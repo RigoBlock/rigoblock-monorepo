@@ -1,7 +1,6 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import './polyfill';
-import DragoApi from './api';
+const Contract = require('./contract');
 
-export default DragoApi;
+module.exports = Contract;
