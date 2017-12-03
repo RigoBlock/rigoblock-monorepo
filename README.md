@@ -10,64 +10,65 @@
 Import DragoAPI class and create an instance passing a Parity API/Web3 instance.
 
 Getting drago details from DragoRegistry contract:
+```javascript
+import DragoApi from '../../DragoApi/src'
 
-    import DragoApi from '../../DragoApi/src'
-
-    const dragoApi = new DragoApi(api)
+const dragoApi = new DragoApi(api)
+dragoApi.contract.dragoregistry
+  .instance()
+  .then((address) =>{
     dragoApi.contract.dragoregistry
-      .instance()
-      .then((address) =>{
-        dragoApi.contract.dragoregistry
-        .drago(dragoID)
-        .then((dragoDetails) => {
-          console.log(dragoDetails)
-        })
-      })
+    .drago(dragoID)
+    .then((dragoDetails) => {
+      console.log(dragoDetails)
+    })
+  })
+  ```
 
 Getting drago prices from DragoEVO contract:
-
+```javascript
+//
+// Initializing Drago API
+// Passing Parity API
+//
+const dragoApi = new DragoApi(api)
+//
+// Initializing registry contract
+//
+dragoApi.contract.dragoregistry
+  .instance()
+  .then((address) =>{
+    //
+    // Looking for drago from dragoID
+    //
+    dragoApi.contract.dragoregistry
+    .drago(dragoID)
+    .then((dragoDetails) => {
+      const dragoAddress = dragoDetails[0][0]
       //
-      // Initializing Drago API
-      // Passing Parity API
+      // Initializing drago contract
       //
-      const dragoApi = new DragoApi(api)
+      dragoApi.contract.drago.instance(dragoAddress)
       //
-      // Initializing registry contract
+      // Calling getData method
       //
-      dragoApi.contract.dragoregistry
-        .instance()
-        .then((address) =>{
-          //
-          // Looking for drago from dragoID
-          //
-          dragoApi.contract.dragoregistry
-          .drago(dragoID)
-          .then((dragoDetails) => {
-            const dragoAddress = dragoDetails[0][0]
-            //
-            // Initializing drago contract
-            //
-            dragoApi.contract.drago.instance(dragoAddress)
-            //
-            // Calling getData method
-            //
-            dragoApi.contract.drago.getData()
-            .then((data) =>{
-              this.setState({
-                dragoDetails: {
-                  address: dragoDetails[0][0],
-                  name: dragoDetails[0][1],
-                  symbol: dragoDetails[0][2],
-                  dragoID: dragoDetails[0][3].c[0],
-                  addresssOwner: dragoDetails[0][4],
-                  addressGroup: dragoDetails[0][5],
-                  sellPrice: api.util.fromWei(data[0][2].toNumber(4)).toFormat(4),
-                  buyPrice: api.util.fromWei(data[0][3].toNumber(4)).toFormat(4),
-                },
-                loading: false
-              })
-            })
-
+      dragoApi.contract.drago.getData()
+      .then((data) =>{
+        this.setState({
+          dragoDetails: {
+            address: dragoDetails[0][0],
+            name: dragoDetails[0][1],
+            symbol: dragoDetails[0][2],
+            dragoID: dragoDetails[0][3].c[0],
+            addresssOwner: dragoDetails[0][4],
+            addressGroup: dragoDetails[0][5],
+            sellPrice: api.util.fromWei(data[0][2].toNumber(4)).toFormat(4),
+            buyPrice: api.util.fromWei(data[0][3].toNumber(4)).toFormat(4),
+          },
+          loading: false
+        })
+      })
+```
 ## Supported contracts
 
 ### DragoRegistry
