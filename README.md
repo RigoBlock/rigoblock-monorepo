@@ -7,7 +7,7 @@
 ### Example
 
 
-Import DragoAPI class and create an instance passing by a Parity API/Web3 instance.
+Import DragoAPI class and create an instance passing a Parity API/Web3 instance.
 
 Getting drago details from DragoRegistry contract:
 
