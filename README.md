@@ -6,7 +6,10 @@
 
 ### Example
 
-Import DragoAPI class and create an instance passing by a Parity API/Web3 instance:
+
+Import DragoAPI class and create an instance passing by a Parity API/Web3 instance.
+
+Getting drago details from DragoRegistry contract:
 
     import DragoApi from '../../DragoApi/src'
 
@@ -21,6 +24,50 @@ Import DragoAPI class and create an instance passing by a Parity API/Web3 instan
         })
       })
 
+Getting drago prices from DragoEVO contract:
+
+      //
+      // Initializing Drago API
+      // Passing Parity API
+      //
+      const dragoApi = new DragoApi(api)
+      //
+      // Initializing registry contract
+      //
+      dragoApi.contract.dragoregistry
+        .instance()
+        .then((address) =>{
+          //
+          // Looking for drago from dragoID
+          //
+          dragoApi.contract.dragoregistry
+          .drago(dragoID)
+          .then((dragoDetails) => {
+            const dragoAddress = dragoDetails[0][0]
+            //
+            // Initializing drago contract
+            //
+            dragoApi.contract.drago.instance(dragoAddress)
+            //
+            // Calling getData method
+            //
+            dragoApi.contract.drago.getData()
+            .then((data) =>{
+              this.setState({
+                dragoDetails: {
+                  address: dragoDetails[0][0],
+                  name: dragoDetails[0][1],
+                  symbol: dragoDetails[0][2],
+                  dragoID: dragoDetails[0][3].c[0],
+                  addresssOwner: dragoDetails[0][4],
+                  addressGroup: dragoDetails[0][5],
+                  sellPrice: api.util.fromWei(data[0][2].toNumber(4)).toFormat(4),
+                  buyPrice: api.util.fromWei(data[0][3].toNumber(4)).toFormat(4),
+                },
+                loading: false
+              })
+            })
+
 ## Supported contracts
 
 ### DragoRegistry
@@ -33,4 +80,4 @@ Methods:
 
 Methods:
 
-`getData` returns `string name, string symbol, uint sellPrice, uint buyPrice`
+`getData()` returns `string name, string symbol, uint sellPrice, uint buyPrice`
