@@ -6,7 +6,7 @@
 
 ### Example
 
-Import DragoAPI class and create an instance passing by a Parity API /Web3 instance:
+Import DragoAPI class and create an instance passing by a Parity API/Web3 instance:
 
     import DragoApi from '../../DragoApi/src'
 
@@ -27,4 +27,10 @@ Import DragoAPI class and create an instance passing by a Parity API /Web3 insta
 
 Methods:
 
-`drago(dragoID)` returns the address of a drago
+`drago(dragoID)` returns `address drago, string name, string symbol, uint dragoID, address owner, address group`
+
+### DragoEVO
+
+Methods:
+
+`getData` returns `string name, string symbol, uint sellPrice, uint buyPrice`
