@@ -21,7 +21,6 @@ class Registry {
     return api.parity
     .registryAddress()
     .then((registryAddress) => {
-      console.log(api)
       const registry = api.newContract(abis.registry, registryAddress).instance;
       return Promise.all([
           registry.getAddress.call({}, [api.util.sha3('dragoregistry'), 'A'])

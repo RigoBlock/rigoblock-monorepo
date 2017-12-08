@@ -1,8 +1,8 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from './abi';
-import Registry from './registry';
+import * as abis from '../abi';
+import Registry from '../registry';
 
 class DragoRegistry {
   constructor (api) {
@@ -20,17 +20,26 @@ class DragoRegistry {
     return this._registry.instanceRegistry(contractAbi)
       .then (instance => {
         this._instance = instance
+        return instance
       })
   }
 
   drago = (dragoID) => {
     if (!dragoID) {
-      throw new Error('DragoID needs to be provided drago')
+      throw new Error('DragoID needs to be provided to drago')
     }
     const instance = this._instance
     return Promise.all([
       instance.drago.call({}, [dragoID])
     ])
+  }
+
+  fromAddress = (dragoAddress) => {
+    if (!dragoAddress) {
+      throw new Error(`dragoAddress needs to be provided to ${arguments.callee.toString()}`)
+    }
+    const instance = this._instance
+    return instance.fromAddress.call({}, [dragoAddress])
   }
 }
 

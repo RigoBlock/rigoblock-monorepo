@@ -62,8 +62,8 @@ dragoApi.contract.dragoregistry
             dragoID: dragoDetails[0][3].c[0],
             addresssOwner: dragoDetails[0][4],
             addressGroup: dragoDetails[0][5],
-            sellPrice: api.util.fromWei(data[0][2].toNumber(4)).toFormat(4),
-            buyPrice: api.util.fromWei(data[0][3].toNumber(4)).toFormat(4),
+            sellPrice: api.util.fromWei(data[2].toNumber(4)).toFormat(4),
+            buyPrice: api.util.fromWei(data[3].toNumber(4)).toFormat(4),
           },
           loading: false
         })
@@ -76,6 +76,7 @@ dragoApi.contract.dragoregistry
 Methods:
 
 `drago(dragoID)` returns `address drago, string name, string symbol, uint dragoID, address owner, address group`
+`fromAddress(dragoAddress)` returns `uint id, string name, string symbol, uint dragoID, address owner, address group`
 
 ### DragoEVO
 
