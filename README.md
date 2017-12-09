@@ -15,7 +15,7 @@ import DragoApi from '../../DragoApi/src'
 
 const dragoApi = new DragoApi(api)
 dragoApi.contract.dragoregistry
-  .instance()
+  .init()
   .then((address) =>{
     dragoApi.contract.dragoregistry
     .drago(dragoID)
@@ -36,7 +36,7 @@ const dragoApi = new DragoApi(api)
 // Initializing registry contract
 //
 dragoApi.contract.dragoregistry
-  .instance()
+  .init()
   .then((address) =>{
     //
     // Looking for drago from dragoID
@@ -83,3 +83,8 @@ Methods:
 Methods:
 
 `getData()` returns `string name, string symbol, uint sellPrice, uint buyPrice`
+
+### Eventful
+
+`getAllLogs(topics)` returns events array
+

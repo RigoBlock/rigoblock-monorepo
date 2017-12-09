@@ -3,14 +3,15 @@
 
 import * as abis from '../abi';
 import Registry from '../registry';
+import { toHex } from '../../Utils';
 
-class DragoRegistryParity {
+class EventfulParity {
   constructor (api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
     this._api = api
-    this._abi = abis.dragoregistry
+    this._abi = abis.eventful
     this._registry = new Registry(api)
     this._constunctorName = this.constructor.name
   }
@@ -29,33 +30,29 @@ class DragoRegistryParity {
     return this._contract;
   }
 
+  get hexSignature() {
+    return this._hexSignature
+  }
+
   init = () => {
     const contractAbi = this._abi
-    return this._registry.instanceRegistry(contractAbi)
+    return this._registry.instanceEventful(contractAbi)
       .then (contract => {
         this._instance = contract.instance
         this._contract = contract
-        return contract
+        const hexSignature = this._contract._events.reduce((events, event) => {
+          events[event._name] = toHex(event._signature)
+          return events
+        }, {})
+        this._hexSignature = hexSignature
+        return this._instance
       })
   }
 
-  drago = (dragoID) => {
-    if (!dragoID) {
-      throw new Error('DragoID needs to be provided to drago')
-    }
-    const instance = this._instance
-    return Promise.all([
-      instance.drago.call({}, [dragoID])
-    ])
-  }
-
-  fromAddress = (dragoAddress) => {
-    if (!dragoAddress) {
-      throw new Error(`dragoAddress needs to be provided to ${arguments.callee.toString()}`)
-    }
-    const instance = this._instance
-    return instance.fromAddress.call({}, [dragoAddress])
+  getAllLogs = (topics = {topics: [ null, null, null, null]}) =>{
+    const contract = this._contract
+    return contract.getAllLogs(topics)
   }
 }
 
-export default DragoRegistryParity;
+export default EventfulParity;
