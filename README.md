@@ -16,7 +16,7 @@ import DragoApi from '../../DragoApi/src'
 const dragoApi = new DragoApi(api)
 dragoApi.contract.dragoregistry
   .init()
-  .then((address) =>{
+  .then(() =>{
     dragoApi.contract.dragoregistry
     .drago(dragoID)
     .then((dragoDetails) => {

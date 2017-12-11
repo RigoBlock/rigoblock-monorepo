@@ -15,6 +15,7 @@ import dragoregistry from './dragoregistry.json';
 import exchangeeventful from './exchangeeventful.json';
 import gabcoineventful from './gabcoineventful.json';
 import nav from './nav.json';
+import parityregister from './parityregister.json';
 
 
 export {
@@ -31,5 +32,6 @@ export {
   dragoregistry,
   exchangeeventful,
   gabcoineventful,
-  nav
+  nav,
+  parityregister
 };

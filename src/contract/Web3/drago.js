@@ -33,8 +33,6 @@ class DragoWeb3 {
 
   buyDrago = (options) => {
     const instance = this._instance
-    console.log(options)
-    console.log(instance.options)
     instance.options.from = options.from
     instance.methods.buyDrago().estimateGas(options)
     .then((gasEstimate) => {
@@ -43,28 +41,10 @@ class DragoWeb3 {
     }
     )
     console.log(instance.options)
-    return instance.methods.buyDrago().send(options).then((receipt) =>{ return console.log(receipt)}).catch((error) => {console.log(error)})
-    // .then(() => {
-    //   console.log(instance.options)
-    //   const instance = instance.methods.buyDrago().send(options).then((receipt) =>{ return console.log(receipt)})
-    //   console.log(instance)
-    //   return instance.methods.buyDrago().send(options).then((receipt) =>{ return console.log(receipt)})
-    // })
-
-
-    // return instance.buyDrago
-    // .estimateGas(options, values)
-    // .then((gasEstimate) => {
-    //   options.gas =  gasEstimate.mul(1.2).toFixed(0);
-    //   console.log(`Buy drago: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}`)
-    //   // var dragoContractIstance = new web3.eth.Contract(abis.drago)
-    //   // dragoContractIstance.options.from = this.state.account.address
-    //   // dragoContractIstance.options.address = dragoDetails.address
-    //   // dragoContractIstance.options.gas = options.gas
-    //   // return dragoContractIstance.methods.buyDrago().send(options)
-    //   // return eth.sendTransaction(options)
-    //   return instance.buyDrago.postTransaction(options, values)
-    // })
+    return instance.methods.buyDrago()
+      .send(options)
+      .then((receipt) =>{ return console.log(receipt)})
+      .catch((error) => {console.log(error)})
   }
 
   sellDrago = (options, values) => {
@@ -80,6 +60,11 @@ class DragoWeb3 {
     )
     console.log(instance.options)
     return instance.methods.sellDrago(values[0]).send(options).then((receipt) =>{ return console.log(receipt)}).catch((error) => {console.log(error)})
+  }
+
+  totalSupply =() =>{
+    const instance = this._instance
+    return instance.methods.totalSupply.call({})
   }
 }
 

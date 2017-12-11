@@ -15,7 +15,7 @@ class DragoParity {
     this._constunctorName = this.constructor.name
   }
 
-  instance = (address) => {
+  init = (address) => {
     if (!address) {
       throw new Error('Contract address needs to be provided')
     }
@@ -53,6 +53,11 @@ class DragoParity {
       console.log(`Sell drago: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}`)
       return instance.sellDrago.postTransaction(options, values)
     })
+  }
+
+  totalSupply =() =>{
+    const instance = this._instance
+    return instance.totalSupply.call({},[])
   }
 }
 
