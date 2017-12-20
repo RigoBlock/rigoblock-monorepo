@@ -5,16 +5,16 @@ import * as abis from '../abi';
 import Registry from '../registry';
 import { toHex } from '../../Utils';
 
-class DragoFactoryParity {
+class exchangeParity {
   constructor (api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
     this._api = api
-    this._abi = abis.dragofactory
+    this._abi = abis.exchange
     this._registry = new Registry(api)
     this._constunctorName = this.constructor.name
-    this._contractName = 'dragofactory'
+    this._contractName = 'exchange2'
   }
 
   get instance () {
@@ -51,32 +51,19 @@ class DragoFactoryParity {
       })
   }
 
-  createDrago = (dragoName, dragoSymbol, accountAddress) => {
-    if (!dragoName) {
-      throw new Error('dragoName needs to be provided')
-    }
-    if (!dragoSymbol) {
-      throw new Error('dragoSymbol needs to be provided')
+  balanceOf = (tokenAddress, accountAddress) => {
+    if (!tokenAddress) {
+      throw new Error('tokenAddress needs to be provided')
     }
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
     }
     const instance = this._instance
-    const options = {
-      from: accountAddress
-    };
-    const values = [dragoName, dragoSymbol, accountAddress]
-    return instance.createDrago
-    .estimateGas(options, values)
-    .then((gasEstimate) => {
-      console.log(gasEstimate.toFormat())
-      options.gas = gasEstimate.mul(1.2).toFixed(0);
-      return instance.createDrago.postTransaction(options, values)
-    })
+    return instance.balanceOf.call({}, [tokenAddress, accountAddress])
     .catch((error) => {
       console.error('error', error)
     })
   }
 }
 
-export default DragoFactoryParity;
+export default exchangeParity;

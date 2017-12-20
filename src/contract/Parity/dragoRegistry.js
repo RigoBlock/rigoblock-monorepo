@@ -13,6 +13,7 @@ class DragoRegistryParity {
     this._abi = abis.dragoregistry
     this._registry = new Registry(api)
     this._constunctorName = this.constructor.name
+    this._contractName = 'dragoregistry'
   }
 
   get instance () {
@@ -31,7 +32,8 @@ class DragoRegistryParity {
 
   init = () => {
     const contractAbi = this._abi
-    return this._registry.instanceRegistry(contractAbi)
+    const contractName = this._contractName
+    return this._registry.instance(contractAbi, contractName)
       .then (contract => {
         this._instance = contract.instance
         this._contract = contract

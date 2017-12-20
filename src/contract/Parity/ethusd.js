@@ -3,18 +3,17 @@
 
 import * as abis from '../abi';
 import Registry from '../registry';
-import { toHex } from '../../Utils';
 
-class EventfulParity {
+class EthusdParity {
   constructor (api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
     this._api = api
-    this._abi = abis.eventful
+    this._abi = abis.ethusd
     this._registry = new Registry(api)
     this._constunctorName = this.constructor.name
-    this._contractName = 'eventful'
+    this._contractName = 'ethusd'
   }
 
   get instance () {
@@ -31,10 +30,6 @@ class EventfulParity {
     return this._contract;
   }
 
-  get hexSignature() {
-    return this._hexSignature
-  }
-
   init = () => {
     const contractAbi = this._abi
     const contractName = this._contractName
@@ -42,19 +37,9 @@ class EventfulParity {
       .then (contract => {
         this._instance = contract.instance
         this._contract = contract
-        const hexSignature = this._contract._events.reduce((events, event) => {
-          events[event._name] = toHex(event._signature)
-          return events
-        }, {})
-        this._hexSignature = hexSignature
-        return this._instance
+        return contract
       })
-  }
-
-  getAllLogs = (topics = {topics: [ null, null, null, null]}) =>{
-    const contract = this._contract
-    return contract.getAllLogs(topics)
   }
 }
 
-export default EventfulParity;
+export default EthusdParity;

@@ -16,6 +16,7 @@ class DragoFactoryWeb3 {
     this._abi = abis.dragofactory
     this._registry = new Registry(api)
     this._constunctorName = this.constructor.name
+    this._contractName = 'dragofactory'
   }
 
   get instance () {
@@ -39,18 +40,19 @@ class DragoFactoryWeb3 {
   init = () => {
     const contractAbi = this._abi
     const api = this._api
-    this._instance = new api.eth.Contract(contractAbi, '2af877bf6b7a1ce3c36a09a8fedfd816c5007d5f')
-    // return this._registry.instanceDragoFactory(contractAbi)
-    //   .then (contract => {
-    //     this._instance = contract.instance
-    //     this._contract = contract
-    //     const hexSignature = this._contract._events.reduce((events, event) => {
-    //       events[event._name] = toHex(event._signature)
-    //       return events
-    //     }, {})
-    //     this._hexSignature = hexSignature
-    //     return this._instance
-    //   })
+    const contractName = this._contractName
+    // this._instance = new api.eth.Contract(contractAbi, 'e0EA5C76FEB69C14AF9EAF3652849Ea069740ac4')
+    return this._registry.instance(contractAbi, contractName)
+      .then (contract => {
+        this._instance = contract
+        // // this._contract = contract
+        // const hexSignature = this._contract._events.reduce((events, event) => {
+        //   events[event._name] = toHex(event._signature)
+        //   return events
+        // }, {})
+        // this._hexSignature = hexSignature
+        return this._instance
+      })
   }
 
   createDrago = (dragoName, dragoSymbol, accountAddress) => {
@@ -81,9 +83,7 @@ class DragoFactoryWeb3 {
     // }
     // )
     // // instance.options.gas = 4600000
-    instance.options.gas = "0x45236A"
-    console.log(instance.options)
-
+    instance.options.gas = "0x442168"
     return instance.methods.createDrago(dragoName, dragoSymbol)
       .send(options)
       .then((receipt) =>{ return console.log(receipt)})

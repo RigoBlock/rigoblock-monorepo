@@ -82,7 +82,11 @@ Methods:
 
 Methods:
 
+`buyDrago`
+`depositToExchange(exchangeAddress, tokenAddress, amount)`
 `getData()` returns `string name, string symbol, uint sellPrice, uint buyPrice`
+`sellDrago`
+
 
 ### Eventful
 
