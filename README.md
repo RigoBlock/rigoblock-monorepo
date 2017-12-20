@@ -71,6 +71,10 @@ dragoApi.contract.dragoregistry
 ```
 ## Supported contracts
 
+### DragoFactory
+
+`createDrago(dragoName, dragoSymbol, accountAddress)`
+
 ### DragoRegistry
 
 Methods:
@@ -85,10 +89,16 @@ Methods:
 `buyDrago`
 `depositToExchange(exchangeAddress, tokenAddress, amount)`
 `getData()` returns `string name, string symbol, uint sellPrice, uint buyPrice`
+`placeOrderCFDExchange(accountAddress, exchangeAddress, cfd, is_stable, adjustment, stake)`
 `sellDrago`
 
+### Ethusd
 
 ### Eventful
 
 `getAllLogs(topics)` returns events array
+
+### Exchange
+
+`balanceOf(tokenAddress, accountAddress)`
 
