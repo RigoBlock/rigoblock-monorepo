@@ -38,15 +38,55 @@ class DragoParity {
     return instance.getData.call({})
   }
 
-  buyDrago = (options, values) => {
+  buyDrago = (accountAddress, amount) => {
+    if (!accountAddress) {
+      throw new Error('accountAddress needs to be provided')
+    }
+    if (!amount) {
+      throw new Error('amount needs to be provided')
+    }
     const instance = this._instance
-    Array.isArray(values) ? values : values = values[values]
+    const options = {
+      from: accountAddress,
+      value: amount
+    }
     return instance.buyDrago
-    .estimateGas(options, values)
+    .estimateGas(options, [])
     .then((gasEstimate) => {
       options.gas =  gasEstimate.mul(1.2).toFixed(0);
       console.log(`Buy drago: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}`)
-      return instance.buyDrago.postTransaction(options, values)
+      return instance.buyDrago.postTransaction(options, [])
+    })
+  }
+
+  cancelOrderCFDExchange = (accountAddress, exchangeAddress, cfd, tradeId) => {
+    if (!accountAddress) {
+      throw new Error('accountAddress needs to be provided')
+    }
+    if (!exchangeAddress) {
+      throw new Error('exchangeAddress needs to be provided')
+    }
+    if (!cfd) {
+      throw new Error('cfd needs to be provided')
+    }
+    if (!tradeId) {
+      throw new Error('tradeId needs to be provided')
+    }
+    const instance = this._instance
+    const options = {
+      from: accountAddress
+    };
+    const values = [accountAddress, exchangeAddress, cfd, tradeId]
+    console.log(exchangeAddress)
+    return instance.cancelOrderCFDExchange
+    .estimateGas(options, values)
+    .then((gasEstimate) => {
+      console.log(gasEstimate.toFormat())
+      options.gas = gasEstimate.mul(1.2).toFixed(0);
+      return instance.cancelOrderCFDExchange.postTransaction(options, values)
+    })
+    .catch((error) => {
+      console.error('error', error)
     })
   }
 
@@ -118,46 +158,18 @@ class DragoParity {
     })
   }
 
-  // cancelOrderCFDExchange = (accountAddress, exchangeAddress, cfd, is_stable, adjustment, stake) => {
-  //   if (!accountAddress) {
-  //     throw new Error('accountAddress needs to be provided')
-  //   }
-  //   if (!exchangeAddress) {
-  //     throw new Error('exchangeAddress needs to be provided')
-  //   }
-  //   if (!cfd) {
-  //     throw new Error('cfd needs to be provided')
-  //   }
-  //   if (!is_stable) {
-  //     throw new Error('is_stable needs to be provided')
-  //   }
-  //   if (!adjustment) {
-  //     throw new Error('adjustment needs to be provided')
-  //   }
-  //   if (!stake) {
-  //     throw new Error('stake needs to be provided')
-  //   }
-  //   const instance = this._instance
-  //   const options = {
-  //     from: accountAddress
-  //   };
-  //   const values = [exchangeAddress, exchangeAddress, cfd, is_stable, adjustment, stake]
-  //   console.log(exchangeAddress)
-  //   return instance.depositToExchange
-  //   .estimateGas(options, values)
-  //   .then((gasEstimate) => {
-  //     console.log(gasEstimate.toFormat())
-  //     options.gas = gasEstimate.mul(1.2).toFixed(0);
-  //     return instance.depositToExchange.postTransaction(options, values)
-  //   })
-  //   .catch((error) => {
-  //     console.error('error', error)
-  //   })
-  // }
-
-  sellDrago = (options, values) => {
+  sellDrago = (accountAddress, amount) => {
+    if (!accountAddress) {
+      throw new Error('accountAddress needs to be provided')
+    }
+    if (!amount) {
+      throw new Error('amount needs to be provided')
+    }
     const instance = this._instance
-    Array.isArray(values) ? values : values = values[values]
+    const values = [amount]
+    const options = {
+      from: accountAddress
+    }
     return instance.sellDrago
     .estimateGas(options, values)
     .then((gasEstimate) => {

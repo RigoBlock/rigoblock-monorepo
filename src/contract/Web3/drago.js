@@ -38,20 +38,22 @@ class DragoWeb3 {
     return instance.getData.call({})
   }
 
-  buyDrago = (options) => {
+  buyDrago = (accountAddress, amount) => {
     const instance = this._instance
-    instance.options.from = options.from
-    instance.methods.buyDrago().estimateGas(options)
+    var options = {
+      from: accountAddress,
+      value: amount
+    }
+    return instance.methods.buyDrago().estimateGas(options)
     .then((gasEstimate) => {
       console.log(gasEstimate)
-      instance.options.gas =  gasEstimate
+      options.gas = gasEstimate
     }
     )
-    console.log(instance.options)
-    return instance.methods.buyDrago()
+    .then (() =>{
+      return instance.methods.buyDrago()
       .send(options)
-      .then((receipt) =>{ return console.log(receipt)})
-      .catch((error) => {console.log(error)})
+    })
   }
 
   depositToExchange = (accountAddress, exchangeAddress, tokenAddress, amount) => {
@@ -119,19 +121,19 @@ class DragoWeb3 {
     })
   }
 
-  sellDrago = (options, values) => {
+  sellDrago = (accountAddress, amount) => {
     const instance = this._instance
-    console.log(options)
-    console.log(instance.options)
-    instance.options.from = options.from
-    instance.methods.sellDrago(values[0]).estimateGas(options)
+    var options = {
+      from: accountAddress,
+    }
+    return instance.methods.sellDrago(amount).estimateGas(options)
     .then((gasEstimate) => {
       console.log(gasEstimate)
-      instance.options.gas =  gasEstimate
-    }
-    )
-    console.log(instance.options)
-    return instance.methods.sellDrago(values[0]).send(options).then((receipt) =>{ return console.log(receipt)}).catch((error) => {console.log(error)})
+      options.gas = gasEstimate
+    })
+    .then(()=>{
+      return instance.methods.sellDrago(amount).send(options)
+    })
   }
 
   totalSupply =() =>{
