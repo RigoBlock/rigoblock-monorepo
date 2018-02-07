@@ -11,10 +11,10 @@ class DragoFactoryParity {
       throw new Error('API instance needs to be provided to Contract')
     }
     this._api = api
-    this._abi = abis.dragofactory
+    this._abi = abis.vaultfactory
     this._registry = new Registry(api)
     this._constunctorName = this.constructor.name
-    this._contractName = 'dragofactory'
+    this._contractName = 'gabcoinfactory'
   }
 
   get instance () {
@@ -51,7 +51,7 @@ class DragoFactoryParity {
       })
   }
 
-  createDrago = (dragoName, dragoSymbol, accountAddress) => {
+  createVault = (dragoName, dragoSymbol, accountAddress) => {
     if (!dragoName) {
       throw new Error('dragoName needs to be provided')
     }
@@ -66,12 +66,12 @@ class DragoFactoryParity {
       from: accountAddress
     };
     const values = [dragoName, dragoSymbol, accountAddress]
-    return instance.createDrago
+    return instance.createGabcoin
     .estimateGas(options, values)
     .then((gasEstimate) => {
       console.log(gasEstimate.toFormat())
       options.gas = gasEstimate.mul(1.2).toFixed(0);
-      return instance.createDrago.postTransaction(options, values)
+      return instance.createGabcoin.postTransaction(options, values)
       // .then((receipt) => {
       //   console.log(receipt)
       //   return receipt

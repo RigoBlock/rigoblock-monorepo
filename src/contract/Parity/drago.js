@@ -38,6 +38,14 @@ class DragoParity {
     return instance.getData.call({})
   }
 
+  balanceOf = (accountAddress) => {
+    if (!accountAddress) {
+      throw new Error('accountAddress needs to be provided')
+    }
+    const instance = this._instance
+    return instance.balanceOf.call({}, [accountAddress])
+  }
+
   buyDrago = (accountAddress, amount) => {
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
@@ -45,17 +53,22 @@ class DragoParity {
     if (!amount) {
       throw new Error('amount needs to be provided')
     }
+    const api = this._api
     const instance = this._instance
     const options = {
       from: accountAddress,
       value: amount
     }
+    console.log(api)
     return instance.buyDrago
     .estimateGas(options, [])
     .then((gasEstimate) => {
       options.gas =  gasEstimate.mul(1.2).toFixed(0);
-      console.log(`Buy drago: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}`)
+      console.log(`Buy Drago: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}`)
       return instance.buyDrago.postTransaction(options, [])
+      // .then((receipt) => {
+      //   return api.parity.checkRequest(receipt, [])
+      // })
     })
   }
 
@@ -174,9 +187,38 @@ class DragoParity {
     .estimateGas(options, values)
     .then((gasEstimate) => {
       options.gas =  gasEstimate.mul(1.2).toFixed(0);
-      console.log(`Sell drago: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}`)
+      console.log(`Sell Drago: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}.`)
       return instance.sellDrago.postTransaction(options, values)
     })
+  }
+
+  setPrices = (accountAddress, buyPrice, sellPrice) => {
+    if (!accountAddress) {
+      throw new Error('accountAddress needs to be provided')
+    }
+    if (!buyPrice) {
+      throw new Error('buyPrice needs to be provided')
+    }
+    if (!sellPrice) {
+      throw new Error('sellPrice needs to be provided')
+    }
+    const api = this._api
+    console.log(api)
+    const buyPriceWei = api.util.toWei(buyPrice, 'ether')
+    const sellPriceWei = api.util.toWei(sellPrice, 'ether')
+    const instance = this._instance
+    const values = [sellPriceWei, buyPriceWei]
+    const options = {
+      from: accountAddress
+    }
+    return instance.setPrices
+    .estimateGas(options, values)
+    .then((gasEstimate) => {
+      options.gas =  gasEstimate.mul(1.2).toFixed(0);
+      console.log(`setPrices Drago: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}. Setting values: ${values}`)
+      return instance.setPrices.postTransaction(options, values)
+    })
+
   }
 
   totalSupply =() =>{

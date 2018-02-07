@@ -1,8 +1,8 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import gabcoin from './gabcoin.json';
-import gabcoinfactory from './gabcoinfactory.json';
+import vault from './vault.json';
+import vaultfactory from './vaultFactory.json';
 import registry from './registry.json';
 import tokenreg from './tokenreg.json';
 import exchange from './exchange.json';
@@ -13,14 +13,14 @@ import eventful from './eventful.json';
 import ethusd from './ethusd.json';
 import dragoregistry from './dragoregistry.json';
 import exchangeeventful from './exchangeeventful.json';
-import gabcoineventful from './gabcoineventful.json';
+import vaulteventful from './vaultEventful.json';
 import nav from './nav.json';
 import parityregister from './parityregister.json';
 
 
 export {
-  gabcoin,
-  gabcoinfactory,
+  vault,
+  vaultfactory,
   registry,
   tokenreg,
   exchange,
@@ -31,7 +31,7 @@ export {
   ethusd,
   dragoregistry,
   exchangeeventful,
-  gabcoineventful,
+  vaulteventful,
   nav,
   parityregister
 };

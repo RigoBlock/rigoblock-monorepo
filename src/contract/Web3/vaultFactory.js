@@ -4,8 +4,7 @@
 import * as abis from '../abi';
 import Registry from '../registry';
 import { toHex } from '../../Utils';
-// import BigNumber from 'bignumber.js';
-// import BigNumber from '../../../node_modules/bignumber.js';
+
 
 class DragoFactoryWeb3 {
   constructor (api) {
@@ -13,10 +12,10 @@ class DragoFactoryWeb3 {
       throw new Error('API instance needs to be provided to Contract')
     }
     this._api = api
-    this._abi = abis.dragofactory
+    this._abi = abis.vaultfactory
     this._registry = new Registry(api)
     this._constunctorName = this.constructor.name
-    this._contractName = 'dragofactory'
+    this._contractName = 'gabcoinfactory'
   }
 
   get instance () {
@@ -48,12 +47,12 @@ class DragoFactoryWeb3 {
       })
   }
 
-  createDrago = (dragoName, dragoSymbol, accountAddress) => {
-    if (!dragoName) {
-      throw new Error('dragoName needs to be provided')
+  createVault = (vaultName, vaultSymbol, accountAddress) => {
+    if (!vaultName) {
+      throw new Error('vaultName needs to be provided')
     }
-    if (!dragoSymbol) {
-      throw new Error('dragoSymbol needs to be provided')
+    if (!vaultSymbol) {
+      throw new Error('vaultSymbol needs to be provided')
     }
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
@@ -64,7 +63,7 @@ class DragoFactoryWeb3 {
     }
     console.log(options)
     instance.options.from = accountAddress
-    // instance.methods.createDrago(dragoName, dragoSymbol).estimateGas(options)
+    // instance.methods.createDrago(vaultName, vaultSymbol).estimateGas(options)
     // .then(function(gasAmount){
     //   console.log(gasAmount)
     //   console.log('gas')
@@ -75,7 +74,7 @@ class DragoFactoryWeb3 {
     // )
     // // instance.options.gas = 4600000
     instance.options.gas = "0x442168"
-    return instance.methods.createDrago(dragoName, dragoSymbol)
+    return instance.methods.createGabcoin(vaultName, vaultSymbol)
       .send(options)
       .then((receipt) =>{
         console.log(receipt)

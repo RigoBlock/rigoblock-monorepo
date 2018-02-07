@@ -44,6 +44,11 @@ class DragoWeb3 {
       from: accountAddress,
       value: amount
     }
+    console.log(accountAddress)
+    console.log(amount)
+    // options.gas = 110053
+    // return instance.methods.buyDrago()
+    // .send(options)
     return instance.methods.buyDrago().estimateGas(options)
     .then((gasEstimate) => {
       console.log(gasEstimate)
@@ -79,7 +84,8 @@ class DragoWeb3 {
     .then((gasEstimate) => {
       console.log(gasEstimate)
       instance.options.gas =  gasEstimate
-      return instance.methods.depositToExchange(exchangeAddress, tokenAddress, amount).send(options).then((receipt) =>{ return console.log(receipt)}).catch((error) => {console.log(error)})
+      return instance.methods.depositToExchange(exchangeAddress, tokenAddress, amount)
+        .send(options)
       }
     )
   }
@@ -107,14 +113,13 @@ class DragoWeb3 {
     const options = {
       from: accountAddress
     };
-    const values = [exchangeAddress, exchangeAddress, cfd, is_stable, adjustment, stake]
     console.log(exchangeAddress)
-    return instance.depositToExchange
-    .estimateGas(options, values)
+    return instance.methods.placeOrderCFDExchange(exchangeAddress, exchangeAddress, cfd, is_stable, adjustment, stake)
+    .estimateGas(options)
     .then((gasEstimate) => {
-      console.log(gasEstimate.toFormat())
-      options.gas = gasEstimate.mul(1.2).toFixed(0);
-      return instance.depositToExchange.postTransaction(options, values)
+      options.gas = gasEstimate
+      return instance.methods.placeOrderCFDExchange(exchangeAddress, exchangeAddress, cfd, is_stable, adjustment, stake)
+        .send(options)
     })
     .catch((error) => {
       console.error('error', error)
@@ -122,10 +127,17 @@ class DragoWeb3 {
   }
 
   sellDrago = (accountAddress, amount) => {
+    if (!accountAddress) {
+      throw new Error('accountAddress needs to be provided')
+    }
+    if (!amount) {
+      throw new Error('amount needs to be provided')
+    }
     const instance = this._instance
     var options = {
       from: accountAddress,
     }
+    console.log(amount)
     return instance.methods.sellDrago(amount).estimateGas(options)
     .then((gasEstimate) => {
       console.log(gasEstimate)
@@ -133,6 +145,39 @@ class DragoWeb3 {
     })
     .then(()=>{
       return instance.methods.sellDrago(amount).send(options)
+    })
+  }
+
+  setPrices = (accountAddress, buyPrice, sellPrice) => {
+    if (!accountAddress) {
+      throw new Error('accountAddress needs to be provided')
+    }
+    if (!buyPrice) {
+      throw new Error('buyPrice needs to be provided')
+    }
+    if (!sellPrice) {
+      throw new Error('sellPrice needs to be provided')
+    }
+    const instance = this._instance
+    var options = {
+      from: accountAddress,
+    }
+    instance.options.from = accountAddress
+    const api = this._api
+    const buyPriceWei = api.utils.toWei(buyPrice, 'ether')
+    const sellPriceWei = api.utils.toWei(sellPrice, 'ether')
+    const values = [sellPriceWei, buyPriceWei]
+    return instance.methods.setPrices(sellPriceWei, buyPriceWei)
+    .estimateGas(options)
+    .then((gasEstimate) => {
+      console.log(gasEstimate)
+      // console.log(gasEstimate.toFormat())
+      options.gas = gasEstimate
+      console.log(instance)
+      return instance.methods.setPrices(sellPriceWei, buyPriceWei).send(options)
+    })
+    .catch((error) => {
+      console.error('error', error)
     })
   }
 

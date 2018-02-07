@@ -91,6 +91,7 @@ Methods:
 `getData()` returns `string name, string symbol, uint sellPrice, uint buyPrice`
 `placeOrderCFDExchange(accountAddress, exchangeAddress, cfd, is_stable, adjustment, stake)`
 `sellDrago`
+`setPrices(accountAddress, buyPrice, sellPrice)`
 
 ### Ethusd
 
