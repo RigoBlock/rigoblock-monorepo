@@ -94,6 +94,9 @@ class Registry {
       }
       return api.newContract(abi, address)
     })
+    .catch(error => {
+      console.warn(error)
+    })
     return contract
   }
 }
