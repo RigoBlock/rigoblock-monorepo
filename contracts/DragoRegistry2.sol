@@ -1,28 +1,30 @@
-//! the Drago Registry contract.
-//!
-//! Copyright 2017-2018 Gabriele Rigo, RigoBlock, Rigo Investment Sagl.
-//!
-//! Licensed under the Apache License, Version 2.0 (the "License");
-//! you may not use this file except in compliance with the License.
-//! You may obtain a copy of the License at
-//!
-//!     http://www.apache.org/licenses/LICENSE-2.0
-//!
-//! Unless required by applicable law or agreed to in writing, software
-//! distributed under the License is distributed on an "AS IS" BASIS,
-//! WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//! See the License for the specific language governing permissions and
-//! limitations under the License.
-//!
-//! Inspired by https://github.com/paritytech/contracts/blob/master/TokenReg.sol
+/*
 
-pragma solidity ^0.4.19;
+ Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+*/
+
+pragma solidity ^0.4.20;
 
 contract Owned {
 
-  modifier only_owner { require(msg.sender == owner); _; }
+  address public owner = msg.sender;
 
   event NewOwner(address indexed old, address indexed current);
+
+  modifier only_owner { require(msg.sender == owner); _; }
 
   function setOwner(address _new) public only_owner {
     owner = _new;
@@ -32,8 +34,6 @@ contract Owned {
   function getOwner() public constant returns (address) {
     return owner;
   }
-
-  address public owner = msg.sender;
 }
 
 contract Authority {
@@ -119,6 +119,9 @@ contract DragoRegistryFace {
   function getFee() public constant returns (uint) {}
 }
 
+/// @title Drago Registry - Allows registration of pools.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
+/// @note Inspired by https://github.com/paritytech/contracts/blob/master/TokenReg.sol
 contract DragoRegistry is DragoRegistryFace, Owned {
 
   address public constant AUTHORITY;
