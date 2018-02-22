@@ -36,6 +36,8 @@ contract Owned {
   }
 }
 
+/// @title Authority Interface - Allows external interaction with Authrity contract.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
 contract Authority {
 
   // EVENTS
@@ -85,6 +87,8 @@ contract Authority {
   function getListsByGroups(string _group) public constant returns (address[]) {}
 }
 
+/// @title Drago Registry Interface - Allows external intaction with Drago Registry.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
 contract DragoRegistryFace {
 
   //EVENTS
@@ -121,7 +125,6 @@ contract DragoRegistryFace {
 
 /// @title Drago Registry - Allows registration of pools.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-/// @note Inspired by https://github.com/paritytech/contracts/blob/master/TokenReg.sol
 contract DragoRegistry is DragoRegistryFace, Owned {
 
   address public AUTHORITY;
