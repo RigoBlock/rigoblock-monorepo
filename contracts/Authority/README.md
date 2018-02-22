@@ -1,7 +1,7 @@
 # Authority Contract
 a contract for managing permissions.
 
-## Registry version 0.3.1
+## Authority version 0.4.1
 ```
 Mainnet:
 Ropsten:
