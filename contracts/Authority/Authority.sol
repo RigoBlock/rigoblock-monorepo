@@ -162,7 +162,7 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Allows the owner to whitelist an authority
   /// @param _authority Address of the authority
-  /// @param _isWhilisted Bool whitelisted
+  /// @param _isWhitelisted Bool whitelisted
   function setAuthority(address _authority, bool _isWhitelisted)
     public
     only_owner
@@ -177,7 +177,7 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Allows the owner to whitelist a whitelister
   /// @param _whitelister Address of the whitelister
-  /// @param _isWhilisted Bool whitelisted
+  /// @param _isWhitelisted Bool whitelisted
   function setWhitelister(address _whitelister, bool _isWhitelisted)
     public
     only_owner
@@ -191,7 +191,7 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Allows a whitelister to whitelist a user
   /// @param _target Address of the target user
-  /// @param _isWhilisted Bool whitelisted
+  /// @param _isWhitelisted Bool whitelisted
   function whitelistUser(address _target, bool _isWhitelisted)
     public
     only_whitelister
@@ -205,7 +205,7 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Allows a whitelister to whitelist an asset
   /// @param _asset Address of the token
-  /// @param _isWhilisted Bool whitelisted
+  /// @param _isWhitelisted Bool whitelisted
   function whitelistAsset(address _asset, bool _isWhitelisted)
     public
     only_whitelister
@@ -219,7 +219,7 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Allows a whitelister to whitelist an exchange
   /// @param _exchange Address of the target exchange
-  /// @param _isWhilisted Bool whitelisted
+  /// @param _isWhitelisted Bool whitelisted
   function whitelistExchange(address _exchange, bool _isWhitelisted)
     public
     only_whitelister
@@ -233,7 +233,7 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Allows an admin to whitelist a drago
   /// @param _drago Address of the target drago
-  /// @param _isWhilisted Bool whitelisted
+  /// @param _isWhitelisted Bool whitelisted
   function whitelistDrago(address _drago, bool _isWhitelisted)
     public
     only_admin
@@ -247,7 +247,7 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Allows an admin to whitelist a vault
   /// @param _vault Address of the target vault
-  /// @param _isWhilisted Bool whitelisted
+  /// @param _isWhitelisted Bool whitelisted
   function whitelistVault(address _vault, bool _isWhitelisted)
     public
     only_admin
@@ -261,7 +261,7 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Allows an admin to whitelist a registry
   /// @param _registry Address of the target registry
-  /// @param _isWhilisted Bool whitelisted
+  /// @param _isWhitelisted Bool whitelisted
   function whitelistRegistry(address _registry, bool _isWhitelisted)
     public
     only_admin
@@ -275,7 +275,7 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Allows an admin to whitelist a factory
   /// @param _factory Address of the target factory
-  /// @param _isWhilisted Bool whitelisted
+  /// @param _isWhitelisted Bool whitelisted
   function whitelistFactory(address _factory, bool _isWhitelisted)
     public
     only_admin
