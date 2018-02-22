@@ -33,6 +33,19 @@ class VaultParity {
     return this._instance
   }
 
+  balanceOf = (accountAddress) => {
+    if (!accountAddress) {
+      throw new Error('accountAddress needs to be provided')
+    }
+    const instance = this._instance
+    return instance.balanceOf.call({}, [accountAddress])
+  }
+
+  getData = () => {
+    const instance = this._instance
+    return instance.getData.call({})
+  }
+
   buyVault = (accountAddress, amount) => {
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
@@ -117,10 +130,10 @@ class VaultParity {
 
   }
 
-  // totalSupply =() =>{
-  //   const instance = this._instance
-  //   return instance.totalSupply.call({},[])
-  // }
+  totalSupply =() =>{
+    const instance = this._instance
+    return instance.totalSupply.call({},[])
+  }
 
 }
 

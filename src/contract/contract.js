@@ -23,7 +23,6 @@ class Contract {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract');
     }
-    console.log(api)
     if (typeof api._provider === 'undefined') {
       isMetaMask = false
     } else {

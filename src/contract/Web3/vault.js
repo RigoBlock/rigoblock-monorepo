@@ -33,6 +33,14 @@ class DragoWeb3 {
     this._instance.options.address = address
   }
 
+  balanceOf = (accountAddress) => {
+    if (!accountAddress) {
+      throw new Error('accountAddress needs to be provided')
+    }
+    const instance = this._instance
+    return instance.balanceOf.call({}, [accountAddress])
+  }
+
   getData = () => {
     const instance = this._instance
     return instance.getData.call({})
