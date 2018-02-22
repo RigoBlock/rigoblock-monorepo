@@ -50,7 +50,7 @@ contract Authority {
   event WhitelistedExchange(address indexed exchange, bool approved);
   event WhitelistedRegistry(address indexed registry, bool approved);
   event WhitelistedFactory(address indexed factory, bool approved);
-  event WhitelistedGabcoin(address indexed gabcoin, bool approved);
+  event WhitelistedVault(address indexed vault, bool approved);
   event WhitelistedDrago(address indexed drago, bool approved);
   event NewEventful(address indexed eventful);
 
@@ -62,11 +62,11 @@ contract Authority {
   function whitelistAsset(address _asset, bool _isWhitelisted) public {}
   function whitelistExchange(address _exchange, bool _isWhitelisted) public {}
   function whitelistDrago(address _drago, bool _isWhitelisted) public {}
-  function whitelistGabcoin(address _gabcoin, bool _isWhitelisted) public {}
+  function whitelistVault(address _vault, bool _isWhitelisted) public {}
   function whitelistRegistry(address _registry, bool _isWhitelisted) public {}
   function whitelistFactory(address _factory, bool _isWhitelisted) public {}
   function setEventful(address _eventful) public {}
-  function setGabcoinEventful(address _gabcoinEventful) public {}
+  function setVaultEventful(address _vaultEventful) public {}
   function setExchangeEventful(address _exchangeEventful) public {}
   function setCasper(address _casper) public {}
 
@@ -77,10 +77,10 @@ contract Authority {
   function isWhitelistedExchange(address _exchange) public constant returns (bool) {}
   function isWhitelistedRegistry(address _registry) public constant returns (bool) {}
   function isWhitelistedDrago(address _drago) public constant returns (bool) {}
-  function isWhitelistedGabcoin(address _gabcoin) public constant returns (bool) {}
+  function isWhitelistedVault(address _vault) public constant returns (bool) {}
   function isWhitelistedFactory(address _factory) public constant returns (bool) {}
   function getEventful() public constant returns (address) {}
-  function getGabcoinEventful() public constant returns (address) {}
+  function getVaultEventful() public constant returns (address) {}
   function getExchangeEventful() public constant returns (address) {}
   function getCasper() public constant returns (address) {}
   function getOwner() public constant returns (address) {}
