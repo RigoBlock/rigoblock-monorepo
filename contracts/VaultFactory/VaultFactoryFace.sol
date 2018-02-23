@@ -18,7 +18,7 @@
 
 pragma solidity ^0.4.20;
 
-/// @title Vault Factory Interface - Allows external intaction with Vault Factory.
+/// @title Vault Factory Interface - Allows external interaction with Vault Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultFactoryFace {
 
