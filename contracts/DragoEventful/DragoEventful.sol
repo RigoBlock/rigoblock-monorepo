@@ -112,7 +112,7 @@ contract DragoRegistry {
 
   // CORE FUNCTIONS
 
-  function register(address _drago, string _name, string _symbol, uint _dragoID, address _owner) public payable returns (bool) {}
+  function register(address _drago, string _name, string _symbol, uint _dragoId, address _owner) public payable returns (bool) {}
   function unregister(uint _id) public {}
   function setMeta(uint _id, bytes32 _key, bytes32 _value) public {}
   function addGroup(address _group) public {}
@@ -123,10 +123,10 @@ contract DragoRegistry {
   function kill() public {}
 
   function dragoCount() public constant returns (uint) {}
-  function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoID, address owner, address group) {}
-  function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoID, address owner, address group) {}
-  function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoID, address owner, address group) {}
-  function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoID, address owner, address group) {}
+  function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoId, address owner, address group) {}
+  function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoId, address owner, address group) {}
+  function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoId, address owner, address group) {}
+  function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoId, address owner, address group) {}
   function fromNameSymbol(string _name, string _symbol) public constant returns (address) {}
   function getNameFromAddress(address _pool) external constant returns (bytes32) {}
   function getSymbolFromAddress(address _pool) external constant returns (bytes32) {}
@@ -150,7 +150,7 @@ contract DragoEventfulFace {
   event TradeExchange(address indexed drago, address indexed exchange, address tokenGet, address tokenGive, uint amountGet, uint amountGive, address get, address give);
   event CancelOrder(address indexed drago, address indexed exchange, address indexed cfd, uint value, uint id);
   event FinalizeDeal(address indexed drago, address indexed exchange, address indexed cfd, uint value, uint id);
-  event DragoCreated(address indexed drago, address indexed group, address indexed owner, uint dragoID, string name, string symbol);
+  event DragoCreated(address indexed drago, address indexed group, address indexed owner, uint dragoId, string name, string symbol);
 
   // CORE FUNCTIONS
 
@@ -262,7 +262,7 @@ contract DragoEventful is DragoEventfulFace {
     address indexed drago,
     address indexed group,
     address indexed owner,
-    uint dragoID,
+    uint dragoId,
     string name,
     string symbol
   );
@@ -559,7 +559,7 @@ contract DragoEventful is DragoEventfulFace {
   /// @dev Logs a modification of the transaction fee event
   /// @param _who Address of the caller
   /// @param _targetDrago Address of the target Drago
-  /// @param _transaction fee Value of the transaction fee in basis points
+  /// @param _transactionFee Value of the transaction fee in basis points
   /// @return Bool the transaction executed successfully
   function setTransactionFee(
     address _who,
@@ -597,10 +597,10 @@ contract DragoEventful is DragoEventfulFace {
   /// @dev Logs a new Drago creation
   /// @param _who Address of the caller
   /// @param _dragoFactory Address of the factory
-  /// @param _targetDrago Address of the new Drago
-  /// @param _name
-  /// @param _symbol
-  /// @param dragoID Number of the new drago Id
+  /// @param _newDrago Address of the new Drago
+  /// @param _name String of the name of the new drago
+  /// @param _symbol String of the symbol of the new drago
+  /// @param _dragoId Number of the new drago Id
   /// @param _owner Address of the drago wizard
   /// @return Bool the transaction executed successfully
   function createDrago(
@@ -609,14 +609,14 @@ contract DragoEventful is DragoEventfulFace {
     address _newDrago,
     string _name,
     string _symbol,
-    uint _dragoID,
+    uint _dragoId,
     address _owner)
     external
     approved_factory_only(_dragoFactory)
     returns(bool success)
   {
     require (msg.sender == _dragoFactory);
-    DragoCreated(_newDrago, _dragoFactory, _owner, _dragoID, _name, _symbol);
+    DragoCreated(_newDrago, _dragoFactory, _owner, _dragoId, _name, _symbol);
     return true;
   }
 }
