@@ -28,7 +28,7 @@ contract DragoRegistryFace {
   event Unregistered(string indexed symbol, uint indexed id);
   event MetaChanged(uint indexed id, bytes32 indexed key, bytes32 value);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function register(address _drago, string _name, string _symbol, uint _dragoID, address _owner) public payable returns (bool) {}
   function unregister(uint _id) public {}
