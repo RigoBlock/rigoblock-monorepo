@@ -18,8 +18,8 @@
 
 pragma solidity ^0.4.20;
 
-/// @note no setting of owner as msg.sender at deploy
-/// @note otherwise cannot set owner from factory
+/// @dev no setting of owner as msg.sender at deploy
+/// @dev otherwise cannot set owner from factory
 contract Owned {
 
   modifier only_owner { require(msg.sender == owner); _; }
@@ -183,7 +183,7 @@ contract VaultFace {
 
   // METHODS
 
-  function() public payable {}
+  function() external payable {}
   function buyVault() public payable returns (bool success) {}
   function buyVaultOnBehalf(address _hodler) public payable returns (bool success) {}
   function sellVault(uint256 amount) public returns (bool success) {}
@@ -210,7 +210,7 @@ contract VaultFace {
 
 /// @title Vault - contract for creating a vault type of pool.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-/// @note includes pooled proof-of-stake mining
+/// @dev includes pooled proof-of-stake mining
 contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
   string constant VERSION = 'GC 2.1.0';
@@ -335,7 +335,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   // CORE METHODS
 
   /// @dev Allows a casper contract to send Ether back
-  function() public payable casper_contract_only {}
+  function() external payable casper_contract_only {}
 
   /// @dev Allows a user to buy into a vault
   /// @return Bool the function executed correctly
@@ -357,10 +357,10 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     minimum_stake(msg.value)
     returns (bool success)
   {
-    var (gross_amount, fee_vault, fee_vaultDAO, amount) = getPurchaseAmounts();
+    var (grossAmount, feeVault, feeVaultDao, amount) = getPurchaseAmounts();
     addPurchaseLog(amount);
-    allocateTokens(_hodler, amount, fee_vault, fee_vaultDAO);
-    data.totalSupply = safeAdd(data.totalSupply, gross_amount);
+    allocateTokens(_hodler, amount, feeVault, feeVaultDao);
+    data.totalSupply = safeAdd(data.totalSupply, grossAmount);
     Buy(msg.sender, this, msg.value, amount);
     return true;
   }
@@ -385,11 +385,11 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   }
 
   /// @dev Allows to deposit from vault to casper contract for pooled PoS mining
+  /// @dev _withdrawal address must be == this
   /// @param _validation Address of the casper miner
   /// @param _withdrawal Address where to withdraw
   /// @param _amount Value of deposit in wei
   /// @return Bool the function executed correctly
-  /// @note _withdrawal address must be == this
   function depositCasper(address _validation, address _withdrawal, uint _amount)
     public
     only_owner
@@ -456,8 +456,8 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   }
 
   /// @dev Allows anyone to pay and update the price
-  /// @note This function allows to write the new nav
-  /// @note NAV is provided by view functions
+  /// @dev This function allows to write the new nav
+  /// @dev NAV is provided by view functions
   function updatePrice() public {
     data.price = getNav();
   }
@@ -618,19 +618,19 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     internal
     constant
     returns (
-      uint gross_amount,
-      uint fee_vault,
-      uint fee_vaultDAO,
+      uint grossAmount,
+      uint feeVault,
+      uint feeVaultDao,
       uint amount
     )
   {
-    gross_amount = safeDiv(msg.value * BASE, getNav());
-    uint fee = safeMul(gross_amount, data.transactionFee) / 10000; //fee is in basis points
+    grossAmount = safeDiv(msg.value * BASE, getNav());
+    uint fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
     return (
-      gross_amount = safeDiv(msg.value * BASE, getNav()),
-      fee_vault = safeMul(fee , admin.ratio) / 100,
-      fee_vaultDAO = safeSub(fee, fee_vault),
-      amount = safeSub(gross_amount, fee)
+      grossAmount = safeDiv(msg.value * BASE, getNav()),
+      feeVault = safeMul(fee , admin.ratio) / 100,
+      feeVaultDao = safeSub(fee, feeVault),
+      amount = safeSub(grossAmount, fee)
     );
   }
 
@@ -643,18 +643,18 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     internal
     constant
     returns (
-      uint fee_vault,
-      uint fee_vaultDAO,
-      uint net_amount,
-      uint net_revenue
+      uint feeVault,
+      uint feeVaultDao,
+      uint netAmount,
+      uint netRevenue
     )
   {
-    uint fee = safeMul (_amount, data.transactionFee) / 10000; //fee is in basis points
+    uint fee = safeMul(_amount, data.transactionFee) / 10000; //fee is in basis points
     return (
-      fee_vault = safeMul(fee, admin.ratio) / 100,
-      fee_vaultDAO = safeSub(fee, fee_vaultDAO),
-      net_amount = safeSub(_amount, fee),
-      net_revenue = safeMul(net_amount, getNav()) / BASE
+      feeVault = safeMul(fee, admin.ratio) / 100,
+      feeVaultDao = safeSub(fee, feeVaultDao),
+      netAmount = safeSub(_amount, fee),
+      netRevenue = safeMul(netAmount, getNav()) / BASE
     );
   }
 }

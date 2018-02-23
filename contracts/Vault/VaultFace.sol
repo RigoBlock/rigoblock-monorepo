@@ -31,7 +31,7 @@ contract VaultFace {
 
   // METHODS
 
-  function() public payable {}
+  function() external payable {}
   function buyVault() public payable returns (bool success) {}
   function buyVaultOnBehalf(address _hodler) public payable returns (bool success) {}
   function sellVault(uint256 amount) public returns (bool success) {}
