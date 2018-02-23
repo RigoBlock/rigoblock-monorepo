@@ -18,6 +18,8 @@
 
 pragma solidity ^0.4.20;
 
+/// @title Drago Interface - Allows interaction with any Drago contract.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
 contract Drago {
 
   // CORE FUNCTIONS
@@ -100,7 +102,7 @@ contract Authority {
 
 /// @title Drago Registry Interface - Allows external intaction with Drago Registry.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract DragoRegistryFace {
+contract DragoRegistry {
 
   //EVENTS
 
@@ -135,7 +137,7 @@ contract DragoRegistryFace {
 
 /// @title Drago Eventful Interface contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract EventfulFace {
+contract DragoEventfulFace {
 
   // EVENTS
 
@@ -150,7 +152,7 @@ contract EventfulFace {
   event FinalizeDeal(address indexed drago, address indexed exchange, address indexed cfd, uint value, uint id);
   event DragoCreated(address indexed drago, address indexed group, address indexed owner, uint dragoID, string name, string symbol);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function buyDrago(address _who, address _targetDrago, uint _value, uint _amount) external returns (bool success) {}
   function sellDrago(address _who, address _targetDrago, uint _amount, uint _revenue) external returns(bool success) {}
@@ -172,25 +174,112 @@ contract EventfulFace {
 
 /// @title Drago Eventful contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract Eventful is EventfulFace {
+contract DragoEventful is DragoEventfulFace {
 
-  event BuyDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
-  event SellDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, string name, string symbol);
-  event NewNAV(address indexed drago, address indexed from, address indexed to, uint sellPrice, uint buyPrice);
-  event DepositExchange(address indexed drago, address indexed exchange, address indexed token, uint value, uint256 amount);
-  event WithdrawExchange(address indexed drago, address indexed exchange, address indexed token, uint value, uint256 amount);
-  event OrderExchange(address indexed drago, address indexed exchange, address indexed cfd, uint value, uint revenue);
-  event TradeExchange(address indexed drago, address indexed exchange, address tokenGet, address tokenGive, uint amountGet, uint amountGive, address get);
-  event CancelOrder(address indexed drago, address indexed exchange, address indexed cfd, uint value, uint id);
-  event DealFinalized(address indexed drago, address indexed exchange, address indexed cfd, uint value, uint id);
-  event DragoCreated(address indexed drago, address indexed group, address indexed owner, uint dragoID, string name, string symbol);
-  event NewFee(address indexed targetDrago, address indexed group, address indexed who, uint transactionFee);
-  event NewCollector(address indexed targetDrago, address indexed group, address indexed who, address feeCollector);
-
-  //double check whether we want registry to be a constant, or should be queried from authority
   address public AUTHORITY;
   address public REGISTRY;
   string constant public VERSION = 'DH0.4.1';
+
+  event BuyDrago(
+    address indexed drago,
+    address indexed from,
+    address indexed to,
+    uint256 amount,
+    uint256 revenue,
+    bytes32 name,
+    bytes32 symbol
+  );
+
+  event SellDrago(
+    address indexed drago,
+    address indexed from,
+    address indexed to,
+    uint256 amount,
+    uint256 revenue,
+    bytes32 name,
+    bytes32 symbol
+  );
+
+  event NewNAV(
+    address indexed drago,
+    address indexed from,
+    address indexed to,
+    uint sellPrice,
+    uint buyPrice
+  );
+
+  event DepositExchange(
+    address indexed drago,
+    address indexed exchange,
+    address indexed token,
+    uint value,
+    uint256 amount
+  );
+
+  event WithdrawExchange(
+    address indexed drago,
+    address indexed exchange,
+    address indexed token,
+    uint value,
+    uint256 amount
+  );
+
+  event OrderExchange(
+    address indexed drago,
+    address indexed exchange,
+    address indexed cfd,
+    uint value,
+    uint revenue
+  );
+
+  event TradeExchange(
+    address indexed drago,
+    address indexed exchange,
+    address tokenGet,
+    address tokenGive,
+    uint amountGet,
+    uint amountGive,
+    address get
+  );
+
+  event CancelOrder(
+    address indexed drago,
+    address indexed exchange,
+    address indexed cfd,
+    uint value,
+    uint id
+  );
+
+  event DealFinalized(
+    address indexed drago,
+    address indexed exchange,
+    address indexed cfd,
+    uint value,
+    uint id
+  );
+
+  event DragoCreated(
+    address indexed drago,
+    address indexed group,
+    address indexed owner,
+    uint dragoID,
+    string name,
+    string symbol
+  );
+
+  event NewFee(
+    address indexed targetDrago,
+    address indexed group,
+    address indexed who,
+    uint transactionFee
+  );
+
+  event NewCollector(
+    address indexed targetDrago,
+    address indexed group,
+    address indexed who,
+    address feeCollector
+  );
 
   modifier approved_factory_only(address _factory) {
     Authority auth = Authority(AUTHORITY);
@@ -218,24 +307,29 @@ contract Eventful is EventfulFace {
     if (auth.isWhitelistedAsset(_asset)) _;
   }
 
-  function Eventful(address _authority, address _registry) public {
+  function DragoEventful(address _authority, address _registry) public {
     AUTHORITY = _authority;
     REGISTRY = _registry;
   }
 
   // CORE FUNCTIONS
 
+  /// @dev Logs a Buy Drago event.
+  /// @param _who Address of who is buying
+  /// @param _targetDrago Address of the target drago
+  /// @param _value Value of the transaction in Ether
+  /// @param _amount Number of shares purchased
+  /// @return Bool the transaction executed successfully
   function buyDrago(
     address _who,
     address _targetDrago,
     uint _value,
     uint _amount)
-    external //public
+    external
     approved_drago_only(_targetDrago)
     returns (bool success)
   {
-    //if (_value < 100 finney) throw; //duplicate from before
-    require (msg.sender == _targetDrago); // if (msg.sender != _targetDrago) return;
+    require (msg.sender == _targetDrago);
     DragoRegistry registry = DragoRegistry(REGISTRY);
     bytes32 kname = registry.getNameFromAddress(_targetDrago);
     bytes32 ksymbol = registry.getSymbolFromAddress(_targetDrago);
@@ -244,19 +338,23 @@ contract Eventful is EventfulFace {
     return true;
   }
 
+  /// @dev Logs a Sell Drago event.
+  /// @param _who Address of who is selling
+  /// @param _targetDrago Address of the target drago
+  /// @param _amount Number of shares purchased
+  /// @param _revenue Value of the transaction in Ether
+  /// @return Bool the transaction executed successfully
   function sellDrago(
     address _who,
     address _targetDrago,
     uint _amount,
     uint _revenue)
-    external //public
+    external
     approved_drago_only(_targetDrago)
     returns(bool success)
   {
     require(_amount > 0);
-    //Drago drago = Drago(_targetDrago);
-    require(msg.sender == _targetDrago); //if (msg.sender != _targetDrago) return;
-    //if (drago.balanceOf(_who) < _amount) return; //this might be lifted as it's checked in the previous sell
+    require(msg.sender == _targetDrago);
     DragoRegistry registry = DragoRegistry(REGISTRY);
     bytes32 kname = registry.getNameFromAddress(_targetDrago);
     bytes32 ksymbol = registry.getSymbolFromAddress(_targetDrago);
@@ -265,6 +363,12 @@ contract Eventful is EventfulFace {
     return true;
   }
 
+  /// @dev Logs a Set Drago Price event
+  /// @param _who Address of the caller
+  /// @param _targetDrago Address of the target Drago
+  /// @param _sellPrice Value of the price of one share in wei
+  /// @param _buyPrice Value of the price of one share in wei
+  /// @return Bool the transaction executed successfully
   function setDragoPrice(
     address _who,
     address _targetDrago,
@@ -274,14 +378,19 @@ contract Eventful is EventfulFace {
     approved_drago_only(_targetDrago)
     returns(bool success)
   {
-    require(_sellPrice > 10 finney && _buyPrice > 10 finney);// if(_sellPrice <= 10 finney || _buyPrice <= 10 finney) return;
-    //Drago drago = Drago(_targetDrago);
+    require(_sellPrice > 10 finney && _buyPrice > 10 finney);
     require(msg.sender == _targetDrago);
-    //if( _who != drago.getOwner()) return; //this might be lifted as msg.sender has to be drago
     NewNAV(_targetDrago, msg.sender, _who, _sellPrice, _buyPrice);
     return true;
   }
 
+  /// @dev Logs a Drago Deposit To Exchange event
+  /// @param _who Address of the caller
+  /// @param _targetDrago Address of the target Drago
+  /// @param _exchange Address of the exchange
+  /// @param _token Address of the deposited token
+  /// @param _value Number of deposited tokens
+  /// @return Bool the transaction executed successfully
   function depositToExchange(
     address _who,
     address _targetDrago,
@@ -293,13 +402,18 @@ contract Eventful is EventfulFace {
     approved_exchange_only(_exchange)
     returns(bool success)
   {
-    //Drago drago = Drago(_targetDrago);
-    require (msg.sender == _targetDrago); // if (msg.sender != _targetDrago) return;
-    //if (_who != drago.getOwner()) return; //this might be useless
+    require (msg.sender == _targetDrago);
     DepositExchange(_targetDrago, _exchange, _token, _value, 0);
     return true;
   }
 
+  /// @dev Logs a Drago Withdraw From Exchange event
+  /// @param _who Address of the caller
+  /// @param _targetDrago Address of the target Drago
+  /// @param _exchange Address of the exchange
+  /// @param _token Address of the withdrawn token
+  /// @param _value Number of withdrawn tokens
+  /// @return Bool the transaction executed successfully
   function withdrawFromExchange(
     address _who,
     address _targetDrago,
@@ -311,10 +425,8 @@ contract Eventful is EventfulFace {
     approved_exchange_only(_exchange)
     returns(bool success)
   {
-    require (_targetDrago != 0); // if(_targetDrago == 0) throw;
-    //Drago drago = Drago(_targetDrago);
-    require (msg.sender == _targetDrago); // if (msg.sender != _targetDrago) return;
-    //if (_who != drago.getOwner()) return; //this might be useless
+    require (_targetDrago != 0);
+    require (msg.sender == _targetDrago);
     WithdrawExchange(_targetDrago, _exchange, _token, _value, 0);
     return true;
   }
@@ -333,10 +445,8 @@ contract Eventful is EventfulFace {
     approved_exchange_only(_exchange)
     returns(bool success)
   {
-    require (_targetDrago != 0); // if(_targetDrago == 0) throw;
-    //Drago drago = Drago(_targetDrago);
-    require (msg.sender == _targetDrago); // if (msg.sender != _targetDrago) return;
-    //if (_who != drago.getOwner()) return; //this might be useless
+    require (_targetDrago != 0);
+    require (msg.sender == _targetDrago);
     OrderExchange(_targetDrago, _exchange, _tokenGet, _amountGet, 0);
     return true;
   }
@@ -446,6 +556,11 @@ contract Eventful is EventfulFace {
     return true;
   }
 
+  /// @dev Logs a modification of the transaction fee event
+  /// @param _who Address of the caller
+  /// @param _targetDrago Address of the target Drago
+  /// @param _transaction fee Value of the transaction fee in basis points
+  /// @return Bool the transaction executed successfully
   function setTransactionFee(
     address _who,
     address _targetDrago,
@@ -455,13 +570,16 @@ contract Eventful is EventfulFace {
     approved_user_only(_who)
     returns(bool success)
   {
-    //Drago drago = Drago(_targetDrago);
-    require (msg.sender == _targetDrago); // if (msg.sender != _targetDrago) return;
-    //if (_who != drago.getOwner()) return;
+    require (msg.sender == _targetDrago);
     NewFee(_targetDrago, msg.sender, _who, _transactionFee);
     return true;
   }
 
+  /// @dev Logs when wizard changes fee collector address
+  /// @param _who Address of the caller
+  /// @param _targetDrago Address of the target Drago
+  /// @param _feeCollector Address of the new fee collector
+  /// @return Bool the transaction executed successfully
   function changeFeeCollector(
     address _who,
     address _targetDrago,
@@ -471,13 +589,20 @@ contract Eventful is EventfulFace {
     approved_user_only(_who)
     returns(bool success)
   {
-    //Drago drago = Drago(_targetDrago);
-    require (msg.sender == _targetDrago); // if (msg.sender != _targetDrago) return;
-    //if (_who != drago.getOwner()) return;
+    require (msg.sender == _targetDrago);
     NewCollector(_targetDrago, msg.sender, _who, _feeCollector);
     return true;
   }
 
+  /// @dev Logs a new Drago creation
+  /// @param _who Address of the caller
+  /// @param _dragoFactory Address of the factory
+  /// @param _targetDrago Address of the new Drago
+  /// @param _name
+  /// @param _symbol
+  /// @param dragoID Number of the new drago Id
+  /// @param _owner Address of the drago wizard
+  /// @return Bool the transaction executed successfully
   function createDrago(
     address _who,
     address _dragoFactory,
@@ -486,11 +611,11 @@ contract Eventful is EventfulFace {
     string _symbol,
     uint _dragoID,
     address _owner)
-    external //compute whether it is better than public for gas costs
+    external
     approved_factory_only(_dragoFactory)
     returns(bool success)
   {
-    require (msg.sender == _dragoFactory); // if (msg.sender != _dragoFactory) return;
+    require (msg.sender == _dragoFactory);
     DragoCreated(_newDrago, _dragoFactory, _owner, _dragoID, _name, _symbol);
     return true;
   }

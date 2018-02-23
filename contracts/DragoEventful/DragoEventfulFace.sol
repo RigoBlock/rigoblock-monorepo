@@ -20,7 +20,7 @@ pragma solidity ^0.4.20;
 
 /// @title Drago Eventful Interface contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract EventfulFace {
+contract DragoEventfulFace {
 
   // EVENTS
 
