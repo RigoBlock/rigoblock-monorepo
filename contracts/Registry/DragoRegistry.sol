@@ -54,7 +54,7 @@ contract Authority {
   event WhitelistedDrago(address indexed drago, bool approved);
   event NewEventful(address indexed eventful);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function setAuthority(address _authority, bool _isWhitelisted) public {}
   function setWhitelister(address _whitelister, bool _isWhitelisted) public {}
@@ -97,7 +97,7 @@ contract DragoRegistryFace {
   event Unregistered(string indexed symbol, uint indexed id);
   event MetaChanged(uint indexed id, bytes32 indexed key, bytes32 value);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function register(address _drago, string _name, string _symbol, uint _dragoID, address _owner) public payable returns (bool) {}
   function unregister(uint _id) public {}
@@ -203,7 +203,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     AUTHORITY = _authority;
   }
 
-  // CORE METHODS
+  // CORE CORE FUNCTIONS
 
   /// @dev Allows a factory which is an authority to register a pool
   /// @param _drago Address of the pool
@@ -292,7 +292,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     selfdestruct(msg.sender);
   }
 
-  // CONSTANT METHODS
+  // CONSTANT CORE FUNCTIONS
 
   /// @dev Provides the total number of registered pools
   /// @return Number of pools
@@ -467,7 +467,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     return fee;
   }
 
-  // INTERNAL METHODS
+  // INTERNAL CORE FUNCTIONS
 
   /// @dev Allows authority to register a pool for a certain group
   /// @param _drago Address of the pool

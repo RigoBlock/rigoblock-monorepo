@@ -36,7 +36,7 @@ contract AuthorityFace {
   event WhitelistedDrago(address indexed drago, bool approved);
   event NewEventful(address indexed eventful);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function setAuthority(address _authority, bool _isWhitelisted) public {}
   function setWhitelister(address _whitelister, bool _isWhitelisted) public {}

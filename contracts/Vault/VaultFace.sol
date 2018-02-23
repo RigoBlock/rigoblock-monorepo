@@ -29,7 +29,7 @@ contract VaultFace {
   event DepositCasper(uint amount, address indexed who, address indexed validation, address indexed withdrawal);
   event WithdrawCasper(uint deposit, address indexed who, address casper);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function() external payable {}
   function buyVault() public payable returns (bool success) {}

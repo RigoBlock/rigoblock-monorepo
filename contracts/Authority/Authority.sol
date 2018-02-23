@@ -58,7 +58,7 @@ contract AuthorityFace {
   event WhitelistedDrago(address indexed drago, bool approved);
   event NewEventful(address indexed eventful);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function setAuthority(address _authority, bool _isWhitelisted) public {}
   function setWhitelister(address _whitelister, bool _isWhitelisted) public {}
@@ -158,7 +158,7 @@ contract Authority is Owned, AuthorityFace {
   modifier only_whitelister { if (isWhitelister(msg.sender)) _; }
   modifier only_authority { if (isAuthority(msg.sender)) _; }
 
-  // CORE METHODS
+  // CORE CORE FUNCTIONS
 
   /// @dev Allows the owner to whitelist an authority
   /// @param _authority Address of the authority
@@ -327,7 +327,7 @@ contract Authority is Owned, AuthorityFace {
     NewCasper(blocks.casper);
   }
 
-  // CONSTANT PUBLIC METHODS
+  // CONSTANT PUBLIC CORE FUNCTIONS
 
   /// @dev Provides whether a user is whitelisted
   /// @param _target Address of the target user

@@ -94,7 +94,7 @@ contract VaultEventful {
   event WithdrawCasper(address indexed vault, address indexed validator, address indexed casper, uint validatorIndex);
   event VaultCreated(address indexed vault, address indexed group, address indexed owner, uint vaultID, string name, string symbol);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function buyVault(address _who, address _targetVault, uint _value, uint _amount) public returns (bool success) {}
   function sellVault(address _who, address _targetVault, uint _amount, uint _revenue) public returns(bool success) {}
@@ -125,7 +125,7 @@ contract Authority {
   event WhitelistedDrago(address indexed drago, bool approved);
   event NewEventful(address indexed eventful);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function setAuthority(address _authority, bool _isWhitelisted) public {}
   function setWhitelister(address _whitelister, bool _isWhitelisted) public {}
@@ -181,7 +181,7 @@ contract VaultFace {
   event DepositCasper(uint amount, address indexed who, address indexed validation, address indexed withdrawal);
   event WithdrawCasper(uint deposit, address indexed who, address casper);
 
-  // METHODS
+  // CORE FUNCTIONS
 
   function() external payable {}
   function buyVault() public payable returns (bool success) {}
@@ -332,7 +332,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     admin.ratio = 80;
   }
 
-  // CORE METHODS
+  // CORE CORE FUNCTIONS
 
   /// @dev Allows a casper contract to send Ether back
   function() external payable casper_contract_only {}
