@@ -89,7 +89,7 @@ contract VaultEventful {
   event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue);
   event NewFee(address indexed vault, address indexed from, address indexed to, uint fee);
   event NewCollector(address indexed vault, address indexed from, address indexed to, address collector);
-  event VaultDAO(address indexed vault, address indexed from, address indexed to, address vaultDAO);
+  event VaultDao(address indexed vault, address indexed from, address indexed to, address vaultDao);
   event DepositCasper(address indexed vault, address indexed validator, address indexed casper, address withdrawal, uint amount);
   event WithdrawCasper(address indexed vault, address indexed validator, address indexed casper, uint validatorIndex);
   event VaultCreated(address indexed vault, address indexed group, address indexed owner, uint vaultID, string name, string symbol);
@@ -101,7 +101,7 @@ contract VaultEventful {
   function changeRatio(address _who, address _targetVault, uint256 _ratio) public returns(bool success) {}
   function setTransactionFee(address _who, address _targetVault, uint _transactionFee) public returns(bool success) {}
   function changeFeeCollector(address _who, address _targetVault, address _feeCollector) public returns(bool success) {}
-  function changeVaultDAO(address _who, address _targetVault, address _vaultDAO) public returns(bool success) {}
+  function changeVaultDao(address _who, address _targetVault, address _vaultDao) public returns(bool success) {}
   function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) public returns(bool success) {}
   function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) public returns(bool success) {}
   function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultID, address _owner) public returns(bool success) {}
@@ -192,14 +192,14 @@ contract VaultFace {
   function changeRatio(uint256 _ratio) public {}
   function setTransactionFee(uint _transactionFee) public {}
   function changeFeeCollector(address _feeCollector) public {}
-  function changeVaultDAO(address _vaultDAO) public {}
+  function changeVaultDao(address _vaultDao) public {}
   function updatePrice() public {}
   function changeMinPeriod(uint32 _minPeriod) public {}
 
   function balanceOf(address _who) public view returns (uint) {}
   function getEventful() public view returns (address) {}
   function getData() public view returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
-  function getAdminData() public view returns (address feeCollector, address vaultDAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
+  function getAdminData() public view returns (address feeCollector, address vaultDao, uint ratio, uint transactionFee, uint32 minPeriod) {}
   function getOwner() public view returns (address) {}
   function totalSupply() public view returns (uint256) {}
   function getCasper() public view returns (address) {}
@@ -270,14 +270,14 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
   struct Admin {
     address authority;
-    address vaultDAO;
+    address vaultDao;
     address feeCollector;
     uint minOrder; // minimum stake to avoid dust clogging things up
     uint ratio; //ratio is 80%
   }
 
-  modifier only_vaultDAO {
-    require(msg.sender == admin.vaultDAO);
+  modifier only_vaultDao {
+    require(msg.sender == admin.vaultDao);
     _;
   }
 
@@ -326,7 +326,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     data.price = 1 ether; //initial price is 1 Ether
     owner = _owner;
     admin.authority = _authority;
-    admin.vaultDAO = msg.sender;
+    admin.vaultDao = msg.sender;
     admin.minOrder = 1 finney;
     admin.feeCollector = _owner;
     admin.ratio = 80;
@@ -375,9 +375,9 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     minimum_period_past
     returns (bool success)
   {
-    var(fee_vault, fee_vaultDAO, net_amount, net_revenue) = getSaleAmounts(_amount);
+    var(fee_vault, fee_vaultDao, net_amount, net_revenue) = getSaleAmounts(_amount);
     addSaleLog(_amount, net_revenue);
-    allocateTokens(msg.sender, _amount, fee_vault, fee_vaultDAO);
+    allocateTokens(msg.sender, _amount, fee_vault, fee_vaultDao);
     data.totalSupply = safeSub(data.totalSupply, net_amount);
     msg.sender.transfer(net_revenue);
     Sell(this, msg.sender, _amount, net_revenue);
@@ -420,7 +420,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
   /// @dev Allows vault dao/factory to change fee split ratio
   /// @param _ratio Number of ratio for wizard, from 0 to 100
-  function changeRatio(uint256 _ratio) public only_vaultDAO {
+  function changeRatio(uint256 _ratio) public only_vaultDao {
     Authority auth = Authority(admin.authority);
     VaultEventful events = VaultEventful(auth.getVaultEventful());
     require(events.changeRatio(msg.sender, this, _ratio));
@@ -447,12 +447,12 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   }
 
   /// @dev Allows vault dao/factory to upgrade its address
-  /// @param _vaultDAO Address of the new vault dao
-  function changeVaultDAO(address _vaultDAO) public only_vaultDAO {
+  /// @param _vaultDao Address of the new vault dao
+  function changeVaultDao(address _vaultDao) public only_vaultDao {
     Authority auth = Authority(admin.authority);
     VaultEventful events = VaultEventful(auth.getVaultEventful());
-    require(events.changeVaultDAO(msg.sender, this, _vaultDAO));
-    admin.vaultDAO = _vaultDAO;
+    require(events.changeVaultDao(msg.sender, this, _vaultDao));
+    admin.vaultDao = _vaultDao;
   }
 
   /// @dev Allows anyone to pay and update the price
@@ -464,7 +464,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
   /// @dev Allows vault dao/factory to change the minimum holding period
   /// @param _minPeriod Number of blocks
-  function changeMinPeriod(uint32 _minPeriod) public only_vaultDAO {
+  function changeMinPeriod(uint32 _minPeriod) public only_vaultDao {
     data.minPeriod = _minPeriod;
   }
 
@@ -519,7 +519,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     constant
     returns (
       address feeCollector,
-      address vaultDAO,
+      address vaultDao,
       uint ratio,
       uint transactionFee,
       uint32 minPeriod
@@ -527,7 +527,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   {
     return (
       admin.feeCollector,
-      admin.vaultDAO,
+      admin.vaultDao,
       admin.ratio,
       data.transactionFee,
       data.minPeriod
@@ -574,17 +574,17 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   /// @param _hodler Address of the buyer
   /// @param _amount Value of tokens issued
   /// @param _fee_vault Number of shares as fee
-  /// @param _fee_vaultDAO Number of shares as fee to dao
+  /// @param _fee_vaultDao Number of shares as fee to dao
   function allocateTokens(
     address _hodler,
     uint _amount,
     uint _fee_vault,
-    uint _fee_vaultDAO)
+    uint _fee_vaultDao)
     internal
   {
     accounts[_hodler].balance = safeAdd(accounts[_hodler].balance, _amount);
     accounts[admin.feeCollector].balance = safeAdd(accounts[admin.feeCollector].balance, _fee_vault);
-    accounts[admin.vaultDAO].balance = safeAdd(accounts[admin.vaultDAO].balance, _fee_vaultDAO);
+    accounts[admin.vaultDao].balance = safeAdd(accounts[admin.vaultDao].balance, _fee_vaultDao);
     accounts[_hodler].receipt.activation = uint32(now) + data.minPeriod;
   }
 
