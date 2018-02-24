@@ -1,16 +1,9 @@
 # Vault Factory Library
 
 The library is used by the factory to deploy Vaults.
-EACH FACTORY ON EACH NETWORK MAKES USE OF DIFFERENT AUTHROTIY
-CODE AND BYTECODE ARE DIFFERENT ON EACH NETWORK!!
+Internal function makes it part of factory and needs no separate deploy
 
 ## version 0.4.1
-
-```
-Mainnet:
-Ropsten:  
-Kovan:
-```
 
 Bytecode:
 ```

@@ -7,7 +7,7 @@ Name in parity registry: dragoregistry-v2
 ```
 Mainnet:
 Ropsten:
-Kovan:
+Kovan: 0xE1be57f169Ea34AF96f975D1caf2e30dd6674c42
 ```
 Bytecode
 ```

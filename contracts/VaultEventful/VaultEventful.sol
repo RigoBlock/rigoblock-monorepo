@@ -111,14 +111,49 @@ contract Authority {
   function getListsByGroups(string _group) public constant returns (address[]) {}
 }
 
+/// @title Drago Registry Interface - Allows external intaction with Drago Registry.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
+contract DragoRegistry {
+
+  //EVENTS
+
+  event Registered(string name, string symbol, uint id, address indexed drago, address indexed owner, address indexed group);
+  event Unregistered(string indexed symbol, uint indexed id);
+  event MetaChanged(uint indexed id, bytes32 indexed key, bytes32 value);
+
+  // CORE FUNCTIONS
+
+  function register(address _drago, string _name, string _symbol, uint _dragoId, address _owner) public payable returns (bool) {}
+  function unregister(uint _id) public {}
+  function setMeta(uint _id, bytes32 _key, bytes32 _value) public {}
+  function addGroup(address _group) public {}
+  function setFee(uint _fee) public {}
+  function upgrade(address _newAddress) public payable {} //payable as there is a transfer of value, otherwise opcode might throw an error
+  function setUpgraded(uint _version) public {}
+  function drain() public {}
+  function kill() public {}
+
+  function dragoCount() public constant returns (uint) {}
+  function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoId, address owner, address group) {}
+  function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoId, address owner, address group) {}
+  function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoId, address owner, address group) {}
+  function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoId, address owner, address group) {}
+  function fromNameSymbol(string _name, string _symbol) public constant returns (address) {}
+  function getNameFromAddress(address _pool) external constant returns (bytes32) {}
+  function getSymbolFromAddress(address _pool) external constant returns (bytes32) {}
+  function meta(uint _id, bytes32 _key) public constant returns (bytes32) {}
+  function getGroups() public constant returns (address[]) {}
+  function getFee() public constant returns (uint) {}
+}
+
 /// @title Vault Eventful Interface - Allows interaction with the Vault Eventful contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultEventfulFace {
 
   // EVENTS
 
-  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue);
-  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue);
+  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
+  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
   event NewFee(address indexed vault, address indexed from, address indexed to, uint fee);
   event NewCollector(address indexed vault, address indexed from, address indexed to, address collector);
   event VaultDao(address indexed vault, address indexed from, address indexed to, address vaultDao);
@@ -146,13 +181,16 @@ contract VaultEventful is VaultEventfulFace {
   string public constant VERSION = 'DH 0.4.1';
 
   address public AUTHORITY;
+  address public REGISTRY;
 
   event BuyVault(
     address indexed vault,
     address indexed from,
     address indexed to,
     uint256 amount,
-    uint256 revenue
+    uint256 revenue,
+    bytes32 name,
+    bytes32 symbol
   );
 
   event SellVault(
@@ -160,7 +198,9 @@ contract VaultEventful is VaultEventfulFace {
     address indexed from,
     address indexed to,
     uint256 amount,
-    uint256 revenue
+    uint256 revenue,
+    bytes32 name,
+    bytes32 symbol
   );
 
   event NewFee(
@@ -228,8 +268,9 @@ contract VaultEventful is VaultEventfulFace {
     if (auth.isWhitelistedUser(_user)) _;
   }
 
-  function VaultEventful(address _authority) public {
+  function VaultEventful(address _authority, address _registry) public {
     AUTHORITY = _authority;
+    REGISTRY = _registry;
   }
 
   // CORE FUNCTIONS
@@ -240,6 +281,7 @@ contract VaultEventful is VaultEventfulFace {
   /// @param _value Value of the transaction in Ether
   /// @param _amount Number of shares purchased
   /// @return Bool the transaction executed successfully
+  /// @notice transform name and symbol in .js with web3.toAscii(bytes32_date)
   function buyVault(
     address _who,
     address _targetVault,
@@ -250,7 +292,10 @@ contract VaultEventful is VaultEventfulFace {
     returns (bool success)
   {
 		require(msg.sender == _targetVault);
-		BuyVault(_targetVault, _who, msg.sender, _value, _amount);
+    DragoRegistry registry = DragoRegistry(REGISTRY);
+    bytes32 vaultName = registry.getNameFromAddress(_targetVault);
+    bytes32 vaultSymbol = registry.getSymbolFromAddress(_targetVault);
+    BuyVault(_targetVault, _who, msg.sender, _value, _amount, vaultName, vaultSymbol);
 		return true;
 	}
 
@@ -260,6 +305,7 @@ contract VaultEventful is VaultEventfulFace {
   /// @param _amount Number of shares purchased
   /// @param _revenue Value of the transaction in Ether
   /// @return Bool the transaction executed successfully
+  /// @notice transform name and symbol in .js with web3.toAscii(bytes32_date)
 	function sellVault(
     address _who,
     address _targetVault,
@@ -271,7 +317,10 @@ contract VaultEventful is VaultEventfulFace {
   {
 		require(_amount > 0);
     require(msg.sender == _targetVault);
-		SellVault(_targetVault, _who, msg.sender, _amount, _revenue);
+    DragoRegistry registry = DragoRegistry(REGISTRY);
+    bytes32 vaultName = registry.getNameFromAddress(_targetVault);
+    bytes32 vaultSymbol = registry.getSymbolFromAddress(_targetVault);
+    SellVault(_targetVault, _who, msg.sender, _amount, _revenue, vaultName, vaultSymbol);
 		return true;
 	}
 
@@ -396,7 +445,7 @@ contract VaultEventful is VaultEventfulFace {
     address _owner)
     external
     approved_factory_only(_vaultFactory)
-    approved_user_only(_who)
+    //approved_user_only(_who) //anyone can create a vault
     returns(bool success)
   {
     require(msg.sender == _vaultFactory);

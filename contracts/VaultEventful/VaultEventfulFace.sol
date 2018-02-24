@@ -24,8 +24,8 @@ contract VaultEventfulFace {
 
   // EVENTS
 
-  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue);
-  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue);
+  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
+  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
   event NewFee(address indexed vault, address indexed from, address indexed to, uint fee);
   event NewCollector(address indexed vault, address indexed from, address indexed to, address collector);
   event VaultDao(address indexed vault, address indexed from, address indexed to, address vaultDao);

@@ -7,7 +7,7 @@ Name in parity registry: distribution-v2
 ```
 Mainnet:
 Ropsten:
-Kovan:
+Kovan: 0x893C4D2fE9A306fC92A65E4c3eC21129F5eE0663
 ```
 Bytecode
 ```

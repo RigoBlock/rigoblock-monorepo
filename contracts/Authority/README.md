@@ -7,7 +7,7 @@ Name in parity registry: authority-v2
 ```
 Mainnet:
 Ropsten:
-Kovan:
+Kovan: 0xe43b097a34CAF029fBFe24EBE92781Bb8EC97E04
 ```
 Bytecode
 ```
