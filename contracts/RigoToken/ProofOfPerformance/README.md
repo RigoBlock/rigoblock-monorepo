@@ -1,5 +1,5 @@
 # Rigo Proof of Performance Contract
-a logger contract for dragos events.
+a contract for attributing pool wizard rewards.
 
 ## Proof of Performance version 0.4.1
 ```

@@ -1,5 +1,5 @@
 # Rigo Token Contract
-a logger contract for dragos events.
+the Rigo token.
 
 ## Rigo Token version 0.4.1
 ```
