@@ -36,7 +36,7 @@ contract Owned {
   }
 }
 
-/// @title Authority Interface - Allows external interaction with Authrity contract.
+/// @title Authority Interface - Allows interaction with the Authority contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract Authority {
 
@@ -44,15 +44,17 @@ contract Authority {
 
   event SetAuthority (address indexed authority);
   event SetWhitelister (address indexed whitelister);
-  event SetEventful(address indexed eventful);
   event WhitelistedUser(address indexed target, bool approved);
   event WhitelistedAsset(address indexed asset, bool approved);
   event WhitelistedExchange(address indexed exchange, bool approved);
   event WhitelistedRegistry(address indexed registry, bool approved);
   event WhitelistedFactory(address indexed factory, bool approved);
   event WhitelistedVault(address indexed vault, bool approved);
-  event WhitelistedDrago(address indexed drago, bool approved);
-  event NewEventful(address indexed eventful);
+  event WhitelistedDrago(address indexed drago, bool isWhitelisted);
+  event NewDragoEventful(address indexed dragoEventful);
+  event NewVaultEventful(address indexed exchangeEventful);
+  event NewExchangeEventful(address indexed vaultEventful);
+  event NewCasper(address indexed casper);
 
   // CORE FUNCTIONS
 
@@ -65,9 +67,10 @@ contract Authority {
   function whitelistVault(address _vault, bool _isWhitelisted) public {}
   function whitelistRegistry(address _registry, bool _isWhitelisted) public {}
   function whitelistFactory(address _factory, bool _isWhitelisted) public {}
-  function setEventful(address _eventful) public {}
+  function setDragoEventful(address _dragoEventful) public {}
   function setVaultEventful(address _vaultEventful) public {}
   function setExchangeEventful(address _exchangeEventful) public {}
+  function setExchangeAdapter(address _exchange, address _adapter) public {}
   function setCasper(address _casper) public {}
 
   function isWhitelistedUser(address _target) public constant returns (bool) {}
@@ -79,11 +82,12 @@ contract Authority {
   function isWhitelistedDrago(address _drago) public constant returns (bool) {}
   function isWhitelistedVault(address _vault) public constant returns (bool) {}
   function isWhitelistedFactory(address _factory) public constant returns (bool) {}
-  function getEventful() public constant returns (address) {}
+  function getDragoEventful() public constant returns (address) {}
   function getVaultEventful() public constant returns (address) {}
   function getExchangeEventful() public constant returns (address) {}
   function getCasper() public constant returns (address) {}
   function getOwner() public constant returns (address) {}
+  function getExchangeAdapter(address _exchange) public constant returns (address) {}
   function getListsByGroups(string _group) public constant returns (address[]) {}
 }
 

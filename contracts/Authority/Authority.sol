@@ -48,15 +48,17 @@ contract AuthorityFace {
 
   event SetAuthority (address indexed authority);
   event SetWhitelister (address indexed whitelister);
-  event SetEventful(address indexed eventful);
   event WhitelistedUser(address indexed target, bool approved);
   event WhitelistedAsset(address indexed asset, bool approved);
   event WhitelistedExchange(address indexed exchange, bool approved);
   event WhitelistedRegistry(address indexed registry, bool approved);
   event WhitelistedFactory(address indexed factory, bool approved);
   event WhitelistedVault(address indexed vault, bool approved);
-  event WhitelistedDrago(address indexed drago, bool approved);
-  event NewEventful(address indexed eventful);
+  event WhitelistedDrago(address indexed drago, bool isWhitelisted);
+  event NewDragoEventful(address indexed dragoEventful);
+  event NewVaultEventful(address indexed exchangeEventful);
+  event NewExchangeEventful(address indexed vaultEventful);
+  event NewCasper(address indexed casper);
 
   // CORE FUNCTIONS
 
@@ -69,9 +71,10 @@ contract AuthorityFace {
   function whitelistVault(address _vault, bool _isWhitelisted) public {}
   function whitelistRegistry(address _registry, bool _isWhitelisted) public {}
   function whitelistFactory(address _factory, bool _isWhitelisted) public {}
-  function setEventful(address _eventful) public {}
+  function setDragoEventful(address _dragoEventful) public {}
   function setVaultEventful(address _vaultEventful) public {}
   function setExchangeEventful(address _exchangeEventful) public {}
+  function setExchangeAdapter(address _exchange, address _adapter) public {}
   function setCasper(address _casper) public {}
 
   function isWhitelistedUser(address _target) public constant returns (bool) {}
@@ -83,11 +86,12 @@ contract AuthorityFace {
   function isWhitelistedDrago(address _drago) public constant returns (bool) {}
   function isWhitelistedVault(address _vault) public constant returns (bool) {}
   function isWhitelistedFactory(address _factory) public constant returns (bool) {}
-  function getEventful() public constant returns (address) {}
+  function getDragoEventful() public constant returns (address) {}
   function getVaultEventful() public constant returns (address) {}
   function getExchangeEventful() public constant returns (address) {}
   function getCasper() public constant returns (address) {}
   function getOwner() public constant returns (address) {}
+  function getExchangeAdapter(address _exchange) public constant returns (address) {}
   function getListsByGroups(string _group) public constant returns (address[]) {}
 }
 
@@ -99,6 +103,7 @@ contract Authority is Owned, AuthorityFace {
   Type types;
 
   mapping (address => Account) accounts;
+  mapping (address => address) adapter;
 
   struct List {
     address target;
@@ -129,7 +134,7 @@ contract Authority is Owned, AuthorityFace {
   }
 
   struct BuildingBlocks {
-    address eventful;
+    address dragoEventful;
     address vaultEventful;
     address exchangeEventful;
     address casper;
@@ -142,9 +147,11 @@ contract Authority is Owned, AuthorityFace {
   event WhitelistedUser(address indexed target, bool approved);
   event WhitelistedAsset(address indexed asset, bool approved);
   event WhitelistedExchange(address indexed exchange, bool approved);
-  event WhitelistedDrago(address indexed drago, bool isWhitelisted);
   event WhitelistedRegistry(address indexed registry, bool approved);
-  event NewEventful(address indexed eventful);
+  event WhitelistedFactory(address indexed factory, bool approved);
+  event WhitelistedVault(address indexed vault, bool approved);
+  event WhitelistedDrago(address indexed drago, bool isWhitelisted);
+  event NewDragoEventful(address indexed dragoEventful);
   event NewVaultEventful(address indexed exchangeEventful);
   event NewExchangeEventful(address indexed vaultEventful);
   event NewCasper(address indexed casper);
@@ -256,7 +263,7 @@ contract Authority is Owned, AuthorityFace {
     accounts[_vault].authorized = _isWhitelisted;
     accounts[_vault].groups[_isWhitelisted].vault = _isWhitelisted;
     types.list.push(List(_vault));
-    WhitelistedDrago(_vault, _isWhitelisted);
+    WhitelistedVault(_vault, _isWhitelisted);
   }
 
   /// @dev Allows an admin to whitelist a registry
@@ -287,14 +294,14 @@ contract Authority is Owned, AuthorityFace {
     WhitelistedFactory(_factory, _isWhitelisted);
   }
 
-  /// @dev Allows the owner to set the eventful
-  /// @param _eventful Address of the logs contract
-  function setEventful(address _eventful)
+  /// @dev Allows the owner to set the drago eventful
+  /// @param _dragoEventful Address of the logs contract
+  function setDragoEventful(address _dragoEventful)
     public
     only_owner
   {
-    blocks.eventful = _eventful;
-    NewEventful(blocks.eventful);
+    blocks.dragoEventful = _dragoEventful;
+    NewDragoEventful(blocks.dragoEventful);
   }
 
   /// @dev Allows the owner to set the vault eventful
@@ -317,6 +324,16 @@ contract Authority is Owned, AuthorityFace {
     NewExchangeEventful(blocks.exchangeEventful);
   }
 
+  /// @dev Allows the owner to associate an exchange to its adapter
+  /// @param _exchange Address of the exchange
+  /// @param _adapter Address of the adapter
+  function setExchangeAdapter(address _exchange, address _adapter)
+    public
+    only_owner
+  {
+    adapter[_exchange] = _adapter;
+  }
+
   /// @dev Allows the owner to set the casper contract
   /// @param _casper Address of the casper contract
   function setCasper(address _casper)
@@ -327,7 +344,7 @@ contract Authority is Owned, AuthorityFace {
     NewCasper(blocks.casper);
   }
 
-  // CONSTANT PUBLIC CORE FUNCTIONS
+  // CONSTANT PUBLIC FUNCTIONS
 
   /// @dev Provides whether a user is whitelisted
   /// @param _target Address of the target user
@@ -430,8 +447,8 @@ contract Authority is Owned, AuthorityFace {
 
   /// @dev Provides the address of the drago logs contract
   /// @return Address of the drago logs contract
-  function getEventful() public constant returns (address) {
-    return blocks.eventful;
+  function getDragoEventful() public constant returns (address) {
+    return blocks.dragoEventful;
   }
 
   /// @dev Provides the address of the vault logs contract
@@ -444,6 +461,17 @@ contract Authority is Owned, AuthorityFace {
   /// @return Address of the exchange logs contract
   function getExchangeEventful() public constant returns (address) {
     return blocks.exchangeEventful;
+  }
+
+  /// @dev Provides the address of the exchange adapter
+  /// @param _exchange Address of the exchange
+  /// @return Address of the adapter
+  function getExchangeAdapter(address _exchange)
+    public
+    constant
+    returns (address)
+  {
+    return adapter[_exchange];
   }
 
   /// @dev Provides the address of the casper contract

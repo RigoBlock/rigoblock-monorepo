@@ -64,15 +64,17 @@ contract Authority {
 
   event SetAuthority (address indexed authority);
   event SetWhitelister (address indexed whitelister);
-  event SetEventful(address indexed eventful);
   event WhitelistedUser(address indexed target, bool approved);
   event WhitelistedAsset(address indexed asset, bool approved);
   event WhitelistedExchange(address indexed exchange, bool approved);
   event WhitelistedRegistry(address indexed registry, bool approved);
   event WhitelistedFactory(address indexed factory, bool approved);
   event WhitelistedVault(address indexed vault, bool approved);
-  event WhitelistedDrago(address indexed drago, bool approved);
-  event NewEventful(address indexed eventful);
+  event WhitelistedDrago(address indexed drago, bool isWhitelisted);
+  event NewDragoEventful(address indexed dragoEventful);
+  event NewVaultEventful(address indexed exchangeEventful);
+  event NewExchangeEventful(address indexed vaultEventful);
+  event NewCasper(address indexed casper);
 
   // CORE FUNCTIONS
 
@@ -85,9 +87,10 @@ contract Authority {
   function whitelistVault(address _vault, bool _isWhitelisted) public {}
   function whitelistRegistry(address _registry, bool _isWhitelisted) public {}
   function whitelistFactory(address _factory, bool _isWhitelisted) public {}
-  function setEventful(address _eventful) public {}
+  function setDragoEventful(address _dragoEventful) public {}
   function setVaultEventful(address _vaultEventful) public {}
   function setExchangeEventful(address _exchangeEventful) public {}
+  function setExchangeAdapter(address _exchange, address _adapter) public {}
   function setCasper(address _casper) public {}
 
   function isWhitelistedUser(address _target) public constant returns (bool) {}
@@ -99,14 +102,17 @@ contract Authority {
   function isWhitelistedDrago(address _drago) public constant returns (bool) {}
   function isWhitelistedVault(address _vault) public constant returns (bool) {}
   function isWhitelistedFactory(address _factory) public constant returns (bool) {}
-  function getEventful() public constant returns (address) {}
+  function getDragoEventful() public constant returns (address) {}
   function getVaultEventful() public constant returns (address) {}
   function getExchangeEventful() public constant returns (address) {}
   function getCasper() public constant returns (address) {}
   function getOwner() public constant returns (address) {}
+  function getExchangeAdapter(address _exchange) public constant returns (address) {}
   function getListsByGroups(string _group) public constant returns (address[]) {}
 }
 
+/// @title Vault Eventful Interface - Allows interaction with the Vault Eventful contract.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultEventfulFace {
 
   // EVENTS
@@ -133,10 +139,13 @@ contract VaultEventfulFace {
   function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultId, address _owner) returns(bool success) {}
 }
 
+/// @title Vault Eventful - Logs events for all vaults.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultEventful is VaultEventfulFace {
 
+  string public constant VERSION = 'DH 0.4.1';
+
   address public AUTHORITY;
-  string constant public version = 'DH 0.4.1';
 
   event BuyVault(
     address indexed vault,
@@ -223,6 +232,14 @@ contract VaultEventful is VaultEventfulFace {
     AUTHORITY = _authority;
   }
 
+  // CORE FUNCTIONS
+
+  /// @dev Logs a Buy Vault event.
+  /// @param _who Address of who is buying
+  /// @param _targetVault Address of the target vault
+  /// @param _value Value of the transaction in Ether
+  /// @param _amount Number of shares purchased
+  /// @return Bool the transaction executed successfully
   function buyVault(
     address _who,
     address _targetVault,
@@ -236,6 +253,12 @@ contract VaultEventful is VaultEventfulFace {
 		return true;
 	}
 
+  /// @dev Logs a Sell Vault event.
+  /// @param _who Address of who is selling
+  /// @param _targetDrago Address of the target vault
+  /// @param _amount Number of shares purchased
+  /// @param _revenue Value of the transaction in Ether
+  /// @return Bool the transaction executed successfully
 	function sellVault(
     address _who,
     address _targetVault,
@@ -250,6 +273,11 @@ contract VaultEventful is VaultEventfulFace {
 		return true;
 	}
 
+  /// @dev Logs a modification of the transaction fee event
+  /// @param _who Address of the caller
+  /// @param _targetVault Address of the target Vault
+  /// @param _transactionFee Value of the transaction fee in basis points
+  /// @return Bool the transaction executed successfully
 	function setTransactionFee(
     address _who,
     address _targetVault,
@@ -263,6 +291,11 @@ contract VaultEventful is VaultEventfulFace {
 		return true;
 	}
 
+  /// @dev Logs when wizard changes fee collector address
+  /// @param _who Address of the caller
+  /// @param _targetVault Address of the target Vault
+  /// @param _feeCollector Address of the new fee collector
+  /// @return Bool the transaction executed successfully
 	function changeFeeCollector(
     address _who,
     address _targetVault,
@@ -276,6 +309,11 @@ contract VaultEventful is VaultEventfulFace {
 		return true;
 	}
 
+  /// @dev Logs a change in the vault dao of an approved vault
+  /// @param _who Address of the caller
+  /// @param _dragoVault Address of the vault
+  /// @param _vaultDao Address of the new vault dao
+  /// @return Bool the transaction executed successfully
 	function changeVaultDao(
     address _who,
     address _targetVault,
@@ -289,6 +327,13 @@ contract VaultEventful is VaultEventfulFace {
     return true;
   }
 
+  /// @dev Logs a vault deposit to the casper contract
+  /// @param _who Address of the caller
+  /// @param _targetVault Address of the vault
+  /// @param _casper Address of the casper contract
+  /// @param _validation Address of the PoS miner
+  /// @param _withdrawal Address of casper withdrawal, must be the vault
+  /// @return Bool the transaction executed successfully
   function depositToCasper(
     address _who,
     address _targetVault,
@@ -305,6 +350,12 @@ contract VaultEventful is VaultEventfulFace {
     return true;
   }
 
+  /// @dev Logs a vault withdrawal from the casper contract
+  /// @param _who Address of the caller
+  /// @param _targetVault Address of the vault
+  /// @param _casper Address of the casper contract
+  /// @param _validatorIndex Number of the validator in the casper contract
+  /// @return Bool the transaction executed successfully
   function withdrawFromCasper(
     address _who,
     address _targetVault,
@@ -319,6 +370,15 @@ contract VaultEventful is VaultEventfulFace {
     return true;
   }
 
+  /// @dev Logs a new Vault creation by factory
+  /// @param _who Address of the caller
+  /// @param _vaultFactory Address of the factory
+  /// @param _newVault Address of the new vault
+  /// @param _name String of the name of the new vault
+  /// @param _symbol String of the symbol of the new vault
+  /// @param _vaultId Number of the new vault Id
+  /// @param _owner Address of the vault wizard
+  /// @return Bool the transaction executed successfully
   function createVault(
     address _who,
     address _vaultFactory,
