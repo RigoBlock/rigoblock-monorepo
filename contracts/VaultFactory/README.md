@@ -9,7 +9,7 @@ Name in parity registry: vaultfactory-v2
 ```
 Mainnet
 Ropsten:
-Kovan:
+Kovan: 0xE10538024a54F288A22Ef8696D7e00e1221cF238
 ```
 Bytecode:
 ```
