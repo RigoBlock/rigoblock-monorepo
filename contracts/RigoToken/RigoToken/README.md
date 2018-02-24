@@ -1,6 +1,8 @@
 # Rigo Token Contract
 the Rigo token.
 
+Name in parity registry:
+
 ## Rigo Token version 0.4.1
 ```
 Mainnet:

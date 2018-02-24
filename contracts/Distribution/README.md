@@ -1,6 +1,8 @@
 # Distribution Contract
 example of how distributors can collect fees.
 
+Name in parity registry: distribution-v2
+
 ## Distribution version 0.4.1
 ```
 Mainnet:

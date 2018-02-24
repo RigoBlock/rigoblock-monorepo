@@ -1,6 +1,8 @@
 # Authority Contract
 a contract for managing permissions.
 
+Name in parity registry: authority-v2
+
 ## Authority version 0.4.1
 ```
 Mainnet:

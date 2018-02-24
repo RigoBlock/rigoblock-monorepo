@@ -1,6 +1,8 @@
 # Rigo Proof of Performance Contract
 a contract for attributing pool wizard rewards.
 
+Name in parity registry: pop-v2
+
 ## Proof of Performance version 0.4.1
 ```
 Mainnet:

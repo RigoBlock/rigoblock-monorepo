@@ -4,6 +4,8 @@ Deploy Vaults like a master!.
 
 Each new Factory has a different bytecode (library address is forced manually input)
 
+Name in parity registry: vaultfactory-v2
+
 Factory Library at:
 ```
 Mainnet:

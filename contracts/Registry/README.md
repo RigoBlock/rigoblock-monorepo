@@ -1,6 +1,8 @@
 # Global Registry Contract
 a Universal Contract for registering pools.
 
+Name in parity registry: dragoregistry-v2
+
 ## Registry version 0.4.1
 ```
 Mainnet:

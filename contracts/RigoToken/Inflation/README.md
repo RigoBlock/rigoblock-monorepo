@@ -1,6 +1,8 @@
 # Inflation Contract
 an inflation contract for the Rigo token.
 
+Name in parity registry: inflation-v2
+
 ## Inflation version 0.4.1
 ```
 Mainnet:
