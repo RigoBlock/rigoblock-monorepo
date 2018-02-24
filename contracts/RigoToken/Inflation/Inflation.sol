@@ -259,7 +259,6 @@ contract Inflation is SafeMath {
     address _proofOfPerformance,
     address _authority)
     public
-    only_rigoblock_dao
   {
     RIGOTOKENADDRESS = _rigoTokenAddress;
     rigoblockDao = msg.sender;

@@ -35,13 +35,13 @@ contract VaultEventfulFace {
 
   // CORE FUNCTIONS
 
-  function buyVault(address _who, address _targetVault, uint _value, uint _amount) returns (bool success) {}
-  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue) returns(bool success) {}
-  function changeRatio(address _who, address _targetVault, uint256 _ratio) returns(bool success) {}
-  function setTransactionFee(address _who, address _targetVault, uint _transactionFee) returns(bool success) {}
-  function changeFeeCollector(address _who, address _targetVault, address _feeCollector) returns(bool success) {}
-  function changeVaultDao(address _who, address _targetVault, address _vaultDao) returns(bool success) {}
-  function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) returns(bool success) {}
-  function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) returns(bool success) {}
-  function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultId, address _owner) returns(bool success) {}
+  function buyVault(address _who, address _targetVault, uint _value, uint _amount) external returns (bool success) {}
+  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue) external returns(bool success) {}
+  function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success) {}
+  function setTransactionFee(address _who, address _targetVault, uint _transactionFee) external returns(bool success) {}
+  function changeFeeCollector(address _who, address _targetVault, address _feeCollector) external returns(bool success) {}
+  function changeVaultDao(address _who, address _targetVault, address _vaultDao) external returns(bool success) {}
+  function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) external returns(bool success) {}
+  function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) external returns(bool success) {}
+  function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultId, address _owner) external returns(bool success) {}
 }

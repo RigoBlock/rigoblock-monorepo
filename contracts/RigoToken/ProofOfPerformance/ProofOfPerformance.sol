@@ -303,7 +303,8 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
   {
     DragoRegistry registry = DragoRegistry(dragoRegistry);
     var(a,b,c,d,e,f) = registry.fromId(_ofPool);
-    return (a,f);
+    pool = a;
+    group = f;
   }
 
   /// @dev Returns the price a pool from its id
@@ -320,8 +321,8 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     var (fund,group) = addressFromId(_ofPool);
     address poolAddress = fund;
     Pool pool = Pool(poolAddress);
-    var(a,b,poolPrice,d) = pool.getData();
-    poolPrice = poolPrice;
+    var(a,b,c,d) = pool.getData();
+    poolPrice = c;
     totalTokens = pool.totalSupply();
   }
 
@@ -347,8 +348,8 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
       var (fund,group) = addressFromId(i);
       pools[i] = fund;
       Pool pool = Pool(fund);
-      var(a,b,poolPrice,d) = pool.getData();
-      poolPrices[i] = poolPrice;
+      var(a,b,c,d) = pool.getData();
+      poolPrices[i] = c;
       totalTokens[i] = pool.totalSupply();
     }
   }
@@ -397,7 +398,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
   /// @return Value of the reward factor
   function getEpochReward(uint _ofPool) public constant returns (uint) {
     Inflation inflate = Inflation(inflation);
-    var (a,group) = addressFromId(_ofPool);
+    var (fund,group) = addressFromId(_ofPool);
     return inflate.getInflationFactor(group);
   }
 
@@ -405,7 +406,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
   /// @param _ofPool Id of the pool
   /// @return Value of the ratio from 1 to 100
   function getRatio(uint _ofPool) public constant returns (uint) {
-    var (a,group) = addressFromId(_ofPool);
+    var (fund,group) = addressFromId(_ofPool);
     return groups[group].rewardRatio;
   }
 

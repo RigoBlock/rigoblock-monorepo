@@ -109,7 +109,7 @@ contract DragoRegistryFace {
   function addGroup(address _group) public {}
   function setFee(uint _fee) public {}
   function upgrade(address _newAddress) public payable {} //payable as there is a transfer of value, otherwise opcode might throw an error
-  function setUpgraded(uint _version) public {}
+  function setUpgraded(uint _version) external {}
   function drain() public {}
   function kill() public {}
 

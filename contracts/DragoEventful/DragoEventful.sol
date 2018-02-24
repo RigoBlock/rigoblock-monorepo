@@ -16,6 +16,8 @@
 
 */
 
+// STILL WORK IN PROGRESS
+
 pragma solidity ^0.4.20;
 
 /// @title Drago Interface - Allows interaction with any Drago contract.
@@ -51,7 +53,7 @@ contract Drago {
 
 /// @title Authority Interface - Allows interaction with the Authority contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract AuthorityFace {
+contract Authority {
 
   // EVENTS
 

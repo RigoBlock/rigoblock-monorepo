@@ -128,15 +128,15 @@ contract VaultEventfulFace {
 
   // CORE FUNCTIONS
 
-  function buyVault(address _who, address _targetVault, uint _value, uint _amount) returns (bool success) {}
-  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue) returns(bool success) {}
-  function changeRatio(address _who, address _targetVault, uint256 _ratio) returns(bool success) {}
-  function setTransactionFee(address _who, address _targetVault, uint _transactionFee) returns(bool success) {}
-  function changeFeeCollector(address _who, address _targetVault, address _feeCollector) returns(bool success) {}
-  function changeVaultDao(address _who, address _targetVault, address _vaultDao) returns(bool success) {}
-  function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) returns(bool success) {}
-  function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) returns(bool success) {}
-  function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultId, address _owner) returns(bool success) {}
+  function buyVault(address _who, address _targetVault, uint _value, uint _amount) external returns (bool success) {}
+  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue) external returns(bool success) {}
+  function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success) {}
+  function setTransactionFee(address _who, address _targetVault, uint _transactionFee) external returns(bool success) {}
+  function changeFeeCollector(address _who, address _targetVault, address _feeCollector) external returns(bool success) {}
+  function changeVaultDao(address _who, address _targetVault, address _vaultDao) external returns(bool success) {}
+  function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) external returns(bool success) {}
+  function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) external returns(bool success) {}
+  function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultId, address _owner) external returns(bool success) {}
 }
 
 /// @title Vault Eventful - Logs events for all vaults.
@@ -228,7 +228,7 @@ contract VaultEventful is VaultEventfulFace {
     if (auth.isWhitelistedUser(_user)) _;
   }
 
-  function VaultEventful(address _authority) {
+  function VaultEventful(address _authority) public {
     AUTHORITY = _authority;
   }
 
@@ -245,6 +245,7 @@ contract VaultEventful is VaultEventfulFace {
     address _targetVault,
     uint _value,
     uint _amount)
+    external
     approved_vault_only(_targetVault)
     returns (bool success)
   {
@@ -255,7 +256,7 @@ contract VaultEventful is VaultEventfulFace {
 
   /// @dev Logs a Sell Vault event.
   /// @param _who Address of who is selling
-  /// @param _targetDrago Address of the target vault
+  /// @param _targetVault Address of the target vault
   /// @param _amount Number of shares purchased
   /// @param _revenue Value of the transaction in Ether
   /// @return Bool the transaction executed successfully
@@ -264,6 +265,7 @@ contract VaultEventful is VaultEventfulFace {
     address _targetVault,
     uint _amount,
     uint _revenue)
+    external
     approved_vault_only(_targetVault)
     returns(bool success)
   {
@@ -282,6 +284,7 @@ contract VaultEventful is VaultEventfulFace {
     address _who,
     address _targetVault,
     uint _transactionFee)
+    external
     approved_vault_only(_targetVault)
     approved_user_only(_who)
     returns(bool success)
@@ -300,6 +303,7 @@ contract VaultEventful is VaultEventfulFace {
     address _who,
     address _targetVault,
     address _feeCollector)
+    external
     approved_vault_only(_targetVault)
     approved_user_only(_who)
     returns(bool success)
@@ -311,13 +315,14 @@ contract VaultEventful is VaultEventfulFace {
 
   /// @dev Logs a change in the vault dao of an approved vault
   /// @param _who Address of the caller
-  /// @param _dragoVault Address of the vault
+  /// @param _targetVault Address of the vault
   /// @param _vaultDao Address of the new vault dao
   /// @return Bool the transaction executed successfully
 	function changeVaultDao(
     address _who,
     address _targetVault,
     address _vaultDao)
+    external
     approved_vault_only(_targetVault)
     approved_user_only(_who)
     returns(bool success)
@@ -341,6 +346,7 @@ contract VaultEventful is VaultEventfulFace {
     address _validation,
     address _withdrawal,
     uint _amount)
+    external
     approved_vault_only(_targetVault)
     approved_user_only(_who)
     returns(bool success)
@@ -361,6 +367,7 @@ contract VaultEventful is VaultEventfulFace {
     address _targetVault,
     address _casper,
     uint _validatorIndex)
+    external
     approved_vault_only(_targetVault)
     approved_user_only(_who)
     returns(bool success)
@@ -387,7 +394,9 @@ contract VaultEventful is VaultEventfulFace {
     string _symbol,
     uint _vaultId,
     address _owner)
+    external
     approved_factory_only(_vaultFactory)
+    approved_user_only(_who)
     returns(bool success)
   {
     require(msg.sender == _vaultFactory);

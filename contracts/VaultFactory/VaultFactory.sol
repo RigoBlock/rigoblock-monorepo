@@ -34,9 +34,8 @@ library VaultFactoryLibrary {
     address newAddress;
   }
 
-  /// @dev Address of authority contract is different on each network
-  modifier whitelisted_factory {
-    Authority auth = Authority(0x0C9579829547c95E35535FE3C57cf42F90a98785);
+  modifier whitelisted_factory(address _authority) {
+    Authority auth = Authority(_authority);
     if (auth.isWhitelistedFactory(this)) _;
   }
 
@@ -55,7 +54,7 @@ library VaultFactoryLibrary {
     uint _vaultId,
     address _authority)
     public
-    whitelisted_factory
+    whitelisted_factory(_authority)
     returns (bool success)
   {
     Vault vault = new Vault(_name, _symbol, _vaultId, _owner, _authority);

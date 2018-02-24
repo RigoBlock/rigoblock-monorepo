@@ -89,7 +89,7 @@ contract DistributionFace {
 
   event Subscription(address indexed buyer, address indexed distributor, uint amount);
 
-  function subscribe(address _pool, address _distributor, address _buyer) {}
+  function subscribe(address _pool, address _distributor, address _buyer) public payable {}
   function setFee(uint _fee, address _distributor) public {}
   function getFee(address _distributor) public constant returns (uint) {}
 }
@@ -116,7 +116,10 @@ contract Distribution is SafeMath {
     _;
   }
 
-  function subscribe(address _pool, address _distributor, address _buyer) {
+  function subscribe(address _pool, address _distributor, address _buyer)
+    public
+    payable
+  {
     Vault vault = Vault(_pool);
     vault.buyVaultOnBehalf(_buyer);
     uint feeAmount = safeDiv(safeMul(msg.value, distributor[_distributor].fee), 10000); //fee is in basis points
