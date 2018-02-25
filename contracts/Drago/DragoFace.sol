@@ -1,0 +1,83 @@
+/*
+
+ Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+*/
+
+pragma solidity ^0.4.20;
+
+/// @title Drago Interface - Allows interaction with the Drago contract.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
+contract DragoFace {
+
+  // CORE FUNCTIONS
+
+  function buyDrago() public payable returns (bool success) {}
+  function sellDrago(uint _amount) public returns (bool success) {}
+  function setPrices(uint _newSellPrice, uint _newBuyPrice)  public {}
+  function changeMinPeriod(uint32 _minPeriod) public {}
+  function changeRatio(uint _ratio) public {}
+  function setTransactionFee(uint _transactionFee) public {}
+  function changeFeeCollector(address _feeCollector) public {}
+  function changeDragoDao(address _dragoDao) public {}
+  function depositToExchange(address _exchange, address _token, uint _value) public {}
+  function withdrawFromExchange(address _exchange, address _token, uint _value) public {}
+
+  function placeOrderExchange(
+    address _exchange,
+    address[5] orderAddresses,
+    uint[6] orderValues,
+    uint fillTakerTokenAmount,
+    bool stableOrSufficient,
+    uint8 v,
+    bytes32[2] signature)
+    public {}
+
+  function placeTradeExchange(
+    address _exchange,
+    address[5] orderAddresses,
+    uint[6] orderValues,
+    uint fillTakerTokenAmount,
+    bool stableOrSufficient,
+    uint8 v,
+    bytes32[2] signature)
+    public {}
+
+  function cancelOrderExchange(
+    address _exchange,
+    address[5] orderAddresses,
+    uint[6] orderValues,
+    uint cancelTakerTokenAmount)
+    public {}
+
+  function finalizeDeal(
+    address _exchange,
+    address[5] orderAddresses,
+    uint[6] orderValues,
+    uint cancelTakerTokenAmount)
+    public {}
+
+  function setOwner(address _new) public {}
+  function() external payable {}
+
+  // PUBLIC CONSTANT FUNCTIONS
+
+  function balanceOf(address _who) public constant returns (uint) {}
+  function getDragoEventful() public constant returns (address) {}
+  function getData() public constant returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
+  function getAdminData() public constant returns (address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
+  function getOwner() public constant returns (address) {}
+  function totalSupply() public constant returns (uint256) {}
+}

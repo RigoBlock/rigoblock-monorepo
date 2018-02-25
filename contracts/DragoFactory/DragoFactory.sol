@@ -19,17 +19,17 @@
 pragma solidity ^0.4.20;
 
   /*
-  * import the vault contract code first
+  * import the drago contract code first
   */
 
-/// @title Vault Factory library - Reduces size of vault factory.
+/// @title Drago Factory library - Reduces size of drago factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-library VaultFactoryLibrary {
+library DragoFactoryLibrary {
 
-  struct NewVault {
+  struct NewDrago {
     string name;
     string symbol;
-    uint256 vaultId;
+    uint256 dragoId;
     address owner;
     address newAddress;
   }
@@ -39,29 +39,29 @@ library VaultFactoryLibrary {
     if (auth.isWhitelistedFactory(this)) _;
   }
 
-  /// @dev Allows an approved factory to create new vaults
+  /// @dev Allows an approved factory to create new dragos
   /// @param _name String of the name
   /// @param _symbol String of the symbol
   /// @param _owner Address of the owner
-  /// @param _vaultId Number of Id of the vault from the registry
+  /// @param _dragoId Number of Id of the drago from the registry
   /// @param _authority Address of the respective authority
   /// @return Bool the function executed
-  function createVault(
-    NewVault storage self,
+  function createDrago(
+    NewDrago storage self,
     string _name,
     string _symbol,
     address _owner,
-    uint _vaultId,
+    uint _dragoId,
     address _authority)
     internal
     whitelisted_factory(_authority)
     returns (bool success)
   {
-    Vault vault = new Vault(_name, _symbol, _vaultId, _owner, _authority);
+    Drago drago = new Drago(_name, _symbol, _dragoId, _owner, _authority);
     self.name = _name;
     self.symbol = _symbol;
-    self.vaultId = _vaultId;
-    self.newAddress = address(vault);
+    self.dragoId = _dragoId;
+    self.newAddress = address(drago);
     self.owner = _owner;
     return true;
   }
@@ -102,35 +102,36 @@ contract DragoRegistry {
   function getFee() public constant returns (uint) {}
 }
 
-
-/// @title Vault Factory Interface - Allows external intaction with Vault Factory.
+/// @title Drago Factory Interface - Allows external interaction with Drago Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract VaultFactoryFace {
+contract DragoFactoryFace {
 
-  event VaultCreated(string name, string symbol, address indexed vault, address indexed owner, uint vaultId);
+  event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint dragoId);
 
-  function createVault(string _name, string _symbol) public returns (bool success) {}
-  function setTargetVaultDao(address _targetVault, address _vaultDao) public {}
-  function changeVaultDao(address _newVaultDao) public {}
+  function createDrago(string _name, string _symbol) public returns (bool success) {}
+  function setTargetDragoDao(address _targetDrago, address _dragoDao) public {}
+  function changeDragoDao(address _newDragoDao) public {}
   function setRegistry(address _newRegistry) public {}
-  function setBeneficiary(address _vaultDao) public {}
+  function setBeneficiary(address _dragoDao) public {}
   function setFee(uint _fee) public {}
   function drain() public {}
+  function setOwner(address _new) {}
 
   function getRegistry() public constant returns (address) {}
-  function getStorage() public constant returns (address vaultDao, uint nextVaultId) {}
-  function getNextId() public constant returns (uint nextVaultId) {}
+  function getStorage() public constant returns (address dragoDao, uint nextDragoId) {}
+  function getNextId() public constant returns (uint nextDragoId) {}
   function getEventful() public constant returns (address) {}
-  function getVaultDao() public constant returns (address vaultDao) {}
+  function getDragoDao() public constant returns (address dragoDao) {}
   function getVersion() public constant returns (string) {}
-  function getVaultsByAddress(address _owner) public constant returns (address[]) {}
+  function getDragosByAddress(address _owner) public constant returns (address[]) {}
+  function getOwner() constant returns (address) {}
 }
 
-/// @title Vault Factory contract - allows creation of new vaults.
+/// @title Drago Factory contract - allows creation of new dragos.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract VaultFactory is Owned, VaultFactoryFace {
+contract DragoFactory is Owned, DragoFactoryFace {
 
-  VaultFactoryLibrary.NewVault libraryData;
+  DragoFactoryLibrary.NewDrago libraryData;
 
   string public constant VERSION = 'VF 0.4.1';
 
@@ -138,18 +139,18 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
   struct Data {
     uint fee;
-    address vaultRegistry;
-    address vaultDao;
+    address dragoRegistry;
+    address dragoDao;
     address authority;
-    mapping(address => address[]) vaults;
+    mapping(address => address[]) dragos;
   }
 
-  event VaultCreated(
+  event DragoCreated(
     string name,
     string symbol,
-    address indexed vault,
+    address indexed drago,
     address indexed owner,
-    uint vaultId
+    uint dragoId
   );
 
   modifier whitelisted_factory(address _authority) {
@@ -159,76 +160,76 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
   modifier when_fee_paid { require(msg.value >= data.fee); _; }
   modifier only_owner { require(msg.sender == owner); _; }
-  modifier only_vault_dao { require(msg.sender == data.vaultDao); _; }
+  modifier only_drago_dao { require(msg.sender == data.dragoDao); _; }
 
-  function VaultFactory(
+  function DragoFactory(
     address _registry,
-    address _vaultDao,
+    address _dragoDao,
     address _authority)
     public
   {
-    data.vaultRegistry = _registry;
-    data.vaultDao = _vaultDao;
+    data.dragoRegistry = _registry;
+    data.dragoDao = _dragoDao;
     data.authority = _authority;
     owner = msg.sender;
   }
 
   // CORE FUNCTIONS
 
-  /// @dev allows creation of a new vault
+  /// @dev allows creation of a new drago
   /// @param _name String of the name
   /// @param _symbol String of the symbol
   /// @return Bool the transaction executed correctly
-  function createVault(string _name, string _symbol)
+  function createDrago(string _name, string _symbol)
     public
     returns (bool success)
   {
-    DragoRegistry registry = DragoRegistry(data.vaultRegistry);
+    DragoRegistry registry = DragoRegistry(data.dragoRegistry);
     uint regFee = registry.getFee();
-    uint vaultId = registry.dragoCount();
-    require(createVaultInternal(_name, _symbol, msg.sender, vaultId));
+    uint dragoId = registry.dragoCount();
+    require(createDragoInternal(_name, _symbol, msg.sender, dragoId));
     assert(registry.register.value(regFee)(
       libraryData.newAddress,
       _name,
       _symbol,
-      vaultId,
+      dragoId,
       msg.sender)
     );
     return true;
   }
 
   /// @dev Allows factory owner to update the address of the dao/factory
-  /// @dev Enables manual update of dao for single vaults
-  /// @param _targetVault Address of the target vault
-  /// @param _vaultDao Address of the new vault dao
-  function setTargetVaultDao(address _targetVault, address _vaultDao)
+  /// @dev Enables manual update of dao for single dragos
+  /// @param _targetDrago Address of the target drago
+  /// @param _dragoDao Address of the new drago dao
+  function setTargetDragoDao(address _targetDrago, address _dragoDao)
     public
     only_owner
   {
-    Vault vault = Vault(_targetVault);
-    vault.changeVaultDao(_vaultDao);
+    Drago drago = Drago(_targetDrago);
+    drago.changeDragoDao(_dragoDao);
   }
 
-  /// @dev Allows vault dao/factory to update its address
+  /// @dev Allows drago dao/factory to update its address
   /// @dev Creates internal record
-  /// @param _newVaultDao Address of the vault dao
-  function changeVaultDao(address _newVaultDao) public only_vault_dao {
-    data.vaultDao = _newVaultDao;
+  /// @param _newDragoDao Address of the drago dao
+  function changeDragoDao(address _newDragoDao) public only_drago_dao {
+    data.dragoDao = _newDragoDao;
   }
 
   /// @dev Allows owner to update the registry
   /// @param _newRegistry Address of the new registry
   function setRegistry(address _newRegistry) public only_owner {
-    data.vaultRegistry = _newRegistry;
+    data.dragoRegistry = _newRegistry;
   }
 
   /// @dev Allows owner to set the address which can collect creation fees
-  /// @param _vaultDao Address of the new vault dao/factory
-  function setBeneficiary(address _vaultDao) public only_owner {
-    data.vaultDao = _vaultDao;
+  /// @param _dragoDao Address of the new drago dao/factory
+  function setBeneficiary(address _dragoDao) public only_owner {
+    data.dragoDao = _dragoDao;
   }
 
-  /// @dev Allows owner to set the vault creation fee
+  /// @dev Allows owner to set the drago creation fee
   /// @param _fee Value of the fee in wei
   function setFee(uint _fee) public only_owner {
     data.fee = _fee;
@@ -236,7 +237,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
   /// @dev Allows owner to collect fees
   function drain() public only_owner {
-    data.vaultDao.transfer(this.balance);
+    data.dragoDao.transfer(this.balance);
   }
 
   // CONSTANT PUBLIC FUNCTIONS
@@ -244,28 +245,28 @@ contract VaultFactory is Owned, VaultFactoryFace {
   /// @dev Returns the address of the pool registry
   /// @return Address of the registry
   function getRegistry() public constant returns (address) {
-    return (data.vaultRegistry);
+    return (data.dragoRegistry);
   }
 
   /// @dev Returns administrative data for this factory
-  /// @return Address of the vault dao
+  /// @return Address of the drago dao
   /// @return String of the version
-  /// @return Number of the next vault from the registry
+  /// @return Number of the next drago from the registry
   function getStorage()
     public
     constant
     returns (
-      address vaultDao,
-      uint nextVaultId)
+      address dragoDao,
+      uint nextDragoId)
   {
-    return (data.vaultDao, nextVaultId);
+    return (data.dragoDao, nextDragoId);
   }
 
-  /// @dev Returns the next Id for a vault
+  /// @dev Returns the next Id for a drago
   /// @return Number of the next Id from the registry
-  function getNextId() public constant returns (uint nextVaultId) {
-    DragoRegistry registry = DragoRegistry(data.vaultRegistry);
-    nextVaultId = registry.dragoCount();
+  function getNextId() public constant returns (uint nextDragoId) {
+    DragoRegistry registry = DragoRegistry(data.dragoRegistry);
+    nextDragoId = registry.dragoCount();
   }
 
   /// @dev Returns the address of the logger contract
@@ -273,13 +274,13 @@ contract VaultFactory is Owned, VaultFactoryFace {
   /// @return Address of the eventful contract
   function getEventful() public constant returns (address) {
     Authority auth = Authority(data.authority);
-    return auth.getVaultEventful();
+    return auth.getDragoEventful();
   }
 
-  /// @dev Returns the address of the vault dao
-  /// @return Address of the vault dao
-  function getVaultDao() public constant returns (address) {
-    return data.vaultDao;
+  /// @dev Returns the address of the drago dao
+  /// @return Address of the drago dao
+  function getDragoDao() public constant returns (address) {
+    return data.dragoDao;
   }
 
   /// @dev Returns the version of this factory
@@ -288,57 +289,57 @@ contract VaultFactory is Owned, VaultFactoryFace {
     return VERSION;
   }
 
-  /// @dev Returns an array of vaults the owner has created
+  /// @dev Returns an array of dragos the owner has created
   /// @param _owner Address of the queried owner
-  /// @return Array of vault addresses
-  function getVaultsByAddress(address _owner)
+  /// @return Array of drago addresses
+  function getDragosByAddress(address _owner)
     public
     constant
     returns (address[])
   {
-    return data.vaults[_owner];
+    return data.dragos[_owner];
   }
 
   // INTERNAL FUNCTIONS
 
-  /// @dev Creates a vault and routes to eventful
+  /// @dev Creates a drago and routes to eventful
   /// @param _name String of the name
   /// @param _symbol String of the symbol
   /// @param _owner Address of the owner
-  /// @param _vaultId Number of the new vault Id
+  /// @param _dragoId Number of the new drago Id
   /// @return Bool the transaction executed correctly
-  function createVaultInternal(
+  function createDragoInternal(
     string _name,
     string _symbol,
     address _owner,
-    uint _vaultId)
+    uint _dragoId)
     internal
     when_fee_paid
     returns (bool success)
   {
     Authority auth = Authority(data.authority);
-    require(VaultFactoryLibrary.createVault(
+    require(DragoFactoryLibrary.createDrago(
       libraryData,
       _name,
       _symbol,
       _owner,
-      _vaultId,
+      _dragoId,
       data.authority)
     );
-    data.vaults[msg.sender].push(libraryData.newAddress);
-    VaultEventful events = VaultEventful(auth.getVaultEventful());
-    require(events.createVault(
+    data.dragos[msg.sender].push(libraryData.newAddress);
+    DragoEventful events = DragoEventful(auth.getDragoEventful());
+    require(events.createDrago(
       msg.sender,
       this,
       libraryData.newAddress,
       _name,
       _symbol,
-      _vaultId,
+      _dragoId,
       _owner)
     );
-    auth.whitelistVault(libraryData.newAddress, true);
+    auth.whitelistDrago(libraryData.newAddress, true);
     auth.whitelistUser(msg.sender, true);
-    VaultCreated(_name, _symbol, libraryData.newAddress, _owner, _vaultId);
+    DragoCreated(_name, _symbol, libraryData.newAddress, _owner, _dragoId);
     return true;
   }
 }

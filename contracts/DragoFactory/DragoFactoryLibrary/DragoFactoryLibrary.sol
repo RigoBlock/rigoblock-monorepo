@@ -18,14 +18,14 @@
 
 pragma solidity ^0.4.20;
 
-/// @title Vault Factory library - Reduces size of vault factory.
+/// @title Drago Factory library - Reduces size of drago factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-library VaultFactoryLibrary {
+library DragoFactoryLibrary {
 
-  struct NewVault {
+  struct NewDrago {
     string name;
     string symbol;
-    uint256 vaultId;
+    uint256 dragoId;
     address owner;
     address newAddress;
   }
@@ -35,29 +35,29 @@ library VaultFactoryLibrary {
     if (auth.isWhitelistedFactory(this)) _;
   }
 
-  /// @dev Allows an approved factory to create new vaults
+  /// @dev Allows an approved factory to create new dragos
   /// @param _name String of the name
   /// @param _symbol String of the symbol
   /// @param _owner Address of the owner
-  /// @param _vaultId Number of Id of the vault from the registry
+  /// @param _dragoId Number of Id of the drago from the registry
   /// @param _authority Address of the respective authority
   /// @return Bool the function executed
-  function createVault(
-    NewVault storage self,
+  function createDrago(
+    NewDrago storage self,
     string _name,
     string _symbol,
     address _owner,
-    uint _vaultId,
+    uint _dragoId,
     address _authority)
     internal
     whitelisted_factory(_authority)
     returns (bool success)
   {
-    Vault vault = new Vault(_name, _symbol, _vaultId, _owner, _authority);
+    Drago drago = new Drago(_name, _symbol, _dragoId, _owner, _authority);
     self.name = _name;
     self.symbol = _symbol;
-    self.vaultId = _vaultId;
-    self.newAddress = address(vault);
+    self.dragoId = _dragoId;
+    self.newAddress = address(drago);
     self.owner = _owner;
     return true;
   }

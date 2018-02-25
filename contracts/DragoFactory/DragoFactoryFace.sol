@@ -18,25 +18,27 @@
 
 pragma solidity ^0.4.20;
 
-/// @title Vault Factory Interface - Allows external interaction with Vault Factory.
+/// @title Drago Factory Interface - Allows external interaction with Drago Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract VaultFactoryFace {
+contract DragoFactoryFace {
 
-  event VaultCreated(string name, string symbol, address indexed vault, address indexed owner, uint vaultId);
+  event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint dragoId);
 
-  function createVault(string _name, string _symbol) public returns (bool success) {}
-  function setTargetVaultDao(address _targetVault, address _vaultDao) public {}
-  function changeVaultDao(address _newVaultDao) public {}
+  function createDrago(string _name, string _symbol) public returns (bool success) {}
+  function setTargetDragoDao(address _targetDrago, address _dragoDao) public {}
+  function changeDragoDao(address _newDragoDao) public {}
   function setRegistry(address _newRegistry) public {}
-  function setBeneficiary(address _vaultDao) public {}
+  function setBeneficiary(address _dragoDao) public {}
   function setFee(uint _fee) public {}
   function drain() public {}
+  function setOwner(address _new) {}
 
   function getRegistry() public constant returns (address) {}
-  function getStorage() public constant returns (address vaultDao, uint nextVaultId) {}
-  function getNextId() public constant returns (uint nextVaultId) {}
+  function getStorage() public constant returns (address dragoDao, string VERSION, uint nextDragoId) {}
+  function getNextId() public constant returns (uint nextDragoId) {}
   function getEventful() public constant returns (address) {}
-  function getVaultDao() public constant returns (address vaultDao) {}
+  function getDragoDao() public constant returns (address dragoDao) {}
   function getVersion() public constant returns (string) {}
-  function getVaultsByAddress(address _owner) public constant returns (address[]) {}
+  function getDragosByAddress(address _owner) public constant returns (address[]) {}
+  function getOwner() constant returns (address) {}
 }
