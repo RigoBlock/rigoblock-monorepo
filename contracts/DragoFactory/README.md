@@ -8,8 +8,8 @@ Name in parity registry: dragofactory-v2
 
 ```
 Mainnet:
-Ropsten:
-Kovan:
+Ropsten: 0x23c3b61F2Fdd0655c88E1249Cad0FBCc54740D8f
+Kovan: 0x25fFb0879F13921588CA28AEeF530aBF719fAd0c
 ```
 Bytecode:
 ```
