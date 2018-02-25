@@ -5,7 +5,7 @@ Name in parity registry: inflation-v2
 
 ## Inflation version 0.4.1
 ```
-Mainnet:
+Mainnet: 0x1262F5AAc11cdA03aD9Cc54FDb42ABa2950cF44B
 Ropsten: 0xd2CB58c6C2c8D152e5a631752FC82A702b40Ef4d
 Kovan: 0x23c3b61F2Fdd0655c88E1249Cad0FBCc54740D8f
 ```

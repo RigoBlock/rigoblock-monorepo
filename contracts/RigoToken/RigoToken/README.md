@@ -5,7 +5,7 @@ Name in parity registry:
 
 ## Rigo Token version 0.4.1
 ```
-Mainnet:
+Mainnet: 0xEF4b26521ceDEaF98aDe9DaABF8df9892eaeceB9
 Ropsten: 0x1262F5AAc11cdA03aD9Cc54FDb42ABa2950cF44B
 Kovan: 0x9f621116B9b29E0CF1b4fE69043fFCcd7c173d86
 ```

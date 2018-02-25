@@ -5,7 +5,7 @@ Name in parity registry: distribution-v2
 
 ## Distribution version 0.4.1
 ```
-Mainnet:
+Mainnet: 0xE1be57f169Ea34AF96f975D1caf2e30dd6674c42
 Ropsten: 0xE1be57f169Ea34AF96f975D1caf2e30dd6674c42
 Kovan: 0x893C4D2fE9A306fC92A65E4c3eC21129F5eE0663
 ```
