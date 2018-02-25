@@ -6,7 +6,7 @@ Name in parity registry: vaulteventful-v2
 ## Vault Eventful version 0.4.1
 ```
 Mainnet:
-Ropsten:
+Ropsten: 0xB2Abe57376D89da63f93A37F4cbeA496EC66c4C2
 Kovan: 0x93f943198C647b0f12C37CFEa0880690ea0939fa
 ```
 Bytecode

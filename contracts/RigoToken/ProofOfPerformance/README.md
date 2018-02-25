@@ -6,7 +6,7 @@ Name in parity registry: pop-v2
 ## Proof of Performance version 0.4.1
 ```
 Mainnet:
-Ropsten:
+Ropsten: 0xD34cf65739954EB99D284fD20aB4f88c64e4d67D
 Kovan: 0x433718D6C6a1bb7c2927a6f385CC4151e65042B0
 ```
 Bytecode
