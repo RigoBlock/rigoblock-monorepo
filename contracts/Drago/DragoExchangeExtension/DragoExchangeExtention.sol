@@ -30,18 +30,24 @@ library DragoExchangeExtension {
     uint ratio; //ratio is 80%
   }
 
-  function depositToExchange(Admin memory admin, address _exchange, address _token, uint _value)
+  function depositToExchange(
+    Admin memory admin,
+    address _exchange,
+    address _token,
+    uint _value)
     internal
   {
-    ExchangeAdapter adapter = ExchangeAdapter(getExchangeAdapter(admin, _exchange));
-    adapter.depositToExchange(_exchange, _token, _value);
+    assembleCall(_exchange, msg.data.length);
   }
 
-  function withdrawFromExchange(Admin memory admin, address _exchange, address _token, uint _value)
+  function withdrawFromExchange(
+    Admin memory admin,
+    address _exchange,
+    address _token,
+    uint _value)
     internal
   {
-    ExchangeAdapter adapter = ExchangeAdapter(getExchangeAdapter(admin, _exchange));
-    adapter.withdrawFromExchange(_exchange, _token, _value);
+    assembleCall(_exchange, msg.data.length);
   }
 
   function placeOrderExchange(
@@ -55,8 +61,7 @@ library DragoExchangeExtension {
     bytes32[2] signature)
     internal
   {
-    ExchangeAdapter adapter = ExchangeAdapter(getExchangeAdapter(admin, _exchange));
-    adapter.placeOrderExchange(_exchange, orderAddresses, orderValues, fillTakerTokenAmount, stableOrSufficient, v, signature);
+    assembleCall(_exchange, msg.data.length);
   }
 
   function placeTradeExchange(
@@ -70,8 +75,7 @@ library DragoExchangeExtension {
     bytes32[2] signature)
     internal
   {
-    ExchangeAdapter adapter = ExchangeAdapter(getExchangeAdapter(admin, _exchange));
-    adapter.placeTradeExchange(_exchange, orderAddresses, orderValues, fillTakerTokenAmount, stableOrSufficient, v, signature);
+    assembleCall(_exchange, msg.data.length);
   }
 
   function cancelOrderExchange(
@@ -82,8 +86,7 @@ library DragoExchangeExtension {
     uint cancelTakerTokenAmount)
     internal
   {
-    ExchangeAdapter adapter = ExchangeAdapter(getExchangeAdapter(admin, _exchange));
-    adapter.cancelOrderExchange(_exchange, orderAddresses, orderValues, cancelTakerTokenAmount);
+    assembleCall(_exchange, msg.data.length);
   }
 
   function finalizeDeal(
@@ -94,10 +97,12 @@ library DragoExchangeExtension {
     uint cancelTakerTokenAmount)
     internal
   {
-    ExchangeAdapter adapter = ExchangeAdapter(getExchangeAdapter(admin, _exchange));
-    adapter.finalizeDeal(_exchange, orderAddresses, orderValues, cancelTakerTokenAmount);
+    assembleCall(_exchange, msg.data.length);
   }
 
+  /// @dev Returns the address of the adapter for an exchange
+  /// @param _exchange Address of the target exchange
+  /// @return Address of the adapter
   function getExchangeAdapter(Admin memory admin, address _exchange)
     internal
     view
@@ -107,8 +112,63 @@ library DragoExchangeExtension {
     return auth.getExchangeAdapter(_exchange);
   }
 
+  /// @dev Returns the drago logger contract
+  /// @return Address of the logger
   function getDragoEventful(Admin memory admin) internal view returns (address) {
     Authority auth = Authority(admin.authority);
     return auth.getDragoEventful();
+  }
+
+  /// @dev Allows caller to delegate any call to the selected exchange adapter
+  /// @param _exchange Address of the target exchange
+  /// @param _callData size of the data of the call
+  function assembleCall(address _exchange, uint _callData) internal {
+    Admin memory admin;
+
+    uint size = _callData;
+    bytes32 m_data = _malloc(size);
+
+    assembly {
+      calldatacopy(m_data, 0x0, size)
+    }
+
+    bytes32 m_result = _call(m_data, size, getExchangeAdapter(admin, _exchange));
+
+    assembly {
+      return(m_result, 0x20)
+    }
+  }
+
+  /// @dev Builds the bytes from the call data
+  /// @param size Given size of the call
+  /// @return Bytes32 of the pointer
+  function _malloc(uint size) internal pure returns(bytes32) {
+    bytes32 m_data;
+
+    assembly {
+      /// @notice Get free memory pointer and update it
+      m_data := mload(0x40)
+      mstore(0x40, add(m_data, size))
+    }
+
+  return m_data;
+  }
+
+  /// @dev Checks whether a call returns something and executes if positive
+  /// @param m_data Bytes32 of the call data
+  /// @param size Given size of the call
+  /// @param adapter Address of the exchange adapter which receives a delegatecall
+  /// @return A pointer to memory which contain the 32 first bytes of the delegatecall output
+  function _call(bytes32 m_data, uint size, address adapter) internal returns(bytes32) {
+    address target = adapter;
+    bytes32 m_result = _malloc(32);
+    bool failed;
+
+    assembly {
+      failed := iszero(delegatecall(sub(gas, 10000), target, m_data, size, m_result, 0x20))
+    }
+
+    require(!failed);
+    return m_result;
   }
 }
