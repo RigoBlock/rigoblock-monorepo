@@ -183,93 +183,10 @@ library DragoExchangeExtension {
     uint ratio; //ratio is 80%
   }
 
-  function depositToExchange(
-    Admin memory admin,
-    address _exchange,
-    address _token,
-    uint _value)
-    internal
-  {
+  /// @dev Enables operations with exchanges
+  /// @param _exchange Address of the exchange
+  function operateOnExchange(Admin memory admin, address _exchange) {
     assembleCall(_exchange, msg.data.length);
-  }
-
-  function withdrawFromExchange(
-    Admin memory admin,
-    address _exchange,
-    address _token,
-    uint _value)
-    internal
-  {
-    assembleCall(_exchange, msg.data.length);
-  }
-
-  function placeOrderExchange(
-    Admin memory admin,
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint fillTakerTokenAmount,
-    bool stableOrSufficient,
-    uint8 v,
-    bytes32[2] signature)
-    internal
-  {
-    assembleCall(_exchange, msg.data.length);
-  }
-
-  function placeTradeExchange(
-    Admin memory admin,
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint fillTakerTokenAmount,
-    bool stableOrSufficient,
-    uint8 v,
-    bytes32[2] signature)
-    internal
-  {
-    assembleCall(_exchange, msg.data.length);
-  }
-
-  function cancelOrderExchange(
-    Admin memory admin,
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint cancelTakerTokenAmount)
-    internal
-  {
-    assembleCall(_exchange, msg.data.length);
-  }
-
-  function finalizeDeal(
-    Admin memory admin,
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint cancelTakerTokenAmount)
-    internal
-  {
-    assembleCall(_exchange, msg.data.length);
-  }
-
-  /// @dev Returns the address of the adapter for an exchange
-  /// @param _exchange Address of the target exchange
-  /// @return Address of the adapter
-  function getExchangeAdapter(Admin memory admin, address _exchange)
-    internal
-    view
-    returns (address)
-  {
-    Authority auth = Authority(admin.authority);
-    return auth.getExchangeAdapter(_exchange);
-  }
-
-  /// @dev Returns the drago logger contract
-  /// @return Address of the logger
-  function getDragoEventful(Admin memory admin) internal view returns (address) {
-    Authority auth = Authority(admin.authority);
-    return auth.getDragoEventful();
   }
 
   /// @dev Allows caller to delegate any call to the selected exchange adapter
@@ -285,7 +202,7 @@ library DragoExchangeExtension {
       calldatacopy(m_data, 0x0, size)
     }
 
-    bytes32 m_result = _call(m_data, size, getExchangeAdapter(admin, _exchange));
+    bytes32 m_result = _call(m_data, size, _exchange);
 
     assembly {
       return(m_result, 0x20)
@@ -340,43 +257,8 @@ contract DragoFace {
   function setTransactionFee(uint _transactionFee) public {}
   function changeFeeCollector(address _feeCollector) public {}
   function changeDragoDao(address _dragoDao) public {}
-  function depositToExchange(address _exchange, address _token, uint _value) public {}
-  function withdrawFromExchange(address _exchange, address _token, uint _value) public {}
-
-  function placeOrderExchange(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint fillTakerTokenAmount,
-    bool stableOrSufficient,
-    uint8 v,
-    bytes32[2] signature)
-    public {}
-
-  function placeTradeExchange(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint fillTakerTokenAmount,
-    bool stableOrSufficient,
-    uint8 v,
-    bytes32[2] signature)
-    public {}
-
-  function cancelOrderExchange(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint cancelTakerTokenAmount)
-    public {}
-
-  function finalizeDeal(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint cancelTakerTokenAmount)
-    public {}
-
+  function depositToExchange(address _exchange, uint _amount) public {}
+  function operateOnExchange(address _exchange, address _token, uint _value) public {}
   function setOwner(address _new) public {}
   function() external payable {}
 
@@ -449,6 +331,12 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   modifier when_approved_exchange(address _exchange) {
     Authority auth = Authority(admin.authority);
     require(auth.isWhitelistedExchange(_exchange));
+    _;
+  }
+
+  modifier owner_or_approved_exchange() {
+    Authority auth = Authority(admin.authority);
+    require(auth.isWhitelistedExchange(msg.sender) || msg.sender == owner);
     _;
   }
 
@@ -620,152 +508,25 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     data.minPeriod = _minPeriod;
   }
 
-  /// @dev Allows drago owner to deposit to an exchange
-  /// @param _exchange Address of the exchange
-  /// @param _token Address of the deposited token (null for eth)
-  /// @param _value Number of tokens deposited (0 for eth)
-  function depositToExchange(address _exchange, address _token, uint _value)
+  depositToExchange(address _exchange, uint _amount)
     public
     only_owner
-    when_approved_exchange(_exchange)
-  {
-    DragoExchangeExtension.depositToExchange(
-        libraryAdmin,
-        _exchange,
-        _token,
-        _value
-    );
+    only_approved_exchange(_exchange) {
+    _exchange.transfer(_amount);
   }
 
-  /// @dev Allows drago owner to withdraw from an exchange
+  /// @dev Allows owner or approved exchange to send a transaction to exchange
+  /// @dev With data of signed/unsigned transaction
   /// @param _exchange Address of the exchange
-  /// @param _token Address of the withdrawn token (null for eth)
-  /// @param _value Number of tokens deposited (0 for eth)
-  function withdrawFromExchange(address _exchange, address _token, uint _value)
-    public
-    only_owner
-    when_approved_exchange(_exchange)
+  function operateOnExchange(address _exchange)
+    external
+    owner_or_approved_exchange()
   {
-    DragoExchangeExtension.withdrawFromExchange(
-        libraryAdmin,
-        _exchange,
-        _token,
-        _value
-    );
-  }
-
-  /// @dev Allows drago owner to place an order on an exchange
-  /// @param _exchange Address of the exchange
-  /// @param orderAddresses Array of order's maker, taker, makerToken, takerToken, and feeRecipient.
-  /// @param orderValues Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt.
-  /// @param fillTakerTokenAmount Desired amount of takerToken to fill.
-  /// @param stableOrSufficient Test if transfer will fail before attempting.
-  /// @param v ECDSA signature parameter v.
-  /// @param signature Array of ECDSA signature parameters r, s.
-  function placeOrderExchange(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint fillTakerTokenAmount,
-    bool stableOrSufficient,
-    uint8 v,
-    bytes32[2] signature)
-    public
-    only_owner
-    when_approved_exchange(_exchange)
-  {
-    DragoExchangeExtension.placeOrderExchange(
-        libraryAdmin,
-        _exchange,
-        orderAddresses,
-        orderValues,
-        fillTakerTokenAmount,
-        stableOrSufficient,
-        v,
-        signature
-    );
-  }
-
-  /// @dev Allows drago owner to execute a trade on an exchange
-  /// @param _exchange Address of the exchange
-  /// @param orderAddresses Array of order's maker, taker, makerToken, takerToken, and feeRecipient.
-  /// @param orderValues Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt.
-  /// @param fillTakerTokenAmount Desired amount of takerToken to fill.
-  /// @param stableOrSufficient Test if transfer will fail before attempting.
-  /// @param v ECDSA signature parameter v.
-  /// @param signature Array of ECDSA signature parameters r, s.
-  function placeTradeExchange(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint fillTakerTokenAmount,
-    bool stableOrSufficient,
-    uint8 v,
-    bytes32[2] signature)
-    public
-    only_owner
-    when_approved_exchange(_exchange)
-  {
-    DragoExchangeExtension.placeTradeExchange(
-        libraryAdmin,
-        _exchange,
-        orderAddresses,
-        orderValues,
-        fillTakerTokenAmount,
-        stableOrSufficient,
-        v,
-        signature
-    );
-  }
-
-  /// @dev Allows drago owner to cancel an order on an exchange
-  /// @param _exchange Address of the exchange
-  /// @param orderAddresses Array of order's maker, taker, makerToken, takerToken, and feeRecipient.
-  /// @param orderValues Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt.
-  /// @param cancelTakerTokenAmount Desired amount of takerToken to cancel in order.
-  function cancelOrderExchange(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint cancelTakerTokenAmount)
-    public
-    only_owner
-    when_approved_exchange(_exchange)
-  {
-    DragoExchangeExtension.cancelOrderExchange(
-        libraryAdmin,
-        _exchange,
-        orderAddresses,
-        orderValues,
-        cancelTakerTokenAmount
-    );
-  }
-
-  /// @dev Allows drago owner to settle a deal on an exchange
-  /// @param _exchange Address of the exchange
-  /// @param orderAddresses Array of order's maker, taker, makerToken, takerToken, and feeRecipient.
-  /// @param orderValues Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt.
-  /// @param cancelTakerTokenAmount Amount of takerToken to settle in deal.
-  function finalizeDeal(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint cancelTakerTokenAmount)
-    public
-    only_owner
-    when_approved_exchange(_exchange)
-  {
-    DragoExchangeExtension.finalizeDeal(
-        libraryAdmin,
-        _exchange,
-        orderAddresses,
-        orderValues,
-        cancelTakerTokenAmount
-    );
+    DragoExchangeExtension.operateOnExchange(libraryAdmin, _exchange);
   }
 
   /// @dev Allows an exchange contract to send Ether back
-  function() external payable when_approved_exchange(msg.sender) {}
+  function() external payable only_approved_exchange(msg.sender) {}
 
   // PUBLIC CONSTANT FUNCTIONS
 
