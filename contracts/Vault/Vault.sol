@@ -79,32 +79,32 @@ contract ERC20Face {
   function allowance(address _owner, address _spender) public view returns (uint256 remaining) {}
 }
 
-/// @title Eventful Interface - allows querying events for dragos.
+/// @title Vault Eventful Interface - Logs all vaults transactions.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultEventful {
 
   // EVENTS
 
-  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue);
-  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue);
+  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
+  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
   event NewFee(address indexed vault, address indexed from, address indexed to, uint fee);
   event NewCollector(address indexed vault, address indexed from, address indexed to, address collector);
   event VaultDao(address indexed vault, address indexed from, address indexed to, address vaultDao);
   event DepositCasper(address indexed vault, address indexed validator, address indexed casper, address withdrawal, uint amount);
   event WithdrawCasper(address indexed vault, address indexed validator, address indexed casper, uint validatorIndex);
-  event VaultCreated(address indexed vault, address indexed group, address indexed owner, uint vaultID, string name, string symbol);
+  event VaultCreated(address indexed vault, address indexed group, address indexed owner, uint vaultId, string name, string symbol);
 
   // CORE FUNCTIONS
 
-  function buyVault(address _who, address _targetVault, uint _value, uint _amount) public returns (bool success) {}
-  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue) public returns(bool success) {}
-  function changeRatio(address _who, address _targetVault, uint256 _ratio) public returns(bool success) {}
-  function setTransactionFee(address _who, address _targetVault, uint _transactionFee) public returns(bool success) {}
-  function changeFeeCollector(address _who, address _targetVault, address _feeCollector) public returns(bool success) {}
-  function changeVaultDao(address _who, address _targetVault, address _vaultDao) public returns(bool success) {}
-  function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) public returns(bool success) {}
-  function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) public returns(bool success) {}
-  function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultID, address _owner) public returns(bool success) {}
+  function buyVault(address _who, address _targetVault, uint _value, uint _amount, bytes _name, bytes _symbol) external returns (bool success) {}
+  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue, bytes _name, bytes _symbol) external returns(bool success) {}
+  function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success) {}
+  function setTransactionFee(address _who, address _targetVault, uint _transactionFee) external returns(bool success) {}
+  function changeFeeCollector(address _who, address _targetVault, address _feeCollector) external returns(bool success) {}
+  function changeVaultDao(address _who, address _targetVault, address _vaultDao) external returns(bool success) {}
+  function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) external returns(bool success) {}
+  function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) external returns(bool success) {}
+  function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultId, address _owner) external returns(bool success) {}
 }
 
 /// @title Authority Interface - Allows interaction with the Authority contract.
@@ -177,19 +177,12 @@ contract Casper {
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultFace {
 
-  // EVENTS
-
-  event Buy(address indexed from, address indexed to, uint256 indexed amount, uint256 revenue);
-  event Sell(address indexed from, address indexed to, uint256 indexed amount,uint256 revenue);
-  event DepositCasper(uint amount, address indexed who, address indexed validation, address indexed withdrawal);
-  event WithdrawCasper(uint deposit, address indexed who, address casper);
-
   // CORE FUNCTIONS
 
   function() external payable {}
-  function buyVault() public payable returns (bool success) {}
+  function buyVault() external payable returns (bool success) {}
   function buyVaultOnBehalf(address _hodler) public payable returns (bool success) {}
-  function sellVault(uint256 amount) public returns (bool success) {}
+  function sellVault(uint256 amount) external returns (bool success) {}
   function depositCasper(address _validation, address _withdrawal, uint _amount) public returns (bool success) {}
   function withdrawCasper(uint128 _validatorIndex) public {}
   function changeRatio(uint256 _ratio) public {}
@@ -223,33 +216,6 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   Admin admin;
 
   mapping (address => Account) accounts;
-
-  event Buy(
-    address indexed from,
-    address indexed to,
-    uint256 indexed amount,
-    uint256 revenue
-  );
-
-  event Sell(
-    address indexed from,
-    address indexed to,
-    uint256 indexed amount,
-    uint256 revenue
-  );
-
-  event DepositCasper(
-    uint amount,
-    address indexed who,
-    address indexed validation,
-    address indexed withdrawal
-  );
-
-  event WithdrawCasper(
-    uint deposit,
-    address indexed who,
-    address casper
-  );
 
   struct Receipt {
     uint32 activation;
@@ -360,11 +326,14 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     minimum_stake(msg.value)
     returns (bool success)
   {
-    var (grossAmount, feeVault, feeVaultDao, amount) = getPurchaseAmounts();
+    uint grossAmount;
+    uint feeVault;
+    uint feeVaultDao;
+    uint amount;
+    (grossAmount, feeVault, feeVaultDao, amount) = getPurchaseAmounts();
     addPurchaseLog(amount);
     allocateTokens(_hodler, amount, feeVault, feeVaultDao);
     data.totalSupply = safeAdd(data.totalSupply, grossAmount);
-    Buy(msg.sender, this, msg.value, amount);
     return true;
   }
 
@@ -378,12 +347,15 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     minimum_period_past
     returns (bool success)
   {
-    var(fee_vault, fee_vaultDao, net_amount, net_revenue) = getSaleAmounts(_amount);
-    addSaleLog(_amount, net_revenue);
-    allocateTokens(msg.sender, _amount, fee_vault, fee_vaultDao);
-    data.totalSupply = safeSub(data.totalSupply, net_amount);
-    msg.sender.transfer(net_revenue);
-    Sell(this, msg.sender, _amount, net_revenue);
+    uint feeVault;
+    uint feeVaultDao;
+    uint netAmount;
+    uint netRevenue;
+    (feeVault, feeVaultDao, netAmount, netRevenue) = getSaleAmounts(_amount);
+    addSaleLog(_amount, netRevenue);
+    allocateTokens(msg.sender, _amount, feeVault, feeVaultDao);
+    data.totalSupply = safeSub(data.totalSupply, netAmount);
+    msg.sender.transfer(netRevenue);
     return true;
   }
 
@@ -406,7 +378,6 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     casper.deposit.value(_amount)(_validation, _withdrawal);
     VaultEventful events = VaultEventful(auth.getVaultEventful());
     require(events.depositToCasper(msg.sender, this, auth.getCasper(), _validation, _withdrawal, _amount));
-    DepositCasper(_amount, msg.sender, _validation, _withdrawal);
     return true;
   }
 
@@ -414,11 +385,9 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   function withdrawCasper() public only_owner {
     Authority auth = Authority(admin.authority);
     Casper casper = Casper(auth.getCasper());
-    uint128 casperDeposit = getCasperDeposit();
     casper.withdraw(data.validatorIndex);
     VaultEventful events = VaultEventful(auth.getVaultEventful());
     require(events.withdrawFromCasper(msg.sender, this, auth.getCasper(), data.validatorIndex));
-    WithdrawCasper(casperDeposit, msg.sender, auth.getCasper());
   }
 
   /// @dev Allows vault dao/factory to change fee split ratio
@@ -596,9 +565,11 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   function addPurchaseLog(uint _amount)
     internal
   {
+    bytes memory name = bytes(data.name);
+    bytes memory symbol = bytes(data.symbol);
     Authority auth = Authority(admin.authority);
     VaultEventful events = VaultEventful(auth.getVaultEventful());
-    require(events.buyVault(msg.sender, this, msg.value, _amount));
+    require(events.buyVault(msg.sender, this, msg.value, _amount, name, symbol));
   }
 
   /// @dev Sends a sell log to the eventful contract
@@ -607,9 +578,11 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   function addSaleLog(uint _amount, uint _netRevenue)
     internal
   {
+    bytes memory name = bytes(data.name);
+    bytes memory symbol = bytes(data.symbol);
     Authority auth = Authority(admin.authority);
     VaultEventful events = VaultEventful(auth.getVaultEventful());
-    require(events.sellVault(msg.sender, this, _amount, _netRevenue));
+    require(events.sellVault(msg.sender, this, _amount, _netRevenue, name, symbol));
   }
 
   /// @dev Calculates the correct purchase amounts

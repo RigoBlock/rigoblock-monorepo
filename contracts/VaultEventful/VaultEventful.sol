@@ -32,7 +32,7 @@ contract Vault {
   // CORE FUNCTIONS
 
   function() external payable {}
-  function buyVault() public payable returns (bool success) {}
+  function buyVault() external payable returns (bool success) {}
   function buyVaultOnBehalf(address _hodler) public payable returns (bool success) {}
   function sellVault(uint256 amount) public returns (bool success) {}
   function depositCasper(address _validation, address _withdrawal, uint _amount) public returns (bool success) {}
@@ -152,8 +152,8 @@ contract VaultEventfulFace {
 
   // EVENTS
 
-  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
-  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
+  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
+  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
   event NewFee(address indexed vault, address indexed from, address indexed to, uint fee);
   event NewCollector(address indexed vault, address indexed from, address indexed to, address collector);
   event VaultDao(address indexed vault, address indexed from, address indexed to, address vaultDao);
@@ -163,8 +163,8 @@ contract VaultEventfulFace {
 
   // CORE FUNCTIONS
 
-  function buyVault(address _who, address _targetVault, uint _value, uint _amount) external returns (bool success) {}
-  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue) external returns(bool success) {}
+  function buyVault(address _who, address _targetVault, uint _value, uint _amount, bytes _name, bytes _symbol) external returns (bool success) {}
+  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue, bytes _name, bytes _symbol) external returns(bool success) {}
   function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success) {}
   function setTransactionFee(address _who, address _targetVault, uint _transactionFee) external returns(bool success) {}
   function changeFeeCollector(address _who, address _targetVault, address _feeCollector) external returns(bool success) {}
@@ -189,8 +189,8 @@ contract VaultEventful is VaultEventfulFace {
     address indexed to,
     uint256 amount,
     uint256 revenue,
-    bytes32 name,
-    bytes32 symbol
+    bytes name,
+    bytes symbol
   );
 
   event SellVault(
@@ -199,8 +199,8 @@ contract VaultEventful is VaultEventfulFace {
     address indexed to,
     uint256 amount,
     uint256 revenue,
-    bytes32 name,
-    bytes32 symbol
+    bytes name,
+    bytes symbol
   );
 
   event NewFee(
@@ -286,16 +286,15 @@ contract VaultEventful is VaultEventfulFace {
     address _who,
     address _targetVault,
     uint _value,
-    uint _amount)
+    uint _amount,
+    bytes _name,
+    bytes _symbol)
     external
     approved_vault_only(_targetVault)
     returns (bool success)
   {
 		require(msg.sender == _targetVault);
-    DragoRegistry registry = DragoRegistry(REGISTRY);
-    bytes32 vaultName = registry.getNameFromAddress(_targetVault);
-    bytes32 vaultSymbol = registry.getSymbolFromAddress(_targetVault);
-    BuyVault(_targetVault, _who, msg.sender, _value, _amount, vaultName, vaultSymbol);
+    BuyVault(_targetVault, _who, msg.sender, _value, _amount, _name, _symbol);
 		return true;
 	}
 
@@ -310,17 +309,16 @@ contract VaultEventful is VaultEventfulFace {
     address _who,
     address _targetVault,
     uint _amount,
-    uint _revenue)
+    uint _revenue,
+    bytes _name,
+    bytes _symbol)
     external
     approved_vault_only(_targetVault)
     returns(bool success)
   {
 		require(_amount > 0);
     require(msg.sender == _targetVault);
-    DragoRegistry registry = DragoRegistry(REGISTRY);
-    bytes32 vaultName = registry.getNameFromAddress(_targetVault);
-    bytes32 vaultSymbol = registry.getSymbolFromAddress(_targetVault);
-    SellVault(_targetVault, _who, msg.sender, _amount, _revenue, vaultName, vaultSymbol);
+    SellVault(_targetVault, _who, msg.sender, _amount, _revenue, _name, _symbol);
 		return true;
 	}
 

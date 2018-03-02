@@ -174,7 +174,7 @@ contract ProofOfPerformanceFace {
 
   function isActive(uint _ofPool) public constant returns (bool) {}
   function addressFromId(uint _ofPool) public constant returns (address pool, address group) {}
-  function getPoolPrice(uint _ofPool) public constant returns (uint poolPrice, uint totalTokens) {}
+  function getPoolPrice(uint _ofPool) public constant returns (uint thePoolPrice, uint totalTokens) {}
   function getPoolPrices() public constant returns (address[] pools, uint[] poolPrices, uint[] totalTokens) {}
   function calcPoolValue(uint256 _ofPool) public /*internal*/ constant returns (uint256 aum, bool success) {}
   function calcNetworkValue() public constant returns (uint networkValue, uint numberOfFunds) {}
@@ -217,7 +217,8 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
 
   modifier only_pool_owner(uint _thePool) {
     DragoRegistry registry = DragoRegistry(dragoRegistry);
-    var (poolAddress, b, c, d, e, f) = registry.fromId(_thePool);
+    address poolAddress;
+    (poolAddress, , , , , ) = registry.fromId(_thePool);
     //address drago, string name, string symbol, uint dragoID, address owner, address group
     Pool pool = Pool(poolAddress);
     assert(msg.sender == pool.getOwner());
@@ -238,7 +239,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     public
   {
     RIGOTOKENADDRESS = _rigoTokenAddress;
-    rigoblockDao = rigoblockDao;
+    rigoblockDao = _rigoblockDao;
     dragoRegistry = _dragoRegistry;
     inflation = _inflation;
   }
@@ -248,9 +249,12 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
   function claimPop(uint _ofPool) public {
     Inflation infl = Inflation(inflation);
     DragoRegistry registry = DragoRegistry(dragoRegistry);
-    var(poolAddress,b,c,d,e,f) = registry.fromId(_ofPool);
+    address poolAddress;
+    (poolAddress, , , , , ) = registry.fromId(_ofPool);
     uint pop = proofOfPerformance(_ofPool);
-    var (price, supply) = getPoolPrice(_ofPool);
+    uint price;
+    uint supply;
+    (price, supply) = getPoolPrice(_ofPool);
     poolPrice[_ofPool].highwatermark = price;
     require(infl.mintInflation(poolAddress, pop));
   }
@@ -277,15 +281,16 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     groups[_ofGroup].rewardRatio = _ratio;
   }
 
-  // CONSTANT PUBLIC FUNCTIONS
+  // CONSTANT PUBLIC FUNCTIONS
 
   /// @dev Checks whether a pool is registered and active
   /// @param _ofPool Id of the pool
   /// @return Bool the pool is active
   function isActive(uint _ofPool) public constant returns (bool) {
     DragoRegistry registry = DragoRegistry(dragoRegistry);
-    var (a,b,c,d,e,f) = registry.fromId(_ofPool);
-    if (a != address(0)) {
+    address thePool;
+    (thePool, , , , , ) = registry.fromId(_ofPool);
+    if (thePool != address(0)) {
       return true;
     }
   }
@@ -302,9 +307,11 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
       address group)
   {
     DragoRegistry registry = DragoRegistry(dragoRegistry);
-    var(a,b,c,d,e,f) = registry.fromId(_ofPool);
-    pool = a;
-    group = f;
+    address thePool;
+    address theGroup;
+    (thePool, , , , , theGroup) = registry.fromId(_ofPool);
+    pool = thePool;
+    group = theGroup;
   }
 
   /// @dev Returns the price a pool from its id
@@ -315,14 +322,15 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     public
     constant
     returns (
-      uint poolPrice,
+      uint thePoolPrice,
       uint totalTokens)
   {
-    var (fund,group) = addressFromId(_ofPool);
+    address fund;
+    address group;
+    (fund,group) = addressFromId(_ofPool);
     address poolAddress = fund;
     Pool pool = Pool(poolAddress);
-    var(a,b,c,d) = pool.getData();
-    poolPrice = c;
+    ( , , thePoolPrice, ) = pool.getData();
     totalTokens = pool.totalSupply();
   }
 
@@ -345,11 +353,14 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
       if (!active) {
         continue;
       }
-      var (fund,group) = addressFromId(i);
+      address fund;
+      address group;
+      (fund, group) = addressFromId(i);
       pools[i] = fund;
       Pool pool = Pool(fund);
-      var(a,b,c,d) = pool.getData();
-      poolPrices[i] = c;
+      uint thePoolPrice;
+      ( , , thePoolPrice, ) = pool.getData();
+      poolPrices[i] = thePoolPrice;
       totalTokens[i] = pool.totalSupply();
     }
   }
@@ -365,7 +376,9 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
       uint256 aum,
       bool success)
   {
-    var(price,supply) = getPoolPrice(_ofPool);
+    uint price;
+    uint supply;
+    (price,supply) = getPoolPrice(_ofPool);
     return (aum = price * supply / 1000000, true); //1000000 is the base (decimals)
   }
 
@@ -386,9 +399,9 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
       if (!active) {
         continue;
       }
-      var (poolValue, n) = calcPoolValue(i);
-      var pools = poolValue;
-      networkValue += pools;
+      uint poolValue;
+      (poolValue, ) = calcPoolValue(i);
+      networkValue += poolValue;
     }
     return (networkValue, length);
   }
@@ -398,7 +411,9 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
   /// @return Value of the reward factor
   function getEpochReward(uint _ofPool) public constant returns (uint) {
     Inflation inflate = Inflation(inflation);
-    var (fund,group) = addressFromId(_ofPool);
+    address fund;
+    address group;
+    (fund,group) = addressFromId(_ofPool);
     return inflate.getInflationFactor(group);
   }
 
@@ -406,7 +421,9 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
   /// @param _ofPool Id of the pool
   /// @return Value of the ratio from 1 to 100
   function getRatio(uint _ofPool) public constant returns (uint) {
-    var (fund,group) = addressFromId(_ofPool);
+    address fund;
+    address group;
+    (fund,group) = addressFromId(_ofPool);
     return groups[group].rewardRatio;
   }
 
@@ -418,16 +435,22 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
   /// @notice should be at least 10^6 (just as pool base) to start with
   /// @notice rigo token has 10^18 decimals
   function proofOfPerformance(uint _ofPool) public constant returns (uint256) {
+    uint highwatermark;
     if (poolPrice[_ofPool].highwatermark == 0) {
-      poolPrice[_ofPool].highwatermark = 1 ether;
+      highwatermark = 1 ether;
+    } else {
+      highwatermark = poolPrice[_ofPool].highwatermark;
     }
-    var (poolValue, y) = calcPoolValue(_ofPool);
+    uint poolValue;
+    (poolValue, ) = calcPoolValue(_ofPool);
     require(poolValue != 0);
-    var (newPrice, tokenSupply) = getPoolPrice(_ofPool);
-    require (newPrice >= poolPrice[_ofPool].highwatermark);
+    uint newPrice;
+    uint tokenSupply;
+    (newPrice, tokenSupply) = getPoolPrice(_ofPool);
+    require (newPrice >= highwatermark);
     uint epochReward = getEpochReward(_ofPool);
     uint rewardRatio = getRatio(_ofPool);
-    uint prevPrice = poolPrice[_ofPool].highwatermark;
+    uint prevPrice = highwatermark;
     uint priceDiff = safeSub(newPrice, prevPrice);
     uint performanceReward = priceDiff * tokenSupply * epochReward * rewardRatio / 10000 ether;
     uint assetsReward = poolValue * epochReward * (10000 - rewardRatio) / 10000 ether;

@@ -140,8 +140,8 @@ contract DragoEventful {
 
   // EVENTS
 
-  event BuyDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
-  event SellDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
+  event BuyDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
+  event SellDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
   event NewNAV(address indexed drago, address indexed from, address indexed to, uint sellPrice, uint buyPrice);
   event DepositExchange(address indexed drago, address indexed exchange, address indexed token, uint value, uint256 amount);
   event WithdrawExchange(address indexed drago, address indexed exchange, address indexed token, uint value, uint256 amount);
@@ -153,8 +153,8 @@ contract DragoEventful {
 
   // CORE FUNCTIONS
 
-  function buyDrago(address _who, address _targetDrago, uint _value, uint _amount) external returns (bool success) {}
-  function sellDrago(address _who, address _targetDrago, uint _amount, uint _revenue) external returns(bool success) {}
+  function buyDrago(address _who, address _targetDrago, uint _value, uint _amount, bytes _name, bytes _symbol) external returns (bool success) {}
+  function sellDrago(address _who, address _targetDrago, uint _amount, uint _revenue, bytes _name, bytes _symbol) external returns(bool success) {}
   function setDragoPrice(address _who, address _targetDrago, uint _sellPrice, uint _buyPrice) external returns(bool success) {}
   function changeRatio(address _who, address _targetDrago, uint256 _ratio) external returns(bool success) {}
   function setTransactionFee(address _who, address _targetDrago, uint _transactionFee) external returns(bool success) {}
@@ -185,7 +185,7 @@ library DragoExchangeExtension {
 
   /// @dev Enables operations with exchanges
   /// @param _exchange Address of the exchange
-  function operateOnExchange(Admin memory admin, address _exchange) {
+  function operateOnExchange(Admin memory admin, address _exchange) internal {
     assembleCall(_exchange, msg.data.length);
   }
 
@@ -249,8 +249,9 @@ contract DragoFace {
 
   // CORE FUNCTIONS
 
-  function buyDrago() public payable returns (bool success) {}
-  function sellDrago(uint _amount) public returns (bool success) {}
+  function buyDrago() external payable returns (bool success) {}
+  function buyDragoOnBehalf(address _hodler) public payable returns (bool success) {}
+  function sellDrago(uint _amount) external returns (bool success) {}
   function setPrices(uint _newSellPrice, uint _newBuyPrice)  public {}
   function changeMinPeriod(uint32 _minPeriod) public {}
   function changeRatio(uint _ratio) public {}
@@ -258,7 +259,7 @@ contract DragoFace {
   function changeFeeCollector(address _feeCollector) public {}
   function changeDragoDao(address _dragoDao) public {}
   function depositToExchange(address _exchange, uint _amount) public {}
-  function operateOnExchange(address _exchange, address _token, uint _value) public {}
+  function operateOnExchange(address _exchange) external {}
   function setOwner(address _new) public {}
   function() external payable {}
 
@@ -410,7 +411,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @dev Allows a user to buy into a drago
   /// @return Bool the function executed correctly
   function buyDrago()
-    public
+    external
     payable
     returns (bool success)
   {
@@ -427,7 +428,11 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     minimum_stake(msg.value)
     returns (bool success)
   {
-    var (grossAmount, feeDrago, feeDragoDao, amount) = getPurchaseAmounts();
+    uint grossAmount;
+    uint feeDrago;
+    uint feeDragoDao;
+    uint amount;
+    (grossAmount, feeDrago, feeDragoDao, amount) = getPurchaseAmounts();
     addPurchaseLog(amount);
     allocateTokens(_hodler, amount, feeDrago, feeDragoDao);
     data.totalSupply = safeAdd(data.totalSupply, grossAmount);
@@ -439,18 +444,22 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @param _amount Number of shares to sell
   /// @return Bool the function executed correctly
   function sellDrago(uint256 _amount)
-    public
+    external
     has_enough(_amount)
     positive_amount(_amount)
     minimum_period_past
     returns (bool success)
   {
-    var(fee_drago, fee_dragoDao, net_amount, net_revenue) = getSaleAmounts(_amount);
-    addSaleLog(_amount, net_revenue);
-    allocateTokens(msg.sender, _amount, fee_drago, fee_dragoDao);
-    data.totalSupply = safeSub(data.totalSupply, net_amount);
-    msg.sender.transfer(net_revenue);
-    Sell(this, msg.sender, _amount, net_revenue);
+    uint feeDrago;
+    uint feeDragoDao;
+    uint netAmount;
+    uint netRevenue;
+    (feeDrago, feeDragoDao, netAmount, netRevenue) = getSaleAmounts(_amount);
+    addSaleLog(_amount, netRevenue);
+    allocateTokens(msg.sender, _amount, feeDrago, feeDragoDao);
+    data.totalSupply = safeSub(data.totalSupply, netAmount);
+    msg.sender.transfer(netRevenue);
+    Sell(this, msg.sender, _amount, netRevenue);
     return true;
   }
 
@@ -508,10 +517,11 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     data.minPeriod = _minPeriod;
   }
 
-  depositToExchange(address _exchange, uint _amount)
+  function depositToExchange(address _exchange, uint _amount)
     public
     only_owner
-    only_approved_exchange(_exchange) {
+    when_approved_exchange(_exchange)
+  {
     _exchange.transfer(_amount);
   }
 
@@ -526,7 +536,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   }
 
   /// @dev Allows an exchange contract to send Ether back
-  function() external payable only_approved_exchange(msg.sender) {}
+  function() external payable when_approved_exchange(msg.sender) {}
 
   // PUBLIC CONSTANT FUNCTIONS
 
@@ -593,7 +603,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
   /// @dev Returns the version of the type of drago
   /// @return String of the version
-  function getVersion() public view returns (string) {
+  function getVersion() public pure returns (string) {
     return VERSION;
   }
 
@@ -628,9 +638,11 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   function addPurchaseLog(uint _amount)
     internal
   {
+    bytes memory name = bytes(data.name);
+    bytes memory symbol = bytes(data.symbol);
     Authority auth = Authority(admin.authority);
     DragoEventful events = DragoEventful(auth.getDragoEventful());
-    require(events.buyDrago(msg.sender, this, msg.value, _amount));
+    require(events.buyDrago(msg.sender, this, msg.value, _amount, name, symbol));
   }
 
   /// @dev Sends a sell log to the eventful contract
@@ -639,9 +651,11 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   function addSaleLog(uint _amount, uint _netRevenue)
     internal
   {
+    bytes memory name = bytes(data.name);
+    bytes memory symbol = bytes(data.symbol);
     Authority auth = Authority(admin.authority);
     DragoEventful events = DragoEventful(auth.getDragoEventful());
-    require(events.sellDrago(msg.sender, this, _amount, _netRevenue));
+    require(events.sellDrago(msg.sender, this, _amount, _netRevenue, name, symbol));
   }
 
   /// @dev Calculates the correct purchase amounts

@@ -24,8 +24,8 @@ contract DragoEventfulFace {
 
   // EVENTS
 
-  event BuyDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
-  event SellDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
+  event BuyDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
+  event SellDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
   event NewNAV(address indexed drago, address indexed from, address indexed to, uint sellPrice, uint buyPrice);
   event DepositExchange(address indexed drago, address indexed exchange, address indexed token, uint value, uint256 amount);
   event WithdrawExchange(address indexed drago, address indexed exchange, address indexed token, uint value, uint256 amount);
@@ -37,13 +37,13 @@ contract DragoEventfulFace {
 
   // CORE FUNCTIONS
 
-  function buyDrago(address _who, address _targetDrago, uint _value, uint _amount) external returns (bool success) {}
-  function sellDrago(address _who, address _targetDrago, uint _amount, uint _revenue) external returns(bool success) {}
+  function buyDrago(address _who, address _targetDrago, uint _value, uint _amount, bytes _name, bytes _symbol) external returns (bool success) {}
+  function sellDrago(address _who, address _targetDrago, uint _amount, uint _revenue, bytes _name, bytes _symbol) external returns(bool success) {}
   function setDragoPrice(address _who, address _targetDrago, uint _sellPrice, uint _buyPrice) external returns(bool success) {}
   function changeRatio(address _who, address _targetDrago, uint256 _ratio) external returns(bool success) {}
   function setTransactionFee(address _who, address _targetDrago, uint _transactionFee) external returns(bool success) {}
   function changeFeeCollector(address _who, address _targetDrago, address _feeCollector) external returns(bool success) {}
-  function changeDragoDAO(address _who, address _targetDrago, address _dragoDAO) external returns(bool success) {}
+  function changeDragoDao(address _who, address _targetDrago, address _dragoDao) external returns(bool success) {}
   function depositToExchange(address _who, address _targetDrago, address _exchange, address _token, uint256 _value) external returns(bool success) {}
   function withdrawFromExchange(address _who, address _targetDrago, address _exchange, address _token, uint256 _value) external returns(bool success) {}
   function placeOrderExchange(address _who, address _targetDrago, address _exchange, address _tokenGet, uint _amountGet, address _tokenGive, uint _amountGive, uint _expires) external returns(bool success) {}

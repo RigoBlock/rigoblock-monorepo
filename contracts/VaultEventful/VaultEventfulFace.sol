@@ -24,8 +24,8 @@ contract VaultEventfulFace {
 
   // EVENTS
 
-  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
-  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes32 name, bytes32 symbol);
+  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
+  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
   event NewFee(address indexed vault, address indexed from, address indexed to, uint fee);
   event NewCollector(address indexed vault, address indexed from, address indexed to, address collector);
   event VaultDao(address indexed vault, address indexed from, address indexed to, address vaultDao);
@@ -35,8 +35,8 @@ contract VaultEventfulFace {
 
   // CORE FUNCTIONS
 
-  function buyVault(address _who, address _targetVault, uint _value, uint _amount) external returns (bool success) {}
-  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue) external returns(bool success) {}
+  function buyVault(address _who, address _targetVault, uint _value, uint _amount, string _name, string _symbol) external returns (bool success) {}
+  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue, string _name, string _symbol) external returns(bool success) {}
   function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success) {}
   function setTransactionFee(address _who, address _targetVault, uint _transactionFee) external returns(bool success) {}
   function changeFeeCollector(address _who, address _targetVault, address _feeCollector) external returns(bool success) {}

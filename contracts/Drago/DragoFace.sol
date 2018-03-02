@@ -24,51 +24,17 @@ contract DragoFace {
 
   // CORE FUNCTIONS
 
-  function buyDrago() public payable returns (bool success) {}
-  function sellDrago(uint _amount) public returns (bool success) {}
+  function buyDrago() external payable returns (bool success) {}
+  function buyDragoOnBehalf(address _hodler) public payable returns (bool success) {}
+  function sellDrago(uint _amount) external returns (bool success) {}
   function setPrices(uint _newSellPrice, uint _newBuyPrice)  public {}
   function changeMinPeriod(uint32 _minPeriod) public {}
   function changeRatio(uint _ratio) public {}
   function setTransactionFee(uint _transactionFee) public {}
   function changeFeeCollector(address _feeCollector) public {}
   function changeDragoDao(address _dragoDao) public {}
-  function depositToExchange(address _exchange, address _token, uint _value) public {}
-  function withdrawFromExchange(address _exchange, address _token, uint _value) public {}
-
-  function placeOrderExchange(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint fillTakerTokenAmount,
-    bool stableOrSufficient,
-    uint8 v,
-    bytes32[2] signature)
-    public {}
-
-  function placeTradeExchange(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint fillTakerTokenAmount,
-    bool stableOrSufficient,
-    uint8 v,
-    bytes32[2] signature)
-    public {}
-
-  function cancelOrderExchange(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint cancelTakerTokenAmount)
-    public {}
-
-  function finalizeDeal(
-    address _exchange,
-    address[5] orderAddresses,
-    uint[6] orderValues,
-    uint cancelTakerTokenAmount)
-    public {}
-
+  function depositToExchange(address _exchange, uint _amount) public {}
+  function operateOnExchange(address _exchange) external {}
   function setOwner(address _new) public {}
   function() external payable {}
 

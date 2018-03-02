@@ -22,19 +22,12 @@ pragma solidity ^0.4.20;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultFace {
 
-  // EVENTS
-
-  event Buy(address indexed from, address indexed to, uint256 indexed amount, uint256 revenue);
-  event Sell(address indexed from, address indexed to, uint256 indexed amount,uint256 revenue);
-  event DepositCasper(uint amount, address indexed who, address indexed validation, address indexed withdrawal);
-  event WithdrawCasper(uint deposit, address indexed who, address casper);
-
   // CORE FUNCTIONS
 
   function() external payable {}
-  function buyVault() public payable returns (bool success) {}
+  function buyVault() external payable returns (bool success) {}
   function buyVaultOnBehalf(address _hodler) public payable returns (bool success) {}
-  function sellVault(uint256 amount) public returns (bool success) {}
+  function sellVault(uint256 amount) external returns (bool success) {}
   function depositCasper(address _validation, address _withdrawal, uint _amount) public returns (bool success) {}
   function withdrawCasper(uint128 _validatorIndex) public {}
   function changeRatio(uint256 _ratio) public {}
