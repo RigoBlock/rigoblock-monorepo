@@ -100,7 +100,7 @@ contract DragoEventfulFace {
   function changeRatio(address _who, address _targetDrago, uint256 _ratio) external returns(bool success) {}
   function setTransactionFee(address _who, address _targetDrago, uint _transactionFee) external returns(bool success) {}
   function changeFeeCollector(address _who, address _targetDrago, address _feeCollector) external returns(bool success) {}
-  function changeDragoDAO(address _who, address _targetDrago, address _dragoDAO) external returns(bool success) {}
+  function changeDragoDao(address _who, address _targetDrago, address _dragoDao) external returns(bool success) {}
   function depositToExchange(address _who, address _targetDrago, address _exchange, address _token, uint256 _value) external returns(bool success) {}
   function withdrawFromExchange(address _who, address _targetDrago, address _exchange, address _token, uint256 _value) external returns(bool success) {}
   function placeOrderExchange(address _who, address _targetDrago, address _exchange, address _tokenGet, uint _amountGet, address _tokenGive, uint _amountGive, uint _expires) external returns(bool success) {}

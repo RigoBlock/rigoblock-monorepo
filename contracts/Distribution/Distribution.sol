@@ -67,14 +67,14 @@ contract Vault {
   function changeRatio(uint256 _ratio) public {}
   function setTransactionFee(uint _transactionFee) public {}
   function changeFeeCollector(address _feeCollector) public {}
-  function changeVaultDAO(address _vaultDAO) public {}
+  function changeVaultDao(address _vaultDao) public {}
   function updatePrice() public {}
   function changeMinPeriod(uint32 _minPeriod) public {}
 
   function balanceOf(address _who) public view returns (uint) {}
   function getEventful() public view returns (address) {}
   function getData() public view returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
-  function getAdminData() public view returns (address feeCollector, address vaultDAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
+  function getAdminData() public view returns (address feeCollector, address vaultDao, uint ratio, uint transactionFee, uint32 minPeriod) {}
   function getOwner() public view returns (address) {}
   function totalSupply() public view returns (uint256) {}
   function getCasper() public view returns (address) {}

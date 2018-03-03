@@ -229,7 +229,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   struct VaultData {
     string name;
     string symbol;
-    uint vaultID;
+    uint vaultId;
     uint totalSupply;
     uint price;
     uint transactionFee; //fee is in basis points (1 bps = 0.01%)
@@ -284,14 +284,14 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
   function Vault(
     string _vaultName,
     string _vaultSymbol,
-    uint _vaultID,
+    uint _vaultId,
     address _owner,
     address _authority)
     public
   {
     data.name = _vaultName;
     data.symbol = _vaultSymbol;
-    data.vaultID = _vaultID;
+    data.vaultId = _vaultId;
     data.price = 1 ether; //initial price is 1 Ether
     owner = _owner;
     admin.authority = _authority;

@@ -79,7 +79,7 @@ contract DragoRegistry {
 
   // CORE FUNCTIONS
 
-  function register(address _drago, string _name, string _symbol, uint _dragoID, address _owner) public payable returns (bool) {}
+  function register(address _drago, string _name, string _symbol, uint _dragoId, address _owner) public payable returns (bool) {}
   function unregister(uint _id) public {}
   function setMeta(uint _id, bytes32 _key, bytes32 _value) public {}
   function addGroup(address _group) public {}
@@ -90,10 +90,10 @@ contract DragoRegistry {
   function kill() public {}
 
   function dragoCount() public constant returns (uint) {}
-  function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoID, address owner, address group) {}
-  function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoID, address owner, address group) {}
-  function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoID, address owner, address group) {}
-  function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoID, address owner, address group) {}
+  function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoId, address owner, address group) {}
+  function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoId, address owner, address group) {}
+  function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoId, address owner, address group) {}
+  function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoId, address owner, address group) {}
   function fromNameSymbol(string _name, string _symbol) public constant returns (address) {}
   function getNameFromAddress(address _pool) external constant returns (bytes32) {}
   function getSymbolFromAddress(address _pool) external constant returns (bytes32) {}

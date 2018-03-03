@@ -103,7 +103,7 @@ contract DragoRegistryFace {
 
   // CORE FUNCTIONS
 
-  function register(address _drago, string _name, string _symbol, uint _dragoID, address _owner) public payable returns (bool) {}
+  function register(address _drago, string _name, string _symbol, uint _dragoId, address _owner) public payable returns (bool) {}
   function unregister(uint _id) public {}
   function setMeta(uint _id, bytes32 _key, bytes32 _value) public {}
   function addGroup(address _group) public {}
@@ -114,10 +114,10 @@ contract DragoRegistryFace {
   function kill() public {}
 
   function dragoCount() public constant returns (uint) {}
-  function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoID, address owner, address group) {}
-  function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoID, address owner, address group) {}
-  function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoID, address owner, address group) {}
-  function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoID, address owner, address group) {}
+  function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoId, address owner, address group) {}
+  function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoId, address owner, address group) {}
+  function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoId, address owner, address group) {}
+  function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoId, address owner, address group) {}
   function fromNameSymbol(string _name, string _symbol) public constant returns (address) {}
   function getNameFromAddress(address _pool) external constant returns (bytes32) {}
   function getSymbolFromAddress(address _pool) external constant returns (bytes32) {}
@@ -148,7 +148,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     address drago;
     string name;
     string symbol;
-    uint dragoID;
+    uint dragoId;
     address owner;
     address group;
     mapping (bytes32 => bytes32) meta;
@@ -213,13 +213,13 @@ contract DragoRegistry is DragoRegistryFace, Owned {
   /// @param _drago Address of the pool
   /// @param _name Name of the pool
   /// @param _symbol Symbol of the pool
-  /// @param _dragoID ID number of the pool
+  /// @param _dragoId Id number of the pool
   /// @param _owner Address of the pool owner
   function register(
     address _drago,
     string _name,
     string _symbol,
-    uint _dragoID,
+    uint _dragoId,
     address _owner)
     public
     payable
@@ -230,7 +230,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     when_is_symbol(_symbol)
     returns (bool)
   {
-    return registerAs(_drago, _name, _symbol, _dragoID, _owner, msg.sender);
+    return registerAs(_drago, _name, _symbol, _dragoId, _owner, msg.sender);
   }
 
   /// @dev Allows owner to unregister a pool
@@ -314,7 +314,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
       address drago,
       string name,
       string symbol,
-      uint dragoID,
+      uint dragoId,
       address owner,
       address group
     )
@@ -323,7 +323,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     drago = pool.drago;
     name = pool.name;
     symbol = pool.symbol;
-    dragoID = pool.dragoID;
+    dragoId = pool.dragoId;
     owner = pool.owner;
     group = pool.group;
   }
@@ -338,7 +338,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
       uint id,
       string name,
       string symbol,
-      uint dragoID,
+      uint dragoId,
       address owner,
       address group
     )
@@ -347,7 +347,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     Drago memory pool = dragos[id];
     name = pool.name;
     symbol = pool.symbol;
-    dragoID = pool.dragoID;
+    dragoId = pool.dragoId;
     owner = pool.owner;
     group = pool.group;
   }
@@ -362,7 +362,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
       uint id,
       address drago,
       string name,
-      uint dragoID,
+      uint dragoId,
       address owner,
       address group
     )
@@ -371,7 +371,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     Drago memory pool = dragos[id];
     drago = pool.drago;
     name = pool.name;
-    dragoID = pool.dragoID;
+    dragoId = pool.dragoId;
     owner = pool.owner;
     group = pool.group;
   }
@@ -386,7 +386,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
       uint id,
       address drago,
       string symbol,
-      uint dragoID,
+      uint dragoId,
       address owner,
       address group
     )
@@ -395,7 +395,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     Drago memory pool = dragos[id];
     symbol = pool.symbol;
     drago = pool.drago;
-    dragoID = pool.dragoID;
+    dragoId = pool.dragoId;
     owner = pool.owner;
     group = pool.group;
   }
@@ -444,7 +444,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
   }
 
   /// @dev Provides a pool's metadata
-  /// @param _id ID number of the pool
+  /// @param _id Id number of the pool
   /// @param _key Bytes32 key
   /// @return Pool metadata
   function meta(uint _id, bytes32 _key)
@@ -477,20 +477,20 @@ contract DragoRegistry is DragoRegistryFace, Owned {
   /// @param _drago Address of the pool
   /// @param _name Name of the pool
   /// @param _symbol Symbol of the pool
-  /// @param _dragoID ID number of the pool
+  /// @param _dragoId Id number of the pool
   /// @param _owner Address of the pool owner
   /// @param _group Address of the group/factory
   function registerAs(
     address _drago,
     string _name,
     string _symbol,
-    uint _dragoID,
+    uint _dragoId,
     address _owner,
     address _group)
     internal
     returns (bool)
   {
-    dragos.push(Drago(_drago, _name, _symbol, _dragoID, _owner, _group));
+    dragos.push(Drago(_drago, _name, _symbol, _dragoId, _owner, _group));
     mapFromAddress[_drago] = dragos.length;
     mapFromName[_name] = dragos.length;
     mapFromSymbol[_symbol] = dragos.length;

@@ -53,7 +53,7 @@ ABI
 				"type": "string"
 			},
 			{
-				"name": "dragoID",
+				"name": "dragoId",
 				"type": "uint256"
 			},
 			{
@@ -92,7 +92,7 @@ ABI
 				"type": "string"
 			},
 			{
-				"name": "dragoID",
+				"name": "dragoId",
 				"type": "uint256"
 			},
 			{
@@ -159,7 +159,7 @@ ABI
 				"type": "string"
 			},
 			{
-				"name": "dragoID",
+				"name": "dragoId",
 				"type": "uint256"
 			},
 			{
@@ -306,7 +306,7 @@ ABI
 				"type": "string"
 			},
 			{
-				"name": "dragoID",
+				"name": "dragoId",
 				"type": "uint256"
 			},
 			{
@@ -457,7 +457,7 @@ ABI
 				"type": "string"
 			},
 			{
-				"name": "_dragoID",
+				"name": "_dragoId",
 				"type": "uint256"
 			},
 			{

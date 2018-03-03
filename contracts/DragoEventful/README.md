@@ -1075,11 +1075,11 @@ ABI
 				"type": "address"
 			},
 			{
-				"name": "_dragoDAO",
+				"name": "_dragoDao",
 				"type": "address"
 			}
 		],
-		"name": "changeDragoDAO",
+		"name": "changeDragoDao",
 		"outputs": [
 			{
 				"name": "success",
