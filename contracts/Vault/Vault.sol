@@ -332,7 +332,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         uint amount;
         (grossAmount, feeVault, feeVaultDao, amount) = getPurchaseAmounts();
         addPurchaseLog(amount);
-        allocateTokens(_hodler, amount, feeVault, feeVaultDao);
+        allocatePurchaseTokens(_hodler, amount, feeVault, feeVaultDao);
         data.totalSupply = safeAdd(data.totalSupply, grossAmount);
         return true;
     }
@@ -353,7 +353,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         uint netRevenue;
         (feeVault, feeVaultDao, netAmount, netRevenue) = getSaleAmounts(_amount);
         addSaleLog(_amount, netRevenue);
-        allocateTokens(msg.sender, _amount, feeVault, feeVaultDao);
+        allocateSaleTokens(msg.sender, _amount, feeVault, feeVaultDao);
         data.totalSupply = safeSub(data.totalSupply, netAmount);
         msg.sender.transfer(netRevenue);
         return true;
@@ -544,20 +544,37 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allocates tokens to buyer, splits fee in tokens to wizard and dao
     /// @param _hodler Address of the buyer
-    /// @param _amount Value of tokens issued
-    /// @param _fee_vault Number of shares as fee
-    /// @param _fee_vaultDao Number of shares as fee to dao
-    function allocateTokens(
+    /// @param _amount Value of issued tokens
+    /// @param _feeVault Number of shares as fee
+    /// @param _feeVaultDao Number of shares as fee to dao
+    function allocatePurchaseTokens(
         address _hodler,
         uint _amount,
-        uint _fee_vault,
-        uint _fee_vaultDao)
+        uint _feeVault,
+        uint _feeVaultDao)
         internal
     {
         accounts[_hodler].balance = safeAdd(accounts[_hodler].balance, _amount);
-        accounts[admin.feeCollector].balance = safeAdd(accounts[admin.feeCollector].balance, _fee_vault);
-        accounts[admin.vaultDao].balance = safeAdd(accounts[admin.vaultDao].balance, _fee_vaultDao);
+        accounts[admin.feeCollector].balance = safeAdd(accounts[admin.feeCollector].balance, _feeVault);
+        accounts[admin.vaultDao].balance = safeAdd(accounts[admin.vaultDao].balance, _feeVaultDao);
         accounts[_hodler].receipt.activation = uint32(now) + data.minPeriod;
+    }
+
+    /// @dev Destroys tokens from buyer, splits fee in tokens to wizard and dao
+    /// @param _hodler Address of the seller
+    /// @param _amount Value of burnt tokens
+    /// @param _feeVault Number of shares as fee
+    /// @param _feeVaultDao Number of shares as fee to dao
+    function allocateSaleTokens(
+        address _hodler,
+        uint _amount,
+        uint _feeVault,
+        uint _feeVaultDao)
+        internal
+    {
+        accounts[_hodler].balance = safeSub(accounts[_hodler].balance, _amount);
+        accounts[admin.feeCollector].balance = safeAdd(accounts[admin.feeCollector].balance, _feeVault);
+        accounts[admin.vaultDao].balance = safeAdd(accounts[admin.vaultDao].balance, _feeVaultDao);
     }
 
     /// @dev Sends a buy log to the eventful contract

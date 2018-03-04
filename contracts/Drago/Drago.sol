@@ -434,7 +434,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
         uint amount;
         (grossAmount, feeDrago, feeDragoDao, amount) = getPurchaseAmounts();
         addPurchaseLog(amount);
-        allocateTokens(_hodler, amount, feeDrago, feeDragoDao);
+        allocatePurchaseTokens(_hodler, amount, feeDrago, feeDragoDao);
         data.totalSupply = safeAdd(data.totalSupply, grossAmount);
         Buy(msg.sender, this, msg.value, amount);
         return true;
@@ -456,7 +456,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
         uint netRevenue;
         (feeDrago, feeDragoDao, netAmount, netRevenue) = getSaleAmounts(_amount);
         addSaleLog(_amount, netRevenue);
-        allocateTokens(msg.sender, _amount, feeDrago, feeDragoDao);
+        allocateSaleTokens(msg.sender, _amount, feeDrago, feeDragoDao);
         data.totalSupply = safeSub(data.totalSupply, netAmount);
         msg.sender.transfer(netRevenue);
         Sell(this, msg.sender, _amount, netRevenue);
@@ -617,20 +617,37 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
     /// @dev Allocates tokens to buyer, splits fee in tokens to wizard and dao
     /// @param _hodler Address of the buyer
-    /// @param _amount Value of tokens issued
-    /// @param _fee_drago Number of shares as fee
-    /// @param _fee_dragoDao Number of shares as fee to dao
-    function allocateTokens(
+    /// @param _amount Value of issued tokens
+    /// @param _feeDrago Number of shares as fee
+    /// @param _feeDragoDao Number of shares as fee to dao
+    function allocatePurchaseTokens(
         address _hodler,
         uint _amount,
-        uint _fee_drago,
-        uint _fee_dragoDao)
+        uint _feeDrago,
+        uint _feeDragoDao)
         internal
     {
         accounts[_hodler].balance = safeAdd(accounts[_hodler].balance, _amount);
-        accounts[admin.feeCollector].balance = safeAdd(accounts[admin.feeCollector].balance, _fee_drago);
-        accounts[admin.dragoDao].balance = safeAdd(accounts[admin.dragoDao].balance, _fee_dragoDao);
+        accounts[admin.feeCollector].balance = safeAdd(accounts[admin.feeCollector].balance, _feeDrago);
+        accounts[admin.dragoDao].balance = safeAdd(accounts[admin.dragoDao].balance, _feeDragoDao);
         accounts[_hodler].receipt.activation = uint32(now) + data.minPeriod;
+    }
+
+    /// @dev Destroys tokens of seller, splits fee in tokens to wizard and dao
+    /// @param _hodler Address of the seller
+    /// @param _amount Value of burnt tokens
+    /// @param _feeDrago Number of shares as fee
+    /// @param _feeDragoDao Number of shares as fee to dao
+    function allocateSaleTokens(
+        address _hodler,
+        uint _amount,
+        uint _feeDrago,
+        uint _feeDragoDao)
+        internal
+    {
+        accounts[_hodler].balance = safeSub(accounts[_hodler].balance, _amount);
+        accounts[admin.feeCollector].balance = safeAdd(accounts[admin.feeCollector].balance, _feeDrago);
+        accounts[admin.dragoDao].balance = safeAdd(accounts[admin.dragoDao].balance, _feeDragoDao);
     }
 
     /// @dev Sends a buy log to the eventful contract
