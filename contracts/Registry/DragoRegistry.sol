@@ -318,14 +318,14 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         )
     {
         Drago memory pool = dragos[_id];
-        return ({
-            drago: pool.drago,
-            name: pool.name,
-            symbol: pool.symbol,
-            dragoId: pool.dragoId,
-            owner: pool.owner,
-            group: pool.group
-        });
+        return (
+            drago = pool.drago,
+            name = pool.name,
+            symbol = pool.symbol,
+            dragoId = pool.dragoId,
+            owner = pool.owner,
+            group = pool.group
+        );
     }
 
     /// @dev Provides a pool's struct data
@@ -345,14 +345,14 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     {
         id = mapFromAddress[_drago] - 1;
         Drago memory pool = dragos[id];
-        return ({
+        return (
             id,
-            name: pool.name,
-            symbol: pool.symbol,
-            dragoId: pool.dragoId,
-            owner: pool.owner,
-            group: pool.group
-        });
+            name = pool.name,
+            symbol = pool.symbol,
+            dragoId = pool.dragoId,
+            owner = pool.owner,
+            group = pool.group
+        );
     }
 
     /// @dev Provides a pool's struct data
@@ -372,14 +372,14 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     {
         id = mapFromSymbol[_symbol] - 1;
         Drago memory pool = dragos[id];
-        return ({
+        return (
             id,
-            drago: pool.drago,
-            name: pool.name,
-            dragoId: pool.dragoId,
-            owner: pool.owner,
-            group: pool.group
-        });
+            drago = pool.drago,
+            name = pool.name,
+            dragoId = pool.dragoId,
+            owner = pool.owner,
+            group = pool.group
+        );
     }
 
     /// @dev Provides a pool's struct data
@@ -399,14 +399,14 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     {
         id = mapFromName[_name] - 1;
         Drago memory pool = dragos[id];
-        return ({
+        return (
             id,
-            drago: pool.drago,
-            symbol: pool.symbol,
-            dragoId: pool.dragoId,
-            owner: pool.owner,
-            group: pool.group
-        });
+            drago = pool.drago,
+            symbol = pool.symbol,
+            dragoId = pool.dragoId,
+            owner = pool.owner,
+            group = pool.group
+        );
     }
 
     /// @dev Provides a pool's struct data
