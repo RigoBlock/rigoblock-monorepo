@@ -22,24 +22,24 @@ pragma solidity ^0.4.20;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract ProofOfPerformanceFace {
 
-  // CORE FUNCTIONS
+    // CORE FUNCTIONS
 
-  function claimPop(uint _ofPool) public {}
-  function setRegistry(address _dragoRegistry) external {}
-  function setRigoblockDao(address _rigoblockDao) external {}
-  function setRatio(address _ofGroup, uint _ratio) public {}
-  function setMinimumRigo(uint256 _amount) external {}
+    function claimPop(uint _ofPool) public {}
+    function setRegistry(address _dragoRegistry) external {}
+    function setRigoblockDao(address _rigoblockDao) external {}
+    function setRatio(address _ofGroup, uint _ratio) public {}
+    function setMinimumRigo(uint256 _amount) external {}
 
-  // CONSTANT PUBLIC FUNCTIONS
+    // CONSTANT PUBLIC FUNCTIONS
 
-  function isActive(uint _ofPool) public constant returns (bool) {}
-  function addressFromId(uint _ofPool) public constant returns (address pool, address group) {}
-  function getPoolPrice(uint _ofPool) public constant returns (uint thePoolPrice, uint totalTokens) {}
-  function getPoolPrices() public constant returns (address[] pools, uint[] poolPrices, uint[] totalTokens) {}
-  function calcPoolValue(uint256 _ofPool) public /*internal*/ constant returns (uint256 aum, bool success) {}
-  function calcNetworkValue() public constant returns (uint networkValue, uint numberOfFunds) {}
-  function getEpochReward(uint _ofPool) public constant returns (uint) {}
-  function getRatio(uint _ofPool) public constant returns (uint) {}
-  function proofOfPerformance(uint _ofPool) public constant returns (uint256) {}
-  function getHwm(uint _ofPool) public constant returns (uint) {}
+    function isActive(uint _ofPool) public constant returns (bool) {}
+    function addressFromId(uint _ofPool) public constant returns (address pool, address group) {}
+    function getPoolPrice(uint _ofPool) public constant returns (uint thePoolPrice, uint totalTokens) {}
+    function getPoolPrices() public constant returns (address[] pools, uint[] poolPrices, uint[] totalTokens) {}
+    function calcPoolValue(uint256 _ofPool) public /*internal*/ constant returns (uint256 aum, bool success) {}
+    function calcNetworkValue() public constant returns (uint networkValue, uint numberOfFunds) {}
+    function getEpochReward(uint _ofPool) public constant returns (uint) {}
+    function getRatio(uint _ofPool) public constant returns (uint) {}
+    function proofOfPerformance(uint _ofPool) public constant returns (uint256) {}
+    function getHwm(uint _ofPool) public constant returns (uint) {}
 }

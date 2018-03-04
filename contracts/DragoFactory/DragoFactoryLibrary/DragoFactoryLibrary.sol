@@ -22,43 +22,43 @@ pragma solidity ^0.4.20;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 library DragoFactoryLibrary {
 
-  struct NewDrago {
-    string name;
-    string symbol;
-    uint256 dragoId;
-    address owner;
-    address newAddress;
-  }
+    struct NewDrago {
+        string name;
+        string symbol;
+        uint256 dragoId;
+        address owner;
+        address newAddress;
+    }
 
-  modifier whitelisted_factory(address _authority) {
-    Authority auth = Authority(_authority);
-    if (auth.isWhitelistedFactory(this)) _;
-  }
+    modifier whitelisted_factory(address _authority) {
+        Authority auth = Authority(_authority);
+        if (auth.isWhitelistedFactory(this)) _;
+    }
 
-  /// @dev Allows an approved factory to create new dragos
-  /// @param _name String of the name
-  /// @param _symbol String of the symbol
-  /// @param _owner Address of the owner
-  /// @param _dragoId Number of Id of the drago from the registry
-  /// @param _authority Address of the respective authority
-  /// @return Bool the function executed
-  function createDrago(
-    NewDrago storage self,
-    string _name,
-    string _symbol,
-    address _owner,
-    uint _dragoId,
-    address _authority)
-    internal
-    whitelisted_factory(_authority)
-    returns (bool success)
-  {
-    Drago drago = new Drago(_name, _symbol, _dragoId, _owner, _authority);
-    self.name = _name;
-    self.symbol = _symbol;
-    self.dragoId = _dragoId;
-    self.newAddress = address(drago);
-    self.owner = _owner;
-    return true;
-  }
+    /// @dev Allows an approved factory to create new dragos
+    /// @param _name String of the name
+    /// @param _symbol String of the symbol
+    /// @param _owner Address of the owner
+    /// @param _dragoId Number of Id of the drago from the registry
+    /// @param _authority Address of the respective authority
+    /// @return Bool the function executed
+    function createDrago(
+        NewDrago storage self,
+        string _name,
+        string _symbol,
+        address _owner,
+        uint _dragoId,
+        address _authority)
+        internal
+        whitelisted_factory(_authority)
+        returns (bool success)
+    {
+        Drago drago = new Drago(_name, _symbol, _dragoId, _owner, _authority);
+        self.name = _name;
+        self.symbol = _symbol;
+        self.dragoId = _dragoId;
+        self.newAddress = address(drago);
+        self.owner = _owner;
+        return true;
+    }
 }

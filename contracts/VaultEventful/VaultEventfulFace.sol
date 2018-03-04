@@ -22,26 +22,26 @@ pragma solidity ^0.4.20;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultEventfulFace {
 
-  // EVENTS
+    // EVENTS
 
-  event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
-  event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
-  event NewFee(address indexed vault, address indexed from, address indexed to, uint fee);
-  event NewCollector(address indexed vault, address indexed from, address indexed to, address collector);
-  event VaultDao(address indexed vault, address indexed from, address indexed to, address vaultDao);
-  event DepositCasper(address indexed vault, address indexed validator, address indexed casper, address withdrawal, uint amount);
-  event WithdrawCasper(address indexed vault, address indexed validator, address indexed casper, uint validatorIndex);
-  event VaultCreated(address indexed vault, address indexed group, address indexed owner, uint vaultId, string name, string symbol);
+    event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
+    event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
+    event NewFee(address indexed vault, address indexed from, address indexed to, uint fee);
+    event NewCollector(address indexed vault, address indexed from, address indexed to, address collector);
+    event VaultDao(address indexed vault, address indexed from, address indexed to, address vaultDao);
+    event DepositCasper(address indexed vault, address indexed validator, address indexed casper, address withdrawal, uint amount);
+    event WithdrawCasper(address indexed vault, address indexed validator, address indexed casper, uint validatorIndex);
+    event VaultCreated(address indexed vault, address indexed group, address indexed owner, uint vaultId, string name, string symbol);
 
-  // CORE FUNCTIONS
+    // CORE FUNCTIONS
 
-  function buyVault(address _who, address _targetVault, uint _value, uint _amount, string _name, string _symbol) external returns (bool success) {}
-  function sellVault(address _who, address _targetVault, uint _amount, uint _revenue, string _name, string _symbol) external returns(bool success) {}
-  function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success) {}
-  function setTransactionFee(address _who, address _targetVault, uint _transactionFee) external returns(bool success) {}
-  function changeFeeCollector(address _who, address _targetVault, address _feeCollector) external returns(bool success) {}
-  function changeVaultDao(address _who, address _targetVault, address _vaultDao) external returns(bool success) {}
-  function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) external returns(bool success) {}
-  function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) external returns(bool success) {}
-  function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultId, address _owner) external returns(bool success) {}
+    function buyVault(address _who, address _targetVault, uint _value, uint _amount, string _name, string _symbol) external returns (bool success) {}
+    function sellVault(address _who, address _targetVault, uint _amount, uint _revenue, string _name, string _symbol) external returns(bool success) {}
+    function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success) {}
+    function setTransactionFee(address _who, address _targetVault, uint _transactionFee) external returns(bool success) {}
+    function changeFeeCollector(address _who, address _targetVault, address _feeCollector) external returns(bool success) {}
+    function changeVaultDao(address _who, address _targetVault, address _vaultDao) external returns(bool success) {}
+    function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) external returns(bool success) {}
+    function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) external returns(bool success) {}
+    function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultId, address _owner) external returns(bool success) {}
 }

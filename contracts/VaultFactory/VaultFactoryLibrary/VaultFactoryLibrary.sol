@@ -22,43 +22,43 @@ pragma solidity ^0.4.20;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 library VaultFactoryLibrary {
 
-  struct NewVault {
-    string name;
-    string symbol;
-    uint256 vaultId;
-    address owner;
-    address newAddress;
-  }
+    struct NewVault {
+        string name;
+        string symbol;
+        uint256 vaultId;
+        address owner;
+        address newAddress;
+    }
 
-  modifier whitelisted_factory(address _authority) {
-    Authority auth = Authority(_authority);
-    if (auth.isWhitelistedFactory(this)) _;
-  }
+    modifier whitelisted_factory(address _authority) {
+        Authority auth = Authority(_authority);
+        if (auth.isWhitelistedFactory(this)) _;
+    }
 
-  /// @dev Allows an approved factory to create new vaults
-  /// @param _name String of the name
-  /// @param _symbol String of the symbol
-  /// @param _owner Address of the owner
-  /// @param _vaultId Number of Id of the vault from the registry
-  /// @param _authority Address of the respective authority
-  /// @return Bool the function executed
-  function createVault(
-    NewVault storage self,
-    string _name,
-    string _symbol,
-    address _owner,
-    uint _vaultId,
-    address _authority)
-    internal
-    whitelisted_factory(_authority)
-    returns (bool success)
-  {
-    Vault vault = new Vault(_name, _symbol, _vaultId, _owner, _authority);
-    self.name = _name;
-    self.symbol = _symbol;
-    self.vaultId = _vaultId;
-    self.newAddress = address(vault);
-    self.owner = _owner;
-    return true;
-  }
+    /// @dev Allows an approved factory to create new vaults
+    /// @param _name String of the name
+    /// @param _symbol String of the symbol
+    /// @param _owner Address of the owner
+    /// @param _vaultId Number of Id of the vault from the registry
+    /// @param _authority Address of the respective authority
+    /// @return Bool the function executed
+    function createVault(
+        NewVault storage self,
+        string _name,
+        string _symbol,
+        address _owner,
+        uint _vaultId,
+        address _authority)
+        internal
+        whitelisted_factory(_authority)
+        returns (bool success)
+    {
+        Vault vault = new Vault(_name, _symbol, _vaultId, _owner, _authority);
+        self.name = _name;
+        self.symbol = _symbol;
+        self.vaultId = _vaultId;
+        self.newAddress = address(vault);
+        self.owner = _owner;
+        return true;
+    }
 }

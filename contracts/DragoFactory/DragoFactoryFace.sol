@@ -22,23 +22,23 @@ pragma solidity ^0.4.20;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract DragoFactoryFace {
 
-  event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint dragoId);
+    event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint dragoId);
 
-  function createDrago(string _name, string _symbol) public returns (bool success) {}
-  function setTargetDragoDao(address _targetDrago, address _dragoDao) public {}
-  function changeDragoDao(address _newDragoDao) public {}
-  function setRegistry(address _newRegistry) public {}
-  function setBeneficiary(address _dragoDao) public {}
-  function setFee(uint _fee) public {}
-  function drain() public {}
-  function setOwner(address _new) {}
+    function createDrago(string _name, string _symbol) public returns (bool success) {}
+    function setTargetDragoDao(address _targetDrago, address _dragoDao) public {}
+    function changeDragoDao(address _newDragoDao) public {}
+    function setRegistry(address _newRegistry) public {}
+    function setBeneficiary(address _dragoDao) public {}
+    function setFee(uint _fee) public {}
+    function drain() public {}
+    function setOwner(address _new) {}
 
-  function getRegistry() public constant returns (address) {}
-  function getStorage() public constant returns (address dragoDao, string VERSION, uint nextDragoId) {}
-  function getNextId() public constant returns (uint nextDragoId) {}
-  function getEventful() public constant returns (address) {}
-  function getDragoDao() public constant returns (address dragoDao) {}
-  function getVersion() public constant returns (string) {}
-  function getDragosByAddress(address _owner) public constant returns (address[]) {}
-  function getOwner() constant returns (address) {}
+    function getRegistry() public constant returns (address) {}
+    function getStorage() public constant returns (address dragoDao, string VERSION, uint nextDragoId) {}
+    function getNextId() public constant returns (uint nextDragoId) {}
+    function getEventful() public constant returns (address) {}
+    function getDragoDao() public constant returns (address dragoDao) {}
+    function getVersion() public constant returns (string) {}
+    function getDragosByAddress(address _owner) public constant returns (address[]) {}
+    function getOwner() constant returns (address) {}
 }

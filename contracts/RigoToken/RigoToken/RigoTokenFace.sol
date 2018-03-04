@@ -22,26 +22,26 @@ pragma solidity ^0.4.20;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract RigoTokenFace {
 
-  // EVENTS
+    // EVENTS
 
-  event TokenMinted(address indexed recipient, uint amount);
+    event TokenMinted(address indexed recipient, uint amount);
 
-  // CORE FUNCTIONS
+    // CORE FUNCTIONS
 
-  function mintToken(address _recipient, uint _amount) external {}
-  //function transfer(address _recipient, uint _amount) public returns (bool success) {}
-  //function transferFrom(address _sender, address _recipient, uint _amount) public returns (bool success) {}
-  function changeMintingAddress(address _newAddress) public {}
-  function changeRigoblockAddress(address _newAddress) public {}
+    function mintToken(address _recipient, uint _amount) external {}
+    //function transfer(address _recipient, uint _amount) public returns (bool success) {}
+    //function transferFrom(address _sender, address _recipient, uint _amount) public returns (bool success) {}
+    function changeMintingAddress(address _newAddress) public {}
+    function changeRigoblockAddress(address _newAddress) public {}
 
-  // CONSTANT PUBLIC FUNCTIONS
+    // CONSTANT PUBLIC FUNCTIONS
 
-  //function balanceOf(address _owner) constant returns (uint256 balance) {}
-  //function totalSupply() constant returns (uint256 totalSupply) {}
-  function getName() public constant returns (string) {}
-  function getSymbol() public constant returns (string) {}
-  function getDecimals() public constant returns (uint) {}
-  function getMinter() public constant returns (address) {}
-  function getRigoblock() public constant returns (address) {}
-  function getInflationFactor(address _group) public constant returns (uint) {}
+    //function balanceOf(address _owner) constant returns (uint256 balance) {}
+    //function totalSupply() constant returns (uint256 totalSupply) {}
+    function getName() public constant returns (string) {}
+    function getSymbol() public constant returns (string) {}
+    function getDecimals() public constant returns (uint) {}
+    function getMinter() public constant returns (address) {}
+    function getRigoblock() public constant returns (address) {}
+    function getInflationFactor(address _group) public constant returns (uint) {}
 }

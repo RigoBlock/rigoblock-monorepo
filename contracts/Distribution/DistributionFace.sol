@@ -22,9 +22,9 @@ pragma solidity ^0.4.20;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract DistributionFace {
 
-  event Subscription(address indexed buyer, address indexed distributor, uint amount);
+    event Subscription(address indexed buyer, address indexed distributor, uint amount);
 
-  function subscribe(address _pool, address _distributor, address _buyer) {}
-  function setFee(uint _fee, address _distributor) public {}
-  function getFee(address _distributor) public constant returns (uint) {}
+    function subscribe(address _pool, address _distributor, address _buyer) {}
+    function setFee(uint _fee, address _distributor) public {}
+    function getFee(address _distributor) public constant returns (uint) {}
 }

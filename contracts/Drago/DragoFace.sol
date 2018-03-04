@@ -22,28 +22,28 @@ pragma solidity ^0.4.20;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract DragoFace {
 
-  // CORE FUNCTIONS
+    // CORE FUNCTIONS
 
-  function buyDrago() external payable returns (bool success) {}
-  function buyDragoOnBehalf(address _hodler) public payable returns (bool success) {}
-  function sellDrago(uint _amount) external returns (bool success) {}
-  function setPrices(uint _newSellPrice, uint _newBuyPrice)  public {}
-  function changeMinPeriod(uint32 _minPeriod) public {}
-  function changeRatio(uint _ratio) public {}
-  function setTransactionFee(uint _transactionFee) public {}
-  function changeFeeCollector(address _feeCollector) public {}
-  function changeDragoDao(address _dragoDao) public {}
-  function depositToExchange(address _exchange, uint _amount) public {}
-  function operateOnExchange(address _exchange) external {}
-  function setOwner(address _new) public {}
-  function() external payable {}
+    function buyDrago() external payable returns (bool success) {}
+    function buyDragoOnBehalf(address _hodler) public payable returns (bool success) {}
+    function sellDrago(uint _amount) external returns (bool success) {}
+    function setPrices(uint _newSellPrice, uint _newBuyPrice)  public {}
+    function changeMinPeriod(uint32 _minPeriod) public {}
+    function changeRatio(uint _ratio) public {}
+    function setTransactionFee(uint _transactionFee) public {}
+    function changeFeeCollector(address _feeCollector) public {}
+    function changeDragoDao(address _dragoDao) public {}
+    function depositToExchange(address _exchange, uint _amount) public {}
+    function operateOnExchange(address _exchange) external {}
+    function setOwner(address _new) public {}
+    function() external payable {}
 
-  // PUBLIC CONSTANT FUNCTIONS
+    // PUBLIC CONSTANT FUNCTIONS
 
-  function balanceOf(address _who) public constant returns (uint) {}
-  function getDragoEventful() public constant returns (address) {}
-  function getData() public constant returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
-  function getAdminData() public constant returns (address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
-  function getOwner() public constant returns (address) {}
-  function totalSupply() public constant returns (uint256) {}
+    function balanceOf(address _who) public constant returns (uint) {}
+    function getDragoEventful() public constant returns (address) {}
+    function getData() public constant returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
+    function getAdminData() public constant returns (address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
+    function getOwner() public constant returns (address) {}
+    function totalSupply() public constant returns (uint256) {}
 }
