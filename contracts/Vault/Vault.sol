@@ -309,7 +309,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @dev Allows a user to buy into a vault
     /// @return Bool the function executed correctly
     function buyVault()
-        public
+        external
         payable
         returns (bool success)
     {
@@ -341,7 +341,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @param _amount Number of shares to sell
     /// @return Bool the function executed correctly
     function sellVault(uint256 _amount)
-        public
+        external
         has_enough(_amount)
         positive_amount(_amount)
         minimum_period_past
@@ -619,12 +619,12 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     {
         grossAmount = safeDiv(msg.value * BASE, getNav());
         uint fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
-        return ({
+        return (
             grossAmount = safeDiv(msg.value * BASE, getNav()),
             feeVault = safeMul(fee , admin.ratio) / 100,
             feeVaultDao = safeSub(fee, feeVault),
             amount = safeSub(grossAmount, fee)
-        });
+        );
     }
 
     /// @dev Calculates the correct sale amounts
@@ -643,11 +643,11 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         )
     {
         uint fee = safeMul(_amount, data.transactionFee) / 10000; //fee is in basis points
-        return ({
+        return (
             feeVault = safeMul(fee, admin.ratio) / 100,
             feeVaultDao = safeSub(fee, feeVaultDao),
             netAmount = safeSub(_amount, fee),
             netRevenue = (safeMul(netAmount, getNav()) / BASE)
-        });
+        );
     }
 }

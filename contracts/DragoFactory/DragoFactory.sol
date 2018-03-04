@@ -20,6 +20,8 @@ pragma solidity ^0.4.20;
 
     /*
     * import the drago contract code first
+    * import { Drago, Authority, Owned, DragoEventful } from "./Drago.sol";
+    * import { Drago, Authority, Owned, DragoEventful } from "../Drago/Drago.sol";
     */
 
 /// @title Drago Factory library - Reduces size of drago factory.

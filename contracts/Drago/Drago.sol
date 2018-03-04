@@ -692,12 +692,12 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     {
         grossAmount = safeDiv(msg.value * BASE, data.buyPrice);
         uint fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
-        return ({
+        return (
             grossAmount = safeDiv(msg.value * BASE, data.buyPrice),
             feeDrago = safeMul(fee , admin.ratio) / 100,
             feeDragoDao = safeSub(fee, feeDrago),
             amount = safeSub(grossAmount, fee)
-        });
+        );
     }
 
     /// @dev Calculates the correct sale amounts
@@ -716,12 +716,12 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
         )
     {
         uint fee = safeMul(_amount, data.transactionFee) / 10000; //fee is in basis points
-        return ({
+        return (
             feeDrago = safeMul(fee, admin.ratio) / 100,
             feeDragoDao = safeSub(fee, feeDragoDao),
             netAmount = safeSub(_amount, fee),
             netRevenue = (safeMul(netAmount, data.sellPrice) / BASE)
-        });
+        );
     }
 
     /// @dev Returns the address of the exchange adapter

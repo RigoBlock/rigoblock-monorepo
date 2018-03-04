@@ -20,6 +20,8 @@ pragma solidity ^0.4.20;
 
     /*
     * import the vault contract code first
+    * import { Vault, Authority, Owned, VaultEventful } from "./Vault.sol";
+    * import { Vault, Authority, Owned, VaultEventful } from "./Vault/Vault.sol";
     */
 
 /// @title Vault Factory library - Reduces size of vault factory.
@@ -186,13 +188,13 @@ contract VaultFactory is Owned, VaultFactoryFace {
         uint regFee = registry.getFee();
         uint vaultId = registry.dragoCount();
         require(createVaultInternal(_name, _symbol, msg.sender, vaultId));
-        assert(registry.register.value(regFee)({
+        assert(registry.register.value(regFee)(
             libraryData.newAddress,
             _name,
             _symbol,
             vaultId,
             msg.sender)
-        });
+        );
         return true;
     }
 
