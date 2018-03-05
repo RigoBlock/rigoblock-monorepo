@@ -35,12 +35,12 @@ contract Distribution is SafeMath {
         uint fee;
     }
 
-    modifier address_free(address _distributor) {
+    modifier addressFree(address _distributor) {
         require(distributor[_distributor].fee == 0);
         _;
     }
 
-    modifier non_zero_address(address _target) {
+    modifier nonZeroAddress(address _target) {
         require(_target != 0);
         _;
     }
@@ -59,13 +59,13 @@ contract Distribution is SafeMath {
 
     function setFee(uint _fee, address _distributor)
         public
-        address_free(_distributor)
-        non_zero_address(_distributor)
+        addressFree(_distributor)
+        nonZeroAddress(_distributor)
     {
         distributor[_distributor].fee = _fee;
     }
 
-    function getFee(address _distributor) public constant returns (uint) {
+    function getFee(address _distributor) public view returns (uint) {
         return distributor[_distributor].fee;
     }
 }

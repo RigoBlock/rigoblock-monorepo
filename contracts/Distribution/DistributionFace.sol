@@ -26,5 +26,5 @@ contract DistributionFace {
 
     function subscribe(address _pool, address _distributor, address _buyer) public payable {}
     function setFee(uint _fee, address _distributor) public {}
-    function getFee(address _distributor) public constant returns (uint) {}
+    function getFee(address _distributor) public view returns (uint) {}
 }

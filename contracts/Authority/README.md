@@ -17,7 +17,7 @@ ABI
 ```
 [
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_asset",
@@ -36,7 +36,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_group",
@@ -55,7 +55,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getOwner",
 		"outputs": [
@@ -69,7 +69,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getVaultEventful",
 		"outputs": [
@@ -83,7 +83,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getExchangeEventful",
 		"outputs": [
@@ -97,7 +97,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_drago",
@@ -116,7 +116,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_exchange",
@@ -135,7 +135,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_factory",
@@ -154,7 +154,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_registry",
@@ -173,7 +173,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_target",
@@ -192,7 +192,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_exchange",
@@ -211,7 +211,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -225,7 +225,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getDragoEventful",
 		"outputs": [
@@ -239,7 +239,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_whitelister",
@@ -258,7 +258,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getCasper",
 		"outputs": [
@@ -272,7 +272,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_vault",
@@ -291,7 +291,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_authority",
@@ -339,7 +339,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_vault",
@@ -374,7 +374,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_authority",
@@ -409,7 +409,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_dragoEventful",
@@ -440,7 +440,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_exchangeEventful",
@@ -471,7 +471,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_new",
@@ -502,7 +502,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_whitelister",
@@ -537,7 +537,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_drago",
@@ -567,7 +567,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_factory",
@@ -597,7 +597,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_casper",
@@ -611,7 +611,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_target",
@@ -682,7 +682,7 @@ ABI
 		"type": "event"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_vaultEventful",
@@ -696,7 +696,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_exchange",
@@ -714,7 +714,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_registry",
@@ -732,7 +732,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_exchange",
@@ -750,7 +750,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_asset",

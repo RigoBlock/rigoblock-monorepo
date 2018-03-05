@@ -33,10 +33,10 @@ contract VaultFactoryFace {
     function drain() public {}
     //function setOwner(address _new) public {}
 
-    function getRegistry() public constant returns (address) {}
-    function getStorage() public constant returns (address vaultDao, string version, uint nextVaultId) {}
-    function getNextId() public constant returns (uint nextVaultId) {}
-    function getEventful() public constant returns (address) {}
-    function getVaultsByAddress(address _owner) public constant returns (address[]) {}
-    //function getOwner() public constant returns (address) {}
+    function getRegistry() public view returns (address) {}
+    function getStorage() public view returns (address vaultDao, string version, uint nextVaultId) {}
+    function getNextId() public view returns (uint nextVaultId) {}
+    function getEventful() public view returns (address) {}
+    function getVaultsByAddress(address _owner) public view returns (address[]) {}
+    //function getOwner() public view returns (address) {}
 }

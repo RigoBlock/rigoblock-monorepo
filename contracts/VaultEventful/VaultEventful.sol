@@ -95,22 +95,22 @@ contract VaultEventful is VaultEventfulFace {
         string symbol
     );
 
-    modifier approved_factory_only(address _factory) {
+    modifier approvedFactoryOnly(address _factory) {
         Authority auth = Authority(AUTHORITY);
         if (auth.isWhitelistedFactory(_factory)) _;
     }
 
-    modifier approved_vault_only(address _vault) {
+    modifier approvedVaultOnly(address _vault) {
         Authority auth = Authority(AUTHORITY);
         if (auth.isWhitelistedVault(_vault)) _;
     }
 
-    modifier is_casper(address _casper) {
+    modifier isCasper(address _casper) {
         Authority auth = Authority(AUTHORITY);
         if (auth.getCasper() == _casper) _;
     }
 
-    modifier approved_user_only(address _user) {
+    modifier approvedUserOnly(address _user) {
         Authority auth = Authority(AUTHORITY);
         if (auth.isWhitelistedUser(_user)) _;
     }
@@ -137,7 +137,7 @@ contract VaultEventful is VaultEventfulFace {
         bytes _name,
         bytes _symbol)
         external
-        approved_vault_only(_targetVault)
+        approvedVaultOnly(_targetVault)
         returns (bool success)
     {
         require(msg.sender == _targetVault);
@@ -160,7 +160,7 @@ contract VaultEventful is VaultEventfulFace {
         bytes _name,
         bytes _symbol)
         external
-        approved_vault_only(_targetVault)
+        approvedVaultOnly(_targetVault)
         returns(bool success)
     {
         require(_amount > 0);
@@ -179,8 +179,8 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         uint _transactionFee)
         external
-        approved_vault_only(_targetVault)
-        approved_user_only(_who)
+        approvedVaultOnly(_targetVault)
+        approvedUserOnly(_who)
         returns(bool success)
     {
         require(msg.sender == _targetVault);
@@ -198,8 +198,8 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         address _feeCollector)
         external
-        approved_vault_only(_targetVault)
-        approved_user_only(_who)
+        approvedVaultOnly(_targetVault)
+        approvedUserOnly(_who)
         returns(bool success)
     {
         require(msg.sender == _targetVault);
@@ -217,8 +217,8 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         address _vaultDao)
         external
-        approved_vault_only(_targetVault)
-        approved_user_only(_who)
+        approvedVaultOnly(_targetVault)
+        approvedUserOnly(_who)
         returns(bool success)
     {
         require(msg.sender == _targetVault);
@@ -241,8 +241,8 @@ contract VaultEventful is VaultEventfulFace {
         address _withdrawal,
         uint _amount)
         external
-        approved_vault_only(_targetVault)
-        approved_user_only(_who)
+        approvedVaultOnly(_targetVault)
+        approvedUserOnly(_who)
         returns(bool success)
     {
         require(msg.sender == _targetVault);
@@ -262,8 +262,8 @@ contract VaultEventful is VaultEventfulFace {
         address _casper,
         uint _validatorIndex)
         external
-        approved_vault_only(_targetVault)
-        approved_user_only(_who)
+        approvedVaultOnly(_targetVault)
+        approvedUserOnly(_who)
         returns(bool success)
     {
         require(msg.sender == _targetVault);
@@ -287,7 +287,7 @@ contract VaultEventful is VaultEventfulFace {
         string _symbol,
         uint _vaultId)
         external
-        approved_factory_only(_vaultFactory)
+        approvedFactoryOnly(_vaultFactory)
         returns(bool success)
     {
         require(msg.sender == _vaultFactory);

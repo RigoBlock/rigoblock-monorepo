@@ -84,12 +84,20 @@ contract Authority is Owned, AuthorityFace {
 
     // MODIFIERS
 
-    modifier only_admin {
-        if (msg.sender == owner || isWhitelister(msg.sender)) _;
+    modifier onlyAdmin {
+        if (msg.sender == owner || isWhitelister(msg.sender))
+        _;
     }
 
-    modifier only_whitelister { if (isWhitelister(msg.sender)) _; }
-    modifier only_authority { if (isAuthority(msg.sender)) _; }
+    modifier onlyWhitelister {
+        if (isWhitelister(msg.sender))
+        _;
+    }
+
+    modifier onlyAuthority {
+        if (isAuthority(msg.sender))
+        _;
+    }
 
     // CORE CORE FUNCTIONS
 
@@ -98,7 +106,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _isWhitelisted Bool whitelisted
     function setAuthority(address _authority, bool _isWhitelisted)
         public
-        only_owner
+        onlyOwner
     {
         accounts[_authority].account = _authority;
         accounts[_authority].authorized = _isWhitelisted;
@@ -113,7 +121,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _isWhitelisted Bool whitelisted
     function setWhitelister(address _whitelister, bool _isWhitelisted)
         public
-        only_owner
+        onlyOwner
     {
         accounts[_whitelister].account = _whitelister;
         accounts[_whitelister].authorized = _isWhitelisted;
@@ -127,7 +135,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _isWhitelisted Bool whitelisted
     function whitelistUser(address _target, bool _isWhitelisted)
         public
-        only_whitelister
+        onlyWhitelister
     {
         accounts[_target].account = _target;
         accounts[_target].authorized = _isWhitelisted;
@@ -141,7 +149,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _isWhitelisted Bool whitelisted
     function whitelistAsset(address _asset, bool _isWhitelisted)
         public
-        only_whitelister
+        onlyWhitelister
     {
         accounts[_asset].account = _asset;
         accounts[_asset].authorized = _isWhitelisted;
@@ -155,7 +163,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _isWhitelisted Bool whitelisted
     function whitelistExchange(address _exchange, bool _isWhitelisted)
         public
-        only_whitelister
+        onlyWhitelister
     {
         accounts[_exchange].account = _exchange;
         accounts[_exchange].authorized = _isWhitelisted;
@@ -169,7 +177,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _isWhitelisted Bool whitelisted
     function whitelistDrago(address _drago, bool _isWhitelisted)
         public
-        only_admin
+        onlyAdmin
     {
         accounts[_drago].account = _drago;
         accounts[_drago].authorized = _isWhitelisted;
@@ -183,7 +191,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _isWhitelisted Bool whitelisted
     function whitelistVault(address _vault, bool _isWhitelisted)
         public
-        only_admin
+        onlyAdmin
     {
         accounts[_vault].account = _vault;
         accounts[_vault].authorized = _isWhitelisted;
@@ -197,7 +205,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _isWhitelisted Bool whitelisted
     function whitelistRegistry(address _registry, bool _isWhitelisted)
         public
-        only_admin
+        onlyAdmin
     {
         accounts[_registry].account = _registry;
         accounts[_registry].authorized = _isWhitelisted;
@@ -211,7 +219,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _isWhitelisted Bool whitelisted
     function whitelistFactory(address _factory, bool _isWhitelisted)
         public
-        only_admin
+        onlyAdmin
     {
         accounts[_factory].account = _factory;
         accounts[_factory].authorized = _isWhitelisted;
@@ -224,7 +232,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _dragoEventful Address of the logs contract
     function setDragoEventful(address _dragoEventful)
         public
-        only_owner
+        onlyOwner
     {
         blocks.dragoEventful = _dragoEventful;
         NewDragoEventful(blocks.dragoEventful);
@@ -234,7 +242,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _vaultEventful Address of the vault logs contract
     function setVaultEventful(address _vaultEventful)
         public
-        only_owner
+        onlyOwner
     {
         blocks.vaultEventful = _vaultEventful;
         NewVaultEventful(blocks.vaultEventful);
@@ -244,7 +252,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _exchangeEventful Address of the exchange logs contract
     function setExchangeEventful(address _exchangeEventful)
         public
-        only_owner
+        onlyOwner
     {
         blocks.exchangeEventful = _exchangeEventful;
         NewExchangeEventful(blocks.exchangeEventful);
@@ -255,7 +263,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _adapter Address of the adapter
     function setExchangeAdapter(address _exchange, address _adapter)
         public
-        only_owner
+        onlyOwner
     {
         adapter[_exchange] = _adapter;
     }
@@ -264,7 +272,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _casper Address of the casper contract
     function setCasper(address _casper)
         public
-        only_owner
+        onlyOwner
     {
         blocks.casper = _casper;
         NewCasper(blocks.casper);
@@ -277,7 +285,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Bool is whitelisted
     function isWhitelistedUser(address _target)
         public
-        constant
+        view
         returns (bool)
     {
         return accounts[_target].groups[true].user;
@@ -288,7 +296,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Bool is whitelisted
     function isWhitelister(address _whitelister)
         public
-        constant
+        view
         returns (bool)
     {
         return accounts[_whitelister].groups[true].whitelister;
@@ -299,7 +307,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Bool is whitelisted
     function isAuthority(address _authority)
         public
-        constant
+        view
         returns (bool)
     {
         return accounts[_authority].groups[true].authority;
@@ -310,7 +318,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Bool is whitelisted
     function isWhitelistedAsset(address _asset)
         public
-        constant
+        view
         returns (bool)
     {
         return accounts[_asset].groups[true].asset;
@@ -321,7 +329,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Bool is whitelisted
     function isWhitelistedExchange(address _exchange)
         public
-        constant
+        view
         returns (bool)
     {
         return accounts[_exchange].groups[true].exchange;
@@ -332,7 +340,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Bool is whitelisted
     function isWhitelistedDrago(address _drago)
         public
-        constant
+        view
         returns (bool)
     {
         return accounts[_drago].groups[true].drago;
@@ -343,7 +351,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Bool is whitelisted
     function isWhitelistedVault(address _vault)
         public
-        constant
+        view
         returns (bool)
     {
         return accounts[_vault].groups[true].vault;
@@ -354,7 +362,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Bool is whitelisted
     function isWhitelistedRegistry(address _registry)
         public
-        constant
+        view
         returns (bool)
     {
         return accounts[_registry].groups[true].registry;
@@ -365,7 +373,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Bool is whitelisted
     function isWhitelistedFactory(address _factory)
         public
-        constant
+        view
         returns (bool)
     {
         return accounts[_factory].groups[true].registry;
@@ -373,19 +381,19 @@ contract Authority is Owned, AuthorityFace {
 
     /// @dev Provides the address of the drago logs contract
     /// @return Address of the drago logs contract
-    function getDragoEventful() public constant returns (address) {
+    function getDragoEventful() public view returns (address) {
         return blocks.dragoEventful;
     }
 
     /// @dev Provides the address of the vault logs contract
     /// @return Address of the vault logs contract
-    function getVaultEventful() public constant returns (address) {
+    function getVaultEventful() public view returns (address) {
         return blocks.vaultEventful;
     }
 
     /// @dev Provides the address of the exchange logs contract
     /// @return Address of the exchange logs contract
-    function getExchangeEventful() public constant returns (address) {
+    function getExchangeEventful() public view returns (address) {
         return blocks.exchangeEventful;
     }
 
@@ -394,7 +402,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Address of the adapter
     function getExchangeAdapter(address _exchange)
         public
-        constant
+        view
         returns (address)
     {
         return adapter[_exchange];
@@ -402,7 +410,7 @@ contract Authority is Owned, AuthorityFace {
 
     /// @dev Provides the address of the casper contract
     /// @return Address of the casper contract
-    function getCasper() public constant returns (address) {
+    function getCasper() public view returns (address) {
         return blocks.casper;
     }
 
@@ -411,7 +419,7 @@ contract Authority is Owned, AuthorityFace {
     /// @return Array of addresses of the pools for a specific group
     function getListsByGroups(string _group)
         public
-        constant
+        view
         returns (address[])
     {
         return types.mapFromGroup[_group];

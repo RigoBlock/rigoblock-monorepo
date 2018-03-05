@@ -39,15 +39,15 @@ contract DragoRegistryFace {
     function setUpgraded(uint _version) external {}
     function drain() public {}
 
-    function dragoCount() public constant returns (uint) {}
-    function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoId, address owner, address group) {}
-    function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoId, address owner, address group) {}
-    function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoId, address owner, address group) {}
-    function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoId, address owner, address group) {}
-    function fromNameSymbol(string _name, string _symbol) public constant returns (address) {}
-    function getNameFromAddress(address _pool) external constant returns (bytes32) {}
-    function getSymbolFromAddress(address _pool) external constant returns (bytes32) {}
-    function meta(uint _id, bytes32 _key) public constant returns (bytes32) {}
-    function getGroups() public constant returns (address[]) {}
-    function getFee() public constant returns (uint) {}
+    function dragoCount() public view returns (uint) {}
+    function fromId(uint _id) public view returns (address drago, string name, string symbol, uint dragoId, address owner, address group) {}
+    function fromAddress(address _drago) public view returns (uint id, string name, string symbol, uint dragoId, address owner, address group) {}
+    function fromSymbol(string _symbol) public view returns (uint id, address drago, string name, uint dragoId, address owner, address group) {}
+    function fromName(string _name) public view returns (uint id, address drago, string symbol, uint dragoId, address owner, address group) {}
+    function fromNameSymbol(string _name, string _symbol) public view returns (address) {}
+    function getNameFromAddress(address _pool) external view returns (bytes32) {}
+    function getSymbolFromAddress(address _pool) external view returns (bytes32) {}
+    function meta(uint _id, bytes32 _key) public view returns (bytes32) {}
+    function getGroups() public view returns (address[]) {}
+    function getFee() public view returns (uint) {}
 }

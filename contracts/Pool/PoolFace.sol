@@ -25,10 +25,10 @@ contract PoolFace {
 
     // CONSTANT PUBLIC FUNCTIONS
 
-    function balanceOf(address _who) public constant returns (uint256) {}
-    function totalSupply() public constant returns (uint256 totaSupply) {}
-    function getEventful() public constant returns (address) {}
-    function getData() public constant returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
-    function getAdminData() public constant returns (address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
-    function getOwner() public constant returns (address) {}
+    function balanceOf(address _who) public view returns (uint256) {}
+    function totalSupply() public view returns (uint256 totaSupply) {}
+    function getEventful() public view returns (address) {}
+    function getData() public view returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
+    function getAdminData() public view returns (address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
+    function getOwner() public view returns (address) {}
 }

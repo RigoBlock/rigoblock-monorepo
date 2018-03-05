@@ -46,18 +46,18 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         uint rewardRatio;
     }
 
-    modifier only_minter {
+    modifier onlyMinter {
         RigoToken token = RigoToken(RIGOTOKENADDRESS);
         require(msg.sender == token.getMinter());
         _;
     }
 
-    modifier only_rigoblock_dao {
+    modifier onlyRigoblockDao {
         require(msg.sender == rigoblockDao);
         _;
     }
 
-    modifier only_pool_owner(uint _thePool) {
+    modifier onlyPoolOwner(uint _thePool) {
         DragoRegistry registry = DragoRegistry(dragoRegistry);
         address poolAddress;
         (poolAddress, , , , , ) = registry.fromId(_thePool);
@@ -66,7 +66,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         _;
     }
 
-    modifier minimum_rigoblock {
+    modifier minimumRigoblock {
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
         require(rigoToken.balanceOf(msg.sender) >= minimumRigo);
         _;
@@ -100,23 +100,23 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         require(infl.mintInflation(poolAddress, pop));
     }
 
-    function setRegistry(address _dragoRegistry) external only_rigoblock_dao {
+    function setRegistry(address _dragoRegistry) external onlyRigoblockDao {
         dragoRegistry = _dragoRegistry;
     }
 
-    function setRigoblockDao(address _rigoblockDao) external only_rigoblock_dao {
+    function setRigoblockDao(address _rigoblockDao) external onlyRigoblockDao {
         rigoblockDao = _rigoblockDao;
     }
 
-    function setMinimumRigo(uint256 _amount) external only_rigoblock_dao {
+    function setMinimumRigo(uint256 _amount) external onlyRigoblockDao {
         minimumRigo = _amount;
     }
 
-    /// @notice only_rigoblock_dao can set ratio, as it determines
+    /// @notice onlyRigoblockDao can set ratio, as it determines
     /// @notice the split between asset and performance reward for a said group
     function setRatio(address _ofGroup, uint _ratio)
         public
-        only_rigoblock_dao
+        onlyRigoblockDao
     {
         require(_ratio <= 10000); //(from 0 to 10000)
         groups[_ofGroup].rewardRatio = _ratio;
@@ -127,7 +127,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @dev Checks whether a pool is registered and active
     /// @param _ofPool Id of the pool
     /// @return Bool the pool is active
-    function isActive(uint _ofPool) public constant returns (bool) {
+    function isActive(uint _ofPool) public view returns (bool) {
         DragoRegistry registry = DragoRegistry(dragoRegistry);
         address thePool;
         (thePool, , , , , ) = registry.fromId(_ofPool);
@@ -142,7 +142,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @return Address of the pool's group
     function addressFromId(uint _ofPool)
         public
-        constant
+        view
         returns (
             address pool,
             address group
@@ -162,7 +162,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @return Number of tokens of a pool (totalSupply)
     function getPoolPrice(uint _ofPool)
         public
-        constant
+        view
         returns (
             uint thePoolPrice,
             uint totalTokens
@@ -183,7 +183,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @return Array of the number of tokens of each pool
     function getPoolPrices()
         public
-        constant
+        view
         returns (
             address[] pools,
             uint[] poolPrices,
@@ -215,7 +215,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @return Address of the pool's group
     function calcPoolValue(uint256 _ofPool)
         public
-        constant
+        view
         returns (
             uint256 aum,
             bool success
@@ -232,7 +232,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @return Number of active funds
     function calcNetworkValue()
         public
-        constant
+        view
         returns (
             uint networkValue,
             uint numberOfFunds
@@ -255,7 +255,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @dev Returns the reward factor for a pool
     /// @param _ofPool Id of the pool
     /// @return Value of the reward factor
-    function getEpochReward(uint _ofPool) public constant returns (uint) {
+    function getEpochReward(uint _ofPool) public view returns (uint) {
         Inflation inflate = Inflation(inflation);
         address fund;
         address group;
@@ -266,7 +266,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @dev Returns the split ratio of asset and performance reward
     /// @param _ofPool Id of the pool
     /// @return Value of the ratio from 1 to 100
-    function getRatio(uint _ofPool) public constant returns (uint) {
+    function getRatio(uint _ofPool) public view returns (uint) {
         address fund;
         address group;
         (fund,group) = addressFromId(_ofPool);
@@ -280,7 +280,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @notice can be decreased if number of funds increases
     /// @notice should be at least 10^6 (just as pool base) to start with
     /// @notice rigo token has 10^18 decimals
-    function proofOfPerformance(uint _ofPool) public constant returns (uint256) {
+    function proofOfPerformance(uint _ofPool) public view returns (uint256) {
         uint highwatermark;
         if (poolPrice[_ofPool].highwatermark == 0) {
             highwatermark = 1 ether;
@@ -306,7 +306,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @dev Returns the highwatermark of a pool
     /// @param _ofPool Id of the pool
     /// @return Value of the all-time-high pool nav
-    function getHwm(uint _ofPool) public constant returns (uint) {
+    function getHwm(uint _ofPool) public view returns (uint) {
         return poolPrice[_ofPool].highwatermark;
     }
 }

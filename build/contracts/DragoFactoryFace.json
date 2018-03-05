@@ -223,11 +223,11 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b6105768061001e6000396000f3006060604052600436106100ba576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680631c31f710146100bf5780633408f73a146100f85780633dcc8b89146101c05780635ab1bd531461021857806369fe0e2d1461026d578063837929b6146102905780639890220b146102e5578063a91ee0dc146102fa578063bc96832614610333578063c1bf130d1461035c578063c8c3b926146103ea578063f08d29d514610423575b600080fd5b34156100ca57600080fd5b6100f6600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506104db565b005b341561010357600080fd5b61010b6104de565b604051808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001838152602001828103825284818151815260200191508051906020019080838360005b83811015610183578082015181840152602081019050610168565b50505050905090810190601f1680156101b05780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b34156101cb57600080fd5b610216600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506104ef565b005b341561022357600080fd5b61022b6104f3565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561027857600080fd5b61028e60048080359060200190919050506104f8565b005b341561029b57600080fd5b6102a36104fb565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156102f057600080fd5b6102f8610500565b005b341561030557600080fd5b610331600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610502565b005b341561033e57600080fd5b610346610505565b6040518082815260200191505060405180910390f35b341561036757600080fd5b610393600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061050a565b6040518080602001828103825283818151815260200191508051906020019060200280838360005b838110156103d65780820151818401526020810190506103bb565b505050509050019250505060405180910390f35b34156103f557600080fd5b610421600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610517565b005b341561042e57600080fd5b6104c1600480803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190505061051a565b604051808215151515815260200191505060405180910390f35b50565b60006104e8610522565b6000909192565b5050565b600090565b50565b600090565b565b50565b600090565b610512610536565b919050565b50565b600092915050565b602060405190810160405280600081525090565b6020604051908101604052806000815250905600a165627a7a72305820ac40a2508962a555026976259939dbc7b54550e3f878b11528753e69ebd809bf0029",
-  "deployedBytecode": "0x6060604052600436106100ba576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680631c31f710146100bf5780633408f73a146100f85780633dcc8b89146101c05780635ab1bd531461021857806369fe0e2d1461026d578063837929b6146102905780639890220b146102e5578063a91ee0dc146102fa578063bc96832614610333578063c1bf130d1461035c578063c8c3b926146103ea578063f08d29d514610423575b600080fd5b34156100ca57600080fd5b6100f6600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506104db565b005b341561010357600080fd5b61010b6104de565b604051808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001838152602001828103825284818151815260200191508051906020019080838360005b83811015610183578082015181840152602081019050610168565b50505050905090810190601f1680156101b05780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b34156101cb57600080fd5b610216600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506104ef565b005b341561022357600080fd5b61022b6104f3565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561027857600080fd5b61028e60048080359060200190919050506104f8565b005b341561029b57600080fd5b6102a36104fb565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156102f057600080fd5b6102f8610500565b005b341561030557600080fd5b610331600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610502565b005b341561033e57600080fd5b610346610505565b6040518082815260200191505060405180910390f35b341561036757600080fd5b610393600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061050a565b6040518080602001828103825283818151815260200191508051906020019060200280838360005b838110156103d65780820151818401526020810190506103bb565b505050509050019250505060405180910390f35b34156103f557600080fd5b610421600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610517565b005b341561042e57600080fd5b6104c1600480803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190505061051a565b604051808215151515815260200191505060405180910390f35b50565b60006104e8610522565b6000909192565b5050565b600090565b50565b600090565b565b50565b600090565b610512610536565b919050565b50565b600092915050565b602060405190810160405280600081525090565b6020604051908101604052806000815250905600a165627a7a72305820ac40a2508962a555026976259939dbc7b54550e3f878b11528753e69ebd809bf0029",
-  "sourceMap": "756:1063:12:-;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "756:1063:12:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1189:52;;;;;;;;;;;;;;;;;;;;;;;;;;;;1431:101;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;80:1;75:3;71;64:6;52:2;49:1;45:3;40:15;;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;990:77:12;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1367:59;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1246:36;;;;;;;;;;;;;;;;;;;;;;;;;;1608:59;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1287:26;;;;;;;;;;;;;;1132:52;;;;;;;;;;;;;;;;;;;;;;;;;;;;1537:66;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1672:82;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;80:1;75:3;71;64:6;52:2;49:1;45:3;40:15;;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;1072:55:12;;;;;;;;;;;;;;;;;;;;;;;;;;;;902:83;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1189:52;;:::o;1431:101::-;1478:16;1496:14;;:::i;:::-;1512:16;1431:101;;;:::o;990:77::-;;;:::o;1367:59::-;1415:7;1367:59;:::o;1246:36::-;;:::o;1608:59::-;1656:7;1608:59;:::o;1287:26::-;:::o;1132:52::-;;:::o;1537:66::-;1583:16;1537:66;:::o;1672:82::-;1741:9;;:::i;:::-;1672:82;;;:::o;1072:55::-;;:::o;902:83::-;969:12;902:83;;;;:::o;756:1063::-;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;:::o",
-  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\n/// @title Drago Factory Interface - Allows external interaction with Drago Factory.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\ncontract DragoFactoryFace {\n\n    event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint dragoId);\n\n    function createDrago(string _name, string _symbol) public returns (bool success) {}\n    function setTargetDragoDao(address _targetDrago, address _dragoDao) public {}\n    function changeDragoDao(address _newDragoDao) public {}\n    function setRegistry(address _newRegistry) public {}\n    function setBeneficiary(address _dragoDao) public {}\n    function setFee(uint _fee) public {}\n    function drain() public {}\n    //function setOwner(address _new) public {}\n\n    function getRegistry() public constant returns (address) {}\n    function getStorage() public constant returns (address dragoDao, string version, uint nextDragoId) {}\n    function getNextId() public constant returns (uint nextDragoId) {}\n    function getEventful() public constant returns (address) {}\n    function getDragosByAddress(address _owner) public constant returns (address[]) {}\n    //function getOwner() public constant returns (address) {}\n}\n",
+  "bytecode": "0x6060604052341561000f57600080fd5b6103ef8061001e6000396000f3006060604052600436106100b95763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631c31f71081146100be5780633408f73a146100ec5780633dcc8b891461019b5780635ab1bd53146101cd57806369fe0e2d14610209578063837929b6146101cd5780639890220b1461021f578063a91ee0dc146100be578063bc96832614610232578063c1bf130d14610257578063c8c3b926146100be578063f08d29d5146102d6575b600080fd5b34156100c957600080fd5b6100ea73ffffffffffffffffffffffffffffffffffffffff6004351661037d565b005b34156100f757600080fd5b6100ff610380565b60405173ffffffffffffffffffffffffffffffffffffffff841681526040810182905260606020820181815290820184818151815260200191508051906020019080838360005b8381101561015e578082015183820152602001610146565b50505050905090810190601f16801561018b5780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b34156101a657600080fd5b6100ea73ffffffffffffffffffffffffffffffffffffffff60043581169060243516610391565b34156101d857600080fd5b6101e0610395565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b341561021457600080fd5b6100ea60043561037d565b341561022a57600080fd5b6100ea61039a565b341561023d57600080fd5b610245610395565b60405190815260200160405180910390f35b341561026257600080fd5b61028373ffffffffffffffffffffffffffffffffffffffff6004351661039c565b60405160208082528190810183818151815260200191508051906020019060200280838360005b838110156102c25780820151838201526020016102aa565b505050509050019250505060405180910390f35b34156102e157600080fd5b61036960046024813581810190830135806020601f8201819004810201604051908101604052818152929190602084018383808284378201915050505050509190803590602001908201803590602001908080601f0160208091040260200160405190810160405281815292919060208401838380828437509496506103a995505050505050565b604051901515815260200160405180910390f35b50565b600061038a6103b1565b6000909192565b5050565b600090565b565b6103a46103b1565b919050565b600092915050565b602060405190810160405260008152905600a165627a7a7230582001e0a413f1a6b9e3d6b3d70ac8115d6a383e8cd49e8bfa7f202361dd7de4ca6b0029",
+  "deployedBytecode": "0x6060604052600436106100b95763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631c31f71081146100be5780633408f73a146100ec5780633dcc8b891461019b5780635ab1bd53146101cd57806369fe0e2d14610209578063837929b6146101cd5780639890220b1461021f578063a91ee0dc146100be578063bc96832614610232578063c1bf130d14610257578063c8c3b926146100be578063f08d29d5146102d6575b600080fd5b34156100c957600080fd5b6100ea73ffffffffffffffffffffffffffffffffffffffff6004351661037d565b005b34156100f757600080fd5b6100ff610380565b60405173ffffffffffffffffffffffffffffffffffffffff841681526040810182905260606020820181815290820184818151815260200191508051906020019080838360005b8381101561015e578082015183820152602001610146565b50505050905090810190601f16801561018b5780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b34156101a657600080fd5b6100ea73ffffffffffffffffffffffffffffffffffffffff60043581169060243516610391565b34156101d857600080fd5b6101e0610395565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b341561021457600080fd5b6100ea60043561037d565b341561022a57600080fd5b6100ea61039a565b341561023d57600080fd5b610245610395565b60405190815260200160405180910390f35b341561026257600080fd5b61028373ffffffffffffffffffffffffffffffffffffffff6004351661039c565b60405160208082528190810183818151815260200191508051906020019060200280838360005b838110156102c25780820151838201526020016102aa565b505050509050019250505060405180910390f35b34156102e157600080fd5b61036960046024813581810190830135806020601f8201819004810201604051908101604052818152929190602084018383808284378201915050505050509190803590602001908201803590602001908080601f0160208091040260200160405190810160405281815292919060208401838380828437509496506103a995505050505050565b604051901515815260200160405180910390f35b50565b600061038a6103b1565b6000909192565b5050565b600090565b565b6103a46103b1565b919050565b600092915050565b602060405190810160405260008152905600a165627a7a7230582001e0a413f1a6b9e3d6b3d70ac8115d6a383e8cd49e8bfa7f202361dd7de4ca6b0029",
+  "sourceMap": "756:1039:12:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "756:1039:12:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1189:52;;;;;;;;;;;;;;;;;;1427:97;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;71:3;;;64:6;52:2;45:3;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;990:77:12;;;;;;;;;;;;;;;;;;;;;1367:55;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1246:36;;;;;;;;;;;;;;1287:26;;;;;;;;;;;;1529:62;;;;;;;;;;;;;;;;;;;;;;;;;;;1656:78;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;71:3;;;64:6;52:2;45:3;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;902:83:12;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;902:83:12;;-1:-1:-1;902:83:12;;-1:-1:-1;;;;;;902:83:12;;;;;;;;;;;;;;;;;;1189:52;;:::o;1427:97::-;1470:16;1488:14;;:::i;:::-;1504:16;1427:97;;;:::o;990:77::-;;;:::o;1367:55::-;1411:7;1367:55;:::o;1287:26::-;:::o;1656:78::-;1721:9;;:::i;:::-;1656:78;;;:::o;902:83::-;969:12;902:83;;;;:::o;756:1039::-;;;;;;;;;;;;;:::o",
+  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\n/// @title Drago Factory Interface - Allows external interaction with Drago Factory.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\ncontract DragoFactoryFace {\n\n    event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint dragoId);\n\n    function createDrago(string _name, string _symbol) public returns (bool success) {}\n    function setTargetDragoDao(address _targetDrago, address _dragoDao) public {}\n    function changeDragoDao(address _newDragoDao) public {}\n    function setRegistry(address _newRegistry) public {}\n    function setBeneficiary(address _dragoDao) public {}\n    function setFee(uint _fee) public {}\n    function drain() public {}\n    //function setOwner(address _new) public {}\n\n    function getRegistry() public view returns (address) {}\n    function getStorage() public view returns (address dragoDao, string version, uint nextDragoId) {}\n    function getNextId() public view returns (uint nextDragoId) {}\n    function getEventful() public view returns (address) {}\n    function getDragosByAddress(address _owner) public view returns (address[]) {}\n    //function getOwner() public view returns (address) {}\n}\n",
   "sourcePath": "/home/gab/truffle/contracts/contracts/DragoFactory/DragoFactoryFace.sol",
   "ast": {
     "absolutePath": "/home/gab/truffle/contracts/contracts/DragoFactory/DragoFactoryFace.sol",
@@ -888,7 +888,7 @@
             "body": {
               "id": 4974,
               "nodeType": "Block",
-              "src": "1424:2:12",
+              "src": "1420:2:12",
               "statements": []
             },
             "id": 4975,
@@ -915,7 +915,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 4975,
-                  "src": "1415:7:12",
+                  "src": "1411:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -926,7 +926,7 @@
                     "id": 4971,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1415:7:12",
+                    "src": "1411:7:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -936,10 +936,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1414:9:12"
+              "src": "1410:9:12"
             },
             "scope": 5007,
-            "src": "1367:59:12",
+            "src": "1367:55:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -948,7 +948,7 @@
             "body": {
               "id": 4984,
               "nodeType": "Block",
-              "src": "1530:2:12",
+              "src": "1522:2:12",
               "statements": []
             },
             "id": 4985,
@@ -962,7 +962,7 @@
               "id": 4976,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1450:2:12"
+              "src": "1446:2:12"
             },
             "payable": false,
             "returnParameters": {
@@ -975,7 +975,7 @@
                   "name": "dragoDao",
                   "nodeType": "VariableDeclaration",
                   "scope": 4985,
-                  "src": "1478:16:12",
+                  "src": "1470:16:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -986,7 +986,7 @@
                     "id": 4977,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1478:7:12",
+                    "src": "1470:7:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1001,7 +1001,7 @@
                   "name": "version",
                   "nodeType": "VariableDeclaration",
                   "scope": 4985,
-                  "src": "1496:14:12",
+                  "src": "1488:14:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1012,7 +1012,7 @@
                     "id": 4979,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1496:6:12",
+                    "src": "1488:6:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -1027,7 +1027,7 @@
                   "name": "nextDragoId",
                   "nodeType": "VariableDeclaration",
                   "scope": 4985,
-                  "src": "1512:16:12",
+                  "src": "1504:16:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1038,7 +1038,7 @@
                     "id": 4981,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1512:4:12",
+                    "src": "1504:4:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1048,10 +1048,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1477:52:12"
+              "src": "1469:52:12"
             },
             "scope": 5007,
-            "src": "1431:101:12",
+            "src": "1427:97:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1060,7 +1060,7 @@
             "body": {
               "id": 4990,
               "nodeType": "Block",
-              "src": "1601:2:12",
+              "src": "1589:2:12",
               "statements": []
             },
             "id": 4991,
@@ -1074,7 +1074,7 @@
               "id": 4986,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1555:2:12"
+              "src": "1547:2:12"
             },
             "payable": false,
             "returnParameters": {
@@ -1087,7 +1087,7 @@
                   "name": "nextDragoId",
                   "nodeType": "VariableDeclaration",
                   "scope": 4991,
-                  "src": "1583:16:12",
+                  "src": "1571:16:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1098,7 +1098,7 @@
                     "id": 4987,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1583:4:12",
+                    "src": "1571:4:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1108,10 +1108,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1582:18:12"
+              "src": "1570:18:12"
             },
             "scope": 5007,
-            "src": "1537:66:12",
+            "src": "1529:62:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1120,7 +1120,7 @@
             "body": {
               "id": 4996,
               "nodeType": "Block",
-              "src": "1665:2:12",
+              "src": "1649:2:12",
               "statements": []
             },
             "id": 4997,
@@ -1134,7 +1134,7 @@
               "id": 4992,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1628:2:12"
+              "src": "1616:2:12"
             },
             "payable": false,
             "returnParameters": {
@@ -1147,7 +1147,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 4997,
-                  "src": "1656:7:12",
+                  "src": "1640:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1158,7 +1158,7 @@
                     "id": 4993,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1656:7:12",
+                    "src": "1640:7:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1168,10 +1168,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1655:9:12"
+              "src": "1639:9:12"
             },
             "scope": 5007,
-            "src": "1608:59:12",
+            "src": "1596:55:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1180,7 +1180,7 @@
             "body": {
               "id": 5005,
               "nodeType": "Block",
-              "src": "1752:2:12",
+              "src": "1732:2:12",
               "statements": []
             },
             "id": 5006,
@@ -1200,7 +1200,7 @@
                   "name": "_owner",
                   "nodeType": "VariableDeclaration",
                   "scope": 5006,
-                  "src": "1700:14:12",
+                  "src": "1684:14:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1211,7 +1211,7 @@
                     "id": 4998,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1700:7:12",
+                    "src": "1684:7:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1221,7 +1221,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1699:16:12"
+              "src": "1683:16:12"
             },
             "payable": false,
             "returnParameters": {
@@ -1234,7 +1234,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 5006,
-                  "src": "1741:9:12",
+                  "src": "1721:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1246,7 +1246,7 @@
                       "id": 5001,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "1741:7:12",
+                      "src": "1721:7:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -1255,7 +1255,7 @@
                     "id": 5002,
                     "length": null,
                     "nodeType": "ArrayTypeName",
-                    "src": "1741:9:12",
+                    "src": "1721:9:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[] storage pointer"
@@ -1265,20 +1265,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1740:11:12"
+              "src": "1720:11:12"
             },
             "scope": 5007,
-            "src": "1672:82:12",
+            "src": "1656:78:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 5008,
-        "src": "756:1063:12"
+        "src": "756:1039:12"
       }
     ],
-    "src": "597:1223:12"
+    "src": "597:1199:12"
   },
   "legacyAST": {
     "absolutePath": "/home/gab/truffle/contracts/contracts/DragoFactory/DragoFactoryFace.sol",
@@ -1939,7 +1939,7 @@
             "body": {
               "id": 4974,
               "nodeType": "Block",
-              "src": "1424:2:12",
+              "src": "1420:2:12",
               "statements": []
             },
             "id": 4975,
@@ -1966,7 +1966,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 4975,
-                  "src": "1415:7:12",
+                  "src": "1411:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1977,7 +1977,7 @@
                     "id": 4971,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1415:7:12",
+                    "src": "1411:7:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1987,10 +1987,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1414:9:12"
+              "src": "1410:9:12"
             },
             "scope": 5007,
-            "src": "1367:59:12",
+            "src": "1367:55:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1999,7 +1999,7 @@
             "body": {
               "id": 4984,
               "nodeType": "Block",
-              "src": "1530:2:12",
+              "src": "1522:2:12",
               "statements": []
             },
             "id": 4985,
@@ -2013,7 +2013,7 @@
               "id": 4976,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1450:2:12"
+              "src": "1446:2:12"
             },
             "payable": false,
             "returnParameters": {
@@ -2026,7 +2026,7 @@
                   "name": "dragoDao",
                   "nodeType": "VariableDeclaration",
                   "scope": 4985,
-                  "src": "1478:16:12",
+                  "src": "1470:16:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2037,7 +2037,7 @@
                     "id": 4977,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1478:7:12",
+                    "src": "1470:7:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2052,7 +2052,7 @@
                   "name": "version",
                   "nodeType": "VariableDeclaration",
                   "scope": 4985,
-                  "src": "1496:14:12",
+                  "src": "1488:14:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2063,7 +2063,7 @@
                     "id": 4979,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1496:6:12",
+                    "src": "1488:6:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -2078,7 +2078,7 @@
                   "name": "nextDragoId",
                   "nodeType": "VariableDeclaration",
                   "scope": 4985,
-                  "src": "1512:16:12",
+                  "src": "1504:16:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2089,7 +2089,7 @@
                     "id": 4981,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1512:4:12",
+                    "src": "1504:4:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2099,10 +2099,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1477:52:12"
+              "src": "1469:52:12"
             },
             "scope": 5007,
-            "src": "1431:101:12",
+            "src": "1427:97:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2111,7 +2111,7 @@
             "body": {
               "id": 4990,
               "nodeType": "Block",
-              "src": "1601:2:12",
+              "src": "1589:2:12",
               "statements": []
             },
             "id": 4991,
@@ -2125,7 +2125,7 @@
               "id": 4986,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1555:2:12"
+              "src": "1547:2:12"
             },
             "payable": false,
             "returnParameters": {
@@ -2138,7 +2138,7 @@
                   "name": "nextDragoId",
                   "nodeType": "VariableDeclaration",
                   "scope": 4991,
-                  "src": "1583:16:12",
+                  "src": "1571:16:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2149,7 +2149,7 @@
                     "id": 4987,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1583:4:12",
+                    "src": "1571:4:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2159,10 +2159,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1582:18:12"
+              "src": "1570:18:12"
             },
             "scope": 5007,
-            "src": "1537:66:12",
+            "src": "1529:62:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2171,7 +2171,7 @@
             "body": {
               "id": 4996,
               "nodeType": "Block",
-              "src": "1665:2:12",
+              "src": "1649:2:12",
               "statements": []
             },
             "id": 4997,
@@ -2185,7 +2185,7 @@
               "id": 4992,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1628:2:12"
+              "src": "1616:2:12"
             },
             "payable": false,
             "returnParameters": {
@@ -2198,7 +2198,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 4997,
-                  "src": "1656:7:12",
+                  "src": "1640:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2209,7 +2209,7 @@
                     "id": 4993,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1656:7:12",
+                    "src": "1640:7:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2219,10 +2219,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1655:9:12"
+              "src": "1639:9:12"
             },
             "scope": 5007,
-            "src": "1608:59:12",
+            "src": "1596:55:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2231,7 +2231,7 @@
             "body": {
               "id": 5005,
               "nodeType": "Block",
-              "src": "1752:2:12",
+              "src": "1732:2:12",
               "statements": []
             },
             "id": 5006,
@@ -2251,7 +2251,7 @@
                   "name": "_owner",
                   "nodeType": "VariableDeclaration",
                   "scope": 5006,
-                  "src": "1700:14:12",
+                  "src": "1684:14:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2262,7 +2262,7 @@
                     "id": 4998,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1700:7:12",
+                    "src": "1684:7:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2272,7 +2272,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1699:16:12"
+              "src": "1683:16:12"
             },
             "payable": false,
             "returnParameters": {
@@ -2285,7 +2285,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 5006,
-                  "src": "1741:9:12",
+                  "src": "1721:9:12",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2297,7 +2297,7 @@
                       "id": 5001,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "1741:7:12",
+                      "src": "1721:7:12",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -2306,7 +2306,7 @@
                     "id": 5002,
                     "length": null,
                     "nodeType": "ArrayTypeName",
-                    "src": "1741:9:12",
+                    "src": "1721:9:12",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[] storage pointer"
@@ -2316,20 +2316,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1740:11:12"
+              "src": "1720:11:12"
             },
             "scope": 5007,
-            "src": "1672:82:12",
+            "src": "1656:78:12",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 5008,
-        "src": "756:1063:12"
+        "src": "756:1039:12"
       }
     ],
-    "src": "597:1223:12"
+    "src": "597:1199:12"
   },
   "compiler": {
     "name": "solc",
@@ -2337,5 +2337,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-05T01:35:43.722Z"
+  "updatedAt": "2018-03-05T21:05:52.520Z"
 }

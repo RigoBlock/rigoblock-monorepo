@@ -1,11 +1,11 @@
 {
   "contractName": "DragoFactoryLibrary",
   "abi": [],
-  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820d335e4410a969f68327ca78928a5c54cb7e28cc54cd3cab8bafbe010016523130029",
-  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820d335e4410a969f68327ca78928a5c54cb7e28cc54cd3cab8bafbe010016523130029",
-  "sourceMap": "866:1201:13:-;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "866:1201:13:-;;;;;",
-  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\nimport { AuthorityFace as Authority } from \"../../Authority/AuthorityFace.sol\";\n\nimport { Drago } from \"../../Drago/Drago.sol\";\n\n/// @title Drago Factory library - Reduces size of drago factory.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\nlibrary DragoFactoryLibrary {\n\n    struct NewDrago {\n        string name;\n        string symbol;\n        uint256 dragoId;\n        address owner;\n        address newAddress;\n    }\n\n    modifier whitelisted_factory(address _authority) {\n        Authority auth = Authority(_authority);\n        if (auth.isWhitelistedFactory(this)) _;\n    }\n\n    /// @dev Allows an approved factory to create new dragos\n    /// @param _name String of the name\n    /// @param _symbol String of the symbol\n    /// @param _dragoId Number of Id of the drago from the registry\n    /// @param _authority Address of the respective authority\n    /// @return Bool the function executed\n    function createDrago(\n        NewDrago storage self,\n        string _name,\n        string _symbol,\n        address _owner,\n        uint _dragoId,\n        address _authority)\n        internal\n        whitelisted_factory(_authority)\n        returns (bool success)\n    {\n        Drago drago = new Drago(\n            self.name = _name,\n            self.symbol = _symbol,\n            self.dragoId = _dragoId,\n            self.owner = _owner,\n            _authority\n        );\n        self.newAddress = address(drago);\n        return true;\n    }\n}\n",
+  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a7230582030eb566c908281295a90fd3f89c5ec370cb22d8e3ae32824951e11015130bca40029",
+  "deployedBytecode": "0x6060604052600080fd00a165627a7a7230582030eb566c908281295a90fd3f89c5ec370cb22d8e3ae32824951e11015130bca40029",
+  "sourceMap": "866:1199:13:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "866:1199:13:-;;;;;",
+  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\nimport { AuthorityFace as Authority } from \"../../Authority/AuthorityFace.sol\";\n\nimport { Drago } from \"../../Drago/Drago.sol\";\n\n/// @title Drago Factory library - Reduces size of drago factory.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\nlibrary DragoFactoryLibrary {\n\n    struct NewDrago {\n        string name;\n        string symbol;\n        uint256 dragoId;\n        address owner;\n        address newAddress;\n    }\n\n    modifier whitelistedFactory(address _authority) {\n        Authority auth = Authority(_authority);\n        if (auth.isWhitelistedFactory(this)) _;\n    }\n\n    /// @dev Allows an approved factory to create new dragos\n    /// @param _name String of the name\n    /// @param _symbol String of the symbol\n    /// @param _dragoId Number of Id of the drago from the registry\n    /// @param _authority Address of the respective authority\n    /// @return Bool the function executed\n    function createDrago(\n        NewDrago storage self,\n        string _name,\n        string _symbol,\n        address _owner,\n        uint _dragoId,\n        address _authority)\n        internal\n        whitelistedFactory(_authority)\n        returns (bool success)\n    {\n        Drago drago = new Drago(\n            self.name = _name,\n            self.symbol = _symbol,\n            self.dragoId = _dragoId,\n            self.owner = _owner,\n            _authority\n        );\n        self.newAddress = address(drago);\n        return true;\n    }\n}\n",
   "sourcePath": "/home/gab/truffle/contracts/contracts/DragoFactory/DragoFactoryLibrary/DragoFactoryLibrary.sol",
   "ast": {
     "absolutePath": "/home/gab/truffle/contracts/contracts/DragoFactory/DragoFactoryLibrary/DragoFactoryLibrary.sol",
@@ -220,7 +220,7 @@
             "body": {
               "id": 5040,
               "nodeType": "Block",
-              "src": "1099:103:13",
+              "src": "1098:103:13",
               "statements": [
                 {
                   "assignments": [
@@ -233,7 +233,7 @@
                       "name": "auth",
                       "nodeType": "VariableDeclaration",
                       "scope": 5041,
-                      "src": "1109:14:13",
+                      "src": "1108:14:13",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -246,7 +246,7 @@
                         "name": "Authority",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 1205,
-                        "src": "1109:9:13",
+                        "src": "1108:9:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_AuthorityFace_$1205",
                           "typeString": "contract AuthorityFace"
@@ -267,7 +267,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 5026,
-                        "src": "1136:10:13",
+                        "src": "1135:10:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -286,7 +286,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 1205,
-                      "src": "1126:9:13",
+                      "src": "1125:9:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_type$_t_contract$_AuthorityFace_$1205_$",
                         "typeString": "type(contract AuthorityFace)"
@@ -300,14 +300,14 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1126:21:13",
+                    "src": "1125:21:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_contract$_AuthorityFace_$1205",
                       "typeString": "contract AuthorityFace"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1109:38:13"
+                  "src": "1108:38:13"
                 },
                 {
                   "condition": {
@@ -319,8 +319,8 @@
                         "name": "this",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11712,
-                        "src": "1187:4:13",
+                        "referencedDeclaration": 11655,
+                        "src": "1186:4:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_DragoFactoryLibrary_$5096",
                           "typeString": "library DragoFactoryLibrary"
@@ -341,7 +341,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 5029,
-                        "src": "1161:4:13",
+                        "src": "1160:4:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_AuthorityFace_$1205",
                           "typeString": "contract AuthorityFace"
@@ -355,7 +355,7 @@
                       "memberName": "isWhitelistedFactory",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 1157,
-                      "src": "1161:25:13",
+                      "src": "1160:25:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_bool_$",
                         "typeString": "function (address) view external returns (bool)"
@@ -369,7 +369,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1161:31:13",
+                    "src": "1160:31:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -378,17 +378,17 @@
                   "falseBody": null,
                   "id": 5039,
                   "nodeType": "IfStatement",
-                  "src": "1157:38:13",
+                  "src": "1156:38:13",
                   "trueBody": {
                     "id": 5038,
                     "nodeType": "PlaceholderStatement",
-                    "src": "1194:1:13"
+                    "src": "1193:1:13"
                   }
                 }
               ]
             },
             "id": 5041,
-            "name": "whitelisted_factory",
+            "name": "whitelistedFactory",
             "nodeType": "ModifierDefinition",
             "parameters": {
               "id": 5027,
@@ -400,7 +400,7 @@
                   "name": "_authority",
                   "nodeType": "VariableDeclaration",
                   "scope": 5041,
-                  "src": "1079:18:13",
+                  "src": "1078:18:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -411,7 +411,7 @@
                     "id": 5025,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1079:7:13",
+                    "src": "1078:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -421,16 +421,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1078:20:13"
+              "src": "1077:20:13"
             },
-            "src": "1050:152:13",
+            "src": "1050:151:13",
             "visibility": "internal"
           },
           {
             "body": {
               "id": 5094,
               "nodeType": "Block",
-              "src": "1792:273:13",
+              "src": "1790:273:13",
               "statements": [
                 {
                   "assignments": [
@@ -443,7 +443,7 @@
                       "name": "drago",
                       "nodeType": "VariableDeclaration",
                       "scope": 5095,
-                      "src": "1802:11:13",
+                      "src": "1800:11:13",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -456,7 +456,7 @@
                         "name": "Drago",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 2647,
-                        "src": "1802:5:13",
+                        "src": "1800:5:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_Drago_$2647",
                           "typeString": "contract Drago"
@@ -486,7 +486,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 5043,
-                            "src": "1839:4:13",
+                            "src": "1837:4:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                               "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -500,7 +500,7 @@
                           "memberName": "name",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 5015,
-                          "src": "1839:9:13",
+                          "src": "1837:9:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_string_storage",
                             "typeString": "string storage ref"
@@ -515,13 +515,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5045,
-                          "src": "1851:5:13",
+                          "src": "1849:5:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_string_memory_ptr",
                             "typeString": "string memory"
                           }
                         },
-                        "src": "1839:17:13",
+                        "src": "1837:17:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_storage",
                           "typeString": "string storage ref"
@@ -543,7 +543,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 5043,
-                            "src": "1870:4:13",
+                            "src": "1868:4:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                               "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -557,7 +557,7 @@
                           "memberName": "symbol",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 5017,
-                          "src": "1870:11:13",
+                          "src": "1868:11:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_string_storage",
                             "typeString": "string storage ref"
@@ -572,13 +572,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5047,
-                          "src": "1884:7:13",
+                          "src": "1882:7:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_string_memory_ptr",
                             "typeString": "string memory"
                           }
                         },
-                        "src": "1870:21:13",
+                        "src": "1868:21:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_storage",
                           "typeString": "string storage ref"
@@ -600,7 +600,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 5043,
-                            "src": "1905:4:13",
+                            "src": "1903:4:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                               "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -614,7 +614,7 @@
                           "memberName": "dragoId",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 5019,
-                          "src": "1905:12:13",
+                          "src": "1903:12:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -629,13 +629,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5051,
-                          "src": "1920:8:13",
+                          "src": "1918:8:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           }
                         },
-                        "src": "1905:23:13",
+                        "src": "1903:23:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -657,7 +657,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 5043,
-                            "src": "1942:4:13",
+                            "src": "1940:4:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                               "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -671,7 +671,7 @@
                           "memberName": "owner",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 5021,
-                          "src": "1942:10:13",
+                          "src": "1940:10:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -686,13 +686,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5049,
-                          "src": "1955:6:13",
+                          "src": "1953:6:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           }
                         },
-                        "src": "1942:19:13",
+                        "src": "1940:19:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -705,7 +705,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 5053,
-                        "src": "1975:10:13",
+                        "src": "1973:10:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -741,7 +741,7 @@
                       "isPure": false,
                       "lValueRequested": false,
                       "nodeType": "NewExpression",
-                      "src": "1816:9:13",
+                      "src": "1814:9:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_creation_nonpayable$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_uint256_$_t_address_$_t_address_$returns$_t_contract$_Drago_$2647_$",
                         "typeString": "function (string memory,string memory,uint256,address,address) returns (contract Drago)"
@@ -752,7 +752,7 @@
                         "name": "Drago",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 2647,
-                        "src": "1820:5:13",
+                        "src": "1818:5:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_Drago_$2647",
                           "typeString": "contract Drago"
@@ -767,14 +767,14 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1816:179:13",
+                    "src": "1814:179:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_contract$_Drago_$2647",
                       "typeString": "contract Drago"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1802:193:13"
+                  "src": "1800:193:13"
                 },
                 {
                   "expression": {
@@ -793,7 +793,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 5043,
-                        "src": "2005:4:13",
+                        "src": "2003:4:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                           "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -807,7 +807,7 @@
                       "memberName": "newAddress",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 5023,
-                      "src": "2005:15:13",
+                      "src": "2003:15:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -825,7 +825,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5062,
-                          "src": "2031:5:13",
+                          "src": "2029:5:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_Drago_$2647",
                             "typeString": "contract Drago"
@@ -845,7 +845,7 @@
                         "isPure": true,
                         "lValueRequested": false,
                         "nodeType": "ElementaryTypeNameExpression",
-                        "src": "2023:7:13",
+                        "src": "2021:7:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_address_$",
                           "typeString": "type(address)"
@@ -860,13 +860,13 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "2023:14:13",
+                      "src": "2021:14:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "src": "2005:32:13",
+                    "src": "2003:32:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -874,7 +874,7 @@
                   },
                   "id": 5091,
                   "nodeType": "ExpressionStatement",
-                  "src": "2005:32:13"
+                  "src": "2003:32:13"
                 },
                 {
                   "expression": {
@@ -887,7 +887,7 @@
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "2054:4:13",
+                    "src": "2052:4:13",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -898,7 +898,7 @@
                   "functionReturnParameters": 5060,
                   "id": 5093,
                   "nodeType": "Return",
-                  "src": "2047:11:13"
+                  "src": "2045:11:13"
                 }
               ]
             },
@@ -916,7 +916,7 @@
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
                     "referencedDeclaration": 5053,
-                    "src": "1745:10:13",
+                    "src": "1743:10:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -927,18 +927,18 @@
                 "modifierName": {
                   "argumentTypes": null,
                   "id": 5055,
-                  "name": "whitelisted_factory",
+                  "name": "whitelistedFactory",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
                   "referencedDeclaration": 5041,
-                  "src": "1725:19:13",
+                  "src": "1724:18:13",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_address_$",
                     "typeString": "modifier (address)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "1725:31:13"
+                "src": "1724:30:13"
               }
             ],
             "name": "createDrago",
@@ -953,7 +953,7 @@
                   "name": "self",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1556:21:13",
+                  "src": "1555:21:13",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
@@ -966,7 +966,7 @@
                     "name": "NewDrago",
                     "nodeType": "UserDefinedTypeName",
                     "referencedDeclaration": 5024,
-                    "src": "1556:8:13",
+                    "src": "1555:8:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                       "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -981,7 +981,7 @@
                   "name": "_name",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1587:12:13",
+                  "src": "1586:12:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -992,7 +992,7 @@
                     "id": 5044,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1587:6:13",
+                    "src": "1586:6:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -1007,7 +1007,7 @@
                   "name": "_symbol",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1609:14:13",
+                  "src": "1608:14:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1018,7 +1018,7 @@
                     "id": 5046,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1609:6:13",
+                    "src": "1608:6:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -1033,7 +1033,7 @@
                   "name": "_owner",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1633:14:13",
+                  "src": "1632:14:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1044,7 +1044,7 @@
                     "id": 5048,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1633:7:13",
+                    "src": "1632:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1059,7 +1059,7 @@
                   "name": "_dragoId",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1657:13:13",
+                  "src": "1656:13:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1070,7 +1070,7 @@
                     "id": 5050,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1657:4:13",
+                    "src": "1656:4:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1085,7 +1085,7 @@
                   "name": "_authority",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1680:18:13",
+                  "src": "1679:18:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1096,7 +1096,7 @@
                     "id": 5052,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1680:7:13",
+                    "src": "1679:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1106,7 +1106,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1546:153:13"
+              "src": "1545:153:13"
             },
             "payable": false,
             "returnParameters": {
@@ -1119,7 +1119,7 @@
                   "name": "success",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1774:12:13",
+                  "src": "1772:12:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1130,7 +1130,7 @@
                     "id": 5058,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1774:4:13",
+                    "src": "1772:4:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1140,20 +1140,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1773:14:13"
+              "src": "1771:14:13"
             },
             "scope": 5096,
-            "src": "1526:539:13",
+            "src": "1525:538:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "internal"
           }
         ],
         "scope": 5097,
-        "src": "866:1201:13"
+        "src": "866:1199:13"
       }
     ],
-    "src": "597:1471:13"
+    "src": "597:1469:13"
   },
   "legacyAST": {
     "absolutePath": "/home/gab/truffle/contracts/contracts/DragoFactory/DragoFactoryLibrary/DragoFactoryLibrary.sol",
@@ -1368,7 +1368,7 @@
             "body": {
               "id": 5040,
               "nodeType": "Block",
-              "src": "1099:103:13",
+              "src": "1098:103:13",
               "statements": [
                 {
                   "assignments": [
@@ -1381,7 +1381,7 @@
                       "name": "auth",
                       "nodeType": "VariableDeclaration",
                       "scope": 5041,
-                      "src": "1109:14:13",
+                      "src": "1108:14:13",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -1394,7 +1394,7 @@
                         "name": "Authority",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 1205,
-                        "src": "1109:9:13",
+                        "src": "1108:9:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_AuthorityFace_$1205",
                           "typeString": "contract AuthorityFace"
@@ -1415,7 +1415,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 5026,
-                        "src": "1136:10:13",
+                        "src": "1135:10:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -1434,7 +1434,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 1205,
-                      "src": "1126:9:13",
+                      "src": "1125:9:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_type$_t_contract$_AuthorityFace_$1205_$",
                         "typeString": "type(contract AuthorityFace)"
@@ -1448,14 +1448,14 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1126:21:13",
+                    "src": "1125:21:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_contract$_AuthorityFace_$1205",
                       "typeString": "contract AuthorityFace"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1109:38:13"
+                  "src": "1108:38:13"
                 },
                 {
                   "condition": {
@@ -1467,8 +1467,8 @@
                         "name": "this",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 11712,
-                        "src": "1187:4:13",
+                        "referencedDeclaration": 11655,
+                        "src": "1186:4:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_DragoFactoryLibrary_$5096",
                           "typeString": "library DragoFactoryLibrary"
@@ -1489,7 +1489,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 5029,
-                        "src": "1161:4:13",
+                        "src": "1160:4:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_AuthorityFace_$1205",
                           "typeString": "contract AuthorityFace"
@@ -1503,7 +1503,7 @@
                       "memberName": "isWhitelistedFactory",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 1157,
-                      "src": "1161:25:13",
+                      "src": "1160:25:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_bool_$",
                         "typeString": "function (address) view external returns (bool)"
@@ -1517,7 +1517,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1161:31:13",
+                    "src": "1160:31:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1526,17 +1526,17 @@
                   "falseBody": null,
                   "id": 5039,
                   "nodeType": "IfStatement",
-                  "src": "1157:38:13",
+                  "src": "1156:38:13",
                   "trueBody": {
                     "id": 5038,
                     "nodeType": "PlaceholderStatement",
-                    "src": "1194:1:13"
+                    "src": "1193:1:13"
                   }
                 }
               ]
             },
             "id": 5041,
-            "name": "whitelisted_factory",
+            "name": "whitelistedFactory",
             "nodeType": "ModifierDefinition",
             "parameters": {
               "id": 5027,
@@ -1548,7 +1548,7 @@
                   "name": "_authority",
                   "nodeType": "VariableDeclaration",
                   "scope": 5041,
-                  "src": "1079:18:13",
+                  "src": "1078:18:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1559,7 +1559,7 @@
                     "id": 5025,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1079:7:13",
+                    "src": "1078:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1569,16 +1569,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1078:20:13"
+              "src": "1077:20:13"
             },
-            "src": "1050:152:13",
+            "src": "1050:151:13",
             "visibility": "internal"
           },
           {
             "body": {
               "id": 5094,
               "nodeType": "Block",
-              "src": "1792:273:13",
+              "src": "1790:273:13",
               "statements": [
                 {
                   "assignments": [
@@ -1591,7 +1591,7 @@
                       "name": "drago",
                       "nodeType": "VariableDeclaration",
                       "scope": 5095,
-                      "src": "1802:11:13",
+                      "src": "1800:11:13",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -1604,7 +1604,7 @@
                         "name": "Drago",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 2647,
-                        "src": "1802:5:13",
+                        "src": "1800:5:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_Drago_$2647",
                           "typeString": "contract Drago"
@@ -1634,7 +1634,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 5043,
-                            "src": "1839:4:13",
+                            "src": "1837:4:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                               "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -1648,7 +1648,7 @@
                           "memberName": "name",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 5015,
-                          "src": "1839:9:13",
+                          "src": "1837:9:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_string_storage",
                             "typeString": "string storage ref"
@@ -1663,13 +1663,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5045,
-                          "src": "1851:5:13",
+                          "src": "1849:5:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_string_memory_ptr",
                             "typeString": "string memory"
                           }
                         },
-                        "src": "1839:17:13",
+                        "src": "1837:17:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_storage",
                           "typeString": "string storage ref"
@@ -1691,7 +1691,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 5043,
-                            "src": "1870:4:13",
+                            "src": "1868:4:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                               "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -1705,7 +1705,7 @@
                           "memberName": "symbol",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 5017,
-                          "src": "1870:11:13",
+                          "src": "1868:11:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_string_storage",
                             "typeString": "string storage ref"
@@ -1720,13 +1720,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5047,
-                          "src": "1884:7:13",
+                          "src": "1882:7:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_string_memory_ptr",
                             "typeString": "string memory"
                           }
                         },
-                        "src": "1870:21:13",
+                        "src": "1868:21:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_storage",
                           "typeString": "string storage ref"
@@ -1748,7 +1748,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 5043,
-                            "src": "1905:4:13",
+                            "src": "1903:4:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                               "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -1762,7 +1762,7 @@
                           "memberName": "dragoId",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 5019,
-                          "src": "1905:12:13",
+                          "src": "1903:12:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -1777,13 +1777,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5051,
-                          "src": "1920:8:13",
+                          "src": "1918:8:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           }
                         },
-                        "src": "1905:23:13",
+                        "src": "1903:23:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -1805,7 +1805,7 @@
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 5043,
-                            "src": "1942:4:13",
+                            "src": "1940:4:13",
                             "typeDescriptions": {
                               "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                               "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -1819,7 +1819,7 @@
                           "memberName": "owner",
                           "nodeType": "MemberAccess",
                           "referencedDeclaration": 5021,
-                          "src": "1942:10:13",
+                          "src": "1940:10:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
@@ -1834,13 +1834,13 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5049,
-                          "src": "1955:6:13",
+                          "src": "1953:6:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           }
                         },
-                        "src": "1942:19:13",
+                        "src": "1940:19:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -1853,7 +1853,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 5053,
-                        "src": "1975:10:13",
+                        "src": "1973:10:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -1889,7 +1889,7 @@
                       "isPure": false,
                       "lValueRequested": false,
                       "nodeType": "NewExpression",
-                      "src": "1816:9:13",
+                      "src": "1814:9:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_creation_nonpayable$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_uint256_$_t_address_$_t_address_$returns$_t_contract$_Drago_$2647_$",
                         "typeString": "function (string memory,string memory,uint256,address,address) returns (contract Drago)"
@@ -1900,7 +1900,7 @@
                         "name": "Drago",
                         "nodeType": "UserDefinedTypeName",
                         "referencedDeclaration": 2647,
-                        "src": "1820:5:13",
+                        "src": "1818:5:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_Drago_$2647",
                           "typeString": "contract Drago"
@@ -1915,14 +1915,14 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1816:179:13",
+                    "src": "1814:179:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_contract$_Drago_$2647",
                       "typeString": "contract Drago"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1802:193:13"
+                  "src": "1800:193:13"
                 },
                 {
                   "expression": {
@@ -1941,7 +1941,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 5043,
-                        "src": "2005:4:13",
+                        "src": "2003:4:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                           "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -1955,7 +1955,7 @@
                       "memberName": "newAddress",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": 5023,
-                      "src": "2005:15:13",
+                      "src": "2003:15:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -1973,7 +1973,7 @@
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 5062,
-                          "src": "2031:5:13",
+                          "src": "2029:5:13",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_Drago_$2647",
                             "typeString": "contract Drago"
@@ -1993,7 +1993,7 @@
                         "isPure": true,
                         "lValueRequested": false,
                         "nodeType": "ElementaryTypeNameExpression",
-                        "src": "2023:7:13",
+                        "src": "2021:7:13",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_address_$",
                           "typeString": "type(address)"
@@ -2008,13 +2008,13 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "2023:14:13",
+                      "src": "2021:14:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "src": "2005:32:13",
+                    "src": "2003:32:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2022,7 +2022,7 @@
                   },
                   "id": 5091,
                   "nodeType": "ExpressionStatement",
-                  "src": "2005:32:13"
+                  "src": "2003:32:13"
                 },
                 {
                   "expression": {
@@ -2035,7 +2035,7 @@
                     "kind": "bool",
                     "lValueRequested": false,
                     "nodeType": "Literal",
-                    "src": "2054:4:13",
+                    "src": "2052:4:13",
                     "subdenomination": null,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -2046,7 +2046,7 @@
                   "functionReturnParameters": 5060,
                   "id": 5093,
                   "nodeType": "Return",
-                  "src": "2047:11:13"
+                  "src": "2045:11:13"
                 }
               ]
             },
@@ -2064,7 +2064,7 @@
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
                     "referencedDeclaration": 5053,
-                    "src": "1745:10:13",
+                    "src": "1743:10:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2075,18 +2075,18 @@
                 "modifierName": {
                   "argumentTypes": null,
                   "id": 5055,
-                  "name": "whitelisted_factory",
+                  "name": "whitelistedFactory",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
                   "referencedDeclaration": 5041,
-                  "src": "1725:19:13",
+                  "src": "1724:18:13",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$_t_address_$",
                     "typeString": "modifier (address)"
                   }
                 },
                 "nodeType": "ModifierInvocation",
-                "src": "1725:31:13"
+                "src": "1724:30:13"
               }
             ],
             "name": "createDrago",
@@ -2101,7 +2101,7 @@
                   "name": "self",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1556:21:13",
+                  "src": "1555:21:13",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
@@ -2114,7 +2114,7 @@
                     "name": "NewDrago",
                     "nodeType": "UserDefinedTypeName",
                     "referencedDeclaration": 5024,
-                    "src": "1556:8:13",
+                    "src": "1555:8:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_struct$_NewDrago_$5024_storage_ptr",
                       "typeString": "struct DragoFactoryLibrary.NewDrago storage pointer"
@@ -2129,7 +2129,7 @@
                   "name": "_name",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1587:12:13",
+                  "src": "1586:12:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2140,7 +2140,7 @@
                     "id": 5044,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1587:6:13",
+                    "src": "1586:6:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -2155,7 +2155,7 @@
                   "name": "_symbol",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1609:14:13",
+                  "src": "1608:14:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2166,7 +2166,7 @@
                     "id": 5046,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1609:6:13",
+                    "src": "1608:6:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -2181,7 +2181,7 @@
                   "name": "_owner",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1633:14:13",
+                  "src": "1632:14:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2192,7 +2192,7 @@
                     "id": 5048,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1633:7:13",
+                    "src": "1632:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2207,7 +2207,7 @@
                   "name": "_dragoId",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1657:13:13",
+                  "src": "1656:13:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2218,7 +2218,7 @@
                     "id": 5050,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1657:4:13",
+                    "src": "1656:4:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2233,7 +2233,7 @@
                   "name": "_authority",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1680:18:13",
+                  "src": "1679:18:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2244,7 +2244,7 @@
                     "id": 5052,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1680:7:13",
+                    "src": "1679:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2254,7 +2254,7 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1546:153:13"
+              "src": "1545:153:13"
             },
             "payable": false,
             "returnParameters": {
@@ -2267,7 +2267,7 @@
                   "name": "success",
                   "nodeType": "VariableDeclaration",
                   "scope": 5095,
-                  "src": "1774:12:13",
+                  "src": "1772:12:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2278,7 +2278,7 @@
                     "id": 5058,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1774:4:13",
+                    "src": "1772:4:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -2288,20 +2288,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1773:14:13"
+              "src": "1771:14:13"
             },
             "scope": 5096,
-            "src": "1526:539:13",
+            "src": "1525:538:13",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "internal"
           }
         ],
         "scope": 5097,
-        "src": "866:1201:13"
+        "src": "866:1199:13"
       }
     ],
-    "src": "597:1471:13"
+    "src": "597:1469:13"
   },
   "compiler": {
     "name": "solc",
@@ -2309,5 +2309,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-05T01:35:43.723Z"
+  "updatedAt": "2018-03-05T21:05:52.522Z"
 }

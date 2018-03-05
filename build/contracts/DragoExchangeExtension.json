@@ -1,8 +1,8 @@
 {
   "contractName": "DragoExchangeExtension",
   "abi": [],
-  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820afc91225597c8a55172121bc88b3481ca6209a535facbe9faeec1468ea25b85d0029",
-  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820afc91225597c8a55172121bc88b3481ca6209a535facbe9faeec1468ea25b85d0029",
+  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820a7ce20d215622cadf8322b369d3075c48a11ecf640eebc5f6906997ab539ccd70029",
+  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820a7ce20d215622cadf8322b369d3075c48a11ecf640eebc5f6906997ab539ccd70029",
   "sourceMap": "815:4316:7:-;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "815:4316:7:-;;;;;",
   "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\nimport { Authority } from \"../../Authority/Authority.sol\";\n\n/// @title Drago Exchange Extention - library to extend drago to exchange adapters.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\nlibrary DragoExchangeExtension {\n\n    struct Admin {\n        address authority;\n        address dragoDao;\n        address feeCollector;\n        uint minOrder; // minimum stake to avoid dust clogging things up\n        uint ratio; //ratio is 80%\n    }\n\n    function depositToExchange(\n        Admin memory admin,\n        address _exchange,\n        address _token,\n        uint _value)\n        internal\n    {\n        assembleCall(_exchange, msg.data.length);\n    }\n\n    function withdrawFromExchange(\n        Admin memory admin,\n        address _exchange,\n        address _token,\n        uint _value)\n        internal\n    {\n        assembleCall(_exchange, msg.data.length);\n    }\n\n    function placeOrderExchange(\n        Admin memory admin,\n        address _exchange,\n        address[5] orderAddresses,\n        uint[6] orderValues,\n        uint fillTakerTokenAmount,\n        bool stableOrSufficient,\n        uint8 v,\n        bytes32[2] signature)\n        internal\n    {\n        assembleCall(_exchange, msg.data.length);\n    }\n\n    function placeTradeExchange(\n        Admin memory admin,\n        address _exchange,\n        address[5] orderAddresses,\n        uint[6] orderValues,\n        uint fillTakerTokenAmount,\n        bool stableOrSufficient,\n        uint8 v,\n        bytes32[2] signature)\n        internal\n    {\n        assembleCall(_exchange, msg.data.length);\n    }\n\n    function cancelOrderExchange(\n        Admin memory admin,\n        address _exchange,\n        address[5] orderAddresses,\n        uint[6] orderValues,\n        uint cancelTakerTokenAmount)\n        internal\n    {\n        assembleCall(_exchange, msg.data.length);\n    }\n\n    function finalizeDeal(\n        Admin memory admin,\n        address _exchange,\n        address[5] orderAddresses,\n        uint[6] orderValues,\n        uint cancelTakerTokenAmount)\n        internal\n    {\n        assembleCall(_exchange, msg.data.length);\n    }\n\n    /// @dev Returns the address of the adapter for an exchange\n    /// @param _exchange Address of the target exchange\n    /// @return Address of the adapter\n    function getExchangeAdapter(Admin memory admin, address _exchange)\n        internal\n        view\n        returns (address)\n    {\n        Authority auth = Authority(admin.authority);\n        return auth.getExchangeAdapter(_exchange);\n    }\n\n    /// @dev Returns the drago logger contract\n    /// @return Address of the logger\n    function getDragoEventful(Admin memory admin) internal view returns (address) {\n        Authority auth = Authority(admin.authority);\n        return auth.getDragoEventful();\n    }\n\n    /// @dev Allows caller to delegate any call to the selected exchange adapter\n    /// @param _exchange Address of the target exchange\n    /// @param _callData size of the data of the call\n    function assembleCall(address _exchange, uint _callData) internal {\n        Admin memory admin;\n\n        uint size = _callData;\n        bytes32 m_data = _malloc(size);\n\n        assembly {\n            calldatacopy(m_data, 0x0, size)\n        }\n\n        bytes32 m_result = _call(m_data, size, getExchangeAdapter(admin, _exchange));\n\n        assembly {\n            return(m_result, 0x20)\n        }\n    }\n\n    /// @dev Builds the bytes from the call data\n    /// @param size Given size of the call\n    /// @return Bytes32 of the pointer\n    function _malloc(uint size) internal pure returns(bytes32) {\n        bytes32 m_data;\n\n        assembly {\n            /// @notice Get free memory pointer and update it\n            m_data := mload(0x40)\n            mstore(0x40, add(m_data, size))\n        }\n\n        return m_data;\n    }\n\n    /// @dev Checks whether a call returns something and executes if positive\n    /// @param m_data Bytes32 of the call data\n    /// @param size Given size of the call\n    /// @param adapter Address of the exchange adapter which receives a delegatecall\n    /// @return A pointer to memory which contain the 32 first bytes of the delegatecall output\n    function _call(bytes32 m_data, uint size, address adapter) internal returns(bytes32) {\n        address target = adapter;\n        bytes32 m_result = _malloc(32);\n        bool failed;\n\n        assembly {\n            failed := iszero(delegatecall(sub(gas, 10000), target, m_data, size, m_result, 0x20))\n        }\n\n        require(!failed);\n        return m_result;\n    }\n}\n",
@@ -231,7 +231,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "1253:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -475,7 +475,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "1468:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -719,7 +719,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "1815:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1148,7 +1148,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "2162:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1577,7 +1577,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "2432:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1901,7 +1901,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "2695:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -3655,7 +3655,7 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11666,
+                      "referencedDeclaration": 11609,
                       "src": "5081:7:7",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -4064,7 +4064,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "1253:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -4308,7 +4308,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "1468:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -4552,7 +4552,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "1815:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -4981,7 +4981,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "2162:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -5410,7 +5410,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "2432:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -5734,7 +5734,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 11663,
+                            "referencedDeclaration": 11606,
                             "src": "2695:3:7",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -7488,7 +7488,7 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 11666,
+                      "referencedDeclaration": 11609,
                       "src": "5081:7:7",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -7679,5 +7679,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-05T01:35:43.685Z"
+  "updatedAt": "2018-03-05T21:05:52.483Z"
 }

@@ -17,7 +17,7 @@ ABI
 ```
 [
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "name",
 		"outputs": [
@@ -31,7 +31,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "minter",
 		"outputs": [
@@ -45,7 +45,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_spender",
@@ -68,7 +68,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getSymbol",
 		"outputs": [
@@ -82,7 +82,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getName",
 		"outputs": [
@@ -96,7 +96,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "totalSupply",
 		"outputs": [
@@ -110,7 +110,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_sender",
@@ -137,7 +137,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "decimals",
 		"outputs": [
@@ -151,7 +151,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "rigoblock",
 		"outputs": [
@@ -165,7 +165,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_newAddress",
@@ -179,7 +179,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_owner",
@@ -198,7 +198,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_recipient",
@@ -216,7 +216,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getRigoblock",
 		"outputs": [
@@ -230,7 +230,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_newAddress",
@@ -244,7 +244,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "symbol",
 		"outputs": [
@@ -258,7 +258,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_recipient",
@@ -281,7 +281,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_group",
@@ -300,7 +300,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_owner",
@@ -323,7 +323,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getDecimals",
 		"outputs": [
@@ -337,7 +337,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getMinter",
 		"outputs": [

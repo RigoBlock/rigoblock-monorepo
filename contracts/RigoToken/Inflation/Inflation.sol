@@ -53,30 +53,30 @@ contract Inflation is SafeMath, InflationFace {
     }
 
     /// @notice in order to qualify for PoP user has to told minimum rigo token
-    modifier minimum_rigoblock(address _ofPool) {
+    modifier minimumRigoblock(address _ofPool) {
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
         Pool pool = Pool(_ofPool);
         require(rigoToken.balanceOf(pool.getOwner()) >= minimumRigo);
         _;
     }
 
-    modifier only_rigoblock_dao {
+    modifier onlyRigoblockDao {
         require(msg.sender == rigoblockDao);
         _;
     }
 
-    modifier only_proof_of_performance {
+    modifier onlyProofOfPerformance {
         require(msg.sender == proofOfPerformance);
         _;
     }
 
-    modifier is_approved_factory(address _factory) {
+    modifier isApprovedFactory(address _factory) {
         Authority auth = Authority(authority);
         require(auth.isWhitelistedFactory(_factory));
         _;
     }
 
-    modifier time_at_least(address _thePool) {
+    modifier timeAtLeast(address _thePool) {
         require(now >= performers[_thePool].endTime); _;
     }
 
@@ -100,9 +100,9 @@ contract Inflation is SafeMath, InflationFace {
     /// @return Bool the transaction executed correctly
     function mintInflation(address _thePool, uint _reward)
         external
-        only_proof_of_performance
-        minimum_rigoblock(_thePool)
-        time_at_least(_thePool)
+        onlyProofOfPerformance
+        minimumRigoblock(_thePool)
+        timeAtLeast(_thePool)
         returns (bool)
     {
         performers[_thePool].startTime = now;
@@ -123,40 +123,40 @@ contract Inflation is SafeMath, InflationFace {
     /// @param _inflationFactor Value of the reward factor
     function setInflationFactor(address _group, uint _inflationFactor)
         public
-        only_rigoblock_dao
-        is_approved_factory(_group)
+        onlyRigoblockDao
+        isApprovedFactory(_group)
     {
         groups[_group].epochReward = _inflationFactor;
     }
 
     /// @dev Allows rigoblock dao to set the minimum number of required tokens
     /// @param _minimum Number of minimum tokens
-    function setMinimumRigo(uint _minimum) public only_rigoblock_dao {
+    function setMinimumRigo(uint _minimum) public onlyRigoblockDao {
         minimumRigo = _minimum;
     }
 
     /// @dev Allows rigoblock dao to upgrade its address
     /// @param _newRigoblock Address of the new rigoblock dao
-    function setRigoblock(address _newRigoblock) public only_rigoblock_dao {
+    function setRigoblock(address _newRigoblock) public onlyRigoblockDao {
         rigoblockDao = _newRigoblock;
     }
 
     /// @dev Allows rigoblock dao to update the authority
     /// @param _authority Address of the authority
-    function setAuthority(address _authority) public only_rigoblock_dao {
+    function setAuthority(address _authority) public onlyRigoblockDao {
         authority = _authority;
     }
 
     /// @dev Allows rigoblock dao to update proof of performance
     /// @param _pop Address of the Proof of Performance contract
-    function setProofOfPerformance(address _pop) public only_rigoblock_dao {
+    function setProofOfPerformance(address _pop) public onlyRigoblockDao {
         proofOfPerformance = _pop;
     }
 
     /// @dev Allows rigoblock dao to set the minimum time between reward collection
     /// @param _newPeriod Number of blocks from 2 rewards
     /// @notice set period on shorter subsets of time for testing
-    function setPeriod(uint _newPeriod) public only_rigoblock_dao {
+    function setPeriod(uint _newPeriod) public onlyRigoblockDao {
         period = _newPeriod;
     }
 
@@ -165,14 +165,14 @@ contract Inflation is SafeMath, InflationFace {
     /// @dev Returns whether a wizard can claim reward tokens
     /// @param _thePool Address of the target pool
     /// @return Bool the wizard can claim
-    function canWithdraw(address _thePool) public constant returns (bool) {
+    function canWithdraw(address _thePool) public view returns (bool) {
         return (now >= performers[_thePool].endTime ? true : false);
     }
 
     /// @dev Return the reward factor for a group
     /// @param _group Address of the group
     /// @return Value of the reward factor
-    function getInflationFactor(address _group) public constant returns (uint) {
+    function getInflationFactor(address _group) public view returns (uint) {
         return groups[_group].epochReward;
     }
 }

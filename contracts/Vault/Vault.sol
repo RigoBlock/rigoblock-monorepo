@@ -68,38 +68,38 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         uint ratio; //ratio is 80%
     }
 
-    modifier only_vaultDao {
+    modifier onlyVaultDao {
         require(msg.sender == admin.vaultDao);
         _;
     }
 
-    modifier only_owner {
+    modifier onlyOwner {
         require(msg.sender == owner);
         _;
     }
 
-    modifier casper_contract_only {
+    modifier casperContractOnly {
         Authority auth = Authority(admin.authority);
         require(msg.sender == auth.getCasper());
         _;
     }
 
-    modifier minimum_stake(uint _amount) {
+    modifier minimumStake(uint _amount) {
         require(_amount >= admin.minOrder);
         _;
     }
 
-    modifier has_enough(uint _amount) {
+    modifier hasEnough(uint _amount) {
         require(accounts[msg.sender].balance >= _amount);
         _;
     }
 
-    modifier positive_amount(uint _amount) {
+    modifier positiveAmount(uint _amount) {
         require(accounts[msg.sender].balance + _amount > accounts[msg.sender].balance);
         _;
     }
 
-    modifier minimum_period_past {
+    modifier minimumPeriodPast {
         require(now >= accounts[msg.sender].receipt.activation);
         _;
     }
@@ -127,7 +127,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     // CORE CORE FUNCTIONS
 
     /// @dev Allows a casper contract to send Ether back
-    function() external payable casper_contract_only {}
+    function() external payable casperContractOnly {}
 
     /// @dev Allows a user to buy into a vault
     /// @return Bool the function executed correctly
@@ -146,7 +146,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     function buyVaultOnBehalf(address _hodler)
         public
         payable
-        minimum_stake(msg.value)
+        minimumStake(msg.value)
         returns (bool success)
     {
         uint grossAmount;
@@ -165,9 +165,9 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Bool the function executed correctly
     function sellVault(uint256 _amount)
         external
-        has_enough(_amount)
-        positive_amount(_amount)
-        minimum_period_past
+        hasEnough(_amount)
+        positiveAmount(_amount)
+        minimumPeriodPast
         returns (bool success)
     {
         uint feeVault;
@@ -190,8 +190,8 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Bool the function executed correctly
     function depositCasper(address _validation, address _withdrawal, uint _amount)
         public
-        only_owner
-        minimum_stake(_amount)
+        onlyOwner
+        minimumStake(_amount)
         returns (bool success)
     {
         require(_withdrawal == address(this));
@@ -205,7 +205,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     }
 
     /// @dev Allows vault owner to withdraw from casper to vault contract
-    function withdrawCasper() public only_owner {
+    function withdrawCasper() public onlyOwner {
         Authority auth = Authority(admin.authority);
         Casper casper = Casper(auth.getCasper());
         casper.withdraw(data.validatorIndex);
@@ -215,7 +215,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allows vault dao/factory to change fee split ratio
     /// @param _ratio Number of ratio for wizard, from 0 to 100
-    function changeRatio(uint256 _ratio) public only_vaultDao {
+    function changeRatio(uint256 _ratio) public onlyVaultDao {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
         require(events.changeRatio(msg.sender, this, _ratio));
@@ -224,7 +224,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allows vault owner to set the transaction fee
     /// @param _transactionFee Value of the transaction fee in basis points
-    function setTransactionFee(uint _transactionFee) public only_owner {
+    function setTransactionFee(uint _transactionFee) public onlyOwner {
         require(_transactionFee <= 100); //fee cannot be higher than 1%
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
@@ -234,7 +234,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allows owner to decide where to receive the fee
     /// @param _feeCollector Address of the fee receiver
-    function changeFeeCollector(address _feeCollector) public only_owner {
+    function changeFeeCollector(address _feeCollector) public onlyOwner {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
         require(events.changeFeeCollector(msg.sender, this, _feeCollector));
@@ -243,7 +243,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allows vault dao/factory to upgrade its address
     /// @param _vaultDao Address of the new vault dao
-    function changeVaultDao(address _vaultDao) public only_vaultDao {
+    function changeVaultDao(address _vaultDao) public onlyVaultDao {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
         require(events.changeVaultDao(msg.sender, this, _vaultDao));
@@ -259,7 +259,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allows vault dao/factory to change the minimum holding period
     /// @param _minPeriod Number of blocks
-    function changeMinPeriod(uint32 _minPeriod) public only_vaultDao {
+    function changeMinPeriod(uint32 _minPeriod) public onlyVaultDao {
         data.minPeriod = _minPeriod;
     }
 
@@ -286,7 +286,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Value of the share price in wei
     function getData()
         public
-        constant
+        view
         returns (
             string name,
             string symbol,
@@ -311,7 +311,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Number of the minimum holding period for shares
     function getAdminData()
         public
-        constant
+        view
         returns (
             address feeCollector,
             address vaultDao,
@@ -345,7 +345,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Calculates the value of the shares
     /// @return Value of the shares in wei
-    function getNav() public constant returns (uint) {
+    function getNav() public view returns (uint) {
         uint casperDeposit = uint(getCasperDeposit());
         uint aum = safeAdd(this.balance, casperDeposit);
         return safeDiv(aum * BASE, data.totalSupply);
@@ -432,7 +432,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Value of net purchased shares
     function getPurchaseAmounts()
         internal
-        constant
+        view
         returns (
             uint grossAmount,
             uint feeVault,
@@ -457,7 +457,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Value of sale amount for hodler
     function getSaleAmounts(uint _amount)
         internal
-        constant
+        view
         returns (
             uint feeVault,
             uint feeVaultDao,

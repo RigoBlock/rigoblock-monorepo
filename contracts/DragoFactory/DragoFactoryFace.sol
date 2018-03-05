@@ -33,10 +33,10 @@ contract DragoFactoryFace {
     function drain() public {}
     //function setOwner(address _new) public {}
 
-    function getRegistry() public constant returns (address) {}
-    function getStorage() public constant returns (address dragoDao, string version, uint nextDragoId) {}
-    function getNextId() public constant returns (uint nextDragoId) {}
-    function getEventful() public constant returns (address) {}
-    function getDragosByAddress(address _owner) public constant returns (address[]) {}
-    //function getOwner() public constant returns (address) {}
+    function getRegistry() public view returns (address) {}
+    function getStorage() public view returns (address dragoDao, string version, uint nextDragoId) {}
+    function getNextId() public view returns (uint nextDragoId) {}
+    function getEventful() public view returns (address) {}
+    function getDragosByAddress(address _owner) public view returns (address[]) {}
+    //function getOwner() public view returns (address) {}
 }

@@ -17,7 +17,7 @@ ABI
 ```
 [
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_ofGroup",
@@ -35,7 +35,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_ofPool",
@@ -54,7 +54,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_ofPool",
@@ -77,7 +77,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "rigoblockDao",
 		"outputs": [
@@ -91,7 +91,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_ofPool",
@@ -114,7 +114,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_ofPool",
@@ -133,7 +133,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getPoolPrices",
 		"outputs": [
@@ -155,7 +155,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_ofPool",
@@ -174,7 +174,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_amount",
@@ -188,7 +188,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_ofPool",
@@ -207,7 +207,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_ofPool",
@@ -230,7 +230,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "RIGOTOKENADDRESS",
 		"outputs": [
@@ -244,7 +244,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_dragoRegistry",
@@ -258,7 +258,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_rigoblockDao",
@@ -272,7 +272,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "dragoRegistry",
 		"outputs": [
@@ -286,7 +286,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "minimumRigo",
 		"outputs": [
@@ -300,7 +300,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_ofPool",
@@ -319,7 +319,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_ofPool",
@@ -333,7 +333,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "calcNetworkValue",
 		"outputs": [

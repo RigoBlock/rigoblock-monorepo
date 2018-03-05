@@ -33,6 +33,6 @@ contract InflationFace {
 
     // CONSTANT PUBLIC FUNCTIONS
 
-    function canWithdraw(address _thePool) public constant returns (bool) {}
-    function getInflationFactor(address _group) public constant returns (uint) {}
+    function canWithdraw(address _thePool) public view returns (bool) {}
+    function getInflationFactor(address _group) public view returns (uint) {}
 }

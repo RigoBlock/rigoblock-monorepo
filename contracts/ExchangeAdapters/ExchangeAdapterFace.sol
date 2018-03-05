@@ -76,13 +76,13 @@ contract ExchangeAdapter {
 
     /// @notice the below functions have to be checked
     /// @notice they are read functions from the exchange, could be queried directly
-    function balanceOf(address token, address user) public constant returns (uint) {}
-    function balanceOf(address _who) public constant returns (uint) {}
-    function marginOf(address _who) public constant returns (uint) {}
-    function availableVolume(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public constant returns(uint) {}
-    function amountFilled(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public constant returns(uint) {}
-    function getLastOrderId() public constant returns (uint) {}
-    function isActive(uint id) public constant returns (bool) {}
-    function getOwner(uint id) public constant returns (address) {}
-    function getOrder(uint id) public constant returns (uint, ERC20, uint, ERC20) {}
+    function balanceOf(address token, address user) public view returns (uint) {}
+    function balanceOf(address _who) public view returns (uint) {}
+    function marginOf(address _who) public view returns (uint) {}
+    function availableVolume(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public view returns(uint) {}
+    function amountFilled(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public view returns(uint) {}
+    function getLastOrderId() public view returns (uint) {}
+    function isActive(uint id) public view returns (bool) {}
+    function getOwner(uint id) public view returns (address) {}
+    function getOrder(uint id) public view returns (uint, ERC20, uint, ERC20) {}
 }

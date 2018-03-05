@@ -17,7 +17,7 @@ ABI
 ```
 [
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "REGISTRY",
 		"outputs": [
@@ -31,7 +31,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_who",
@@ -70,7 +70,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_who",
@@ -101,7 +101,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_who",
@@ -140,7 +140,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "AUTHORITY",
 		"outputs": [
@@ -154,7 +154,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_who",
@@ -181,7 +181,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_who",
@@ -208,7 +208,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_who",
@@ -251,7 +251,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_who",
@@ -278,7 +278,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_who",
@@ -305,7 +305,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_who",
@@ -344,7 +344,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "VERSION",
 		"outputs": [

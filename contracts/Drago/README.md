@@ -16,7 +16,7 @@ Kovan:
 ```
 [
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_newSellPrice",
@@ -34,7 +34,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_spender",
@@ -57,7 +57,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_transactionFee",
@@ -71,7 +71,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getVersion",
 		"outputs": [
@@ -85,7 +85,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_new",
@@ -99,7 +99,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "totalSupply",
 		"outputs": [
@@ -113,7 +113,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_from",
@@ -140,7 +140,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getDragoEventful",
 		"outputs": [
@@ -154,7 +154,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [],
 		"name": "buyDrago",
 		"outputs": [
@@ -168,7 +168,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getData",
 		"outputs": [
@@ -194,7 +194,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_minPeriod",
@@ -208,7 +208,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_amount",
@@ -227,7 +227,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_hodler",
@@ -246,7 +246,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_who",
@@ -265,7 +265,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_exchange",
@@ -283,7 +283,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getOwner",
 		"outputs": [
@@ -297,7 +297,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -311,7 +311,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "getAdminData",
 		"outputs": [
@@ -341,7 +341,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_feeCollector",
@@ -355,7 +355,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_to",
@@ -378,7 +378,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_dragoDao",
@@ -392,7 +392,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_exchange",
@@ -406,7 +406,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_owner",
@@ -429,7 +429,7 @@ Kovan:
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_ratio",

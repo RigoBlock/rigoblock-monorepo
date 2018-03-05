@@ -53,14 +53,25 @@ contract VaultFactory is Owned, VaultFactoryFace {
         uint vaultId
     );
 
-    modifier whitelisted_factory(address _authority) {
+    modifier whitelistedFactory(address _authority) {
         Authority auth = Authority(_authority);
         if (auth.isWhitelistedFactory(this)) _;
     }
 
-    modifier when_fee_paid { require(msg.value >= data.fee); _; }
-    modifier only_owner { require(msg.sender == owner); _; }
-    modifier only_vault_dao { require(msg.sender == data.vaultDao); _; }
+    modifier whenFeePaid {
+        require(msg.value >= data.fee);
+        _;
+    }
+
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+
+    modifier onlyVaultDao {
+        require(msg.sender == data.vaultDao);
+        _;
+    }
 
     function VaultFactory(
         address _registry,
@@ -104,7 +115,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @param _vaultDao Address of the new vault dao
     function setTargetVaultDao(address _targetVault, address _vaultDao)
         public
-        only_owner
+        onlyOwner
     {
         Vault vault = Vault(_targetVault);
         vault.changeVaultDao(_vaultDao);
@@ -113,30 +124,30 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @dev Allows vault dao/factory to update its address
     /// @dev Creates internal record
     /// @param _newVaultDao Address of the vault dao
-    function changeVaultDao(address _newVaultDao) public only_vault_dao {
+    function changeVaultDao(address _newVaultDao) public onlyVaultDao {
         data.vaultDao = _newVaultDao;
     }
 
     /// @dev Allows owner to update the registry
     /// @param _newRegistry Address of the new registry
-    function setRegistry(address _newRegistry) public only_owner {
+    function setRegistry(address _newRegistry) public onlyOwner {
         data.vaultRegistry = _newRegistry;
     }
 
     /// @dev Allows owner to set the address which can collect creation fees
     /// @param _vaultDao Address of the new vault dao/factory
-    function setBeneficiary(address _vaultDao) public only_owner {
+    function setBeneficiary(address _vaultDao) public onlyOwner {
         data.vaultDao = _vaultDao;
     }
 
     /// @dev Allows owner to set the vault creation fee
     /// @param _fee Value of the fee in wei
-    function setFee(uint _fee) public only_owner {
+    function setFee(uint _fee) public onlyOwner {
         data.fee = _fee;
     }
 
     /// @dev Allows owner to collect fees
-    function drain() public only_owner {
+    function drain() public onlyOwner {
         data.vaultDao.transfer(this.balance);
     }
 
@@ -144,7 +155,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
     /// @dev Returns the address of the pool registry
     /// @return Address of the registry
-    function getRegistry() public constant returns (address) {
+    function getRegistry() public view returns (address) {
         return (data.vaultRegistry);
     }
 
@@ -154,7 +165,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @return Number of the next vault from the registry
     function getStorage()
         public
-        constant
+        view
         returns (
             address vaultDao,
             string version,
@@ -170,7 +181,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
     /// @dev Returns the next Id for a vault
     /// @return Number of the next Id from the registry
-    function getNextId() public constant returns (uint nextVaultId) {
+    function getNextId() public view returns (uint nextVaultId) {
         DragoRegistry registry = DragoRegistry(data.vaultRegistry);
         nextVaultId = registry.dragoCount();
     }
@@ -178,7 +189,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @dev Returns the address of the logger contract
     /// @dev Queries from authority contract
     /// @return Address of the eventful contract
-    function getEventful() public constant returns (address) {
+    function getEventful() public view returns (address) {
         Authority auth = Authority(data.authority);
         return auth.getVaultEventful();
     }
@@ -188,7 +199,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @return Array of vault addresses
     function getVaultsByAddress(address _owner)
         public
-        constant
+        view
         returns (address[])
     {
         return data.vaults[_owner];
@@ -208,7 +219,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
         address _owner,
         uint _vaultId)
         internal
-        when_fee_paid
+        whenFeePaid
         returns (bool success)
     {
         Authority auth = Authority(data.authority);

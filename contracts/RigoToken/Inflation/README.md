@@ -17,7 +17,7 @@ ABI
 ```
 [
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_group",
@@ -35,7 +35,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_newPeriod",
@@ -49,7 +49,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_thePool",
@@ -68,7 +68,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "rigoblockDao",
 		"outputs": [
@@ -82,7 +82,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_minimum",
@@ -96,7 +96,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_newRigoblock",
@@ -110,7 +110,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_authority",
@@ -124,7 +124,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "RIGOTOKENADDRESS",
 		"outputs": [
@@ -138,7 +138,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_thePool",
@@ -161,7 +161,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "authority",
 		"outputs": [
@@ -175,7 +175,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_group",
@@ -194,7 +194,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_pop",
@@ -208,7 +208,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "proofOfPerformance",
 		"outputs": [
@@ -222,7 +222,7 @@ ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "period",
 		"outputs": [

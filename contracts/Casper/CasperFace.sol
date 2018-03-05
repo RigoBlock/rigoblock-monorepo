@@ -25,6 +25,6 @@ contract CasperFace {
     function deposit(address _validation, address _withdrawal) public payable {}
     function withdraw(uint128 _validatorIndex) public {}
 
-    function get_deposit_size(uint128 _validatorIndex) public constant returns (uint128) {}
-    function get_nextValidatorIndex() public constant returns (uint128) {}
+    function get_deposit_size(uint128 _validatorIndex) public view returns (uint128) {}
+    function get_nextValidatorIndex() public view returns (uint128) {}
 }

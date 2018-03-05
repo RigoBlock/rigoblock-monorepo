@@ -18,7 +18,7 @@ mock ABI
 
 [
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_validatorIndex",
@@ -32,7 +32,7 @@ mock ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [],
 		"name": "get_nextValidatorIndex",
 		"outputs": [
@@ -46,7 +46,7 @@ mock ABI
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"view": true,
 		"inputs": [
 			{
 				"name": "_validatorIndex",
@@ -65,7 +65,7 @@ mock ABI
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"view": false,
 		"inputs": [
 			{
 				"name": "_validation",

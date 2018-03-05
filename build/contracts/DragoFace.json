@@ -249,11 +249,11 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b61059d8061001e6000396000f3006060604052600436106100d0576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305fefda7146100d2578063096a8ab7146100fe57806326c7a0de146101215780632fbbde2d146101765780633bc5de301461019857806354bdbd4d146102a057806354ea1538146102c95780636854f6681461030457806384193be21461034a5780638f7a844b1461038c5780639245290d14610435578063c8c3b9261461046e578063d0f187ef146104a7578063f6a33253146104e0575b005b34156100dd57600080fd5b6100fc6004808035906020019091908035906020019091905050610503565b005b341561010957600080fd5b61011f6004808035906020019091905050610507565b005b341561012c57600080fd5b61013461050a565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b61017e61050f565b604051808215151515815260200191505060405180910390f35b34156101a357600080fd5b6101ab610514565b604051808060200180602001858152602001848152602001838103835287818151815260200191508051906020019080838360005b838110156101fb5780820151818401526020810190506101e0565b50505050905090810190601f1680156102285780820380516001836020036101000a031916815260200191505b50838103825286818151815260200191508051906020019080838360005b83811015610261578082015181840152602081019050610246565b50505050905090810190601f16801561028e5780820380516001836020036101000a031916815260200191505b50965050505050505060405180910390f35b34156102ab57600080fd5b6102c7600480803563ffffffff1690602001909190505061052d565b005b34156102d457600080fd5b6102ea6004808035906020019091905050610530565b604051808215151515815260200191505060405180910390f35b610330600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610537565b604051808215151515815260200191505060405180910390f35b341561035557600080fd5b61038a600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803590602001909190505061053e565b005b341561039757600080fd5b61039f610542565b604051808673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018481526020018381526020018263ffffffff1663ffffffff1681526020019550505050505060405180910390f35b341561044057600080fd5b61046c600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610551565b005b341561047957600080fd5b6104a5600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610554565b005b34156104b257600080fd5b6104de600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610557565b005b34156104eb57600080fd5b610501600480803590602001909190505061055a565b005b5050565b50565b600090565b600090565b61051c61055d565b61052461055d565b60008090919293565b50565b6000919050565b6000919050565b5050565b60008060008060009091929394565b50565b50565b50565b50565b6020604051908101604052806000815250905600a165627a7a72305820d04e42fb7cefa6e930ad7099cdc16d461c3ba372dec0e47e2c1935e9c3fb8b750029",
-  "deployedBytecode": "0x6060604052600436106100d0576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806305fefda7146100d2578063096a8ab7146100fe57806326c7a0de146101215780632fbbde2d146101765780633bc5de301461019857806354bdbd4d146102a057806354ea1538146102c95780636854f6681461030457806384193be21461034a5780638f7a844b1461038c5780639245290d14610435578063c8c3b9261461046e578063d0f187ef146104a7578063f6a33253146104e0575b005b34156100dd57600080fd5b6100fc6004808035906020019091908035906020019091905050610503565b005b341561010957600080fd5b61011f6004808035906020019091905050610507565b005b341561012c57600080fd5b61013461050a565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b61017e61050f565b604051808215151515815260200191505060405180910390f35b34156101a357600080fd5b6101ab610514565b604051808060200180602001858152602001848152602001838103835287818151815260200191508051906020019080838360005b838110156101fb5780820151818401526020810190506101e0565b50505050905090810190601f1680156102285780820380516001836020036101000a031916815260200191505b50838103825286818151815260200191508051906020019080838360005b83811015610261578082015181840152602081019050610246565b50505050905090810190601f16801561028e5780820380516001836020036101000a031916815260200191505b50965050505050505060405180910390f35b34156102ab57600080fd5b6102c7600480803563ffffffff1690602001909190505061052d565b005b34156102d457600080fd5b6102ea6004808035906020019091905050610530565b604051808215151515815260200191505060405180910390f35b610330600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610537565b604051808215151515815260200191505060405180910390f35b341561035557600080fd5b61038a600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803590602001909190505061053e565b005b341561039757600080fd5b61039f610542565b604051808673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018481526020018381526020018263ffffffff1663ffffffff1681526020019550505050505060405180910390f35b341561044057600080fd5b61046c600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610551565b005b341561047957600080fd5b6104a5600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610554565b005b34156104b257600080fd5b6104de600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610557565b005b34156104eb57600080fd5b610501600480803590602001909190505061055a565b005b5050565b50565b600090565b600090565b61051c61055d565b61052461055d565b60008090919293565b50565b6000919050565b6000919050565b5050565b60008060008060009091929394565b50565b50565b50565b50565b6020604051908101604052806000815250905600a165627a7a72305820d04e42fb7cefa6e930ad7099cdc16d461c3ba372dec0e47e2c1935e9c3fb8b750029",
-  "sourceMap": "744:1419:8:-;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "744:1419:8:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1020:68;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1199:58;;;;;;;;;;;;;;;;;;;;;;;;;;1711:64;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;793:62;;;;;;;;;;;;;;;;;;;;;;;;;;;1780:105;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;80:1;75:3;71;64:6;52:2;49:1;45:3;40:15;;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;80:1;75:3;71;64:6;52:2;49:1;45:3;40:15;;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1093:53:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;948:67;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;860:83;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1384:69;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1890:142;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1262:60;;;;;;;;;;;;;;;;;;;;;;;;;;;;1327:52;;;;;;;;;;;;;;;;;;;;;;;;;;;;1458:57;;;;;;;;;;;;;;;;;;;;;;;;;;;;1151:43;;;;;;;;;;;;;;;;;;;;;;;;;;1020:68;;;:::o;1199:58::-;;:::o;1711:64::-;1764:7;1711:64;:::o;793:62::-;839:12;793:62;:::o;1780:105::-;1824:11;;:::i;:::-;1837:13;;:::i;:::-;1852:14;1868:13;1780:105;;;;:::o;1093:53::-;;:::o;948:67::-;999:12;948:67;;;:::o;860:83::-;927:12;860:83;;;:::o;1384:69::-;;;:::o;1890:142::-;1939:20;1961:16;1979:10;1991:19;2012:16;1890:142;;;;;:::o;1262:60::-;;:::o;1327:52::-;;:::o;1458:57::-;;:::o;1151:43::-;;:::o;744:1419::-;;;;;;;;;;;;;;;:::o",
-  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\n/// @title Drago Interface - Allows interaction with the Drago contract.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\ncontract DragoFace {\n\n    // CORE FUNCTIONS\n\n    function buyDrago() external payable returns (bool success) {}\n    function buyDragoOnBehalf(address _hodler) public payable returns (bool success) {}\n    function sellDrago(uint _amount) external returns (bool success) {}\n    function setPrices(uint _newSellPrice, uint _newBuyPrice)  public {}\n    function changeMinPeriod(uint32 _minPeriod) public {}\n    function changeRatio(uint _ratio) public {}\n    function setTransactionFee(uint _transactionFee) public {}\n    function changeFeeCollector(address _feeCollector) public {}\n    function changeDragoDao(address _dragoDao) public {}\n    function depositToExchange(address _exchange, uint _amount) public {}\n    function operateOnExchange(address _exchange) external {}\n    //function setOwner(address _new) public {}\n    function() external payable {}\n\n    // PUBLIC CONSTANT FUNCTIONS\n\n    //function balanceOf(address _who) public constant returns (uint) {}\n    function getDragoEventful() public constant returns (address) {}\n    function getData() public constant returns (string name, string symbol, uint sellPrice, uint buyPrice) {}\n    function getAdminData() public constant returns (address feeCollector, address dragoDao, uint ratio, uint transactionFee, uint32 minPeriod) {}\n    //function getOwner() public constant returns (address) {}\n    //function totalSupply() public constant returns (uint256) {}\n}\n",
+  "bytecode": "0x6060604052341561000f57600080fd5b6103df8061001e6000396000f3006060604052600436106100cf5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166305fefda781146100d1578063096a8ab7146100ea57806326c7a0de146101005780632fbbde2d1461013c5780633bc5de301461015857806354bdbd4d1461025a57806354ea1538146102765780636854f6681461028c57806384193be2146102ad5780638f7a844b146102dc5780639245290d1461033b578063c8c3b9261461033b578063d0f187ef1461033b578063f6a33253146100ea575b005b34156100dc57600080fd5b6100cf600435602435610367565b34156100f557600080fd5b6100cf60043561036b565b341561010b57600080fd5b61011361036e565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b61014461036e565b604051901515815260200160405180910390f35b341561016357600080fd5b61016b610373565b604051808060200180602001858152602001848152602001838103835287818151815260200191508051906020019080838360005b838110156101b85780820151838201526020016101a0565b50505050905090810190601f1680156101e55780820380516001836020036101000a031916815260200191505b50838103825286818151815260200191508051906020019080838360005b8381101561021b578082015183820152602001610203565b50505050905090810190601f1680156102485780820380516001836020036101000a031916815260200191505b50965050505050505060405180910390f35b341561026557600080fd5b6100cf63ffffffff6004351661036b565b341561028157600080fd5b61014460043561038c565b61014473ffffffffffffffffffffffffffffffffffffffff6004351661038c565b34156102b857600080fd5b6100cf73ffffffffffffffffffffffffffffffffffffffff60043516602435610367565b34156102e757600080fd5b6102ef610392565b60405173ffffffffffffffffffffffffffffffffffffffff9586168152939094166020840152604080840192909252606083015263ffffffff909216608082015260a001905180910390f35b341561034657600080fd5b6100cf73ffffffffffffffffffffffffffffffffffffffff6004351661036b565b5050565b50565b600090565b61037b6103a1565b6103836103a1565b60008090919293565b50600090565b60008060008060009091929394565b602060405190810160405260008152905600a165627a7a72305820a2d2a9cf5ff51559662bcbb2b5456007e68400470353843e93daeadc7bea15de0029",
+  "deployedBytecode": "0x6060604052600436106100cf5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166305fefda781146100d1578063096a8ab7146100ea57806326c7a0de146101005780632fbbde2d1461013c5780633bc5de301461015857806354bdbd4d1461025a57806354ea1538146102765780636854f6681461028c57806384193be2146102ad5780638f7a844b146102dc5780639245290d1461033b578063c8c3b9261461033b578063d0f187ef1461033b578063f6a33253146100ea575b005b34156100dc57600080fd5b6100cf600435602435610367565b34156100f557600080fd5b6100cf60043561036b565b341561010b57600080fd5b61011361036e565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b61014461036e565b604051901515815260200160405180910390f35b341561016357600080fd5b61016b610373565b604051808060200180602001858152602001848152602001838103835287818151815260200191508051906020019080838360005b838110156101b85780820151838201526020016101a0565b50505050905090810190601f1680156101e55780820380516001836020036101000a031916815260200191505b50838103825286818151815260200191508051906020019080838360005b8381101561021b578082015183820152602001610203565b50505050905090810190601f1680156102485780820380516001836020036101000a031916815260200191505b50965050505050505060405180910390f35b341561026557600080fd5b6100cf63ffffffff6004351661036b565b341561028157600080fd5b61014460043561038c565b61014473ffffffffffffffffffffffffffffffffffffffff6004351661038c565b34156102b857600080fd5b6100cf73ffffffffffffffffffffffffffffffffffffffff60043516602435610367565b34156102e757600080fd5b6102ef610392565b60405173ffffffffffffffffffffffffffffffffffffffff9586168152939094166020840152604080840192909252606083015263ffffffff909216608082015260a001905180910390f35b341561034657600080fd5b6100cf73ffffffffffffffffffffffffffffffffffffffff6004351661036b565b5050565b50565b600090565b61037b6103a1565b6103836103a1565b60008090919293565b50600090565b60008060008060009091929394565b602060405190810160405260008152905600a165627a7a72305820a2d2a9cf5ff51559662bcbb2b5456007e68400470353843e93daeadc7bea15de0029",
+  "sourceMap": "744:1395:8:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "744:1395:8:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1020:68;;;;;;;;;;;;;;;;1199:58;;;;;;;;;;;;;;1707:60;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;793:62;;;;;;;;;;;;;;;;;;;;;1772:101;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;71:3;;;64:6;52:2;45:3;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;71:3;;;64:6;52:2;45:3;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1093:53:8;;;;;;;;;;;;;;;;948:67;;;;;;;;;;;;;;860:83;;;;;;;;1384:69;;;;;;;;;;;;;;;;;;1878:138;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1262:60;;;;;;;;;;;;;;;;1020:68;;;:::o;1199:58::-;;:::o;1707:60::-;1756:7;1707:60;:::o;1772:101::-;1812:11;;:::i;:::-;1825:13;;:::i;:::-;1840:14;1856:13;1772:101;;;;:::o;948:67::-;-1:-1:-1;999:12:8;;948:67::o;1878:138::-;1923:20;1945:16;1963:10;1975:19;1996:16;1878:138;;;;;:::o;744:1395::-;;;;;;;;;;;;;:::o",
+  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\n/// @title Drago Interface - Allows interaction with the Drago contract.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\ncontract DragoFace {\n\n    // CORE FUNCTIONS\n\n    function buyDrago() external payable returns (bool success) {}\n    function buyDragoOnBehalf(address _hodler) public payable returns (bool success) {}\n    function sellDrago(uint _amount) external returns (bool success) {}\n    function setPrices(uint _newSellPrice, uint _newBuyPrice)  public {}\n    function changeMinPeriod(uint32 _minPeriod) public {}\n    function changeRatio(uint _ratio) public {}\n    function setTransactionFee(uint _transactionFee) public {}\n    function changeFeeCollector(address _feeCollector) public {}\n    function changeDragoDao(address _dragoDao) public {}\n    function depositToExchange(address _exchange, uint _amount) public {}\n    function operateOnExchange(address _exchange) external {}\n    //function setOwner(address _new) public {}\n    function() external payable {}\n\n    // PUBLIC CONSTANT FUNCTIONS\n\n    //function balanceOf(address _who) public view returns (uint) {}\n    function getDragoEventful() public view returns (address) {}\n    function getData() public view returns (string name, string symbol, uint sellPrice, uint buyPrice) {}\n    function getAdminData() public view returns (address feeCollector, address dragoDao, uint ratio, uint transactionFee, uint32 minPeriod) {}\n    //function getOwner() public view returns (address) {}\n    //function totalSupply() public view returns (uint256) {}\n}\n",
   "sourcePath": "/home/gab/truffle/contracts/contracts/Drago/DragoFace.sol",
   "ast": {
     "absolutePath": "/home/gab/truffle/contracts/contracts/Drago/DragoFace.sol",
@@ -1092,7 +1092,7 @@
             "body": {
               "id": 3133,
               "nodeType": "Block",
-              "src": "1773:2:8",
+              "src": "1765:2:8",
               "statements": []
             },
             "id": 3134,
@@ -1106,7 +1106,7 @@
               "id": 3129,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1736:2:8"
+              "src": "1732:2:8"
             },
             "payable": false,
             "returnParameters": {
@@ -1119,7 +1119,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 3134,
-                  "src": "1764:7:8",
+                  "src": "1756:7:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1130,7 +1130,7 @@
                     "id": 3130,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1764:7:8",
+                    "src": "1756:7:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1140,10 +1140,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1763:9:8"
+              "src": "1755:9:8"
             },
             "scope": 3161,
-            "src": "1711:64:8",
+            "src": "1707:60:8",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1152,7 +1152,7 @@
             "body": {
               "id": 3145,
               "nodeType": "Block",
-              "src": "1883:2:8",
+              "src": "1871:2:8",
               "statements": []
             },
             "id": 3146,
@@ -1166,7 +1166,7 @@
               "id": 3135,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1796:2:8"
+              "src": "1788:2:8"
             },
             "payable": false,
             "returnParameters": {
@@ -1179,7 +1179,7 @@
                   "name": "name",
                   "nodeType": "VariableDeclaration",
                   "scope": 3146,
-                  "src": "1824:11:8",
+                  "src": "1812:11:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1190,7 +1190,7 @@
                     "id": 3136,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1824:6:8",
+                    "src": "1812:6:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -1205,7 +1205,7 @@
                   "name": "symbol",
                   "nodeType": "VariableDeclaration",
                   "scope": 3146,
-                  "src": "1837:13:8",
+                  "src": "1825:13:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1216,7 +1216,7 @@
                     "id": 3138,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1837:6:8",
+                    "src": "1825:6:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -1231,7 +1231,7 @@
                   "name": "sellPrice",
                   "nodeType": "VariableDeclaration",
                   "scope": 3146,
-                  "src": "1852:14:8",
+                  "src": "1840:14:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1242,7 +1242,7 @@
                     "id": 3140,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1852:4:8",
+                    "src": "1840:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1257,7 +1257,7 @@
                   "name": "buyPrice",
                   "nodeType": "VariableDeclaration",
                   "scope": 3146,
-                  "src": "1868:13:8",
+                  "src": "1856:13:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1268,7 +1268,7 @@
                     "id": 3142,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1868:4:8",
+                    "src": "1856:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1278,10 +1278,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1823:59:8"
+              "src": "1811:59:8"
             },
             "scope": 3161,
-            "src": "1780:105:8",
+            "src": "1772:101:8",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -1290,7 +1290,7 @@
             "body": {
               "id": 3159,
               "nodeType": "Block",
-              "src": "2030:2:8",
+              "src": "2014:2:8",
               "statements": []
             },
             "id": 3160,
@@ -1304,7 +1304,7 @@
               "id": 3147,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1911:2:8"
+              "src": "1899:2:8"
             },
             "payable": false,
             "returnParameters": {
@@ -1317,7 +1317,7 @@
                   "name": "feeCollector",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "1939:20:8",
+                  "src": "1923:20:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1328,7 +1328,7 @@
                     "id": 3148,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1939:7:8",
+                    "src": "1923:7:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1343,7 +1343,7 @@
                   "name": "dragoDao",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "1961:16:8",
+                  "src": "1945:16:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1354,7 +1354,7 @@
                     "id": 3150,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1961:7:8",
+                    "src": "1945:7:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -1369,7 +1369,7 @@
                   "name": "ratio",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "1979:10:8",
+                  "src": "1963:10:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1380,7 +1380,7 @@
                     "id": 3152,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1979:4:8",
+                    "src": "1963:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1395,7 +1395,7 @@
                   "name": "transactionFee",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "1991:19:8",
+                  "src": "1975:19:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1406,7 +1406,7 @@
                     "id": 3154,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1991:4:8",
+                    "src": "1975:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1421,7 +1421,7 @@
                   "name": "minPeriod",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "2012:16:8",
+                  "src": "1996:16:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1432,7 +1432,7 @@
                     "id": 3156,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2012:6:8",
+                    "src": "1996:6:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -1442,20 +1442,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1938:91:8"
+              "src": "1922:91:8"
             },
             "scope": 3161,
-            "src": "1890:142:8",
+            "src": "1878:138:8",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 3162,
-        "src": "744:1419:8"
+        "src": "744:1395:8"
       }
     ],
-    "src": "597:1567:8"
+    "src": "597:1543:8"
   },
   "legacyAST": {
     "absolutePath": "/home/gab/truffle/contracts/contracts/Drago/DragoFace.sol",
@@ -2294,7 +2294,7 @@
             "body": {
               "id": 3133,
               "nodeType": "Block",
-              "src": "1773:2:8",
+              "src": "1765:2:8",
               "statements": []
             },
             "id": 3134,
@@ -2308,7 +2308,7 @@
               "id": 3129,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1736:2:8"
+              "src": "1732:2:8"
             },
             "payable": false,
             "returnParameters": {
@@ -2321,7 +2321,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 3134,
-                  "src": "1764:7:8",
+                  "src": "1756:7:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2332,7 +2332,7 @@
                     "id": 3130,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1764:7:8",
+                    "src": "1756:7:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2342,10 +2342,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1763:9:8"
+              "src": "1755:9:8"
             },
             "scope": 3161,
-            "src": "1711:64:8",
+            "src": "1707:60:8",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2354,7 +2354,7 @@
             "body": {
               "id": 3145,
               "nodeType": "Block",
-              "src": "1883:2:8",
+              "src": "1871:2:8",
               "statements": []
             },
             "id": 3146,
@@ -2368,7 +2368,7 @@
               "id": 3135,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1796:2:8"
+              "src": "1788:2:8"
             },
             "payable": false,
             "returnParameters": {
@@ -2381,7 +2381,7 @@
                   "name": "name",
                   "nodeType": "VariableDeclaration",
                   "scope": 3146,
-                  "src": "1824:11:8",
+                  "src": "1812:11:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2392,7 +2392,7 @@
                     "id": 3136,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1824:6:8",
+                    "src": "1812:6:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -2407,7 +2407,7 @@
                   "name": "symbol",
                   "nodeType": "VariableDeclaration",
                   "scope": 3146,
-                  "src": "1837:13:8",
+                  "src": "1825:13:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2418,7 +2418,7 @@
                     "id": 3138,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1837:6:8",
+                    "src": "1825:6:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string storage pointer"
@@ -2433,7 +2433,7 @@
                   "name": "sellPrice",
                   "nodeType": "VariableDeclaration",
                   "scope": 3146,
-                  "src": "1852:14:8",
+                  "src": "1840:14:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2444,7 +2444,7 @@
                     "id": 3140,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1852:4:8",
+                    "src": "1840:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2459,7 +2459,7 @@
                   "name": "buyPrice",
                   "nodeType": "VariableDeclaration",
                   "scope": 3146,
-                  "src": "1868:13:8",
+                  "src": "1856:13:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2470,7 +2470,7 @@
                     "id": 3142,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1868:4:8",
+                    "src": "1856:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2480,10 +2480,10 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1823:59:8"
+              "src": "1811:59:8"
             },
             "scope": 3161,
-            "src": "1780:105:8",
+            "src": "1772:101:8",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
@@ -2492,7 +2492,7 @@
             "body": {
               "id": 3159,
               "nodeType": "Block",
-              "src": "2030:2:8",
+              "src": "2014:2:8",
               "statements": []
             },
             "id": 3160,
@@ -2506,7 +2506,7 @@
               "id": 3147,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1911:2:8"
+              "src": "1899:2:8"
             },
             "payable": false,
             "returnParameters": {
@@ -2519,7 +2519,7 @@
                   "name": "feeCollector",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "1939:20:8",
+                  "src": "1923:20:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2530,7 +2530,7 @@
                     "id": 3148,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1939:7:8",
+                    "src": "1923:7:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2545,7 +2545,7 @@
                   "name": "dragoDao",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "1961:16:8",
+                  "src": "1945:16:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2556,7 +2556,7 @@
                     "id": 3150,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1961:7:8",
+                    "src": "1945:7:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -2571,7 +2571,7 @@
                   "name": "ratio",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "1979:10:8",
+                  "src": "1963:10:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2582,7 +2582,7 @@
                     "id": 3152,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1979:4:8",
+                    "src": "1963:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2597,7 +2597,7 @@
                   "name": "transactionFee",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "1991:19:8",
+                  "src": "1975:19:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2608,7 +2608,7 @@
                     "id": 3154,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1991:4:8",
+                    "src": "1975:4:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2623,7 +2623,7 @@
                   "name": "minPeriod",
                   "nodeType": "VariableDeclaration",
                   "scope": 3160,
-                  "src": "2012:16:8",
+                  "src": "1996:16:8",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2634,7 +2634,7 @@
                     "id": 3156,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2012:6:8",
+                    "src": "1996:6:8",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -2644,20 +2644,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1938:91:8"
+              "src": "1922:91:8"
             },
             "scope": 3161,
-            "src": "1890:142:8",
+            "src": "1878:138:8",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 3162,
-        "src": "744:1419:8"
+        "src": "744:1395:8"
       }
     ],
-    "src": "597:1567:8"
+    "src": "597:1543:8"
   },
   "compiler": {
     "name": "solc",
@@ -2665,5 +2665,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-05T01:35:43.690Z"
+  "updatedAt": "2018-03-05T21:05:52.486Z"
 }

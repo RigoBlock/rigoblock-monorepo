@@ -36,12 +36,12 @@ contract RigoTokenFace {
 
     // CONSTANT PUBLIC FUNCTIONS
 
-    //function balanceOf(address _owner) constant returns (uint256 balance) {}
-    //function totalSupply() constant returns (uint256 totalSupply) {}
-    function getName() public constant returns (string) {}
-    function getSymbol() public constant returns (string) {}
-    function getDecimals() public constant returns (uint) {}
-    function getMinter() public constant returns (address) {}
-    function getRigoblock() public constant returns (address) {}
-    function getInflationFactor(address _group) public constant returns (uint) {}
+    //function balanceOf(address _owner) view returns (uint256 balance) {}
+    //function totalSupply() view returns (uint256 totalSupply) {}
+    function getName() public view returns (string) {}
+    function getSymbol() public view returns (string) {}
+    function getDecimals() public view returns (uint) {}
+    function getMinter() public view returns (address) {}
+    function getRigoblock() public view returns (address) {}
+    function getInflationFactor(address _group) public view returns (uint) {}
 }

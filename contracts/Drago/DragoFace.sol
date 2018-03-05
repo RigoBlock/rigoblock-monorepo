@@ -40,10 +40,10 @@ contract DragoFace {
 
     // PUBLIC CONSTANT FUNCTIONS
 
-    //function balanceOf(address _who) public constant returns (uint) {}
-    function getDragoEventful() public constant returns (address) {}
-    function getData() public constant returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
-    function getAdminData() public constant returns (address feeCollector, address dragoDao, uint ratio, uint transactionFee, uint32 minPeriod) {}
-    //function getOwner() public constant returns (address) {}
-    //function totalSupply() public constant returns (uint256) {}
+    //function balanceOf(address _who) public view returns (uint) {}
+    function getDragoEventful() public view returns (address) {}
+    function getData() public view returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
+    function getAdminData() public view returns (address feeCollector, address dragoDao, uint ratio, uint transactionFee, uint32 minPeriod) {}
+    //function getOwner() public view returns (address) {}
+    //function totalSupply() public view returns (uint256) {}
 }

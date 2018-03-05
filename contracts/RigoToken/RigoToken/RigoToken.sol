@@ -43,12 +43,12 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
 
     // MODIFIERS
 
-    modifier only_minter {
+    modifier onlyMinter {
         require(msg.sender == minter);
         _;
     }
 
-    modifier only_rigoblock {
+    modifier onlyRigoblock {
         require(msg.sender == rigoblock);
         _;
     }
@@ -64,7 +64,7 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
     /// @dev Allows minter to create new tokens
     /// @param _recipient Address of who receives new tokens
     /// @param _amount Number of new tokens
-    function mintToken(address _recipient, uint _amount) external only_minter {
+    function mintToken(address _recipient, uint _amount) external onlyMinter {
         balances[_recipient] = safeAdd(balances[_recipient], _amount);
         totalSupply = safeAdd(totalSupply, _amount);
     }
@@ -94,13 +94,13 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
 
     /// @dev Allows rigoblock dao to change minter
     /// @param _newAddress Address of the new minter
-    function changeMintingAddress(address _newAddress) public only_rigoblock {
+    function changeMintingAddress(address _newAddress) public onlyRigoblock {
         minter = _newAddress;
     }
 
     /// @dev Allows rigoblock dao to upgrade dao
     /// @param _newAddress Address of the new rigoblock dao
-    function changeRigoblockAddress(address _newAddress) public only_rigoblock {
+    function changeRigoblockAddress(address _newAddress) public onlyRigoblock {
         rigoblock = _newAddress;
     }
 
@@ -108,38 +108,38 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
 
     /// @dev Returns name of Rigo token
     /// @return String with name
-    function getName() public constant returns (string) {
+    function getName() public view returns (string) {
         return name;
     }
 
     /// @dev Returns symbol of Rigo token
     /// @return String with symbol
-    function getSymbol() public constant returns (string) {
+    function getSymbol() public view returns (string) {
         return symbol;
     }
 
     /// @dev Returns decimals of Rigo token
     /// @return Number of decimals
-    function getDecimals() public constant returns (uint) {
+    function getDecimals() public view returns (uint) {
         return decimals;
     }
 
     /// @dev Returns the minter
     /// @return Address of the minter
-    function getMinter() public constant returns (address) {
+    function getMinter() public view returns (address) {
         return minter;
     }
 
     /// @dev Returns the rigoblock dao
     /// @return Address of the rigoblock dao
-    function getRigoblock() public constant returns (address) {
+    function getRigoblock() public view returns (address) {
         return rigoblock;
     }
 
     /// @dev Returns the reward/inflation factor for a said group
     /// @param _group Address of the group/factory
     /// @return Value of the inflation factor
-    function getInflationFactor(address _group) public constant returns (uint) {
+    function getInflationFactor(address _group) public view returns (uint) {
         Inflation inflation = Inflation(minter);
         inflation.getInflationFactor(_group);
     }

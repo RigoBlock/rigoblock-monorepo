@@ -34,7 +34,7 @@ library VaultFactoryLibrary {
         address newAddress;
     }
 
-    modifier whitelisted_factory(address _authority) {
+    modifier whitelistedFactory(address _authority) {
         Authority auth = Authority(_authority);
         if (auth.isWhitelistedFactory(this)) _;
     }
@@ -53,7 +53,7 @@ library VaultFactoryLibrary {
         uint _vaultId,
         address _authority)
         internal
-        whitelisted_factory(_authority)
+        whitelistedFactory(_authority)
         returns (bool success)
     {
         Vault vault = new Vault(

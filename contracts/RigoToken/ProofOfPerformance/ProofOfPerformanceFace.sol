@@ -32,14 +32,14 @@ contract ProofOfPerformanceFace {
 
     // CONSTANT PUBLIC FUNCTIONS
 
-    function isActive(uint _ofPool) public constant returns (bool) {}
-    function addressFromId(uint _ofPool) public constant returns (address pool, address group) {}
-    function getPoolPrice(uint _ofPool) public constant returns (uint thePoolPrice, uint totalTokens) {}
-    function getPoolPrices() public constant returns (address[] pools, uint[] poolPrices, uint[] totalTokens) {}
-    function calcPoolValue(uint256 _ofPool) public /*internal*/ constant returns (uint256 aum, bool success) {}
-    function calcNetworkValue() public constant returns (uint networkValue, uint numberOfFunds) {}
-    function getEpochReward(uint _ofPool) public constant returns (uint) {}
-    function getRatio(uint _ofPool) public constant returns (uint) {}
-    function proofOfPerformance(uint _ofPool) public constant returns (uint256) {}
-    function getHwm(uint _ofPool) public constant returns (uint) {}
+    function isActive(uint _ofPool) public view returns (bool) {}
+    function addressFromId(uint _ofPool) public view returns (address pool, address group) {}
+    function getPoolPrice(uint _ofPool) public view returns (uint thePoolPrice, uint totalTokens) {}
+    function getPoolPrices() public view returns (address[] pools, uint[] poolPrices, uint[] totalTokens) {}
+    function calcPoolValue(uint256 _ofPool) public /*internal*/ view returns (uint256 aum, bool success) {}
+    function calcNetworkValue() public view returns (uint networkValue, uint numberOfFunds) {}
+    function getEpochReward(uint _ofPool) public view returns (uint) {}
+    function getRatio(uint _ofPool) public view returns (uint) {}
+    function proofOfPerformance(uint _ofPool) public view returns (uint256) {}
+    function getHwm(uint _ofPool) public view returns (uint) {}
 }

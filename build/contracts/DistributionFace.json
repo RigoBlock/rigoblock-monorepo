@@ -83,11 +83,11 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b6101938061001e6000396000f300606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063b4f2e8b81461005c578063b88c91481461009e578063e487721a146100eb575b600080fd5b341561006757600080fd5b61009c600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610157565b005b34156100a957600080fd5b6100d5600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061015b565b6040518082815260200191505060405180910390f35b610155600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610162565b005b5050565b6000919050565b5050505600a165627a7a72305820fbc1479de1e5f8eb20bf47496c2c394c10da0ef4997af933a20e4e88b1c10e560029",
-  "deployedBytecode": "0x606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063b4f2e8b81461005c578063b88c91481461009e578063e487721a146100eb575b600080fd5b341561006757600080fd5b61009c600480803590602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610157565b005b34156100a957600080fd5b6100d5600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061015b565b6040518082815260200191505060405180910390f35b610155600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610162565b005b5050565b6000919050565b5050505600a165627a7a72305820fbc1479de1e5f8eb20bf47496c2c394c10da0ef4997af933a20e4e88b1c10e560029",
-  "sourceMap": "749:353:4:-;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "749:353:4:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;966:58;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1029:71;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;872:89;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;966:58;;;:::o;1029:71::-;1092:4;1029:71;;;:::o;872:89::-;;;;:::o",
-  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\n/// @title Distribution Interface - Allows to interact with the distribution.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\ncontract DistributionFace {\n\n    event Subscription(address indexed buyer, address indexed distributor, uint amount);\n\n    function subscribe(address _pool, address _distributor, address _buyer) public payable {}\n    function setFee(uint _fee, address _distributor) public {}\n    function getFee(address _distributor) public constant returns (uint) {}\n}\n",
+  "bytecode": "0x6060604052341561000f57600080fd5b6101268061001e6000396000f30060606040526004361060525763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663b4f2e8b881146057578063b88c9148146085578063e487721a1460c0575b600080fd5b3415606157600080fd5b608360043573ffffffffffffffffffffffffffffffffffffffff6024351660eb565b005b3415608f57600080fd5b60ae73ffffffffffffffffffffffffffffffffffffffff6004351660ef565b60405190815260200160405180910390f35b608373ffffffffffffffffffffffffffffffffffffffff6004358116906024358116906044351660f5565b5050565b50600090565b5050505600a165627a7a72305820744e13a12ed60f8f38bdaf2fdab7b3172e1300e4bbabcb3eaa5a70e2f0f289160029",
+  "deployedBytecode": "0x60606040526004361060525763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663b4f2e8b881146057578063b88c9148146085578063e487721a1460c0575b600080fd5b3415606157600080fd5b608360043573ffffffffffffffffffffffffffffffffffffffff6024351660eb565b005b3415608f57600080fd5b60ae73ffffffffffffffffffffffffffffffffffffffff6004351660ef565b60405190815260200160405180910390f35b608373ffffffffffffffffffffffffffffffffffffffff6004358116906024358116906044351660f5565b5050565b50600090565b5050505600a165627a7a72305820744e13a12ed60f8f38bdaf2fdab7b3172e1300e4bbabcb3eaa5a70e2f0f289160029",
+  "sourceMap": "749:349:4:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "749:349:4:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;966:58;;;;;;;;;;;;;;;;;;;;1029:67;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;872:89;;;;;;;;;;;;;;;;;;966:58;;;:::o;1029:67::-;-1:-1:-1;1088:4:4;;1029:67::o;872:89::-;;;;:::o",
+  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\n/// @title Distribution Interface - Allows to interact with the distribution.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\ncontract DistributionFace {\n\n    event Subscription(address indexed buyer, address indexed distributor, uint amount);\n\n    function subscribe(address _pool, address _distributor, address _buyer) public payable {}\n    function setFee(uint _fee, address _distributor) public {}\n    function getFee(address _distributor) public view returns (uint) {}\n}\n",
   "sourcePath": "/home/gab/truffle/contracts/contracts/Distribution/DistributionFace.sol",
   "ast": {
     "absolutePath": "/home/gab/truffle/contracts/contracts/Distribution/DistributionFace.sol",
@@ -420,7 +420,7 @@
             "body": {
               "id": 1414,
               "nodeType": "Block",
-              "src": "1098:2:4",
+              "src": "1094:2:4",
               "statements": []
             },
             "id": 1415,
@@ -474,7 +474,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1415,
-                  "src": "1092:4:4",
+                  "src": "1088:4:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -485,7 +485,7 @@
                     "id": 1411,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1092:4:4",
+                    "src": "1088:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -495,20 +495,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1091:6:4"
+              "src": "1087:6:4"
             },
             "scope": 1416,
-            "src": "1029:71:4",
+            "src": "1029:67:4",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 1417,
-        "src": "749:353:4"
+        "src": "749:349:4"
       }
     ],
-    "src": "597:506:4"
+    "src": "597:502:4"
   },
   "legacyAST": {
     "absolutePath": "/home/gab/truffle/contracts/contracts/Distribution/DistributionFace.sol",
@@ -841,7 +841,7 @@
             "body": {
               "id": 1414,
               "nodeType": "Block",
-              "src": "1098:2:4",
+              "src": "1094:2:4",
               "statements": []
             },
             "id": 1415,
@@ -895,7 +895,7 @@
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1415,
-                  "src": "1092:4:4",
+                  "src": "1088:4:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -906,7 +906,7 @@
                     "id": 1411,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1092:4:4",
+                    "src": "1088:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -916,20 +916,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1091:6:4"
+              "src": "1087:6:4"
             },
             "scope": 1416,
-            "src": "1029:71:4",
+            "src": "1029:67:4",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 1417,
-        "src": "749:353:4"
+        "src": "749:349:4"
       }
     ],
-    "src": "597:506:4"
+    "src": "597:502:4"
   },
   "compiler": {
     "name": "solc",
@@ -937,5 +937,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-05T01:35:43.658Z"
+  "updatedAt": "2018-03-05T21:05:52.457Z"
 }

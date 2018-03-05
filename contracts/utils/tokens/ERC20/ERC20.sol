@@ -23,7 +23,7 @@ contract ERC20 is ERC20Face {
         } else { return false; }
     }
 
-    function balanceOf(address _owner) public constant returns (uint256) {
+    function balanceOf(address _owner) public view returns (uint256) {
         return balances[_owner];
     }
 
@@ -33,7 +33,7 @@ contract ERC20 is ERC20Face {
         return true;
     }
 
-    function allowance(address _owner, address _spender) public constant returns (uint256) {
+    function allowance(address _owner, address _spender) public view returns (uint256) {
         return allowed[_owner][_spender];
     }
 

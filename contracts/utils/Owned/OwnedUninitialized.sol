@@ -6,14 +6,17 @@ contract OwnedUninitialized {
 
     event NewOwner(address indexed old, address indexed current);
 
-    modifier only_owner { require(msg.sender == owner); _; }
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
 
-    function setOwner(address _new) public only_owner {
+    function setOwner(address _new) public onlyOwner {
         owner = _new;
         NewOwner(owner, _new);
     }
 
-    function getOwner() public constant returns (address) {
+    function getOwner() public view returns (address) {
         return owner;
     }
 }

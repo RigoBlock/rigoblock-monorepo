@@ -72,55 +72,55 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
         uint ratio; //ratio is 80%
     }
 
-    modifier only_dragoDao {
+    modifier onlyDragoDao {
         require(msg.sender == admin.dragoDao);
         _;
     }
 
-    modifier only_owner_or_authority {
+    modifier onlyOwnerOrAuthority {
         Authority auth = Authority(admin.authority);
         require(auth.isAuthority(msg.sender) || msg.sender == owner);
         _;
     }
 
-    modifier when_approved_exchange(address _exchange) {
+    modifier whenApprovedExchange(address _exchange) {
         Authority auth = Authority(admin.authority);
         require(auth.isWhitelistedExchange(_exchange));
         _;
     }
 
-    modifier owner_or_approved_exchange() {
+    modifier ownerOrApprovedExchange() {
         Authority auth = Authority(admin.authority);
         require(auth.isWhitelistedExchange(msg.sender) || msg.sender == owner);
         _;
     }
 
-    modifier minimum_stake(uint amount) {
+    modifier minimumStake(uint amount) {
         require (amount >= admin.minOrder);
         _;
     }
 
-    modifier has_enough(uint _amount) {
+    modifier hasEnough(uint _amount) {
         require(accounts[msg.sender].balance >= _amount);
         _;
     }
 
-    modifier positive_amount(uint _amount) {
+    modifier positiveAmount(uint _amount) {
         require(accounts[msg.sender].balance + _amount > accounts[msg.sender].balance);
         _;
     }
 
-    modifier minimum_period_past {
+    modifier minimumPeriodPast {
         require(block.timestamp >= accounts[msg.sender].receipt.activation);
         _;
     }
 
-    modifier buy_price_higher_or_equal(uint _sellPrice, uint _buyPrice) {
+    modifier buyPriceHigherOrEqual(uint _sellPrice, uint _buyPrice) {
         require(_sellPrice <= _buyPrice);
         _;
     }
 
-    modifier not_price_error(uint _sellPrice, uint _buyPrice) {
+    modifier notPriceError(uint _sellPrice, uint _buyPrice) {
         if (_sellPrice <= data.sellPrice / 10 || _buyPrice >= data.buyPrice * 10) return;
         _;
     }
@@ -179,7 +179,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     function buyDragoOnBehalf(address _hodler)
         public
         payable
-        minimum_stake(msg.value)
+        minimumStake(msg.value)
         returns (bool success)
     {
         uint grossAmount;
@@ -199,9 +199,9 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     /// @return Bool the function executed correctly
     function sellDrago(uint256 _amount)
         external
-        has_enough(_amount)
-        positive_amount(_amount)
-        minimum_period_past
+        hasEnough(_amount)
+        positiveAmount(_amount)
+        minimumPeriodPast
         returns (bool success)
     {
         uint feeDrago;
@@ -222,9 +222,9 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     /// @param _newBuyPrice Price in wei
     function setPrices(uint _newSellPrice, uint _newBuyPrice)
         public
-        only_owner_or_authority
-        buy_price_higher_or_equal(_newSellPrice, _newBuyPrice)
-        not_price_error(_newSellPrice, _newBuyPrice)
+        onlyOwnerOrAuthority
+        buyPriceHigherOrEqual(_newSellPrice, _newBuyPrice)
+        notPriceError(_newSellPrice, _newBuyPrice)
     {
         DragoEventful events = DragoEventful(getDragoEventful());
         require(events.setDragoPrice(msg.sender, this, _newSellPrice, _newBuyPrice));
@@ -234,7 +234,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
     /// @dev Allows drago dao/factory to change fee split ratio
     /// @param _ratio Number of ratio for wizard, from 0 to 100
-    function changeRatio(uint _ratio) public only_dragoDao {
+    function changeRatio(uint _ratio) public onlyDragoDao {
         DragoEventful events = DragoEventful(getDragoEventful());
         require(events.changeRatio(msg.sender, this, _ratio));
         admin.ratio = _ratio;
@@ -242,7 +242,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
     /// @dev Allows drago owner to set the transaction fee
     /// @param _transactionFee Value of the transaction fee in basis points
-    function setTransactionFee(uint _transactionFee) public only_owner {
+    function setTransactionFee(uint _transactionFee) public onlyOwner {
         require(_transactionFee <= 100); //fee cannot be higher than 1%
         DragoEventful events = DragoEventful(getDragoEventful());
         require(events.setTransactionFee(msg.sender, this, _transactionFee));
@@ -251,7 +251,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
     /// @dev Allows owner to decide where to receive the fee
     /// @param _feeCollector Address of the fee receiver
-    function changeFeeCollector(address _feeCollector) public only_owner {
+    function changeFeeCollector(address _feeCollector) public onlyOwner {
         DragoEventful events = DragoEventful(getDragoEventful());
         events.changeFeeCollector(msg.sender, this, _feeCollector);
         admin.feeCollector = _feeCollector;
@@ -259,7 +259,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
     /// @dev Allows drago dao/factory to upgrade its address
     /// @param _dragoDao Address of the new drago dao
-    function changeDragoDao(address _dragoDao) public only_dragoDao {
+    function changeDragoDao(address _dragoDao) public onlyDragoDao {
         DragoEventful events = DragoEventful(getDragoEventful());
         require(events.changeDragoDao(msg.sender, this, _dragoDao));
         admin.dragoDao = _dragoDao;
@@ -267,14 +267,14 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
     /// @dev Allows drago dao/factory to change the minimum holding period
     /// @param _minPeriod Number of blocks
-    function changeMinPeriod(uint32 _minPeriod) public only_dragoDao {
+    function changeMinPeriod(uint32 _minPeriod) public onlyDragoDao {
         data.minPeriod = _minPeriod;
     }
 
     function depositToExchange(address _exchange, uint _amount)
         public
-        only_owner
-        when_approved_exchange(_exchange)
+        onlyOwner
+        whenApprovedExchange(_exchange)
     {
         _exchange.transfer(_amount);
     }
@@ -284,26 +284,26 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     /// @param _exchange Address of the exchange
     function operateOnExchange(address _exchange)
         external
-        owner_or_approved_exchange()
+        ownerOrApprovedExchange()
     {
         DragoExchangeExtension.operateOnExchange(libraryAdmin, _exchange);
     }
 
     /// @dev Allows an exchange contract to send Ether back
-    function() external payable when_approved_exchange(msg.sender) {}
+    function() external payable whenApprovedExchange(msg.sender) {}
 
     // PUBLIC CONSTANT FUNCTIONS
 
     /// @dev Calculates how many shares a user holds
     /// @param _who Address of the target account
     /// @return Number of shares
-    function balanceOf(address _who) public constant returns (uint256) {
+    function balanceOf(address _who) public view returns (uint256) {
         return accounts[_who].balance;
     }
 
     /// @dev Gets the address of the logger contract
     /// @return Address of the logger contrac
-    function getDragoEventful() public constant returns (address) {
+    function getDragoEventful() public view returns (address) {
         Authority auth = Authority(admin.authority);
         return auth.getDragoEventful();
     }
@@ -315,7 +315,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     /// @return Value of the share price in wei
     function getData()
         public
-        constant
+        view
         returns (
             string name,
             string symbol,
@@ -337,7 +337,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     /// @return Number of the minimum holding period for shares
     function getAdminData()
         public
-        constant
+        view
         returns (
             address feeCollector,
             address dragodAO,
@@ -436,7 +436,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     /// @return Value of net purchased shares
     function getPurchaseAmounts()
         internal
-        constant
+        view
         returns (
             uint grossAmount,
             uint feeDrago,
@@ -461,7 +461,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     /// @return Value of sale amount for hodler
     function getSaleAmounts(uint _amount)
         internal
-        constant
+        view
         returns (
             uint feeDrago,
             uint feeDragoDao,

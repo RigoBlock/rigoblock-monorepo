@@ -22,16 +22,16 @@ pragma solidity ^0.4.19;
 /// @dev otherwise cannot set owner from factory
 contract Owned {
 
-  modifier only_owner { require(msg.sender == owner); _; }
+  modifier onlyOwner { require(msg.sender == owner); _; }
 
   event NewOwner(address indexed old, address indexed current);
 
-  function setOwner(address _new) public only_owner {
+  function setOwner(address _new) public onlyOwner {
     owner = _new;
     NewOwner(owner, _new);
   }
 
-  function getOwner() public constant returns (address) {
+  function getOwner() public view returns (address) {
     return owner;
   }
 
@@ -116,22 +116,22 @@ contract Authority {
   function setExchangeAdapter(address _exchange, address _adapter) public {}
   function setCasper(address _casper) public {}
 
-  function isWhitelistedUser(address _target) public constant returns (bool) {}
-  function isWhitelister(address _whitelister) public constant returns (bool) {}
-  function isAuthority(address _authority) public constant returns (bool) {}
-  function isWhitelistedAsset(address _asset) public constant returns (bool) {}
-  function isWhitelistedExchange(address _exchange) public constant returns (bool) {}
-  function isWhitelistedRegistry(address _registry) public constant returns (bool) {}
-  function isWhitelistedDrago(address _drago) public constant returns (bool) {}
-  function isWhitelistedVault(address _vault) public constant returns (bool) {}
-  function isWhitelistedFactory(address _factory) public constant returns (bool) {}
-  function getDragoEventful() public constant returns (address) {}
-  function getVaultEventful() public constant returns (address) {}
-  function getExchangeEventful() public constant returns (address) {}
-  function getCasper() public constant returns (address) {}
-  function getOwner() public constant returns (address) {}
-  function getExchangeAdapter(address _exchange) public constant returns (address) {}
-  function getListsByGroups(string _group) public constant returns (address[]) {}
+  function isWhitelistedUser(address _target) public view returns (bool) {}
+  function isWhitelister(address _whitelister) public view returns (bool) {}
+  function isAuthority(address _authority) public view returns (bool) {}
+  function isWhitelistedAsset(address _asset) public view returns (bool) {}
+  function isWhitelistedExchange(address _exchange) public view returns (bool) {}
+  function isWhitelistedRegistry(address _registry) public view returns (bool) {}
+  function isWhitelistedDrago(address _drago) public view returns (bool) {}
+  function isWhitelistedVault(address _vault) public view returns (bool) {}
+  function isWhitelistedFactory(address _factory) public view returns (bool) {}
+  function getDragoEventful() public view returns (address) {}
+  function getVaultEventful() public view returns (address) {}
+  function getExchangeEventful() public view returns (address) {}
+  function getCasper() public view returns (address) {}
+  function getOwner() public view returns (address) {}
+  function getExchangeAdapter(address _exchange) public view returns (address) {}
+  function getListsByGroups(string _group) public view returns (address[]) {}
 }
 
 /// @title Drago Eventful Interface contract.
@@ -227,15 +227,15 @@ contract ExchangeAdapter {
 
   /// @notice the below functions have to be checked
   /// @notice they are read functions from the exchange, could be queried directly
-  function balanceOf(address token, address user) public constant returns (uint) {}
-  function balanceOf(address _who) public constant returns (uint) {}
-  function marginOf(address _who) public constant returns (uint) {}
-  function availableVolume(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public constant returns(uint) {}
-  function amountFilled(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public constant returns(uint) {}
-  function getLastOrderId() public constant returns (uint) {}
-  function isActive(uint id) public constant returns (bool) {}
-  function getOwner(uint id) public constant returns (address) {}
-  function getOrder(uint id) public constant returns (uint, ERC20Face, uint, ERC20Face) {}
+  function balanceOf(address token, address user) public view returns (uint) {}
+  function balanceOf(address _who) public view returns (uint) {}
+  function marginOf(address _who) public view returns (uint) {}
+  function availableVolume(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public view returns(uint) {}
+  function amountFilled(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public view returns(uint) {}
+  function getLastOrderId() public view returns (uint) {}
+  function isActive(uint id) public view returns (bool) {}
+  function getOwner(uint id) public view returns (address) {}
+  function getOrder(uint id) public view returns (uint, ERC20Face, uint, ERC20Face) {}
 }
 
 /// @title Drago Exchange Extention - library to extend drago to exchange adapters.
@@ -389,12 +389,12 @@ contract DragoFace {
 
   // PUBLIC CONSTANT FUNCTIONS
 
-  function balanceOf(address _who) public constant returns (uint) {}
-  function getDragoEventful() public constant returns (address) {}
-  function getData() public constant returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
-  function getAdminData() public constant returns (address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
-  function getOwner() public constant returns (address) {}
-  function totalSupply() public constant returns (uint256) {}
+  function balanceOf(address _who) public view returns (uint) {}
+  function getDragoEventful() public view returns (address) {}
+  function getData() public view returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
+  function getAdminData() public view returns (address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
+  function getOwner() public view returns (address) {}
+  function totalSupply() public view returns (uint256) {}
 }
 
 /// @title Drago - A set of rules for a drago.
@@ -442,49 +442,49 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     uint ratio; //ratio is 80%
   }
 
-  modifier only_dragoDao {
+  modifier onlyDragoDao {
     require(msg.sender == admin.dragoDao);
     _;
   }
 
-  modifier only_owner_or_authority {
+  modifier onlyOwnerOrAuthority {
     Authority auth = Authority(admin.authority);
     require(auth.isAuthority(msg.sender) || msg.sender == owner);
     _;
   }
 
-  modifier when_approved_exchange(address _exchange) {
+  modifier whenApprovedExchange(address _exchange) {
     Authority auth = Authority(admin.authority);
     require(auth.isWhitelistedExchange(_exchange));
     _;
   }
 
-  modifier minimum_stake(uint amount) {
+  modifier minimumStake(uint amount) {
     require (amount >= admin.minOrder);
     _;
   }
 
-  modifier has_enough(uint _amount) {
+  modifier hasEnough(uint _amount) {
     require(accounts[msg.sender].balance >= _amount);
     _;
   }
 
-  modifier positive_amount(uint _amount) {
+  modifier positiveAmount(uint _amount) {
     require(accounts[msg.sender].balance + _amount > accounts[msg.sender].balance);
     _;
   }
 
-  modifier minimum_period_past {
+  modifier minimumPeriodPast {
     require(block.timestamp >= accounts[msg.sender].receipt.activation);
     _;
   }
 
-  modifier buy_price_higher_or_equal(uint _sellPrice, uint _buyPrice) {
+  modifier buyPriceHigherOrEqual(uint _sellPrice, uint _buyPrice) {
     require(_sellPrice <= _buyPrice);
     _;
   }
 
-  modifier not_price_error(uint _sellPrice, uint _buyPrice) {
+  modifier notPriceError(uint _sellPrice, uint _buyPrice) {
     if (_sellPrice <= data.sellPrice / 10 || _buyPrice >= data.buyPrice * 10) return;
     _;
   }
@@ -543,7 +543,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   function buyDragoOnBehalf(address _hodler)
     public
     payable
-    minimum_stake(msg.value)
+    minimumStake(msg.value)
     returns (bool success)
   {
     var (grossAmount, feeDrago, feeDragoDao, amount) = getPurchaseAmounts();
@@ -559,9 +559,9 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @return Bool the function executed correctly
   function sellDrago(uint256 _amount)
     public
-    has_enough(_amount)
-    positive_amount(_amount)
-    minimum_period_past
+    hasEnough(_amount)
+    positiveAmount(_amount)
+    minimumPeriodPast
     returns (bool success)
   {
     var(fee_drago, fee_dragoDao, net_amount, net_revenue) = getSaleAmounts(_amount);
@@ -578,9 +578,9 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @param _newBuyPrice Price in wei
   function setPrices(uint _newSellPrice, uint _newBuyPrice)
     public
-    only_owner_or_authority
-    buy_price_higher_or_equal(_newSellPrice, _newBuyPrice)
-    not_price_error(_newSellPrice, _newBuyPrice)
+    onlyOwnerOrAuthority
+    buyPriceHigherOrEqual(_newSellPrice, _newBuyPrice)
+    notPriceError(_newSellPrice, _newBuyPrice)
   {
     DragoEventful events = DragoEventful(getDragoEventful());
     require(events.setDragoPrice(msg.sender, this, _newSellPrice, _newBuyPrice));
@@ -590,7 +590,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
   /// @dev Allows drago dao/factory to change fee split ratio
   /// @param _ratio Number of ratio for wizard, from 0 to 100
-  function changeRatio(uint _ratio) public only_dragoDao {
+  function changeRatio(uint _ratio) public onlyDragoDao {
     DragoEventful events = DragoEventful(getDragoEventful());
     require(events.changeRatio(msg.sender, this, _ratio));
     admin.ratio = _ratio;
@@ -598,7 +598,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
   /// @dev Allows drago owner to set the transaction fee
   /// @param _transactionFee Value of the transaction fee in basis points
-  function setTransactionFee(uint _transactionFee) public only_owner {
+  function setTransactionFee(uint _transactionFee) public onlyOwner {
     require(_transactionFee <= 100); //fee cannot be higher than 1%
     DragoEventful events = DragoEventful(getDragoEventful());
     require(events.setTransactionFee(msg.sender, this, _transactionFee));
@@ -607,7 +607,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
   /// @dev Allows owner to decide where to receive the fee
   /// @param _feeCollector Address of the fee receiver
-  function changeFeeCollector(address _feeCollector) public only_owner {
+  function changeFeeCollector(address _feeCollector) public onlyOwner {
     DragoEventful events = DragoEventful(getDragoEventful());
     events.changeFeeCollector(msg.sender, this, _feeCollector);
     admin.feeCollector = _feeCollector;
@@ -615,7 +615,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
   /// @dev Allows drago dao/factory to upgrade its address
   /// @param _dragoDao Address of the new drago dao
-  function changeDragoDao(address _dragoDao) public only_dragoDao {
+  function changeDragoDao(address _dragoDao) public onlyDragoDao {
     DragoEventful events = DragoEventful(getDragoEventful());
     require(events.changeDragoDao(msg.sender, this, _dragoDao));
     admin.dragoDao = _dragoDao;
@@ -623,7 +623,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
 
   /// @dev Allows drago dao/factory to change the minimum holding period
   /// @param _minPeriod Number of blocks
-  function changeMinPeriod(uint32 _minPeriod) public only_dragoDao {
+  function changeMinPeriod(uint32 _minPeriod) public onlyDragoDao {
     data.minPeriod = _minPeriod;
   }
 
@@ -633,8 +633,8 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @param _value Number of tokens deposited (0 for eth)
   function depositToExchange(address _exchange, address _token, uint _value)
     public
-    only_owner
-    when_approved_exchange(_exchange)
+    onlyOwner
+    whenApprovedExchange(_exchange)
   {
     DragoExchangeExtension.depositToExchange(
         libraryAdmin,
@@ -650,8 +650,8 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @param _value Number of tokens deposited (0 for eth)
   function withdrawFromExchange(address _exchange, address _token, uint _value)
     public
-    only_owner
-    when_approved_exchange(_exchange)
+    onlyOwner
+    whenApprovedExchange(_exchange)
   {
     DragoExchangeExtension.withdrawFromExchange(
         libraryAdmin,
@@ -678,8 +678,8 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     uint8 v,
     bytes32[2] signature)
     public
-    only_owner
-    when_approved_exchange(_exchange)
+    onlyOwner
+    whenApprovedExchange(_exchange)
   {
     DragoExchangeExtension.placeOrderExchange(
         libraryAdmin,
@@ -710,8 +710,8 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     uint8 v,
     bytes32[2] signature)
     public
-    only_owner
-    when_approved_exchange(_exchange)
+    onlyOwner
+    whenApprovedExchange(_exchange)
   {
     DragoExchangeExtension.placeTradeExchange(
         libraryAdmin,
@@ -736,8 +736,8 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     uint[6] orderValues,
     uint cancelTakerTokenAmount)
     public
-    only_owner
-    when_approved_exchange(_exchange)
+    onlyOwner
+    whenApprovedExchange(_exchange)
   {
     DragoExchangeExtension.cancelOrderExchange(
         libraryAdmin,
@@ -759,8 +759,8 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
     uint[6] orderValues,
     uint cancelTakerTokenAmount)
     public
-    only_owner
-    when_approved_exchange(_exchange)
+    onlyOwner
+    whenApprovedExchange(_exchange)
   {
     DragoExchangeExtension.finalizeDeal(
         libraryAdmin,
@@ -772,20 +772,20 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   }
 
   /// @dev Allows an exchange contract to send Ether back
-  function() external payable when_approved_exchange(msg.sender) {}
+  function() external payable whenApprovedExchange(msg.sender) {}
 
   // PUBLIC CONSTANT FUNCTIONS
 
   /// @dev Calculates how many shares a user holds
   /// @param _who Address of the target account
   /// @return Number of shares
-  function balanceOf(address _who) public constant returns (uint256) {
+  function balanceOf(address _who) public view returns (uint256) {
     return accounts[_who].balance;
   }
 
   /// @dev Gets the address of the logger contract
   /// @return Address of the logger contrac
-  function getDragoEventful() public constant returns (address) {
+  function getDragoEventful() public view returns (address) {
     Authority auth = Authority(admin.authority);
     return auth.getDragoEventful();
   }
@@ -797,7 +797,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @return Value of the share price in wei
   function getData()
     public
-    constant
+    view
     returns (
       string name,
       string symbol,
@@ -819,7 +819,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @return Number of the minimum holding period for shares
   function getAdminData()
     public
-    constant
+    view
     returns (
       address feeCollector,
       address dragodAO,
@@ -897,7 +897,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @return Value of net purchased shares
   function getPurchaseAmounts()
     internal
-    constant
+    view
     returns (
       uint grossAmount,
       uint feeDrago,
@@ -922,7 +922,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
   /// @return Value of sale amount for hodler
   function getSaleAmounts(uint _amount)
     internal
-    constant
+    view
     returns (
       uint feeDrago,
       uint feeDragoDao,
