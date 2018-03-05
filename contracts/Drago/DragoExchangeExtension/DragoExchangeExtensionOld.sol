@@ -16,7 +16,9 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
+
+import { Authority } from "../../Authority/Authority.sol";
 
 /// @title Drago Exchange Extention - library to extend drago to exchange adapters.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

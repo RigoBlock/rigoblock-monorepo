@@ -16,7 +16,11 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
+
+import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
+
+import { Vault } from "../../Vault/Vault.sol";
 
 /// @title Vault Factory library - Reduces size of vault factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -38,7 +42,6 @@ library VaultFactoryLibrary {
     /// @dev Allows an approved factory to create new vaults
     /// @param _name String of the name
     /// @param _symbol String of the symbol
-    /// @param _owner Address of the owner
     /// @param _vaultId Number of Id of the vault from the registry
     /// @param _authority Address of the respective authority
     /// @return Bool the function executed
@@ -53,12 +56,14 @@ library VaultFactoryLibrary {
         whitelisted_factory(_authority)
         returns (bool success)
     {
-        Vault vault = new Vault(_name, _symbol, _vaultId, _owner, _authority);
-        self.name = _name;
-        self.symbol = _symbol;
-        self.vaultId = _vaultId;
+        Vault vault = new Vault(
+            self.name = _name,
+            self.symbol = _symbol,
+            self.vaultId = _vaultId,
+            self.owner = _owner,
+            _authority
+        );
         self.newAddress = address(vault);
-        self.owner = _owner;
         return true;
     }
 }

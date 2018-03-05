@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
 /// @title Drago Interface - Allows interaction with the Drago contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -35,15 +35,15 @@ contract DragoFace {
     function changeDragoDao(address _dragoDao) public {}
     function depositToExchange(address _exchange, uint _amount) public {}
     function operateOnExchange(address _exchange) external {}
-    function setOwner(address _new) public {}
+    //function setOwner(address _new) public {}
     function() external payable {}
 
     // PUBLIC CONSTANT FUNCTIONS
 
-    function balanceOf(address _who) public constant returns (uint) {}
+    //function balanceOf(address _who) public constant returns (uint) {}
     function getDragoEventful() public constant returns (address) {}
     function getData() public constant returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
-    function getAdminData() public constant returns (address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod) {}
-    function getOwner() public constant returns (address) {}
-    function totalSupply() public constant returns (uint256) {}
+    function getAdminData() public constant returns (address feeCollector, address dragoDao, uint ratio, uint transactionFee, uint32 minPeriod) {}
+    //function getOwner() public constant returns (address) {}
+    //function totalSupply() public constant returns (uint256) {}
 }

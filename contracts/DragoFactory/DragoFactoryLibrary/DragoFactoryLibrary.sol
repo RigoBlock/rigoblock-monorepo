@@ -16,7 +16,11 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
+
+import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
+
+import { Drago } from "../../Drago/Drago.sol";
 
 /// @title Drago Factory library - Reduces size of drago factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -38,7 +42,6 @@ library DragoFactoryLibrary {
     /// @dev Allows an approved factory to create new dragos
     /// @param _name String of the name
     /// @param _symbol String of the symbol
-    /// @param _owner Address of the owner
     /// @param _dragoId Number of Id of the drago from the registry
     /// @param _authority Address of the respective authority
     /// @return Bool the function executed
@@ -53,12 +56,14 @@ library DragoFactoryLibrary {
         whitelisted_factory(_authority)
         returns (bool success)
     {
-        Drago drago = new Drago(_name, _symbol, _dragoId, _owner, _authority);
-        self.name = _name;
-        self.symbol = _symbol;
-        self.dragoId = _dragoId;
+        Drago drago = new Drago(
+            self.name = _name,
+            self.symbol = _symbol,
+            self.dragoId = _dragoId,
+            self.owner = _owner,
+            _authority
+        );
         self.newAddress = address(drago);
-        self.owner = _owner;
         return true;
     }
 }

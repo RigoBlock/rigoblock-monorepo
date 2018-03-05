@@ -16,117 +16,16 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
-    /*
-    * import the drago contract code first
-    * import { Drago, Authority, Owned, DragoEventful } from "./Drago.sol";
-    * import { Drago, Authority, Owned, DragoEventful } from "../Drago/Drago.sol";
-    */
+import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistryFace.sol";
+import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
+import { DragoFace as Drago } from "../Drago/DragoFace.sol";
+import { DragoEventfulFace as DragoEventful } from "../DragoEventful/DragoEventfulFace.sol";
 
-/// @title Drago Factory library - Reduces size of drago factory.
-/// @author Gabriele Rigo - <gab@rigoblock.com>
-library DragoFactoryLibrary {
-
-    struct NewDrago {
-        string name;
-        string symbol;
-        uint256 dragoId;
-        address owner;
-        address newAddress;
-    }
-
-    modifier whitelisted_factory(address _authority) {
-        Authority auth = Authority(_authority);
-        if (auth.isWhitelistedFactory(this)) _;
-    }
-
-    /// @dev Allows an approved factory to create new dragos
-    /// @param _name String of the name
-    /// @param _symbol String of the symbol
-    /// @param _owner Address of the owner
-    /// @param _dragoId Number of Id of the drago from the registry
-    /// @param _authority Address of the respective authority
-    /// @return Bool the function executed
-    function createDrago(
-        NewDrago storage self,
-        string _name,
-        string _symbol,
-        address _owner,
-        uint _dragoId,
-        address _authority)
-        internal
-        whitelisted_factory(_authority)
-        returns (bool success)
-    {
-        Drago drago = new Drago(_name, _symbol, _dragoId, _owner, _authority);
-        self.name = _name;
-        self.symbol = _symbol;
-        self.dragoId = _dragoId;
-        self.newAddress = address(drago);
-        self.owner = _owner;
-        return true;
-    }
-}
-
-/// @title Drago Registry Interface - Allows external intaction with Drago Registry.
-/// @author Gabriele Rigo - <gab@rigoblock.com>
-contract DragoRegistry {
-
-    //EVENTS
-
-    event Registered(string name, string symbol, uint id, address indexed drago, address indexed owner, address indexed group);
-    event Unregistered(string indexed symbol, uint indexed id);
-    event MetaChanged(uint indexed id, bytes32 indexed key, bytes32 value);
-
-    // CORE FUNCTIONS
-
-    function register(address _drago, string _name, string _symbol, uint _dragoId, address _owner) public payable returns (bool) {}
-    function unregister(uint _id) public {}
-    function setMeta(uint _id, bytes32 _key, bytes32 _value) public {}
-    function addGroup(address _group) public {}
-    function setFee(uint _fee) public {}
-    function upgrade(address _newAddress) public payable {} //payable as there is a transfer of value, otherwise opcode might throw an error
-    function setUpgraded(uint _version) public {}
-    function drain() public {}
-
-    function dragoCount() public constant returns (uint) {}
-    function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoId, address owner, address group) {}
-    function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoId, address owner, address group) {}
-    function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoId, address owner, address group) {}
-    function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoId, address owner, address group) {}
-    function fromNameSymbol(string _name, string _symbol) public constant returns (address) {}
-    function getNameFromAddress(address _pool) external constant returns (bytes32) {}
-    function getSymbolFromAddress(address _pool) external constant returns (bytes32) {}
-    function meta(uint _id, bytes32 _key) public constant returns (bytes32) {}
-    function getGroups() public constant returns (address[]) {}
-    function getFee() public constant returns (uint) {}
-}
-
-/// @title Drago Factory Interface - Allows external interaction with Drago Factory.
-/// @author Gabriele Rigo - <gab@rigoblock.com>
-contract DragoFactoryFace {
-
-    event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint dragoId);
-
-    function createDrago(string _name, string _symbol) public returns (bool success) {}
-    function setTargetDragoDao(address _targetDrago, address _dragoDao) public {}
-    function changeDragoDao(address _newDragoDao) public {}
-    function setRegistry(address _newRegistry) public {}
-    function setBeneficiary(address _dragoDao) public {}
-    function setFee(uint _fee) public {}
-    function drain() public {}
-    function setOwner(address _new) {}
-
-    function getRegistry() public constant returns (address) {}
-    function getStorage() public constant returns (address dragoDao, uint nextDragoId) {}
-    function getNextId() public constant returns (uint nextDragoId) {}
-    function getEventful() public constant returns (address) {}
-    function getDragoDao() public constant returns (address dragoDao) {}
-    function getVersion() public constant returns (string) {}
-    function getDragosByAddress(address _owner) public constant returns (address[]) {}
-    function getOwner() constant returns (address) {}
-}
+import { DragoFactoryLibrary } from "./DragoFactoryLibrary/DragoFactoryLibrary.sol";
+import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
+import { DragoFactoryFace } from "./DragoFactoryFace.sol";
 
 /// @title Drago Factory contract - allows creation of new dragos.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -258,10 +157,15 @@ contract DragoFactory is Owned, DragoFactoryFace {
         constant
         returns (
             address dragoDao,
+            string version,
             uint nextDragoId
         )
     {
-        return (data.dragoDao, nextDragoId);
+        return (
+            dragoDao = data.dragoDao,
+            version = VERSION,
+            nextDragoId = getNextId()
+        );
     }
 
     /// @dev Returns the next Id for a drago
@@ -277,18 +181,6 @@ contract DragoFactory is Owned, DragoFactoryFace {
     function getEventful() public constant returns (address) {
         Authority auth = Authority(data.authority);
         return auth.getDragoEventful();
-    }
-
-    /// @dev Returns the address of the drago dao
-    /// @return Address of the drago dao
-    function getDragoDao() public constant returns (address) {
-        return data.dragoDao;
-    }
-
-    /// @dev Returns the version of this factory
-    /// @return Address of the factory
-    function getVersion() public constant returns (string) {
-        return VERSION;
     }
 
     /// @dev Returns an array of dragos the owner has created

@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
 /// @title Drago Factory Interface - Allows external interaction with Drago Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -31,14 +31,12 @@ contract DragoFactoryFace {
     function setBeneficiary(address _dragoDao) public {}
     function setFee(uint _fee) public {}
     function drain() public {}
-    function setOwner(address _new) {}
+    //function setOwner(address _new) public {}
 
     function getRegistry() public constant returns (address) {}
-    function getStorage() public constant returns (address dragoDao, string VERSION, uint nextDragoId) {}
+    function getStorage() public constant returns (address dragoDao, string version, uint nextDragoId) {}
     function getNextId() public constant returns (uint nextDragoId) {}
     function getEventful() public constant returns (address) {}
-    function getDragoDao() public constant returns (address dragoDao) {}
-    function getVersion() public constant returns (string) {}
     function getDragosByAddress(address _owner) public constant returns (address[]) {}
-    function getOwner() constant returns (address) {}
+    //function getOwner() public constant returns (address) {}
 }

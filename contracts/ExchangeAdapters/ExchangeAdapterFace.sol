@@ -16,7 +16,9 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
+
+import { ERC20Face as ERC20 } from "../utils/tokens/ERC20/ERC20Face.sol";
 
 /// @title Exchange Adapter - Allows interaction with decentralized exchanges.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -31,7 +33,7 @@ contract ExchangeAdapter {
         external {}
 
     function withdrawFromExchange(
-        addr  ess _exchange,
+        address _exchange,
         address _token,
         uint _value)
         external {}
@@ -82,5 +84,5 @@ contract ExchangeAdapter {
     function getLastOrderId() public constant returns (uint) {}
     function isActive(uint id) public constant returns (bool) {}
     function getOwner(uint id) public constant returns (address) {}
-    function getOrder(uint id) public constant returns (uint, ERC20Face, uint, ERC20Face) {}
+    function getOrder(uint id) public constant returns (uint, ERC20, uint, ERC20) {}
 }

@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
 /// @title Vault Factory Interface - Allows external interaction with Vault Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -31,12 +31,12 @@ contract VaultFactoryFace {
     function setBeneficiary(address _vaultDao) public {}
     function setFee(uint _fee) public {}
     function drain() public {}
+    //function setOwner(address _new) public {}
 
     function getRegistry() public constant returns (address) {}
-    function getStorage() public constant returns (address vaultDao, uint nextVaultId) {}
+    function getStorage() public constant returns (address vaultDao, string version, uint nextVaultId) {}
     function getNextId() public constant returns (uint nextVaultId) {}
     function getEventful() public constant returns (address) {}
-    function getVaultDao() public constant returns (address vaultDao) {}
-    function getVersion() public constant returns (string) {}
     function getVaultsByAddress(address _owner) public constant returns (address[]) {}
+    //function getOwner() public constant returns (address) {}
 }

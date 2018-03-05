@@ -16,116 +16,16 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
-    /*
-    * import the vault contract code first
-    * import { Vault, Authority, Owned, VaultEventful } from "./Vault.sol";
-    * import { Vault, Authority, Owned, VaultEventful } from "./Vault/Vault.sol";
-    */
+import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistryFace.sol";
+import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
+import { VaultFace as Vault } from "../Vault/VaultFace.sol";
+import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
 
-/// @title Vault Factory library - Reduces size of vault factory.
-/// @author Gabriele Rigo - <gab@rigoblock.com>
-library VaultFactoryLibrary {
-
-    struct NewVault {
-        string name;
-        string symbol;
-        uint256 vaultId;
-        address owner;
-        address newAddress;
-    }
-
-    modifier whitelisted_factory(address _authority) {
-        Authority auth = Authority(_authority);
-        if (auth.isWhitelistedFactory(this)) _;
-    }
-
-    /// @dev Allows an approved factory to create new vaults
-    /// @param _name String of the name
-    /// @param _symbol String of the symbol
-    /// @param _owner Address of the owner
-    /// @param _vaultId Number of Id of the vault from the registry
-    /// @param _authority Address of the respective authority
-    /// @return Bool the function executed
-    function createVault(
-        NewVault storage self,
-        string _name,
-        string _symbol,
-        address _owner,
-        uint _vaultId,
-        address _authority)
-        internal
-        whitelisted_factory(_authority)
-        returns (bool success)
-    {
-        Vault vault = new Vault(_name, _symbol, _vaultId, _owner, _authority);
-        self.name = _name;
-        self.symbol = _symbol;
-        self.vaultId = _vaultId;
-        self.newAddress = address(vault);
-        self.owner = _owner;
-        return true;
-    }
-}
-
-/// @title Drago Registry Interface - Allows external intaction with Drago Registry.
-/// @author Gabriele Rigo - <gab@rigoblock.com>
-contract DragoRegistry {
-
-    //EVENTS
-
-    event Registered(string name, string symbol, uint id, address indexed drago, address indexed owner, address indexed group);
-    event Unregistered(string indexed symbol, uint indexed id);
-    event MetaChanged(uint indexed id, bytes32 indexed key, bytes32 value);
-
-    // CORE FUNCTIONS
-
-    function register(address _drago, string _name, string _symbol, uint _dragoId, address _owner) public payable returns (bool) {}
-    function unregister(uint _id) public {}
-    function setMeta(uint _id, bytes32 _key, bytes32 _value) public {}
-    function addGroup(address _group) public {}
-    function setFee(uint _fee) public {}
-    function upgrade(address _newAddress) public payable {} //payable as there is a transfer of value, otherwise opcode might throw an error
-    function setUpgraded(uint _version) public {}
-    function drain() public {}
-
-    function dragoCount() public constant returns (uint) {}
-    function fromId(uint _id) public constant returns (address drago, string name, string symbol, uint dragoId, address owner, address group) {}
-    function fromAddress(address _drago) public constant returns (uint id, string name, string symbol, uint dragoId, address owner, address group) {}
-    function fromSymbol(string _symbol) public constant returns (uint id, address drago, string name, uint dragoId, address owner, address group) {}
-    function fromName(string _name) public constant returns (uint id, address drago, string symbol, uint dragoId, address owner, address group) {}
-    function fromNameSymbol(string _name, string _symbol) public constant returns (address) {}
-    function getNameFromAddress(address _pool) external constant returns (bytes32) {}
-    function getSymbolFromAddress(address _pool) external constant returns (bytes32) {}
-    function meta(uint _id, bytes32 _key) public constant returns (bytes32) {}
-    function getGroups() public constant returns (address[]) {}
-    function getFee() public constant returns (uint) {}
-}
-
-
-/// @title Vault Factory Interface - Allows external intaction with Vault Factory.
-/// @author Gabriele Rigo - <gab@rigoblock.com>
-contract VaultFactoryFace {
-
-    event VaultCreated(string name, string symbol, address indexed vault, address indexed owner, uint vaultId);
-
-    function createVault(string _name, string _symbol) public returns (bool success) {}
-    function setTargetVaultDao(address _targetVault, address _vaultDao) public {}
-    function changeVaultDao(address _newVaultDao) public {}
-    function setRegistry(address _newRegistry) public {}
-    function setBeneficiary(address _vaultDao) public {}
-    function setFee(uint _fee) public {}
-    function drain() public {}
-
-    function getRegistry() public constant returns (address) {}
-    function getStorage() public constant returns (address vaultDao, uint nextVaultId) {}
-    function getNextId() public constant returns (uint nextVaultId) {}
-    function getEventful() public constant returns (address) {}
-    function getVaultDao() public constant returns (address vaultDao) {}
-    function getVersion() public constant returns (string) {}
-    function getVaultsByAddress(address _owner) public constant returns (address[]) {}
-}
+import { VaultFactoryLibrary } from "./VaultFactoryLibrary/VaultFactoryLibrary.sol";
+import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
+import { VaultFactoryFace } from "./VaultFactoryFace.sol";
 
 /// @title Vault Factory contract - allows creation of new vaults.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -257,10 +157,15 @@ contract VaultFactory is Owned, VaultFactoryFace {
         constant
         returns (
             address vaultDao,
+            string version,
             uint nextVaultId
         )
     {
-        return (data.vaultDao, nextVaultId);
+        return (
+            vaultDao = data.vaultDao,
+            version = VERSION,
+            nextVaultId = getNextId()
+        );
     }
 
     /// @dev Returns the next Id for a vault
@@ -276,18 +181,6 @@ contract VaultFactory is Owned, VaultFactoryFace {
     function getEventful() public constant returns (address) {
         Authority auth = Authority(data.authority);
         return auth.getVaultEventful();
-    }
-
-    /// @dev Returns the address of the vault dao
-    /// @return Address of the vault dao
-    function getVaultDao() public constant returns (address) {
-        return data.vaultDao;
-    }
-
-    /// @dev Returns the version of this factory
-    /// @return Address of the factory
-    function getVersion() public constant returns (string) {
-        return VERSION;
     }
 
     /// @dev Returns an array of vaults the owner has created

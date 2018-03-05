@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
 /// @title Inflation Interface - Allows interaction with the Inflation contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

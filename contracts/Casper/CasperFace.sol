@@ -16,11 +16,11 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
 /// @title Casper Interface - Allows interaction with the Casoper contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract Casper {
+contract CasperFace {
 
     function deposit(address _validation, address _withdrawal) public payable {}
     function withdraw(uint128 _validatorIndex) public {}

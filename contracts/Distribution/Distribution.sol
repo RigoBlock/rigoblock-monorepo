@@ -16,83 +16,12 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
-contract SafeMath {
+import { VaultFace as Vault } from "../Vault/Vault.sol";
 
-    function safeMul(uint a, uint b) internal pure returns (uint) {
-        uint c = a * b;
-        assert(a == 0 || c / a == b);
-        return c;
-    }
-
-    function safeDiv(uint a, uint b) internal pure returns (uint) {
-        assert(b > 0);
-        uint c = a / b;
-        assert(a == b * c + a % b);
-        return c;
-    }
-
-    function safeSub(uint a, uint b) internal pure returns (uint) {
-        assert(b <= a);
-        return a - b;
-    }
-
-    function safeAdd(uint a, uint b) internal pure returns (uint) {
-        uint c = a + b;
-        assert(c>=a && c>=b);
-        return c;
-    }
-}
-
-/// @title Vault Interface - Allows interaction with the Vault contracts.
-/// @author Gabriele Rigo - <gab@rigoblock.com>
-contract Vault {
-
-    // EVENTS
-
-    event Buy(address indexed from, address indexed to, uint256 indexed amount, uint256 revenue);
-    event Sell(address indexed from, address indexed to, uint256 indexed amount,uint256 revenue);
-    event DepositCasper(uint amount, address indexed who, address indexed validation, address indexed withdrawal);
-    event WithdrawCasper(uint deposit, address indexed who, address casper);
-
-    // CORE FUNCTIONS
-
-    function() external payable {}
-    function buyVault() public payable returns (bool success) {}
-    function buyVaultOnBehalf(address _hodler) public payable returns (bool success) {}
-    function sellVault(uint256 amount) public returns (bool success) {}
-    function depositCasper(address _validation, address _withdrawal, uint _amount) public returns (bool success) {}
-    function withdrawCasper(uint128 _validatorIndex) public {}
-    function changeRatio(uint256 _ratio) public {}
-    function setTransactionFee(uint _transactionFee) public {}
-    function changeFeeCollector(address _feeCollector) public {}
-    function changeVaultDao(address _vaultDao) public {}
-    function updatePrice() public {}
-    function changeMinPeriod(uint32 _minPeriod) public {}
-
-    function balanceOf(address _who) public view returns (uint) {}
-    function getEventful() public view returns (address) {}
-    function getData() public view returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
-    function getAdminData() public view returns (address feeCollector, address vaultDao, uint ratio, uint transactionFee, uint32 minPeriod) {}
-    function getOwner() public view returns (address) {}
-    function totalSupply() public view returns (uint256) {}
-    function getCasper() public view returns (address) {}
-    function getCasperDeposit() public view returns (uint128) {}
-    function getNav() public view returns (uint) {}
-    function getVersion() public view returns (string) {}
-}
-
-/// @title Distribution Interface - Allows to interact with the distribution.
-/// @author Gabriele Rigo - <gab@rigoblock.com>
-contract DistributionFace {
-
-    event Subscription(address indexed buyer, address indexed distributor, uint amount);
-
-    function subscribe(address _pool, address _distributor, address _buyer) public payable {}
-    function setFee(uint _fee, address _distributor) public {}
-    function getFee(address _distributor) public constant returns (uint) {}
-}
+import { DistributionFace } from "./DistributionFace.sol";
+import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
 
 /// @title Distribution - Allows to collect subscription fees on vaults.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

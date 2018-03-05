@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
 /// @title Rigo Token Interface - Allows interaction with the Rigo token.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

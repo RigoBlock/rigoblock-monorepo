@@ -5,9 +5,9 @@ Name in parity registry: dragoeventful-v2
 
 ## Drago Eventful version 0.4.1
 ```
-Mainnet:
-Ropsten: 0xc758210ba2A91201Dd074Ba105dB29d6d871db2f
-Kovan: 0x181e01a9AC2521705d81D525a7867A5D567775Cf
+Mainnet: 
+Ropsten:
+Kovan: 0x455ee85f5bF4DEbe91e4469b767CfA6AfD11aAFA
 ```
 Bytecode
 ```

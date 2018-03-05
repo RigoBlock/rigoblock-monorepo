@@ -1,0 +1,2341 @@
+{
+  "contractName": "VaultFactoryFace",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "indexed": true,
+          "name": "vault",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "vaultId",
+          "type": "uint256"
+        }
+      ],
+      "name": "VaultCreated",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "name": "_symbol",
+          "type": "string"
+        }
+      ],
+      "name": "createVault",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_targetVault",
+          "type": "address"
+        },
+        {
+          "name": "_vaultDao",
+          "type": "address"
+        }
+      ],
+      "name": "setTargetVaultDao",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newVaultDao",
+          "type": "address"
+        }
+      ],
+      "name": "changeVaultDao",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newRegistry",
+          "type": "address"
+        }
+      ],
+      "name": "setRegistry",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_vaultDao",
+          "type": "address"
+        }
+      ],
+      "name": "setBeneficiary",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_fee",
+          "type": "uint256"
+        }
+      ],
+      "name": "setFee",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "drain",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getRegistry",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getStorage",
+      "outputs": [
+        {
+          "name": "vaultDao",
+          "type": "address"
+        },
+        {
+          "name": "version",
+          "type": "string"
+        },
+        {
+          "name": "nextVaultId",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getNextId",
+      "outputs": [
+        {
+          "name": "nextVaultId",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getEventful",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "name": "getVaultsByAddress",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6105768061001e6000396000f3006060604052600436106100ba576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680631c31f710146100bf5780633408f73a146100f857806350825207146101c05780635ab1bd53146101f957806369fe0e2d1461024e578063837929b6146102715780639890220b146102c6578063a390d7e1146102db578063a91ee0dc14610393578063b11e2beb146103cc578063bc9683261461045a578063ed3b49ac14610483575b600080fd5b34156100ca57600080fd5b6100f6600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506104db565b005b341561010357600080fd5b61010b6104de565b604051808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001838152602001828103825284818151815260200191508051906020019080838360005b83811015610183578082015181840152602081019050610168565b50505050905090810190601f1680156101b05780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b34156101cb57600080fd5b6101f7600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506104ef565b005b341561020457600080fd5b61020c6104f2565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561025957600080fd5b61026f60048080359060200190919050506104f7565b005b341561027c57600080fd5b6102846104fa565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156102d157600080fd5b6102d96104ff565b005b34156102e657600080fd5b610379600480803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091905050610501565b604051808215151515815260200191505060405180910390f35b341561039e57600080fd5b6103ca600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610509565b005b34156103d757600080fd5b610403600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061050c565b6040518080602001828103825283818151815260200191508051906020019060200280838360005b8381101561044657808201518184015260208101905061042b565b505050509050019250505060405180910390f35b341561046557600080fd5b61046d610519565b6040518082815260200191505060405180910390f35b341561048e57600080fd5b6104d9600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061051e565b005b50565b60006104e8610522565b6000909192565b50565b600090565b50565b600090565b565b600092915050565b50565b610514610536565b919050565b600090565b5050565b602060405190810160405280600081525090565b6020604051908101604052806000815250905600a165627a7a72305820b19812940a41aa95ccd1696e994f5b74cf03ee43f96a2ffed5232a61eb6b6b900029",
+  "deployedBytecode": "0x6060604052600436106100ba576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680631c31f710146100bf5780633408f73a146100f857806350825207146101c05780635ab1bd53146101f957806369fe0e2d1461024e578063837929b6146102715780639890220b146102c6578063a390d7e1146102db578063a91ee0dc14610393578063b11e2beb146103cc578063bc9683261461045a578063ed3b49ac14610483575b600080fd5b34156100ca57600080fd5b6100f6600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506104db565b005b341561010357600080fd5b61010b6104de565b604051808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001838152602001828103825284818151815260200191508051906020019080838360005b83811015610183578082015181840152602081019050610168565b50505050905090810190601f1680156101b05780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b34156101cb57600080fd5b6101f7600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506104ef565b005b341561020457600080fd5b61020c6104f2565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561025957600080fd5b61026f60048080359060200190919050506104f7565b005b341561027c57600080fd5b6102846104fa565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156102d157600080fd5b6102d96104ff565b005b34156102e657600080fd5b610379600480803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091905050610501565b604051808215151515815260200191505060405180910390f35b341561039e57600080fd5b6103ca600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610509565b005b34156103d757600080fd5b610403600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061050c565b6040518080602001828103825283818151815260200191508051906020019060200280838360005b8381101561044657808201518184015260208101905061042b565b505050509050019250505060405180910390f35b341561046557600080fd5b61046d610519565b6040518082815260200191505060405180910390f35b341561048e57600080fd5b6104d9600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061051e565b005b50565b60006104e8610522565b6000909192565b50565b600090565b50565b600090565b565b600092915050565b50565b610514610536565b919050565b600090565b5050565b602060405190810160405280600081525090565b6020604051908101604052806000815250905600a165627a7a72305820b19812940a41aa95ccd1696e994f5b74cf03ee43f96a2ffed5232a61eb6b6b900029",
+  "sourceMap": "756:1063:30:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "756:1063:30:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1189:52;;;;;;;;;;;;;;;;;;;;;;;;;;;;1431:101;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;80:1;75:3;71;64:6;52:2;49:1;45:3;40:15;;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1072:55:30;;;;;;;;;;;;;;;;;;;;;;;;;;;;1367:59;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1246:36;;;;;;;;;;;;;;;;;;;;;;;;;;1608:59;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1287:26;;;;;;;;;;;;;;902:83;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1132:52;;;;;;;;;;;;;;;;;;;;;;;;;;;;1672:82;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;80:1;75:3;71;64:6;52:2;49:1;45:3;40:15;;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;1537:66:30;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;990:77;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1189:52;;:::o;1431:101::-;1478:16;1496:14;;:::i;:::-;1512:16;1431:101;;;:::o;1072:55::-;;:::o;1367:59::-;1415:7;1367:59;:::o;1246:36::-;;:::o;1608:59::-;1656:7;1608:59;:::o;1287:26::-;:::o;902:83::-;969:12;902:83;;;;:::o;1132:52::-;;:::o;1672:82::-;1741:9;;:::i;:::-;1672:82;;;:::o;1537:66::-;1583:16;1537:66;:::o;990:77::-;;;:::o;756:1063::-;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;:::o",
+  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\n/// @title Vault Factory Interface - Allows external interaction with Vault Factory.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\ncontract VaultFactoryFace {\n\n    event VaultCreated(string name, string symbol, address indexed vault, address indexed owner, uint vaultId);\n\n    function createVault(string _name, string _symbol) public returns (bool success) {}\n    function setTargetVaultDao(address _targetVault, address _vaultDao) public {}\n    function changeVaultDao(address _newVaultDao) public {}\n    function setRegistry(address _newRegistry) public {}\n    function setBeneficiary(address _vaultDao) public {}\n    function setFee(uint _fee) public {}\n    function drain() public {}\n    //function setOwner(address _new) public {}\n\n    function getRegistry() public constant returns (address) {}\n    function getStorage() public constant returns (address vaultDao, string version, uint nextVaultId) {}\n    function getNextId() public constant returns (uint nextVaultId) {}\n    function getEventful() public constant returns (address) {}\n    function getVaultsByAddress(address _owner) public constant returns (address[]) {}\n    //function getOwner() public constant returns (address) {}\n}\n",
+  "sourcePath": "/home/gab/truffle/contracts/contracts/VaultFactory/VaultFactoryFace.sol",
+  "ast": {
+    "absolutePath": "/home/gab/truffle/contracts/contracts/VaultFactory/VaultFactoryFace.sol",
+    "exportedSymbols": {
+      "VaultFactoryFace": [
+        10799
+      ]
+    },
+    "id": 10800,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 10703,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "597:24:30"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Vault Factory Interface - Allows external interaction with Vault Factory.\n @author Gabriele Rigo - <gab@rigoblock.com>",
+        "fullyImplemented": true,
+        "id": 10799,
+        "linearizedBaseContracts": [
+          10799
+        ],
+        "name": "VaultFactoryFace",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "id": 10715,
+            "name": "VaultCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 10714,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10705,
+                  "indexed": false,
+                  "name": "name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "808:11:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10704,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "808:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10707,
+                  "indexed": false,
+                  "name": "symbol",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "821:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10706,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "821:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10709,
+                  "indexed": true,
+                  "name": "vault",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "836:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10708,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "836:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10711,
+                  "indexed": true,
+                  "name": "owner",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "859:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10710,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "859:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10713,
+                  "indexed": false,
+                  "name": "vaultId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "882:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10712,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "882:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "807:88:30"
+            },
+            "src": "789:107:30"
+          },
+          {
+            "body": {
+              "id": 10724,
+              "nodeType": "Block",
+              "src": "983:2:30",
+              "statements": []
+            },
+            "id": 10725,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "createVault",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10720,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10717,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10725,
+                  "src": "923:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10716,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "923:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10719,
+                  "name": "_symbol",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10725,
+                  "src": "937:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10718,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "937:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "922:30:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10723,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10722,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10725,
+                  "src": "969:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 10721,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "969:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "968:14:30"
+            },
+            "scope": 10799,
+            "src": "902:83:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10732,
+              "nodeType": "Block",
+              "src": "1065:2:30",
+              "statements": []
+            },
+            "id": 10733,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setTargetVaultDao",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10730,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10727,
+                  "name": "_targetVault",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10733,
+                  "src": "1017:20:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10726,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1017:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10729,
+                  "name": "_vaultDao",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10733,
+                  "src": "1039:17:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10728,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1039:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1016:41:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10731,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1065:0:30"
+            },
+            "scope": 10799,
+            "src": "990:77:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10738,
+              "nodeType": "Block",
+              "src": "1125:2:30",
+              "statements": []
+            },
+            "id": 10739,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "changeVaultDao",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10736,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10735,
+                  "name": "_newVaultDao",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10739,
+                  "src": "1096:20:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10734,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1096:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1095:22:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10737,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1125:0:30"
+            },
+            "scope": 10799,
+            "src": "1072:55:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10744,
+              "nodeType": "Block",
+              "src": "1182:2:30",
+              "statements": []
+            },
+            "id": 10745,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setRegistry",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10742,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10741,
+                  "name": "_newRegistry",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10745,
+                  "src": "1153:20:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10740,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1153:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1152:22:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10743,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1182:0:30"
+            },
+            "scope": 10799,
+            "src": "1132:52:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10750,
+              "nodeType": "Block",
+              "src": "1239:2:30",
+              "statements": []
+            },
+            "id": 10751,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setBeneficiary",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10748,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10747,
+                  "name": "_vaultDao",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10751,
+                  "src": "1213:17:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10746,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1213:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1212:19:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10749,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1239:0:30"
+            },
+            "scope": 10799,
+            "src": "1189:52:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10756,
+              "nodeType": "Block",
+              "src": "1280:2:30",
+              "statements": []
+            },
+            "id": 10757,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10754,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10753,
+                  "name": "_fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10757,
+                  "src": "1262:9:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10752,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1262:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1261:11:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10755,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1280:0:30"
+            },
+            "scope": 10799,
+            "src": "1246:36:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10760,
+              "nodeType": "Block",
+              "src": "1311:2:30",
+              "statements": []
+            },
+            "id": 10761,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "drain",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10758,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1301:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10759,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1311:0:30"
+            },
+            "scope": 10799,
+            "src": "1287:26:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10766,
+              "nodeType": "Block",
+              "src": "1424:2:30",
+              "statements": []
+            },
+            "id": 10767,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getRegistry",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10762,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1387:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10765,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10764,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10767,
+                  "src": "1415:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10763,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1415:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1414:9:30"
+            },
+            "scope": 10799,
+            "src": "1367:59:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10776,
+              "nodeType": "Block",
+              "src": "1530:2:30",
+              "statements": []
+            },
+            "id": 10777,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getStorage",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10768,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1450:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10775,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10770,
+                  "name": "vaultDao",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10777,
+                  "src": "1478:16:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10769,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1478:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10772,
+                  "name": "version",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10777,
+                  "src": "1496:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10771,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1496:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10774,
+                  "name": "nextVaultId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10777,
+                  "src": "1512:16:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10773,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1512:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1477:52:30"
+            },
+            "scope": 10799,
+            "src": "1431:101:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10782,
+              "nodeType": "Block",
+              "src": "1601:2:30",
+              "statements": []
+            },
+            "id": 10783,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getNextId",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10778,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1555:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10781,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10780,
+                  "name": "nextVaultId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10783,
+                  "src": "1583:16:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10779,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1583:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1582:18:30"
+            },
+            "scope": 10799,
+            "src": "1537:66:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10788,
+              "nodeType": "Block",
+              "src": "1665:2:30",
+              "statements": []
+            },
+            "id": 10789,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getEventful",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10784,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1628:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10787,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10786,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10789,
+                  "src": "1656:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10785,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1656:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1655:9:30"
+            },
+            "scope": 10799,
+            "src": "1608:59:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10797,
+              "nodeType": "Block",
+              "src": "1752:2:30",
+              "statements": []
+            },
+            "id": 10798,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getVaultsByAddress",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10792,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10791,
+                  "name": "_owner",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10798,
+                  "src": "1700:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10790,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1700:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1699:16:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10796,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10795,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10798,
+                  "src": "1741:9:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[] memory"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 10793,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1741:7:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 10794,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1741:9:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[] storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1740:11:30"
+            },
+            "scope": 10799,
+            "src": "1672:82:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 10800,
+        "src": "756:1063:30"
+      }
+    ],
+    "src": "597:1223:30"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/gab/truffle/contracts/contracts/VaultFactory/VaultFactoryFace.sol",
+    "exportedSymbols": {
+      "VaultFactoryFace": [
+        10799
+      ]
+    },
+    "id": 10800,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 10703,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "597:24:30"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Vault Factory Interface - Allows external interaction with Vault Factory.\n @author Gabriele Rigo - <gab@rigoblock.com>",
+        "fullyImplemented": true,
+        "id": 10799,
+        "linearizedBaseContracts": [
+          10799
+        ],
+        "name": "VaultFactoryFace",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "id": 10715,
+            "name": "VaultCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 10714,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10705,
+                  "indexed": false,
+                  "name": "name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "808:11:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10704,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "808:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10707,
+                  "indexed": false,
+                  "name": "symbol",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "821:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10706,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "821:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10709,
+                  "indexed": true,
+                  "name": "vault",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "836:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10708,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "836:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10711,
+                  "indexed": true,
+                  "name": "owner",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "859:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10710,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "859:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10713,
+                  "indexed": false,
+                  "name": "vaultId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10715,
+                  "src": "882:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10712,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "882:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "807:88:30"
+            },
+            "src": "789:107:30"
+          },
+          {
+            "body": {
+              "id": 10724,
+              "nodeType": "Block",
+              "src": "983:2:30",
+              "statements": []
+            },
+            "id": 10725,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "createVault",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10720,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10717,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10725,
+                  "src": "923:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10716,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "923:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10719,
+                  "name": "_symbol",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10725,
+                  "src": "937:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10718,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "937:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "922:30:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10723,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10722,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10725,
+                  "src": "969:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 10721,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "969:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "968:14:30"
+            },
+            "scope": 10799,
+            "src": "902:83:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10732,
+              "nodeType": "Block",
+              "src": "1065:2:30",
+              "statements": []
+            },
+            "id": 10733,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setTargetVaultDao",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10730,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10727,
+                  "name": "_targetVault",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10733,
+                  "src": "1017:20:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10726,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1017:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10729,
+                  "name": "_vaultDao",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10733,
+                  "src": "1039:17:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10728,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1039:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1016:41:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10731,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1065:0:30"
+            },
+            "scope": 10799,
+            "src": "990:77:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10738,
+              "nodeType": "Block",
+              "src": "1125:2:30",
+              "statements": []
+            },
+            "id": 10739,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "changeVaultDao",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10736,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10735,
+                  "name": "_newVaultDao",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10739,
+                  "src": "1096:20:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10734,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1096:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1095:22:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10737,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1125:0:30"
+            },
+            "scope": 10799,
+            "src": "1072:55:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10744,
+              "nodeType": "Block",
+              "src": "1182:2:30",
+              "statements": []
+            },
+            "id": 10745,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setRegistry",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10742,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10741,
+                  "name": "_newRegistry",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10745,
+                  "src": "1153:20:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10740,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1153:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1152:22:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10743,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1182:0:30"
+            },
+            "scope": 10799,
+            "src": "1132:52:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10750,
+              "nodeType": "Block",
+              "src": "1239:2:30",
+              "statements": []
+            },
+            "id": 10751,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setBeneficiary",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10748,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10747,
+                  "name": "_vaultDao",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10751,
+                  "src": "1213:17:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10746,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1213:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1212:19:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10749,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1239:0:30"
+            },
+            "scope": 10799,
+            "src": "1189:52:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10756,
+              "nodeType": "Block",
+              "src": "1280:2:30",
+              "statements": []
+            },
+            "id": 10757,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10754,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10753,
+                  "name": "_fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10757,
+                  "src": "1262:9:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10752,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1262:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1261:11:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10755,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1280:0:30"
+            },
+            "scope": 10799,
+            "src": "1246:36:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10760,
+              "nodeType": "Block",
+              "src": "1311:2:30",
+              "statements": []
+            },
+            "id": 10761,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "drain",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10758,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1301:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10759,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1311:0:30"
+            },
+            "scope": 10799,
+            "src": "1287:26:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10766,
+              "nodeType": "Block",
+              "src": "1424:2:30",
+              "statements": []
+            },
+            "id": 10767,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getRegistry",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10762,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1387:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10765,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10764,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10767,
+                  "src": "1415:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10763,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1415:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1414:9:30"
+            },
+            "scope": 10799,
+            "src": "1367:59:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10776,
+              "nodeType": "Block",
+              "src": "1530:2:30",
+              "statements": []
+            },
+            "id": 10777,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getStorage",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10768,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1450:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10775,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10770,
+                  "name": "vaultDao",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10777,
+                  "src": "1478:16:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10769,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1478:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10772,
+                  "name": "version",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10777,
+                  "src": "1496:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10771,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1496:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10774,
+                  "name": "nextVaultId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10777,
+                  "src": "1512:16:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10773,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1512:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1477:52:30"
+            },
+            "scope": 10799,
+            "src": "1431:101:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10782,
+              "nodeType": "Block",
+              "src": "1601:2:30",
+              "statements": []
+            },
+            "id": 10783,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getNextId",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10778,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1555:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10781,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10780,
+                  "name": "nextVaultId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10783,
+                  "src": "1583:16:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10779,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1583:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1582:18:30"
+            },
+            "scope": 10799,
+            "src": "1537:66:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10788,
+              "nodeType": "Block",
+              "src": "1665:2:30",
+              "statements": []
+            },
+            "id": 10789,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getEventful",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10784,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1628:2:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10787,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10786,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10789,
+                  "src": "1656:7:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10785,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1656:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1655:9:30"
+            },
+            "scope": 10799,
+            "src": "1608:59:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10797,
+              "nodeType": "Block",
+              "src": "1752:2:30",
+              "statements": []
+            },
+            "id": 10798,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getVaultsByAddress",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10792,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10791,
+                  "name": "_owner",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10798,
+                  "src": "1700:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10790,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1700:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1699:16:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10796,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10795,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10798,
+                  "src": "1741:9:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[] memory"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 10793,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1741:7:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 10794,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1741:9:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[] storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1740:11:30"
+            },
+            "scope": 10799,
+            "src": "1672:82:30",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 10800,
+        "src": "756:1063:30"
+      }
+    ],
+    "src": "597:1223:30"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-03-05T01:35:43.852Z"
+}

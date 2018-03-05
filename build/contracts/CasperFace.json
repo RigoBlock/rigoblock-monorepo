@@ -1,0 +1,751 @@
+{
+  "contractName": "CasperFace",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_validation",
+          "type": "address"
+        },
+        {
+          "name": "_withdrawal",
+          "type": "address"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_validatorIndex",
+          "type": "uint128"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_validatorIndex",
+          "type": "uint128"
+        }
+      ],
+      "name": "get_deposit_size",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "get_nextValidatorIndex",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6101e28061001e6000396000f300606060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806302387a7b14610067578063363258851461009c578063f0afa25f146100e9578063f9609f0814610156575b600080fd5b341561007257600080fd5b61009a60048080356fffffffffffffffffffffffffffffffff169060200190919050506101a3565b005b34156100a757600080fd5b6100af6101a6565b60405180826fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100f457600080fd5b61011c60048080356fffffffffffffffffffffffffffffffff169060200190919050506101ab565b60405180826fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101a1600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506101b2565b005b50565b600090565b6000919050565b50505600a165627a7a72305820375a744b002b5d58cda4cdcc257dd8b36e8515cecb02d6ff0ee23f1148a733cb0029",
+  "deployedBytecode": "0x606060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806302387a7b14610067578063363258851461009c578063f0afa25f146100e9578063f9609f0814610156575b600080fd5b341561007257600080fd5b61009a60048080356fffffffffffffffffffffffffffffffff169060200190919050506101a3565b005b34156100a757600080fd5b6100af6101a6565b60405180826fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100f457600080fd5b61011c60048080356fffffffffffffffffffffffffffffffff169060200190919050506101ab565b60405180826fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6101a1600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506101b2565b005b50565b600090565b6000919050565b50505600a165627a7a72305820375a744b002b5d58cda4cdcc257dd8b36e8515cecb02d6ff0ee23f1148a733cb0029",
+  "sourceMap": "747:330:2:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "747:330:2:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;855:52;;;;;;;;;;;;;;;;;;;;;;;;;;;;1005:70;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;913:87;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;774:76;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;855:52;;:::o;1005:70::-;1064:7;1005:70;:::o;913:87::-;989:7;913:87;;;:::o;774:76::-;;;:::o",
+  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.19;\n\n/// @title Casper Interface - Allows interaction with the Casoper contract.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\ncontract CasperFace {\n\n    function deposit(address _validation, address _withdrawal) public payable {}\n    function withdraw(uint128 _validatorIndex) public {}\n\n    function get_deposit_size(uint128 _validatorIndex) public constant returns (uint128) {}\n    function get_nextValidatorIndex() public constant returns (uint128) {}\n}\n",
+  "sourcePath": "/home/gab/truffle/contracts/contracts/Casper/CasperFace.sol",
+  "ast": {
+    "absolutePath": "/home/gab/truffle/contracts/contracts/Casper/CasperFace.sol",
+    "exportedSymbols": {
+      "CasperFace": [
+        1236
+      ]
+    },
+    "id": 1237,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1207,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "597:24:2"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Casper Interface - Allows interaction with the Casoper contract.\n @author Gabriele Rigo - <gab@rigoblock.com>",
+        "fullyImplemented": true,
+        "id": 1236,
+        "linearizedBaseContracts": [
+          1236
+        ],
+        "name": "CasperFace",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 1214,
+              "nodeType": "Block",
+              "src": "848:2:2",
+              "statements": []
+            },
+            "id": 1215,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "deposit",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1212,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1209,
+                  "name": "_validation",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1215,
+                  "src": "791:19:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1208,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "791:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1211,
+                  "name": "_withdrawal",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1215,
+                  "src": "812:19:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1210,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "812:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "790:42:2"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 1213,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "848:0:2"
+            },
+            "scope": 1236,
+            "src": "774:76:2",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1220,
+              "nodeType": "Block",
+              "src": "905:2:2",
+              "statements": []
+            },
+            "id": 1221,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "withdraw",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1218,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1217,
+                  "name": "_validatorIndex",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1221,
+                  "src": "873:23:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 1216,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "873:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "872:25:2"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1219,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "905:0:2"
+            },
+            "scope": 1236,
+            "src": "855:52:2",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1228,
+              "nodeType": "Block",
+              "src": "998:2:2",
+              "statements": []
+            },
+            "id": 1229,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "get_deposit_size",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1224,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1223,
+                  "name": "_validatorIndex",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1229,
+                  "src": "939:23:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 1222,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "939:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "938:25:2"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1227,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1226,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1229,
+                  "src": "989:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 1225,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "989:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "988:9:2"
+            },
+            "scope": 1236,
+            "src": "913:87:2",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1234,
+              "nodeType": "Block",
+              "src": "1073:2:2",
+              "statements": []
+            },
+            "id": 1235,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "get_nextValidatorIndex",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1230,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1036:2:2"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1233,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1232,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1235,
+                  "src": "1064:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 1231,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1064:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1063:9:2"
+            },
+            "scope": 1236,
+            "src": "1005:70:2",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 1237,
+        "src": "747:330:2"
+      }
+    ],
+    "src": "597:481:2"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/gab/truffle/contracts/contracts/Casper/CasperFace.sol",
+    "exportedSymbols": {
+      "CasperFace": [
+        1236
+      ]
+    },
+    "id": 1237,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1207,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "597:24:2"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@title Casper Interface - Allows interaction with the Casoper contract.\n @author Gabriele Rigo - <gab@rigoblock.com>",
+        "fullyImplemented": true,
+        "id": 1236,
+        "linearizedBaseContracts": [
+          1236
+        ],
+        "name": "CasperFace",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 1214,
+              "nodeType": "Block",
+              "src": "848:2:2",
+              "statements": []
+            },
+            "id": 1215,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "deposit",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1212,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1209,
+                  "name": "_validation",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1215,
+                  "src": "791:19:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1208,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "791:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1211,
+                  "name": "_withdrawal",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1215,
+                  "src": "812:19:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1210,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "812:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "790:42:2"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 1213,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "848:0:2"
+            },
+            "scope": 1236,
+            "src": "774:76:2",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1220,
+              "nodeType": "Block",
+              "src": "905:2:2",
+              "statements": []
+            },
+            "id": 1221,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "withdraw",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1218,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1217,
+                  "name": "_validatorIndex",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1221,
+                  "src": "873:23:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 1216,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "873:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "872:25:2"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1219,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "905:0:2"
+            },
+            "scope": 1236,
+            "src": "855:52:2",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1228,
+              "nodeType": "Block",
+              "src": "998:2:2",
+              "statements": []
+            },
+            "id": 1229,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "get_deposit_size",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1224,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1223,
+                  "name": "_validatorIndex",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1229,
+                  "src": "939:23:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 1222,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "939:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "938:25:2"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1227,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1226,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1229,
+                  "src": "989:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 1225,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "989:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "988:9:2"
+            },
+            "scope": 1236,
+            "src": "913:87:2",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1234,
+              "nodeType": "Block",
+              "src": "1073:2:2",
+              "statements": []
+            },
+            "id": 1235,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "get_nextValidatorIndex",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1230,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1036:2:2"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1233,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1232,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1235,
+                  "src": "1064:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
+                  },
+                  "typeName": {
+                    "id": 1231,
+                    "name": "uint128",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1064:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1063:9:2"
+            },
+            "scope": 1236,
+            "src": "1005:70:2",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 1237,
+        "src": "747:330:2"
+      }
+    ],
+    "src": "597:481:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-03-05T01:35:43.655Z"
+}

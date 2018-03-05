@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
 /// @title Vault Eventful Interface - Logs all vaults transactions.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -35,8 +35,8 @@ contract VaultEventfulFace {
 
     // CORE FUNCTIONS
 
-    function buyVault(address _who, address _targetVault, uint _value, uint _amount, string _name, string _symbol) external returns (bool success) {}
-    function sellVault(address _who, address _targetVault, uint _amount, uint _revenue, string _name, string _symbol) external returns(bool success) {}
+    function buyVault(address _who, address _targetVault, uint _value, uint _amount, bytes _name, bytes _symbol) external returns (bool success) {}
+    function sellVault(address _who, address _targetVault, uint _amount, uint _revenue, bytes _name, bytes _symbol) external returns(bool success) {}
     function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success) {}
     function setTransactionFee(address _who, address _targetVault, uint _transactionFee) external returns(bool success) {}
     function changeFeeCollector(address _who, address _targetVault, address _feeCollector) external returns(bool success) {}

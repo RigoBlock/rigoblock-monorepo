@@ -5,9 +5,9 @@ Name in parity registry: dragoregistry-v2
 
 ## Registry version 0.4.1
 ```
-Mainnet: 0x893C4D2fE9A306fC92A65E4c3eC21129F5eE0663
-Ropsten: 0x893C4D2fE9A306fC92A65E4c3eC21129F5eE0663
-Kovan: 0xE1be57f169Ea34AF96f975D1caf2e30dd6674c42
+Mainnet:
+Ropsten:
+Kovan: 0x510C9B971c6e5A5f217B76d945940247Ee368c4E
 ```
 Bytecode
 ```
