@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
 /// @title Drago Factory Interface - Allows external interaction with Drago Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
 /// @title Drago Registry Interface - Allows external intaction with Drago Registry.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

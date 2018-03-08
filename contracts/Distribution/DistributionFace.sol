@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
 /// @title Distribution Interface - Allows to interact with the distribution.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

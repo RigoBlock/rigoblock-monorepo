@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
 import { Owned } from "../utils/Owned/Owned.sol";
 import { DragoRegistryFace } from "../Registry/DragoRegistryFace.sol";

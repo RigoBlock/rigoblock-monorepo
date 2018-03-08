@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
 import { InflationFace as Inflation } from "../Inflation/InflationFace.sol";
 

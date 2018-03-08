@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
 import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
 import { RigoToken } from "../RigoToken/RigoToken.sol";

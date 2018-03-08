@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.20;
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { VaultEventfulFace } from "./VaultEventfulFace.sol";
