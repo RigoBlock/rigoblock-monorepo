@@ -4,7 +4,7 @@ module.exports = {
   solc: {
     optimizer: {
       enabled: true,
-      runs: 200
+      runs: 500
     }
   }
 };

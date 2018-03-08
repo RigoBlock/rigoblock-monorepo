@@ -231,19 +231,18 @@ contract VaultFactory is Owned, VaultFactoryFace {
             _vaultId,
             data.authority)
         );
-        data.vaults[msg.sender].push(libraryData.newAddress);
+        data.vaults[_owner].push(libraryData.newAddress);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
         require(events.createVault(
-            msg.sender,
+            _owner,
             this,
             libraryData.newAddress,
             _name,
             _symbol,
-            _vaultId,
-            _owner)
+            _vaultId)
         );
         auth.whitelistVault(libraryData.newAddress, true);
-        auth.whitelistUser(msg.sender, true);
+        auth.whitelistUser(_owner, true);
         VaultCreated(_name, _symbol, libraryData.newAddress, _owner, _vaultId);
         return true;
     }

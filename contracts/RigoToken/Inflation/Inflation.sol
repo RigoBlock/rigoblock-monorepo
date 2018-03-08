@@ -77,7 +77,8 @@ contract Inflation is SafeMath, InflationFace {
     }
 
     modifier timeAtLeast(address _thePool) {
-        require(now >= performers[_thePool].endTime); _;
+        require(now >= performers[_thePool].endTime);
+        _;
     }
 
     function Inflation(

@@ -64,6 +64,7 @@ contract Authority is Owned, AuthorityFace {
         address vaultEventful;
         address exchangeEventful;
         address casper;
+        mapping (address => bool) initialized;
     }
 
     // EVENTS
@@ -78,8 +79,8 @@ contract Authority is Owned, AuthorityFace {
     event WhitelistedVault(address indexed vault, bool approved);
     event WhitelistedDrago(address indexed drago, bool isWhitelisted);
     event NewDragoEventful(address indexed dragoEventful);
-    event NewVaultEventful(address indexed exchangeEventful);
-    event NewExchangeEventful(address indexed vaultEventful);
+    event NewVaultEventful(address indexed vaultEventful);
+    event NewExchangeEventful(address indexed exchangeEventful);
     event NewCasper(address indexed casper);
 
     // MODIFIERS
@@ -275,6 +276,7 @@ contract Authority is Owned, AuthorityFace {
         onlyOwner
     {
         blocks.casper = _casper;
+        blocks.initialized[_casper] = true;
         NewCasper(blocks.casper);
     }
 
@@ -406,6 +408,13 @@ contract Authority is Owned, AuthorityFace {
         returns (address)
     {
         return adapter[_exchange];
+    }
+
+    /// @dev Checkes whether casper has been inizialized
+    /// @return Bool the casper contract has been initialized
+    function isCasperInitialized() public view returns (bool) {
+        address casper = blocks.casper;
+        return blocks.initialized[casper];
     }
 
     /// @dev Provides the address of the casper contract

@@ -34,8 +34,8 @@ contract AuthorityFace {
     event WhitelistedVault(address indexed vault, bool approved);
     event WhitelistedDrago(address indexed drago, bool isWhitelisted);
     event NewDragoEventful(address indexed dragoEventful);
-    event NewVaultEventful(address indexed exchangeEventful);
-    event NewExchangeEventful(address indexed vaultEventful);
+    event NewVaultEventful(address indexed vaultEventful);
+    event NewExchangeEventful(address indexed exchangeEventful);
     event NewCasper(address indexed casper);
 
     // CORE FUNCTIONS
@@ -67,6 +67,7 @@ contract AuthorityFace {
     function getDragoEventful() public view returns (address) {}
     function getVaultEventful() public view returns (address) {}
     function getExchangeEventful() public view returns (address) {}
+    function isCasperInitialized() public view returns (bool) {}
     function getCasper() public view returns (address) {}
     function getOwner() public view returns (address) {}
     function getExchangeAdapter(address _exchange) public view returns (address) {}

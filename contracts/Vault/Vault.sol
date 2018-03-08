@@ -294,12 +294,11 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
             uint buyPrice
         )
     {
-        sellPrice = buyPrice = getNav();
         return(
             name = data.name,
             symbol = data.symbol,
-            sellPrice,
-            buyPrice
+            sellPrice = getNav(),
+            buyPrice = getNav
         );
     }
 
@@ -329,18 +328,24 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         );
     }
 
-    /// @dev Queries the address of the casper contract from the authority
-    /// @return Address of the casper contract
+    /// @dev Queries the addres of the inizialized casper
+    /// @return Address of the casper address
     function getCasper() public view returns (address) {
         Authority auth = Authority(admin.authority);
-        return auth.getCasper();
+        if (casperInitialized()) {
+            return auth.getCasper();
+        }
     }
 
     /// @dev Finds the value of the deposit of this vault at the casper contract
     /// @return Value of the deposit at casper in wei
     function getCasperDeposit() public view returns (uint128) {
-        Casper casper = Casper(getCasper());
-        return casper.get_deposit_size(data.validatorIndex);
+        if (casperInitialized()) {
+            Casper casper = Casper(getCasper());
+            return casper.get_deposit_size(data.validatorIndex);
+        } else {
+            return 0;
+        }
     }
 
     /// @dev Calculates the value of the shares
@@ -472,5 +477,12 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
             netAmount = safeSub(_amount, fee),
             netRevenue = (safeMul(netAmount, getNav()) / BASE)
         );
+    }
+
+    /// @dev Checkes whether casper has been inizialized by the Authority
+    /// @return Bool the casper contract has been initialized
+    function casperInitialized() internal view returns (bool) {
+        Authority auth = Authority(admin.authority);
+        return auth.isCasperInitialized();
     }
 }

@@ -231,19 +231,18 @@ contract DragoFactory is Owned, DragoFactoryFace {
             _dragoId,
             data.authority)
         );
-        data.dragos[msg.sender].push(libraryData.newAddress);
+        data.dragos[_owner].push(libraryData.newAddress);
         DragoEventful events = DragoEventful(auth.getDragoEventful());
         require(events.createDrago(
-            msg.sender,
+            _owner,
             this,
             libraryData.newAddress,
             _name,
             _symbol,
-            _dragoId,
-            _owner)
+            _dragoId)
         );
         auth.whitelistDrago(libraryData.newAddress, true);
-        auth.whitelistUser(msg.sender, true);
+        auth.whitelistUser(_owner, true);
         DragoCreated(_name, _symbol, libraryData.newAddress, _owner, _dragoId);
         return true;
     }
