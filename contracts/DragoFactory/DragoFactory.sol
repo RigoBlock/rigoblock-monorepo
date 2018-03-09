@@ -20,10 +20,9 @@ pragma solidity ^0.4.20;
 
 import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistryFace.sol";
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
-import { DragoFace as Drago } from "../Drago/DragoFace.sol";
 import { DragoEventfulFace as DragoEventful } from "../DragoEventful/DragoEventfulFace.sol";
 
-import { DragoFactoryLibrary } from "./DragoFactoryLibrary/DragoFactoryLibrary.sol";
+import { DragoFactoryLibrary, Drago } from "./DragoFactoryLibrary/DragoFactoryLibrary.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
 import { DragoFactoryFace } from "./DragoFactoryFace.sol";
 
@@ -93,6 +92,8 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @return Bool the transaction executed correctly
     function createDrago(string _name, string _symbol)
         public
+        payable
+        whenFeePaid
         returns (bool success)
     {
         DragoRegistry registry = DragoRegistry(data.dragoRegistry);
@@ -219,7 +220,6 @@ contract DragoFactory is Owned, DragoFactoryFace {
         address _owner,
         uint _dragoId)
         internal
-        whenFeePaid
         returns (bool success)
     {
         Authority auth = Authority(data.authority);

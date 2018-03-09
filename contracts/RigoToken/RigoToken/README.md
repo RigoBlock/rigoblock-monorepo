@@ -7,7 +7,8 @@ Name in parity registry: rigotoken-v2
 ```
 Mainnet:
 Ropsten:
-Kovan:
+Kovan: 0xB01c606837E39771C09c827BaB292Bf9eA1c5ED1
+
 ```
 Bytecode
 ```

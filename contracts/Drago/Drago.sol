@@ -125,20 +125,6 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
         _;
     }
 
-    event Buy(
-        address indexed from,
-        address indexed to,
-        uint indexed _amount,
-        uint _revenue
-    );
-
-    event Sell(
-        address indexed from,
-        address indexed to,
-        uint indexed _amount,
-        uint _revenue
-    );
-
     function Drago(
         string _dragoName,
         string _dragoSymbol,
@@ -155,7 +141,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
         owner = _owner;
         admin.authority = _authority;
         admin.dragoDao = msg.sender;
-        admin.minOrder = 100 finney;
+        admin.minOrder = 1 finney;
         admin.feeCollector = _owner;
         admin.ratio = 80;
     }
@@ -190,7 +176,6 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
         addPurchaseLog(amount);
         allocatePurchaseTokens(_hodler, amount, feeDrago, feeDragoDao);
         data.totalSupply = safeAdd(data.totalSupply, grossAmount);
-        Buy(msg.sender, this, msg.value, amount);
         return true;
     }
 
@@ -213,7 +198,6 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
         allocateSaleTokens(msg.sender, _amount, feeDrago, feeDragoDao);
         data.totalSupply = safeSub(data.totalSupply, netAmount);
         msg.sender.transfer(netRevenue);
-        Sell(this, msg.sender, _amount, netRevenue);
         return true;
     }
 
@@ -340,7 +324,7 @@ contract Drago is Owned, ERC20Face, SafeMath, DragoFace {
         view
         returns (
             address feeCollector,
-            address dragodAO,
+            address dragoDao,
             uint ratio,
             uint transactionFee,
             uint32 minPeriod

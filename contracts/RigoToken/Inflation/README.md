@@ -7,7 +7,7 @@ Name in parity registry: inflation-v2
 ```
 Mainnet:
 Ropsten:
-Kovan:
+Kovan: 0x510C9B971c6e5A5f217B76d945940247Ee368c4E
 ```
 Bytecode
 ```

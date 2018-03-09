@@ -7,7 +7,7 @@ Name in parity registry: pop-v2
 ```
 Mainnet:
 Ropsten:
-Kovan:
+Kovan: 0xF82Eb973Cca1976596670b3c152f7C6811Aa4d1b
 ```
 Bytecode
 ```

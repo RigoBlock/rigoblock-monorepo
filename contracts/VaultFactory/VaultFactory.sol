@@ -20,10 +20,9 @@ pragma solidity ^0.4.20;
 
 import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistryFace.sol";
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
-import { VaultFace as Vault } from "../Vault/VaultFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
 
-import { VaultFactoryLibrary } from "./VaultFactoryLibrary/VaultFactoryLibrary.sol";
+import { VaultFactoryLibrary, Vault } from "./VaultFactoryLibrary/VaultFactoryLibrary.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
 import { VaultFactoryFace } from "./VaultFactoryFace.sol";
 
@@ -93,6 +92,8 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @return Bool the transaction executed correctly
     function createVault(string _name, string _symbol)
         public
+        payable
+        whenFeePaid
         returns (bool success)
     {
         DragoRegistry registry = DragoRegistry(data.vaultRegistry);
@@ -219,7 +220,6 @@ contract VaultFactory is Owned, VaultFactoryFace {
         address _owner,
         uint _vaultId)
         internal
-        whenFeePaid
         returns (bool success)
     {
         Authority auth = Authority(data.authority);

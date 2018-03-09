@@ -34,11 +34,6 @@ library DragoFactoryLibrary {
         address newAddress;
     }
 
-    modifier whitelistedFactory(address _authority) {
-        Authority auth = Authority(_authority);
-        if (auth.isWhitelistedFactory(this)) _;
-    }
-
     /// @dev Allows an approved factory to create new dragos
     /// @param _name String of the name
     /// @param _symbol String of the symbol
@@ -53,7 +48,6 @@ library DragoFactoryLibrary {
         uint _dragoId,
         address _authority)
         internal
-        whitelistedFactory(_authority)
         returns (bool success)
     {
         Drago drago = new Drago(
