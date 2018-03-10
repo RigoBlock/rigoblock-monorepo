@@ -43,5 +43,5 @@ contract VaultEventfulFace {
     function changeVaultDao(address _who, address _targetVault, address _vaultDao) external returns(bool success) {}
     function depositToCasper(address _who, address _targetVault, address _casper, address _validation, address _withdrawal, uint _amount) external returns(bool success) {}
     function withdrawFromCasper(address _who, address _targetVault, address _casper, uint _validatorIndex) external returns(bool success) {}
-    function createVault(address _who, address _vaultFactory, address _newVault, string _name, string _symbol, uint _vaultId) external returns(bool success) {}
+    function createVault(address _who, address _newVault, string _name, string _symbol, uint _vaultId) external returns(bool success) {}
 }

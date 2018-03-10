@@ -170,6 +170,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         minimumPeriodPast
         returns (bool success)
     {
+        updatePrice();
         uint feeVault;
         uint feeVaultDao;
         uint netAmount;
@@ -254,7 +255,9 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @dev This function allows to write the new nav
     /// @dev NAV is provided by view functions
     function updatePrice() public {
-        data.price = getNav();
+        if (this.balance > 0) {
+            data.price = getNav();
+        }
     }
 
     /// @dev Allows vault dao/factory to change the minimum holding period
@@ -351,9 +354,18 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @dev Calculates the value of the shares
     /// @return Value of the shares in wei
     function getNav() public view returns (uint) {
-        uint casperDeposit = uint(getCasperDeposit());
+        if (casperInitialized()) {
+            uint casperDeposit = uint(getCasperDeposit());
+        } else {
+            casperDeposit = 0;
+        }
         uint aum = safeAdd(this.balance, casperDeposit);
-        return safeDiv(aum * BASE, data.totalSupply);
+        if (this.balance == 0) {
+            uint poolPrice = data.price;
+        } else {
+            poolPrice = safeDiv(aum * BASE, data.totalSupply);
+        }
+        return poolPrice;
     }
 
     /// @dev Returns the version of the type of vault
@@ -445,7 +457,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
             uint amount
         )
     {
-        grossAmount = safeDiv(msg.value * BASE, getNav());
+        grossAmount = safeDiv(msg.value * BASE, data.price);
         uint fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
         return (
             grossAmount = safeDiv(msg.value * BASE, getNav()),
@@ -475,7 +487,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
             feeVault = safeMul(fee, admin.ratio) / 100,
             feeVaultDao = safeSub(fee, feeVaultDao),
             netAmount = safeSub(_amount, fee),
-            netRevenue = (safeMul(netAmount, getNav()) / BASE)
+            netRevenue = (safeMul(netAmount, data.price) / BASE)
         );
     }
 

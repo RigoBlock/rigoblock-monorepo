@@ -281,16 +281,14 @@ contract VaultEventful is VaultEventfulFace {
     /// @return Bool the transaction executed successfully
     function createVault(
         address _who,
-        address _vaultFactory,
         address _newVault,
         string _name,
         string _symbol,
         uint _vaultId)
         external
-        approvedFactoryOnly(_vaultFactory)
+        approvedFactoryOnly(msg.sender)
         returns(bool success)
     {
-        require(msg.sender == _vaultFactory);
         VaultCreated(_newVault, _vaultFactory, _who, _vaultId, _name, _symbol);
         return true;
     }
