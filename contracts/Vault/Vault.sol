@@ -141,7 +141,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         minimumStake(msg.value)
         returns (bool success)
     {
-        require(buyVaultInternal(msg.sender));
+        require(buyVaultInternal(msg.sender, msg.value));
         return true;
     }
 
@@ -154,7 +154,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         minimumStake(msg.value)
         returns (bool success)
     {
-        require(buyVaultInternal(_hodler));
+        require(buyVaultInternal(_hodler, msg.value));
         return true;
     }
 
@@ -382,7 +382,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Executes purchase function
     /// @param _hodler Address of the target user
     /// @return Bool the function executed correctly
-    function buyVaultInternal(address _hodler)
+    function buyVaultInternal(address _hodler, uint _totalEth)
         internal
         returns (bool success)
     {
@@ -390,7 +390,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         uint feeVault;
         uint feeVaultDao;
         uint amount;
-        (grossAmount, feeVault, feeVaultDao, amount) = getPurchaseAmounts();
+        (grossAmount, feeVault, feeVaultDao, amount) = getPurchaseAmounts(_totalEth);
         addPurchaseLog(amount);
         allocatePurchaseTokens(_hodler, amount, feeVault, feeVaultDao);
         data.totalSupply = safeAdd(data.totalSupply, grossAmount);
@@ -471,7 +471,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of fee in shares
     /// @return Value of fee in shares to dao
     /// @return Value of net purchased shares
-    function getPurchaseAmounts()
+    function getPurchaseAmounts(uint _totalEth)
         internal view
         returns (
             uint grossAmount,
@@ -480,10 +480,10 @@ contract Vault is Owned, SafeMath, VaultFace {
             uint amount
         )
     {
-        grossAmount = safeDiv(msg.value * BASE, data.price);
+        grossAmount = safeDiv(_totalEth * BASE, getNav());
         uint fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
         return (
-            grossAmount = safeDiv(msg.value * BASE, getNav()),
+            grossAmount,
             feeVault = safeMul(fee , admin.ratio) / 100,
             feeVaultDao = safeSub(fee, feeVault),
             amount = safeSub(grossAmount, fee)
@@ -549,19 +549,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Calculates the value of the shares
     /// @return Value of the shares in wei
     function getNav() internal view returns (uint) {
-        uint casperDeposit;
-        if (casperInitialized()) {
-            casperDeposit = uint(getCasperDepositInternal());
-        } else {
-            casperDeposit = 0;
-        }
+        uint casperDeposit = (casperInitialized() ? getCasperDepositInternal() : 0);
         uint aum = safeAdd(address(this).balance, casperDeposit);
-        uint poolPrice;
-        if (address(this).balance == 0) {
-            poolPrice = data.price;
-        } else {
-            poolPrice = safeDiv(aum * BASE, data.totalSupply);
-        }
-        return poolPrice;
+        return (data.totalSupply == 0 ? data.price : safeDiv(aum * BASE, data.totalSupply));
     }
 }
