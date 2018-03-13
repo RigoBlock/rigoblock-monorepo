@@ -177,6 +177,11 @@ contract VaultEventful is VaultEventfulFace {
         return true;
     }
     
+    /// @dev Logswhen rigoblock dao changes fee split.
+    /// @param _who Address of the caller
+    /// @param _targetVault Address of the target vault
+    /// @param _ratio Ratio number from 0 to 100
+    /// @return Bool the transaction executed successfully
     function changeRatio(
         address _who,
         address _targetVault,
@@ -188,7 +193,7 @@ contract VaultEventful is VaultEventfulFace {
         require(_ratio > 0);
         emit NewRatio(_targetVault, _who, _ratio);
         return true;
-    }    
+    }
 
 
     /// @dev Logs a modification of the transaction fee event

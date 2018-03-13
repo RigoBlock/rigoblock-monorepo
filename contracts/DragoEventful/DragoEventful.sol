@@ -49,6 +49,12 @@ contract DragoEventful is DragoEventfulFace {
         bytes name,
         bytes symbol
     );
+    
+    event NewRatio(
+        address indexed drago,
+        address indexed from,
+        uint newRatio
+    );
 
     event NewNAV(
         address indexed drago,
@@ -56,6 +62,27 @@ contract DragoEventful is DragoEventfulFace {
         address indexed to,
         uint sellPrice,
         uint buyPrice
+    );
+    
+    event NewFee(
+        address indexed targetDrago,
+        address indexed group,
+        address indexed who,
+        uint transactionFee
+    );
+
+    event NewCollector(
+        address indexed targetDrago,
+        address indexed group,
+        address indexed who,
+        address feeCollector
+    );
+    
+    event DragoDao(
+        address indexed drago,
+        address indexed from,
+        address indexed to,
+        address dragoDao
     );
 
     event DepositExchange(
@@ -115,20 +142,6 @@ contract DragoEventful is DragoEventfulFace {
         uint dragoId,
         string name,
         string symbol
-    );
-
-    event NewFee(
-        address indexed targetDrago,
-        address indexed group,
-        address indexed who,
-        uint transactionFee
-    );
-
-    event NewCollector(
-        address indexed targetDrago,
-        address indexed group,
-        address indexed who,
-        address feeCollector
     );
 
     modifier approvedFactoryOnly(address _factory) {
@@ -209,6 +222,60 @@ contract DragoEventful is DragoEventfulFace {
         emit SellDrago(_targetDrago, _who, msg.sender, _amount, _revenue, _name, _symbol);
         return true;
     }
+    
+    /// @dev Logswhen rigoblock dao changes fee split.
+    /// @param _who Address of the caller
+    /// @param _targetDrago Address of the target drago
+    /// @param _ratio Ratio number from 0 to 100
+    /// @return Bool the transaction executed successfully
+    function changeRatio(
+        address _who,
+        address _targetDrago,
+        uint256 _ratio)
+        external
+        approvedDragoOnly(msg.sender)
+        returns(bool success)
+    {
+        require(_ratio > 0);
+        emit NewRatio(_targetDrago, _who, _ratio);
+        return true;
+    }
+    
+    /// @dev Logs when wizard changes fee collector address
+    /// @param _who Address of the caller
+    /// @param _targetDrago Address of the target Drago
+    /// @param _feeCollector Address of the new fee collector
+    /// @return Bool the transaction executed successfully
+    function changeFeeCollector(
+        address _who,
+        address _targetDrago,
+        address _feeCollector)
+        external
+        approvedDragoOnly(msg.sender)
+        approvedUserOnly(_who)
+        returns(bool success)
+    {
+        emit NewCollector(_targetDrago, msg.sender, _who, _feeCollector);
+        return true;
+    }
+    
+    /// @dev Logs a change in the drago dao of an approved vault
+    /// @param _who Address of the caller
+    /// @param _targetDrago Address of the drago
+    /// @param _dragoDao Address of the new drago dao
+    /// @return Bool the transaction executed successfully
+    function changeDragoDao(
+        address _who,
+        address _targetDrago,
+        address _dragoDao)
+        external
+        approvedDragoOnly(msg.sender)
+        approvedUserOnly(_who)
+        returns(bool success)
+    {
+        emit DragoDao(_targetDrago, msg.sender, _who, _dragoDao);
+        return true;
+    }
 
     /// @dev Logs a Set Drago Price event
     /// @param _who Address of the caller
@@ -227,6 +294,24 @@ contract DragoEventful is DragoEventfulFace {
     {
         require(_sellPrice > 10 finney && _buyPrice > 10 finney);
         emit NewNAV(_targetDrago, msg.sender, _who, _sellPrice, _buyPrice);
+        return true;
+    }
+    
+    /// @dev Logs a modification of the transaction fee event
+    /// @param _who Address of the caller
+    /// @param _targetDrago Address of the target Drago
+    /// @param _transactionFee Value of the transaction fee in basis points
+    /// @return Bool the transaction executed successfully
+    function setTransactionFee(
+        address _who,
+        address _targetDrago,
+        uint _transactionFee)
+        external
+        approvedDragoOnly(msg.sender)
+        approvedUserOnly(_who)
+        returns(bool success)
+    {
+        emit NewFee(_targetDrago, msg.sender, _who, _transactionFee);
         return true;
     }
 
@@ -370,52 +455,16 @@ contract DragoEventful is DragoEventfulFace {
     function finalizeDealCFDExchange(
         address _who,
         address _targetDrago,
-        address _cfdExchange,
+        address _exchange,
         address _cfd,
         uint24 _id)
         external
         approvedDragoOnly(msg.sender)
-        approvedExchangeOnly(_cfdExchange)
+        approvedExchangeOnly(_exchange)
         approvedAsset(_cfd)
         returns(bool success)
     {
-        emit DealFinalized(_targetDrago, _cfdExchange, _cfd, 0, _id);
-        return true;
-    }
-
-    /// @dev Logs a modification of the transaction fee event
-    /// @param _who Address of the caller
-    /// @param _targetDrago Address of the target Drago
-    /// @param _transactionFee Value of the transaction fee in basis points
-    /// @return Bool the transaction executed successfully
-    function setTransactionFee(
-        address _who,
-        address _targetDrago,
-        uint _transactionFee)
-        external
-        approvedDragoOnly(msg.sender)
-        approvedUserOnly(_who)
-        returns(bool success)
-    {
-        emit NewFee(_targetDrago, msg.sender, _who, _transactionFee);
-        return true;
-    }
-
-    /// @dev Logs when wizard changes fee collector address
-    /// @param _who Address of the caller
-    /// @param _targetDrago Address of the target Drago
-    /// @param _feeCollector Address of the new fee collector
-    /// @return Bool the transaction executed successfully
-    function changeFeeCollector(
-        address _who,
-        address _targetDrago,
-        address _feeCollector)
-        external
-        approvedDragoOnly(msg.sender)
-        approvedUserOnly(_who)
-        returns(bool success)
-    {
-        emit NewCollector(_targetDrago, msg.sender, _who, _feeCollector);
+        emit DealFinalized(_targetDrago, _exchange, _cfd, 0, _id);
         return true;
     }
 
