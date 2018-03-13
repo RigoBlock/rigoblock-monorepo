@@ -5,8 +5,8 @@ Name in parity registry: rigotoken-v2
 
 ## Rigo Token version 0.4.1
 ```
-Mainnet:
-Ropsten:
+Mainnet: 0xD34cf65739954EB99D284fD20aB4f88c64e4d67D
+Ropsten: 0x6FA8590920c5966713b1a86916f7b0419411e474
 Kovan: 0x60aC9D751a7c7b6f4ed00Bd1BD2891312A394057
 
 ```
