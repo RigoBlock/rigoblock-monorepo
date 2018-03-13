@@ -16,30 +16,38 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 /// @title Proof of Performance Interface - Allows interaction with the PoP contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract ProofOfPerformanceFace {
+interface ProofOfPerformanceFace {
 
     // CORE FUNCTIONS
 
-    function claimPop(uint _ofPool) public {}
-    function setRegistry(address _dragoRegistry) external {}
-    function setRigoblockDao(address _rigoblockDao) external {}
-    function setRatio(address _ofGroup, uint _ratio) public {}
-    function setMinimumRigo(uint256 _amount) external {}
+    function claimPop(uint _ofPool) external;
+    function setRegistry(address _dragoRegistry) external;
+    function setRigoblockDao(address _rigoblockDao) external;
+    function setRatio(address _ofGroup, uint _ratio) external;
+    function setMinimumRigo(uint256 _amount) external;
 
     // CONSTANT PUBLIC FUNCTIONS
+    
+    function getPoolData(uint _ofPool)
+        external view
+        returns (
+            bool active,
+            address thePoolAddress,
+            address thePoolGroup,
+            uint thePoolPrice,
+            uint thePoolSupply,
+            uint poolValue,
+            uint epochReward,
+            uint ratio,
+            uint pop
+        );
 
-    function isActive(uint _ofPool) public view returns (bool) {}
-    function addressFromId(uint _ofPool) public view returns (address pool, address group) {}
-    function getPoolPrice(uint _ofPool) public view returns (uint thePoolPrice, uint totalTokens) {}
-    function getPoolPrices() public view returns (address[] pools, uint[] poolPrices, uint[] totalTokens) {}
-    function calcPoolValue(uint256 _ofPool) public /*internal*/ view returns (uint256 aum, bool success) {}
-    function calcNetworkValue() public view returns (uint networkValue, uint numberOfFunds) {}
-    function getEpochReward(uint _ofPool) public view returns (uint) {}
-    function getRatio(uint _ofPool) public view returns (uint) {}
-    function proofOfPerformance(uint _ofPool) public view returns (uint256) {}
-    function getHwm(uint _ofPool) public view returns (uint) {}
+    function getHwm(uint _ofPool) external view returns (uint);
+    function getPoolPrices() external view returns (address[] pools, uint[] poolPrices, uint[] totalTokens);
+    function calcNetworkValue() external view returns (uint networkValue, uint numberOfFunds);
 }

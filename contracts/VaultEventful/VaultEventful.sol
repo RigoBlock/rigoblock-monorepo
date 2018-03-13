@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
+pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { VaultEventfulFace } from "./VaultEventfulFace.sol";
@@ -28,7 +29,6 @@ contract VaultEventful is VaultEventfulFace {
     string public constant VERSION = 'DH 0.4.1';
 
     address public AUTHORITY;
-    address public REGISTRY;
 
     event BuyVault(
         address indexed vault,
@@ -49,6 +49,13 @@ contract VaultEventful is VaultEventfulFace {
         bytes name,
         bytes symbol
     );
+    
+    event NewRatio(
+        address indexed vault,
+        address indexed from,
+        uint newRatio
+    );
+
 
     event NewFee(
         address indexed vault,
@@ -97,27 +104,30 @@ contract VaultEventful is VaultEventfulFace {
 
     modifier approvedFactoryOnly(address _factory) {
         Authority auth = Authority(AUTHORITY);
-        if (auth.isWhitelistedFactory(_factory)) _;
+        require(auth.isWhitelistedFactory(_factory));
+        _;
     }
 
     modifier approvedVaultOnly(address _vault) {
         Authority auth = Authority(AUTHORITY);
-        if (auth.isWhitelistedVault(_vault)) _;
+        require(auth.isWhitelistedVault(_vault));
+        _;
     }
 
     modifier isCasper(address _casper) {
         Authority auth = Authority(AUTHORITY);
-        if (auth.getCasper() == _casper) _;
+        require(auth.getCasper() == _casper);
+        _;
     }
 
     modifier approvedUserOnly(address _user) {
         Authority auth = Authority(AUTHORITY);
-        if (auth.isWhitelistedUser(_user)) _;
+        require(auth.isWhitelistedUser(_user));
+        _;
     }
 
-    function VaultEventful(address _authority, address _registry) public {
+    function VaultEventful(address _authority) public {
         AUTHORITY = _authority;
-        REGISTRY = _registry;
     }
 
     // CORE FUNCTIONS
@@ -137,11 +147,10 @@ contract VaultEventful is VaultEventfulFace {
         bytes _name,
         bytes _symbol)
         external
-        approvedVaultOnly(_targetVault)
+        approvedVaultOnly(msg.sender)
         returns (bool success)
     {
-        require(msg.sender == _targetVault);
-        BuyVault(_targetVault, _who, msg.sender, _value, _amount, _name, _symbol);
+        emit BuyVault(_targetVault, _who, msg.sender, _value, _amount, _name, _symbol);
         return true;
     }
 
@@ -160,14 +169,27 @@ contract VaultEventful is VaultEventfulFace {
         bytes _name,
         bytes _symbol)
         external
-        approvedVaultOnly(_targetVault)
+        approvedVaultOnly(msg.sender)
         returns(bool success)
     {
         require(_amount > 0);
-        require(msg.sender == _targetVault);
-        SellVault(_targetVault, _who, msg.sender, _amount, _revenue, _name, _symbol);
+        emit SellVault(_targetVault, _who, msg.sender, _amount, _revenue, _name, _symbol);
         return true;
     }
+    
+    function changeRatio(
+        address _who,
+        address _targetVault,
+        uint256 _ratio)
+        external
+        approvedVaultOnly(msg.sender)
+        returns(bool success)
+    {
+        require(_ratio > 0);
+        emit NewRatio(_targetVault, _who, _ratio);
+        return true;
+    }    
+
 
     /// @dev Logs a modification of the transaction fee event
     /// @param _who Address of the caller
@@ -179,12 +201,11 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         uint _transactionFee)
         external
-        approvedVaultOnly(_targetVault)
+        approvedVaultOnly(msg.sender)
         approvedUserOnly(_who)
         returns(bool success)
     {
-        require(msg.sender == _targetVault);
-        NewFee(_targetVault, msg.sender, _who, _transactionFee);
+        emit NewFee(_targetVault, msg.sender, _who, _transactionFee);
         return true;
     }
 
@@ -198,12 +219,11 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         address _feeCollector)
         external
-        approvedVaultOnly(_targetVault)
+        approvedVaultOnly(msg.sender)
         approvedUserOnly(_who)
         returns(bool success)
     {
-        require(msg.sender == _targetVault);
-        NewCollector(_targetVault, msg.sender, _who, _feeCollector);
+        emit NewCollector(_targetVault, msg.sender, _who, _feeCollector);
         return true;
     }
 
@@ -217,12 +237,11 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         address _vaultDao)
         external
-        approvedVaultOnly(_targetVault)
+        approvedVaultOnly(msg.sender)
         approvedUserOnly(_who)
         returns(bool success)
     {
-        require(msg.sender == _targetVault);
-        VaultDao(_targetVault, msg.sender, _who, _vaultDao);
+        emit VaultDao(_targetVault, msg.sender, _who, _vaultDao);
         return true;
     }
 
@@ -241,12 +260,11 @@ contract VaultEventful is VaultEventfulFace {
         address _withdrawal,
         uint _amount)
         external
-        approvedVaultOnly(_targetVault)
+        approvedVaultOnly(msg.sender)
         approvedUserOnly(_who)
         returns(bool success)
     {
-        require(msg.sender == _targetVault);
-        DepositCasper(_targetVault, _validation, _casper, _withdrawal, _amount);
+        emit DepositCasper(_targetVault, _validation, _casper, _withdrawal, _amount);
         return true;
     }
 
@@ -262,18 +280,16 @@ contract VaultEventful is VaultEventfulFace {
         address _casper,
         uint _validatorIndex)
         external
-        approvedVaultOnly(_targetVault)
+        approvedVaultOnly(msg.sender)
         approvedUserOnly(_who)
         returns(bool success)
     {
-        require(msg.sender == _targetVault);
-        WithdrawCasper(_targetVault, _who, _casper, _validatorIndex);
+        emit WithdrawCasper(_targetVault, _who, _casper, _validatorIndex);
         return true;
     }
 
     /// @dev Logs a new Vault creation by factory
     /// @param _who Address of the caller
-    /// @param _vaultFactory Address of the factory
     /// @param _newVault Address of the new vault
     /// @param _name String of the name of the new vault
     /// @param _symbol String of the symbol of the new vault
@@ -289,7 +305,7 @@ contract VaultEventful is VaultEventfulFace {
         approvedFactoryOnly(msg.sender)
         returns(bool success)
     {
-        VaultCreated(_newVault, _vaultFactory, _who, _vaultId, _name, _symbol);
+        emit VaultCreated(_newVault, msg.sender, _who, _vaultId, _name, _symbol);
         return true;
     }
 }

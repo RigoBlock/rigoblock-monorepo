@@ -1,4 +1,5 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 
 contract Owned {
@@ -16,12 +17,12 @@ contract Owned {
         owner = msg.sender;
     }
 
-    function setOwner(address _new) public onlyOwner {
+    function setOwner(address _new)
+        public
+        onlyOwner
+    {
+        require(_new != address(0));
         owner = _new;
-        NewOwner(owner, _new);
-    }
-
-    function getOwner() public view returns (address) {
-        return owner;
+        emit NewOwner(owner, _new);
     }
 }

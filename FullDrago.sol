@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 /// @dev no setting of owner as msg.sender at deploy
 /// @dev otherwise cannot set owner from factory

@@ -16,11 +16,12 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 /// @title Authority Interface - Allows interaction with the Authority contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract AuthorityFace {
+interface AuthorityFace {
 
     // EVENTS
 
@@ -40,36 +41,33 @@ contract AuthorityFace {
 
     // CORE FUNCTIONS
 
-    function setAuthority(address _authority, bool _isWhitelisted) public {}
-    function setWhitelister(address _whitelister, bool _isWhitelisted) public {}
-    function whitelistUser(address _target, bool _isWhitelisted) public {}
-    function whitelistAsset(address _asset, bool _isWhitelisted) public {}
-    function whitelistExchange(address _exchange, bool _isWhitelisted) public {}
-    function whitelistDrago(address _drago, bool _isWhitelisted) public {}
-    function whitelistVault(address _vault, bool _isWhitelisted) public {}
-    function whitelistRegistry(address _registry, bool _isWhitelisted) public {}
-    function whitelistFactory(address _factory, bool _isWhitelisted) public {}
-    function setDragoEventful(address _dragoEventful) public {}
-    function setVaultEventful(address _vaultEventful) public {}
-    function setExchangeEventful(address _exchangeEventful) public {}
-    function setExchangeAdapter(address _exchange, address _adapter) public {}
-    function setCasper(address _casper) public {}
+    function setAuthority(address _authority, bool _isWhitelisted) external;
+    function whitelistUser(address _target, bool _isWhitelisted) external;
+    function whitelistAsset(address _asset, bool _isWhitelisted) external;
+    function whitelistExchange(address _exchange, bool _isWhitelisted) external;
+    function whitelistDrago(address _drago, bool _isWhitelisted) external;
+    function whitelistVault(address _vault, bool _isWhitelisted) external;
+    function whitelistRegistry(address _registry, bool _isWhitelisted) external;
+    function whitelistFactory(address _factory, bool _isWhitelisted) external;
+    function setDragoEventful(address _dragoEventful) external;
+    function setVaultEventful(address _vaultEventful) external;
+    function setExchangeEventful(address _exchangeEventful) external;
+    function setExchangeAdapter(address _exchange, address _adapter) external;
+    function setCasper(address _casper) external;
 
-    function isWhitelistedUser(address _target) public view returns (bool) {}
-    function isWhitelister(address _whitelister) public view returns (bool) {}
-    function isAuthority(address _authority) public view returns (bool) {}
-    function isWhitelistedAsset(address _asset) public view returns (bool) {}
-    function isWhitelistedExchange(address _exchange) public view returns (bool) {}
-    function isWhitelistedRegistry(address _registry) public view returns (bool) {}
-    function isWhitelistedDrago(address _drago) public view returns (bool) {}
-    function isWhitelistedVault(address _vault) public view returns (bool) {}
-    function isWhitelistedFactory(address _factory) public view returns (bool) {}
-    function getDragoEventful() public view returns (address) {}
-    function getVaultEventful() public view returns (address) {}
-    function getExchangeEventful() public view returns (address) {}
-    function isCasperInitialized() public view returns (bool) {}
-    function getCasper() public view returns (address) {}
-    function getOwner() public view returns (address) {}
-    function getExchangeAdapter(address _exchange) public view returns (address) {}
-    function getListsByGroups(string _group) public view returns (address[]) {}
+    function isWhitelistedUser(address _target) external view returns (bool);
+    function isAuthority(address _authority) external view returns (bool);
+    function isWhitelistedAsset(address _asset) external view returns (bool);
+    function isWhitelistedExchange(address _exchange) external view returns (bool);
+    function isWhitelistedRegistry(address _registry) external view returns (bool);
+    function isWhitelistedDrago(address _drago) external view returns (bool);
+    function isWhitelistedVault(address _vault) external view returns (bool);
+    function isWhitelistedFactory(address _factory) external view returns (bool);
+    function getDragoEventful() external view returns (address);
+    function getVaultEventful() external view returns (address);
+    function getExchangeEventful() external view returns (address);
+    function isCasperInitialized() external view returns (bool);
+    function getCasper() external view returns (address);
+    function getExchangeAdapter(address _exchange) external view returns (address);
+    function getListsByGroups(string _group) external view returns (address[]);
 }

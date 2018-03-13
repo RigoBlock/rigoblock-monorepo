@@ -1,4 +1,5 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 import { ERC20 } from "../ERC20/ERC20.sol";
 
@@ -12,7 +13,7 @@ contract UnlimitedAllowanceToken is ERC20 {
     /// @param _value Amount to transfer.
     /// @return Success of transfer.
     function transferFrom(address _from, address _to, uint _value)
-        public
+        external
         returns (bool)
     {
         uint allowance = allowed[_from][msg.sender];
@@ -26,7 +27,7 @@ contract UnlimitedAllowanceToken is ERC20 {
         if (allowance < MAX_UINT) {
             allowed[_from][msg.sender] -= _value;
         }
-        Transfer(_from, _to, _value);
+        emit Transfer(_from, _to, _value);
         return true;
     }
 }

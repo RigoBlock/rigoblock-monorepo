@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 import { Owned } from "../utils/Owned/Owned.sol";
 import { AuthorityFace } from "./AuthorityFace.sol";
@@ -86,17 +87,12 @@ contract Authority is Owned, AuthorityFace {
     // MODIFIERS
 
     modifier onlyAdmin {
-        if (msg.sender == owner || isWhitelister(msg.sender))
+        require(msg.sender == owner || isWhitelister(msg.sender));
         _;
     }
 
     modifier onlyWhitelister {
-        if (isWhitelister(msg.sender))
-        _;
-    }
-
-    modifier onlyAuthority {
-        if (isAuthority(msg.sender))
+        require(isWhitelister(msg.sender));
         _;
     }
 
@@ -106,7 +102,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _authority Address of the authority
     /// @param _isWhitelisted Bool whitelisted
     function setAuthority(address _authority, bool _isWhitelisted)
-        public
+        external
         onlyOwner
     {
         accounts[_authority].account = _authority;
@@ -114,156 +110,156 @@ contract Authority is Owned, AuthorityFace {
         accounts[_authority].groups[_isWhitelisted].authority = _isWhitelisted;
         setWhitelister(_authority, _isWhitelisted);
         types.list.push(List(_authority));
-        SetAuthority(_authority);
+        emit SetAuthority(_authority);
     }
 
     /// @dev Allows the owner to whitelist a whitelister
     /// @param _whitelister Address of the whitelister
     /// @param _isWhitelisted Bool whitelisted
     function setWhitelister(address _whitelister, bool _isWhitelisted)
-        public
+        internal
         onlyOwner
     {
         accounts[_whitelister].account = _whitelister;
         accounts[_whitelister].authorized = _isWhitelisted;
         accounts[_whitelister].groups[_isWhitelisted].whitelister = _isWhitelisted;
         types.list.push(List(_whitelister));
-        SetWhitelister(_whitelister);
+        emit SetWhitelister(_whitelister);
     }
 
     /// @dev Allows a whitelister to whitelist a user
     /// @param _target Address of the target user
     /// @param _isWhitelisted Bool whitelisted
     function whitelistUser(address _target, bool _isWhitelisted)
-        public
+        external
         onlyWhitelister
     {
         accounts[_target].account = _target;
         accounts[_target].authorized = _isWhitelisted;
         accounts[_target].groups[_isWhitelisted].user = _isWhitelisted;
         types.list.push(List(_target));
-        WhitelistedUser(_target, _isWhitelisted);
+        emit WhitelistedUser(_target, _isWhitelisted);
     }
 
     /// @dev Allows a whitelister to whitelist an asset
     /// @param _asset Address of the token
     /// @param _isWhitelisted Bool whitelisted
     function whitelistAsset(address _asset, bool _isWhitelisted)
-        public
+        external
         onlyWhitelister
     {
         accounts[_asset].account = _asset;
         accounts[_asset].authorized = _isWhitelisted;
         accounts[_asset].groups[_isWhitelisted].asset = _isWhitelisted;
         types.list.push(List(_asset));
-        WhitelistedAsset(_asset, _isWhitelisted);
+        emit WhitelistedAsset(_asset, _isWhitelisted);
     }
 
     /// @dev Allows a whitelister to whitelist an exchange
     /// @param _exchange Address of the target exchange
     /// @param _isWhitelisted Bool whitelisted
     function whitelistExchange(address _exchange, bool _isWhitelisted)
-        public
+        external
         onlyWhitelister
     {
         accounts[_exchange].account = _exchange;
         accounts[_exchange].authorized = _isWhitelisted;
         accounts[_exchange].groups[_isWhitelisted].exchange = _isWhitelisted;
         types.list.push(List(_exchange));
-        WhitelistedExchange(_exchange, _isWhitelisted);
+        emit WhitelistedExchange(_exchange, _isWhitelisted);
     }
 
     /// @dev Allows an admin to whitelist a drago
     /// @param _drago Address of the target drago
     /// @param _isWhitelisted Bool whitelisted
     function whitelistDrago(address _drago, bool _isWhitelisted)
-        public
+        external
         onlyAdmin
     {
         accounts[_drago].account = _drago;
         accounts[_drago].authorized = _isWhitelisted;
         accounts[_drago].groups[_isWhitelisted].drago = _isWhitelisted;
         types.list.push(List(_drago));
-        WhitelistedDrago(_drago, _isWhitelisted);
+        emit WhitelistedDrago(_drago, _isWhitelisted);
     }
 
     /// @dev Allows an admin to whitelist a vault
     /// @param _vault Address of the target vault
     /// @param _isWhitelisted Bool whitelisted
     function whitelistVault(address _vault, bool _isWhitelisted)
-        public
+        external
         onlyAdmin
     {
         accounts[_vault].account = _vault;
         accounts[_vault].authorized = _isWhitelisted;
         accounts[_vault].groups[_isWhitelisted].vault = _isWhitelisted;
         types.list.push(List(_vault));
-        WhitelistedVault(_vault, _isWhitelisted);
+        emit WhitelistedVault(_vault, _isWhitelisted);
     }
 
     /// @dev Allows an admin to whitelist a registry
     /// @param _registry Address of the target registry
     /// @param _isWhitelisted Bool whitelisted
     function whitelistRegistry(address _registry, bool _isWhitelisted)
-        public
+        external
         onlyAdmin
     {
         accounts[_registry].account = _registry;
         accounts[_registry].authorized = _isWhitelisted;
         accounts[_registry].groups[_isWhitelisted].registry = _isWhitelisted;
         types.list.push(List(_registry));
-        WhitelistedRegistry(_registry, _isWhitelisted);
+        emit WhitelistedRegistry(_registry, _isWhitelisted);
     }
 
     /// @dev Allows an admin to whitelist a factory
     /// @param _factory Address of the target factory
     /// @param _isWhitelisted Bool whitelisted
     function whitelistFactory(address _factory, bool _isWhitelisted)
-        public
+        external
         onlyAdmin
     {
         accounts[_factory].account = _factory;
         accounts[_factory].authorized = _isWhitelisted;
         accounts[_factory].groups[_isWhitelisted].registry = _isWhitelisted;
         types.list.push(List(_factory));
-        WhitelistedFactory(_factory, _isWhitelisted);
+        emit WhitelistedFactory(_factory, _isWhitelisted);
     }
 
     /// @dev Allows the owner to set the drago eventful
     /// @param _dragoEventful Address of the logs contract
     function setDragoEventful(address _dragoEventful)
-        public
+        external
         onlyOwner
     {
         blocks.dragoEventful = _dragoEventful;
-        NewDragoEventful(blocks.dragoEventful);
+        emit NewDragoEventful(blocks.dragoEventful);
     }
 
     /// @dev Allows the owner to set the vault eventful
     /// @param _vaultEventful Address of the vault logs contract
     function setVaultEventful(address _vaultEventful)
-        public
+        external
         onlyOwner
     {
         blocks.vaultEventful = _vaultEventful;
-        NewVaultEventful(blocks.vaultEventful);
+        emit NewVaultEventful(blocks.vaultEventful);
     }
 
     /// @dev Allows the owner to set the exchange eventful
     /// @param _exchangeEventful Address of the exchange logs contract
     function setExchangeEventful(address _exchangeEventful)
-        public
+        external
         onlyOwner
     {
         blocks.exchangeEventful = _exchangeEventful;
-        NewExchangeEventful(blocks.exchangeEventful);
+        emit NewExchangeEventful(blocks.exchangeEventful);
     }
 
     /// @dev Allows the owner to associate an exchange to its adapter
     /// @param _exchange Address of the exchange
     /// @param _adapter Address of the adapter
     function setExchangeAdapter(address _exchange, address _adapter)
-        public
+        external
         onlyOwner
     {
         adapter[_exchange] = _adapter;
@@ -272,21 +268,21 @@ contract Authority is Owned, AuthorityFace {
     /// @dev Allows the owner to set the casper contract
     /// @param _casper Address of the casper contract
     function setCasper(address _casper)
-        public
+        external
         onlyOwner
     {
         blocks.casper = _casper;
         blocks.initialized[_casper] = true;
-        NewCasper(blocks.casper);
+        emit NewCasper(blocks.casper);
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
+    // CONSTANT PUBLIC FUNCTIONS
 
     /// @dev Provides whether a user is whitelisted
     /// @param _target Address of the target user
     /// @return Bool is whitelisted
     function isWhitelistedUser(address _target)
-        public
+        external
         view
         returns (bool)
     {
@@ -297,7 +293,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _whitelister Address of the target whitelister
     /// @return Bool is whitelisted
     function isWhitelister(address _whitelister)
-        public
+        internal
         view
         returns (bool)
     {
@@ -308,8 +304,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _authority Address of the target authority
     /// @return Bool is whitelisted
     function isAuthority(address _authority)
-        public
-        view
+        external view
         returns (bool)
     {
         return accounts[_authority].groups[true].authority;
@@ -319,7 +314,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _asset Address of the target asset
     /// @return Bool is whitelisted
     function isWhitelistedAsset(address _asset)
-        public
+        external
         view
         returns (bool)
     {
@@ -330,7 +325,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _exchange Address of the target exchange
     /// @return Bool is whitelisted
     function isWhitelistedExchange(address _exchange)
-        public
+        external
         view
         returns (bool)
     {
@@ -341,7 +336,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _drago Address of the target drago
     /// @return Bool is whitelisted
     function isWhitelistedDrago(address _drago)
-        public
+        external
         view
         returns (bool)
     {
@@ -352,7 +347,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _vault Address of the target vault
     /// @return Bool is whitelisted
     function isWhitelistedVault(address _vault)
-        public
+        external
         view
         returns (bool)
     {
@@ -363,7 +358,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _registry Address of the target registry
     /// @return Bool is whitelisted
     function isWhitelistedRegistry(address _registry)
-        public
+        external
         view
         returns (bool)
     {
@@ -374,7 +369,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _factory Address of the target factory
     /// @return Bool is whitelisted
     function isWhitelistedFactory(address _factory)
-        public
+        external
         view
         returns (bool)
     {
@@ -383,19 +378,19 @@ contract Authority is Owned, AuthorityFace {
 
     /// @dev Provides the address of the drago logs contract
     /// @return Address of the drago logs contract
-    function getDragoEventful() public view returns (address) {
+    function getDragoEventful() external view returns (address) {
         return blocks.dragoEventful;
     }
 
     /// @dev Provides the address of the vault logs contract
     /// @return Address of the vault logs contract
-    function getVaultEventful() public view returns (address) {
+    function getVaultEventful() external view returns (address) {
         return blocks.vaultEventful;
     }
 
     /// @dev Provides the address of the exchange logs contract
     /// @return Address of the exchange logs contract
-    function getExchangeEventful() public view returns (address) {
+    function getExchangeEventful() external view returns (address) {
         return blocks.exchangeEventful;
     }
 
@@ -403,7 +398,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _exchange Address of the exchange
     /// @return Address of the adapter
     function getExchangeAdapter(address _exchange)
-        public
+        external
         view
         returns (address)
     {
@@ -412,14 +407,14 @@ contract Authority is Owned, AuthorityFace {
 
     /// @dev Checkes whether casper has been inizialized
     /// @return Bool the casper contract has been initialized
-    function isCasperInitialized() public view returns (bool) {
+    function isCasperInitialized() external view returns (bool) {
         address casper = blocks.casper;
         return blocks.initialized[casper];
     }
 
     /// @dev Provides the address of the casper contract
     /// @return Address of the casper contract
-    function getCasper() public view returns (address) {
+    function getCasper() external view returns (address) {
         return blocks.casper;
     }
 
@@ -427,7 +422,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _group Address of the group/factory
     /// @return Array of addresses of the pools for a specific group
     function getListsByGroups(string _group)
-        public
+        external
         view
         returns (address[])
     {

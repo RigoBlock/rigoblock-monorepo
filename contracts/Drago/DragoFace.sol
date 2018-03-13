@@ -16,34 +16,34 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 /// @title Drago Interface - Allows interaction with the Drago contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract DragoFace {
+interface DragoFace {
 
     // CORE FUNCTIONS
 
-    function buyDrago() external payable returns (bool success) {}
-    function buyDragoOnBehalf(address _hodler) public payable returns (bool success) {}
-    function sellDrago(uint _amount) external returns (bool success) {}
-    function setPrices(uint _newSellPrice, uint _newBuyPrice)  public {}
-    function changeMinPeriod(uint32 _minPeriod) public {}
-    function changeRatio(uint _ratio) public {}
-    function setTransactionFee(uint _transactionFee) public {}
-    function changeFeeCollector(address _feeCollector) public {}
-    function changeDragoDao(address _dragoDao) public {}
-    function depositToExchange(address _exchange, uint _amount) public {}
-    function operateOnExchange(address _exchange) external {}
-    //function setOwner(address _new) public {}
-    function() external payable {}
+    function() external payable;
+    function buyDrago() external payable returns (bool success);
+    function buyDragoOnBehalf(address _hodler) external payable returns (bool success);
+    function sellDrago(uint _amount) external returns (bool success);
+    function setPrices(uint _newSellPrice, uint _newBuyPrice)  external;
+    function changeMinPeriod(uint32 _minPeriod) external;
+    function changeRatio(uint _ratio) external;
+    function setTransactionFee(uint _transactionFee) external;
+    function changeFeeCollector(address _feeCollector) external;
+    function changeDragoDao(address _dragoDao) external;
+    function depositToExchange(address _exchange, uint _amount) external;
+    function operateOnExchange(address _exchange) external;
 
     // PUBLIC CONSTANT FUNCTIONS
 
-    //function balanceOf(address _who) public view returns (uint) {}
-    function getDragoEventful() public view returns (address) {}
-    function getData() public view returns (string name, string symbol, uint sellPrice, uint buyPrice) {}
-    function getAdminData() public view returns (address feeCollector, address dragoDao, uint ratio, uint transactionFee, uint32 minPeriod) {}
-    //function getOwner() public view returns (address) {}
-    //function totalSupply() public view returns (uint256) {}
+    function balanceOf(address _who) external view returns (uint);
+    function getEventful() external view returns (address);
+    function getData() external view returns (string name, string symbol, uint sellPrice, uint buyPrice);
+    function getAdminData() external view returns (address, address feeCollector, address dragoDao, uint ratio, uint transactionFee, uint32 minPeriod);
+    function totalSupply() external view returns (uint256);
+    function getVersion() external view returns (string);
 }

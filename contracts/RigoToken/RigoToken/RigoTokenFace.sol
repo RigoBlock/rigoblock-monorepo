@@ -16,11 +16,12 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 /// @title Rigo Token Interface - Allows interaction with the Rigo token.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract RigoTokenFace {
+interface RigoTokenFace {
 
     // EVENTS
 
@@ -28,20 +29,16 @@ contract RigoTokenFace {
 
     // CORE FUNCTIONS
 
-    function mintToken(address _recipient, uint _amount) external {}
-    //function transfer(address _recipient, uint _amount) public returns (bool success) {}
-    //function transferFrom(address _sender, address _recipient, uint _amount) public returns (bool success) {}
-    function changeMintingAddress(address _newAddress) public {}
-    function changeRigoblockAddress(address _newAddress) public {}
+    function mintToken(address _recipient, uint _amount) external;
+    function changeMintingAddress(address _newAddress) external;
+    function changeRigoblockAddress(address _newAddress) external;
 
     // CONSTANT PUBLIC FUNCTIONS
 
-    //function balanceOf(address _owner) view returns (uint256 balance) {}
-    //function totalSupply() view returns (uint256 totalSupply) {}
-    function getName() public view returns (string) {}
-    function getSymbol() public view returns (string) {}
-    function getDecimals() public view returns (uint) {}
-    function getMinter() public view returns (address) {}
-    function getRigoblock() public view returns (address) {}
-    function getInflationFactor(address _group) public view returns (uint) {}
+    function getName() external view returns (string);
+    function getSymbol() external view returns (string);
+    function getDecimals() external view returns (uint);
+    function getMinter() external view returns (address);
+    function getRigoblock() external view returns (address);
+    function getInflationFactor(address _group) external view returns (uint);
 }

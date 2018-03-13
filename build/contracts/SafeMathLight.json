@@ -5,7 +5,8 @@
   "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820ffe405e63d93b040fab53074bfcee229dd765e452ec02b3d4601696d2334cfb50029",
   "sourceMap": "26:625:34:-;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "26:625:34:-;;;;;",
-  "source": "pragma solidity ^0.4.20;\n\ncontract SafeMathLight {\n\n    function safeMul(uint a, uint b) internal pure returns (uint) {\n        uint c = a * b;\n        assert(a == 0 || c / a == b);\n        return c;\n    }\n\n    function safeDiv(uint a, uint b) internal pure returns (uint) {\n        assert(b > 0);\n        uint c = a / b;\n        assert(a == b * c + a % b);\n        return c;\n    }\n\n    function safeSub(uint a, uint b) internal pure returns (uint) {\n        assert(b <= a);\n        return a - b;\n    }\n\n    function safeAdd(uint a, uint b) internal pure returns (uint) {\n        uint c = a + b;\n        assert(c>=a && c>=b);\n        return c;\n    }\n}\n",
+  "source": "pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";\n\ncontract SafeMathLight {\n\n    function safeMul(uint a, uint b) internal pure returns (uint) {\n        uint c = a * b;\n        assert(a == 0 || c / a == b);\n        return c;\n    }\n\n    function safeDiv(uint a, uint b) internal pure returns (uint) {\n        assert(b > 0);\n        uint c = a / b;\n        assert(a == b * c + a % b);\n        return c;\n    }\n\n    function safeSub(uint a, uint b) internal pure returns (uint) {\n        assert(b <= a);\n        return a - b;\n    }\n\n    function safeAdd(uint a, uint b) internal pure returns (uint) {\n        uint c = a + b;\n        assert(c>=a && c>=b);\n        return c;\n    }\n}\n",
   "sourcePath": "/home/gab/truffle/contracts/contracts/utils/SafeMath/SafeMathLight.sol",
   "ast": {
     "absolutePath": "/home/gab/truffle/contracts/contracts/utils/SafeMath/SafeMathLight.sol",

@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
@@ -25,12 +26,11 @@ import { CasperFace as Casper } from "../Casper/CasperFace.sol";
 import { VaultFace } from "./VaultFace.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
 import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
-import { ERC20Face } from "../utils/tokens/ERC20/ERC20Face.sol";
 
 /// @title Vault - contract for creating a vault type of pool.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 /// @dev includes pooled proof-of-stake mining
-contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
+contract Vault is Owned, SafeMath, VaultFace {
 
     string constant VERSION = 'VC 0.5.1';
     uint constant BASE = 1000000; //tokens are divisible by 1 million
@@ -124,19 +124,24 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         admin.ratio = 80;
     }
 
-    // CORE CORE FUNCTIONS
+    // CORE FUNCTIONS
 
     /// @dev Allows a casper contract to send Ether back
-    function() external payable casperContractOnly {}
+    function()
+        external
+        payable
+        casperContractOnly
+    {}
 
     /// @dev Allows a user to buy into a vault
     /// @return Bool the function executed correctly
     function buyVault()
         external
         payable
+        minimumStake(msg.value)
         returns (bool success)
     {
-        require(buyVaultOnBehalf(msg.sender));
+        require(buyVaultInternal(msg.sender));
         return true;
     }
 
@@ -144,19 +149,12 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @param _hodler Address of the target user
     /// @return Bool the function executed correctly
     function buyVaultOnBehalf(address _hodler)
-        public
+        external
         payable
         minimumStake(msg.value)
         returns (bool success)
     {
-        uint grossAmount;
-        uint feeVault;
-        uint feeVaultDao;
-        uint amount;
-        (grossAmount, feeVault, feeVaultDao, amount) = getPurchaseAmounts();
-        addPurchaseLog(amount);
-        allocatePurchaseTokens(_hodler, amount, feeVault, feeVaultDao);
-        data.totalSupply = safeAdd(data.totalSupply, grossAmount);
+        require(buyVaultInternal(_hodler));
         return true;
     }
 
@@ -170,7 +168,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         minimumPeriodPast
         returns (bool success)
     {
-        updatePrice();
+        updatePriceInternal();
         uint feeVault;
         uint feeVaultDao;
         uint netAmount;
@@ -190,7 +188,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @param _amount Value of deposit in wei
     /// @return Bool the function executed correctly
     function depositCasper(address _validation, address _withdrawal, uint _amount)
-        public
+        external
         onlyOwner
         minimumStake(_amount)
         returns (bool success)
@@ -206,7 +204,10 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     }
 
     /// @dev Allows vault owner to withdraw from casper to vault contract
-    function withdrawCasper() public onlyOwner {
+    function withdrawCasper()
+        external
+        onlyOwner
+    {
         Authority auth = Authority(admin.authority);
         Casper casper = Casper(auth.getCasper());
         casper.withdraw(data.validatorIndex);
@@ -216,7 +217,10 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allows vault dao/factory to change fee split ratio
     /// @param _ratio Number of ratio for wizard, from 0 to 100
-    function changeRatio(uint256 _ratio) public onlyVaultDao {
+    function changeRatio(uint256 _ratio)
+        external
+        onlyVaultDao
+    {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
         require(events.changeRatio(msg.sender, this, _ratio));
@@ -225,7 +229,10 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allows vault owner to set the transaction fee
     /// @param _transactionFee Value of the transaction fee in basis points
-    function setTransactionFee(uint _transactionFee) public onlyOwner {
+    function setTransactionFee(uint _transactionFee)
+        external
+        onlyOwner
+    {
         require(_transactionFee <= 100); //fee cannot be higher than 1%
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
@@ -235,7 +242,10 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allows owner to decide where to receive the fee
     /// @param _feeCollector Address of the fee receiver
-    function changeFeeCollector(address _feeCollector) public onlyOwner {
+    function changeFeeCollector(address _feeCollector)
+        external
+        onlyOwner
+    {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
         require(events.changeFeeCollector(msg.sender, this, _feeCollector));
@@ -244,7 +254,10 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
 
     /// @dev Allows vault dao/factory to upgrade its address
     /// @param _vaultDao Address of the new vault dao
-    function changeVaultDao(address _vaultDao) public onlyVaultDao {
+    function changeVaultDao(address _vaultDao)
+        external
+        onlyVaultDao
+    {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
         require(events.changeVaultDao(msg.sender, this, _vaultDao));
@@ -254,15 +267,18 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @dev Allows anyone to pay and update the price
     /// @dev This function allows to write the new nav
     /// @dev NAV is provided by view functions
-    function updatePrice() public {
-        if (this.balance > 0) {
-            data.price = getNav();
-        }
+    function updatePrice()
+        external
+    {
+        updatePriceInternal();
     }
 
     /// @dev Allows vault dao/factory to change the minimum holding period
     /// @param _minPeriod Number of blocks
-    function changeMinPeriod(uint32 _minPeriod) public onlyVaultDao {
+    function changeMinPeriod(uint32 _minPeriod)
+        external
+        onlyVaultDao
+    {
         data.minPeriod = _minPeriod;
     }
 
@@ -271,13 +287,19 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @dev Calculates how many shares a user holds
     /// @param _from Address of the target account
     /// @return Number of shares
-    function balanceOf(address _from) public view returns (uint256) {
+    function balanceOf(address _from)
+        external view
+        returns (uint256)
+    {
         return accounts[_from].balance;
     }
 
     /// @dev Gets the address of the logger contract
     /// @return Address of the logger contrac
-    function getEventful() public view returns (address) {
+    function getEventful()
+        external view
+        returns (address)
+    {
         Authority auth = Authority(admin.authority);
         return auth.getVaultEventful();
     }
@@ -288,8 +310,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Value of the share price in wei
     /// @return Value of the share price in wei
     function getData()
-        public
-        view
+        external view
         returns (
             string name,
             string symbol,
@@ -301,7 +322,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
             name = data.name,
             symbol = data.symbol,
             sellPrice = getNav(),
-            buyPrice = getNav
+            buyPrice = getNav()
         );
     }
 
@@ -312,9 +333,9 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Value of the transaction fee in basis points
     /// @return Number of the minimum holding period for shares
     function getAdminData()
-        public
-        view
+        external view
         returns (
+            address,
             address feeCollector,
             address vaultDao,
             uint ratio,
@@ -323,6 +344,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         )
     {
         return (
+            owner,
             admin.feeCollector,
             admin.vaultDao,
             admin.ratio,
@@ -331,56 +353,58 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         );
     }
 
-    /// @dev Queries the addres of the inizialized casper
-    /// @return Address of the casper address
-    function getCasper() public view returns (address) {
-        Authority auth = Authority(admin.authority);
-        if (casperInitialized()) {
-            return auth.getCasper();
-        }
-    }
-
     /// @dev Finds the value of the deposit of this vault at the casper contract
     /// @return Value of the deposit at casper in wei
-    function getCasperDeposit() public view returns (uint128) {
-        if (casperInitialized()) {
-            Casper casper = Casper(getCasper());
-            return casper.get_deposit_size(data.validatorIndex);
-        } else {
-            return 0;
-        }
-    }
-
-    /// @dev Calculates the value of the shares
-    /// @return Value of the shares in wei
-    function getNav() public view returns (uint) {
-        if (casperInitialized()) {
-            uint casperDeposit = uint(getCasperDeposit());
-        } else {
-            casperDeposit = 0;
-        }
-        uint aum = safeAdd(this.balance, casperDeposit);
-        if (this.balance == 0) {
-            uint poolPrice = data.price;
-        } else {
-            poolPrice = safeDiv(aum * BASE, data.totalSupply);
-        }
-        return poolPrice;
+    function getCasperDeposit() external view returns (uint128) {
+        return getCasperDepositInternal();
     }
 
     /// @dev Returns the version of the type of vault
     /// @return String of the version
-    function getVersion() public view returns (string) {
+    function getVersion()
+        external view
+        returns (string)
+    {
         return VERSION;
     }
 
     /// @dev Returns the total amount of issued tokens for this vault
     /// @return Number of shares
-    function totalSupply() public view returns (uint256) {
+    function totalSupply()
+        external view
+        returns (uint256)
+    {
         return data.totalSupply;
     }
 
     // INTERNAL FUNCTIONS
+
+    /// @dev Executes purchase function
+    /// @param _hodler Address of the target user
+    /// @return Bool the function executed correctly
+    function buyVaultInternal(address _hodler)
+        internal
+        returns (bool success)
+    {
+        uint grossAmount;
+        uint feeVault;
+        uint feeVaultDao;
+        uint amount;
+        (grossAmount, feeVault, feeVaultDao, amount) = getPurchaseAmounts();
+        addPurchaseLog(amount);
+        allocatePurchaseTokens(_hodler, amount, feeVault, feeVaultDao);
+        data.totalSupply = safeAdd(data.totalSupply, grossAmount);
+        return true;
+    }
+
+    /// @dev Updates the price
+    function updatePriceInternal()
+        internal
+    {
+        if (address(this).balance > 0) {
+            data.price = getNav();
+        }
+    }
 
     /// @dev Allocates tokens to buyer, splits fee in tokens to wizard and dao
     /// @param _hodler Address of the buyer
@@ -448,8 +472,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Value of fee in shares to dao
     /// @return Value of net purchased shares
     function getPurchaseAmounts()
-        internal
-        view
+        internal view
         returns (
             uint grossAmount,
             uint feeVault,
@@ -473,8 +496,7 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
     /// @return Value of net sold shares
     /// @return Value of sale amount for hodler
     function getSaleAmounts(uint _amount)
-        internal
-        view
+        internal view
         returns (
             uint feeVault,
             uint feeVaultDao,
@@ -491,10 +513,55 @@ contract Vault is Owned, ERC20Face, SafeMath, VaultFace {
         );
     }
 
+    /// @dev Queries the addres of the inizialized casper
+    /// @return Address of the casper address
+    function getCasper()
+        internal view
+        returns (address)
+    {
+        Authority auth = Authority(admin.authority);
+        if (casperInitialized()) {
+            return auth.getCasper();
+        }
+    }
+
     /// @dev Checkes whether casper has been inizialized by the Authority
     /// @return Bool the casper contract has been initialized
-    function casperInitialized() internal view returns (bool) {
+    function casperInitialized()
+        internal view
+        returns (bool)
+    {
         Authority auth = Authority(admin.authority);
         return auth.isCasperInitialized();
+    }
+
+    /// @dev Finds the value of the deposit of this vault at the casper contract
+    /// @return Value of the deposit at casper in wei
+    function getCasperDepositInternal() internal view returns (uint128) {
+        if (casperInitialized()) {
+            Casper casper = Casper(getCasper());
+            return casper.get_deposit_size(data.validatorIndex);
+        } else {
+            return 0;
+        }
+    }
+
+    /// @dev Calculates the value of the shares
+    /// @return Value of the shares in wei
+    function getNav() internal view returns (uint) {
+        uint casperDeposit;
+        if (casperInitialized()) {
+            casperDeposit = uint(getCasperDepositInternal());
+        } else {
+            casperDeposit = 0;
+        }
+        uint aum = safeAdd(address(this).balance, casperDeposit);
+        uint poolPrice;
+        if (address(this).balance == 0) {
+            poolPrice = data.price;
+        } else {
+            poolPrice = safeDiv(aum * BASE, data.totalSupply);
+        }
+        return poolPrice;
     }
 }

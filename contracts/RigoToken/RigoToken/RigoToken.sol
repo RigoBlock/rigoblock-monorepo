@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 import { InflationFace as Inflation } from "../Inflation/InflationFace.sol";
 
@@ -67,40 +68,18 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
     function mintToken(address _recipient, uint _amount) external onlyMinter {
         balances[_recipient] = safeAdd(balances[_recipient], _amount);
         totalSupply = safeAdd(totalSupply, _amount);
-    }
-
-    /// @dev Allows transfers of tokens
-    /// @param _recipient Address of who receives tokens
-    /// @param _amount Number of new tokens
-    /// @return Bool the transaction executed successfully
-    function transfer(address _recipient, uint _amount)
-        public
-        returns (bool success)
-    {
-        return super.transfer(_recipient, _amount);
-    }
-
-    /// @dev Allows delegated transfers of tokens from another contract
-    /// @param _sender Address of the token sender
-    /// @param _recipient Address of who receives tokens
-    /// @param _amount Number of new tokens
-    /// @return Bool the transaction executed successfully
-    function transferFrom(address _sender, address _recipient, uint _amount)
-        public
-        returns (bool success)
-    {
-        return super.transferFrom(_sender, _recipient, _amount);
+        emit TokenMinted(_recipient, _amount);
     }
 
     /// @dev Allows rigoblock dao to change minter
     /// @param _newAddress Address of the new minter
-    function changeMintingAddress(address _newAddress) public onlyRigoblock {
+    function changeMintingAddress(address _newAddress) external onlyRigoblock {
         minter = _newAddress;
     }
 
     /// @dev Allows rigoblock dao to upgrade dao
     /// @param _newAddress Address of the new rigoblock dao
-    function changeRigoblockAddress(address _newAddress) public onlyRigoblock {
+    function changeRigoblockAddress(address _newAddress) external onlyRigoblock {
         rigoblock = _newAddress;
     }
 
@@ -108,38 +87,38 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
 
     /// @dev Returns name of Rigo token
     /// @return String with name
-    function getName() public view returns (string) {
+    function getName() external view returns (string) {
         return name;
     }
 
     /// @dev Returns symbol of Rigo token
     /// @return String with symbol
-    function getSymbol() public view returns (string) {
+    function getSymbol() external view returns (string) {
         return symbol;
     }
 
     /// @dev Returns decimals of Rigo token
     /// @return Number of decimals
-    function getDecimals() public view returns (uint) {
+    function getDecimals() external view returns (uint) {
         return decimals;
     }
 
     /// @dev Returns the minter
     /// @return Address of the minter
-    function getMinter() public view returns (address) {
+    function getMinter() external view returns (address) {
         return minter;
     }
 
     /// @dev Returns the rigoblock dao
     /// @return Address of the rigoblock dao
-    function getRigoblock() public view returns (address) {
+    function getRigoblock() external view returns (address) {
         return rigoblock;
     }
 
     /// @dev Returns the reward/inflation factor for a said group
     /// @param _group Address of the group/factory
     /// @return Value of the inflation factor
-    function getInflationFactor(address _group) public view returns (uint) {
+    function getInflationFactor(address _group) external view returns (uint) {
         Inflation inflation = Inflation(minter);
         inflation.getInflationFactor(_group);
     }

@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { DragoEventfulFace } from "./DragoEventfulFace.sol";
@@ -132,27 +133,32 @@ contract DragoEventful is DragoEventfulFace {
 
     modifier approvedFactoryOnly(address _factory) {
         Authority auth = Authority(AUTHORITY);
-        if (auth.isWhitelistedFactory(_factory)) _;
+        require(auth.isWhitelistedFactory(_factory));
+        _;
     }
 
     modifier approvedDragoOnly(address _drago) {
         Authority auth = Authority(AUTHORITY);
-        if (auth.isWhitelistedDrago(_drago)) _;
+        require(auth.isWhitelistedDrago(_drago));
+        _;
     }
 
     modifier approvedExchangeOnly(address _exchange) {
         Authority auth = Authority(AUTHORITY);
-        if (auth.isWhitelistedExchange(_exchange)) _;
+        require(auth.isWhitelistedExchange(_exchange));
+        _;
     }
 
     modifier approvedUserOnly(address _user) {
         Authority auth = Authority(AUTHORITY);
-        if (auth.isWhitelistedUser(_user)) _;
+        require(auth.isWhitelistedUser(_user));
+        _;
     }
 
     modifier approvedAsset(address _asset) {
         Authority auth = Authority(AUTHORITY);
-        if (auth.isWhitelistedAsset(_asset)) _;
+        require(auth.isWhitelistedAsset(_asset));
+        _;
     }
 
     function DragoEventful(address _authority) public {
@@ -175,11 +181,10 @@ contract DragoEventful is DragoEventfulFace {
         bytes _name,
         bytes _symbol)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         returns (bool success)
     {
-        require(msg.sender == _targetDrago);
-        BuyDrago(_targetDrago, _who, msg.sender, _value, _amount, _name, _symbol);
+        emit BuyDrago(_targetDrago, _who, msg.sender, _value, _amount, _name, _symbol);
         return true;
     }
 
@@ -197,12 +202,11 @@ contract DragoEventful is DragoEventfulFace {
         bytes _name,
         bytes _symbol)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         returns(bool success)
     {
         require(_amount > 0);
-        require(msg.sender == _targetDrago);
-        SellDrago(_targetDrago, _who, msg.sender, _amount, _revenue, _name, _symbol);
+        emit SellDrago(_targetDrago, _who, msg.sender, _amount, _revenue, _name, _symbol);
         return true;
     }
 
@@ -218,12 +222,11 @@ contract DragoEventful is DragoEventfulFace {
         uint _sellPrice,
         uint _buyPrice)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         returns(bool success)
     {
         require(_sellPrice > 10 finney && _buyPrice > 10 finney);
-        require(msg.sender == _targetDrago);
-        NewNAV(_targetDrago, msg.sender, _who, _sellPrice, _buyPrice);
+        emit NewNAV(_targetDrago, msg.sender, _who, _sellPrice, _buyPrice);
         return true;
     }
 
@@ -241,12 +244,11 @@ contract DragoEventful is DragoEventfulFace {
         address _token,
         uint256 _value)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_exchange)
         returns(bool success)
     {
-        require (msg.sender == _targetDrago);
-        DepositExchange(_targetDrago, _exchange, _token, _value, 0);
+        emit DepositExchange(_targetDrago, _exchange, _token, _value, 0);
         return true;
     }
 
@@ -264,13 +266,11 @@ contract DragoEventful is DragoEventfulFace {
         address _token,
         uint256 _value)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_exchange)
         returns(bool success)
     {
-        require (_targetDrago != 0);
-        require (msg.sender == _targetDrago);
-        WithdrawExchange(_targetDrago, _exchange, _token, _value, 0);
+        emit WithdrawExchange(_targetDrago, _exchange, _token, _value, 0);
         return true;
     }
 
@@ -284,15 +284,14 @@ contract DragoEventful is DragoEventfulFace {
         uint _amountGive,
         uint _expires)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_exchange)
         returns(bool success)
     {
-        require (_targetDrago != 0);
-        require (msg.sender == _targetDrago);
-        OrderExchange(_targetDrago, _exchange, _tokenGet, _amountGet, 0);
+        emit OrderExchange(_targetDrago, _exchange, _tokenGet, _amountGet, 0);
         return true;
     }
+
 
     function placeOrderCFDExchange(
         address _who,
@@ -303,15 +302,15 @@ contract DragoEventful is DragoEventfulFace {
         uint32 _adjustment,
         uint128 _stake)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_cfdExchange)
         approvedAsset(_cfd)
         returns(bool success)
     {
-        require (msg.sender == _targetDrago);
-        OrderExchange(_targetDrago, _cfdExchange, _cfd, _stake, _adjustment);
+        emit OrderExchange(_targetDrago, _cfdExchange, _cfd, _stake, _adjustment);
         return true;
     }
+    
 
     function placeTradeExchange(
         address _who,
@@ -325,13 +324,11 @@ contract DragoEventful is DragoEventfulFace {
         address _user,
         uint _amount)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_exchange)
         returns(bool success)
     {
-        require (_targetDrago != 0);
-        require (msg.sender == _targetDrago);
-        //TradeExchange(_targetDrago, _exchange, _tokenGet, _tokenGive, _amountGet, _amountGive, _user);
+        emit TradeExchange(_targetDrago, _exchange, _tokenGet, _tokenGive, _amountGet, _amountGive, _user);
         return true;
     }
 
@@ -345,13 +342,12 @@ contract DragoEventful is DragoEventfulFace {
         uint _amountGive,
         uint _expires)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_exchange)
+        approvedUserOnly(_who)
         returns(bool success)
     {
-        require (_targetDrago != 0);
-        require (msg.sender == _targetDrago);
-        CancelOrder(_targetDrago, _exchange, _tokenGet, _amountGet, 0);
+        emit CancelOrder(_targetDrago, _exchange, _tokenGet, _amountGet, 0);
         return true;
     }
 
@@ -362,13 +358,12 @@ contract DragoEventful is DragoEventfulFace {
         address _cfd,
         uint32 _id)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_cfdExchange)
         approvedAsset(_cfd)
         returns(bool success)
     {
-        require (msg.sender == _targetDrago);
-        CancelOrder(_targetDrago, _cfdExchange, _cfd, 0,_id);
+        emit CancelOrder(_targetDrago, _cfdExchange, _cfd, 0,_id);
         return true;
     }
 
@@ -379,13 +374,12 @@ contract DragoEventful is DragoEventfulFace {
         address _cfd,
         uint24 _id)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_cfdExchange)
         approvedAsset(_cfd)
         returns(bool success)
     {
-        require (msg.sender == _targetDrago);
-        DealFinalized(_targetDrago, _cfdExchange, _cfd, 0, _id);
+        emit DealFinalized(_targetDrago, _cfdExchange, _cfd, 0, _id);
         return true;
     }
 
@@ -399,12 +393,11 @@ contract DragoEventful is DragoEventfulFace {
         address _targetDrago,
         uint _transactionFee)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedUserOnly(_who)
         returns(bool success)
     {
-        require (msg.sender == _targetDrago);
-        NewFee(_targetDrago, msg.sender, _who, _transactionFee);
+        emit NewFee(_targetDrago, msg.sender, _who, _transactionFee);
         return true;
     }
 
@@ -418,18 +411,16 @@ contract DragoEventful is DragoEventfulFace {
         address _targetDrago,
         address _feeCollector)
         external
-        approvedDragoOnly(_targetDrago)
+        approvedDragoOnly(msg.sender)
         approvedUserOnly(_who)
         returns(bool success)
     {
-        require (msg.sender == _targetDrago);
-        NewCollector(_targetDrago, msg.sender, _who, _feeCollector);
+        emit NewCollector(_targetDrago, msg.sender, _who, _feeCollector);
         return true;
     }
 
     /// @dev Logs a new Drago creation by factory
     /// @param _who Address of the caller
-    /// @param _dragoFactory Address of the factory
     /// @param _newDrago Address of the new Drago
     /// @param _name String of the name of the new drago
     /// @param _symbol String of the symbol of the new drago
@@ -437,17 +428,15 @@ contract DragoEventful is DragoEventfulFace {
     /// @return Bool the transaction executed successfully
     function createDrago(
         address _who,
-        address _dragoFactory,
         address _newDrago,
         string _name,
         string _symbol,
         uint _dragoId)
         external
-        approvedFactoryOnly(_dragoFactory)
+        approvedFactoryOnly(msg.sender)
         returns(bool success)
     {
-        require (msg.sender == _dragoFactory);
-        DragoCreated(_newDrago, _dragoFactory, _who, _dragoId, _name, _symbol);
+        emit DragoCreated(_newDrago, msg.sender, _who, _dragoId, _name, _symbol);
         return true;
     }
 }

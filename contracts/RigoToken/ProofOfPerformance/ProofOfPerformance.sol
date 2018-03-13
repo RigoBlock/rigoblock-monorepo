@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
 import { RigoToken } from "../RigoToken/RigoToken.sol";
@@ -33,7 +34,6 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     address public dragoRegistry;
     address public rigoblockDao;
     uint256 public minimumRigo;
-    address inflation;
 
     mapping (uint => PoolPrice) poolPrice;
     mapping (address => Group) groups;
@@ -44,12 +44,6 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
 
     struct Group {
         uint rewardRatio;
-    }
-
-    modifier onlyMinter {
-        RigoToken token = RigoToken(RIGOTOKENADDRESS);
-        require(msg.sender == token.getMinter());
-        _;
     }
 
     modifier onlyRigoblockDao {
@@ -75,20 +69,20 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     function ProofOfPerformance(
         address _rigoTokenAddress,
         address _rigoblockDao,
-        address _dragoRegistry,
-        address _inflation)
+        address _dragoRegistry)
         public
     {
         RIGOTOKENADDRESS = _rigoTokenAddress;
         rigoblockDao = _rigoblockDao;
         dragoRegistry = _dragoRegistry;
-        inflation = _inflation;
     }
 
     // CORE FUNCTIONS
 
-    function claimPop(uint _ofPool) public {
-        Inflation infl = Inflation(inflation);
+    function claimPop(uint _ofPool)
+        external
+    {
+        Inflation infl = Inflation(getMinter());
         DragoRegistry registry = DragoRegistry(dragoRegistry);
         address poolAddress;
         (poolAddress, , , , , ) = registry.fromId(_ofPool);
@@ -100,22 +94,31 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         require(infl.mintInflation(poolAddress, pop));
     }
 
-    function setRegistry(address _dragoRegistry) external onlyRigoblockDao {
+    function setRegistry(address _dragoRegistry)
+        external
+        onlyRigoblockDao
+    {
         dragoRegistry = _dragoRegistry;
     }
 
-    function setRigoblockDao(address _rigoblockDao) external onlyRigoblockDao {
+    function setRigoblockDao(address _rigoblockDao)
+        external
+        onlyRigoblockDao
+    {
         rigoblockDao = _rigoblockDao;
     }
 
-    function setMinimumRigo(uint256 _amount) external onlyRigoblockDao {
+    function setMinimumRigo(uint256 _amount)
+        external
+        onlyRigoblockDao
+    {
         minimumRigo = _amount;
     }
 
     /// @notice onlyRigoblockDao can set ratio, as it determines
     /// @notice the split between asset and performance reward for a said group
     function setRatio(address _ofGroup, uint _ratio)
-        public
+        external
         onlyRigoblockDao
     {
         require(_ratio <= 10000); //(from 0 to 10000)
@@ -123,58 +126,42 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     }
 
     // CONSTANT PUBLIC FUNCTIONS
-
-    /// @dev Checks whether a pool is registered and active
+    
+    /// @dev Gets data of a pool
     /// @param _ofPool Id of the pool
     /// @return Bool the pool is active
-    function isActive(uint _ofPool) public view returns (bool) {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        address thePool;
-        (thePool, , , , , ) = registry.fromId(_ofPool);
-        if (thePool != address(0)) {
-            return true;
-        }
-    }
-
-    /// @dev Returns the address and the group of a pool from its id
-    /// @param _ofPool Id of the pool
-    /// @return Address of the target pool
-    /// @return Address of the pool's group
-    function addressFromId(uint _ofPool)
-        public
-        view
+    /// @return 
+    function getPoolData(uint _ofPool)
+        external view
         returns (
-            address pool,
-            address group
-        )
-    {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        address thePool;
-        address theGroup;
-        (thePool, , , , , theGroup) = registry.fromId(_ofPool);
-        pool = thePool;
-        group = theGroup;
-    }
-
-    /// @dev Returns the price a pool from its id
-    /// @param _ofPool Id of the pool
-    /// @return Price of the pool in wei
-    /// @return Number of tokens of a pool (totalSupply)
-    function getPoolPrice(uint _ofPool)
-        public
-        view
-        returns (
+            bool active,
+            address thePoolAddress,
+            address thePoolGroup,
             uint thePoolPrice,
-            uint totalTokens
+            uint thePoolSupply,
+            uint poolValue,
+            uint epochReward,
+            uint ratio,
+            uint pop
         )
     {
-        address fund;
-        address group;
-        (fund,group) = addressFromId(_ofPool);
-        address poolAddress = fund;
-        Pool pool = Pool(poolAddress);
-        ( , , thePoolPrice, ) = pool.getData();
-        totalTokens = pool.totalSupply();
+        active = isActive(_ofPool);
+        (thePoolAddress, thePoolGroup) = addressFromId(_ofPool);
+        (thePoolPrice, thePoolSupply) = getPoolPrice(_ofPool);
+        ( poolValue, ) = calcPoolValue(_ofPool);
+        epochReward = getEpochReward(_ofPool);
+        ratio = getRatio(_ofPool);
+        pop = proofOfPerformance(_ofPool);
+    }
+    
+    /// @dev Returns the highwatermark of a pool
+    /// @param _ofPool Id of the pool
+    /// @return Value of the all-time-high pool nav
+    function getHwm(uint _ofPool)
+        external view
+        returns (uint)
+    {
+        return poolPrice[_ofPool].highwatermark;
     }
 
     /// @dev Returns two arrays of prices and total supply
@@ -182,8 +169,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @return Array of the prices of the active pools
     /// @return Array of the number of tokens of each pool
     function getPoolPrices()
-        public
-        view
+        external view
         returns (
             address[] pools,
             uint[] poolPrices,
@@ -209,30 +195,11 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         }
     }
 
-    /// @dev Returns the address and the group of a pool from its id
-    /// @param _ofPool Id of the pool
-    /// @return Address of the target pool
-    /// @return Address of the pool's group
-    function calcPoolValue(uint256 _ofPool)
-        public
-        view
-        returns (
-            uint256 aum,
-            bool success
-        )
-    {
-        uint price;
-        uint supply;
-        (price,supply) = getPoolPrice(_ofPool);
-        return (aum = price * supply / 1000000, true); //1000000 is the base (decimals)
-    }
-
     /// @dev Returns the value of the assets in the rigoblock network
     /// @return Value of the rigoblock network in wei
     /// @return Number of active funds
     function calcNetworkValue()
-        public
-        view
+        external view
         returns (
             uint networkValue,
             uint numberOfFunds
@@ -251,12 +218,17 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         }
         return (networkValue, length);
     }
+    
+    // CONSTANT PUBLIC FUNCTIONS
 
     /// @dev Returns the reward factor for a pool
     /// @param _ofPool Id of the pool
     /// @return Value of the reward factor
-    function getEpochReward(uint _ofPool) public view returns (uint) {
-        Inflation inflate = Inflation(inflation);
+    function getEpochReward(uint _ofPool)
+        internal view
+        returns (uint)
+    {
+        Inflation inflate = Inflation(getMinter());
         address fund;
         address group;
         (fund,group) = addressFromId(_ofPool);
@@ -266,11 +238,24 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @dev Returns the split ratio of asset and performance reward
     /// @param _ofPool Id of the pool
     /// @return Value of the ratio from 1 to 100
-    function getRatio(uint _ofPool) public view returns (uint) {
+    function getRatio(uint _ofPool)
+        internal view
+        returns (uint)
+    {
         address fund;
         address group;
         (fund,group) = addressFromId(_ofPool);
         return groups[group].rewardRatio;
+    }
+    
+    /// @dev Returns the address of the Inflation contract
+    /// @return Address of the minter/inflation
+    function getMinter()
+        internal view
+        returns (address)
+    {
+        RigoToken token = RigoToken(RIGOTOKENADDRESS);
+        return token.getMinter();
     }
 
     /// @dev Returns the proof of performance reward for a pool
@@ -280,7 +265,10 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @notice can be decreased if number of funds increases
     /// @notice should be at least 10^6 (just as pool base) to start with
     /// @notice rigo token has 10^18 decimals
-    function proofOfPerformance(uint _ofPool) public view returns (uint256) {
+    function proofOfPerformance(uint _ofPool)
+        internal view
+        returns (uint256) 
+    {
         uint highwatermark;
         if (poolPrice[_ofPool].highwatermark == 0) {
             highwatermark = 1 ether;
@@ -302,11 +290,76 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         uint assetsReward = poolValue * epochReward * (10000 - rewardRatio) / 10000 ether;
         return performanceReward + assetsReward;
     }
-
-    /// @dev Returns the highwatermark of a pool
+    
+    /// @dev Checks whether a pool is registered and active
     /// @param _ofPool Id of the pool
-    /// @return Value of the all-time-high pool nav
-    function getHwm(uint _ofPool) public view returns (uint) {
-        return poolPrice[_ofPool].highwatermark;
+    /// @return Bool the pool is active
+    function isActive(uint _ofPool)
+        internal view
+        returns (bool)
+    {
+        DragoRegistry registry = DragoRegistry(dragoRegistry);
+        address thePool;
+        (thePool, , , , , ) = registry.fromId(_ofPool);
+        if (thePool != address(0)) {
+            return true;
+        }
+    }
+
+    /// @dev Returns the address and the group of a pool from its id
+    /// @param _ofPool Id of the pool
+    /// @return Address of the target pool
+    /// @return Address of the pool's group
+    function addressFromId(uint _ofPool)
+        internal view
+        returns (
+            address pool,
+            address group
+        )
+    {
+        DragoRegistry registry = DragoRegistry(dragoRegistry);
+        address thePool;
+        address theGroup;
+        (thePool, , , , , theGroup) = registry.fromId(_ofPool);
+        pool = thePool;
+        group = theGroup;
+    }
+
+    /// @dev Returns the price a pool from its id
+    /// @param _ofPool Id of the pool
+    /// @return Price of the pool in wei
+    /// @return Number of tokens of a pool (totalSupply)
+    function getPoolPrice(uint _ofPool)
+        internal view
+        returns (
+            uint thePoolPrice,
+            uint totalTokens
+        )
+    {
+        address fund;
+        address group;
+        (fund,group) = addressFromId(_ofPool);
+        address poolAddress = fund;
+        Pool pool = Pool(poolAddress);
+        ( , , thePoolPrice, ) = pool.getData();
+        totalTokens = pool.totalSupply();
+    }
+    
+    /// @dev Returns the address and the group of a pool from its id
+    /// @param _ofPool Id of the pool
+    /// @return Address of the target pool
+    /// @return Address of the pool's group
+    function calcPoolValue(uint256 _ofPool)
+        internal
+        view
+        returns (
+            uint256 aum,
+            bool success
+        )
+    {
+        uint price;
+        uint supply;
+        (price,supply) = getPoolPrice(_ofPool);
+        return (aum = price * supply / 1000000, true); //1000000 is the base (decimals)
     }
 }

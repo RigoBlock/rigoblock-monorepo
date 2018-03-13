@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 import { VaultFace as Vault } from "../Vault/Vault.sol";
 
@@ -44,9 +45,11 @@ contract Distribution is SafeMath {
         require(_target != 0);
         _;
     }
+    
+    // CORE FUNCTIONS
 
     function subscribe(address _pool, address _distributor, address _buyer)
-        public
+        external
         payable
     {
         Vault vault = Vault(_pool);
@@ -55,17 +58,23 @@ contract Distribution is SafeMath {
         uint netAmount = safeSub(msg.value, feeAmount);
         _pool.transfer(netAmount);
         _distributor.transfer(feeAmount);
+        emit Subscription(_buyer, _distributor, netAmount);
     }
 
     function setFee(uint _fee, address _distributor)
-        public
+        external
         addressFree(_distributor)
         nonZeroAddress(_distributor)
     {
         distributor[_distributor].fee = _fee;
     }
+    
+    // CONSTANT PUBLIC FUNCTIONS
 
-    function getFee(address _distributor) public view returns (uint) {
+    function getFee(address _distributor)
+        external view
+        returns (uint)
+    {
         return distributor[_distributor].fee;
     }
 }

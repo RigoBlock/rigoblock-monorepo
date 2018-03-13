@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistryFace.sol";
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
@@ -91,7 +92,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @param _symbol String of the symbol
     /// @return Bool the transaction executed correctly
     function createDrago(string _name, string _symbol)
-        public
+        external
         payable
         whenFeePaid
         returns (bool success)
@@ -115,7 +116,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @param _targetDrago Address of the target drago
     /// @param _dragoDao Address of the new drago dao
     function setTargetDragoDao(address _targetDrago, address _dragoDao)
-        public
+        external
         onlyOwner
     {
         Drago drago = Drago(_targetDrago);
@@ -125,38 +126,56 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @dev Allows drago dao/factory to update its address
     /// @dev Creates internal record
     /// @param _newDragoDao Address of the drago dao
-    function changeDragoDao(address _newDragoDao) public onlyDragoDao {
+    function changeDragoDao(address _newDragoDao)
+        external
+        onlyDragoDao
+    {
         data.dragoDao = _newDragoDao;
     }
 
     /// @dev Allows owner to update the registry
     /// @param _newRegistry Address of the new registry
-    function setRegistry(address _newRegistry) public onlyOwner {
+    function setRegistry(address _newRegistry)
+        external
+        onlyOwner
+    {
         data.dragoRegistry = _newRegistry;
     }
 
     /// @dev Allows owner to set the address which can collect creation fees
     /// @param _dragoDao Address of the new drago dao/factory
-    function setBeneficiary(address _dragoDao) public onlyOwner {
+    function setBeneficiary(address _dragoDao)
+        external
+        onlyOwner
+    {
         data.dragoDao = _dragoDao;
     }
 
     /// @dev Allows owner to set the drago creation fee
     /// @param _fee Value of the fee in wei
-    function setFee(uint _fee) public onlyOwner {
+    function setFee(uint _fee)
+        external
+        onlyOwner
+    {
         data.fee = _fee;
     }
 
     /// @dev Allows owner to collect fees
-    function drain() public onlyOwner {
-        data.dragoDao.transfer(this.balance);
+    function drain()
+        external
+        onlyOwner
+    {
+        data.dragoDao.transfer(address(this).balance);
     }
 
     // CONSTANT PUBLIC FUNCTIONS
 
     /// @dev Returns the address of the pool registry
     /// @return Address of the registry
-    function getRegistry() public view returns (address) {
+    function getRegistry()
+        external view
+        returns (address)
+    {
         return (data.dragoRegistry);
     }
 
@@ -165,7 +184,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @return String of the version
     /// @return Number of the next drago from the registry
     function getStorage()
-        public
+        external
         view
         returns (
             address dragoDao,
@@ -180,17 +199,13 @@ contract DragoFactory is Owned, DragoFactoryFace {
         );
     }
 
-    /// @dev Returns the next Id for a drago
-    /// @return Number of the next Id from the registry
-    function getNextId() public view returns (uint nextDragoId) {
-        DragoRegistry registry = DragoRegistry(data.dragoRegistry);
-        nextDragoId = registry.dragoCount();
-    }
-
     /// @dev Returns the address of the logger contract
     /// @dev Queries from authority contract
     /// @return Address of the eventful contract
-    function getEventful() public view returns (address) {
+    function getEventful()
+        external view
+        returns (address)
+    {
         Authority auth = Authority(data.authority);
         return auth.getDragoEventful();
     }
@@ -199,7 +214,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @param _owner Address of the queried owner
     /// @return Array of drago addresses
     function getDragosByAddress(address _owner)
-        public
+        external
         view
         returns (address[])
     {
@@ -235,7 +250,6 @@ contract DragoFactory is Owned, DragoFactoryFace {
         DragoEventful events = DragoEventful(auth.getDragoEventful());
         require(events.createDrago(
             _owner,
-            this,
             libraryData.newAddress,
             _name,
             _symbol,
@@ -243,7 +257,17 @@ contract DragoFactory is Owned, DragoFactoryFace {
         );
         auth.whitelistDrago(libraryData.newAddress, true);
         auth.whitelistUser(_owner, true);
-        DragoCreated(_name, _symbol, libraryData.newAddress, _owner, _dragoId);
+        emit DragoCreated(_name, _symbol, libraryData.newAddress, _owner, _dragoId);
         return true;
+    }
+    
+    /// @dev Returns the next Id for a drago
+    /// @return Number of the next Id from the registry
+    function getNextId()
+        internal view
+        returns (uint nextDragoId)
+    {
+        DragoRegistry registry = DragoRegistry(data.dragoRegistry);
+        nextDragoId = registry.dragoCount();
     }
 }

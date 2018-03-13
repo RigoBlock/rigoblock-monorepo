@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
 import { RigoToken } from "../RigoToken/RigoToken.sol";
@@ -109,7 +110,7 @@ contract Inflation is SafeMath, InflationFace {
         performers[_thePool].startTime = now;
         performers[_thePool].endTime = now + period;
         ++performers[_thePool].epoch;
-        uint reward = _reward * 95 / 100; //5% royalty to rigoblock
+        uint reward = _reward * 95 / 100; //5% royalty to rigoblock dao
         uint rigoblockReward = safeSub(_reward, reward);
         Pool pool = Pool(_thePool);
         address poolOwner = pool.getOwner();
@@ -123,7 +124,7 @@ contract Inflation is SafeMath, InflationFace {
     /// @param _group Address of the group/factory
     /// @param _inflationFactor Value of the reward factor
     function setInflationFactor(address _group, uint _inflationFactor)
-        public
+        external
         onlyRigoblockDao
         isApprovedFactory(_group)
     {
@@ -132,32 +133,32 @@ contract Inflation is SafeMath, InflationFace {
 
     /// @dev Allows rigoblock dao to set the minimum number of required tokens
     /// @param _minimum Number of minimum tokens
-    function setMinimumRigo(uint _minimum) public onlyRigoblockDao {
+    function setMinimumRigo(uint _minimum) external onlyRigoblockDao {
         minimumRigo = _minimum;
     }
 
     /// @dev Allows rigoblock dao to upgrade its address
     /// @param _newRigoblock Address of the new rigoblock dao
-    function setRigoblock(address _newRigoblock) public onlyRigoblockDao {
+    function setRigoblock(address _newRigoblock) external onlyRigoblockDao {
         rigoblockDao = _newRigoblock;
     }
 
     /// @dev Allows rigoblock dao to update the authority
     /// @param _authority Address of the authority
-    function setAuthority(address _authority) public onlyRigoblockDao {
+    function setAuthority(address _authority) external onlyRigoblockDao {
         authority = _authority;
     }
 
     /// @dev Allows rigoblock dao to update proof of performance
     /// @param _pop Address of the Proof of Performance contract
-    function setProofOfPerformance(address _pop) public onlyRigoblockDao {
+    function setProofOfPerformance(address _pop) external onlyRigoblockDao {
         proofOfPerformance = _pop;
     }
 
     /// @dev Allows rigoblock dao to set the minimum time between reward collection
     /// @param _newPeriod Number of blocks from 2 rewards
     /// @notice set period on shorter subsets of time for testing
-    function setPeriod(uint _newPeriod) public onlyRigoblockDao {
+    function setPeriod(uint _newPeriod) external onlyRigoblockDao {
         period = _newPeriod;
     }
 
@@ -166,14 +167,14 @@ contract Inflation is SafeMath, InflationFace {
     /// @dev Returns whether a wizard can claim reward tokens
     /// @param _thePool Address of the target pool
     /// @return Bool the wizard can claim
-    function canWithdraw(address _thePool) public view returns (bool) {
+    function canWithdraw(address _thePool) external view returns (bool) {
         return (now >= performers[_thePool].endTime ? true : false);
     }
 
     /// @dev Return the reward factor for a group
     /// @param _group Address of the group
     /// @return Value of the reward factor
-    function getInflationFactor(address _group) public view returns (uint) {
+    function getInflationFactor(address _group) external view returns (uint) {
         return groups[_group].epochReward;
     }
 }

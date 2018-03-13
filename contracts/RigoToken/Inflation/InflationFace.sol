@@ -16,23 +16,24 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 /// @title Inflation Interface - Allows interaction with the Inflation contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract InflationFace {
+interface InflationFace {
 
     // CORE FUNCTIONS
 
-    function mintInflation(address _thePool, uint _reward) external returns (bool) {}
-    function setInflationFactor(address _group, uint _inflationFactor) public {}
-    function setMinimumRigo(uint _minimum) public {}
-    function setRigoblock(address _newRigoblock) public {}
-    function setAuthority(address _authority) public {}
-    function setPeriod(uint _newPeriod) public {}
+    function mintInflation(address _thePool, uint _reward) external returns (bool);
+    function setInflationFactor(address _group, uint _inflationFactor) external;
+    function setMinimumRigo(uint _minimum) external;
+    function setRigoblock(address _newRigoblock) external;
+    function setAuthority(address _authority) external;
+    function setPeriod(uint _newPeriod) external;
 
     // CONSTANT PUBLIC FUNCTIONS
 
-    function canWithdraw(address _thePool) public view returns (bool) {}
-    function getInflationFactor(address _group) public view returns (uint) {}
+    function canWithdraw(address _thePool) external view returns (bool);
+    function getInflationFactor(address _group) external view returns (uint);
 }

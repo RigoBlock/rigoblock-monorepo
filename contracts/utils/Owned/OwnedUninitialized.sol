@@ -1,4 +1,5 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 contract OwnedUninitialized {
 
@@ -12,11 +13,8 @@ contract OwnedUninitialized {
     }
 
     function setOwner(address _new) public onlyOwner {
+        require(_new != address(0));
         owner = _new;
-        NewOwner(owner, _new);
-    }
-
-    function getOwner() public view returns (address) {
-        return owner;
+        emit  NewOwner(owner, _new);
     }
 }

@@ -16,27 +16,25 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 /// @title Vault Factory Interface - Allows external interaction with Vault Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract VaultFactoryFace {
+interface VaultFactoryFace {
 
     event VaultCreated(string name, string symbol, address indexed vault, address indexed owner, uint vaultId);
 
-    function createVault(string _name, string _symbol) public returns (bool success) {}
-    function setTargetVaultDao(address _targetVault, address _vaultDao) public {}
-    function changeVaultDao(address _newVaultDao) public {}
-    function setRegistry(address _newRegistry) public {}
-    function setBeneficiary(address _vaultDao) public {}
-    function setFee(uint _fee) public {}
-    function drain() public {}
-    //function setOwner(address _new) public {}
+    function createVault(string _name, string _symbol) external payable returns (bool success);
+    function setTargetVaultDao(address _targetVault, address _vaultDao) external;
+    function changeVaultDao(address _newVaultDao) external;
+    function setRegistry(address _newRegistry) external;
+    function setBeneficiary(address _vaultDao) external;
+    function setFee(uint _fee) external;
+    function drain() external;
 
-    function getRegistry() public view returns (address) {}
-    function getStorage() public view returns (address vaultDao, string version, uint nextVaultId) {}
-    function getNextId() public view returns (uint nextVaultId) {}
-    function getEventful() public view returns (address) {}
-    function getVaultsByAddress(address _owner) public view returns (address[]) {}
-    //function getOwner() public view returns (address) {}
+    function getRegistry() external view returns (address);
+    function getStorage() external view returns (address vaultDao, string version, uint nextVaultId);
+    function getEventful() external view returns (address);
+    function getVaultsByAddress(address _owner) external view returns (address[]);
 }

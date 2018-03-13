@@ -16,27 +16,25 @@
 
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.21;
+pragma experimental "v0.5.0";
 
 /// @title Drago Factory Interface - Allows external interaction with Drago Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract DragoFactoryFace {
+interface DragoFactoryFace {
 
     event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint dragoId);
 
-    function createDrago(string _name, string _symbol) public payable returns (bool success) {}
-    function setTargetDragoDao(address _targetDrago, address _dragoDao) public {}
-    function changeDragoDao(address _newDragoDao) public {}
-    function setRegistry(address _newRegistry) public {}
-    function setBeneficiary(address _dragoDao) public {}
-    function setFee(uint _fee) public {}
-    function drain() public {}
-    //function setOwner(address _new) public {}
+    function createDrago(string _name, string _symbol) external payable returns (bool success);
+    function setTargetDragoDao(address _targetDrago, address _dragoDao) external;
+    function changeDragoDao(address _newDragoDao) external;
+    function setRegistry(address _newRegistry) external;
+    function setBeneficiary(address _dragoDao) external;
+    function setFee(uint _fee) external;
+    function drain() external;
 
-    function getRegistry() public view returns (address) {}
-    function getStorage() public view returns (address dragoDao, string version, uint nextDragoId) {}
-    function getNextId() public view returns (uint nextDragoId) {}
-    function getEventful() public view returns (address) {}
-    function getDragosByAddress(address _owner) public view returns (address[]) {}
-    //function getOwner() public view returns (address) {}
+    function getRegistry() external view returns (address);
+    function getStorage() external view returns (address dragoDao, string version, uint nextDragoId);
+    function getEventful() external view returns (address);
+    function getDragosByAddress(address _owner) external view returns (address[]);
 }
