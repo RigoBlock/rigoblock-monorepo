@@ -34,7 +34,7 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
     string constant public symbol = "GRG";
     uint constant public decimals = 18;
 
-    uint public totalSupply = 10**27; // 1 billion tokens, 18 decimal places
+    uint public totalSupply = 10**25; // 10 million tokens, 18 decimal places
     address public minter;
     address public rigoblock;
 

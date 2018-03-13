@@ -282,22 +282,10 @@ contract Authority is Owned, AuthorityFace {
     /// @param _target Address of the target user
     /// @return Bool is whitelisted
     function isWhitelistedUser(address _target)
-        external
-        view
+        external view
         returns (bool)
     {
         return accounts[_target].groups[true].user;
-    }
-
-    /// @dev Provides whether an address is whitelister
-    /// @param _whitelister Address of the target whitelister
-    /// @return Bool is whitelisted
-    function isWhitelister(address _whitelister)
-        internal
-        view
-        returns (bool)
-    {
-        return accounts[_whitelister].groups[true].whitelister;
     }
 
     /// @dev Provides whether an address is an authority
@@ -314,8 +302,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _asset Address of the target asset
     /// @return Bool is whitelisted
     function isWhitelistedAsset(address _asset)
-        external
-        view
+        external view
         returns (bool)
     {
         return accounts[_asset].groups[true].asset;
@@ -325,8 +312,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _exchange Address of the target exchange
     /// @return Bool is whitelisted
     function isWhitelistedExchange(address _exchange)
-        external
-        view
+        external view
         returns (bool)
     {
         return accounts[_exchange].groups[true].exchange;
@@ -336,8 +322,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _drago Address of the target drago
     /// @return Bool is whitelisted
     function isWhitelistedDrago(address _drago)
-        external
-        view
+        external view
         returns (bool)
     {
         return accounts[_drago].groups[true].drago;
@@ -347,8 +332,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _vault Address of the target vault
     /// @return Bool is whitelisted
     function isWhitelistedVault(address _vault)
-        external
-        view
+        external view
         returns (bool)
     {
         return accounts[_vault].groups[true].vault;
@@ -358,8 +342,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _registry Address of the target registry
     /// @return Bool is whitelisted
     function isWhitelistedRegistry(address _registry)
-        external
-        view
+        external view
         returns (bool)
     {
         return accounts[_registry].groups[true].registry;
@@ -369,8 +352,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _factory Address of the target factory
     /// @return Bool is whitelisted
     function isWhitelistedFactory(address _factory)
-        external
-        view
+        external view
         returns (bool)
     {
         return accounts[_factory].groups[true].registry;
@@ -378,19 +360,28 @@ contract Authority is Owned, AuthorityFace {
 
     /// @dev Provides the address of the drago logs contract
     /// @return Address of the drago logs contract
-    function getDragoEventful() external view returns (address) {
+    function getDragoEventful()
+        external view
+        returns (address)
+    {
         return blocks.dragoEventful;
     }
 
     /// @dev Provides the address of the vault logs contract
     /// @return Address of the vault logs contract
-    function getVaultEventful() external view returns (address) {
+    function getVaultEventful()
+        external view
+        returns (address)
+    {
         return blocks.vaultEventful;
     }
 
     /// @dev Provides the address of the exchange logs contract
     /// @return Address of the exchange logs contract
-    function getExchangeEventful() external view returns (address) {
+    function getExchangeEventful()
+        external view
+        returns (address)
+    {
         return blocks.exchangeEventful;
     }
 
@@ -398,8 +389,7 @@ contract Authority is Owned, AuthorityFace {
     /// @param _exchange Address of the exchange
     /// @return Address of the adapter
     function getExchangeAdapter(address _exchange)
-        external
-        view
+        external view
         returns (address)
     {
         return adapter[_exchange];
@@ -407,14 +397,20 @@ contract Authority is Owned, AuthorityFace {
 
     /// @dev Checkes whether casper has been inizialized
     /// @return Bool the casper contract has been initialized
-    function isCasperInitialized() external view returns (bool) {
+    function isCasperInitialized()
+        external view
+        returns (bool)
+    {
         address casper = blocks.casper;
         return blocks.initialized[casper];
     }
 
     /// @dev Provides the address of the casper contract
     /// @return Address of the casper contract
-    function getCasper() external view returns (address) {
+    function getCasper()
+        external view
+        returns (address)
+    {
         return blocks.casper;
     }
 
@@ -422,10 +418,21 @@ contract Authority is Owned, AuthorityFace {
     /// @param _group Address of the group/factory
     /// @return Array of addresses of the pools for a specific group
     function getListsByGroups(string _group)
-        external
-        view
+        external view
         returns (address[])
     {
         return types.mapFromGroup[_group];
+    }
+
+    // INTERNAL FUNCTIONS
+
+    /// @dev Provides whether an address is whitelister
+    /// @param _whitelister Address of the target whitelister
+    /// @return Bool is whitelisted
+    function isWhitelister(address _whitelister)
+        internal view
+        returns (bool)
+    {
+        return accounts[_whitelister].groups[true].whitelister;
     }
 }
