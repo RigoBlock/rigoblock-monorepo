@@ -1,6 +1,9 @@
 {
   "extends": [
+      "plugin:react/recommended",
+
       "prettier",
+      "prettier/react",
       "prettier/standard"
     ],
     "parserOptions": {
@@ -8,7 +11,8 @@
       "sourceType": "module"
     },
     "plugins": [
-      "prettier"
+      "prettier",
+      "react"
     ],
     "rules": {
       "prettier/prettier": [
