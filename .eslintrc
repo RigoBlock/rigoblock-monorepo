@@ -1,0 +1,21 @@
+{
+  "extends": [
+      "prettier",
+      "prettier/standard"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error", {
+          "singleQuote": true,
+          "semi": false
+        }
+      ]
+    }
+}
