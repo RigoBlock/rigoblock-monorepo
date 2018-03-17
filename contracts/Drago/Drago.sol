@@ -60,7 +60,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         uint totalSupply;
         uint sellPrice;
         uint buyPrice;
-        uint transactionFee; //in basis points 1 = 0.01%
+        uint transactionFee; // in basis points 1 = 0.01%
         uint32 minPeriod;
     }
 
@@ -69,7 +69,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         address dragoDao;
         address feeCollector;
         uint minOrder; // minimum stake to avoid dust clogging things up
-        uint ratio; //ratio is 80%
+        uint ratio; // ratio is 80%
     }
 
     modifier onlyDragoDao {

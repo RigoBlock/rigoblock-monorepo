@@ -55,7 +55,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         uint vaultId;
         uint totalSupply;
         uint price;
-        uint transactionFee; //fee is in basis points (1 bps = 0.01%)
+        uint transactionFee; // fee is in basis points (1 bps = 0.01%)
         uint32 minPeriod;
         uint128 validatorIndex;
     }
@@ -65,7 +65,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         address vaultDao;
         address feeCollector;
         uint minOrder; // minimum stake to avoid dust clogging things up
-        uint ratio; //ratio is 80%
+        uint ratio; // ratio is 80%
     }
 
     modifier onlyVaultDao {

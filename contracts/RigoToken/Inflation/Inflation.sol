@@ -56,8 +56,7 @@ contract Inflation is SafeMath, InflationFace {
     /// @notice in order to qualify for PoP user has to told minimum rigo token
     modifier minimumRigoblock(address _ofPool) {
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
-        Pool pool = Pool(_ofPool);
-        require(rigoToken.balanceOf(pool.getOwner()) >= minimumRigo);
+        require(rigoToken.balanceOf(getPoolOwner(_ofPool)) >= minimumRigo);
         _;
     }
 
@@ -112,10 +111,8 @@ contract Inflation is SafeMath, InflationFace {
         ++performers[_thePool].epoch;
         uint reward = _reward * 95 / 100; //5% royalty to rigoblock dao
         uint rigoblockReward = safeSub(_reward, reward);
-        Pool pool = Pool(_thePool);
-        address poolOwner = pool.getOwner();
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
-        rigoToken.mintToken(poolOwner, reward);
+        rigoToken.mintToken(getPoolOwner(_thePool), reward);
         rigoToken.mintToken(rigoblockDao, rigoblockReward);
         return true;
     }
@@ -133,32 +130,47 @@ contract Inflation is SafeMath, InflationFace {
 
     /// @dev Allows rigoblock dao to set the minimum number of required tokens
     /// @param _minimum Number of minimum tokens
-    function setMinimumRigo(uint _minimum) external onlyRigoblockDao {
+    function setMinimumRigo(uint _minimum)
+        external
+        onlyRigoblockDao
+    {
         minimumRigo = _minimum;
     }
 
     /// @dev Allows rigoblock dao to upgrade its address
     /// @param _newRigoblock Address of the new rigoblock dao
-    function setRigoblock(address _newRigoblock) external onlyRigoblockDao {
+    function setRigoblock(address _newRigoblock)
+        external
+        onlyRigoblockDao
+    {
         rigoblockDao = _newRigoblock;
     }
 
     /// @dev Allows rigoblock dao to update the authority
     /// @param _authority Address of the authority
-    function setAuthority(address _authority) external onlyRigoblockDao {
+    function setAuthority(address _authority)
+        external
+        onlyRigoblockDao
+    {
         authority = _authority;
     }
 
     /// @dev Allows rigoblock dao to update proof of performance
     /// @param _pop Address of the Proof of Performance contract
-    function setProofOfPerformance(address _pop) external onlyRigoblockDao {
+    function setProofOfPerformance(address _pop)
+        external
+        onlyRigoblockDao
+    {
         proofOfPerformance = _pop;
     }
 
     /// @dev Allows rigoblock dao to set the minimum time between reward collection
     /// @param _newPeriod Number of blocks from 2 rewards
     /// @notice set period on shorter subsets of time for testing
-    function setPeriod(uint _newPeriod) external onlyRigoblockDao {
+    function setPeriod(uint _newPeriod)
+        external
+        onlyRigoblockDao
+    {
         period = _newPeriod;
     }
 
@@ -167,14 +179,33 @@ contract Inflation is SafeMath, InflationFace {
     /// @dev Returns whether a wizard can claim reward tokens
     /// @param _thePool Address of the target pool
     /// @return Bool the wizard can claim
-    function canWithdraw(address _thePool) external view returns (bool) {
+    function canWithdraw(address _thePool)
+        external view
+        returns (bool)
+    {
         return (now >= performers[_thePool].endTime ? true : false);
     }
 
     /// @dev Return the reward factor for a group
     /// @param _group Address of the group
     /// @return Value of the reward factor
-    function getInflationFactor(address _group) external view returns (uint) {
+    function getInflationFactor(address _group)
+        external view
+        returns (uint)
+    {
         return groups[_group].epochReward;
+    }
+    
+    // INTERNAL FUNCTIONS
+    
+    /// @dev Returns the address of the pool owner
+    /// @param _ofPool Number of the registered pool
+    /// @return Address of the pool owner
+    function getPoolOwner(address _ofPool)
+        internal view
+        returns (address poolOwner)
+    {
+        Pool pool = Pool(_ofPool);
+        (poolOwner, , , , , ) = pool.getAdminData();
     }
 }

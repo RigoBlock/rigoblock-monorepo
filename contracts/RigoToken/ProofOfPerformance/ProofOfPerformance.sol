@@ -51,15 +51,6 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         _;
     }
 
-    modifier onlyPoolOwner(uint _thePool) {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        address poolAddress;
-        (poolAddress, , , , , ) = registry.fromId(_thePool);
-        Pool pool = Pool(poolAddress);
-        assert(msg.sender == pool.getOwner());
-        _;
-    }
-
     modifier minimumRigoblock {
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
         require(rigoToken.balanceOf(msg.sender) >= minimumRigo);
@@ -219,7 +210,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         return (networkValue, length);
     }
     
-    // CONSTANT PUBLIC FUNCTIONS
+    // INTERNAL FUNCTIONS
 
     /// @dev Returns the reward factor for a pool
     /// @param _ofPool Id of the pool
@@ -350,8 +341,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @return Address of the target pool
     /// @return Address of the pool's group
     function calcPoolValue(uint256 _ofPool)
-        internal
-        view
+        internal view
         returns (
             uint256 aum,
             bool success

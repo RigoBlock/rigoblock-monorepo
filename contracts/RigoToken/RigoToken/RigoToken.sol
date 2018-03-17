@@ -120,6 +120,6 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
     /// @return Value of the inflation factor
     function getInflationFactor(address _group) external view returns (uint) {
         Inflation inflation = Inflation(minter);
-        inflation.getInflationFactor(_group);
+        return inflation.getInflationFactor(_group);
     }
 }
