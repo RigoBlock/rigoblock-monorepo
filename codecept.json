@@ -1,6 +1,4 @@
 {
-  "tests": "./test/functional/*_test.js",
-  "timeout": 10000,
   "output": "./output",
   "helpers": {
     "Puppeteer": {
@@ -11,7 +9,11 @@
   "include": {
     "I": "./steps_file.js"
   },
-  "bootstrap": false,
   "mocha": {},
+  "bootstrap": false,
+  "teardown": null,
+  "hooks": [],
+  "tests": "./test/*.test.js",
+  "timeout": 10000,
   "name": "rigoblock-dappv2"
 }

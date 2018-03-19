@@ -10,9 +10,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "test-func": "./node_modules/.bin/codeceptjs run --steps",
-    "cov": "./node_modules/.bin/instanbul cover ./test/unit",
+    "test:unit": "react-scripts test --env=jsdom",
+    "test:feature": "./node_modules/.bin/codeceptjs run --steps",
+    "cov": "npm run test:unit -- --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "precommit": "lint-staged"
@@ -31,8 +31,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test",
-      "pre-push": "npm run test"
+      "pre-commit": "npm run test:unit",
+      "pre-push": "npm run test:unit"
     }
   },
   "lint-staged": {
@@ -40,8 +40,5 @@
       "npm run lint",
       "git add"
     ]
-  },
-  "jest": {
-
   }
 }
