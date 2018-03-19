@@ -10,8 +10,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test:unit": "react-scripts test --env=jsdom",
+    "test": "npm run test:unit && npm run test:feature",
+    "test:unit": "CI=true react-scripts test --env=jsdom",
+    "test:unit:watch": "react-scripts test --env=jsdom",
+    "test:unit:debug": "react-scripts --inspect-brk test --runInBand --env=jsdom",
     "test:feature": "./node_modules/.bin/codeceptjs run --steps",
+    "test:feature:debug": "./node_modules/.bin/codeceptjs run --debug",
     "cov": "npm run test:unit -- --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
@@ -27,7 +31,8 @@
     "husky": "^0.14.3",
     "lint-staged": "^7.0.0",
     "prettier": "^1.11.1",
-    "puppeteer": "^1.2.0"
+    "puppeteer": "^1.2.0",
+    "react-test-renderer": "^16.2.0"
   },
   "husky": {
     "hooks": {
