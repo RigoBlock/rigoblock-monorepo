@@ -1,3 +1,5 @@
+# RigoBlock DApp
+
 ## Folder Structure
 
 ```
