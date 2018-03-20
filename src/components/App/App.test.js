@@ -1,7 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import renderer from 'react-test-renderer'
+import Enzyme, { render } from 'enzyme'
 import App from './App.jsx'
+import Adapter from 'enzyme-adapter-react-16'
+import toJson from 'enzyme-to-json'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 it('renders without crashing', () => {
   const div = document.createElement('div')
@@ -10,12 +14,5 @@ it('renders without crashing', () => {
 })
 
 it('renders correctly', () => {
-  const tree = renderer
-    .create(
-      <div>
-        <h1>RigoBlock</h1>
-      </div>
-    )
-    .toJSON()
-  expect(tree).toMatchSnapshot()
+  expect(toJson(render(<App />))).toMatchSnapshot()
 })
