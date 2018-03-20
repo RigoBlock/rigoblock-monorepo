@@ -1,0 +1,25 @@
+{
+  "extends": [
+      "plugin:react/recommended",
+
+      "prettier",
+      "prettier/react",
+      "prettier/standard"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "prettier",
+      "react"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error", {
+          "singleQuote": true,
+          "semi": false
+        }
+      ]
+    }
+}
