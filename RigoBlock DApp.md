@@ -6,44 +6,60 @@
 ├── coverage
 ├── node_modules
 ├── output
+├── dist            // Dist folder will contain the built file for
+│                      production use (populated with yarn build)
 ├── public
-│   └── index.html
+│   └── index.html  // Page template
 ├── src
-│   ├── App.css
-│   ├── App.js
-│   ├── App.test.js
+│   ├── components  // Components have their own folders here
+│   │   └── App
+│   │       ├── __snapshots__
+│   │       ├── App.css
+│   │       ├── App.jsx
+│   │       ├── App.test.js
+│   │       └── index.js
 │   ├── index.css
-│   ├── index.js
+│   ├── index.js    // JavaScript entry point
 │   └── registerServiceWorker.js
-├── test
-│   └── pages
+├── test            // Feature tests are located inside this folder
+│   └── pages       // Folder for codecept page objects
 ├── package.json
 └── yarn.lock
 ```
-
-For the project to build, **these files must exist with exact filenames**:
-
-* `public/index.html` is the page template;
-* `src/index.js` is the JavaScript entry point.
-
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `yarn start`
 
-Runs the app in the development mode.<br>
+Runs the app in the development mode.
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
+The page will reload if you make edits.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br>
+Launches unit tests and feature tests sequentially.
+### `yarn test:unit`
+
+Launches unit tests only and exits upon finishing.
+### `yarn test:unit:watch`
+
+Launches unit tests in debug mode.
+### `yarn test:unit:debug`
+
+Launches unit tests in interactive mode and listens for changes to the test file.
+### `yarn test:feature`
+
+Launches feature tests.
+### `yarn test:feature:debug`
+
+Launches feature tests in debug mode.
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.<br>
+Builds the app for production to the `build` folder.
 
 ### `yarn eject`
 
@@ -78,6 +94,6 @@ it('sums numbers', () => {
 });
 ```
 
-All `expect()` matchers supported by Jest are [extensively documented here](https://facebook.github.io/jest/docs/en/expect.html#content).<br>
+All `expect()` matchers supported by Jest are [extensively documented here](https://facebook.github.io/jest/docs/en/expect.html#content).
 You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://facebook.github.io/jest/docs/en/expect.html#tohavebeencalled) to create “spies” or mock functions.
 
