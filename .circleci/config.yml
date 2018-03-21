@@ -1,0 +1,131 @@
+version: 2.0
+
+references:
+  workspace_root: &workspace_root
+    ~/rigoblock-dappv2
+
+  timezone: &timezone
+    "/usr/share/zoneinfo/America/Los_Angeles"
+
+  node_image: &node_image
+    circleci/node:8.10.0-stretch
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+jobs:
+  setup:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: Installing new npm packages
+          command: yarn
+      - save_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+            - node_modules/.cache
+            - ~/.cache/yarn
+
+  build:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: Building dist
+          command: yarn build
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - build
+
+  test-unit:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: circleci/node:8.10-stretch
+    steps:
+      - checkout
+      - *attach_workspace
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: JS unit tests
+          command: yarn test:unit
+
+  test-feature:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: circleci/node:8.10-stretch-browsers
+    steps:
+      - checkout
+      - *attach_workspace
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: Starting server
+          command: yarn start &
+      - run:
+          name: JS feature tests
+          command: yarn test:feature
+
+  # deploy:
+  #   working_directory: *workspace_root
+  #   environment:
+  #     TZ: *timezone
+  #   docker:
+  #     - image: *node_image
+    # steps:
+    #   - checkout
+    #   - *attach_workspace
+    #   - restore_cache:
+    #       key: equinox-ruby-v1-{{ checksum "Gemfile.lock" }}
+    #   - run:
+    #       name: Verifying bundle
+    #       command: "bundle check --path=vendor/bundle"
+    #   - run:
+    #       name: Deploying
+    #       command: |
+    #         bin/deploy $CIRCLE_SHA1 equinoxproposal-int
+    #         bin/rails ci:deliver
+    # ssh_known_hosts:
+    #   - heroku.com
+
+workflows:
+  version: 2
+  rigoblock:
+    jobs:
+      - setup
+      - build:
+          requires:
+            - setup
+      - test-unit:
+          requires:
+            - build
+      - test-feature:
+          requires:
+            - test-unit
+      # - deploy:
+      #     requires:
+      #       - test
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
