@@ -51,7 +51,7 @@ jobs:
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - build
+            - dist
 
   test-unit:
     working_directory: *workspace_root
@@ -81,7 +81,8 @@ jobs:
           key: rigoblock-node-v1-{{ checksum "package.json" }}
       - run:
           name: Starting server
-          command: yarn start &
+          command: yarn start
+          background: true
       - run:
           name: JS feature tests
           command: yarn test:feature
