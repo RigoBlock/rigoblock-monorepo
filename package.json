@@ -3,21 +3,56 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "autoprefixer": "7.1.6",
+    "babel-core": "6.26.0",
+    "babel-eslint": "7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-loader": "7.1.4",
+    "babel-preset-react-app": "^3.1.1",
+    "babel-runtime": "6.26.0",
+    "case-sensitive-paths-webpack-plugin": "2.1.2",
+    "chalk": "1.1.3",
+    "css-loader": "0.28.11",
+    "dotenv": "4.0.0",
+    "dotenv-expand": "4.2.0",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-loader": "1.9.0",
+    "eslint-plugin-flowtype": "2.46.1",
+    "eslint-plugin-import": "2.9.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "1.1.11",
+    "fs-extra": "3.0.1",
+    "html-webpack-plugin": "3.0.7",
+    "jest": "20.0.4",
+    "node-sass": "^4.7.2",
+    "object-assign": "4.1.1",
+    "postcss-flexbugs-fixes": "3.3.0",
+    "postcss-loader": "2.1.3",
+    "promise": "8.0.1",
+    "raf": "3.4.0",
     "react": "^16.2.0",
+    "react-dev-utils": "^5.0.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1"
+    "sass-loader": "^6.0.7",
+    "style-loader": "0.20.3",
+    "sw-precache-webpack-plugin": "0.11.5",
+    "url-loader": "0.6.2",
+    "webpack": "4.1.1",
+    "webpack-dev-server": "3.1.1",
+    "webpack-manifest-plugin": "2.0.0-rc.2",
+    "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
     "test": "npm run test:unit && npm run test:feature",
-    "test:unit": "CI=true react-scripts test --env=jsdom",
-    "test:unit:watch": "react-scripts test --env=jsdom",
+    "test:unit": "CI=true node scripts/test.js --env=jsdom",
+    "test:unit:watch": "node scripts/test.js --env=jsdom",
     "test:unit:debug": "react-scripts --inspect-brk test --runInBand --env=jsdom",
     "test:feature": "./node_modules/.bin/codeceptjs run --steps",
     "test:feature:debug": "./node_modules/.bin/codeceptjs run --debug",
     "cov": "npm run test:unit -- --coverage",
-    "eject": "react-scripts eject",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "precommit": "lint-staged"
   },
@@ -27,7 +62,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
-    "eslint": "^4.18.2",
+    "eslint": "^4.19.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
@@ -35,7 +70,8 @@
     "lint-staged": "^7.0.0",
     "prettier": "^1.11.1",
     "puppeteer": "^1.2.0",
-    "react-test-renderer": "^16.2.0"
+    "react-test-renderer": "^16.2.0",
+    "webpack-cli": "^2.0.12"
   },
   "husky": {
     "hooks": {
@@ -50,8 +86,49 @@
     ]
   },
   "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,mjs}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
+    ],
+    "testEnvironment": "node",
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "mjs",
+      "js",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }

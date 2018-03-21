@@ -1,11 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Enzyme, { render } from 'enzyme'
+import { render } from 'enzyme'
 import App from './App.jsx'
-import Adapter from 'enzyme-adapter-react-16'
 import toJson from 'enzyme-to-json'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 it('renders without crashing', () => {
   const div = document.createElement('div')
