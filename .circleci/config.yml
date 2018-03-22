@@ -5,7 +5,7 @@ references:
     ~/rigoblock-dappv2
 
   timezone: &timezone
-    "/usr/share/zoneinfo/America/Los_Angeles"
+    "/usr/share/zoneinfo/Europe/Rome"
 
   node_image: &node_image
     circleci/node:8.10.0-stretch
@@ -32,7 +32,6 @@ jobs:
           key: rigoblock-node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
-            - node_modules/.cache
             - ~/.cache/yarn
 
   build:
@@ -87,28 +86,6 @@ jobs:
           name: JS feature tests
           command: yarn test:feature
 
-  # deploy:
-  #   working_directory: *workspace_root
-  #   environment:
-  #     TZ: *timezone
-  #   docker:
-  #     - image: *node_image
-    # steps:
-    #   - checkout
-    #   - *attach_workspace
-    #   - restore_cache:
-    #       key: equinox-ruby-v1-{{ checksum "Gemfile.lock" }}
-    #   - run:
-    #       name: Verifying bundle
-    #       command: "bundle check --path=vendor/bundle"
-    #   - run:
-    #       name: Deploying
-    #       command: |
-    #         bin/deploy $CIRCLE_SHA1 equinoxproposal-int
-    #         bin/rails ci:deliver
-    # ssh_known_hosts:
-    #   - heroku.com
-
 workflows:
   version: 2
   rigoblock:
@@ -123,10 +100,3 @@ workflows:
       - test-feature:
           requires:
             - test-unit
-      # - deploy:
-      #     requires:
-      #       - test
-      #       - build
-      #     filters:
-      #       branches:
-      #         only: master
