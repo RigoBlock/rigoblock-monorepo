@@ -43,12 +43,12 @@ RUN mkdir /opt
 RUN curl http://gwan.com/archives/gwan_linux64-bit.tar.bz2 | tar xj -C /opt
 RUN mv /opt/gwan_linux64-bit /opt/gwan && \
   rm -rf /opt/gwan/0.0.0.0:* && \
-  mkdir -p /opt/gwan/0.0.0.0:80/#0.0.0.0/www
+  mkdir -p /opt/gwan/0.0.0.0:8080/#0.0.0.0/www
 
-COPY --from=builder /src/dist /opt/gwan/0.0.0.0:80/#0.0.0.0/www
+COPY --from=builder /src/dist /opt/gwan/0.0.0.0:8080/#0.0.0.0/www
 
 RUN apk del curl bzip2
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD /opt/gwan/gwan

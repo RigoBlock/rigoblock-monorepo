@@ -126,6 +126,9 @@ jobs:
       - run:
           name: Flynn push
           command: "~/flynn -a dapp-staging docker push staging:latest"
+      - run:
+          name: Flynn push
+          command: "~/flynn -a dapp-staging scale app=1"
 
 workflows:
   version: 2
