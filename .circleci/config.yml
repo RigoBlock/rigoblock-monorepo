@@ -98,7 +98,7 @@ jobs:
           key: rigoblock-node-v1-{{ checksum "package.json" }}
       - run:
           name: Install Flynn CLI
-          command: "L=/usr/local/bin/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L"
+          command: 'L=/usr/local/bin/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
       - run:
           name: Add Flynn cluster
           command: "flynn cluster add -p Kh+c569v46HsTbFVs51cyEOz9+iLuxbR2mWQ2FaqSkM= staging dev-02.endpoint.network a6019d9d46a314c3007b668d5161aff4"
