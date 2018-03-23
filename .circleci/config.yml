@@ -109,6 +109,9 @@ jobs:
           name: Building docker image
           command: "docker build -t staging ."
       - run:
+          name: Flynn set docker
+          command: "~/flynn docker set-push-url && ~/flynn docker login"
+      - run:
           name: Flynn push
           command: "~/flynn -a dapp-staging docker push staging:latest"
 
