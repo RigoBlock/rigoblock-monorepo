@@ -107,7 +107,7 @@ jobs:
           command: "~/flynn apps"
       - run:
           name: Download flynn cert
-          command: "curl https://mega.nz/#!37hG1QTb!7pN72aJVCi64FgbxAZMM1XUMLmW8ZVCido3GEoRSNAA -o /etc/docker/certs.d/docker.dev-02.endpoint.network/ca.crt"
+          command: "sudo bash -c 'curl https://pastebin.com/raw/z1D3TGwP -o /etc/docker/certs.d/docker.dev-02.endpoint.network/ca.crt'"
       - run:
           name: Restart docker
           command: "sudo service docker restart"
