@@ -107,7 +107,7 @@ jobs:
           command: "~/flynn apps"
       - run:
           name: Download flynn cert
-          command: "curl https://pastebin.com/raw/z1D3TGwP -o ca.crt"
+          command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
       - run:
           name: Cert folder
           command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
