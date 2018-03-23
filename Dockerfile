@@ -1,6 +1,6 @@
 FROM debian:stretch as builder
 
-WORKDIR /usr/src
+WORKDIR /src
 
 RUN apt-get update
 RUN apt-get install wget sed build-essential -y
@@ -14,11 +14,8 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.7/install.s
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 COPY . /src
-COPY .nvmrc /src/.nvmrc
-
-WORKDIR /src
-
-RUN export NODE_VERSION=`cat /src/.nvmrc`
+# TODO: use .nvmrc
+# COPY .nvmrc /src/.nvmrc
 
 # install node and npm
 RUN source $NVM_DIR/nvm.sh \
@@ -45,8 +42,7 @@ RUN mkdir /opt
 
 RUN curl http://gwan.com/archives/gwan_linux64-bit.tar.bz2 | tar xj -C /opt
 RUN mv /opt/gwan_linux64-bit /opt/gwan && \
-  rm -rf /opt/gwan/0.0.0.0:8080 && \
-  rm -rf /opt/gwan/0.0.0.0:8081_PONG && \
+  rm -rf /opt/gwan/0.0.0.0:* && \
   mkdir -p /opt/gwan/0.0.0.0:80/#0.0.0.0/www
 
 COPY --from=builder /src/dist /opt/gwan/0.0.0.0:80/#0.0.0.0/www
