@@ -114,11 +114,11 @@ workflows:
       # - test-feature:
       #     requires:
       #       - test-unit
-      - deploy-staging:
-          requires:
-            - test-feature
-            - test-unit
-            - build
+      - deploy-staging
+          # requires:
+          #   - test-feature
+          #   - test-unit
+          #   - build
           # filters:
           #   branches:
           #     only: master
