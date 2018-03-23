@@ -135,20 +135,20 @@ workflows:
   rigoblock:
     jobs:
       - setup
-      # - build:
-      #     requires:
-      #       - setup
-      # - test-unit:
-      #     requires:
-      #       - build
-      # - test-feature:
-      #     requires:
-      #       - test-unit
-      - deploy-staging
-          # requires:
-          #   - test-feature
-          #   - test-unit
-          #   - build
-          # filters:
-          #   branches:
-          #     only: master
+      - build:
+          requires:
+            - setup
+      - test-unit:
+          requires:
+            - build
+      - test-feature:
+          requires:
+            - test-unit
+      - deploy-staging:
+          requires:
+            - test-feature
+            - test-unit
+            - build
+          filters:
+            branches:
+              only: master
