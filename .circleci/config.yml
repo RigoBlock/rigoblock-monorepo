@@ -86,17 +86,39 @@ jobs:
           name: JS feature tests
           command: yarn test:feature
 
+  deploy-staging:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    machine: true
+    steps:
+      - checkout
+      - *attach_workspace
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: Building docker image
+          command: "docker build -t staging ."
+
 workflows:
   version: 2
   rigoblock:
     jobs:
       - setup
-      - build:
+      # - build:
+      #     requires:
+      #       - setup
+      # - test-unit:
+      #     requires:
+      #       - build
+      # - test-feature:
+      #     requires:
+      #       - test-unit
+      - deploy-staging:
           requires:
-            - setup
-      - test-unit:
-          requires:
-            - build
-      - test-feature:
-          requires:
+            - test-feature
             - test-unit
+            - build
+          # filters:
+          #   branches:
+          #     only: master
