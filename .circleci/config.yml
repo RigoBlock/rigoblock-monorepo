@@ -107,7 +107,13 @@ jobs:
           command: "~/flynn apps"
       - run:
           name: Download flynn cert
-          command: "sudo bash -c 'curl https://pastebin.com/raw/z1D3TGwP -o /etc/docker/certs.d/docker.dev-02.endpoint.network/ca.crt'"
+          command: "curl https://pastebin.com/raw/z1D3TGwP -o ca.crt"
+      - run:
+          name: Cert folder
+          command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+      - run:
+          name: Move cert
+          command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
       - run:
           name: Restart docker
           command: "sudo service docker restart"
