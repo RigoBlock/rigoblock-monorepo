@@ -7,7 +7,7 @@ Name in parity registry: dragofactory-v2
 ## version 0.4.1
 
 ```
-Mainnet:
+Mainnet: 0xa992cdf1ba964516cb5cd0cd357c3d8d270556ea
 Ropsten: 0xa992cdf1ba964516cb5cd0cd357c3d8d270556ea
 Kovan: 0xa992cdf1ba964516cb5cd0cd357c3d8d270556ea
 ```

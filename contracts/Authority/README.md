@@ -5,7 +5,7 @@ Name in parity registry: authority-v2
 
 ## Authority version 0.4.1
 ```
-Mainnet:
+Mainnet: 0x56cadce6c2f02857faf06912a531bda33c3494e9
 Ropsten: 0x56cadce6c2f02857faf06912a531bda33c3494e9
 Kovan: 0x56cadce6c2f02857faf06912a531bda33c3494e9
 ```

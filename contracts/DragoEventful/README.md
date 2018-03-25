@@ -5,7 +5,7 @@ Name in parity registry: dragoeventful-v2
 
 ## Drago Eventful version 0.4.1
 ```
-Mainnet:
+Mainnet: 0xa36b34a4328ed64faaccafb063d426af2c34de74
 Ropsten: 0xa36b34a4328ed64faaccafb063d426af2c34de74
 Kovan: 0xa36b34a4328ed64faaccafb063d426af2c34de74
 ```

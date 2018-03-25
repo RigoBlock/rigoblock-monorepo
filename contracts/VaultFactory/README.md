@@ -7,7 +7,7 @@ Name in parity registry: vaultfactory-v2
 ## version 0.4.1
 
 ```
-Mainnet:
+Mainnet: 0xdc04786d38ca630ce7ba842dfbd415e5c098fd8a
 Ropsten: 0xdc04786d38ca630ce7ba842dfbd415e5c098fd8a
 Kovan: 0xdc04786d38ca630ce7ba842dfbd415e5c098fd8a
 ```
