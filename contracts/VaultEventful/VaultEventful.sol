@@ -49,7 +49,7 @@ contract VaultEventful is VaultEventfulFace {
         bytes name,
         bytes symbol
     );
-    
+
     event NewRatio(
         address indexed vault,
         address indexed from,
@@ -176,7 +176,7 @@ contract VaultEventful is VaultEventfulFace {
         sellVaultInternal(_targetVault, _who, msg.sender, _amount, _revenue, _name, _symbol);
         return true;
     }
-    
+
     /// @dev Logswhen rigoblock dao changes fee split.
     /// @param _who Address of the caller
     /// @param _targetVault Address of the target vault
@@ -296,32 +296,32 @@ contract VaultEventful is VaultEventfulFace {
     /// @dev Logs a new Vault creation by factory
     /// @param _who Address of the caller
     /// @param _newVault Address of the new vault
-    /// @param _vaultName String of the name of the new vault
-    /// @param _vaultSymbol String of the symbol of the new vault
+    /// @param _name String of the name of the new vault
+    /// @param _symbol String of the symbol of the new vault
     /// @param _vaultId Number of the new vault Id
     /// @return Bool the transaction executed successfully
     function createVault(
         address _who,
         address _newVault,
-        string _vaultName,
-        string _vaultSymbol,
+        string _name,
+        string _symbol,
         uint _vaultId)
         external
         approvedFactoryOnly(msg.sender)
         returns(bool success)
     {
-        createVaultInternal(_newVault, _who, msg.sender, _vaultName, _vaultSymbol, _vaultId);
+        createVaultInternal(_newVault, _who, msg.sender, _name, _symbol, _vaultId);
         return true;
     }
-    
+
     // INTERNAL FUNCTIONS
-    
+
     /// @dev Logs a purchase event
     /// @param _who Address of the caller
     /// @param _targetVault Address of the vault
     /// @param _factory Address of the factory
     /// @param _value Value of transaction in wei
-    /// @param _amount Number of new tokens 
+    /// @param _amount Number of new tokens
     /// @param _name Hex encoded bytes of the name
     /// @param _symbol Hex encoded bytes of the symbol
     function buyVaultInternal(
