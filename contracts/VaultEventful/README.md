@@ -7,7 +7,7 @@ Name in parity registry: vaulteventful-v2
 ```
 Mainnet: 0x50f7a5e7ac4a3667977d90c45dd81cf6eabd3e48
 Ropsten: 0xa803e24a2ea1e8ae64db74e5a447f082208a3980
-Kovan: 0xa803e24a2ea1e8ae64db74e5a447f082208a3980
+Kovan: 0xcd2be04b8b5b5a6d295ca615ec426bdcb8e1b23e
 ```
 Bytecode
 ```
