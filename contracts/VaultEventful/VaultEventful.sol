@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.21;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
@@ -150,7 +150,7 @@ contract VaultEventful is VaultEventfulFace {
         approvedVaultOnly(msg.sender)
         returns (bool success)
     {
-        emit BuyVault(_targetVault, _who, msg.sender, _value, _amount, _name, _symbol);
+        buyVaultInternal(_targetVault, _who, msg.sender, _value, _amount, _name, _symbol);
         return true;
     }
 
@@ -173,7 +173,7 @@ contract VaultEventful is VaultEventfulFace {
         returns(bool success)
     {
         require(_amount > 0);
-        emit SellVault(_targetVault, _who, msg.sender, _amount, _revenue, _name, _symbol);
+        sellVaultInternal(_targetVault, _who, msg.sender, _amount, _revenue, _name, _symbol);
         return true;
     }
     
@@ -296,21 +296,84 @@ contract VaultEventful is VaultEventfulFace {
     /// @dev Logs a new Vault creation by factory
     /// @param _who Address of the caller
     /// @param _newVault Address of the new vault
-    /// @param _name String of the name of the new vault
-    /// @param _symbol String of the symbol of the new vault
+    /// @param _vaultName String of the name of the new vault
+    /// @param _vaultSymbol String of the symbol of the new vault
     /// @param _vaultId Number of the new vault Id
     /// @return Bool the transaction executed successfully
     function createVault(
         address _who,
         address _newVault,
-        string _name,
-        string _symbol,
+        string _vaultName,
+        string _vaultSymbol,
         uint _vaultId)
         external
         approvedFactoryOnly(msg.sender)
         returns(bool success)
     {
-        emit VaultCreated(_newVault, msg.sender, _who, _vaultId, _name, _symbol);
+        createVaultInternal(_newVault, _who, msg.sender, _vaultName, _vaultSymbol, _vaultId);
         return true;
+    }
+    
+    // INTERNAL FUNCTIONS
+    
+    /// @dev Logs a purchase event
+    /// @param _who Address of the caller
+    /// @param _targetVault Address of the vault
+    /// @param _factory Address of the factory
+    /// @param _value Value of transaction in wei
+    /// @param _amount Number of new tokens 
+    /// @param _name Hex encoded bytes of the name
+    /// @param _symbol Hex encoded bytes of the symbol
+    function buyVaultInternal(
+        address _who,
+        address _targetVault,
+        address _factory,
+        uint _value,
+        uint _amount,
+        bytes _name,
+        bytes _symbol)
+        internal
+    {
+        emit BuyVault(_targetVault, _who, _factory, _value, _amount, _name, _symbol);
+    }
+
+    /// @dev Logs a sale event
+    /// @param _who Address of the caller
+    /// @param _targetVault Address of the vault
+    /// @param _factory Address of the factory
+    /// @param _amount Number of burnt tokens
+    /// @param _revenue Value of transaction in wei
+    /// @param _name Hex encoded bytes of the name
+    /// @param _symbol Hex encoded bytes of the symbol
+    function sellVaultInternal(
+        address _who,
+        address _targetVault,
+        address _factory,
+        uint _amount,
+        uint _revenue,
+        bytes _name,
+        bytes _symbol)
+        internal
+    {
+        emit SellVault(_targetVault, _who, _factory, _amount, _revenue, _name, _symbol);
+    }
+
+    /// @dev Logs a new vault creation by factory
+    /// @param _who Address of the caller
+    /// @param _newVault Address of the new vault
+    /// @param _factory Address of the factory
+    /// @param _name Bytes array of the name
+    /// @param _symbol Bytes array of the symbol
+    /// @param _vaultId Number of the pool in registry
+    function createVaultInternal(
+        address _who,
+        address _newVault,
+        address _factory,
+        string _name,
+        string _symbol,
+        uint _vaultId)
+        internal
+    {
+        emit VaultCreated(_newVault, _who, _factory, _vaultId, _name, _symbol);
     }
 }

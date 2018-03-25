@@ -355,7 +355,7 @@ contract Vault is Owned, SafeMath, VaultFace {
 
     /// @dev Finds the value of the deposit of this vault at the casper contract
     /// @return Value of the deposit at casper in wei
-    function getCasperDeposit() external view returns (uint128) {
+    function getCasperDeposit() external view returns (uint) {
         return getCasperDepositInternal();
     }
 
@@ -386,6 +386,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         internal
         returns (bool success)
     {
+        updatePriceInternal();
         uint grossAmount;
         uint feeVault;
         uint feeVaultDao;
@@ -480,7 +481,7 @@ contract Vault is Owned, SafeMath, VaultFace {
             uint amount
         )
     {
-        grossAmount = safeDiv(_totalEth * BASE, getNav());
+        grossAmount = safeDiv(_totalEth * BASE, data.price);
         uint fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
         return (
             grossAmount,
@@ -537,10 +538,13 @@ contract Vault is Owned, SafeMath, VaultFace {
 
     /// @dev Finds the value of the deposit of this vault at the casper contract
     /// @return Value of the deposit at casper in wei
-    function getCasperDepositInternal() internal view returns (uint128) {
+    function getCasperDepositInternal()
+        internal view
+        returns (uint)
+    {
         if (casperInitialized()) {
             Casper casper = Casper(getCasper());
-            return casper.get_deposit_size(data.validatorIndex);
+            return uint(casper.get_deposit_size(data.validatorIndex));
         } else {
             return 0;
         }
@@ -548,9 +552,12 @@ contract Vault is Owned, SafeMath, VaultFace {
 
     /// @dev Calculates the value of the shares
     /// @return Value of the shares in wei
-    function getNav() internal view returns (uint) {
+    function getNav()
+        internal view
+        returns (uint)
+    {
         uint casperDeposit = (casperInitialized() ? getCasperDepositInternal() : 0);
-        uint aum = safeAdd(address(this).balance, casperDeposit);
+        uint aum = safeAdd(address(this).balance, casperDeposit) - msg.value;
         return (data.totalSupply == 0 ? data.price : safeDiv(aum * BASE, data.totalSupply));
     }
 }

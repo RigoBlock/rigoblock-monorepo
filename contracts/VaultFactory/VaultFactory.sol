@@ -55,7 +55,8 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
     modifier whitelistedFactory(address _authority) {
         Authority auth = Authority(_authority);
-        if (auth.isWhitelistedFactory(this)) _;
+        require(auth.isWhitelistedFactory(address(this)));
+        _;
     }
 
     modifier whenFeePaid {
@@ -258,7 +259,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
         emit VaultCreated(_name, _symbol, libraryData.newAddress, _owner, _vaultId);
         return true;
     }
-    
+
     /// @dev Returns the next Id for a vault
     /// @return Number of the next Id from the registry
     function getNextId()

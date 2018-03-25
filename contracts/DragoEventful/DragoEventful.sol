@@ -197,7 +197,7 @@ contract DragoEventful is DragoEventfulFace {
         approvedDragoOnly(msg.sender)
         returns (bool success)
     {
-        emit BuyDrago(_targetDrago, _who, msg.sender, _value, _amount, _name, _symbol);
+        buyDragoInternal(_targetDrago, _who, msg.sender, _value, _amount, _name, _symbol);
         return true;
     }
 
@@ -219,7 +219,7 @@ contract DragoEventful is DragoEventfulFace {
         returns(bool success)
     {
         require(_amount > 0);
-        emit SellDrago(_targetDrago, _who, msg.sender, _amount, _revenue, _name, _symbol);
+        sellDragoInternal(_targetDrago, _who, msg.sender, _amount, _revenue, _name, _symbol);
         return true;
     }
     
@@ -485,7 +485,70 @@ contract DragoEventful is DragoEventfulFace {
         approvedFactoryOnly(msg.sender)
         returns(bool success)
     {
-        emit DragoCreated(_newDrago, msg.sender, _who, _dragoId, _name, _symbol);
+        createDragoInternal(_newDrago, msg.sender, _who, _dragoId, _name, _symbol);
         return true;
+    }
+    
+    // INTERNAL FUNCTIONS
+    
+    /// @dev Logs a purchase event
+    /// @param _who Address of the caller
+    /// @param _targetDrago Address of the drago
+    /// @param _factory Address of the factory
+    /// @param _value Value of transaction in wei
+    /// @param _amount Number of new tokens 
+    /// @param _name Hex encoded bytes of the name
+    /// @param _symbol Hex encoded bytes of the symbol
+    function buyDragoInternal(
+        address _who,
+        address _targetDrago,
+        address _factory,
+        uint _value,
+        uint _amount,
+        bytes _name,
+        bytes _symbol)
+        internal
+    {
+        emit BuyDrago(_targetDrago, _who, _factory, _value, _amount, _name, _symbol);
+    }
+
+    /// @dev Logs a sale event
+    /// @param _who Address of the caller
+    /// @param _targetDrago Address of the drago
+    /// @param _factory Address of the factory
+    /// @param _amount Number of burnt tokens
+    /// @param _revenue Value of transaction in wei
+    /// @param _name Hex encoded bytes of the name
+    /// @param _symbol Hex encoded bytes of the symbol
+    function sellDragoInternal(
+        address _who,
+        address _targetDrago,
+        address _factory,
+        uint _amount,
+        uint _revenue,
+        bytes _name,
+        bytes _symbol)
+        internal
+    {
+        emit SellDrago(_targetDrago, _who, _factory, _amount, _revenue, _name, _symbol);
+    }
+
+    /// @dev Logs a new drago creation by factory
+    /// @param _who Address of the caller
+    /// @param _newDrago Address of the new drago
+    /// @param _factory Address of the factory
+    /// @param _name Bytes array of the name
+    /// @param _symbol Bytes array of the symbol
+    /// @param _dragoId Number of the pool in registry
+    function createDragoInternal(
+        address _who,
+        address _newDrago,
+        address _factory,
+        uint _dragoId,
+        string _name,
+        string _symbol)
+        internal
+    {
+        emit DragoCreated(_newDrago, _who, _factory, _dragoId, _name, _symbol);
     }
 }

@@ -96,7 +96,7 @@ contract Authority is Owned, AuthorityFace {
         _;
     }
 
-    // CORE CORE FUNCTIONS
+    // CORE FUNCTIONS
 
     /// @dev Allows the owner to whitelist an authority
     /// @param _authority Address of the authority
@@ -105,26 +105,17 @@ contract Authority is Owned, AuthorityFace {
         external
         onlyOwner
     {
-        accounts[_authority].account = _authority;
-        accounts[_authority].authorized = _isWhitelisted;
-        accounts[_authority].groups[_isWhitelisted].authority = _isWhitelisted;
-        setWhitelister(_authority, _isWhitelisted);
-        types.list.push(List(_authority));
-        emit SetAuthority(_authority);
+        setAuthorityInternal(_authority, _isWhitelisted);
     }
-
+    
     /// @dev Allows the owner to whitelist a whitelister
     /// @param _whitelister Address of the whitelister
     /// @param _isWhitelisted Bool whitelisted
     function setWhitelister(address _whitelister, bool _isWhitelisted)
-        internal
+        external
         onlyOwner
     {
-        accounts[_whitelister].account = _whitelister;
-        accounts[_whitelister].authorized = _isWhitelisted;
-        accounts[_whitelister].groups[_isWhitelisted].whitelister = _isWhitelisted;
-        types.list.push(List(_whitelister));
-        emit SetWhitelister(_whitelister);
+        setWhitelisterInternal(_whitelister, _isWhitelisted);
     }
 
     /// @dev Allows a whitelister to whitelist a user
@@ -222,6 +213,7 @@ contract Authority is Owned, AuthorityFace {
         accounts[_factory].authorized = _isWhitelisted;
         accounts[_factory].groups[_isWhitelisted].registry = _isWhitelisted;
         types.list.push(List(_factory));
+        setAuthorityInternal(_factory, _isWhitelisted);
         emit WhitelistedFactory(_factory, _isWhitelisted);
     }
 
@@ -425,6 +417,37 @@ contract Authority is Owned, AuthorityFace {
     }
 
     // INTERNAL FUNCTIONS
+    
+    /// @dev Allows to whitelist an authority
+    /// @param _authority Address of the authority
+    /// @param _isWhitelisted Bool whitelisted
+    function setAuthorityInternal(
+        address _authority,
+        bool _isWhitelisted)
+        internal
+    {
+        accounts[_authority].account = _authority;
+        accounts[_authority].authorized = _isWhitelisted;
+        accounts[_authority].groups[_isWhitelisted].authority = _isWhitelisted;
+        setWhitelisterInternal(_authority, _isWhitelisted);
+        types.list.push(List(_authority));
+        emit SetAuthority(_authority);
+    }
+    
+    /// @dev Allows the owner to whitelist a whitelister
+    /// @param _whitelister Address of the whitelister
+    /// @param _isWhitelisted Bool whitelisted
+    function setWhitelisterInternal(
+        address _whitelister,
+        bool _isWhitelisted)
+        internal
+    {
+        accounts[_whitelister].account = _whitelister;
+        accounts[_whitelister].authorized = _isWhitelisted;
+        accounts[_whitelister].groups[_isWhitelisted].whitelister = _isWhitelisted;
+        types.list.push(List(_whitelister));
+        emit SetWhitelister(_whitelister);
+    }
 
     /// @dev Provides whether an address is whitelister
     /// @param _whitelister Address of the target whitelister

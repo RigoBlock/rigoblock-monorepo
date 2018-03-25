@@ -42,6 +42,7 @@ interface AuthorityFace {
     // CORE FUNCTIONS
 
     function setAuthority(address _authority, bool _isWhitelisted) external;
+    function setWhitelister(address _whitelister, bool _isWhitelisted) external;
     function whitelistUser(address _target, bool _isWhitelisted) external;
     function whitelistAsset(address _asset, bool _isWhitelisted) external;
     function whitelistExchange(address _exchange, bool _isWhitelisted) external;

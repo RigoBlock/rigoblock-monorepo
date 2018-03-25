@@ -199,7 +199,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @dev Allows owner to collect fees by draining the balance
     function drain()
         external
-        onlyOwner 
+        onlyOwner
     {
         msg.sender.transfer(address(this).balance);
     }
