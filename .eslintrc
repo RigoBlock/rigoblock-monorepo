@@ -1,7 +1,6 @@
 {
   "extends": [
       "plugin:react/recommended",
-
       "prettier",
       "prettier/react",
       "prettier/standard"
@@ -15,6 +14,7 @@
       "react"
     ],
     "rules": {
+      "react/require-default-props": 2,
       "prettier/prettier": [
         "error", {
           "singleQuote": true,
