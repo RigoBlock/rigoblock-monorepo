@@ -47,6 +47,7 @@
   "scripts": {
     "start": "http-server dist",
     "build": "node scripts/build.js",
+    "dev": "node scripts/start.js",
     "test": "npm run test:unit && npm run test:feature",
     "test:unit": "CI=true node scripts/test.js --env=jsdom",
     "test:unit:watch": "node scripts/test.js --env=jsdom",
