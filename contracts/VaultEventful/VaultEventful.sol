@@ -310,7 +310,7 @@ contract VaultEventful is VaultEventfulFace {
         approvedFactoryOnly(msg.sender)
         returns(bool success)
     {
-        createVaultInternal(_newVault, _who, msg.sender, _name, _symbol, _vaultId);
+        createVaultInternal(_newVault, msg.sender, _who, _name, _symbol, _vaultId);
         return true;
     }
 
