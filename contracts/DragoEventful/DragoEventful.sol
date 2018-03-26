@@ -49,7 +49,7 @@ contract DragoEventful is DragoEventfulFace {
         bytes name,
         bytes symbol
     );
-    
+
     event NewRatio(
         address indexed drago,
         address indexed from,
@@ -63,7 +63,7 @@ contract DragoEventful is DragoEventfulFace {
         uint sellPrice,
         uint buyPrice
     );
-    
+
     event NewFee(
         address indexed targetDrago,
         address indexed group,
@@ -77,7 +77,7 @@ contract DragoEventful is DragoEventfulFace {
         address indexed who,
         address feeCollector
     );
-    
+
     event DragoDao(
         address indexed drago,
         address indexed from,
@@ -222,7 +222,7 @@ contract DragoEventful is DragoEventfulFace {
         sellDragoInternal(_targetDrago, _who, msg.sender, _amount, _revenue, _name, _symbol);
         return true;
     }
-    
+
     /// @dev Logswhen rigoblock dao changes fee split.
     /// @param _who Address of the caller
     /// @param _targetDrago Address of the target drago
@@ -240,7 +240,7 @@ contract DragoEventful is DragoEventfulFace {
         emit NewRatio(_targetDrago, _who, _ratio);
         return true;
     }
-    
+
     /// @dev Logs when wizard changes fee collector address
     /// @param _who Address of the caller
     /// @param _targetDrago Address of the target Drago
@@ -258,7 +258,7 @@ contract DragoEventful is DragoEventfulFace {
         emit NewCollector(_targetDrago, msg.sender, _who, _feeCollector);
         return true;
     }
-    
+
     /// @dev Logs a change in the drago dao of an approved vault
     /// @param _who Address of the caller
     /// @param _targetDrago Address of the drago
@@ -296,7 +296,7 @@ contract DragoEventful is DragoEventfulFace {
         emit NewNAV(_targetDrago, msg.sender, _who, _sellPrice, _buyPrice);
         return true;
     }
-    
+
     /// @dev Logs a modification of the transaction fee event
     /// @param _who Address of the caller
     /// @param _targetDrago Address of the target Drago
@@ -395,7 +395,7 @@ contract DragoEventful is DragoEventfulFace {
         emit OrderExchange(_targetDrago, _cfdExchange, _cfd, _stake, _adjustment);
         return true;
     }
-    
+
 
     function placeTradeExchange(
         address _who,
@@ -488,20 +488,20 @@ contract DragoEventful is DragoEventfulFace {
         createDragoInternal(_newDrago, msg.sender, _who, _dragoId, _name, _symbol);
         return true;
     }
-    
+
     // INTERNAL FUNCTIONS
-    
+
     /// @dev Logs a purchase event
     /// @param _who Address of the caller
     /// @param _targetDrago Address of the drago
     /// @param _factory Address of the factory
     /// @param _value Value of transaction in wei
-    /// @param _amount Number of new tokens 
+    /// @param _amount Number of new tokens
     /// @param _name Hex encoded bytes of the name
     /// @param _symbol Hex encoded bytes of the symbol
     function buyDragoInternal(
-        address _who,
         address _targetDrago,
+        address _who,
         address _factory,
         uint _value,
         uint _amount,
@@ -521,8 +521,8 @@ contract DragoEventful is DragoEventfulFace {
     /// @param _name Hex encoded bytes of the name
     /// @param _symbol Hex encoded bytes of the symbol
     function sellDragoInternal(
-        address _who,
         address _targetDrago,
+        address _who,
         address _factory,
         uint _amount,
         uint _revenue,
@@ -541,14 +541,14 @@ contract DragoEventful is DragoEventfulFace {
     /// @param _symbol Bytes array of the symbol
     /// @param _dragoId Number of the pool in registry
     function createDragoInternal(
-        address _who,
         address _newDrago,
         address _factory,
+        address _who,
         uint _dragoId,
         string _name,
         string _symbol)
         internal
     {
-        emit DragoCreated(_newDrago, _who, _factory, _dragoId, _name, _symbol);
+        emit DragoCreated(_newDrago, _factory, _who, _dragoId, _name, _symbol);
     }
 }

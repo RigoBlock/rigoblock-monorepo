@@ -325,8 +325,8 @@ contract VaultEventful is VaultEventfulFace {
     /// @param _name Hex encoded bytes of the name
     /// @param _symbol Hex encoded bytes of the symbol
     function buyVaultInternal(
-        address _who,
         address _targetVault,
+        address _who,
         address _factory,
         uint _value,
         uint _amount,
@@ -346,8 +346,8 @@ contract VaultEventful is VaultEventfulFace {
     /// @param _name Hex encoded bytes of the name
     /// @param _symbol Hex encoded bytes of the symbol
     function sellVaultInternal(
-        address _who,
         address _targetVault,
+        address _who,
         address _factory,
         uint _amount,
         uint _revenue,
@@ -366,14 +366,14 @@ contract VaultEventful is VaultEventfulFace {
     /// @param _symbol Bytes array of the symbol
     /// @param _vaultId Number of the pool in registry
     function createVaultInternal(
-        address _who,
         address _newVault,
         address _factory,
+        address _who,
         string _name,
         string _symbol,
         uint _vaultId)
         internal
     {
-        emit VaultCreated(_newVault, _who, _factory, _vaultId, _name, _symbol);
+        emit VaultCreated(_newVault, _factory, _who, _vaultId, _name, _symbol);
     }
 }
