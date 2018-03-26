@@ -7,9 +7,7 @@ exports[`renders correctly 1`] = `
   <h1>
     RigoBlock
   </h1>
-  <button
-    class="counter"
-  >
+  <button>
     0
   </button>
 </div>

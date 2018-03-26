@@ -13,6 +13,7 @@
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "1.1.3",
     "css-loader": "0.28.11",
+    "deep-freeze": "^0.0.1",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
     "eslint-config-react-app": "^2.1.0",
@@ -59,8 +60,7 @@
     "test:feature": "./node_modules/.bin/codeceptjs run --steps",
     "test:feature:debug": "./node_modules/.bin/codeceptjs run --debug",
     "cov": "npm run test:unit -- --coverage",
-    "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
-    "precommit": "lint-staged"
+    "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix"
   },
   "devDependencies": {
     "codeceptjs": "^1.1.7",
@@ -72,7 +72,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
-    "husky": "^0.14.3",
+    "husky": "^0.15.0-rc.13",
     "lint-staged": "^7.0.0",
     "prettier": "^1.11.1",
     "puppeteer": "^1.2.0",
@@ -81,8 +81,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test:unit",
-      "pre-push": "npm run test:unit"
+      "pre-commit": "lint-staged && npm run test:unit",
+      "pre-push": "lint-staged && npm run test:unit"
     }
   },
   "lint-staged": {
