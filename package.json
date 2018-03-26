@@ -51,7 +51,7 @@
   },
   "scripts": {
     "start": "http-server dist",
-    "build": "node scripts/build.js",
+    "build": "rm -rf dist/* && node scripts/build.js",
     "dev": "node scripts/start.js",
     "test": "npm run test:unit && npm run test:feature",
     "test:unit": "CI=true node scripts/test.js --env=jsdom",
@@ -77,6 +77,8 @@
     "prettier": "^1.11.1",
     "puppeteer": "^1.2.0",
     "react-test-renderer": "^16.2.0",
+    "reactotron-react-js": "^1.13.0",
+    "reactotron-redux": "^1.13.0",
     "webpack-cli": "^2.0.12"
   },
   "husky": {
