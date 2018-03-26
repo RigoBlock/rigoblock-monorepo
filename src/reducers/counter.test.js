@@ -2,18 +2,6 @@ import counter from './counter'
 import actions from '../actions/counter-actions'
 import deepFreeze from 'deep-freeze'
 
-const reducerTester = function(reducer) {
-  return function(currentState, action, expectedState) {
-    if (currentState && typeof currentState === 'object') {
-      deepFreeze(currentState)
-    }
-    const newState = reducer(currentState, action)
-    return expect(newState).toEqual(expectedState)
-  }
-}
-
-window.reducerTester = reducerTester
-
 describe('counter reducer', () => {
   const counterReducer = reducerTester(counter)
 
