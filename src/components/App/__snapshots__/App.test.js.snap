@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`App component renders correctly 1`] = `
 <div
   class="app-wrapper"
 >
   <h1>
-    RigoBlock
+    Rigoblock
   </h1>
   <button>
     0
