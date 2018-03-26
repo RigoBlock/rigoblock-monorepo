@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
 import rootReducer from '../reducers/index'
 
-export default (initialState = 0) => {
+export default (initialState = {}) => {
   const storeEnhancer =
     typeof window !== 'undefined' && window.devToolsExtension
       ? window.devToolsExtension()

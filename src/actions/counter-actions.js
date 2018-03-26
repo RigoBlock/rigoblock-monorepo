@@ -1,7 +1,9 @@
+import { actionTypes } from '../core/action-types'
+
 export default {
   add() {
     return {
-      type: 'COUNTER_ADD',
+      type: actionTypes.COUNTER_ADD,
       amount: 1
     }
   }
