@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <div className="app-wrapper">
-        <h1>RigoBlock</h1>
+        <h1>{this.props.title}</h1>
         <Provider store={store}>
           <Counter />
         </Provider>
@@ -20,7 +20,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  children: PropTypes.object
+  title: PropTypes.string.isRequired
 }
 
 export default App

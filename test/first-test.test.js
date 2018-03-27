@@ -2,5 +2,5 @@ Feature('div')
 
 Scenario('test correct div render', I => {
   I.amOnPage('/')
-  I.see('RigoBlock', 'div')
+  I.see('RigoBlock', 'h1')
 })
