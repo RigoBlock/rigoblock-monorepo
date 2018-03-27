@@ -1,15 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
-import { persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
 import rootReducer from '../reducers'
 import history from './history'
-
-const persistConfig = {
-  key: 'root',
-  storage
-}
-const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export default () => {
   let middlewares = []
@@ -30,5 +22,5 @@ export default () => {
     storeCreator = Reactotron.createStore
   }
 
-  return storeCreator(persistedReducer, undefined, compose(...middlewares))
+  return storeCreator(rootReducer, undefined, compose(...middlewares))
 }

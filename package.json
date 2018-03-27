@@ -28,6 +28,7 @@
     "http-server": "^0.11.1",
     "jest": "20.0.4",
     "keymirror": "^0.1.1",
+    "localforage": "^1.6.0",
     "node-sass": "^4.7.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.3.0",
