@@ -10,7 +10,7 @@ describe('App component', () => {
   }
   // temporarily hardcoded
   const createComponentWithTitle = () => {
-    return <App title={'Rigoblock'} />
+    return <App title={'RigoBlock'} />
   }
 
   it('renders without crashing', () => {

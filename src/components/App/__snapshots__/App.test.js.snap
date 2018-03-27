@@ -5,7 +5,7 @@ exports[`App component renders correctly 1`] = `
   class="app-wrapper"
 >
   <h1>
-    Rigoblock
+    RigoBlock
   </h1>
   <button>
     0
