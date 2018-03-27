@@ -15,10 +15,14 @@ class Counter extends Component {
     return (
       <div>
         <h1>This is a basic Counter</h1>
-        <button onClick={this.addCount}>{this.props.count}</button>
-        <button>
-          <Link to="/">Home</Link>
+        <button onClick={this.addCount} className="counter">
+          {this.props.count}
         </button>
+        {/* <button> */}
+        <Link to="/" className="link">
+          Home
+        </Link>
+        {/* </button> */}
       </div>
     )
   }

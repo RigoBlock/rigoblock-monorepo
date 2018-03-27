@@ -7,12 +7,11 @@ exports[`App component renders correctly 1`] = `
   <h1>
     RigoBlock
   </h1>
-  <button>
-    <a
-      href="/counter"
-    >
-      Counter
-    </a>
-  </button>
+  <a
+    class="link"
+    href="/counter"
+  >
+    Counter
+  </a>
 </div>
 `;

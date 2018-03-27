@@ -9,9 +9,9 @@ class App extends Component {
     return (
       <div className="app-wrapper">
         <h1>{this.props.title}</h1>
-        <button>
-          <Link to="/counter">Counter</Link>
-        </button>
+        <Link to="/counter" className="link">
+          Counter
+        </Link>
       </div>
     )
   }
