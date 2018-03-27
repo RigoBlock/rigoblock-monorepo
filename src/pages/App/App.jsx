@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Counter from '../Counter'
+import Counter from '../../components/Counter'
 import './App.scss'
 
 class App extends Component {
@@ -9,8 +9,9 @@ class App extends Component {
     return (
       <div className="app-wrapper">
         <h1>{this.props.title}</h1>
-        <Link to="/counter" className="link">
-          Counter
+        <Counter />
+        <Link to="/vault" className="link">
+          Vault
         </Link>
       </div>
     )

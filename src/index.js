@@ -5,8 +5,8 @@ import { Provider } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import history from './store/history'
-import App from './components/App'
-import Counter from './components/Counter'
+import App from './pages/App'
+import Vault from './pages/Vault'
 import './images/favicon.ico'
 import './index.scss'
 import registerServiceWorker from './registerServiceWorker'
@@ -18,7 +18,7 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <div>
         <Route exact path="/" render={() => <App title={'RigoBlock'} />} />
-        <Route exact path="/counter" render={() => <Counter />} />
+        <Route exact path="/vault" render={() => <Vault />} />
       </div>
     </ConnectedRouter>
   </Provider>,
