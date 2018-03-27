@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router-dom'
 import CounterActions from '../../actions/counter-actions'
 import './Counter.scss'
 
@@ -15,6 +16,9 @@ class Counter extends Component {
       <div>
         <h1>This is a basic Counter</h1>
         <button onClick={this.addCount}>{this.props.count}</button>
+        <button>
+          <Link to="/">Home</Link>
+        </button>
       </div>
     )
   }

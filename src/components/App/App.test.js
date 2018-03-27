@@ -1,16 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { render } from 'enzyme'
+import { MemoryRouter } from 'react-router-dom'
 import App from './App.jsx'
 import toJson from 'enzyme-to-json'
 
 describe('App component', () => {
-  const createComponent = props => {
-    return <App {...props} />
-  }
-  // temporarily hardcoded
-  const createComponentWithTitle = () => {
-    return <App title={'RigoBlock'} />
+  const createComponentWithTitle = (title = 'RigoBlock') => {
+    return (
+      <MemoryRouter>
+        <App title={title} />
+      </MemoryRouter>
+    )
   }
 
   it('renders without crashing', () => {

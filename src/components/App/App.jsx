@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Counter from '../Counter'
 import './App.scss'
@@ -7,15 +8,17 @@ class App extends Component {
   render() {
     return (
       <div className="app-wrapper">
-        {/* <h1>{this.props.title}</h1> */}
-        <h1>RigoBlock</h1>
+        <h1>{this.props.title}</h1>
+        <button>
+          <Link to="/counter">Counter</Link>
+        </button>
       </div>
     )
   }
 }
 
-// App.propTypes = {
-//   title: PropTypes.string.isRequired
-// }
+App.propTypes = {
+  title: PropTypes.string.isRequired
+}
 
 export default App
