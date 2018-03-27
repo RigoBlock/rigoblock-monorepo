@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import CounterActions from '../../actions/counter-actions'
+import './Counter.scss'
 
 class Counter extends Component {
   addCount = () => {
@@ -10,7 +11,12 @@ class Counter extends Component {
   }
 
   render() {
-    return <button onClick={this.addCount}>{this.props.count}</button>
+    return (
+      <div>
+        <h1>This is a basic Counter</h1>
+        <button onClick={this.addCount}>{this.props.count}</button>
+      </div>
+    )
   }
 }
 
