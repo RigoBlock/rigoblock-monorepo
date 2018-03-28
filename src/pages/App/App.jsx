@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
-import { Provider } from 'react-redux'
-import configureStore from '../../store'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Counter from '../Counter'
+import Counter from '../../components/Counter'
 import './App.scss'
 
-const store = configureStore()
 class App extends Component {
   render() {
     return (
       <div className="app-wrapper">
         <h1>{this.props.title}</h1>
-        <Provider store={store}>
-          <Counter />
-        </Provider>
+        <Counter />
+        <Link to="/vault" className="link">
+          Vault
+        </Link>
       </div>
     )
   }

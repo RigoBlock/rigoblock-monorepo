@@ -1,4 +1,4 @@
-import { actionTypes } from '../core/action-types'
+import { actionTypes } from '../constants/action-types'
 
 export default {
   add: () => ({
