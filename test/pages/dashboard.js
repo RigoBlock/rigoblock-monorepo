@@ -5,6 +5,10 @@ module.exports = {
     I = require('../steps')()
   },
 
+  navigateTo() {
+    I.amOnPage('/')
+  },
+
   assertImOnPage() {
     I.waitInUrl('/')
     I.see('RigoBlock')
@@ -12,7 +16,5 @@ module.exports = {
 
   navigateToVault() {
     I.click('.link')
-    I.waitInUrl('/vault')
-    I.see('Vault')
   }
 }

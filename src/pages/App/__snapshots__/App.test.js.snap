@@ -2,26 +2,18 @@
 
 exports[`App component renders correctly 1`] = `
 <div
-  class="app-wrapper"
+  className="app-wrapper"
 >
   <h1>
     RigoBlock
   </h1>
-  <div>
-    <p>
-      Test counter
-    </p>
-    <button
-      class="counter"
-    >
-      0
-    </button>
-  </div>
-  <a
-    class="link"
-    href="/vault"
+  <Connect(Counter) />
+  <Link
+    className="link"
+    replace={false}
+    to="/vault"
   >
     Vault
-  </a>
+  </Link>
 </div>
 `;

@@ -10,7 +10,7 @@ module.exports = {
   },
 
   assertImOnPage() {
-    I.waitInUrl('/')
+    I.waitInUrl('/vault')
     I.see('Vault')
   }
 }

@@ -1,11 +1,12 @@
 Feature('div')
 
 Scenario('test correct div render', (I, dashboard) => {
-  I.amOnPage('/')
+  dashboard.navigateTo()
   dashboard.assertImOnPage()
 })
 
-Scenario('test correct navigation to vault page', (I, dashboard) => {
-  I.amOnPage('/')
+Scenario('test correct navigation to vault page', (I, dashboard, vault) => {
+  dashboard.navigateTo()
   dashboard.navigateToVault()
+  vault.assertImOnPage()
 })
