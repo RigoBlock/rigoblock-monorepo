@@ -14,10 +14,9 @@ class Counter extends Component {
   render() {
     return (
       <div>
-        <h1>This is a basic Counter</h1>
-        <button onClick={this.addCount}>{this.props.count}</button>
-        <button>
-          <Link to="/">Home</Link>
+        <p>Test counter</p>
+        <button onClick={this.addCount} className="counter">
+          {this.props.count}
         </button>
       </div>
     )
