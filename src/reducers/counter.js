@@ -1,10 +1,13 @@
 import persistentDecorator from '../store/persistentDecorator'
 import { actionTypes } from '../constants/action-types'
 
-function counter(state = 0, action) {
+function counter(state = { count: 0 }, action) {
   switch (action.type) {
     case actionTypes.COUNTER_ADD:
-      return (state += action.amount)
+      return {
+        ...state,
+        count: state.count + action.amount
+      }
     default:
       return state
   }

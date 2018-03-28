@@ -32,7 +32,7 @@ Counter.propTypes = {
 export default connect(
   state => {
     return {
-      count: state.counter
+      count: state.counter.count
     }
   },
   dispatch => bindActionCreators(CounterActions, dispatch)

@@ -13,7 +13,6 @@
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "1.1.3",
     "css-loader": "0.28.11",
-    "deep-freeze": "^0.0.1",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
     "eslint-config-react-app": "^2.1.0",
@@ -69,6 +68,7 @@
   "devDependencies": {
     "codeceptjs": "^1.1.7",
     "codeceptjs-puppeteer": "^1.1.0",
+    "deep-freeze": "^0.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
