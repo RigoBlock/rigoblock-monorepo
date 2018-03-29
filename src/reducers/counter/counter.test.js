@@ -1,5 +1,5 @@
 import counter from './counter'
-import actions from '../actions/counter-actions'
+import actions from '../../actions/counter-actions'
 
 describe('counter reducer', () => {
   const counterReducer = reducerTester(counter)
