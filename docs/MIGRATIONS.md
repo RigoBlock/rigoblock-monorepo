@@ -1,7 +1,7 @@
 # Creating a database migration
 
 
-We are using [redux-persist](https://github.com/rt2zz/redux-persist) and [localforage](https://github.com/localForage/localForage) to manage store persistence on IndexedDB.
+
 
 This is the folder structure of a sample counter reducer.
 
