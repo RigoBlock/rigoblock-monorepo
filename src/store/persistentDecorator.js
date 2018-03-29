@@ -11,7 +11,9 @@ export default (reducer, key, migrations = null, version = -1) =>
       key,
       version: version,
       storage: localforage,
-      migrate: createMigrate(migrations, { debug: true })
+      migrate: createMigrate(migrations, {
+        debug: process.env.NODE_ENV === 'development'
+      })
     },
     reducer
   )

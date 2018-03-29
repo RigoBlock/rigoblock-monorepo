@@ -31,6 +31,8 @@ export default migrations
 ```
 When we export the reducer, we pass it through the persistentDecorator function together with its migrations and the version we want to use.
 
+**To bump the version simply change the VERSION constant in the reducer file.**
+
 
 ```js
 // persistentDecorator.js
@@ -41,7 +43,7 @@ export default (reducer, key, migrations = null, version = -1) =>
       key,
       version: version,
       storage: localforage,
-      migrate: createMigrate(migrations, { debug: true })
+      migrate: createMigrate(migrations, { debug: process.env.NODE_ENV === 'development' })
     },
     reducer
   )
@@ -67,4 +69,3 @@ function counter(state = { count: 0 }, action) {
 
 export default persistentDecorator(counter, 'counter', migrations, VERSION)
 ```
-
