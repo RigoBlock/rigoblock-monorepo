@@ -21,7 +21,7 @@ const compile = (networkId, contracts) => {
 
   const compiler = new Compiler(compilerOpts)
 
-  logger.info('compiling...')
+  logger.info(c.bold(`Compiling ${JSON.stringify(contracts)}...`))
   return compiler.compileAllAsync()
 }
 
@@ -39,12 +39,12 @@ const deploy = (from, networkId, contractName, args = []) => {
 
   const deployer = new Deployer(deployerOpts)
 
-  logger.info(c.grey(`Deploying ${contractName}...`))
+  logger.info(c.bold(`Deploying ${contractName}...`))
   return deployer.deployAndSaveAsync(contractName, args)
 }
 
 const printAddress = (name, address) => {
-  return logger.info(c.grey(name), c.magenta(address))
+  return logger.info(c.bold(name), c.bold.magenta(address))
 }
 
 module.exports = async (baseAccount, networkId) => {
@@ -69,7 +69,7 @@ module.exports = async (baseAccount, networkId) => {
   ])
   printAddress('VaultEventful', authority.address)
 
-  logger.info(c.grey('Setting up VaultEventful...'))
+  logger.info(c.bold('Setting up VaultEventful...'))
   authority.setVaultEventful(vaultEventful.address)
 
   const vaultFactory = await deploy(baseAccount, networkId, 'VaultFactory', [
@@ -79,7 +79,7 @@ module.exports = async (baseAccount, networkId) => {
   ])
   printAddress('VaultFactory', authority.address)
 
-  logger.info(c.grey('Whitelisting VaultFactory...'))
+  logger.info(c.bold('Whitelisting VaultFactory...'))
   authority.whitelistFactory(vaultFactory.address, true)
 
   const dragoEventful = await deploy(baseAccount, networkId, 'DragoEventful', [
@@ -87,7 +87,7 @@ module.exports = async (baseAccount, networkId) => {
   ])
   printAddress('DragoEventful', authority.address)
 
-  logger.info(c.grey('Setting up DragoEventful...'))
+  logger.info(c.bold('Setting up DragoEventful...'))
   authority.setDragoEventful(dragoEventful.address)
 
   const dragoFactory = await deploy(baseAccount, networkId, 'DragoFactory', [
@@ -97,6 +97,6 @@ module.exports = async (baseAccount, networkId) => {
   ])
   printAddress('DragoFactory', authority.address)
 
-  logger.info(c.grey('Whitelisting DragoFactory...'))
+  logger.info(c.bold('Whitelisting DragoFactory...'))
   authority.whitelistFactory(dragoFactory.address, true)
 }

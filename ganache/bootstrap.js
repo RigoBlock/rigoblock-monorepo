@@ -8,8 +8,8 @@ const bootstrap = async () => {
   const web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_URL))
   const accList = await web3.eth.getAccounts()
   const networkId = await web3.eth.net.getId()
-  logger.info('Accounts list', accList)
-  logger.info('NETWORK ID', networkId)
+  logger.info('BASE ACCOUNT', c.bold.magenta(accList[0]))
+  logger.info('NETWORK ID', c.bold.magenta(networkId))
   await protocolDeploy(accList[0], networkId)
 }
 
