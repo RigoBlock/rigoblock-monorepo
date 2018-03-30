@@ -66,6 +66,7 @@
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix"
   },
   "devDependencies": {
+    "@0xproject/deployer": "^0.3.3",
     "codeceptjs": "^1.1.7",
     "codeceptjs-puppeteer": "^1.1.0",
     "deep-freeze": "^0.0.1",
@@ -83,6 +84,7 @@
     "react-test-renderer": "^16.2.0",
     "reactotron-react-js": "^1.13.0",
     "reactotron-redux": "^1.13.0",
+    "web3": "^1.0.0-beta.33",
     "webpack-cli": "^2.0.12"
   },
   "husky": {
