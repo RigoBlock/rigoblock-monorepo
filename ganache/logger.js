@@ -1,6 +1,7 @@
 const pino = require('pino')
 const loggerOpts = {
-  prettyPrint: true
+  prettyPrint: true,
+  timestamp: false
 }
 
 module.exports = pino(loggerOpts)
