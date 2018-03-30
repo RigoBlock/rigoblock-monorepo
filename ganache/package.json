@@ -1,0 +1,16 @@
+{
+  "name": "ganache",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bootstrap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.3.2",
+    "pino": "^4.15.3",
+    "web3": "^1.0.0-beta.33"
+  }
+}
