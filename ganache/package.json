@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@0xproject/deployer": "0.3.5",
     "chalk": "^2.3.2",
     "pino": "^4.15.3",
     "web3": "^1.0.0-beta.33"

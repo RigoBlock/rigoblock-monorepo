@@ -22,7 +22,7 @@ const compile = (networkId, contracts) => {
   const compiler = new Compiler(compilerOpts)
 
   logger.info(c.bold(`Compiling ${JSON.stringify(contracts)}...`))
-  return compiler.compileAllAsync()
+  return compiler.compileAsync()
 }
 
 const deploy = (from, networkId, contractName, args = []) => {
