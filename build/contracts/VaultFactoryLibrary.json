@@ -1,0 +1,2314 @@
+{
+  "contractName": "VaultFactoryLibrary",
+  "abi": [],
+  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a723058201e90bbedf26c20a0d9d77f5227e9331ff08bbcca0fd427a3c8669fe5bc342a250029",
+  "deployedBytecode": "0x6060604052600080fd00a165627a7a723058201e90bbedf26c20a0d9d77f5227e9331ff08bbcca0fd427a3c8669fe5bc342a250029",
+  "sourceMap": "866:1199:30:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "866:1199:30:-;;;;;",
+  "source": "/*\n\n Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity ^0.4.21;
+pragma experimental "v0.5.0";\n\nimport { AuthorityFace as Authority } from \"../../Authority/AuthorityFace.sol\";\n\nimport { Vault } from \"../../Vault/Vault.sol\";\n\n/// @title Vault Factory library - Reduces size of vault factory.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\nlibrary VaultFactoryLibrary {\n\n    struct NewVault {\n        string name;\n        string symbol;\n        uint256 vaultId;\n        address owner;\n        address newAddress;\n    }\n\n    modifier whitelistedFactory(address _authority) {\n        Authority auth = Authority(_authority);\n        if (auth.isWhitelistedFactory(this)) _;\n    }\n\n    /// @dev Allows an approved factory to create new vaults\n    /// @param _name String of the name\n    /// @param _symbol String of the symbol\n    /// @param _vaultId Number of Id of the vault from the registry\n    /// @param _authority Address of the respective authority\n    /// @return Bool the function executed\n    function createVault(\n        NewVault storage self,\n        string _name,\n        string _symbol,\n        address _owner,\n        uint _vaultId,\n        address _authority)\n        internal\n        whitelistedFactory(_authority)\n        returns (bool success)\n    {\n        Vault vault = new Vault(\n            self.name = _name,\n            self.symbol = _symbol,\n            self.vaultId = _vaultId,\n            self.owner = _owner,\n            _authority\n        );\n        self.newAddress = address(vault);\n        return true;\n    }\n}\n",
+  "sourcePath": "/home/gab/truffle/contracts/contracts/VaultFactory/VaultFactoryLibrary/VaultFactoryLibrary.sol",
+  "ast": {
+    "absolutePath": "/home/gab/truffle/contracts/contracts/VaultFactory/VaultFactoryLibrary/VaultFactoryLibrary.sol",
+    "exportedSymbols": {
+      "VaultFactoryLibrary": [
+        10831
+      ]
+    },
+    "id": 10832,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 10744,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "597:24:30"
+      },
+      {
+        "absolutePath": "/home/gab/truffle/contracts/contracts/Authority/AuthorityFace.sol",
+        "file": "../../Authority/AuthorityFace.sol",
+        "id": 10746,
+        "nodeType": "ImportDirective",
+        "scope": 10832,
+        "sourceUnit": 1206,
+        "src": "623:79:30",
+        "symbolAliases": [
+          {
+            "foreign": 10745,
+            "local": "Authority"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/gab/truffle/contracts/contracts/Vault/Vault.sol",
+        "file": "../../Vault/Vault.sol",
+        "id": 10748,
+        "nodeType": "ImportDirective",
+        "scope": 10832,
+        "sourceUnit": 9294,
+        "src": "704:46:30",
+        "symbolAliases": [
+          {
+            "foreign": 10747,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [
+          9293
+        ],
+        "contractKind": "library",
+        "documentation": "@title Vault Factory library - Reduces size of vault factory.\n @author Gabriele Rigo - <gab@rigoblock.com>",
+        "fullyImplemented": true,
+        "id": 10831,
+        "linearizedBaseContracts": [
+          10831
+        ],
+        "name": "VaultFactoryLibrary",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "VaultFactoryLibrary.NewVault",
+            "id": 10759,
+            "members": [
+              {
+                "constant": false,
+                "id": 10750,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "927:11:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string storage pointer"
+                },
+                "typeName": {
+                  "id": 10749,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "927:6:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string storage pointer"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10752,
+                "name": "symbol",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "948:13:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string storage pointer"
+                },
+                "typeName": {
+                  "id": 10751,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "948:6:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string storage pointer"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10754,
+                "name": "vaultId",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "971:15:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 10753,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "971:7:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10756,
+                "name": "owner",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "996:13:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 10755,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "996:7:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10758,
+                "name": "newAddress",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "1019:18:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 10757,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1019:7:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "NewVault",
+            "nodeType": "StructDefinition",
+            "scope": 10831,
+            "src": "901:143:30",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10775,
+              "nodeType": "Block",
+              "src": "1098:103:30",
+              "statements": [
+                {
+                  "assignments": [
+                    10764
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 10764,
+                      "name": "auth",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 10776,
+                      "src": "1108:14:30",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_AuthorityFace_$1205",
+                        "typeString": "contract AuthorityFace"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 10763,
+                        "name": "Authority",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 1205,
+                        "src": "1108:9:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_AuthorityFace_$1205",
+                          "typeString": "contract AuthorityFace"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 10768,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 10766,
+                        "name": "_authority",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10761,
+                        "src": "1135:10:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 10765,
+                      "name": "Authority",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1205,
+                      "src": "1125:9:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_contract$_AuthorityFace_$1205_$",
+                        "typeString": "type(contract AuthorityFace)"
+                      }
+                    },
+                    "id": 10767,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1125:21:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_AuthorityFace_$1205",
+                      "typeString": "contract AuthorityFace"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1108:38:30"
+                },
+                {
+                  "condition": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 10771,
+                        "name": "this",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 11687,
+                        "src": "1186:4:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_VaultFactoryLibrary_$10831",
+                          "typeString": "library VaultFactoryLibrary"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_VaultFactoryLibrary_$10831",
+                          "typeString": "library VaultFactoryLibrary"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 10769,
+                        "name": "auth",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10764,
+                        "src": "1160:4:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_AuthorityFace_$1205",
+                          "typeString": "contract AuthorityFace"
+                        }
+                      },
+                      "id": 10770,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "isWhitelistedFactory",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1157,
+                      "src": "1160:25:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_bool_$",
+                        "typeString": "function (address) view external returns (bool)"
+                      }
+                    },
+                    "id": 10772,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1160:31:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": null,
+                  "id": 10774,
+                  "nodeType": "IfStatement",
+                  "src": "1156:38:30",
+                  "trueBody": {
+                    "id": 10773,
+                    "nodeType": "PlaceholderStatement",
+                    "src": "1193:1:30"
+                  }
+                }
+              ]
+            },
+            "id": 10776,
+            "name": "whitelistedFactory",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 10762,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10761,
+                  "name": "_authority",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10776,
+                  "src": "1078:18:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10760,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1078:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1077:20:30"
+            },
+            "src": "1050:151:30",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 10829,
+              "nodeType": "Block",
+              "src": "1790:273:30",
+              "statements": [
+                {
+                  "assignments": [
+                    10797
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 10797,
+                      "name": "vault",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 10830,
+                      "src": "1800:11:30",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Vault_$9293",
+                        "typeString": "contract Vault"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 10796,
+                        "name": "Vault",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 9293,
+                        "src": "1800:5:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Vault_$9293",
+                          "typeString": "contract Vault"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 10818,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 10803,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftHandSide": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 10800,
+                            "name": "self",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 10778,
+                            "src": "1837:4:30",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                              "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                            }
+                          },
+                          "id": 10801,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": true,
+                          "memberName": "name",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 10750,
+                          "src": "1837:9:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_storage",
+                            "typeString": "string storage ref"
+                          }
+                        },
+                        "nodeType": "Assignment",
+                        "operator": "=",
+                        "rightHandSide": {
+                          "argumentTypes": null,
+                          "id": 10802,
+                          "name": "_name",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10780,
+                          "src": "1849:5:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_memory_ptr",
+                            "typeString": "string memory"
+                          }
+                        },
+                        "src": "1837:17:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 10807,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftHandSide": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 10804,
+                            "name": "self",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 10778,
+                            "src": "1868:4:30",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                              "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                            }
+                          },
+                          "id": 10805,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": true,
+                          "memberName": "symbol",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 10752,
+                          "src": "1868:11:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_storage",
+                            "typeString": "string storage ref"
+                          }
+                        },
+                        "nodeType": "Assignment",
+                        "operator": "=",
+                        "rightHandSide": {
+                          "argumentTypes": null,
+                          "id": 10806,
+                          "name": "_symbol",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10782,
+                          "src": "1882:7:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_memory_ptr",
+                            "typeString": "string memory"
+                          }
+                        },
+                        "src": "1868:21:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 10811,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftHandSide": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 10808,
+                            "name": "self",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 10778,
+                            "src": "1903:4:30",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                              "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                            }
+                          },
+                          "id": 10809,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": true,
+                          "memberName": "vaultId",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 10754,
+                          "src": "1903:12:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "Assignment",
+                        "operator": "=",
+                        "rightHandSide": {
+                          "argumentTypes": null,
+                          "id": 10810,
+                          "name": "_vaultId",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10786,
+                          "src": "1918:8:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "src": "1903:23:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 10815,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftHandSide": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 10812,
+                            "name": "self",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 10778,
+                            "src": "1940:4:30",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                              "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                            }
+                          },
+                          "id": 10813,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": true,
+                          "memberName": "owner",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 10756,
+                          "src": "1940:10:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "Assignment",
+                        "operator": "=",
+                        "rightHandSide": {
+                          "argumentTypes": null,
+                          "id": 10814,
+                          "name": "_owner",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10784,
+                          "src": "1953:6:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1940:19:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 10816,
+                        "name": "_authority",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10788,
+                        "src": "1973:10:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        },
+                        {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 10799,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "NewExpression",
+                      "src": "1814:9:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_creation_nonpayable$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_uint256_$_t_address_$_t_address_$returns$_t_contract$_Vault_$9293_$",
+                        "typeString": "function (string memory,string memory,uint256,address,address) returns (contract Vault)"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 10798,
+                        "name": "Vault",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 9293,
+                        "src": "1818:5:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Vault_$9293",
+                          "typeString": "contract Vault"
+                        }
+                      }
+                    },
+                    "id": 10817,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1814:179:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Vault_$9293",
+                      "typeString": "contract Vault"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1800:193:30"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 10825,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 10819,
+                        "name": "self",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10778,
+                        "src": "2003:4:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                          "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                        }
+                      },
+                      "id": 10821,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "newAddress",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 10758,
+                      "src": "2003:15:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 10823,
+                          "name": "vault",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10797,
+                          "src": "2029:5:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_Vault_$9293",
+                            "typeString": "contract Vault"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_contract$_Vault_$9293",
+                            "typeString": "contract Vault"
+                          }
+                        ],
+                        "id": 10822,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "nodeType": "ElementaryTypeNameExpression",
+                        "src": "2021:7:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_address_$",
+                          "typeString": "type(address)"
+                        },
+                        "typeName": "address"
+                      },
+                      "id": 10824,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "2021:14:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "2003:32:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 10826,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2003:32:30"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "74727565",
+                    "id": 10827,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2052:4:30",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 10795,
+                  "id": 10828,
+                  "nodeType": "Return",
+                  "src": "2045:11:30"
+                }
+              ]
+            },
+            "id": 10830,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 10791,
+                    "name": "_authority",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 10788,
+                    "src": "1743:10:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 10792,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 10790,
+                  "name": "whitelistedFactory",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 10776,
+                  "src": "1724:18:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1724:30:30"
+              }
+            ],
+            "name": "createVault",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10789,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10778,
+                  "name": "self",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1555:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "storage",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                    "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 10777,
+                    "name": "NewVault",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 10759,
+                    "src": "1555:8:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                      "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10780,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1586:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10779,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1586:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10782,
+                  "name": "_symbol",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1608:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10781,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1608:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10784,
+                  "name": "_owner",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1632:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10783,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1632:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10786,
+                  "name": "_vaultId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1656:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10785,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1656:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10788,
+                  "name": "_authority",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1679:18:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10787,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1679:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1545:153:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10795,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10794,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1772:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 10793,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1772:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1771:14:30"
+            },
+            "scope": 10831,
+            "src": "1525:538:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 10832,
+        "src": "866:1199:30"
+      }
+    ],
+    "src": "597:1469:30"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/gab/truffle/contracts/contracts/VaultFactory/VaultFactoryLibrary/VaultFactoryLibrary.sol",
+    "exportedSymbols": {
+      "VaultFactoryLibrary": [
+        10831
+      ]
+    },
+    "id": 10832,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 10744,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".19"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "597:24:30"
+      },
+      {
+        "absolutePath": "/home/gab/truffle/contracts/contracts/Authority/AuthorityFace.sol",
+        "file": "../../Authority/AuthorityFace.sol",
+        "id": 10746,
+        "nodeType": "ImportDirective",
+        "scope": 10832,
+        "sourceUnit": 1206,
+        "src": "623:79:30",
+        "symbolAliases": [
+          {
+            "foreign": 10745,
+            "local": "Authority"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/gab/truffle/contracts/contracts/Vault/Vault.sol",
+        "file": "../../Vault/Vault.sol",
+        "id": 10748,
+        "nodeType": "ImportDirective",
+        "scope": 10832,
+        "sourceUnit": 9294,
+        "src": "704:46:30",
+        "symbolAliases": [
+          {
+            "foreign": 10747,
+            "local": null
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [
+          9293
+        ],
+        "contractKind": "library",
+        "documentation": "@title Vault Factory library - Reduces size of vault factory.\n @author Gabriele Rigo - <gab@rigoblock.com>",
+        "fullyImplemented": true,
+        "id": 10831,
+        "linearizedBaseContracts": [
+          10831
+        ],
+        "name": "VaultFactoryLibrary",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "VaultFactoryLibrary.NewVault",
+            "id": 10759,
+            "members": [
+              {
+                "constant": false,
+                "id": 10750,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "927:11:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string storage pointer"
+                },
+                "typeName": {
+                  "id": 10749,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "927:6:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string storage pointer"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10752,
+                "name": "symbol",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "948:13:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string storage pointer"
+                },
+                "typeName": {
+                  "id": 10751,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "948:6:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string storage pointer"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10754,
+                "name": "vaultId",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "971:15:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 10753,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "971:7:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10756,
+                "name": "owner",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "996:13:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 10755,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "996:7:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10758,
+                "name": "newAddress",
+                "nodeType": "VariableDeclaration",
+                "scope": 10759,
+                "src": "1019:18:30",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 10757,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1019:7:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "NewVault",
+            "nodeType": "StructDefinition",
+            "scope": 10831,
+            "src": "901:143:30",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 10775,
+              "nodeType": "Block",
+              "src": "1098:103:30",
+              "statements": [
+                {
+                  "assignments": [
+                    10764
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 10764,
+                      "name": "auth",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 10776,
+                      "src": "1108:14:30",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_AuthorityFace_$1205",
+                        "typeString": "contract AuthorityFace"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 10763,
+                        "name": "Authority",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 1205,
+                        "src": "1108:9:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_AuthorityFace_$1205",
+                          "typeString": "contract AuthorityFace"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 10768,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 10766,
+                        "name": "_authority",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10761,
+                        "src": "1135:10:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 10765,
+                      "name": "Authority",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1205,
+                      "src": "1125:9:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_contract$_AuthorityFace_$1205_$",
+                        "typeString": "type(contract AuthorityFace)"
+                      }
+                    },
+                    "id": 10767,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1125:21:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_AuthorityFace_$1205",
+                      "typeString": "contract AuthorityFace"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1108:38:30"
+                },
+                {
+                  "condition": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 10771,
+                        "name": "this",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 11687,
+                        "src": "1186:4:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_VaultFactoryLibrary_$10831",
+                          "typeString": "library VaultFactoryLibrary"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_VaultFactoryLibrary_$10831",
+                          "typeString": "library VaultFactoryLibrary"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 10769,
+                        "name": "auth",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10764,
+                        "src": "1160:4:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_AuthorityFace_$1205",
+                          "typeString": "contract AuthorityFace"
+                        }
+                      },
+                      "id": 10770,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "isWhitelistedFactory",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1157,
+                      "src": "1160:25:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_bool_$",
+                        "typeString": "function (address) view external returns (bool)"
+                      }
+                    },
+                    "id": 10772,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1160:31:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": null,
+                  "id": 10774,
+                  "nodeType": "IfStatement",
+                  "src": "1156:38:30",
+                  "trueBody": {
+                    "id": 10773,
+                    "nodeType": "PlaceholderStatement",
+                    "src": "1193:1:30"
+                  }
+                }
+              ]
+            },
+            "id": 10776,
+            "name": "whitelistedFactory",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 10762,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10761,
+                  "name": "_authority",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10776,
+                  "src": "1078:18:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10760,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1078:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1077:20:30"
+            },
+            "src": "1050:151:30",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 10829,
+              "nodeType": "Block",
+              "src": "1790:273:30",
+              "statements": [
+                {
+                  "assignments": [
+                    10797
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 10797,
+                      "name": "vault",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 10830,
+                      "src": "1800:11:30",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_Vault_$9293",
+                        "typeString": "contract Vault"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 10796,
+                        "name": "Vault",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 9293,
+                        "src": "1800:5:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Vault_$9293",
+                          "typeString": "contract Vault"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 10818,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 10803,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftHandSide": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 10800,
+                            "name": "self",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 10778,
+                            "src": "1837:4:30",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                              "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                            }
+                          },
+                          "id": 10801,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": true,
+                          "memberName": "name",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 10750,
+                          "src": "1837:9:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_storage",
+                            "typeString": "string storage ref"
+                          }
+                        },
+                        "nodeType": "Assignment",
+                        "operator": "=",
+                        "rightHandSide": {
+                          "argumentTypes": null,
+                          "id": 10802,
+                          "name": "_name",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10780,
+                          "src": "1849:5:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_memory_ptr",
+                            "typeString": "string memory"
+                          }
+                        },
+                        "src": "1837:17:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 10807,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftHandSide": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 10804,
+                            "name": "self",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 10778,
+                            "src": "1868:4:30",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                              "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                            }
+                          },
+                          "id": 10805,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": true,
+                          "memberName": "symbol",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 10752,
+                          "src": "1868:11:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_storage",
+                            "typeString": "string storage ref"
+                          }
+                        },
+                        "nodeType": "Assignment",
+                        "operator": "=",
+                        "rightHandSide": {
+                          "argumentTypes": null,
+                          "id": 10806,
+                          "name": "_symbol",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10782,
+                          "src": "1882:7:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_string_memory_ptr",
+                            "typeString": "string memory"
+                          }
+                        },
+                        "src": "1868:21:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 10811,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftHandSide": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 10808,
+                            "name": "self",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 10778,
+                            "src": "1903:4:30",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                              "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                            }
+                          },
+                          "id": 10809,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": true,
+                          "memberName": "vaultId",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 10754,
+                          "src": "1903:12:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "Assignment",
+                        "operator": "=",
+                        "rightHandSide": {
+                          "argumentTypes": null,
+                          "id": 10810,
+                          "name": "_vaultId",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10786,
+                          "src": "1918:8:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "src": "1903:23:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 10815,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftHandSide": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 10812,
+                            "name": "self",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 10778,
+                            "src": "1940:4:30",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                              "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                            }
+                          },
+                          "id": 10813,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": true,
+                          "memberName": "owner",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 10756,
+                          "src": "1940:10:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "Assignment",
+                        "operator": "=",
+                        "rightHandSide": {
+                          "argumentTypes": null,
+                          "id": 10814,
+                          "name": "_owner",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10784,
+                          "src": "1953:6:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1940:19:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 10816,
+                        "name": "_authority",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10788,
+                        "src": "1973:10:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        },
+                        {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 10799,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "NewExpression",
+                      "src": "1814:9:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_creation_nonpayable$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_uint256_$_t_address_$_t_address_$returns$_t_contract$_Vault_$9293_$",
+                        "typeString": "function (string memory,string memory,uint256,address,address) returns (contract Vault)"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 10798,
+                        "name": "Vault",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 9293,
+                        "src": "1818:5:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Vault_$9293",
+                          "typeString": "contract Vault"
+                        }
+                      }
+                    },
+                    "id": 10817,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1814:179:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Vault_$9293",
+                      "typeString": "contract Vault"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1800:193:30"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 10825,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 10819,
+                        "name": "self",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10778,
+                        "src": "2003:4:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                          "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                        }
+                      },
+                      "id": 10821,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "newAddress",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 10758,
+                      "src": "2003:15:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 10823,
+                          "name": "vault",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 10797,
+                          "src": "2029:5:30",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_Vault_$9293",
+                            "typeString": "contract Vault"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_contract$_Vault_$9293",
+                            "typeString": "contract Vault"
+                          }
+                        ],
+                        "id": 10822,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "nodeType": "ElementaryTypeNameExpression",
+                        "src": "2021:7:30",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_address_$",
+                          "typeString": "type(address)"
+                        },
+                        "typeName": "address"
+                      },
+                      "id": 10824,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "2021:14:30",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "2003:32:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 10826,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2003:32:30"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "74727565",
+                    "id": 10827,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "2052:4:30",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 10795,
+                  "id": 10828,
+                  "nodeType": "Return",
+                  "src": "2045:11:30"
+                }
+              ]
+            },
+            "id": 10830,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "argumentTypes": null,
+                    "id": 10791,
+                    "name": "_authority",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 10788,
+                    "src": "1743:10:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 10792,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 10790,
+                  "name": "whitelistedFactory",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 10776,
+                  "src": "1724:18:30",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$_t_address_$",
+                    "typeString": "modifier (address)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1724:30:30"
+              }
+            ],
+            "name": "createVault",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10789,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10778,
+                  "name": "self",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1555:21:30",
+                  "stateVariable": false,
+                  "storageLocation": "storage",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                    "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 10777,
+                    "name": "NewVault",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 10759,
+                    "src": "1555:8:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_NewVault_$10759_storage_ptr",
+                      "typeString": "struct VaultFactoryLibrary.NewVault storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10780,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1586:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10779,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1586:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10782,
+                  "name": "_symbol",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1608:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string memory"
+                  },
+                  "typeName": {
+                    "id": 10781,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1608:6:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string storage pointer"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10784,
+                  "name": "_owner",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1632:14:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10783,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1632:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10786,
+                  "name": "_vaultId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1656:13:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10785,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1656:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10788,
+                  "name": "_authority",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1679:18:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10787,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1679:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1545:153:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 10795,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10794,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10830,
+                  "src": "1772:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 10793,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1772:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1771:14:30"
+            },
+            "scope": 10831,
+            "src": "1525:538:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 10832,
+        "src": "866:1199:30"
+      }
+    ],
+    "src": "597:1469:30"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-03-05T21:05:52.644Z"
+}
