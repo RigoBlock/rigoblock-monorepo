@@ -1,0 +1,154 @@
+version: 2.0
+
+references:
+  workspace_root: &workspace_root
+    ~/rigoblock-dappv2
+
+  timezone: &timezone
+    "/usr/share/zoneinfo/Europe/Rome"
+
+  node_image: &node_image
+    circleci/node:8.10.0-stretch
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+jobs:
+  setup:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: Installing new npm packages
+          command: yarn
+      - save_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+            - ~/.cache/yarn
+
+  build:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: Building dist
+          command: yarn build
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - dist
+
+  test-unit:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: circleci/node:8.10-stretch
+    steps:
+      - checkout
+      - *attach_workspace
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: JS unit tests
+          command: yarn test:unit
+
+  test-feature:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: circleci/node:8.10-stretch-browsers
+    steps:
+      - checkout
+      - *attach_workspace
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: Starting server
+          command: yarn start
+          background: true
+      - run:
+          name: JS feature tests
+          command: yarn test:feature
+
+  deploy-staging:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    machine: true
+    steps:
+      - checkout
+      - *attach_workspace
+      - restore_cache:
+          key: rigoblock-node-v1-{{ checksum "package.json" }}
+      - run:
+          name: Install Flynn CLI
+          command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
+      - run:
+          name: Add Flynn cluster
+          command: "~/flynn cluster add -p Kh+c569v46HsTbFVs51cyEOz9+iLuxbR2mWQ2FaqSkM= staging dev-02.endpoint.network a6019d9d46a314c3007b668d5161aff4"
+      - run:
+          name: Flynn ping
+          command: "~/flynn apps"
+      - run:
+          name: Download flynn cert
+          command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
+      - run:
+          name: Cert folder
+          command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+      - run:
+          name: Move cert
+          command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+      - run:
+          name: Restart docker
+          command: "sudo service docker restart"
+      - run:
+          name: Flynn set docker
+          command: "~/flynn docker set-push-url && ~/flynn docker login"
+      - run:
+          name: Building docker image
+          command: "docker build -t staging ."
+      - run:
+          name: Flynn push
+          command: "~/flynn -a dapp-staging docker push staging:latest"
+      - run:
+          name: Flynn push
+          command: "~/flynn -a dapp-staging scale app=1"
+
+workflows:
+  version: 2
+  rigoblock:
+    jobs:
+      - setup
+      - build:
+          requires:
+            - setup
+      - test-unit:
+          requires:
+            - build
+      - test-feature:
+          requires:
+            - test-unit
+      - deploy-staging:
+          requires:
+            - test-feature
+            - test-unit
+            - build
+          filters:
+            branches:
+              only: master
