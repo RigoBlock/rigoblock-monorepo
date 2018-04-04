@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "lerna:run": "lerna run",
-    "lint": "eslint packages/rigoblock-dapp --ext js,jsx --ignore-path .gitignore --fix"
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "lint": "lerna run lint"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
