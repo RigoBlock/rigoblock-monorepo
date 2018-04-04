@@ -1,0 +1,29 @@
+{
+  "extends": [
+      "plugin:react/recommended",
+      "prettier",
+      "prettier/react",
+      "prettier/standard"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "prettier",
+      "react",
+      "import"
+    ],
+    "rules": {
+      "import/order": ["error", {"newlines-between": "never"}],
+      "import/newline-after-import": ["error", { "count": 1 }],
+      "react/require-default-props": 2,
+      "prettier/prettier": [
+        "error", {
+          "singleQuote": true,
+          "semi": false
+        }
+      ]
+    }
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import App from './App.jsx'
 import toJson from 'enzyme-to-json'
+import App from './App.jsx'
 
 describe('App component', () => {
   const createComponentWithTitle = (title = 'RigoBlock') => {
