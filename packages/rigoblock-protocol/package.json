@@ -2,5 +2,7 @@
   "name": "rigoblock-protocol",
   "version": "1.0.0",
   "private": true,
-  "scripts": {}
+  "scripts": {
+    "lint": "eslint . --ext js,jsx --fix"
+  }
 }

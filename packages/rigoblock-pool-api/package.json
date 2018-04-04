@@ -7,7 +7,7 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix"
+    "lint": ""
   },
   "publishConfig": {
     "access": "public"
