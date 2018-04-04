@@ -1,0 +1,707 @@
+[{
+  "constant": false,
+  "inputs": [{
+    "name": "stable",
+    "type": "address"
+  }, {
+    "name": "stable_gets",
+    "type": "uint256"
+  }, {
+    "name": "leveraged",
+    "type": "address"
+  }, {
+    "name": "leveraged_gets",
+    "type": "uint256"
+  }, {
+    "name": "id",
+    "type": "uint24"
+  }],
+  "name": "addCredits",
+  "outputs": [{
+    "name": "success",
+    "type": "bool"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_new",
+    "type": "address"
+  }],
+  "name": "setOwner",
+  "outputs": [],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_cfd",
+    "type": "address"
+  }, {
+    "name": "_is_stable",
+    "type": "bool"
+  }, {
+    "name": "_adjustment",
+    "type": "uint32"
+  }, {
+    "name": "_stake",
+    "type": "uint128"
+  }],
+  "name": "orderCFD",
+  "outputs": [{
+    "name": "id",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "getExchangeEventful",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_token",
+    "type": "address"
+  }, {
+    "name": "_amount",
+    "type": "uint256"
+  }],
+  "name": "deposit",
+  "outputs": [{
+    "name": "success",
+    "type": "bool"
+  }],
+  "payable": true,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "",
+    "type": "address"
+  }, {
+    "name": "",
+    "type": "address"
+  }],
+  "name": "tokens",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_cfd",
+    "type": "address"
+  }, {
+    "name": "_is_stable",
+    "type": "bool"
+  }, {
+    "name": "_stake",
+    "type": "uint128"
+  }],
+  "name": "getBestAdjustmentFor",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_tokenGet",
+    "type": "address"
+  }, {
+    "name": "_amountGet",
+    "type": "uint256"
+  }, {
+    "name": "_tokenGive",
+    "type": "address"
+  }, {
+    "name": "_amountGive",
+    "type": "uint256"
+  }, {
+    "name": "_expires",
+    "type": "uint256"
+  }],
+  "name": "order",
+  "outputs": [{
+    "name": "id",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "getLastOrderId",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_who",
+    "type": "address"
+  }],
+  "name": "balanceOf",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_tokenGet",
+    "type": "address"
+  }, {
+    "name": "_amountGet",
+    "type": "uint256"
+  }, {
+    "name": "_tokenGive",
+    "type": "address"
+  }, {
+    "name": "_amountGive",
+    "type": "uint256"
+  }, {
+    "name": "_expires",
+    "type": "uint256"
+  }],
+  "name": "cancelOrder",
+  "outputs": [],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_cfd",
+    "type": "address"
+  }, {
+    "name": "_is_stable",
+    "type": "bool"
+  }],
+  "name": "getBestAdjustment",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_cfd",
+    "type": "address"
+  }, {
+    "name": "_id",
+    "type": "uint24"
+  }],
+  "name": "finalize",
+  "outputs": [],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "id",
+    "type": "uint256"
+  }],
+  "name": "isActive",
+  "outputs": [{
+    "name": "",
+    "type": "bool"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "owner",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_tokenGet",
+    "type": "address"
+  }, {
+    "name": "_amountGet",
+    "type": "uint256"
+  }, {
+    "name": "_tokenGive",
+    "type": "address"
+  }, {
+    "name": "amountGive",
+    "type": "uint256"
+  }, {
+    "name": "expires",
+    "type": "uint256"
+  }, {
+    "name": "user",
+    "type": "address"
+  }, {
+    "name": "amount",
+    "type": "uint256"
+  }],
+  "name": "trade",
+  "outputs": [],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_who",
+    "type": "address"
+  }],
+  "name": "marginOf",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_cfd",
+    "type": "address"
+  }, {
+    "name": "_id",
+    "type": "uint32"
+  }],
+  "name": "cancel",
+  "outputs": [],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_cfd",
+    "type": "address"
+  }, {
+    "name": "_newExchange",
+    "type": "address"
+  }],
+  "name": "setExchange",
+  "outputs": [],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "tokenGet",
+    "type": "address"
+  }, {
+    "name": "amountGet",
+    "type": "uint256"
+  }, {
+    "name": "tokenGive",
+    "type": "address"
+  }, {
+    "name": "amountGive",
+    "type": "uint256"
+  }, {
+    "name": "expires",
+    "type": "uint256"
+  }, {
+    "name": "user",
+    "type": "address"
+  }],
+  "name": "amountFilled",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "authority",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "id",
+    "type": "uint256"
+  }],
+  "name": "getOwner",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "id",
+    "type": "uint256"
+  }],
+  "name": "getOrder",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }, {
+    "name": "",
+    "type": "address"
+  }, {
+    "name": "",
+    "type": "uint256"
+  }, {
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_cfd",
+    "type": "address"
+  }, {
+    "name": "_maxLeverage",
+    "type": "uint24"
+  }],
+  "name": "setCfdMaxLeverage",
+  "outputs": [],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "tokenGet",
+    "type": "address"
+  }, {
+    "name": "amountGet",
+    "type": "uint256"
+  }, {
+    "name": "tokenGive",
+    "type": "address"
+  }, {
+    "name": "amountGive",
+    "type": "uint256"
+  }, {
+    "name": "expires",
+    "type": "uint256"
+  }, {
+    "name": "user",
+    "type": "address"
+  }],
+  "name": "availableVolume",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_token",
+    "type": "address"
+  }, {
+    "name": "_amount",
+    "type": "uint256"
+  }],
+  "name": "withdraw",
+  "outputs": [{
+    "name": "success",
+    "type": "bool"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_token",
+    "type": "address"
+  }, {
+    "name": "_who",
+    "type": "address"
+  }],
+  "name": "balanceOf",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "inputs": [{
+    "name": "_authority",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "constructor"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": false,
+    "name": "token",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "user",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "amount",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "balance",
+    "type": "uint256"
+  }],
+  "name": "Deposit",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": false,
+    "name": "token",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "user",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "amount",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "balance",
+    "type": "uint256"
+  }],
+  "name": "Withdraw",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "cfd",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "id",
+    "type": "uint32"
+  }, {
+    "indexed": true,
+    "name": "who",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "stake",
+    "type": "uint128"
+  }],
+  "name": "OrderCancelled",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "cfd",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "id",
+    "type": "uint32"
+  }, {
+    "indexed": true,
+    "name": "stable",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "name": "leveraged",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "price",
+    "type": "uint64"
+  }],
+  "name": "DealFinalized",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "old",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "name": "current",
+    "type": "address"
+  }],
+  "name": "NewOwner",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": false,
+    "name": "tokenGet",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "amountGet",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "tokenGive",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "amountGive",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "expires",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "user",
+    "type": "address"
+  }],
+  "name": "Order",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "cfd",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "name": "who",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "name": "is_stable",
+    "type": "bool"
+  }, {
+    "indexed": false,
+    "name": "adjustment",
+    "type": "uint32"
+  }, {
+    "indexed": false,
+    "name": "stake",
+    "type": "uint128"
+  }],
+  "name": "OrderPlaced",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "cfd",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "name": "stable",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "name": "leveraged",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "is_stable",
+    "type": "bool"
+  }, {
+    "indexed": false,
+    "name": "deal",
+    "type": "uint32"
+  }, {
+    "indexed": false,
+    "name": "strike",
+    "type": "uint64"
+  }, {
+    "indexed": false,
+    "name": "stake",
+    "type": "uint128"
+  }],
+  "name": "OrderMatched",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": false,
+    "name": "tokenGet",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "amountGet",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "tokenGive",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "amountGive",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "expires",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "user",
+    "type": "address"
+  }],
+  "name": "Cancel",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": false,
+    "name": "tokenGet",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "amountGet",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "tokenGive",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "amountGive",
+    "type": "uint256"
+  }, {
+    "indexed": false,
+    "name": "get",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "give",
+    "type": "address"
+  }],
+  "name": "Trade",
+  "type": "event"
+}]
