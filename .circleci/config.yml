@@ -2,7 +2,7 @@ version: 2.0
 
 references:
   workspace_root: &workspace_root
-    ~/rigoblock-dappv2
+    ~/rigoblock-monorepo
 
   timezone: &timezone
     "/usr/share/zoneinfo/Europe/Rome"
