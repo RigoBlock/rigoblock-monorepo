@@ -1,3 +1,5 @@
 const deploy = require('./deployment/deploy')
 
-module.exports = deploy
+module.exports = {
+  deploy
+}

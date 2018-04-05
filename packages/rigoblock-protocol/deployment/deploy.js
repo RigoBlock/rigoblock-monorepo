@@ -1,33 +1,14 @@
+const path = require('path')
 const Deployer = require('@0xproject/deployer').Deployer
-const Compiler = require('@0xproject/deployer').Compiler
 const c = require('chalk')
 const logger = require('./logger')
-const {
-  ARTIFACTS_FOLDER,
-  CONTRACTS_FOLDER,
-  GANACHE_URL,
-  GAS_ESTIMATE
-} = require('./constants')
+const { ARTIFACTS_FOLDER, GANACHE_URL, GAS_ESTIMATE } = require('./constants')
 
-const compile = (networkId, contracts) => {
-  const contractsSol = contracts.map(c => `${c}.sol`)
-
-  const compilerOpts = {
-    artifactsDir: ARTIFACTS_FOLDER,
-    contractsDir: CONTRACTS_FOLDER,
-    networkId,
-    specifiedContracts: new Set(contractsSol)
-  }
-
-  const compiler = new Compiler(compilerOpts)
-
-  logger.info(c.bold(`Compiling ${JSON.stringify(contracts)}...`))
-  return compiler.compileAsync()
-}
+console.log(c.yellow(ARTIFACTS_FOLDER))
 
 const deploy = (from, networkId, contractName, args = []) => {
   const deployerOpts = {
-    artifactsDir: ARTIFACTS_FOLDER,
+    artifactsDir: path.resolve('..', '..', 'rigoblock-protocol', 'artifacts'),
     jsonrpcUrl: GANACHE_URL,
     networkId,
     defaults: {
@@ -48,14 +29,6 @@ const printAddress = (name, address) => {
 }
 
 module.exports = async (baseAccount, networkId) => {
-  await compile(networkId, [
-    'Authority',
-    'DragoRegistry',
-    'VaultEventful',
-    'VaultFactory',
-    'DragoEventful',
-    'DragoFactory'
-  ])
   const authority = await deploy(baseAccount, networkId, 'Authority')
   printAddress('Authority', authority.address)
 

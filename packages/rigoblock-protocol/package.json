@@ -4,8 +4,10 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "compile": "node deployment/compiler.js",
     "lint": "eslint . --ext js,jsx --fix"
   },
+
   "dependencies": {
     "@0xproject/deployer": "^0.3.5",
     "chalk": "^2.3.2",
