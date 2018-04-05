@@ -7,4 +7,4 @@ module.exports = {
       runs: 500
     }
   }
-};
+}

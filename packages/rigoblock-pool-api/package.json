@@ -1,37 +1,13 @@
 {
-  "name": "@parity/api",
-  "description": "The Parity Promise-based API library for interfacing with Ethereum over RPC",
-  "version": "2.1.5",
-  "main": "lib/index.js",
-  "author": "Parity Team <admin@parity.io>",
-  "maintainers": [
-    "Jaco Greeff",
-    "Nicolas Gotchac"
-  ],
-  "contributors": [],
-  "license": "GPL-3.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/paritytech/js-api.git"
-  },
-  "keywords": [
-    "Ethereum",
-    "API",
-    "RPC",
-    "Parity",
-    "Promise"
-  ],
+  "name": "pool-api",
+  "description": "A JS wrapper around RigoBlock Smart Contracts to simplify their consumption.",
+  "version": "1.00",
+  "private": true,
   "engines": {
     "node": ">=6.4"
   },
   "scripts": {
-    "build": "rimraf lib && babel src --out-dir lib --ignore *.spec.js",
-    "ci:makeshift": "makeshift",
-    "lint": "npm run lint:css && npm run lint:js",
-    "lint:css": "echo \"WARN: npm run lint:css skipped\"",
-    "lint:js": "eslint src",
-    "test": "cross-env NODE_ENV=test mocha 'src/*.spec.js' 'src/**/*.spec.js'",
-    "test:coverage": "cross-env NODE_ENV=test istanbul cover _mocha 'src/*.spec.js' 'src/**/*.spec.js' && coveralls < coverage/lcov.info"
+    "lint": ""
   },
   "publishConfig": {
     "access": "public"

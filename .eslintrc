@@ -5,6 +5,10 @@
       "prettier/react",
       "prettier/standard"
     ],
+    "env": {
+      "browser": true,
+      "node": true
+    },
     "parser": "babel-eslint",
     "parserOptions": {
       "ecmaVersion": 8,
@@ -12,9 +16,12 @@
     },
     "plugins": [
       "prettier",
-      "react"
+      "react",
+      "import"
     ],
     "rules": {
+      "import/order": ["error", {"newlines-between": "never"}],
+      "import/newline-after-import": ["error", { "count": 1 }],
       "react/require-default-props": 2,
       "prettier/prettier": [
         "error", {
