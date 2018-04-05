@@ -2,9 +2,7 @@ const path = require('path')
 const Deployer = require('@0xproject/deployer').Deployer
 const c = require('chalk')
 const logger = require('./logger')
-const { ARTIFACTS_FOLDER, GANACHE_URL, GAS_ESTIMATE } = require('./constants')
-
-console.log(c.yellow(ARTIFACTS_FOLDER))
+const { GANACHE_URL, GAS_ESTIMATE } = require('./constants')
 
 const deploy = (from, networkId, contractName, args = []) => {
   const deployerOpts = {

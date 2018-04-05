@@ -1,18 +1,18 @@
 const path = require('path')
 const Compiler = require('@0xproject/deployer').Compiler
 const c = require('chalk')
+const globPromise = require('./glob-promise')
 const logger = require('./logger')
 
+const artifactsDir = path.resolve('artifacts')
+const contractsDir = path.resolve('contracts')
+
 const compile = (contracts, networkId = 5777) => {
-  const contractsSol = contracts.map(c => `${c}.sol`)
-  const artifactsDir = path.resolve('artifacts')
-  const contractsDir = path.resolve('contracts')
-  console.log(artifactsDir)
   const compilerOpts = {
     artifactsDir,
     contractsDir,
     networkId,
-    specifiedContracts: new Set(contractsSol)
+    specifiedContracts: new Set(contracts)
   }
 
   const compiler = new Compiler(compilerOpts)
@@ -21,11 +21,4 @@ const compile = (contracts, networkId = 5777) => {
   return compiler.compileAsync()
 }
 
-compile([
-  'Authority',
-  'DragoRegistry',
-  'VaultEventful',
-  'VaultFactory',
-  'DragoEventful',
-  'DragoFactory'
-]).catch(e => console.error('Error', e))
+globPromise(contractsDir + '/**/!(*Face).sol').then(res => compile(res))
