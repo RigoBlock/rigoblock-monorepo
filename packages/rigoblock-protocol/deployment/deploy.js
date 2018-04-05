@@ -6,7 +6,7 @@ const { GANACHE_URL, GAS_ESTIMATE } = require('./constants')
 
 const deploy = (from, networkId, contractName, args = []) => {
   const deployerOpts = {
-    artifactsDir: path.resolve('..', '..', 'rigoblock-protocol', 'artifacts'),
+    artifactsDir: path.resolve(__dirname, '..', 'artifacts'),
     jsonrpcUrl: GANACHE_URL,
     networkId,
     defaults: {
