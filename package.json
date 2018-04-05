@@ -30,6 +30,5 @@
       "npm run lint",
       "git add"
     ]
-  },
-  "dependencies": {}
+  }
 }
