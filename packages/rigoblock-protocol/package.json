@@ -1,8 +1,14 @@
 {
   "name": "rigoblock-protocol",
   "version": "1.0.0",
+  "main": "index.js",
   "private": true,
   "scripts": {
     "lint": "eslint . --ext js,jsx --fix"
+  },
+  "dependencies": {
+    "@0xproject/deployer": "^0.3.5",
+    "chalk": "^2.3.2",
+    "pino": "^4.16.0"
   }
 }

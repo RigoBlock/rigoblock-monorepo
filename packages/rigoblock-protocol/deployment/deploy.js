@@ -62,12 +62,12 @@ module.exports = async (baseAccount, networkId) => {
   const dragoRegistry = await deploy(baseAccount, networkId, 'DragoRegistry', [
     authority.address
   ])
-  printAddress('DragoRegistry', authority.address)
+  printAddress('DragoRegistry', dragoRegistry.address)
 
   const vaultEventful = await deploy(baseAccount, networkId, 'VaultEventful', [
     authority.address
   ])
-  printAddress('VaultEventful', authority.address)
+  printAddress('VaultEventful', vaultEventful.address)
 
   logger.info(c.bold('Setting up VaultEventful...'))
   authority.setVaultEventful(vaultEventful.address)
@@ -77,7 +77,7 @@ module.exports = async (baseAccount, networkId) => {
     baseAccount,
     authority.address
   ])
-  printAddress('VaultFactory', authority.address)
+  printAddress('VaultFactory', vaultFactory.address)
 
   logger.info(c.bold('Whitelisting VaultFactory...'))
   authority.whitelistFactory(vaultFactory.address, true)
@@ -85,7 +85,7 @@ module.exports = async (baseAccount, networkId) => {
   const dragoEventful = await deploy(baseAccount, networkId, 'DragoEventful', [
     authority.address
   ])
-  printAddress('DragoEventful', authority.address)
+  printAddress('DragoEventful', dragoEventful.address)
 
   logger.info(c.bold('Setting up DragoEventful...'))
   authority.setDragoEventful(dragoEventful.address)
@@ -95,7 +95,7 @@ module.exports = async (baseAccount, networkId) => {
     baseAccount,
     authority.address
   ])
-  printAddress('DragoFactory', authority.address)
+  printAddress('DragoFactory', dragoFactory.address)
 
   logger.info(c.bold('Whitelisting DragoFactory...'))
   authority.whitelistFactory(dragoFactory.address, true)

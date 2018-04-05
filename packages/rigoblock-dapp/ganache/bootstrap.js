@@ -1,7 +1,7 @@
 const Web3 = require('web3')
 const c = require('chalk')
+const protocolDeploy = require('../../rigoblock-protocol')
 const logger = require('./logger')
-const protocolDeploy = require('./protocolDeploy')
 const protocolSeed = require('./protocolSeed')
 const { GANACHE_URL } = require('./constants')
 
