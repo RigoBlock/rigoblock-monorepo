@@ -1,7 +1,10 @@
 {
   "name": "@rigoblock/ganache-bootstrap",
   "version": "0.1.1",
-  "bin": "bin/ganache-bootstrap.js",
+  "bin": {
+    "ganache-bootstrap": "bin/ganache-bootstrap.js",
+    "ganache-seed": "bin/ganache-seed.js"
+  },
   "dependencies": {
     "@rigoblock/protocol": "^0.1.0",
     "chalk": "^2.3.2",
