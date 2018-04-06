@@ -1,5 +1,5 @@
 {
-  "name": "pool-api",
+  "name": "@rigoblock/pool-api",
   "description": "A JS wrapper around RigoBlock Smart Contracts to simplify their consumption.",
   "version": "0.1.0",
   "private": true,

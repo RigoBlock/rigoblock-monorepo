@@ -1,6 +1,7 @@
 {
-  "name": "rigoblock-ganache-bootstrap",
+  "name": "@rigoblock/ganache-bootstrap",
   "version": "0.1.0",
+  "private": true,
   "bin": "bin/ganache-bootstrap.js",
   "dependencies": {
     "chalk": "^2.3.2",
