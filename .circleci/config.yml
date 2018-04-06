@@ -4,22 +4,19 @@ references:
   workspace_root: &workspace_root
     ~/rigoblock-monorepo
 
-  dapp_folder: &dapp_folder
-    ~/rigoblock-monorepo/packages/rigoblock-dapp
-
   timezone: &timezone
     "/usr/share/zoneinfo/Europe/Rome"
 
   node_image: &node_image
     circleci/node:8.10.0-stretch
 
-  # attach_workspace: &attach_workspace
-  #   attach_workspace:
-  #     at: *workspace_root
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
 
 jobs:
   setup:
-    working_directory: *dapp_folder
+    working_directory: *workspace_root
     environment:
       TZ: *timezone
     docker:
@@ -27,62 +24,59 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: rigoblock-node-v1-{{ checksum "package.json" }}
+          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
-          name: Installing new npm packages
+          name: Install lerna and monorepo dependencies
           command: yarn
+      - run:
+          name: Installing all dependencies
+          command: lerna boostrap
       - save_cache:
-          key: rigoblock-node-v1-{{ checksum "package.json" }}
+          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - node_modules
-            - ~/.cache/yarn
+            - *workspace_root
 
-  build:
-    working_directory: *dapp_folder
+  build-dapp:
+    working_directory: *workspace_root
     environment:
       TZ: *timezone
     docker:
       - image: *node_image
     steps:
-      - checkout
       - restore_cache:
-          key: rigoblock-node-v1-{{ checksum "package.json" }}
+          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Building dist
-          command: yarn build
+          command: lerna run --scope rigoblock-dapp build
       - persist_to_workspace:
-          root: *dapp_folder
+          root: *workspace_root
           paths:
-            - dist
+            - packages/rigoblock-dapp/dist
 
-  test-unit:
-    working_directory: *dapp_folder
+  test-unit-dapp:
+    working_directory: *workspace_root
     environment:
       TZ: *timezone
     docker:
       - image: circleci/node:8.10-stretch
     steps:
-      - checkout
-      - attach_workspace:
-          at: *dapp_folder
+      - *attach_workspace
       - restore_cache:
-          key: rigoblock-node-v1-{{ checksum "package.json" }}
+          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: JS unit tests
-          command: yarn test:unit
+          command: lerna run --scope rigoblock-dapp test:unit
 
   test-feature:
-    working_directory: *dapp_folder
+    working_directory: *workspace_root
     environment:
       TZ: *timezone
     docker:
       - image: circleci/node:8.10-stretch-browsers
     steps:
-      - checkout
-      - attach_workspace:
-          at: *dapp_folder
+      - *attach_workspace
       - restore_cache:
-          key: rigoblock-node-v1-{{ checksum "package.json" }}
+          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Starting server
           command: yarn start
@@ -98,10 +92,9 @@ jobs:
     machine: true
     steps:
       - checkout
-      - attach_workspace:
-          at: *dapp_folder
+      - *attach_workspace
       - restore_cache:
-          key: rigoblock-node-v1-{{ checksum "package.json" }}
+          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Install Flynn CLI
           command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
@@ -141,20 +134,21 @@ workflows:
   rigoblock:
     jobs:
       - setup
-      - build:
+      - test-unit-dapp:
           requires:
             - setup
-      - test-unit:
+      - build-dapp:
           requires:
-            - build
-      - test-feature:
-          requires:
-            - test-unit
-      - deploy-staging:
-          requires:
-            - test-feature
-            - test-unit
-            - build
-          filters:
-            branches:
-              only: master
+            - test-unit-dapp
+
+      # - test-feature:
+      #     requires:
+      #       - test-unit
+      # - deploy-staging:
+      #     requires:
+      #       - test-feature
+      #       - test-unit
+      #       - build
+          # filters:
+          #   branches:
+          #     only: master
