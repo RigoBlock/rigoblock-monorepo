@@ -47,11 +47,11 @@ jobs:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Building dist
-          command: npx lerna run --scope rigoblock-dapp build
+          command: npx lerna run --scope @rigoblock/dapp build
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - packages/rigoblock-dapp/dist
+            - packages/dapp/dist
 
   test-unit-dapp:
     working_directory: *workspace_root
@@ -65,7 +65,7 @@ jobs:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: JS unit tests
-          command: npx lerna run --scope rigoblock-dapp test:unit
+          command: npx lerna run --scope @rigoblock/dapp test:unit
 
   test-feature-dapp:
     working_directory: *workspace_root
@@ -79,11 +79,11 @@ jobs:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Starting server
-          command: npx lerna run --scope rigoblock-dapp start
+          command: npx lerna run --scope @rigoblock/dapp start
           background: true
       - run:
           name: JS feature tests
-          command: npx lerna run --scope rigoblock-dapp test:feature
+          command: npx lerna run --scope @rigoblock/dapp test:feature
 
   deploy-staging:
     working_directory: *workspace_root
@@ -121,7 +121,7 @@ jobs:
           command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
-          command: "docker build -t staging ./packages/rigoblock-dapp"
+          command: "docker build -t staging ./packages/dapp"
       - run:
           name: Flynn push
           command: "~/flynn -a dapp-staging docker push staging:latest"
