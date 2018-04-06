@@ -1,18 +1,20 @@
 const Web3 = require('web3')
 const c = require('chalk')
+const { deploy } = require('rigoblock-protocol')
 const logger = require('./logger')
-const protocolDeploy = require('./protocolDeploy')
 const protocolSeed = require('./protocolSeed')
-const { GANACHE_URL } = require('./constants')
+const { NETWORKS } = require('./constants')
 
-const bootstrap = async () => {
-  const web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_URL))
+const bootstrap = async network => {
+  const web3 = new Web3(new Web3.providers.HttpProvider(network))
   const accList = await web3.eth.getAccounts()
   const networkId = await web3.eth.net.getId()
   logger.info('BASE ACCOUNT', c.bold.magenta(accList[0]))
   logger.info('NETWORK ID', c.bold.magenta(networkId))
-  const contracts = await protocolDeploy(accList[0], networkId)
+  const contracts = await deploy(accList[0], network)
   await protocolSeed(accList, contracts)
 }
 
-bootstrap().catch(e => console.error('Error', e))
+NETWORKS.forEach(network =>
+  bootstrap(network).catch(e => console.error('Error', e))
+)
