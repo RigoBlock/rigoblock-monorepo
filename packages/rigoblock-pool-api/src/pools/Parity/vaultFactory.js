@@ -1,12 +1,12 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../abi';
+import * as abis from '../../contracts/abi';
 import Registry from '../registry';
-import { toHex } from '../../Utils';
+import { toHex } from '../../utils';
+import { VAULTFACTORY } from '../../utils/const'
 
-
-class DragoFactoryWeb3 {
+class VaultFactoryParity {
   constructor (api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
@@ -15,7 +15,7 @@ class DragoFactoryWeb3 {
     this._abi = abis.vaultfactory
     this._registry = new Registry(api)
     this._constunctorName = this.constructor.name
-    this._contractName = 'gabcoinfactory'
+    this._contractName = VAULTFACTORY
   }
 
   get instance () {
@@ -38,11 +38,16 @@ class DragoFactoryWeb3 {
 
   init = () => {
     const contractAbi = this._abi
-    const api = this._api
     const contractName = this._contractName
     return this._registry.instance(contractAbi, contractName)
       .then (contract => {
-        this._instance = contract
+        this._instance = contract.instance
+        this._contract = contract
+        const hexSignature = this._contract._events.reduce((events, event) => {
+          events[event._name] = toHex(event._signature)
+          return events
+        }, {})
+        this._hexSignature = hexSignature
         return this._instance
       })
   }
@@ -60,42 +65,16 @@ class DragoFactoryWeb3 {
     const instance = this._instance
     const options = {
       from: accountAddress
-    }
-    console.log(options)
-    instance.options.from = accountAddress
-    // instance.methods.createDrago(vaultName, vaultSymbol).estimateGas(options)
-    // .then(function(gasAmount){
-    //   console.log(gasAmount)
-    //   console.log('gas')
-    //   var gasEstimateCorrect = 0
-    //   // (gasEstimate) ? gasEstimateCorrect = 4600000 : gasEstimateCorrect = gasEstimate
-    //   instance.options.gas =  gasEstimateCorrect
-    // }
-    // )
-    // // instance.options.gas = 4600000
-    instance.options.gas = "0x442168"
-    return instance.methods.createGabcoin(vaultName, vaultSymbol)
-      .send(options)
-      .then((receipt) =>{
-        console.log(receipt)
-        return receipt
-      })
-      .catch((error) => {
-        console.log(error)
-        return error
-      })
-
-
-    // return instance.createDrago
-    // .estimateGas(options, values)
-    // .then((gasEstimate) => {
-    //   options.gas = gasEstimate.mul(1.2).toFixed(0);
-    //   return instance.createDrago.postTransaction(options, values)
-    // })
-    // .catch((error) => {
-    //   console.error('error', error)
-    // })
+    };
+    const values = [vaultName, vaultSymbol, accountAddress]
+    return instance.createVault
+    .estimateGas(options, values)
+    .then((gasEstimate) => {
+      console.log(gasEstimate.toFormat())
+      options.gas = gasEstimate.mul(1.2).toFixed(0);
+      return instance.createVault.postTransaction(options, values)
+    })
   }
 }
 
-export default DragoFactoryWeb3;
+export default VaultFactoryParity;

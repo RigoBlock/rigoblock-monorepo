@@ -1,7 +1,7 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../abi';
+import * as abis from '../../contracts/abi';
 import Registry from '../registry';
 
 class DragoWeb3 {
@@ -28,17 +28,17 @@ class DragoWeb3 {
     }
     const api = this._api
     const abi = this._abi
-    const contractAbi = this._abi
     this._instance = new api.eth.Contract(abi)
     this._instance.options.address = address
   }
 
-  balanceOf = (accountAddress) => {
+  balanceOf = (accountAddress) =>{
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
     }
     const instance = this._instance
-    return instance.balanceOf.call({}, [accountAddress])
+    console.log(instance)
+    return instance.methods.balanceOf(accountAddress).call({},)
   }
 
   getData = () => {
@@ -52,14 +52,14 @@ class DragoWeb3 {
       from: accountAddress,
       value: amount
     }
-    return instance.methods.buyGabcoin().estimateGas(options)
+    return instance.methods.buyVault().estimateGas(options)
     .then((gasEstimate) => {
       console.log(gasEstimate)
       options.gas = gasEstimate
     }
     )
     .then (() =>{
-      return instance.methods.buyGabcoin()
+      return instance.methods.buyVault()
       .send(options)
     })
   }
@@ -98,9 +98,9 @@ class DragoWeb3 {
       from: accountAddress,
     }
     instance.options.from = accountAddress
-    const api = this._api
-    const basisPoints = price * 100
-    const values = [basisPoints]
+    console.log(price)
+    const basisPoints = (price * 100).toFixed(0)
+    console.log(basisPoints)
     return instance.methods.setTransactionFee(basisPoints)
     .estimateGas(options)
     .then((gasEstimate) => {
@@ -117,7 +117,7 @@ class DragoWeb3 {
 
   totalSupply =() =>{
     const instance = this._instance
-    return instance.methods.totalSupply.call({})
+    return instance.methods.totalSupply().call({})
   }
 }
 

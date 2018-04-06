@@ -2,6 +2,6 @@
 // This file is part of RigoBlock.
 
 import './polyfill';
-import DragoApi from './api';
+import PoolsApi from './api';
 
-export default DragoApi;
+export default PoolsApi;

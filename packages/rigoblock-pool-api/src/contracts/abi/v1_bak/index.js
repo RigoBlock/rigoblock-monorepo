@@ -16,6 +16,7 @@ import exchangeeventful from './exchangeeventful.json';
 import vaulteventful from './vaultEventful.json';
 import nav from './nav.json';
 import parityregister from './parityregister.json';
+import rigotoken from './rigoToken.json';
 
 
 export {
@@ -33,5 +34,6 @@ export {
   exchangeeventful,
   vaulteventful,
   nav,
-  parityregister
+  parityregister,
+  rigotoken
 };

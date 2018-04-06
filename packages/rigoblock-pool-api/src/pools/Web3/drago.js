@@ -1,7 +1,7 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../abi';
+import * as abis from '../../contracts/abi';
 import Registry from '../registry';
 
 class DragoWeb3 {
@@ -28,7 +28,6 @@ class DragoWeb3 {
     }
     const api = this._api
     const abi = this._abi
-    const contractAbi = this._abi
     this._instance = new api.eth.Contract(abi)
     this._instance.options.address = address
   }
@@ -121,9 +120,9 @@ class DragoWeb3 {
       return instance.methods.placeOrderCFDExchange(exchangeAddress, exchangeAddress, cfd, is_stable, adjustment, stake)
         .send(options)
     })
-    .catch((error) => {
-      console.error('error', error)
-    })
+    // .catch((error) => {
+    //   console.error('error', error)
+    // })
   }
 
   sellDrago = (accountAddress, amount) => {
@@ -166,7 +165,6 @@ class DragoWeb3 {
     const api = this._api
     const buyPriceWei = api.utils.toWei(buyPrice, 'ether')
     const sellPriceWei = api.utils.toWei(sellPrice, 'ether')
-    const values = [sellPriceWei, buyPriceWei]
     return instance.methods.setPrices(sellPriceWei, buyPriceWei)
     .estimateGas(options)
     .then((gasEstimate) => {
@@ -176,9 +174,9 @@ class DragoWeb3 {
       console.log(instance)
       return instance.methods.setPrices(sellPriceWei, buyPriceWei).send(options)
     })
-    .catch((error) => {
-      console.error('error', error)
-    })
+    // .catch((error) => {
+    //   console.error('error', error)
+    // })
   }
 
   totalSupply =() =>{

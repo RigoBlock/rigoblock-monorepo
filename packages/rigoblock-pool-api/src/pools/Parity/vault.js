@@ -1,7 +1,7 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../abi';
+import * as abis from '../../contracts/abi';
 import Registry from '../registry';
 
 class VaultParity {
@@ -28,7 +28,6 @@ class VaultParity {
     }
     const api = this._api
     const abi = this._abi
-    const contractAbi = this._abi
     this._instance = api.newContract(abi, address).instance
     return this._instance
   }
@@ -53,23 +52,18 @@ class VaultParity {
     if (!amount) {
       throw new Error('amount needs to be provided')
     }
-    const api = this._api
     const instance = this._instance
     const options = {
       from: accountAddress,
       value: amount
     }
-    console.log(amount)
-    console.log(api)
-    return instance.buyGabcoin
+    // return instance.buyVault.postTransaction(options, [])
+    return instance.buyVault
     .estimateGas(options, [])
     .then((gasEstimate) => {
       options.gas =  gasEstimate.mul(1.2).toFixed(0);
       console.log(`Buy Vault: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}`)
-      return instance.buyGabcoin.postTransaction(options, [])
-      // .then((receipt) => {
-      //   return api.parity.checkRequest(receipt, [])
-      // })
+      return instance.buyVault.postTransaction(options, [])
     })
   }
 
@@ -78,9 +72,9 @@ class VaultParity {
     return instance.getPrice.call({})
   }
 
-  getTransactionFee = () => {
+  getAdminData = () => {
     const instance = this._instance
-    return instance.getTransactionFee.call({})
+    return instance.getAdminData.call({})
   }
 
   sellVault = (accountAddress, amount) => {
@@ -95,12 +89,12 @@ class VaultParity {
     const options = {
       from: accountAddress
     }
-    return instance.sellGabcoin
+    return instance.sellVault
     .estimateGas(options, values)
     .then((gasEstimate) => {
       options.gas =  gasEstimate.mul(1.2).toFixed(0);
       console.log(`Sell Vault: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}.`)
-      return instance.sellGabcoin.postTransaction(options, values)
+      return instance.sellVault.postTransaction(options, values)
     })
   }
 
@@ -111,9 +105,9 @@ class VaultParity {
     if (!price) {
       throw new Error('price needs to be provided')
     }
-    const api = this._api
+    // const api = this._api
     // const basisPoints = api.util.toWei(price * 100, 'ether')
-    const basisPoints = price * 100
+    const basisPoints = (price * 100).toFixed(0)
     console.log(basisPoints)
     const values = [basisPoints]
     const instance = this._instance

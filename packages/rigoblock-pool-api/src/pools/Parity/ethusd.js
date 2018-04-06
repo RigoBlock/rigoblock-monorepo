@@ -1,19 +1,20 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../abi';
+import * as abis from '../../contracts/abi';
 import Registry from '../registry';
+import { ETHUSD } from '../../utils/const'
 
-class DragoRegistryParity {
+class EthusdParity {
   constructor (api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
     this._api = api
-    this._abi = abis.dragoregistry
+    this._abi = abis.ethusd
     this._registry = new Registry(api)
     this._constunctorName = this.constructor.name
-    this._contractName = 'dragoregistry'
+    this._contractName = ETHUSD
   }
 
   get instance () {
@@ -40,24 +41,6 @@ class DragoRegistryParity {
         return contract
       })
   }
-
-  drago = (dragoID) => {
-    if (!dragoID) {
-      throw new Error('DragoID needs to be provided to drago')
-    }
-    const instance = this._instance
-    return Promise.all([
-      instance.drago.call({}, [dragoID])
-    ])
-  }
-
-  fromAddress = (dragoAddress) => {
-    if (!dragoAddress) {
-      throw new Error(`dragoAddress needs to be provided to ${arguments.callee.toString()}`)
-    }
-    const instance = this._instance
-    return instance.fromAddress.call({}, [dragoAddress])
-  }
 }
 
-export default DragoRegistryParity;
+export default EthusdParity;
