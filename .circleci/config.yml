@@ -121,7 +121,7 @@ jobs:
           command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
-          command: "cd ./packages/rigoblock-dapp && docker build -t staging . "
+          command: "docker build -t staging ./packages/rigoblock-dapp"
       - run:
           name: Flynn push
           command: "~/flynn -a dapp-staging docker push staging:latest"
@@ -137,17 +137,17 @@ workflows:
       - test-unit-dapp:
           requires:
             - setup
-      - test-feature:
-          requires:
-            - test-unit-dapp
       - build-dapp:
           requires:
             - test-unit-dapp
-      # - deploy-staging:
-      #     requires:
-      #       - test-feature
-      #       - test-unit
-      #       - build
+      - test-feature-dapp:
+          requires:
+            - build-dapp
+      - deploy-staging:
+          requires:
+            - test-unit-dapp
+            - build-dapp
+            - test-feature-dapp
           # filters:
           #   branches:
           #     only: master
