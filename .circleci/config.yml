@@ -79,7 +79,7 @@ jobs:
       - image: circleci/node:8.10-stretch-browsers
     steps:
       - checkout
-       - attach_workspace:
+      - attach_workspace:
           at: *dapp_folder
       - restore_cache:
           key: rigoblock-node-v1-{{ checksum "package.json" }}
@@ -98,7 +98,7 @@ jobs:
     machine: true
     steps:
       - checkout
-       - attach_workspace:
+      - attach_workspace:
           at: *dapp_folder
       - restore_cache:
           key: rigoblock-node-v1-{{ checksum "package.json" }}
