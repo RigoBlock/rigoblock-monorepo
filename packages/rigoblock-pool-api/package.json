@@ -1,7 +1,7 @@
 {
   "name": "pool-api",
   "description": "A JS wrapper around RigoBlock Smart Contracts to simplify their consumption.",
-  "version": "1.00",
+  "version": "0.1.0",
   "private": true,
   "engines": {
     "node": ">=6.4"
