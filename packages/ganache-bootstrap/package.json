@@ -1,11 +1,11 @@
 {
   "name": "@rigoblock/ganache-bootstrap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "bin": "bin/ganache-bootstrap.js",
   "dependencies": {
+    "@rigoblock/protocol": "^0.1.0",
     "chalk": "^2.3.2",
     "pino": "^4.15.3",
-    "@rigoblock/protocol": "^0.1.0",
     "web3": "^1.0.0-beta.33"
   }
 }
