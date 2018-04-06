@@ -1,5 +1,4 @@
 #! /usr/bin/env node
-const { CONTRACTS } = require('@rigoblock/protocol')
 const seed = require('../seed')
 const { GANACHE_URL } = require('../constants')
 

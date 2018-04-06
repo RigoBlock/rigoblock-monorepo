@@ -6,7 +6,7 @@ module.exports = path => {
       if (err) {
         return reject(err)
       }
-      resolve(result.map(file => file.split('/').pop()))
+      resolve(result)
     })
   })
 }
