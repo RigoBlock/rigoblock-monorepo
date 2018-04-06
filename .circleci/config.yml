@@ -30,7 +30,7 @@ jobs:
           command: yarn
       - run:
           name: Installing all dependencies
-          command: npx lerna boostrap
+          command: yarn bootstrap
       - save_cache:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
