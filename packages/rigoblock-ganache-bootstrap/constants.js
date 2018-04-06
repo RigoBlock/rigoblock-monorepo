@@ -1,3 +1,3 @@
 module.exports = {
-  NETWORKS: process.env.NETWORKS || ['http://localhost:8545']
+  GANACHE_URL: 'http://localhost:8545'
 }
