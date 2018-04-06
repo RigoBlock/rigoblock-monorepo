@@ -148,6 +148,6 @@ workflows:
             - test-unit-dapp
             - build-dapp
             - test-feature-dapp
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
