@@ -30,7 +30,7 @@ jobs:
           command: yarn
       - run:
           name: Installing all dependencies
-          command: lerna boostrap
+          command: yarn boostrap
       - save_cache:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
@@ -47,7 +47,7 @@ jobs:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Building dist
-          command: lerna run --scope rigoblock-dapp build
+          command: npx lerna run --scope rigoblock-dapp build
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -65,7 +65,7 @@ jobs:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: JS unit tests
-          command: lerna run --scope rigoblock-dapp test:unit
+          command: npx lerna run --scope rigoblock-dapp test:unit
 
   test-feature:
     working_directory: *workspace_root
