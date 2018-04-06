@@ -67,7 +67,7 @@ jobs:
           name: JS unit tests
           command: npx lerna run --scope rigoblock-dapp test:unit
 
-  test-feature:
+  test-feature-dapp:
     working_directory: *workspace_root
     environment:
       TZ: *timezone
@@ -79,11 +79,11 @@ jobs:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Starting server
-          command: yarn start
+          command: npx lerna run --scope rigoblock-dapp start
           background: true
       - run:
           name: JS feature tests
-          command: yarn test:feature
+          command: npx lerna run --scope rigoblock-dapp test:feature
 
   deploy-staging:
     working_directory: *workspace_root
@@ -137,13 +137,12 @@ workflows:
       - test-unit-dapp:
           requires:
             - setup
+      - test-feature:
+          requires:
+            - test-unit-dapp
       - build-dapp:
           requires:
             - test-unit-dapp
-
-      # - test-feature:
-      #     requires:
-      #       - test-unit
       # - deploy-staging:
       #     requires:
       #       - test-feature
