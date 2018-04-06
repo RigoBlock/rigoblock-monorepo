@@ -82,6 +82,16 @@ jobs:
           command: npx lerna run --scope @rigoblock/dapp start
           background: true
       - run:
+          name: Starting ganache cli
+          command: npx lerna run --scope @rigoblock/dapp ganache
+          background: true
+      - run:
+          name: Bootstrapping smart contracts to ganache cli
+          command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap
+      - run:
+          name: Seeding ganache cli
+          command: npx lerna run --scope @rigoblock/dapp ganache:seed
+      - run:
           name: JS feature tests
           command: npx lerna run --scope @rigoblock/dapp test:feature
 
