@@ -2,7 +2,6 @@
   "name": "@rigoblock/protocol",
   "version": "0.1.0",
   "main": "index.js",
-  "private": true,
   "scripts": {
     "compile": "node deployment/compiler.js",
     "lint": "eslint . --ext js,jsx --fix"
