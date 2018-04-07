@@ -31,7 +31,8 @@
       "git add"
     ]
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": ["**/*"]
+  }
 }

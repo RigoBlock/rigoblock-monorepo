@@ -47,7 +47,7 @@ jobs:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Building dist
-          command: npx lerna run --scope @rigoblock/dapp build
+          command: npx lerna run --scope @rigoblock/dapp build --stream
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -60,12 +60,11 @@ jobs:
     docker:
       - image: circleci/node:8.10-stretch
     steps:
-      - *attach_workspace
       - restore_cache:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: JS unit tests
-          command: npx lerna run --scope @rigoblock/dapp test:unit
+          command: npx lerna run --scope @rigoblock/dapp test:unit --stream
 
   test-feature-dapp:
     working_directory: *workspace_root
@@ -87,13 +86,13 @@ jobs:
           background: true
       - run:
           name: Bootstrapping smart contracts to ganache cli
-          command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap
+          command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap --stream
       - run:
           name: Seeding ganache cli
-          command: npx lerna run --scope @rigoblock/dapp ganache:seed
+          command: npx lerna run --scope @rigoblock/dapp ganache:seed --stream
       - run:
           name: JS feature tests
-          command: npx lerna run --scope @rigoblock/dapp test:feature
+          command: npx lerna run --scope @rigoblock/dapp test:feature --stream
 
   deploy-staging:
     working_directory: *workspace_root
