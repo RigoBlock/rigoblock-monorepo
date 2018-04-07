@@ -33,6 +33,6 @@
   },
   "workspaces": {
     "packages": ["packages/*"],
-    "nohoist": ["**/*"]
+    "nohoist": ["**/*jest*", "**/jsdom"]
   }
 }

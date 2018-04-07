@@ -10,8 +10,8 @@ const compile = async (contracts, networkUrl) => {
   const networkId = await web3.eth.net.getId()
 
   const compilerOpts = {
-    ARTIFACTS_DIR,
-    CONTRACTS_DIR,
+    artifactsDir: ARTIFACTS_DIR,
+    contractsDir: CONTRACTS_DIR,
     networkId,
     specifiedContracts: new Set(contracts)
   }
