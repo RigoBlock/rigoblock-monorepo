@@ -77,13 +77,21 @@ jobs:
       - restore_cache:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
-          name: Starting server
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          name: Starting HTTP server
           command: npx lerna run --scope @rigoblock/dapp start --stream
           background: true
       - run:
           name: Starting ganache cli
           command: npx lerna run --scope @rigoblock/dapp ganache --stream
           background: true
+      - run:
+          name: Wait for HTTP server and ganache cli
+          command: dockerize -wait tcp://localhost:8545 -wait tcp://localhost:8080 -timeout 1m
       - run:
           name: Compiling smart contracts for ganache
           command: npx lerna run --scope @rigoblock/protocol compile --stream
