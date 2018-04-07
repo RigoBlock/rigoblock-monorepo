@@ -78,12 +78,15 @@ jobs:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Starting server
-          command: npx lerna run --scope @rigoblock/dapp start
+          command: npx lerna run --scope @rigoblock/dapp start --stream
           background: true
       - run:
           name: Starting ganache cli
-          command: npx lerna run --scope @rigoblock/dapp ganache
+          command: npx lerna run --scope @rigoblock/dapp ganache --stream
           background: true
+      - run:
+          name: Compiling smart contracts for ganache
+          command: npx lerna run --scope @rigoblock/protocol compile --stream
       - run:
           name: Bootstrapping smart contracts to ganache cli
           command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap --stream
