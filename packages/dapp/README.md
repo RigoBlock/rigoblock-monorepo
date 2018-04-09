@@ -95,3 +95,17 @@ You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://facebook.gi
 We are using [redux-persist](https://github.com/rt2zz/redux-persist) and [localforage](https://github.com/localForage/localForage) libraries to manage redux store persistence on IndexedDB.
 
 [Info on migrations](docs/MIGRATIONS.md)
+
+### Ganache bootstrapping and seeding
+
+### `yarn ganache`
+
+Starts up the Ganache-cli with default port, network Id and mnemonic specified in the package.json file
+
+### `yarn ganache:bootstrap`
+
+Deploys all the compiled contracts on Ganache
+
+### `yarn ganache:seed`
+
+Runs the seed script on Ganache
