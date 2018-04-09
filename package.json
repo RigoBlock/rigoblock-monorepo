@@ -21,15 +21,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.js": [
-      "npm run lint",
-      "git add"
-    ]
+    "lint-staged": {
+      "*.{js,json,md}": ["eslint --fix", "git add"]
+    }
   },
   "workspaces": {
     "packages": ["packages/*"],
