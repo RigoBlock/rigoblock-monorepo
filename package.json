@@ -25,9 +25,7 @@
     }
   },
   "lint-staged": {
-    "lint-staged": {
-      "*.{js,json,md}": ["eslint --fix", "git add"]
-    }
+    "*.{js,jsx}": ["eslint --fix", "git add"]
   },
   "workspaces": {
     "packages": ["packages/*"],

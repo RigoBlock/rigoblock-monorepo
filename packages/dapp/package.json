@@ -91,18 +91,6 @@
     "webpack-manifest-plugin": "2.0.0-rc.2",
     "whatwg-fetch": "2.0.3"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && npm run test:unit",
-      "pre-push": "lint-staged && npm run test:unit"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "npm run lint",
-      "git add"
-    ]
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
