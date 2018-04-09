@@ -1,0 +1,615 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_newVault",
+				"type": "address"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_symbol",
+				"type": "string"
+			},
+			{
+				"name": "_vaultId",
+				"type": "uint256"
+			}
+		],
+		"name": "createVault",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetVault",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"name": "_name",
+				"type": "bytes"
+			},
+			{
+				"name": "_symbol",
+				"type": "bytes"
+			}
+		],
+		"name": "buyVault",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetVault",
+				"type": "address"
+			},
+			{
+				"name": "_casper",
+				"type": "address"
+			},
+			{
+				"name": "_validatorIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "withdrawFromCasper",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetVault",
+				"type": "address"
+			},
+			{
+				"name": "_casper",
+				"type": "address"
+			},
+			{
+				"name": "_validation",
+				"type": "address"
+			},
+			{
+				"name": "_withdrawal",
+				"type": "address"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "depositToCasper",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "AUTHORITY",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetVault",
+				"type": "address"
+			},
+			{
+				"name": "_vaultDao",
+				"type": "address"
+			}
+		],
+		"name": "changeVaultDao",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetVault",
+				"type": "address"
+			},
+			{
+				"name": "_ratio",
+				"type": "uint256"
+			}
+		],
+		"name": "changeRatio",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetVault",
+				"type": "address"
+			},
+			{
+				"name": "_transactionFee",
+				"type": "uint256"
+			}
+		],
+		"name": "setTransactionFee",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetVault",
+				"type": "address"
+			},
+			{
+				"name": "_feeCollector",
+				"type": "address"
+			}
+		],
+		"name": "changeFeeCollector",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetVault",
+				"type": "address"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"name": "_revenue",
+				"type": "uint256"
+			},
+			{
+				"name": "_name",
+				"type": "bytes"
+			},
+			{
+				"name": "_symbol",
+				"type": "bytes"
+			}
+		],
+		"name": "sellVault",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "VERSION",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_authority",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "vault",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "revenue",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"name": "symbol",
+				"type": "bytes"
+			}
+		],
+		"name": "BuyVault",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "vault",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "revenue",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"name": "symbol",
+				"type": "bytes"
+			}
+		],
+		"name": "SellVault",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "vault",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "newRatio",
+				"type": "uint256"
+			}
+		],
+		"name": "NewRatio",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "vault",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "fee",
+				"type": "uint256"
+			}
+		],
+		"name": "NewFee",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "vault",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "collector",
+				"type": "address"
+			}
+		],
+		"name": "NewCollector",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "vault",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "vaultDao",
+				"type": "address"
+			}
+		],
+		"name": "VaultDao",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "vault",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "validator",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "casper",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "withdrawal",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "DepositCasper",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "vault",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "validator",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "casper",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "validatorIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "WithdrawCasper",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "vault",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "group",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "vaultId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "symbol",
+				"type": "string"
+			}
+		],
+		"name": "VaultCreated",
+		"type": "event"
+	}
+]
