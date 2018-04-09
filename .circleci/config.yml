@@ -47,11 +47,11 @@ jobs:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Building dist
-          command: npx lerna run --scope rigoblock-dapp build
+          command: npx lerna run --scope @rigoblock/dapp build --stream
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - packages/rigoblock-dapp/dist
+            - packages/dapp/dist
 
   test-unit-dapp:
     working_directory: *workspace_root
@@ -60,12 +60,11 @@ jobs:
     docker:
       - image: circleci/node:8.10-stretch
     steps:
-      - *attach_workspace
       - restore_cache:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: JS unit tests
-          command: npx lerna run --scope rigoblock-dapp test:unit
+          command: npx lerna run --scope @rigoblock/dapp test:unit --stream
 
   test-feature-dapp:
     working_directory: *workspace_root
@@ -78,12 +77,33 @@ jobs:
       - restore_cache:
           key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
-          name: Starting server
-          command: npx lerna run --scope rigoblock-dapp start
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          name: Starting HTTP server
+          command: npx lerna run --scope @rigoblock/dapp start --stream
           background: true
       - run:
+          name: Starting ganache cli
+          command: npx lerna run --scope @rigoblock/dapp ganache --stream
+          background: true
+      - run:
+          name: Wait for HTTP server and ganache cli
+          command: dockerize -wait tcp://localhost:8545 -wait tcp://localhost:8080 -timeout 1m
+      - run:
+          name: Compiling smart contracts for ganache
+          command: npx lerna run --scope @rigoblock/protocol compile --stream
+      - run:
+          name: Bootstrapping smart contracts to ganache cli
+          command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap --stream
+      - run:
+          name: Seeding ganache cli
+          command: npx lerna run --scope @rigoblock/dapp ganache:seed --stream
+      - run:
           name: JS feature tests
-          command: npx lerna run --scope rigoblock-dapp test:feature
+          command: npx lerna run --scope @rigoblock/dapp test:feature --stream
 
   deploy-staging:
     working_directory: *workspace_root
@@ -121,7 +141,7 @@ jobs:
           command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
-          command: "docker build -t staging ./packages/rigoblock-dapp"
+          command: "docker build -t staging ./packages/dapp"
       - run:
           name: Flynn push
           command: "~/flynn -a dapp-staging docker push staging:latest"

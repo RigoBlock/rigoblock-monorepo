@@ -1,12 +1,15 @@
 {
-  "name": "rigoblock-protocol",
-  "version": "0.1.0",
+  "name": "@rigoblock/protocol",
+  "version": "0.1.1",
   "main": "index.js",
-  "private": true,
   "scripts": {
     "compile": "node deployment/compiler.js",
     "lint": "eslint . --ext js,jsx --fix"
   },
+  "files": [
+    "artifacts",
+    "deployment"
+  ],
   "dependencies": {
     "@0xproject/deployer": "^0.3.5",
     "chalk": "^2.3.2",

@@ -17,7 +17,7 @@ const config = {
   hooks: [],
   tests: './test/**/*.test.js',
   timeout: 10000,
-  name: 'rigoblock-dappv2'
+  name: 'rigoblock-dapp'
 }
 
 module.exports = { config }
