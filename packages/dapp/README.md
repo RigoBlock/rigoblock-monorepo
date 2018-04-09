@@ -64,7 +64,19 @@ Launches feature tests in debug mode.
 
 Builds the app for production to the `dist` folder.
 
-### Filename Conventions
+### `yarn ganache`
+
+Starts up the Ganache-cli with default port, network Id and mnemonic specified in the package.json file
+
+### `yarn ganache:bootstrap`
+
+Deploys all the compiled contracts on Ganache
+
+### `yarn ganache:seed`
+
+Runs the seed script on Ganache
+
+## Filename Conventions
 
 Jest will look for test files with this naming:
 
@@ -90,22 +102,8 @@ it('sums numbers', () => {
 All `expect()` matchers supported by Jest are [extensively documented here](https://facebook.github.io/jest/docs/en/expect.html#content).
 You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://facebook.github.io/jest/docs/en/expect.html#tohavebeencalled) to create “spies” or mock functions.
 
-### Offline Cache
+## Offline Cache
 
 We are using [redux-persist](https://github.com/rt2zz/redux-persist) and [localforage](https://github.com/localForage/localForage) libraries to manage redux store persistence on IndexedDB.
 
 [Info on migrations](docs/MIGRATIONS.md)
-
-### Ganache bootstrapping and seeding
-
-### `yarn ganache`
-
-Starts up the Ganache-cli with default port, network Id and mnemonic specified in the package.json file
-
-### `yarn ganache:bootstrap`
-
-Deploys all the compiled contracts on Ganache
-
-### `yarn ganache:seed`
-
-Runs the seed script on Ganache
