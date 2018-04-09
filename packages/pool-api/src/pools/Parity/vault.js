@@ -1,11 +1,11 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../../contracts/abi';
-import Registry from '../registry';
+import * as abis from '../../contracts/abi'
+import Registry from '../registry'
 
 class VaultParity {
-  constructor (api) {
+  constructor(api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
@@ -15,14 +15,14 @@ class VaultParity {
     this._constunctorName = this.constructor.name
   }
 
-  get instance () {
+  get instance() {
     if (typeof this._instance === 'undefined') {
       throw new Error('The contract needs to be initialized.')
     }
-    return this._instance;
+    return this._instance
   }
 
-  init = (address) => {
+  init = address => {
     if (!address) {
       throw new Error('Contract address needs to be provided')
     }
@@ -32,7 +32,7 @@ class VaultParity {
     return this._instance
   }
 
-  balanceOf = (accountAddress) => {
+  balanceOf = accountAddress => {
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
     }
@@ -58,11 +58,13 @@ class VaultParity {
       value: amount
     }
     // return instance.buyVault.postTransaction(options, [])
-    return instance.buyVault
-    .estimateGas(options, [])
-    .then((gasEstimate) => {
-      options.gas =  gasEstimate.mul(1.2).toFixed(0);
-      console.log(`Buy Vault: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}`)
+    return instance.buyVault.estimateGas(options, []).then(gasEstimate => {
+      options.gas = gasEstimate.mul(1.2).toFixed(0)
+      console.log(
+        `Buy Vault: gas estimated as ${gasEstimate.toFixed(0)} setting to ${
+          options.gas
+        }`
+      )
       return instance.buyVault.postTransaction(options, [])
     })
   }
@@ -89,11 +91,13 @@ class VaultParity {
     const options = {
       from: accountAddress
     }
-    return instance.sellVault
-    .estimateGas(options, values)
-    .then((gasEstimate) => {
-      options.gas =  gasEstimate.mul(1.2).toFixed(0);
-      console.log(`Sell Vault: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}.`)
+    return instance.sellVault.estimateGas(options, values).then(gasEstimate => {
+      options.gas = gasEstimate.mul(1.2).toFixed(0)
+      console.log(
+        `Sell Vault: gas estimated as ${gasEstimate.toFixed(0)} setting to ${
+          options.gas
+        }.`
+      )
       return instance.sellVault.postTransaction(options, values)
     })
   }
@@ -115,22 +119,22 @@ class VaultParity {
       from: accountAddress
     }
     return instance.setTransactionFee
-    .estimateGas(options, values)
-    .then((gasEstimate) => {
-      options.gas =  gasEstimate.mul(1.2).toFixed(0);
-      console.log(`setTransactionFee Vault: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}. Setting values: ${values}`)
-      return instance.setTransactionFee.postTransaction(options, values)
-    })
-
+      .estimateGas(options, values)
+      .then(gasEstimate => {
+        options.gas = gasEstimate.mul(1.2).toFixed(0)
+        console.log(
+          `setTransactionFee Vault: gas estimated as ${gasEstimate.toFixed(
+            0
+          )} setting to ${options.gas}. Setting values: ${values}`
+        )
+        return instance.setTransactionFee.postTransaction(options, values)
+      })
   }
 
-  totalSupply =() =>{
+  totalSupply = () => {
     const instance = this._instance
-    return instance.totalSupply.call({},[])
+    return instance.totalSupply.call({}, [])
   }
-
 }
 
-
-
-export default VaultParity;
+export default VaultParity

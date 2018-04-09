@@ -1,12 +1,12 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../../contracts/abi';
-import Registry from '../registry';
-import {RIGOTOKEN_ADDRESSES} from '../../utils/const'
+import * as abis from '../../contracts/abi'
+import Registry from '../registry'
+import { RIGOTOKEN_ADDRESSES } from '../../utils/const'
 
 class RigoTokenParity {
-  constructor (api) {
+  constructor(api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
@@ -16,11 +16,11 @@ class RigoTokenParity {
     this._constunctorName = this.constructor.name
   }
 
-  get instance () {
+  get instance() {
     if (typeof this._instance === 'undefined') {
       throw new Error('The contract needs to be initialized.')
     }
-    return this._instance;
+    return this._instance
   }
 
   init = () => {
@@ -31,7 +31,7 @@ class RigoTokenParity {
     return this._instance
   }
 
-  balanceOf = (accountAddress) => {
+  balanceOf = accountAddress => {
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
     }
@@ -54,15 +54,16 @@ class RigoTokenParity {
     const options = {
       from: fromAddress
     }
-    return instance.transfer
-    .estimateGas(options, values)
-    .then((gasEstimate) => {
-      options.gas =  gasEstimate.mul(1.2).toFixed(0);
-      console.log(`Transfer GRG: gas estimated as ${gasEstimate.toFixed(0)} setting to ${options.gas}`)
+    return instance.transfer.estimateGas(options, values).then(gasEstimate => {
+      options.gas = gasEstimate.mul(1.2).toFixed(0)
+      console.log(
+        `Transfer GRG: gas estimated as ${gasEstimate.toFixed(0)} setting to ${
+          options.gas
+        }`
+      )
       return instance.transfer.postTransaction(options, values)
     })
   }
-
 }
 
-export default RigoTokenParity;
+export default RigoTokenParity

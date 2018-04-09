@@ -1,13 +1,12 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../../contracts/abi';
-import Registry from '../registry';
+import * as abis from '../../contracts/abi'
+import Registry from '../registry'
 import { DRAGOFACTORY } from '../../utils/const'
 
-
 class DragoFactoryWeb3 {
-  constructor (api) {
+  constructor(api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
@@ -18,11 +17,11 @@ class DragoFactoryWeb3 {
     this._contractName = DRAGOFACTORY
   }
 
-  get instance () {
+  get instance() {
     if (typeof this._instance === 'undefined') {
       throw new Error('The contract needs to be initialized.')
     }
-    return this._instance;
+    return this._instance
   }
 
   get hexSignature() {
@@ -32,11 +31,10 @@ class DragoFactoryWeb3 {
   init = () => {
     const contractAbi = this._abi
     const contractName = this._contractName
-    return this._registry.instance(contractAbi, contractName)
-      .then (contract => {
-        this._instance = contract
-        return this._instance
-      })
+    return this._registry.instance(contractAbi, contractName).then(contract => {
+      this._instance = contract
+      return this._instance
+    })
   }
 
   createDrago = (dragoName, dragoSymbol, accountAddress) => {
@@ -54,17 +52,19 @@ class DragoFactoryWeb3 {
       from: accountAddress
     }
     instance.options.from = accountAddress
-    return instance.methods.createDrago(dragoName, dragoSymbol).estimateGas(options)
-    .then(function(gasAmount){
-      instance.options.gas =  gasAmount
-      return instance.methods.createDrago(dragoName, dragoSymbol)
-      .send(options)
-      .then((receipt) =>{
-        return receipt
+    return instance.methods
+      .createDrago(dragoName, dragoSymbol)
+      .estimateGas(options)
+      .then(function(gasAmount) {
+        instance.options.gas = gasAmount
+        return instance.methods
+          .createDrago(dragoName, dragoSymbol)
+          .send(options)
+          .then(receipt => {
+            return receipt
+          })
       })
-    }
-    )
   }
 }
 
-export default DragoFactoryWeb3;
+export default DragoFactoryWeb3

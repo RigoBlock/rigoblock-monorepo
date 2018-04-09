@@ -1,12 +1,12 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../../contracts/abi';
-import Registry from '../registry';
+import * as abis from '../../contracts/abi'
+import Registry from '../registry'
 import { VAULTFACTORY } from '../../utils/const'
 
 class VaultFactoryWeb3 {
-  constructor (api) {
+  constructor(api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
@@ -17,11 +17,11 @@ class VaultFactoryWeb3 {
     this._contractName = VAULTFACTORY
   }
 
-  get instance () {
+  get instance() {
     if (typeof this._instance === 'undefined') {
       throw new Error('The contract needs to be initialized.')
     }
-    return this._instance;
+    return this._instance
   }
 
   get hexSignature() {
@@ -31,11 +31,10 @@ class VaultFactoryWeb3 {
   init = () => {
     const contractAbi = this._abi
     const contractName = this._contractName
-    return this._registry.instance(contractAbi, contractName)
-      .then (contract => {
-        this._instance = contract
-        return this._instance
-      })
+    return this._registry.instance(contractAbi, contractName).then(contract => {
+      this._instance = contract
+      return this._instance
+    })
   }
 
   createVault = (vaultName, vaultSymbol, accountAddress) => {
@@ -54,17 +53,19 @@ class VaultFactoryWeb3 {
     }
     console.log(options)
     instance.options.from = accountAddress
-    return instance.methods.createVault(vaultName, vaultSymbol).estimateGas(options)
-      .then(function (gasAmount) {
+    return instance.methods
+      .createVault(vaultName, vaultSymbol)
+      .estimateGas(options)
+      .then(function(gasAmount) {
         instance.options.gas = gasAmount
-        return instance.methods.createVault(vaultName, vaultSymbol)
+        return instance.methods
+          .createVault(vaultName, vaultSymbol)
           .send(options)
-          .then((receipt) => {
+          .then(receipt => {
             return receipt
           })
-      }
-      )
+      })
   }
 }
 
-export default VaultFactoryWeb3;
+export default VaultFactoryWeb3
