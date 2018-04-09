@@ -1,0 +1,573 @@
+[{
+  "constant": true,
+  "inputs": [],
+  "name": "getMaxLeverage",
+  "outputs": [{
+    "name": "",
+    "type": "uint24"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "leveraged",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "id",
+    "type": "uint32"
+  }, {
+    "name": "who",
+    "type": "address"
+  }],
+  "name": "cancelExchange",
+  "outputs": [{
+    "name": "success",
+    "type": "bool"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "stable",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_is_stable",
+    "type": "bool"
+  }, {
+    "name": "_stake",
+    "type": "uint128"
+  }],
+  "name": "bestAdjustmentFor",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_maxLev",
+    "type": "uint24"
+  }],
+  "name": "setMaxLeverage",
+  "outputs": [],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "value",
+    "type": "uint256"
+  }],
+  "name": "withdraw",
+  "outputs": [{
+    "name": "success",
+    "type": "bool"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "is_stable",
+    "type": "bool"
+  }, {
+    "name": "adjustment",
+    "type": "uint32"
+  }, {
+    "name": "stake",
+    "type": "uint128"
+  }, {
+    "name": "who",
+    "type": "address"
+  }],
+  "name": "orderExchange",
+  "outputs": [{
+    "name": "success",
+    "type": "bool"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "getExchangeEventful",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "maxLev",
+  "outputs": [{
+    "name": "",
+    "type": "uint24"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "name": "accounts",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_exchange",
+    "type": "address"
+  }],
+  "name": "setExchange",
+  "outputs": [],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "name": "orders",
+  "outputs": [{
+    "name": "who",
+    "type": "address"
+  }, {
+    "name": "is_stable",
+    "type": "bool"
+  }, {
+    "name": "adjustment",
+    "type": "uint32"
+  }, {
+    "name": "stake",
+    "type": "uint128"
+  }, {
+    "name": "prev_id",
+    "type": "uint32"
+  }, {
+    "name": "next_id",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "getLastOrderId",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_who",
+    "type": "address"
+  }],
+  "name": "balanceOf",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "name": "deals",
+  "outputs": [{
+    "name": "stable",
+    "type": "address"
+  }, {
+    "name": "leveraged",
+    "type": "address"
+  }, {
+    "name": "strike",
+    "type": "uint64"
+  }, {
+    "name": "stake",
+    "type": "uint128"
+  }, {
+    "name": "end_time",
+    "type": "uint32"
+  }, {
+    "name": "prev_id",
+    "type": "uint32"
+  }, {
+    "name": "next_id",
+    "type": "uint32"
+  }, {
+    "name": "lev",
+    "type": "uint24"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "oracle",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "head",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "getPrice",
+  "outputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "id",
+    "type": "uint24"
+  }, {
+    "name": "who",
+    "type": "address"
+  }],
+  "name": "finalizeExchange",
+  "outputs": [{
+    "name": "success",
+    "type": "bool"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_id",
+    "type": "uint32"
+  }],
+  "name": "getStable",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_id",
+    "type": "uint32"
+  }],
+  "name": "orderDetails",
+  "outputs": [{
+    "name": "",
+    "type": "uint128"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_id",
+    "type": "uint32"
+  }],
+  "name": "getDealStake",
+  "outputs": [{
+    "name": "",
+    "type": "uint128"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_id",
+    "type": "uint32"
+  }],
+  "name": "getLeveraged",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "exchange",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_id",
+    "type": "uint32"
+  }],
+  "name": "dealDetails",
+  "outputs": [{
+    "name": "stable",
+    "type": "address"
+  }, {
+    "name": "leveraged",
+    "type": "address"
+  }, {
+    "name": "strike",
+    "type": "uint64"
+  }, {
+    "name": "stake",
+    "type": "uint128"
+  }, {
+    "name": "end_time",
+    "type": "uint32"
+  }, {
+    "name": "VAR",
+    "type": "uint256"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "next_id",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_id",
+    "type": "uint32"
+  }],
+  "name": "getOrderOwner",
+  "outputs": [{
+    "name": "",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_is_stable",
+    "type": "bool"
+  }],
+  "name": "bestAdjustment",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [],
+  "name": "period",
+  "outputs": [{
+    "name": "",
+    "type": "uint32"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": true,
+  "inputs": [{
+    "name": "_id",
+    "type": "uint32"
+  }],
+  "name": "getDealLev",
+  "outputs": [{
+    "name": "",
+    "type": "uint24"
+  }],
+  "payable": false,
+  "type": "function"
+}, {
+  "constant": false,
+  "inputs": [{
+    "name": "_who",
+    "type": "address"
+  }],
+  "name": "deposit",
+  "outputs": [],
+  "payable": true,
+  "type": "function"
+}, {
+  "inputs": [{
+    "name": "_oracle",
+    "type": "address"
+  }, {
+    "name": "_exchange",
+    "type": "address"
+  }],
+  "payable": false,
+  "type": "constructor"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "who",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "value",
+    "type": "uint256"
+  }],
+  "name": "Deposit",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "who",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "value",
+    "type": "uint256"
+  }],
+  "name": "Withdraw",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "id",
+    "type": "uint32"
+  }, {
+    "indexed": true,
+    "name": "who",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "name": "is_stable",
+    "type": "bool"
+  }, {
+    "indexed": false,
+    "name": "adjustment",
+    "type": "uint32"
+  }, {
+    "indexed": false,
+    "name": "stake",
+    "type": "uint128"
+  }],
+  "name": "OrderPlaced",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "id",
+    "type": "uint32"
+  }, {
+    "indexed": true,
+    "name": "stable",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "name": "leveraged",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "is_stable",
+    "type": "bool"
+  }, {
+    "indexed": false,
+    "name": "deal",
+    "type": "uint32"
+  }, {
+    "indexed": false,
+    "name": "strike",
+    "type": "uint64"
+  }, {
+    "indexed": false,
+    "name": "stake",
+    "type": "uint128"
+  }],
+  "name": "OrderMatched",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "id",
+    "type": "uint32"
+  }, {
+    "indexed": true,
+    "name": "who",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "stake",
+    "type": "uint128"
+  }],
+  "name": "OrderCancelled",
+  "type": "event"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "name": "id",
+    "type": "uint32"
+  }, {
+    "indexed": true,
+    "name": "stable",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "name": "leveraged",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "name": "price",
+    "type": "uint64"
+  }],
+  "name": "DealFinalized",
+  "type": "event"
+}]

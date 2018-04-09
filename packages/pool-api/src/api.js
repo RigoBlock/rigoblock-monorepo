@@ -1,15 +1,15 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import Contract from './contract';
+import Contracts from './pools';
 
-class DragoApi {
+class PoolsApi {
   constructor (api) {
     // super()
     if (!api) {
       throw new Error('API instance needs to be provided to Contract');
     }
-    this._contract = new Contract(api);
+    this._contract = new Contracts(api);
   }
 
   get contract () {
@@ -17,4 +17,4 @@ class DragoApi {
   }
 }
 
-export default DragoApi;
+export default PoolsApi;

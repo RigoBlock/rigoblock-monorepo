@@ -1,0 +1,1130 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_cfdExchange",
+				"type": "address"
+			},
+			{
+				"name": "_cfd",
+				"type": "address"
+			},
+			{
+				"name": "_is_stable",
+				"type": "bool"
+			},
+			{
+				"name": "_adjustment",
+				"type": "uint32"
+			},
+			{
+				"name": "_stake",
+				"type": "uint128"
+			}
+		],
+		"name": "placeOrderCFDExchange",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_exchange",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_tokenGet",
+				"type": "address"
+			},
+			{
+				"name": "_amountGet",
+				"type": "uint256"
+			},
+			{
+				"name": "_tokenGive",
+				"type": "address"
+			},
+			{
+				"name": "_amountGive",
+				"type": "uint256"
+			},
+			{
+				"name": "_expires",
+				"type": "uint256"
+			}
+		],
+		"name": "placeOrderExchange",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_dragoDao",
+				"type": "address"
+			}
+		],
+		"name": "changeDragoDao",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"name": "_name",
+				"type": "bytes"
+			},
+			{
+				"name": "_symbol",
+				"type": "bytes"
+			}
+		],
+		"name": "buyDrago",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"name": "_revenue",
+				"type": "uint256"
+			},
+			{
+				"name": "_name",
+				"type": "bytes"
+			},
+			{
+				"name": "_symbol",
+				"type": "bytes"
+			}
+		],
+		"name": "sellDrago",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_newDrago",
+				"type": "address"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_symbol",
+				"type": "string"
+			},
+			{
+				"name": "_dragoId",
+				"type": "uint256"
+			}
+		],
+		"name": "createDrago",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_exchange",
+				"type": "address"
+			},
+			{
+				"name": "_tokenGet",
+				"type": "address"
+			},
+			{
+				"name": "_amountGet",
+				"type": "uint256"
+			},
+			{
+				"name": "_tokenGive",
+				"type": "address"
+			},
+			{
+				"name": "_amountGive",
+				"type": "uint256"
+			},
+			{
+				"name": "_expires",
+				"type": "uint256"
+			},
+			{
+				"name": "_user",
+				"type": "address"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "placeTradeExchange",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_exchange",
+				"type": "address"
+			},
+			{
+				"name": "_token",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "withdrawFromExchange",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_cfdExchange",
+				"type": "address"
+			},
+			{
+				"name": "_cfd",
+				"type": "address"
+			},
+			{
+				"name": "_id",
+				"type": "uint32"
+			}
+		],
+		"name": "cancelOrderCFDExchange",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_sellPrice",
+				"type": "uint256"
+			},
+			{
+				"name": "_buyPrice",
+				"type": "uint256"
+			}
+		],
+		"name": "setDragoPrice",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "AUTHORITY",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_ratio",
+				"type": "uint256"
+			}
+		],
+		"name": "changeRatio",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_exchange",
+				"type": "address"
+			},
+			{
+				"name": "_cfd",
+				"type": "address"
+			},
+			{
+				"name": "_id",
+				"type": "uint24"
+			}
+		],
+		"name": "finalizeDealCFDExchange",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_transactionFee",
+				"type": "uint256"
+			}
+		],
+		"name": "setTransactionFee",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_feeCollector",
+				"type": "address"
+			}
+		],
+		"name": "changeFeeCollector",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_exchange",
+				"type": "address"
+			},
+			{
+				"name": "_token",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "depositToExchange",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_who",
+				"type": "address"
+			},
+			{
+				"name": "_targetDrago",
+				"type": "address"
+			},
+			{
+				"name": "_exchange",
+				"type": "address"
+			},
+			{
+				"name": "_tokenGet",
+				"type": "address"
+			},
+			{
+				"name": "_amountGet",
+				"type": "uint256"
+			},
+			{
+				"name": "_tokenGive",
+				"type": "address"
+			},
+			{
+				"name": "_amountGive",
+				"type": "uint256"
+			},
+			{
+				"name": "_expires",
+				"type": "uint256"
+			}
+		],
+		"name": "cancelOrderExchange",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "VERSION",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_authority",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "revenue",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"name": "symbol",
+				"type": "bytes"
+			}
+		],
+		"name": "BuyDrago",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "revenue",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "bytes"
+			},
+			{
+				"indexed": false,
+				"name": "symbol",
+				"type": "bytes"
+			}
+		],
+		"name": "SellDrago",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "newRatio",
+				"type": "uint256"
+			}
+		],
+		"name": "NewRatio",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "sellPrice",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "buyPrice",
+				"type": "uint256"
+			}
+		],
+		"name": "NewNAV",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "targetDrago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "group",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "who",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "transactionFee",
+				"type": "uint256"
+			}
+		],
+		"name": "NewFee",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "targetDrago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "group",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "who",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "feeCollector",
+				"type": "address"
+			}
+		],
+		"name": "NewCollector",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "dragoDao",
+				"type": "address"
+			}
+		],
+		"name": "DragoDao",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "exchange",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "token",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "DepositExchange",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "exchange",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "token",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "WithdrawExchange",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "exchange",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "cfd",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "revenue",
+				"type": "uint256"
+			}
+		],
+		"name": "OrderExchange",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "exchange",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "tokenGet",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "tokenGive",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "amountGet",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "amountGive",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "get",
+				"type": "address"
+			}
+		],
+		"name": "TradeExchange",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "exchange",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "cfd",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "CancelOrder",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "exchange",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "cfd",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "DealFinalized",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "group",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "dragoId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "symbol",
+				"type": "string"
+			}
+		],
+		"name": "DragoCreated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drago",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "exchange",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "tokenGet",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "tokenGive",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "amountGet",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "amountGive",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "get",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "give",
+				"type": "address"
+			}
+		],
+		"name": "TradeExchange",
+		"type": "event"
+	}
+]
