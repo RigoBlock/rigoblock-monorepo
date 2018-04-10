@@ -44,6 +44,7 @@ jobs:
     docker:
       - image: *node_image
     steps:
+      - checkout
       - restore_cache:
           key: monorepo-{{ checksum "yarn.lock" }}
       - run:
@@ -61,6 +62,7 @@ jobs:
     docker:
       - image: circleci/node:8.10-stretch
     steps:
+      - checkout
       - restore_cache:
           key: monorepo-{{ checksum "yarn.lock" }}
       - run:
@@ -74,6 +76,7 @@ jobs:
     docker:
       - image: circleci/node:8.10-stretch-browsers
     steps:
+      - checkout
       - *attach_workspace
       - restore_cache:
           key: monorepo-{{ checksum "yarn.lock" }}
