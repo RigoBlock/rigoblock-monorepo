@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: monorepo-v1-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Install lerna and monorepo dependencies
           command: yarn
@@ -32,7 +32,7 @@ jobs:
           name: Installing all dependencies
           command: yarn bootstrap
       - save_cache:
-          key: monorepo-v1-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - packages/dapp/node_modules
@@ -50,7 +50,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: monorepo-v1-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Building dist
           command: npx lerna run --scope @rigoblock/dapp build --stream
@@ -68,7 +68,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: monorepo-v1-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: JS unit tests
           command: npx lerna run --scope @rigoblock/dapp test:unit --stream
@@ -83,7 +83,7 @@ jobs:
       - checkout
       - *attach_workspace
       - restore_cache:
-          key: monorepo-v1-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -122,7 +122,7 @@ jobs:
       - checkout
       - *attach_workspace
       - restore_cache:
-          key: monorepo-v1-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Install Flynn CLI
           command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
