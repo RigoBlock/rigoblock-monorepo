@@ -48,7 +48,7 @@
     "@parity/jsonrpc": "2.1.x",
     "@parity/wordlist": "1.1.x",
     "babel-eslint": "7",
-    "bignumber.js": "^6.0.0",
+    "bignumber.js": "3.0.1",
     "blockies": "0.0.2",
     "es6-error": "^4.0.0",
     "es6-promise": "^4.1.1",
