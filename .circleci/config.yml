@@ -35,6 +35,10 @@ jobs:
           key: monorepo-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+            - packages/dapp/node_modules
+            - packages/ganache-bootstrap/node_modules
+            - packages/pool-api/node_modules
+            - packages/protocol/node_modules
             - ~/.cache/yarn
 
   build-dapp:
