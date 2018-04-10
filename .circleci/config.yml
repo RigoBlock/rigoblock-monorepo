@@ -149,7 +149,7 @@ jobs:
           command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
-          command: "docker build -t staging --build-arg NPM_KEY={{.Environment.NPM_KEY}} -f ./packages/dapp/Dockerfile ./packages/dapp"
+          command: "docker build -t staging --build-arg NPM_KEY={{.Environment.NPM_KEY}} -f ./packages/dapp/Dockerfile ."
       - run:
           name: Flynn push
           command: "~/flynn -a dapp-staging docker push staging:latest"

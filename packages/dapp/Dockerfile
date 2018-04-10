@@ -16,7 +16,7 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.7/install.s
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 COPY packages/dapp /src
-ADD yarn.lock .
+COPY yarn.lock .
 # TODO: use .nvmrc
 # COPY .nvmrc /src/.nvmrc
 
