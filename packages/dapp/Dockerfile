@@ -34,7 +34,7 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN echo "//registry.npmjs.org/:_authToken=$NPM_KEY" > $HOME/.npmrc
 
 RUN npm i -g yarn
-RUN yarn
+RUN yarn --pure-lockfile
 RUN yarn build
 
 # setup gwan on alpine linux, copy dist folder from builder image onto gwan's folder

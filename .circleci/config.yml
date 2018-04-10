@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
+          key: monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Install lerna and monorepo dependencies
           command: yarn
@@ -32,9 +32,10 @@ jobs:
           name: Installing all dependencies
           command: yarn bootstrap
       - save_cache:
-          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
+          key: monorepo-{{ checksum "yarn.lock" }}
           paths:
-            - *workspace_root
+            - node_modules
+            - ~/.cache/yarn
 
   build-dapp:
     working_directory: *workspace_root
@@ -44,7 +45,7 @@ jobs:
       - image: *node_image
     steps:
       - restore_cache:
-          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
+          key: monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Building dist
           command: npx lerna run --scope @rigoblock/dapp build --stream
@@ -61,7 +62,7 @@ jobs:
       - image: circleci/node:8.10-stretch
     steps:
       - restore_cache:
-          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
+          key: monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: JS unit tests
           command: npx lerna run --scope @rigoblock/dapp test:unit --stream
@@ -75,7 +76,7 @@ jobs:
     steps:
       - *attach_workspace
       - restore_cache:
-          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
+          key: monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -114,7 +115,7 @@ jobs:
       - checkout
       - *attach_workspace
       - restore_cache:
-          key: monorepo-{{ .Environment.CIRCLE_SHA1 }}
+          key: monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Install Flynn CLI
           command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
@@ -141,7 +142,7 @@ jobs:
           command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
-          command: "docker build -t staging --build-arg NPM_KEY={{ .Environment.NPM_KEY }} ./packages/dapp"
+          command: "docker build -t staging --build-arg NPM_KEY={{ .Environment.NPM_KEY }} -f ./packages/dapp/Dockerfile ."
       - run:
           name: Flynn push
           command: "~/flynn -a dapp-staging docker push staging:latest"
@@ -168,6 +169,6 @@ workflows:
             - test-unit-dapp
             - build-dapp
             - test-feature-dapp
-        #   filters:
-        #     branches:
-        #       only: master
+          filters:
+            branches:
+              only: master
