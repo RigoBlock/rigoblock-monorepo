@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
-import CounterActions from '../../actions/counter-actions'
+import CounterActions from '../../../actions/counter-actions'
 import './Counter.scss'
 
 class Counter extends Component {
