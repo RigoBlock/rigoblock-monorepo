@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Counter from '../../components/atoms/Counter'
-import './App.scss'
+import './Dashboard.scss'
 
-class App extends Component {
+class Dashboard extends Component {
   render() {
     return (
       <div className="app-wrapper">
-        <h1>{this.props.title}</h1>
+        <h1>Hello</h1>
         <Link to="/vault" className="link">
           Vault
         </Link>
@@ -17,8 +16,8 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
+Dashboard.propTypes = {
   title: PropTypes.string.isRequired
 }
 
-export default App
+export default Dashboard

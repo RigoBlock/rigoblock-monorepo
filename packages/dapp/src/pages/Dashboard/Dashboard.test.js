@@ -1,11 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
-import App from './App.jsx'
+import Dashboard from './Dashboard.jsx'
 
-describe('App component', () => {
+describe('Dashboard component', () => {
   const createComponentWithTitle = (title = 'RigoBlock') => {
-    return <App title={title} />
+    return <Dashboard title={title} />
   }
 
   it('renders correctly', () => {
