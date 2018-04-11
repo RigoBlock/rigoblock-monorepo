@@ -1,17 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Tajawal');
+
 .title {
-  font-size: 4em;
+  font-size: 24px;
   font-weight: lighter;
+  font-family: 'Tajawal', sans-serif;
   letter-spacing: 3px;
   line-height: 1;
   margin-top: 0;
-  color: var(--grey-3);
 
   &:after {
     content: '';
     display: block;
     width: 1em;
-    border-bottom: 2px solid var(--brand);
     margin-top: -0.5em;
     margin-left: -1.1em;
   }
+}
+
+/* Size */
+
+.small {
+  font-size: 1.5em;
+}
+
+.medium {
+  font-size: 2em;
+}
+
+.large {
+  font-size: 3em;
 }
