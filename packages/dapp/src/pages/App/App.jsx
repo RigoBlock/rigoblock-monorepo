@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Counter from '../../components/Counter'
+import Counter from '../../components/atoms/Counter'
 import './App.scss'
 
 class App extends Component {
