@@ -1,12 +1,12 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../../contracts/abi';
-import Registry from '../registry';
-import {RIGOTOKEN_ADDRESSES} from '../../utils/const'
+import * as abis from '../../contracts/abi'
+import Registry from '../registry'
+import { RIGOTOKEN_ADDRESSES } from '../../utils/const'
 
 class RigoTokenWeb3 {
-  constructor (api) {
+  constructor(api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
@@ -16,11 +16,11 @@ class RigoTokenWeb3 {
     this._constunctorName = this.constructor.name
   }
 
-  get instance () {
+  get instance() {
     if (typeof this._instance === 'undefined') {
       throw new Error('The contract needs to be initialized.')
     }
-    return this._instance;
+    return this._instance
   }
 
   init = () => {
@@ -32,12 +32,12 @@ class RigoTokenWeb3 {
     return this._instance
   }
 
-  balanceOf = (accountAddress) =>{
+  balanceOf = accountAddress => {
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
     }
     const instance = this._instance
-    return instance.methods.balanceOf(accountAddress).call({},)
+    return instance.methods.balanceOf(accountAddress).call({})
   }
 
   transfer = (fromAddress, toAddress, amount) => {
@@ -52,16 +52,17 @@ class RigoTokenWeb3 {
       from: fromAddress
     }
 
-    return instance.methods.transfer(toAddress, amount).estimateGas(options)
-    .then((gasEstimate) => {
-      console.log(gasEstimate)
-      options.gas = gasEstimate
-    })
-    .then(()=>{
-      return instance.methods.transfer(toAddress, amount).send(options)
-    })
+    return instance.methods
+      .transfer(toAddress, amount)
+      .estimateGas(options)
+      .then(gasEstimate => {
+        console.log(gasEstimate)
+        options.gas = gasEstimate
+      })
+      .then(() => {
+        return instance.methods.transfer(toAddress, amount).send(options)
+      })
   }
-
 }
 
-export default RigoTokenWeb3;
+export default RigoTokenWeb3

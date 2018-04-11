@@ -21,18 +21,22 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.js": [
-      "npm run lint",
+    "*.{js,jsx}": [
+      "eslint --fix",
       "git add"
     ]
   },
   "workspaces": {
-    "packages": ["packages/*"],
-    "nohoist": ["**/*jest*", "**/jsdom"]
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/*jest*",
+      "**/jsdom"
+    ]
   }
 }

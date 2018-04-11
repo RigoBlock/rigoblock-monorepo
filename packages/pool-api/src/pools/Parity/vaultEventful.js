@@ -1,13 +1,13 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../../contracts/abi';
-import Registry from '../registry';
-import { toHex } from '../../utils';
+import * as abis from '../../contracts/abi'
+import Registry from '../registry'
+import { toHex } from '../../utils'
 import { VAULTEVENTFUL } from '../../utils/const'
 
 class VaultEventfulParity {
-  constructor (api) {
+  constructor(api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
@@ -19,18 +19,18 @@ class VaultEventfulParity {
     // console.log(abis)
   }
 
-  get instance () {
+  get instance() {
     if (typeof this._instance === 'undefined') {
       throw new Error('The contract needs to be initialized.')
     }
-    return this._instance;
+    return this._instance
   }
 
-  get contract () {
+  get contract() {
     if (typeof this._contract === 'undefined') {
       throw new Error('The contract needs to be initialized.')
     }
-    return this._contract;
+    return this._contract
   }
 
   get hexSignature() {
@@ -40,23 +40,22 @@ class VaultEventfulParity {
   init = () => {
     const contractAbi = this._abi
     const contractName = this._contractName
-    return this._registry.instance(contractAbi, contractName)
-      .then (contract => {
-        this._instance = contract.instance
-        this._contract = contract
-        const hexSignature = this._contract._events.reduce((events, event) => {
-          events[event._name] = toHex(event._signature)
-          return events
-        }, {})
-        this._hexSignature = hexSignature
-        return this._instance
-      })
+    return this._registry.instance(contractAbi, contractName).then(contract => {
+      this._instance = contract.instance
+      this._contract = contract
+      const hexSignature = this._contract._events.reduce((events, event) => {
+        events[event._name] = toHex(event._signature)
+        return events
+      }, {})
+      this._hexSignature = hexSignature
+      return this._instance
+    })
   }
 
-  getAllLogs = (topics = {topics: [ null, null, null, null]}) =>{
+  getAllLogs = (topics = { topics: [null, null, null, null] }) => {
     const contract = this._contract
     return contract.getAllLogs(topics)
   }
 }
 
-export default VaultEventfulParity;
+export default VaultEventfulParity
