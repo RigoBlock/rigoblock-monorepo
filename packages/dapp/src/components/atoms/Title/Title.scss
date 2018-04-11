@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Tajawal');
+@import "../_settings/variables";
 
 .title {
   font-size: 24px;
   font-weight: lighter;
-  font-family: 'Tajawal', sans-serif;
+  font-family: $font-stack;
   letter-spacing: 3px;
   line-height: 1;
   margin-top: 0;
