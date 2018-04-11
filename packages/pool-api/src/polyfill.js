@@ -2,9 +2,9 @@
 // This file is part of RigoBlock.
 
 if (typeof Promise === 'undefined') {
-  require('es6-promise').polyfill();
+  require('es6-promise').polyfill()
 }
 
 if (typeof fetch === 'undefined') {
-  require('isomorphic-fetch');
+  require('isomorphic-fetch')
 }

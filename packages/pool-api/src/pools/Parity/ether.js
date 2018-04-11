@@ -2,7 +2,7 @@
 // This file is part of RigoBlock.
 
 class EtherParity {
-  constructor (api) {
+  constructor(api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
@@ -28,7 +28,6 @@ class EtherParity {
     console.log(this._api)
     return this._api.eth.sendTransaction(options)
   }
-
 }
 
-export default EtherParity;
+export default EtherParity

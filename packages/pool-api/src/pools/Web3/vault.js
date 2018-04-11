@@ -1,11 +1,11 @@
 // Copyright 2017 Rigo Investment Sarl.
 // This file is part of RigoBlock.
 
-import * as abis from '../../contracts/abi';
-import Registry from '../registry';
+import * as abis from '../../contracts/abi'
+import Registry from '../registry'
 
 class DragoWeb3 {
-  constructor (api) {
+  constructor(api) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
@@ -15,14 +15,14 @@ class DragoWeb3 {
     this._constunctorName = this.constructor.name
   }
 
-  get instance () {
+  get instance() {
     if (typeof this._instance === 'undefined') {
       throw new Error('The contract needs to be initialized.')
     }
-    return this._instance;
+    return this._instance
   }
 
-  init = (address) => {
+  init = address => {
     if (!address) {
       throw new Error('Contract address needs to be provided')
     }
@@ -32,13 +32,13 @@ class DragoWeb3 {
     this._instance.options.address = address
   }
 
-  balanceOf = (accountAddress) =>{
+  balanceOf = accountAddress => {
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
     }
     const instance = this._instance
     console.log(instance)
-    return instance.methods.balanceOf(accountAddress).call({},)
+    return instance.methods.balanceOf(accountAddress).call({})
   }
 
   getData = () => {
@@ -52,16 +52,16 @@ class DragoWeb3 {
       from: accountAddress,
       value: amount
     }
-    return instance.methods.buyVault().estimateGas(options)
-    .then((gasEstimate) => {
-      console.log(gasEstimate)
-      options.gas = gasEstimate
-    }
-    )
-    .then (() =>{
-      return instance.methods.buyVault()
-      .send(options)
-    })
+    return instance.methods
+      .buyVault()
+      .estimateGas(options)
+      .then(gasEstimate => {
+        console.log(gasEstimate)
+        options.gas = gasEstimate
+      })
+      .then(() => {
+        return instance.methods.buyVault().send(options)
+      })
   }
 
   sellVault = (accountAddress, amount) => {
@@ -73,17 +73,19 @@ class DragoWeb3 {
     }
     const instance = this._instance
     var options = {
-      from: accountAddress,
+      from: accountAddress
     }
     console.log(amount)
-    return instance.methods.sellVault(amount).estimateGas(options)
-    .then((gasEstimate) => {
-      console.log(gasEstimate)
-      options.gas = gasEstimate
-    })
-    .then(()=>{
-      return instance.methods.sellVault(amount).send(options)
-    })
+    return instance.methods
+      .sellVault(amount)
+      .estimateGas(options)
+      .then(gasEstimate => {
+        console.log(gasEstimate)
+        options.gas = gasEstimate
+      })
+      .then(() => {
+        return instance.methods.sellVault(amount).send(options)
+      })
   }
 
   setTransactionFee = (accountAddress, price) => {
@@ -95,30 +97,31 @@ class DragoWeb3 {
     }
     const instance = this._instance
     var options = {
-      from: accountAddress,
+      from: accountAddress
     }
     instance.options.from = accountAddress
     console.log(price)
     const basisPoints = (price * 100).toFixed(0)
     console.log(basisPoints)
-    return instance.methods.setTransactionFee(basisPoints)
-    .estimateGas(options)
-    .then((gasEstimate) => {
-      console.log(gasEstimate)
-      // console.log(gasEstimate.toFormat())
-      options.gas = gasEstimate
-      console.log(instance)
-      return instance.methods.setTransactionFee(basisPoints).send(options)
-    })
-    .catch((error) => {
-      console.error('error', error)
-    })
+    return instance.methods
+      .setTransactionFee(basisPoints)
+      .estimateGas(options)
+      .then(gasEstimate => {
+        console.log(gasEstimate)
+        // console.log(gasEstimate.toFormat())
+        options.gas = gasEstimate
+        console.log(instance)
+        return instance.methods.setTransactionFee(basisPoints).send(options)
+      })
+      .catch(error => {
+        console.error('error', error)
+      })
   }
 
-  totalSupply =() =>{
+  totalSupply = () => {
     const instance = this._instance
     return instance.methods.totalSupply().call({})
   }
 }
 
-export default DragoWeb3;
+export default DragoWeb3

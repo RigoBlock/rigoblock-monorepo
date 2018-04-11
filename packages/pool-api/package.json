@@ -6,7 +6,7 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "lint": ""
+    "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix"
   },
   "publishConfig": {
     "access": "public"
@@ -22,15 +22,6 @@
     "chai-as-promised": "6.0.0",
     "coveralls": "^3.0.0",
     "cross-env": "^5.1.1",
-    "eslint": "3.x",
-    "eslint-config-semistandard": "^11.0.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-config-standard-react": "^5.0.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^7.1.0",
-    "eslint-plugin-standard": "^3.0.1",
     "istanbul": "^0.4.5",
     "jsdom": "^11.1.0",
     "makeshift": "^1.1.0",
