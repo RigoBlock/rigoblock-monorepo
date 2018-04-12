@@ -1,3 +1,5 @@
+@import "../../_settings/variables.scss";
+
 .link {
   text-decoration: none;
   color: #333333;
@@ -5,16 +7,16 @@
 }
 
 .link-small {
-  font-size: 1em;
+  font-size: $base-font-size;
   padding: 10px;
 }
 
 .link-medium {
-  font-size: 1.2em;
+  font-size: calc(1.2 * #{$base-font-size});
   padding: 15px;
 }
 
 .link-large {
-  font-size: 1.7em;
+  font-size: calc(1.8 * #{$base-font-size});
   padding: 20px;
 }
