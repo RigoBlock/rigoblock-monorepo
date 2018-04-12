@@ -6,6 +6,7 @@ class Preferences extends Component {
     return (
       <div className="Preferences">
         <Navbar />
+        <h1>Preferences</h1>
       </div>
     )
   }

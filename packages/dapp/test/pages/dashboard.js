@@ -14,7 +14,11 @@ module.exports = {
     I.see('RigoBlock')
   },
 
-  navigateToVault() {
-    I.click('.link')
+  navigateToPreferences() {
+    I.click('Preferences')
+  },
+
+  navigateToHelp() {
+    I.click('Help')
   }
 }

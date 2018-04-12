@@ -6,6 +6,7 @@ class Help extends Component {
     return (
       <div className="Help">
         <Navbar />
+        <h1>Help</h1>
       </div>
     )
   }
