@@ -83,7 +83,6 @@ class DragoWeb3 {
       from: accountAddress
     }
     instance.options.from = options.from
-    const values = [exchangeAddress, tokenAddress, amount]
     return instance.methods
       .depositToExchange(exchangeAddress, tokenAddress, amount)
       .estimateGas(options)
