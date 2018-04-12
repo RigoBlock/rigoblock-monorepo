@@ -1,13 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
+import Navbar from '../../components/organisms/Navbar'
 
-export default function Vault() {
-  return (
-    <div>
-      <h1>Vault</h1>
-      <Link to="/" className="link">
-        Dashboard
-      </Link>
-    </div>
-  )
+class Vault extends Component {
+  render() {
+    return (
+      <div className="Vault">
+        <Navbar />
+      </div>
+    )
+  }
 }
+
+export default Vault

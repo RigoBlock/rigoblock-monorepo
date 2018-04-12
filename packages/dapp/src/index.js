@@ -6,7 +6,8 @@ import { ConnectedRouter } from 'react-router-redux'
 import history from './store/history'
 import { store, persistor } from './store'
 import Dashboard from './pages/Dashboard'
-import Vault from './pages/Vault'
+import Preferences from './pages/Preferences'
+import Help from './pages/Help'
 import './images/favicon.ico'
 import './components/_settings/_base.scss'
 import registerServiceWorker from './registerServiceWorker'
@@ -18,7 +19,8 @@ ReactDOM.render(
       <ConnectedRouter history={history}>
         <div>
           <Route exact path="/" render={() => <Dashboard />} />
-          <Route exact path="/vault" render={() => <Vault />} />
+          <Route exact path="/preferences" render={() => <Preferences />} />
+          <Route exact path="/help" render={() => <Help />} />
         </div>
       </ConnectedRouter>
     </PersistGate>

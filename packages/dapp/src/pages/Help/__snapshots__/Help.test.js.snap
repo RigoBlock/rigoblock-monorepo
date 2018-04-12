@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Vault page renders correctly 1`] = `
+exports[`Help page renders correctly 1`] = `
 <div
-  className="Vault"
+  className="Help"
 >
   <Navbar />
 </div>
