@@ -21,6 +21,16 @@
     "stylelint": "^9.2.0",
     "stylelint-config-standard": "^18.2.0"
   },
+  "stylelint": {
+    "config": {
+      "extends": [
+        "stylelint-config-recommended-scss"
+      ],
+      "plugins": [
+        "stylelint-scss"
+      ]
+    }
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
