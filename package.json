@@ -19,16 +19,16 @@
     "lint-staged": "^7.0.3",
     "prettier": "^1.11.1",
     "stylelint": "^9.2.0",
-    "stylelint-config-standard": "^18.2.0"
+    "stylelint-config-recommended-scss": "^3.2.0",
+    "stylelint-scss": "^3.0.0"
   },
   "stylelint": {
-    "config": {
-      "extends": [
-        "stylelint-config-recommended-scss"
-      ],
-      "plugins": [
-        "stylelint-scss"
-      ]
+    "extends": "stylelint-config-recommended-scss",
+    "rules": {
+      "max-empty-lines": 1,
+      "max-nesting-depth": 2,
+      "indentation": 2,
+      "declaration-block-single-line-max-declarations": 0
     }
   },
   "husky": {
