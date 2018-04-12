@@ -27,7 +27,7 @@ Link.propTypes = {
 }
 
 Link.defaultProps = {
-  size: 'medium'
+  size: LINK_SIZES.MEDIUM
 }
 
 export default Link
