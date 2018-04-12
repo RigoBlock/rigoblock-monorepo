@@ -6,7 +6,7 @@ import Navbar from '../../components/organisms/Navbar'
 class Dashboard extends Component {
   render() {
     return (
-      <div className="app-wrapper">
+      <div className="dashboard">
         <Navbar />
       </div>
     )

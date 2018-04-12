@@ -6,7 +6,7 @@ import './Link.scss'
 
 const Link = props => {
   const { size, children, to } = props
-  const classProps = classNames('link', size)
+  const classProps = classNames('link', `${size}-link`)
   return (
     <RouterLink to={to} className={classProps}>
       {children}
