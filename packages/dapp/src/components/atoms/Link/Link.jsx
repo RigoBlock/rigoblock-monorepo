@@ -4,9 +4,15 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import './Link.scss'
 
+export const LINK_SIZES = {
+  SMALL: 'small',
+  MEDIUM: 'medium',
+  LARGE: 'large'
+}
+
 const Link = props => {
   const { size, children, to } = props
-  const classProps = classNames('link', `${size}-link`)
+  const classProps = classNames('link', `link-${size}`)
   return (
     <RouterLink to={to} className={classProps}>
       {children}
@@ -17,7 +23,7 @@ const Link = props => {
 Link.propTypes = {
   to: PropTypes.string.isRequired,
   children: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired
+  size: PropTypes.oneOf([LINK_SIZES.SMALL, LINK_SIZES.MEDIUM, LINK_SIZES.LARGE])
 }
 
 Link.defaultProps = {
