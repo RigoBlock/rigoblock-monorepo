@@ -12,9 +12,5 @@ module.exports = {
   assertImOnPage() {
     I.waitInUrl('/help')
     I.see('Help', 'h1')
-  },
-
-  navigateToHome() {
-    I.click('RigoBlock')
   }
 }
