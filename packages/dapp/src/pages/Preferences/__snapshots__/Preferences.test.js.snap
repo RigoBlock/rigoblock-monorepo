@@ -5,5 +5,8 @@ exports[`Preferences page renders correctly 1`] = `
   className="Preferences"
 >
   <Navbar />
+  <h1>
+    Preferences
+  </h1>
 </div>
 `;

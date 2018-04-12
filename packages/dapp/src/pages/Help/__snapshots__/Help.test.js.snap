@@ -5,5 +5,8 @@ exports[`Help page renders correctly 1`] = `
   className="Help"
 >
   <Navbar />
+  <h1>
+    Help
+  </h1>
 </div>
 `;
