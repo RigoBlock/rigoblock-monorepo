@@ -5,7 +5,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "lint": "lerna run lint"
+    "lint": "lerna run lint",
+    "test:unit": "lerna run test:unit --stream"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
@@ -34,7 +35,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm run test:unit"
     }
   },
   "lint-staged": {
