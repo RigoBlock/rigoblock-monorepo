@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import TopNavbar from '../../components/organisms/TopNavbar'
-import LeftNavbar from '../../components/organisms/LeftNavbar'
+import BaseTemplate from '../../components/templates/BaseTemplate'
 
 class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-        <TopNavbar />
-        <LeftNavbar />
+        <BaseTemplate />
       </div>
     )
   }

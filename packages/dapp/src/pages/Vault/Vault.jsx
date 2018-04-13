@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import TopNavbar from '../../components/organisms/TopNavbar'
+import BaseTemplate from '../../components/templates/BaseTemplate'
 
 class Vault extends Component {
   render() {
     return (
       <div className="Vault">
-        <TopNavbar />
+        <BaseTemplate />
       </div>
     )
   }
