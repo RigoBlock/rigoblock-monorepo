@@ -3,7 +3,6 @@
 .link {
   text-decoration: none;
   color: black;
-
 }
 
 .link-small {
@@ -12,11 +11,11 @@
 }
 
 .link-medium {
-  font-size: calc(1.2 * #{$base-font-size});
+  font-size: 1.2 * $base-font-size;
   padding: 20px;
 }
 
 .link-large {
-  font-size: calc(1.8 * #{$base-font-size});
+  font-size: 1.8 * $base-font-size;
   padding: 30px;
 }
