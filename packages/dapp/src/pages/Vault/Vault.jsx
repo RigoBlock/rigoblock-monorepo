@@ -5,7 +5,9 @@ class Vault extends Component {
   render() {
     return (
       <div className="Vault">
-        <BaseTemplate />
+        <BaseTemplate>
+          <h1>Vault</h1>
+        </BaseTemplate>
       </div>
     )
   }
