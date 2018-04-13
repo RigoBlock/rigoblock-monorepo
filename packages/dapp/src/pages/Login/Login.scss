@@ -1,0 +1,10 @@
+@import "../../components/_settings/_variables.scss";
+
+.login {
+  background: lightcoral;
+  width: 50%;
+  margin: 0 auto;
+  h1 {
+    font-size: 2 * $font-size;
+  }
+}
