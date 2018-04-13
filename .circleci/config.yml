@@ -45,6 +45,8 @@ jobs:
     working_directory: *workspace_root
     environment:
       TZ: *timezone
+      CI: false
+      NODE_ENV: production
     docker:
       - image: *node_image
     steps:
@@ -54,8 +56,6 @@ jobs:
       - run:
           name: Building dist
           command: npx lerna run --scope @rigoblock/dapp build --stream
-          environment:
-            CI: false
       - persist_to_workspace:
           root: *workspace_root
           paths:
