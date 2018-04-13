@@ -28,8 +28,6 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-console.log(store.dispatch)
-
 registerServiceWorker()
 
 if (module.hot) {

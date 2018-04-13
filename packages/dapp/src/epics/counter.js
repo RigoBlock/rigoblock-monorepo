@@ -1,9 +1,12 @@
+import { Scheduler } from 'rxjs/Scheduler'
 import { actionTypes } from '../constants/action-types'
 import 'rxjs/add/operator/map'
 
-const counterEpic = action$ =>
-  action$
+export const counterEpic = (action$, store, ts = Scheduler.async) => {
+  return action$
     .ofType(actionTypes.COUNTER_ADD)
+    .delay(100, ts)
     .map(action => ({ ...action, type: actionTypes.COUNTER_SUBTRACT }))
+}
 
 export default [counterEpic]
