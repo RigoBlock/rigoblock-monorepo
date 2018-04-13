@@ -3,11 +3,10 @@
 .content-section {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  min-height: calc(100vh - #{$dist-l});
+  min-height: 100vh;
 }
 
 .content {
-  width: 85%;
   margin-right: $dist-s;
+  flex-grow: 1;
 }

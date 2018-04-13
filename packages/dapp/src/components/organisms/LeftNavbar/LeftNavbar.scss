@@ -2,5 +2,5 @@
 
 .left-navbar {
   padding-left: $dist-m;
-  width: 15%;
+  min-width: 20 * $dist-xs;
 }
