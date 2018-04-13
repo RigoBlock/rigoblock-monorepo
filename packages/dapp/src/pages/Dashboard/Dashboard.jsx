@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import TopNavbar from '../../components/organisms/TopNavbar'
-import NavigationLinks from '../../components/molecules/NavigationLinks'
+import LeftNavbar from '../../components/organisms/LeftNavbar'
 
 class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
         <TopNavbar />
-        <NavigationLinks />
+        <LeftNavbar />
       </div>
     )
   }

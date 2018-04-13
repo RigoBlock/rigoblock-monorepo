@@ -5,7 +5,7 @@ import ROUTES from '../../../constants/routes'
 import './TopNavbar.scss'
 
 const TopNavbar = () => (
-  <div className="TopNavbar">
+  <div className="top-navbar">
     <Link to={ROUTES.DASHBOARD} size={LINK_SIZES.LARGE}>
       RigoBlock
     </Link>

@@ -6,8 +6,12 @@ import './UserMenu.scss'
 const UserMenu = () => {
   return (
     <div className="user-menu">
-      <Link to={ROUTES.PREFERENCES}>Preferences</Link>
-      <Link to={ROUTES.HELP}>Help</Link>
+      <Link to={ROUTES.PREFERENCES} size={'small'}>
+        Preferences
+      </Link>
+      <Link to={ROUTES.HELP} size={'small'}>
+        Help
+      </Link>
     </div>
   )
 }

@@ -1,5 +1,9 @@
+@import "../../_settings/variables.scss";
+
 .top-navbar {
-  height: 80px;
+  height: $dist-l;
   display: flex;
+  padding: $dist-s $dist-s 0 $dist-m;
+  align-items: center;
   justify-content: space-between;
 }
