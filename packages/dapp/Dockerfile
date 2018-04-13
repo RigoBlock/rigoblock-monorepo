@@ -37,23 +37,12 @@ RUN npm i -g yarn
 RUN yarn --pure-lockfile
 RUN yarn build
 
-# setup gwan on alpine linux, copy dist folder from builder image onto gwan's folder
+# setup nginx on alpine linux, copy dist folder from builder image onto nginx's folder
+FROM nginx:stable-alpine
 
-FROM jeanblanchard/alpine-glibc
-
-RUN apk update && apk add alpine-sdk curl bzip2
-
-RUN mkdir /opt
-
-RUN curl http://gwan.com/archives/gwan_linux64-bit.tar.bz2 | tar xj -C /opt
-RUN mv /opt/gwan_linux64-bit /opt/gwan && \
-  rm -rf /opt/gwan/0.0.0.0:* && \
-  mkdir -p /opt/gwan/0.0.0.0:8080/#0.0.0.0/www
-
-COPY --from=builder /src/dist /opt/gwan/0.0.0.0:8080/#0.0.0.0/www
-
-RUN apk del curl bzip2
+COPY --from=builder /src/dist /usr/share/nginx/html
+COPY packages/dapp/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 8080
 
-CMD /opt/gwan/gwan
+CMD ["nginx-debug", "-g", "daemon off;"]
