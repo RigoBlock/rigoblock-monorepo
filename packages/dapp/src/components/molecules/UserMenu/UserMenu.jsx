@@ -1,15 +1,15 @@
 import React from 'react'
-import Link from '../../atoms/Link'
+import Link, { LINK_SIZES } from '../../atoms/Link'
 import ROUTES from '../../../constants/routes'
 import './UserMenu.scss'
 
 const UserMenu = () => {
   return (
     <div className="user-menu">
-      <Link to={ROUTES.PREFERENCES} size={'small'}>
+      <Link to={ROUTES.PREFERENCES} size={LINK_SIZES.small}>
         Preferences
       </Link>
-      <Link to={ROUTES.HELP} size={'small'}>
+      <Link to={ROUTES.HELP} size={LINK_SIZES.small}>
         Help
       </Link>
     </div>
