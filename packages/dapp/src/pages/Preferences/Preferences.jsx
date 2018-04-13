@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Navbar from '../../components/organisms/Navbar'
+import TopNavbar from '../../components/organisms/TopNavbar'
 
 class Preferences extends Component {
   render() {
     return (
       <div className="Preferences">
-        <Navbar />
+        <TopNavbar />
         <h1>Preferences</h1>
       </div>
     )

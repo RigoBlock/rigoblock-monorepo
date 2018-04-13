@@ -1,9 +1,9 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { MemoryRouter } from 'react-router-dom'
-import Navbar from './Navbar'
+import TopNavbar from './TopNavbar'
 import '../../_settings/_base.scss'
 
-storiesOf('Organisms/Navbar', module)
+storiesOf('Organisms/TopNavbar', module)
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
-  .add('default', () => <Navbar />)
+  .add('default', () => <TopNavbar />)

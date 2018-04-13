@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import Navbar from '../../components/organisms/Navbar'
+import TopNavbar from '../../components/organisms/TopNavbar'
+import NavigationLinks from '../../components/molecules/NavigationLinks'
 
 class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-        <Navbar />
+        <TopNavbar />
+        <NavigationLinks />
       </div>
     )
   }
