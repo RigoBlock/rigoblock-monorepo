@@ -1,0 +1,13 @@
+@import "../../_settings/variables.scss";
+
+.content-section {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: calc(100vh - #{$dist-l});
+}
+
+.content {
+  width: 85%;
+  margin-right: $dist-s;
+}

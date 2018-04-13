@@ -4,9 +4,10 @@ exports[`Help page renders correctly 1`] = `
 <div
   className="Help"
 >
-  <Navbar />
-  <h1>
-    Help
-  </h1>
+  <BaseTemplate>
+    <h1>
+      Help
+    </h1>
+  </BaseTemplate>
 </div>
 `;

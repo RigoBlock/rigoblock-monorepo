@@ -4,6 +4,10 @@ exports[`Dashboard component renders correctly 1`] = `
 <div
   className="dashboard"
 >
-  <Navbar />
+  <BaseTemplate>
+    <h1>
+      Dashboard
+    </h1>
+  </BaseTemplate>
 </div>
 `;

@@ -1,4 +1,7 @@
+@import "../../_settings/variables.scss";
+
 .user-menu {
-  display: flex;
-  align-items: center;
+  > *:not(:last-child) {
+    margin-right: $dist-m;
+  }
 }

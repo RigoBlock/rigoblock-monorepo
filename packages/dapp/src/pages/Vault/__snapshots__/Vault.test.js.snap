@@ -4,6 +4,10 @@ exports[`Vault page renders correctly 1`] = `
 <div
   className="Vault"
 >
-  <Navbar />
+  <BaseTemplate>
+    <h1>
+      Vault
+    </h1>
+  </BaseTemplate>
 </div>
 `;
