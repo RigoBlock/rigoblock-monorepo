@@ -6,11 +6,11 @@ module.exports = {
   },
 
   navigateTo() {
-    I.amOnPage('/')
+    I.amOnPage('/preferences')
   },
 
   assertImOnPage() {
-    I.waitInUrl('/')
-    I.see('RigoBlock')
+    I.waitInUrl('/preferences')
+    I.see('Preferences', 'h1')
   }
 }

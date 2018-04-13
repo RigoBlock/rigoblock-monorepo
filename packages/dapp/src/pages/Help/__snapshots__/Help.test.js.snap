@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Help page renders correctly 1`] = `
+<div
+  className="Help"
+>
+  <Navbar />
+  <h1>
+    Help
+  </h1>
+</div>
+`;

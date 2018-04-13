@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import Navbar from '../../components/organisms/Navbar'
 
-class Vault extends Component {
+class Dashboard extends Component {
   render() {
     return (
-      <div className="Vault">
+      <div className="dashboard">
         <Navbar />
       </div>
     )
   }
 }
 
-export default Vault
+export default Dashboard

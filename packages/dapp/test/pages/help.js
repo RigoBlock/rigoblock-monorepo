@@ -6,11 +6,11 @@ module.exports = {
   },
 
   navigateTo() {
-    I.amOnPage('/')
+    I.amOnPage('/help')
   },
 
   assertImOnPage() {
-    I.waitInUrl('/')
-    I.see('RigoBlock')
+    I.waitInUrl('/help')
+    I.see('Help', 'h1')
   }
 }

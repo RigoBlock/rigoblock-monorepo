@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Preferences page renders correctly 1`] = `
+<div
+  className="Preferences"
+>
+  <Navbar />
+  <h1>
+    Preferences
+  </h1>
+</div>
+`;

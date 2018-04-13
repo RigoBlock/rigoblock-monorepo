@@ -1,15 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Vault component renders correctly 1`] = `
-<div>
-  <h1>
-    Vault
-  </h1>
-  <a
-    class="link"
-    href="/"
-  >
-    Dashboard
-  </a>
+exports[`Vault page renders correctly 1`] = `
+<div
+  className="Vault"
+>
+  <Navbar />
 </div>
 `;

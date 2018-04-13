@@ -8,8 +8,10 @@ const config = {
   },
   include: {
     I: './test/steps.js',
+    navigation: './test/pages/navigation.js',
     dashboard: './test/pages/dashboard.js',
-    vault: './test/pages/vault.js'
+    preferences: './test/pages/preferences.js',
+    help: './test/pages/help.js'
   },
   mocha: {},
   bootstrap: false,

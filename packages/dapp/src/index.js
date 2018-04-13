@@ -5,10 +5,11 @@ import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import history from './store/history'
 import { store, persistor } from './store'
-import App from './pages/App'
-import Vault from './pages/Vault'
+import Dashboard from './pages/Dashboard'
+import Preferences from './pages/Preferences'
+import Help from './pages/Help'
 import './images/favicon.ico'
-import './index.scss'
+import './components/_settings/_base.scss'
 import registerServiceWorker from './registerServiceWorker'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -17,8 +18,9 @@ ReactDOM.render(
     <PersistGate loading={null} persistor={persistor}>
       <ConnectedRouter history={history}>
         <div>
-          <Route exact path="/" render={() => <App title={'RigoBlock'} />} />
-          <Route exact path="/vault" render={() => <Vault />} />
+          <Route exact path="/" render={() => <Dashboard />} />
+          <Route exact path="/preferences" render={() => <Preferences />} />
+          <Route exact path="/help" render={() => <Help />} />
         </div>
       </ConnectedRouter>
     </PersistGate>

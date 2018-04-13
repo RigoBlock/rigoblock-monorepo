@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import Navbar from '../../components/organisms/Navbar'
 
-class Vault extends Component {
+class Preferences extends Component {
   render() {
     return (
-      <div className="Vault">
+      <div className="Preferences">
         <Navbar />
+        <h1>Preferences</h1>
       </div>
     )
   }
 }
 
-export default Vault
+export default Preferences
