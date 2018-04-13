@@ -54,6 +54,8 @@ jobs:
       - run:
           name: Building dist
           command: npx lerna run --scope @rigoblock/dapp build --stream
+          environment:
+            CI: false
       - persist_to_workspace:
           root: *workspace_root
           paths:
