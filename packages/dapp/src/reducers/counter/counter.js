@@ -11,6 +11,11 @@ function counter(state = { count: 0 }, action) {
         ...state,
         count: state.count + action.amount
       }
+    case actionTypes.COUNTER_SUBTRACT:
+      return {
+        ...state,
+        count: state.count - action.amount
+      }
     default:
       return state
   }
