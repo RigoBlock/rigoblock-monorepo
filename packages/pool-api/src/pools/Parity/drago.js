@@ -45,6 +45,12 @@ class DragoParity {
     return instance.balanceOf.call({}, [accountAddress])
   }
 
+  getBalance = () => {
+    const api = this._api
+    const instance = this._instance
+    return api.eth.getBalance(instance.address)
+  }
+
   buyDrago = (accountAddress, amount) => {
     if (!accountAddress) {
       throw new Error('accountAddress needs to be provided')
