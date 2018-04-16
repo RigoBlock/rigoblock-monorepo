@@ -45,6 +45,8 @@ jobs:
     working_directory: *workspace_root
     environment:
       TZ: *timezone
+      CI: false
+      NODE_ENV: production
     docker:
       - image: *node_image
     steps:
