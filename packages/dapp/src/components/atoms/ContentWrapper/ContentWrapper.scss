@@ -1,0 +1,16 @@
+@import "../../_settings/variables.scss";
+
+.content-wrapper {
+  border-radius: $wrapper-radius;
+  box-shadow: $box-shadow;
+  border: $wrapper-border;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: $dist-s;
+  h1 {
+    flex-basis: 100%;
+  }
+}
