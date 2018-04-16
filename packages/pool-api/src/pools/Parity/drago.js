@@ -3,6 +3,7 @@
 
 import * as abis from '../../contracts/abi'
 import Registry from '../registry'
+import { WETH_ADDRESSES, ZRX_ADDRESSES } from '../../utils/const'
 
 class DragoParity {
   constructor(api) {
@@ -49,6 +50,20 @@ class DragoParity {
     const api = this._api
     const instance = this._instance
     return api.eth.getBalance(instance.address)
+  }
+
+  getBalanceWETH = () => {
+    const api = this._api
+    const instance = this._instance
+    const wethInstance = api.newContract(abis.weth, WETH_ADDRESSES[api._rb.network.id]).instance
+    return wethInstance.balanceOf.call({}, [instance.address])
+  }
+
+  getBalanceZRX = () => {
+    const api = this._api
+    const instance = this._instance
+    const wethInstance = api.newContract(abis.weth, ZRX_ADDRESSES[api._rb.network.id]).instance
+    return wethInstance.balanceOf.call({}, [instance.address])
   }
 
   buyDrago = (accountAddress, amount) => {
@@ -111,7 +126,6 @@ class DragoParity {
   depositToExchange = (
     accountAddress,
     exchangeAddress,
-    tokenAddress,
     amount
   ) => {
     if (!accountAddress) {
@@ -120,9 +134,6 @@ class DragoParity {
     if (!exchangeAddress) {
       throw new Error('exchangeAddress needs to be provided')
     }
-    if (!tokenAddress) {
-      throw new Error('tokenAddress needs to be provided')
-    }
     if (!amount) {
       throw new Error('amount needs to be provided')
     }
@@ -130,7 +141,7 @@ class DragoParity {
     const options = {
       from: accountAddress
     }
-    const values = [exchangeAddress, tokenAddress, amount]
+    const values = [exchangeAddress, amount]
     console.log(exchangeAddress)
     return instance.depositToExchange
       .estimateGas(options, values)

@@ -12,6 +12,7 @@ import vaulteventful from './v2/vaultEventful-v2.json'
 import vaultfactory from './v2/vaultFactory-v2.json'
 import ethusd from './v2/ethusd.json'
 import exchange from './v2/exchange.json'
+import weth from './v2/weth.json'
 
 // Legacy v1 contracts
 // import vault from './v1/vault.json';
@@ -42,5 +43,6 @@ export {
   ethusd,
   vaulteventful,
   parityregister,
-  rigotoken
+  rigotoken,
+  weth
 }

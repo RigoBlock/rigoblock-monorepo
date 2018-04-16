@@ -40,6 +40,12 @@ class VaultParity {
     return instance.balanceOf.call({}, [accountAddress])
   }
 
+  getBalance = () => {
+    const api = this._api
+    const instance = this._instance
+    return api.eth.getBalance(instance.address)
+  }
+
   getData = () => {
     const instance = this._instance
     return instance.getData.call({})
