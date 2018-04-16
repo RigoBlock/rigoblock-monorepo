@@ -7,9 +7,9 @@ import './BaseTemplate.scss'
 const BaseTemplate = props => (
   <div>
     <TopNavbar />
-    <div className="content-section">
+    <div className="page-content-section">
       <LeftNavbar />
-      <div className="content">{props.children}</div>
+      <div className="page-main-content">{props.children}</div>
     </div>
   </div>
 )

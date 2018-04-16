@@ -1,12 +1,12 @@
 @import "../../_settings/variables.scss";
 
-.content-section {
+.page-content-section {
   display: flex;
   flex-direction: row;
   min-height: 100vh;
 }
 
-.content {
+.page-main-content {
   margin-right: $dist-s;
   flex-grow: 1;
 }
