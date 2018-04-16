@@ -4,11 +4,9 @@ import BaseTemplate from '../../components/templates/BaseTemplate'
 class Preferences extends Component {
   render() {
     return (
-      <div className="Preferences">
-        <BaseTemplate>
-          <h1>Preferences</h1>
-        </BaseTemplate>
-      </div>
+      <BaseTemplate>
+        <h1>Preferences</h1>
+      </BaseTemplate>
     )
   }
 }
