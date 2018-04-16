@@ -16,4 +16,3 @@ storiesOf('Molecules/ListItemName', module)
     </div>
   ))
   .add('default', () => <ListItemName symbol="VLT" name="Rocksolid Vault" />)
-  .add('grey', () => <ListItemName symbol="VLT" name="Rocksolid Vault" />)
