@@ -1,13 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Dashboard component renders correctly 1`] = `
-<div
-  className="dashboard"
->
-  <BaseTemplate>
-    <h1>
-      Dashboard
-    </h1>
-  </BaseTemplate>
-</div>
+<BaseTemplate>
+  <h1>
+    Dashboard
+  </h1>
+</BaseTemplate>
 `;

@@ -1,13 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Vault page renders correctly 1`] = `
-<div
-  className="Vault"
->
-  <BaseTemplate>
-    <h1>
-      Vault
-    </h1>
-  </BaseTemplate>
-</div>
+<BaseTemplate>
+  <h1>
+    Vault
+  </h1>
+</BaseTemplate>
 `;
