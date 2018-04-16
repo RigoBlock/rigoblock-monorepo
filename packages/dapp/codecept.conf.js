@@ -11,7 +11,8 @@ const config = {
     navigation: './test/pages/navigation.js',
     dashboard: './test/pages/dashboard.js',
     preferences: './test/pages/preferences.js',
-    help: './test/pages/help.js'
+    help: './test/pages/help.js',
+    login: './test/pages/login.js'
   },
   mocha: {},
   bootstrap: false,
