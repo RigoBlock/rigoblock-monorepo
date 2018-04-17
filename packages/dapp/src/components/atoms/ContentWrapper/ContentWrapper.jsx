@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './ContentWrapper.scss'
+import Tooltip from '../Tooltip'
 
 const ContentWrapper = props => {
   const { tooltip, children, title } = props
 
-  const tooltipComponent = tooltip ? (
-    <i className="material-icons tooltip">help</i>
-  ) : null
+  const tooltipComponent = tooltip ? <Tooltip type={'help'} /> : null
 
   return (
     <div className="content-wrapper">

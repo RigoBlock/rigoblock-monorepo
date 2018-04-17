@@ -1,0 +1,17 @@
+@import "../../_settings/variables.scss";
+
+.tooltip {
+  color: $light-grey;
+}
+
+.tooltip-small {
+  font-size: 1.2 * $base-font-size !important;
+}
+
+.tooltip-medium {
+  font-size: 1.7 * $base-font-size !important;
+}
+
+.tooltip-large {
+  font-size: 2.6 * $base-font-size !important;
+}

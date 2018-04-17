@@ -5,7 +5,7 @@ import '../../_settings/_base.scss'
 
 storiesOf('Atoms/ContentWrapper', module)
   .addDecorator(story => (
-    <div style={{ 'min-height': '400px', width: '400px' }}>{story()}</div>
+    <div style={{ minHeight: '400px', width: '400px' }}>{story()}</div>
   ))
   .add('default', () => (
     <ContentWrapper title="Content Wrapper">
