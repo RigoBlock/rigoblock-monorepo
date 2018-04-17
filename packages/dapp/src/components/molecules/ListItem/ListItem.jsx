@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ListItemName from '../ListItemName'
-import ListItemValue, { ITEM_VALUE_SIZES } from '../../atoms/ListItemValue'
+import ItemName from '../ItemName'
+import ItemValue, { ITEM_VALUE_SIZES } from '../../atoms/ItemValue'
 import './ListItem.scss'
 
 const ListItem = props => {
   return (
     <div className="list-item">
-      <ListItemName name={props.itemName} symbol={props.itemSymbol} />
-      <ListItemValue value={props.itemValue} valueSize={props.valueSize} />
+      <ItemName name={props.itemName} symbol={props.itemSymbol} />
+      <ItemValue value={props.itemValue} valueSize={props.valueSize} />
     </div>
   )
 }

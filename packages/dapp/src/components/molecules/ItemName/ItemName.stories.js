@@ -1,9 +1,9 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import ListItemName from './ListItemName'
+import ItemName from './ItemName'
 import '../../_settings/_base.scss'
 
-storiesOf('Molecules/ListItemName', module)
+storiesOf('Molecules/ItemName', module)
   .addDecorator(story => (
     <div
       style={{
@@ -15,4 +15,4 @@ storiesOf('Molecules/ListItemName', module)
       {story()}
     </div>
   ))
-  .add('default', () => <ListItemName symbol="VLT" name="Rocksolid Vault" />)
+  .add('default', () => <ItemName symbol="VLT" name="Rocksolid Vault" />)

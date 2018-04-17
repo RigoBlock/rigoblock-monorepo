@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { ITEM_VALUE_SIZES } from '../../atoms/ListItemValue'
+import { ITEM_VALUE_SIZES } from '../../atoms/ItemValue'
 import ListItem from './ListItem'
 import '../../_settings/_base.scss'
 
