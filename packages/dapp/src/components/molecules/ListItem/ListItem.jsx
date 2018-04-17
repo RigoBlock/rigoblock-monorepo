@@ -6,15 +6,12 @@ import './ListItem.scss'
 
 const ListItem = props => {
   const { growth, currencyGrowth, itemName, itemSymbol, itemValue } = props
-  return growth && currencyGrowth ? (
+  const valueProps =
+    growth && currencyGrowth ? { growth, currencyGrowth } : { itemValue }
+  return (
     <div className="list-item">
       <ItemName name={itemName} symbol={itemSymbol} />
-      <ItemValue growth={growth} currencyGrowth={currencyGrowth} />
-    </div>
-  ) : (
-    <div className="list-item">
-      <ItemName name={itemName} symbol={itemSymbol} />
-      <ItemValue itemValue={itemValue} />
+      <ItemValue {...valueProps} />
     </div>
   )
 }
