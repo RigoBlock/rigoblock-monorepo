@@ -11,7 +11,7 @@ const ContentWrapper = props => {
 
   return (
     <div className="content-wrapper">
-      <div className="header">
+      <div className="content-wrapper-header">
         <h1>{title}</h1>
         {tooltipComponent}
       </div>

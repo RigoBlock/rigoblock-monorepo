@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import ContentWrapper from './ContentWrapper'
 import '../../_settings/_base.scss'
 
-storiesOf('Molecules/ContentWrapper', module)
+storiesOf('Atoms/ContentWrapper', module)
   .addDecorator(story => (
     <div style={{ 'min-height': '400px', width: '400px' }}>{story()}</div>
   ))
