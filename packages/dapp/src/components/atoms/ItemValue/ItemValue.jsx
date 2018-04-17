@@ -35,7 +35,7 @@ ItemValue.propTypes = {
 }
 
 ItemValue.defaultProps = {
-  valueSize: ITEM_VALUE_SIZES.SMALL,
+  valueSize: ITEM_VALUE_SIZES.LARGE,
   itemValue: 0,
   growth: 0,
   currencyGrowth: 0

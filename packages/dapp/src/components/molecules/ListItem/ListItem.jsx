@@ -1,18 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ItemName from '../ItemName'
-import ItemValue, { ITEM_VALUE_SIZES } from '../../atoms/ItemValue'
+import ItemValue from '../../atoms/ItemValue'
 import './ListItem.scss'
 
 const ListItem = props => {
-  const {
-    growth,
-    currencyGrowth,
-    itemName,
-    itemSymbol,
-    valueSize,
-    itemValue
-  } = props
+  const { growth, currencyGrowth, itemName, itemSymbol, itemValue } = props
   return growth && currencyGrowth ? (
     <div className="list-item">
       <ItemName name={itemName} symbol={itemSymbol} />
@@ -21,7 +14,7 @@ const ListItem = props => {
   ) : (
     <div className="list-item">
       <ItemName name={itemName} symbol={itemSymbol} />
-      <ItemValue itemValue={itemValue} valueSize={valueSize} />
+      <ItemValue itemValue={itemValue} />
     </div>
   )
 }
@@ -31,13 +24,10 @@ ListItem.propTypes = {
   itemSymbol: PropTypes.string.isRequired,
   itemValue: PropTypes.number,
   growth: PropTypes.number,
-  currencyGrowth: PropTypes.number,
-  itemStyle: PropTypes.string.isRequired,
-  valueSize: PropTypes.string
+  currencyGrowth: PropTypes.number
 }
 
 ListItem.defaultProps = {
-  valueSize: ITEM_VALUE_SIZES.SMALL,
   itemValue: 0,
   growth: 0,
   currencyGrowth: 0

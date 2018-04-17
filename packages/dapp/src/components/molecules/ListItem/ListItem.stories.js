@@ -1,6 +1,5 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { ITEM_VALUE_SIZES } from '../../atoms/ItemValue'
 import ListItem from './ListItem'
 import '../../_settings/_base.scss'
 
@@ -22,20 +21,17 @@ storiesOf('Molecules/ListItem', module)
         itemSymbol="VLT"
         itemName="Rocksolid Vault"
         itemValue={12489.51323}
-        valueSize={ITEM_VALUE_SIZES.LARGE}
       />
       <ListItem
         itemSymbol="DRG"
         itemName="Drago name"
         growth={0.25}
         currencyGrowth={2.32}
-        valueSize={ITEM_VALUE_SIZES.LARGE}
       />
       <ListItem
         itemSymbol="VLT"
         itemName="Rocksolid Vault"
         itemValue={12489.51323}
-        valueSize={ITEM_VALUE_SIZES.LARGE}
       />
     </div>
   ))
