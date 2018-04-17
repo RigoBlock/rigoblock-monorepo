@@ -5,8 +5,8 @@ import deepFreeze from 'deep-freeze'
 
 configure({ adapter: new Adapter() })
 
-// eslint-disable-next-line react/display-name
 global.createComponentWithProps = (Component, props) => <Component {...props} />
+global.createComponentWithProps.displayName = 'testComponent'
 
 global.reducerTester = reducer => (currentState, action, expectedState) => {
   if (currentState && typeof currentState === 'object') {
