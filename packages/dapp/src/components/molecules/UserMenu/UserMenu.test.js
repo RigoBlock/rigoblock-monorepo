@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
-import Usermenu from './Usermenu.jsx'
+import UserMenu from './UserMenu.jsx'
 
-describe('Usermenu component', () => {
+describe('UserMenu component', () => {
   it('renders correctly', () => {
-    expect(toJson(shallow(<Usermenu />))).toMatchSnapshot()
+    expect(toJson(shallow(<UserMenu />))).toMatchSnapshot()
   })
 })
