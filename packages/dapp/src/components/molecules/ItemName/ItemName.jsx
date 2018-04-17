@@ -6,7 +6,7 @@ const ItemName = props => {
   return (
     <div>
       <span className="item-symbol">{props.symbol}</span>
-      <span>{props.name}</span>
+      <span className="item-name">{props.name}</span>
     </div>
   )
 }

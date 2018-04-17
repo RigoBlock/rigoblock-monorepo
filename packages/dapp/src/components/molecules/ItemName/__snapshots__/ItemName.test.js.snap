@@ -7,7 +7,9 @@ exports[`ItemName component renders correctly 1`] = `
   >
     VLT
   </span>
-  <span>
+  <span
+    className="item-name"
+  >
     Rocksolid Vault
   </span>
 </div>
