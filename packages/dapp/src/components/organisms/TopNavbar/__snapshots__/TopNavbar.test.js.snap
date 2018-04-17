@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopNavbar component renders correctly 1`] = `
+<div
+  className="top-navbar"
+>
+  <Link
+    size="large"
+    to="/"
+  >
+    RigoBlock
+  </Link>
+  <UserMenu />
+</div>
+`;

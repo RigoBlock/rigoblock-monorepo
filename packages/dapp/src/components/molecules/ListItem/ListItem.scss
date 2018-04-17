@@ -1,0 +1,12 @@
+@import "../../_settings/variables.scss";
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $dist-s;
+  background: $list-item-grey;
+  &:nth-child(2) {
+    background: $list-item-alternate;
+  }
+}
