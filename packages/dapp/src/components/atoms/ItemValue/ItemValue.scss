@@ -1,5 +1,9 @@
 @import "../../_settings/variables.scss";
 
+.item-value, .currency-growth {
+  display: block;
+}
+
 .item-value-small {
   font-size: $base-font-size;
 }
