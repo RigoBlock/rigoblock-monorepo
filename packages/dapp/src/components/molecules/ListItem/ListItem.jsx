@@ -7,16 +7,16 @@ import './ListItem.scss'
 const ListItem = props => {
   const {
     growth,
-    ethGrowth,
+    currencyGrowth,
     itemName,
     itemSymbol,
     valueSize,
     itemValue
   } = props
-  return growth && ethGrowth ? (
+  return growth && currencyGrowth ? (
     <div className="list-item">
       <ItemName name={itemName} symbol={itemSymbol} />
-      <ItemValue growth={growth} ethGrowth={ethGrowth} />
+      <ItemValue growth={growth} currencyGrowth={currencyGrowth} />
     </div>
   ) : (
     <div className="list-item">
@@ -31,7 +31,7 @@ ListItem.propTypes = {
   itemSymbol: PropTypes.string.isRequired,
   itemValue: PropTypes.number,
   growth: PropTypes.number,
-  ethGrowth: PropTypes.number,
+  currencyGrowth: PropTypes.number,
   itemStyle: PropTypes.string.isRequired,
   valueSize: PropTypes.string
 }
@@ -40,7 +40,7 @@ ListItem.defaultProps = {
   valueSize: ITEM_VALUE_SIZES.SMALL,
   itemValue: 0,
   growth: 0,
-  ethGrowth: 0
+  currencyGrowth: 0
 }
 
 export default ListItem

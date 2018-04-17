@@ -21,20 +21,20 @@ storiesOf('Molecules/ListItem', module)
       <ListItem
         itemSymbol="VLT"
         itemName="Rocksolid Vault"
-        itemValue={'12489,51'}
+        itemValue={12489.51323}
         valueSize={ITEM_VALUE_SIZES.LARGE}
       />
       <ListItem
         itemSymbol="DRG"
         itemName="Drago name"
-        growth={'0,25'}
-        ethGrowth={'2,32'}
+        growth={0.25}
+        currencyGrowth={2.32}
         valueSize={ITEM_VALUE_SIZES.LARGE}
       />
       <ListItem
         itemSymbol="VLT"
         itemName="Rocksolid Vault"
-        itemValue={'12489,51'}
+        itemValue={12489.51323}
         valueSize={ITEM_VALUE_SIZES.LARGE}
       />
     </div>

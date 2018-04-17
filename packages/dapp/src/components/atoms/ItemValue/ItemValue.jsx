@@ -10,20 +10,19 @@ export const ITEM_VALUE_SIZES = {
 }
 
 const ItemValue = props => {
-  const { growth, ethGrowth, itemValue } = props
+  const res = Object.keys(props)
+    .map(k => ({ [k]: parseFloat(props[k], 10).toFixed(2) }))
+    .reduce((acc, curr) => ({ ...acc, ...curr }), {})
+  console.log(res, props)
   const classProps = classNames('item-value', `item-value-${props.valueSize}`)
-  return growth && ethGrowth ? (
+  return props.growth && props.currencyGrowth ? (
     <div>
-      <span
-        className={'item-value item-value-large'}
-      >{`+${growth.toLocaleString('it')}%`}</span>
-      <span className={'eth-growth'}>{`+${ethGrowth.toLocaleString(
-        'it'
-      )} ETH`}</span>
+      <span className={'item-value item-value-large'}>{`+${res.growth}%`}</span>
+      <span className={'eth-growth'}>{`+${res.currencyGrowth} ETH`}</span>
     </div>
   ) : (
     <div>
-      <span className={classProps}>{itemValue.toLocaleString('it')}</span>
+      <span className={classProps}>{res.itemValue}</span>
     </div>
   )
 }
@@ -31,7 +30,7 @@ const ItemValue = props => {
 ItemValue.propTypes = {
   itemValue: PropTypes.number,
   growth: PropTypes.number,
-  ethGrowth: PropTypes.number,
+  currencyGrowth: PropTypes.number,
   valueSize: PropTypes.string
 }
 
@@ -39,7 +38,7 @@ ItemValue.defaultProps = {
   valueSize: ITEM_VALUE_SIZES.SMALL,
   itemValue: 0,
   growth: 0,
-  ethGrowth: 0
+  currencyGrowth: 0
 }
 
 export default ItemValue
