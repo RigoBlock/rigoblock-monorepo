@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import './ContentWrapper.scss'
 
 const ContentWrapper = props => {
-  const hasTooltip = props.tooltip
-  return hasTooltip ? (
+  const { tooltip, children, title } = props
+  return tooltip ? (
     <div className="content-wrapper">
-      <h1>{props.title}</h1>
+      <h1>{title}</h1>
       <i className="material-icons tooltip">help</i>
-      <div className="content-wrapper-content">{props.children}</div>
+      <div className="content-wrapper-content">{children}</div>
     </div>
   ) : (
     <div className="content-wrapper">
-      <h1>{props.title}</h1>
-      <div className="content-wrapper-content">{props.children}</div>
+      <h1>{title}</h1>
+      <div className="content-wrapper-content">{children}</div>
     </div>
   )
 }
