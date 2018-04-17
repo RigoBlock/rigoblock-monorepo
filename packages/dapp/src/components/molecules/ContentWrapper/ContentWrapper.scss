@@ -5,7 +5,6 @@
   width: 100%;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: $dist-s;
   border-radius: $wrapper-radius;
   box-shadow: $box-shadow;
   background: #FFFFFF;
@@ -15,7 +14,7 @@
   .content-wrapper-header {
     flex-grow: 1;
     display: flex;
-    padding: $dist-s 0;
+    padding: $dist-s;
     h1 {
       flex-grow: 1;
       font-style: normal;
