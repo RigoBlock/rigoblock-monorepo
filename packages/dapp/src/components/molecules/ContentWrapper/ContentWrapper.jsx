@@ -4,15 +4,17 @@ import './ContentWrapper.scss'
 
 const ContentWrapper = props => {
   const { tooltip, children, title } = props
-  return tooltip ? (
+
+  const tooltipComponent = tooltip ? (
+    <i className="material-icons tooltip">help</i>
+  ) : null
+
+  return (
     <div className="content-wrapper">
-      <h1>{title}</h1>
-      <i className="material-icons tooltip">help</i>
-      <div className="content-wrapper-content">{children}</div>
-    </div>
-  ) : (
-    <div className="content-wrapper">
-      <h1>{title}</h1>
+      <div className="header">
+        <h1>{title}</h1>
+        {tooltipComponent}
+      </div>
       <div className="content-wrapper-content">{children}</div>
     </div>
   )
