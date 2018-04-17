@@ -3,16 +3,10 @@
 .list-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: $dist-s;
+  background: $list-item-grey;
   &:nth-child(2) {
-    background: #F4F6F7;
+    background: white;
   }
-}
-
-.list-item-default {
-  background: #FFFFFF;
-}
-
-.list-item-grey {
-  background: #F4F6F7;
 }
