@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link component renders correctly 1`] = `
+<Link
+  className="link link-medium"
+  replace={false}
+  to="#"
+>
+  Test link
+</Link>
+`;

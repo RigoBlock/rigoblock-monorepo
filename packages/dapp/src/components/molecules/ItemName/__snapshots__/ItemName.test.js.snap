@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemName component renders correctly 1`] = `
+<div>
+  <span
+    className="item-symbol"
+  >
+    VLT
+  </span>
+  <span>
+    Rocksolid Vault
+  </span>
+</div>
+`;
