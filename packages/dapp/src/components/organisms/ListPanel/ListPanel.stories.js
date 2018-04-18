@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import List from './List'
+import ListPanel from './ListPanel'
 import '../../_settings/_base.scss'
 
 const items = [
@@ -25,6 +25,6 @@ const items = [
   }
 ]
 
-storiesOf('Organisms/List', module)
+storiesOf('Organisms/ListPanel', module)
   .addDecorator(story => <div style={{ width: '400px' }}>{story()}</div>)
-  .add('default', () => <List title={'Example List'} items={items} />)
+  .add('default', () => <ListPanel title={'Example ListPanel'} items={items} />)

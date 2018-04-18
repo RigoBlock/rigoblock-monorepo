@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ContentWrapper from '../../molecules/ContentWrapper'
 import ListItem from '../../molecules/ListItem'
 
-const List = props => {
+const ListPanel = props => {
   const { title, items, tooltip } = props
   const listItems = items.map(item => (
     <ListItem
@@ -22,14 +22,14 @@ const List = props => {
   )
 }
 
-List.propTypes = {
+ListPanel.propTypes = {
   title: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   tooltip: PropTypes.string
 }
 
-List.defaultProps = {
+ListPanel.defaultProps = {
   tooltip: null
 }
 
-export default List
+export default ListPanel

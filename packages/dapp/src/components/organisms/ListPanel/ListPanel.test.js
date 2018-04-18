@@ -1,9 +1,9 @@
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
-import List from './List.jsx'
+import ListPanel from './ListPanel.jsx'
 
 const props = {
-  title: 'List Component',
+  title: 'ListPanel Component',
   items: [
     {
       id: 1,
@@ -14,10 +14,10 @@ const props = {
   ]
 }
 
-describe('List component', () => {
+describe('ListPanel component', () => {
   it('renders correctly', () => {
     expect(
-      toJson(shallow(createComponentWithProps(List, props)))
+      toJson(shallow(createComponentWithProps(ListPanel, props)))
     ).toMatchSnapshot()
   })
 })

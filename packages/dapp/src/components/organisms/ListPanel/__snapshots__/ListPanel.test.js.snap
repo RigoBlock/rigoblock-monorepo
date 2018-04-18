@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`List component renders correctly 1`] = `
+exports[`ListPanel component renders correctly 1`] = `
 <ContentWrapper
-  title="List Component"
+  title="ListPanel Component"
   tooltip={null}
 >
   <ListItem
