@@ -7,9 +7,7 @@ exports[`ContentWrapper component renders correctly 1`] = `
   <div
     className="content-wrapper-header"
   >
-    <h1>
-      Test Wrapper
-    </h1>
+    string header
   </div>
   <div
     className="content-wrapper-content"

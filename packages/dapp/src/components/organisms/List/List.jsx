@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ContentWrapper from '../../molecules/ContentWrapper'
 import ListItem from '../../molecules/ListItem'
 
 const List = props => {
-  const { title, items, tooltip } = props
+  const { items } = props
   const listItems = items.map(item => (
     <ListItem
       key={item.id}
@@ -15,21 +14,11 @@ const List = props => {
       currencyGrowth={item.currencyGrowth}
     />
   ))
-  return (
-    <ContentWrapper title={title} tooltip={tooltip}>
-      {listItems}
-    </ContentWrapper>
-  )
+  return <div className="list">{listItems}</div>
 }
 
 List.propTypes = {
-  title: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  tooltip: PropTypes.string
-}
-
-List.defaultProps = {
-  tooltip: null
+  items: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default List

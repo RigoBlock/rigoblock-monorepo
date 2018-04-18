@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`List component renders correctly 1`] = `
-<ContentWrapper
-  title="List Component"
-  tooltip={null}
+<div
+  className="list"
 >
   <ListItem
     currencyGrowth={0}
@@ -13,5 +12,5 @@ exports[`List component renders correctly 1`] = `
     itemValue={12489.51323}
     key="1"
   />
-</ContentWrapper>
+</div>
 `;
