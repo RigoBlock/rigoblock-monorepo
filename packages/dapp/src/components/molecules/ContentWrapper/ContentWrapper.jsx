@@ -1,27 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PanelHeader from '../../molecules/PanelHeader'
 import './ContentWrapper.scss'
 
-const ContentWrapper = props => {
-  const { tooltip, children, title } = props
-
+const ContentWrapper = ({ header, children }) => {
   return (
     <div className="content-wrapper">
-      <PanelHeader title={title} tooltip={tooltip} />
+      <div className="content-wrapper-header">{header}</div>
       <div className="content-wrapper-content">{children}</div>
     </div>
   )
 }
 
 ContentWrapper.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  tooltip: PropTypes.string
-}
-
-ContentWrapper.defaultProps = {
-  tooltip: null
+  header: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default ContentWrapper

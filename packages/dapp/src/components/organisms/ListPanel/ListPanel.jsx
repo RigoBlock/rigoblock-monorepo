@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ContentWrapper from '../../molecules/ContentWrapper'
+import PanelHeader from '../../molecules/PanelHeader'
 import List from '../../organisms/List'
 
 const ListPanel = props => {
   const { title, items, tooltip } = props
+  const header = <PanelHeader title={title} tooltip={tooltip} />
   return (
-    <ContentWrapper title={title} tooltip={tooltip}>
+    <ContentWrapper header={header}>
       <List items={items} />
     </ContentWrapper>
   )

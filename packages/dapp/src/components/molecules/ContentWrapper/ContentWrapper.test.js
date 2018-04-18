@@ -2,7 +2,7 @@ import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
 import ContentWrapper from './ContentWrapper.jsx'
 
-const props = { title: 'Test Wrapper', children: 'test content' }
+const props = { header: 'string header', children: 'test content' }
 
 describe('ContentWrapper component', () => {
   it('renders correctly', () => {

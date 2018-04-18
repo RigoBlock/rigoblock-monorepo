@@ -11,6 +11,9 @@
   display: flex;
   overflow: hidden;
 
+  .content-wrapper-header {
+    flex-grow: 1;
+  }
   .content-wrapper-content {
     flex-basis: 100%;
   }

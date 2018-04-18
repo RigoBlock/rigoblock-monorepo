@@ -2,8 +2,12 @@
 
 exports[`ListPanel component renders correctly 1`] = `
 <ContentWrapper
-  title="ListPanel Component"
-  tooltip={null}
+  header={
+    <PanelHeader
+      title="ListPanel Component"
+      tooltip={null}
+    />
+  }
 >
   <List
     items={
