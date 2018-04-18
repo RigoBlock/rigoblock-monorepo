@@ -9,7 +9,7 @@ storiesOf('Molecules/ListItem', module)
       style={{
         width: '400px',
         background: 'white',
-        border: '1px solid rgba(0, 0, 0, 0.1'
+        border: '1px solid rgba(0, 0, 0, 0.1)'
       }}
     >
       {story()}

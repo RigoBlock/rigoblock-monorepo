@@ -1,23 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ContentWrapper from '../../molecules/ContentWrapper'
-import ListItem from '../../molecules/ListItem'
+import List from '../../organisms/List'
 
 const ListPanel = props => {
   const { title, items, tooltip } = props
-  const listItems = items.map(item => (
-    <ListItem
-      key={item.id}
-      itemName={item.name}
-      itemSymbol={item.symbol}
-      itemValue={item.value}
-      growth={item.growth}
-      currencyGrowth={item.currencyGrowth}
-    />
-  ))
   return (
     <ContentWrapper title={title} tooltip={tooltip}>
-      {listItems}
+      <List items={items} />
     </ContentWrapper>
   )
 }

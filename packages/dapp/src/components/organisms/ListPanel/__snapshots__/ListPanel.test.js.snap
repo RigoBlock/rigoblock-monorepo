@@ -5,13 +5,17 @@ exports[`ListPanel component renders correctly 1`] = `
   title="ListPanel Component"
   tooltip={null}
 >
-  <ListItem
-    currencyGrowth={0}
-    growth={0}
-    itemName="Rocksolid Vault"
-    itemSymbol="VLT"
-    itemValue={12489.51323}
-    key="1"
+  <List
+    items={
+      Array [
+        Object {
+          "id": 1,
+          "name": "Rocksolid Vault",
+          "symbol": "VLT",
+          "value": 12489.51323,
+        },
+      ]
+    }
   />
 </ContentWrapper>
 `;
