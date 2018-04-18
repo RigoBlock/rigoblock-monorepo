@@ -1,9 +1,9 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import ListItem from './ListItem'
+import PanelHeader from './PanelHeader'
 import '../../_settings/_base.scss'
 
-storiesOf('Molecules/ListItem', module)
+storiesOf('Molecules/PanelHeader', module)
   .addDecorator(story => (
     <div
       style={{
@@ -15,10 +15,7 @@ storiesOf('Molecules/ListItem', module)
       {story()}
     </div>
   ))
-  .add('default', () => (
-    <ListItem
-      itemSymbol="VLT"
-      itemName="Rocksolid Vault"
-      itemValue={12489.51323}
-    />
+  .add('default', () => <PanelHeader title="PanelHeader" />)
+  .add('tooltip', () => (
+    <PanelHeader title="PanelHeader" tooltip="empty tooltip" />
   ))

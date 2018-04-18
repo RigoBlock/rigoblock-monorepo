@@ -4,13 +4,10 @@ exports[`ContentWrapper component renders correctly 1`] = `
 <div
   className="content-wrapper"
 >
-  <div
-    className="content-wrapper-header"
-  >
-    <h1>
-      Test Wrapper
-    </h1>
-  </div>
+  <PanelHeader
+    title="Test Wrapper"
+    tooltip={null}
+  />
   <div
     className="content-wrapper-content"
   >

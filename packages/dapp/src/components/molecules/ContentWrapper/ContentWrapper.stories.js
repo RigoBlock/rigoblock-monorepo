@@ -20,8 +20,8 @@ storiesOf('Molecules/ContentWrapper', module)
     </ContentWrapper>
   ))
   .add('tooltip', () => (
-    <ContentWrapper title="Content Wrapper" tooltip="true">
-      <div style={{ padding: '16px' }}>
+    <ContentWrapper title="Content Wrapper" tooltip="empty tooltip">
+      <div style={{ padding: '16px', background: '#e3eaee' }}>
         Bacon ipsum dolor amet boudin ball tip venison, burgdoggen pork
         prosciutto cupim ribeye meatloaf beef ribs chuck pastrami t-bone picanha
         rump. Spare ribs strip steak buffalo, beef shankle capicola short ribs
