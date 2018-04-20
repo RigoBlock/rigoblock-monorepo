@@ -22,7 +22,7 @@ import VaultWeb3 from './Web3/vault'
 
 class Contract {
   constructor(api) {
-    var isMetaMask = false
+    let isMetaMask = false
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
