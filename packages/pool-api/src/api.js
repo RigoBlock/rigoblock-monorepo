@@ -5,7 +5,6 @@ import Contracts from './pools'
 
 class PoolsApi {
   constructor(api) {
-    // super()
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }

@@ -8,9 +8,6 @@
   "scripts": {
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
