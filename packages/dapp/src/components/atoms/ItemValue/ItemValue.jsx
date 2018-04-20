@@ -9,17 +9,23 @@ export const ITEM_VALUE_SIZES = {
   LARGE: 'large'
 }
 
-const ItemValue = props => {
-  const res = Object.keys(props)
+const roundProps = props => {
+  return Object.keys(props)
+    .filter(k => !isNaN(props[k]) && props[k] % 1 !== 0)
     .map(k => ({ [k]: parseFloat(props[k], 10).toFixed(props.precision) }))
     .reduce((acc, curr) => ({ ...acc, ...curr }), {})
-  const classProps = classNames('item-value', `item-value-${props.valueSize}`)
-  return props.growth && props.currencyGrowth ? (
+}
+
+const ItemValue = props => {
+  const { valueSize, currencyGrowth, growth, currency } = props
+  const res = roundProps(props)
+  const classProps = classNames('item-value', `item-value-${valueSize}`)
+  return growth && currencyGrowth ? (
     <div>
       <span className={classProps}>{`+${res.growth}%`}</span>
-      <span className={'currency-growth'}>{`+${res.currencyGrowth} ${
-        props.currency
-      }`}</span>
+      <span className={'currency-growth'}>{`+${
+        res.currencyGrowth
+      } ${currency}`}</span>
     </div>
   ) : (
     <div>

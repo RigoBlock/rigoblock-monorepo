@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ListItem from '../../molecules/ListItem'
 
-const List = props => {
-  const { items } = props
+const List = ({ items }) => {
   const listItems = items.map(item => (
     <ListItem
       key={item.id}

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import Tooltip from '../../atoms/Tooltip'
 import './PanelHeader.scss'
 
-const PanelHeader = props => {
-  const { tooltip, title } = props
+const PanelHeader = ({ tooltip, title }) => {
   const tooltipComponent = tooltip && <Tooltip type={'help'} />
 
   return (

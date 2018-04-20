@@ -4,8 +4,13 @@ import ItemName from '../ItemName'
 import ItemValue from '../../atoms/ItemValue'
 import './ListItem.scss'
 
-const ListItem = props => {
-  const { growth, currencyGrowth, itemName, itemSymbol, itemValue } = props
+const ListItem = ({
+  growth,
+  currencyGrowth,
+  itemName,
+  itemSymbol,
+  itemValue = 0
+}) => {
   const valueProps =
     growth && currencyGrowth ? { growth, currencyGrowth } : { itemValue }
   return (

@@ -24,4 +24,4 @@ storiesOf('Atoms/ItemValue', module)
   .add(ITEM_VALUE_SIZES.LARGE, () => (
     <ItemValue itemValue={12489.51354} valueSize={ITEM_VALUE_SIZES.LARGE} />
   ))
-  .add('growth', () => <ItemValue growth={0.25} currencyGrowth={2.32} />)
+  .add('growth', () => <ItemValue growth={0.25423} currencyGrowth={2.32} />)
