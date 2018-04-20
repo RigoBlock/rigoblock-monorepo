@@ -24,8 +24,10 @@
   },
   "devDependencies": {
     "@rigoblock/ganache-bootstrap": "^0.1.2",
-    "@storybook/addon-actions": "^3.4.1",
-    "@storybook/addon-links": "^3.4.1",
+    "@storybook/addon-info": "^3.4.2",
+    "@storybook/addon-knobs": "^3.4.2",
+    "@storybook/addon-options": "^3.4.2",
+    "@storybook/addon-viewport": "^3.4.2",
     "@storybook/addons": "^3.4.1",
     "@storybook/react": "^3.4.1",
     "autoprefixer": "7.1.6",

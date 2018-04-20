@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { withKnobs, text, object } from '@storybook/addon-knobs/react'
 import ListPanel from './ListPanel'
 import '../../_settings/_base.scss'
 
@@ -26,12 +27,18 @@ const items = [
 ]
 
 storiesOf('Organisms/ListPanel', module)
+  .addDecorator(withKnobs)
   .addDecorator(story => <div style={{ width: '400px' }}>{story()}</div>)
-  .add('default', () => <ListPanel title={'Example ListPanel'} items={items} />)
+  .add('default', () => (
+    <ListPanel
+      title={text('Title', 'Example ListPanel')}
+      items={object('Items', items)}
+    />
+  ))
   .add('tooltip', () => (
     <ListPanel
-      title="Example ListPanel"
-      items={items}
-      tooltip="empty tooltip"
+      title={text('Title', 'Example ListPanel')}
+      items={object('Items', items)}
+      tooltip={text('Tooltip', 'empty tooltip')}
     />
   ))
