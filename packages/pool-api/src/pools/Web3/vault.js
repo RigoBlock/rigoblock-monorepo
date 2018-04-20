@@ -48,7 +48,7 @@ class DragoWeb3 {
 
   buyVault = (accountAddress, amount) => {
     const instance = this._instance
-    var options = {
+    const options = {
       from: accountAddress,
       value: amount
     }
@@ -72,7 +72,7 @@ class DragoWeb3 {
       throw new Error('amount needs to be provided')
     }
     const instance = this._instance
-    var options = {
+    const options = {
       from: accountAddress
     }
     console.log(amount)
@@ -96,7 +96,7 @@ class DragoWeb3 {
       throw new Error('price needs to be provided')
     }
     const instance = this._instance
-    var options = {
+    const options = {
       from: accountAddress
     }
     instance.options.from = accountAddress

@@ -21,6 +21,7 @@
     ],
     "rules": {
       "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
+      "no-var": ["error"],
       "import/order": ["error", {"newlines-between": "never"}],
       "import/newline-after-import": ["error", { "count": 1 }],
       "react/require-default-props": 2,
