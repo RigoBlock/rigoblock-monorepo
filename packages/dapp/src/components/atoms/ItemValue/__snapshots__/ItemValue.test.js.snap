@@ -5,7 +5,7 @@ exports[`ItemValue component renders correctly 1`] = `
   <span
     className="item-value item-value-large"
   >
-    0.00
+    12489.51
   </span>
 </div>
 `;

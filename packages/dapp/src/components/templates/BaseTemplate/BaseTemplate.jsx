@@ -4,12 +4,12 @@ import TopNavbar from '../../organisms/TopNavbar'
 import LeftNavbar from '../../organisms/LeftNavbar'
 import './BaseTemplate.scss'
 
-const BaseTemplate = props => (
+const BaseTemplate = ({ children }) => (
   <div>
     <TopNavbar />
     <div className="page-content-section">
       <LeftNavbar />
-      <div className="page-main-content">{props.children}</div>
+      <div className="page-main-content">{children}</div>
     </div>
   </div>
 )

@@ -4,8 +4,7 @@ import ContentWrapper from '../../molecules/ContentWrapper'
 import PanelHeader from '../../molecules/PanelHeader'
 import List from '../../organisms/List'
 
-const ListPanel = props => {
-  const { title, items, tooltip } = props
+const ListPanel = ({ title, items, tooltip }) => {
   const header = <PanelHeader title={title} tooltip={tooltip} />
   return (
     <ContentWrapper header={header}>

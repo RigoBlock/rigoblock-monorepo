@@ -29,7 +29,7 @@ storiesOf('Atoms/ItemValue', module)
   ))
   .add('growth', () => (
     <ItemValue
-      growth={number('Growth', 0.25)}
+      growth={number('Growth', 0.25423)}
       currencyGrowth={number('Currency growth', 2.32)}
     />
   ))

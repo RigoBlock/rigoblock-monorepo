@@ -9,8 +9,7 @@ export const TOOLTIP_SIZES = {
   LARGE: 'large'
 }
 
-const Tooltip = props => {
-  const { size, type } = props
+const Tooltip = ({ size, type }) => {
   const classProps = classNames('material-icons', 'tooltip', `tooltip-${size}`)
   return <span className={classProps}>{type}</span>
 }

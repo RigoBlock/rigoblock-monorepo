@@ -10,8 +10,7 @@ export const LINK_SIZES = {
   LARGE: 'large'
 }
 
-const Link = props => {
-  const { size, children, to } = props
+const Link = ({ size, children, to }) => {
   const classProps = classNames('link', `link-${size}`)
   return (
     <RouterLink to={to} className={classProps}>
