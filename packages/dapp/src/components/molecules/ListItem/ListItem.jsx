@@ -9,7 +9,7 @@ const ListItem = ({
   currencyGrowth,
   itemName,
   itemSymbol,
-  itemValue = 0
+  itemValue
 }) => {
   const valueProps =
     growth && currencyGrowth ? { growth, currencyGrowth } : { itemValue }
