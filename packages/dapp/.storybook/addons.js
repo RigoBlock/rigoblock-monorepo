@@ -1,6 +1,7 @@
 import { addDecorator } from '@storybook/react'
 import { withInfo } from '@storybook/addon-info'
 import { setOptions } from '@storybook/addon-options'
+import '@storybook/addon-knobs/register'
 import '@storybook/addon-viewport/register'
 import '@storybook/addon-options/register'
 

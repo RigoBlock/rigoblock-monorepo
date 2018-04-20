@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { withKnobs, object } from '@storybook/addon-knobs/react'
 import List from './List'
 import '../../_settings/_base.scss'
 
@@ -26,9 +27,10 @@ const items = [
 ]
 
 storiesOf('Organisms/List', module)
+  .addDecorator(withKnobs)
   .addDecorator(story => (
     <div style={{ width: '400px', border: '1px solid rgba(0, 0, 0, 0.1)' }}>
       {story()}
     </div>
   ))
-  .add('default', () => <List items={items} />)
+  .add('default', () => <List items={object('Items', items)} />)
