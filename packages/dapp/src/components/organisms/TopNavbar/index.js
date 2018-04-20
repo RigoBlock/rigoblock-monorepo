@@ -1,3 +1,1 @@
-import TopNavbar from './TopNavbar'
-
-export default TopNavbar
+export { default } from './TopNavbar'

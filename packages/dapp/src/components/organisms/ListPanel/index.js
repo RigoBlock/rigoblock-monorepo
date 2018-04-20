@@ -1,3 +1,1 @@
-import ListPanel from './ListPanel'
-
-export default ListPanel
+export { default } from './ListPanel'

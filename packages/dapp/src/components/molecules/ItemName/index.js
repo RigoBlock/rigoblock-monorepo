@@ -1,3 +1,1 @@
-import ItemName from './ItemName'
-
-export default ItemName
+export { default } from './ItemName'
