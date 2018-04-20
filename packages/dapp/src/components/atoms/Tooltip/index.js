@@ -1,5 +1,1 @@
-import Tooltip, { TOOLTIP_SIZES } from './Tooltip'
-
-export { TOOLTIP_SIZES }
-
-export default Tooltip
+export { default, TOOLTIP_SIZES } from './Tooltip'

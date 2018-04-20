@@ -1,9 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { withKnobs, text, number } from '@storybook/addon-knobs/react'
 import ListItem from './ListItem'
 import '../../_settings/_base.scss'
 
 storiesOf('Molecules/ListItem', module)
+  .addDecorator(withKnobs)
   .addDecorator(story => (
     <div
       style={{
@@ -17,8 +19,8 @@ storiesOf('Molecules/ListItem', module)
   ))
   .add('default', () => (
     <ListItem
-      itemSymbol="VLT"
-      itemName="Rocksolid Vault"
-      itemValue={12489.51323}
+      itemSymbol={text('Item Symbol', 'VLT')}
+      itemName={text('Item Name', 'Rocksolid Vault')}
+      itemValue={number('Item Value', 12489.51323)}
     />
   ))

@@ -1,9 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { withKnobs, number, selectV2 } from '@storybook/addon-knobs/react'
 import ItemValue, { ITEM_VALUE_SIZES } from './ItemValue'
 import '../../_settings/_base.scss'
 
 storiesOf('Atoms/ItemValue', module)
+  .addDecorator(withKnobs)
   .addDecorator(story => (
     <div
       style={{
@@ -15,13 +17,19 @@ storiesOf('Atoms/ItemValue', module)
       {story()}
     </div>
   ))
-  .add(ITEM_VALUE_SIZES.SMALL, () => (
-    <ItemValue itemValue={12489.51354} valueSize={ITEM_VALUE_SIZES.SMALL} />
+  .add('default', () => (
+    <ItemValue
+      itemValue={number('Item value', 12489.51354)}
+      valueSize={selectV2(
+        'Value size',
+        ITEM_VALUE_SIZES,
+        ITEM_VALUE_SIZES.SMALL
+      )}
+    />
   ))
-  .add(ITEM_VALUE_SIZES.MEDIUM, () => (
-    <ItemValue itemValue={12489.51354} valueSize={ITEM_VALUE_SIZES.MEDIUM} />
+  .add('growth', () => (
+    <ItemValue
+      growth={number('Growth', 0.25423)}
+      currencyGrowth={number('Currency growth', 2.32)}
+    />
   ))
-  .add(ITEM_VALUE_SIZES.LARGE, () => (
-    <ItemValue itemValue={12489.51354} valueSize={ITEM_VALUE_SIZES.LARGE} />
-  ))
-  .add('growth', () => <ItemValue growth={0.25423} currencyGrowth={2.32} />)
