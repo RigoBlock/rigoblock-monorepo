@@ -1,3 +1,1 @@
-import ContentWrapper from './ContentWrapper'
-
-export default ContentWrapper
+export { default } from './ContentWrapper'

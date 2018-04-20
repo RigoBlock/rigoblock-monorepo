@@ -1,3 +1,1 @@
-import Vault from './Vault.jsx'
-
-export default Vault
+export { default } from './Vault.jsx'

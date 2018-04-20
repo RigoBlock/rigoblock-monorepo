@@ -1,3 +1,1 @@
-import PanelHeader from './PanelHeader'
-
-export default PanelHeader
+export { default } from './PanelHeader'
