@@ -1,6 +1,3 @@
-// Copyright 2017 Rigo Investment Sarl.
-// This file is part of RigoBlock.
-
 class EtherWeb3 {
   constructor(api) {
     if (!api) {

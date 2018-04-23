@@ -1,9 +1,7 @@
-// import Web3 from 'web3'
-import { Authority } from '../contracts/Authority'
-import { VaultFactory } from '../dist/VaultFactory'
-import { VaultEventful } from '../dist/VaultEventful'
-// import Web3 from 'web3'
-const Web3 = require('web3')
+import Web3 from 'web3'
+import { Authority } from './pools/contracts/Authority'
+import { VaultFactory } from './pools/contracts/VaultFactory'
+import { VaultEventful } from './pools/contracts/VaultEventful'
 
 const vaultFactoryAddress = '0x7ce6e371085cb611fb46d5065397223ef2f952ff'
 const vaultEventfulAddress = '0x6dddcaede2071883c85c6e5781524985608d2460'

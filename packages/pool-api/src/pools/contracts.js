@@ -1,57 +1,33 @@
-// Copyright 2017 Rigo Investment Sarl.
-// This file is part of RigoBlock.
-
-import DragoEventfulParity from './Parity/dragoEventful'
-import DragoFactoryParity from './Parity/dragoFactory'
-import DragoFactoryWeb3 from './Web3/dragoFactory'
-import DragoParity from './Parity/drago'
-import DragoRegistryParity from './Parity/dragoRegistry'
-import DragoWeb3 from './Web3/drago'
-import EthusdParity from './Parity/ethusd'
-import EtherParity from './Parity/ether'
-import EtherWeb3 from './Web3/ether'
-import ExchangeParity from './Parity/exchange'
-import RegistryParity from './registry'
-import RigoTokenParity from './Parity/rigoToken'
-import RigoTokenWeb3 from './Web3/rigoToken'
-import VaultEventfulParity from './Parity/vaultEventful'
-import VaultFactoryParity from './Parity/vaultFactory'
-import VaultFactoryWeb3 from './Web3/vaultFactory'
-import VaultParity from './Parity/vault'
-import VaultWeb3 from './Web3/vault'
+import Drago from './contracts/Drago'
+import DragoEventful from './contracts/DragoEventful'
+import DragoFactory from './contracts/DragoFactory'
+import DragoRegistry from './contracts/DragoRegistry'
+import Ethusd from './contracts/Ethusd'
+import Ether from './contracts/Ether'
+import Exchange from './contracts/exchange'
+import Registry from './registry'
+import RigoToken from './contracts/RigoToken'
+import Vault from './contracts/Vault'
+import VaultEventful from './contracts/VaultEventful'
+import VaultFactory from './contracts/VaultFactory'
 
 class Contract {
   constructor(api) {
-    let isMetaMask = false
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
-    if (typeof api._provider === 'undefined') {
-      isMetaMask = false
-    } else {
-      isMetaMask = api._provider.isMetaMask
-    }
-    if (isMetaMask) {
-      this._drago = new DragoWeb3(api)
-      this._dragofactory = new DragoFactoryWeb3(api)
-      this._ether = new EtherWeb3(api)
-      this._vault = new VaultWeb3(api)
-      this._vaultfactory = new VaultFactoryWeb3(api)
-      this._rigotoken = new RigoTokenWeb3(api)
-    } else {
-      this._drago = new DragoParity(api)
-      this._dragoeventful = new DragoEventfulParity(api)
-      this._dragofactory = new DragoFactoryParity(api)
-      this._dragoregistry = new DragoRegistryParity(api)
-      this._ethusd = new EthusdParity(api)
-      this._ether = new EtherParity(api)
-      this._exchange = new ExchangeParity(api)
-      this._registry = new RegistryParity(api)
-      this._rigotoken = new RigoTokenParity(api)
-      this._vault = new VaultParity(api)
-      this._vaulteventful = new VaultEventfulParity(api)
-      this._vaultfactory = new VaultFactoryParity(api)
-    }
+    this._drago = new Drago(api)
+    this._dragoeventful = new DragoEventful(api)
+    this._dragofactory = new DragoFactory(api)
+    this._dragoregistry = new DragoRegistry(api)
+    this._ethusd = new Ethusd(api)
+    this._ether = new Ether(api)
+    this._exchange = new Exchange(api)
+    this._registry = new Registry(api)
+    this._rigotoken = new RigoToken(api)
+    this._vault = new Vault(api)
+    this._vaulteventful = new VaultEventful(api)
+    this._vaultfactory = new VaultFactory(api)
   }
 
   get dragoregistry() {

@@ -9,16 +9,16 @@ const writeFilePromise = (name, content) =>
   )
 
 const extractor = async network => {
-  const tmpFolder = path.join(__dirname, '..', '.tmp')
+  const tmpFolder = path.join(__dirname, '.tmp')
   if (!fs.existsSync(tmpFolder)) {
     fs.mkdirSync(tmpFolder)
   }
   const web3 = new Web3(new Web3.providers.HttpProvider(network))
-  const networkId = await web3.eth.net.getId()
+  const networkId = await web3.version.network
   const contractsMap = await contracts(networkId)
   const abiPromises = Object.keys(contractsMap).map(contractName =>
     writeFilePromise(
-      path.join(__dirname, '..', '.tmp', `${contractName}.json`),
+      path.join(__dirname, '.tmp', `${contractName}.json`),
       JSON.stringify(contractsMap[contractName].abi, null, 2)
     )
   )
