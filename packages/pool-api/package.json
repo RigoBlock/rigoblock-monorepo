@@ -38,7 +38,8 @@
     "typechain": "^0.1.5",
     "typescript": "^2.8.3",
     "typescript-eslint-parser": "^15.0.0",
-    "web3": "0.20.6"
+    "web3": "0.20.6",
+    "web3-provider-engine": "^14.0.4"
   },
   "dependencies": {
     "@parity/abi": "2.1.x",
