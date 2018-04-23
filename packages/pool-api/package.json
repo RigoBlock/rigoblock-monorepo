@@ -6,9 +6,13 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix"
+    "build": "rm -rf dist; tsc -d",
+    "build:watch": "rm -rf dist; tsc -w -d",
+    "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
+    "typechain": "typechain --force --outDir contracts '.tmp/*.json'"
   },
   "devDependencies": {
+    "@types/node": "^9.6.6",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -19,6 +23,7 @@
     "chai-as-promised": "6.0.0",
     "coveralls": "^3.0.0",
     "cross-env": "^5.1.1",
+    "eslint-plugin-typescript": "^0.11.0",
     "istanbul": "^0.4.5",
     "jsdom": "^11.1.0",
     "makeshift": "^1.1.0",
@@ -31,7 +36,9 @@
     "sinon-as-promised": "4.0.2",
     "sinon-chai": "2.8.0",
     "typechain": "^0.1.5",
-    "web3": "^1.0.0-beta.34"
+    "typescript": "^2.8.3",
+    "typescript-eslint-parser": "^15.0.0",
+    "web3": "0.20.6"
   },
   "dependencies": {
     "@parity/abi": "2.1.x",

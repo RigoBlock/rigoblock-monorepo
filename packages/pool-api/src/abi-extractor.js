@@ -16,7 +16,6 @@ const extractor = async network => {
   const web3 = new Web3(new Web3.providers.HttpProvider(network))
   const networkId = await web3.eth.net.getId()
   const contractsMap = await contracts(networkId)
-  console.log(contractsMap['Authority'])
   const abiPromises = Object.keys(contractsMap).map(contractName =>
     writeFilePromise(
       path.join(__dirname, '..', '.tmp', `${contractName}.json`),

@@ -1,4 +1,7 @@
 coverage
+.tmp
+contracts
+dist
 lib
 node_modules
 # misc
