@@ -16,8 +16,8 @@ const PoolApi = async() => {
   engine.addProvider(new InjectedWeb3Subprovider((<any>window).web3.currentProvider))
   const networkId = web3.version.network
   console.log(networkId)
-  // const contractAddresses = await addressList(networkId)
-  // console.log(contractAddresses)
+  const contractAddresses = await addressList(networkId)
+  console.log(contractAddresses)
 }
 
 ;(async () => {

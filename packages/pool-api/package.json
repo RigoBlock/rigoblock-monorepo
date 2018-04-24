@@ -14,33 +14,31 @@
   },
   "devDependencies": {
     "@0xproject/subproviders": "^0.9.0",
+    "@rigoblock/protocol": "^0.1.2",
     "@types/node": "^9.6.6",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "7",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
+    "bignumber.js": "3.0.1",
     "cross-env": "^5.1.1",
+    "es6-error": "^4.0.0",
+    "es6-promise": "^4.1.1",
     "eslint-plugin-typescript": "^0.11.0",
+    "isomorphic-fetch": "^2.2.1",
+    "js-sha3": "0.5.5",
     "jsdom": "^11.1.0",
     "ts-loader": "^4.2.0",
     "typechain": "^0.1.5",
     "typescript": "^2.8.3",
     "typescript-eslint-parser": "^15.0.0",
     "web3": "0.20.6",
-    "web3-provider-engine": "^14.0.4"
-  },
-  "dependencies": {
-    "@rigoblock/protocol": "^0.1.2",
-    "babel-eslint": "7",
-    "bignumber.js": "3.0.1",
-    "es6-error": "^4.0.0",
-    "es6-promise": "^4.1.1",
-    "isomorphic-fetch": "^2.2.1",
-    "js-sha3": "0.5.5",
-    "lodash": "^4.17.4",
+    "web3-provider-engine": "^14.0.4",
     "webpack": "^4.6.0",
     "webpack-dev-server": "^3.1.3"
-  }
+  },
+  "dependencies": {}
 }
