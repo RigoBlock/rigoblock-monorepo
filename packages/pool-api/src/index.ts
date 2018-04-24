@@ -27,8 +27,8 @@ const PoolApi = async() => {
   const networkId = web3.version.network
   // const contracts = new Contracts(web3, addressList)
   // console.log(contracts.VaultFactory)
-  const addresses = await addressList(networkId)
-  console.log(addresses)
+  const map = await addressList(networkId)
+  console.log(map)
 }
 
 ;(async () => {

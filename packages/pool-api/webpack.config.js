@@ -1,4 +1,5 @@
 const path = require('path')
+// const webpack = require('webpack')
 
 module.exports = {
   entry: path.join(__dirname, '/src/index.ts'),
@@ -17,5 +18,18 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
+  },
+  plugins: [
+    // new webpack.ContextReplacementPlugin(
+    //   /artifacts/,
+    //   path.resolve(__dirname, '..', 'artifacts'),
+    //   true,
+    //   /^.*.json$/
+    // )
+  ],
+  node: {
+    fs: 'empty',
+    module: 'empty',
+    '@0xproject/deployer': 'empty'
   }
 }

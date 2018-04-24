@@ -1,10 +1,10 @@
-import { Drago } from './contracts/Drago'
+// import { Drago } from './contracts/Drago'
 import { DragoEventful } from './contracts/DragoEventful'
 import { DragoFactory } from './contracts/DragoFactory'
 import { DragoRegistry } from './contracts/DragoRegistry'
 // import Registry from './registry'
-import { RigoToken } from './contracts/RigoToken'
-import { Vault } from './contracts/Vault'
+// import { RigoToken } from './contracts/RigoToken'
+// import { Vault } from './contracts/Vault'
 import { VaultEventful } from './contracts/VaultEventful'
 import { VaultFactory } from './contracts/VaultFactory'
 
