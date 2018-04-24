@@ -10,6 +10,8 @@ import DragoWeb3 from './Web3/drago'
 import EthusdParity from './Parity/ethusd'
 import EtherParity from './Parity/ether'
 import EtherWeb3 from './Web3/ether'
+import FundProxyWeb3 from './Web3/fundProxy'
+// import FundProxyParity from './Parity/fundProxy'
 import ExchangeParity from './Parity/exchange'
 import RegistryParity from './registry'
 import RigoTokenParity from './Parity/rigoToken'
@@ -38,6 +40,7 @@ class Contract {
       this._vault = new VaultWeb3(api)
       this._vaultfactory = new VaultFactoryWeb3(api)
       this._rigotoken = new RigoTokenWeb3(api)
+      this._fundproxy = new FundProxyWeb3(api)
     } else {
       this._drago = new DragoParity(api)
       this._dragoeventful = new DragoEventfulParity(api)
@@ -48,6 +51,7 @@ class Contract {
       this._exchange = new ExchangeParity(api)
       this._registry = new RegistryParity(api)
       this._rigotoken = new RigoTokenParity(api)
+      // this._fundproxy = new RigoTokenParity(api)
       this._vault = new VaultParity(api)
       this._vaulteventful = new VaultEventfulParity(api)
       this._vaultfactory = new VaultFactoryParity(api)
@@ -80,6 +84,10 @@ class Contract {
 
   get exchange() {
     return this._exchange
+  }
+
+  get fundproxy() {
+    return this._fundproxy
   }
 
   get registry() {
