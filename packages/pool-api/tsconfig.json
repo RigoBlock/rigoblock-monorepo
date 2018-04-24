@@ -1,23 +1,26 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es5",
     "module": "commonjs",
     "outDir": "dist",
+    "jsx": "react",
     "sourceRoot": "./src",
     "sourceMap": true,
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
+    "types": [
+      "node"
+    ],
+    "lib": [ "es2015", "dom" ]
   },
   "global": {
     "baseSubscriber": true
   },
-  "types": [
-    "node"
-  ],
   "include": [
-    "./**/*.ts"
+    "src/**/*.ts"
   ],
+  "compileOnSave": false,
   "exclude": [
     "node_modules"
   ]

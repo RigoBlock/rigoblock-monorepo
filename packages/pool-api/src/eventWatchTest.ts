@@ -1,5 +1,4 @@
 import Web3 from 'web3'
-import { Authority } from './pools/contracts/Authority'
 import { VaultFactory } from './pools/contracts/VaultFactory'
 import { VaultEventful } from './pools/contracts/VaultEventful'
 

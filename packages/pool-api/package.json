@@ -6,12 +6,14 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "build": "rm -rf dist; tsc -d",
-    "build:watch": "rm -rf dist; tsc -w -d",
+    "dev": "webpack-dev-server --mode development",
+    "tsc": "rm -rf dist; tsc -d",
+    "build:watch": "rm -rf dist; tsc -w -m system -d",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "typechain": "typechain --force --outDir src/pools/contracts '.tmp/*.json'"
   },
   "devDependencies": {
+    "@0xproject/subproviders": "^0.9.0",
     "@types/node": "^9.6.6",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -19,22 +21,10 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
-    "chai": "3.5.0",
-    "chai-as-promised": "6.0.0",
-    "coveralls": "^3.0.0",
     "cross-env": "^5.1.1",
     "eslint-plugin-typescript": "^0.11.0",
-    "istanbul": "^0.4.5",
     "jsdom": "^11.1.0",
-    "makeshift": "^1.1.0",
-    "mocha": "^3.4.2",
-    "mock-local-storage": "1.0.2",
-    "mock-socket": "6.0.4",
-    "nock": "9.0.7",
-    "rimraf": "^2.6.2",
-    "sinon": "1.17.7",
-    "sinon-as-promised": "4.0.2",
-    "sinon-chai": "2.8.0",
+    "ts-loader": "^4.2.0",
     "typechain": "^0.1.5",
     "typescript": "^2.8.3",
     "typescript-eslint-parser": "^15.0.0",
@@ -42,19 +32,15 @@
     "web3-provider-engine": "^14.0.4"
   },
   "dependencies": {
-    "@parity/abi": "2.1.x",
-    "@parity/jsonrpc": "2.1.x",
-    "@parity/wordlist": "1.1.x",
     "@rigoblock/protocol": "^0.1.2",
     "babel-eslint": "7",
     "bignumber.js": "3.0.1",
-    "blockies": "0.0.2",
     "es6-error": "^4.0.0",
     "es6-promise": "^4.1.1",
-    "eventemitter3": "^2.0.2",
     "isomorphic-fetch": "^2.2.1",
     "js-sha3": "0.5.5",
     "lodash": "^4.17.4",
-    "store": "^2.0.12"
+    "webpack": "^4.6.0",
+    "webpack-dev-server": "^3.1.3"
   }
 }
