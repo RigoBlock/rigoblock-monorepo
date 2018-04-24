@@ -9,32 +9,32 @@ import { VaultEventful } from './contracts/VaultEventful'
 import { VaultFactory } from './contracts/VaultFactory'
 
 class Contract {
-  drago: Object
+  // drago: Object
   dragoEventful: Object
   dragoFactory: Object
   dragoRegistry: Object
-  rigoToken: Object
-  vault: Object
+  // rigoToken: Object
+  // vault: Object
   vaultEventful: Object
   vaultFactory: Object
   constructor(api, addresses) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
-    this.drago = new Drago(api, addresses.drago)
-    this.dragoEventful = new DragoEventful(api, addresses.dragoEventful)
-    this.dragoFactory = new DragoFactory(api, addresses.dragoFactory)
-    this.dragoRegistry = new DragoRegistry(api, addresses.dragoRegistry)
-    this.rigoToken = new RigoToken(api, addresses.rigoToken)
-    this.vault = new Vault(api, addresses.vault)
-    this.vaultEventful = new VaultEventful(api, addresses.vaultEventful)
-    this.vaultFactory = new VaultFactory(api, addresses.vaultFactory)
+    // this.drago = new Drago(api, addresses.drago)
+    this.dragoEventful = new DragoEventful(api, addresses.DragoEventful)
+    this.dragoFactory = new DragoFactory(api, addresses.DragoFactory)
+    this.dragoRegistry = new DragoRegistry(api, addresses.DragoRegistry)
+    // this.rigoToken = new RigoToken(api, addresses.rigoToken)
+    // this.vault = new Vault(api, addresses.vault)
+    this.vaultEventful = new VaultEventful(api, addresses.VaultEventful)
+    this.vaultFactory = new VaultFactory(api, addresses.VaultFactory)
     // this.registry = new Registry(api, addresses.drago)
   }
 
-  get Drago() {
-    return this.drago
-  }
+  // get Drago() {
+  //   return this.drago
+  // }
 
   get DragoRegistry() {
     return this.dragoRegistry
@@ -52,9 +52,9 @@ class Contract {
   //   return this.registry
   // }
 
-  get RigoToken() {
-    return this.rigoToken
-  }
+  // get RigoToken() {
+  //   return this.rigoToken
+  // }
 
   get VaultEventful() {
     return this.vaultEventful
@@ -64,9 +64,9 @@ class Contract {
     return this.vaultFactory
   }
 
-  get Vault() {
-    return this.vault
-  }
+  // get Vault() {
+  //   return this.vault
+  // }
 }
 
 export default Contract
