@@ -29,14 +29,12 @@ const test = async () => {
     Math.random()
       .toString(36)
       .substring(10)
-  const test = await vaultFactory
-    .createVaultTx(randomString(), randomString())
-    .send({
-      value: 0,
-      from: defaultAccount,
-      gas: 4700000,
-      gasPrice: 100000000000
-    })
+  await vaultFactory.createVaultTx(randomString(), randomString()).send({
+    value: 0,
+    from: defaultAccount,
+    gas: 4700000,
+    gasPrice: 100000000000
+  })
 }
 ;(async () => {
   await test()

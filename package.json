@@ -55,7 +55,8 @@
     "nohoist": [
       "**/*jest*",
       "**/jsdom",
-      "**/@types"
+      "**/@types",
+      "**/@rigoblock/protocol"
     ]
   }
 }
