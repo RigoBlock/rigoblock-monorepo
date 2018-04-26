@@ -3,12 +3,13 @@
   "version": "0.1.2",
   "main": "index.js",
   "scripts": {
-    "compile": "node deployment/compiler.js",
+    "compile": "node deploy/compiler.js",
     "lint": "eslint . --ext js,jsx --fix"
   },
   "files": [
     "artifacts",
-    "deployment"
+    "deploy",
+    "contracts"
   ],
   "dependencies": {
     "@0xproject/deployer": "^0.3.5",
