@@ -1,6 +1,6 @@
 const Web3 = require('web3')
 const c = require('chalk')
-const { contracts } = require('@rigoblock/protocol')
+const contracts = require('@rigoblock/protocol/contracts')
 const logger = require('./logger')
 
 module.exports = async network => {
@@ -16,9 +16,7 @@ module.exports = async network => {
     }
   )
 
-  const vault = await vaultFactoryInstance.methods
-    .createVault('myVault', 'TMP')
-    .call()
+  await vaultFactoryInstance.methods.createVault('myVault', 'TMP').call()
 
   logger.info(c.magenta('Seed completed'))
 }
