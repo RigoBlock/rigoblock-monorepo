@@ -1,29 +1,11 @@
-import * as ProviderEngine from 'web3-provider-engine'
-import { InjectedWeb3Subprovider } from '@0xproject/subproviders'
-import * as RpcSubprovider from 'web3-provider-engine/subproviders/rpc.js'
-import Web3 from 'web3'
-import Contract from './pools/contracts'
-import addressList from './addressList'
+import PoolsApi from './api'
 
-const PoolApi = async() => {
-  const engine = new ProviderEngine()
-  const web3 = (<any>window).web3
+const api = async () => {
+  const test = new PoolsApi()
+  await test.init()
 
-  engine.addProvider(
-    new RpcSubprovider({
-      rpcUrl: 'http://localhost:8545'
-    })
-  )
-  engine.addProvider(new InjectedWeb3Subprovider((<any>window).web3.currentProvider))
-  const networkId = web3.version.network
-  const contractsMap = await addressList(networkId)
-  const addressMap = contractsMap.reduce((acc, curr) => Object.assign(acc, curr), {})
-  const contract = new Contract(web3, addressMap)
-  console.log(contract)
+  console.log(test.contract)
 }
-
 ;(async () => {
-  await PoolApi()
+  await api()
 })()
-
-

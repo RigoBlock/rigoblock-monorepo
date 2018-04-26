@@ -9,27 +9,36 @@ import { VaultEventful } from './contracts/VaultEventful'
 import { VaultFactory } from './contracts/VaultFactory'
 
 class Contract {
+  dragoEventful: DragoEventful
+  dragoFactory: DragoFactory
+  dragoRegistry: DragoRegistry
+  vaultEventful: VaultEventful
+  vaultFactory: VaultFactory
   // drago: Object
-  dragoEventful: Object
-  dragoFactory: Object
-  dragoRegistry: Object
   // rigoToken: Object
   // vault: Object
-  vaultEventful: Object
-  vaultFactory: Object
-  constructor(api, addresses) {
+  constructor(api, contractsAddresses) {
     if (!api) {
       throw new Error('API instance needs to be provided to Contract')
     }
-    // this.drago = new Drago(api, addresses.drago)
-    this.dragoEventful = new DragoEventful(api, addresses.DragoEventful)
-    this.dragoFactory = new DragoFactory(api, addresses.DragoFactory)
-    this.dragoRegistry = new DragoRegistry(api, addresses.DragoRegistry)
-    // this.rigoToken = new RigoToken(api, addresses.rigoToken)
-    // this.vault = new Vault(api, addresses.vault)
-    this.vaultEventful = new VaultEventful(api, addresses.VaultEventful)
-    this.vaultFactory = new VaultFactory(api, addresses.VaultFactory)
-    // this.registry = new Registry(api, addresses.drago)
+    // this.drago = new Drago(api, contractsAddresses.drago)
+    this.dragoEventful = new DragoEventful(
+      api,
+      contractsAddresses.DragoEventful
+    )
+    this.dragoFactory = new DragoFactory(api, contractsAddresses.DragoFactory)
+    this.dragoRegistry = new DragoRegistry(
+      api,
+      contractsAddresses.DragoRegistry
+    )
+    // this.rigoToken = new RigoToken(api, contractsAddresses.rigoToken)
+    // this.vault = new Vault(api, contractsAddresses.vault)
+    this.vaultEventful = new VaultEventful(
+      api,
+      contractsAddresses.VaultEventful
+    )
+    this.vaultFactory = new VaultFactory(api, contractsAddresses.VaultFactory)
+    // this.registry = new Registry(api, contractsAddresses.drago)
   }
 
   // get Drago() {
