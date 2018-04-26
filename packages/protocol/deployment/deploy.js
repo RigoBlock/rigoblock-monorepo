@@ -2,8 +2,8 @@ const path = require('path')
 const Web3 = require('web3')
 const Deployer = require('@0xproject/deployer').Deployer
 const c = require('chalk')
+const { GAS_ESTIMATE } = require('../constants')
 const logger = require('./logger')
-const { GAS_ESTIMATE } = require('./constants')
 
 const deploy = async (from, networkUrl, contractName, args = []) => {
   const web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
