@@ -1,13 +1,13 @@
 const Web3 = require('web3')
 const Compiler = require('@0xproject/deployer').Compiler
 const c = require('chalk')
-const logger = require('./logger')
 const {
   NETWORKS,
   ARTIFACTS_DIR,
   CONTRACTS_DIR,
   CONTRACT_NAMES
-} = require('./constants')
+} = require('../constants')
+const logger = require('./logger')
 
 const compile = async (contracts, networkUrl) => {
   const web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
