@@ -63,7 +63,6 @@ class DragoWeb3 {
   depositToExchange = (
     accountAddress,
     exchangeAddress,
-    tokenAddress,
     amount
   ) => {
     if (!accountAddress) {
@@ -71,9 +70,6 @@ class DragoWeb3 {
     }
     if (!exchangeAddress) {
       throw new Error('exchangeAddress needs to be provided')
-    }
-    if (!tokenAddress) {
-      throw new Error('tokenAddress needs to be provided')
     }
     if (!amount) {
       throw new Error('amount needs to be provided')
@@ -83,14 +79,16 @@ class DragoWeb3 {
       from: accountAddress
     }
     instance.options.from = options.from
+    console.log(amount)
+    console.log('API web3 Deposit to Exchange')
     return instance.methods
-      .depositToExchange(exchangeAddress, tokenAddress, amount)
+      .depositToExchange(exchangeAddress, amount)
       .estimateGas(options)
       .then(gasEstimate => {
         console.log(gasEstimate)
         instance.options.gas = gasEstimate
         return instance.methods
-          .depositToExchange(exchangeAddress, tokenAddress, amount)
+          .depositToExchange(exchangeAddress, amount)
           .send(options)
       })
   }
