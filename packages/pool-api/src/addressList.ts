@@ -1,4 +1,4 @@
-import contracts from '@rigoblock/protocol'
+import contracts from '@rigoblock/protocol/contracts'
 
 const addressList = async networkId => {
   const contractsMap = await contracts(networkId)

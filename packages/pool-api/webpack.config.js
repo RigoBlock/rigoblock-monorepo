@@ -10,26 +10,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.ts?$/,
         loader: 'ts-loader',
         exclude: /node_modules/
       }
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.ts', '.js']
   },
-  plugins: [
-    // new webpack.ContextReplacementPlugin(
-    //   /artifacts/,
-    //   path.resolve(__dirname, '..', 'artifacts'),
-    //   true,
-    //   /^.*.json$/
-    // )
-  ],
   node: {
     fs: 'empty',
-    module: 'empty',
-    '@0xproject/deployer': 'empty'
+    module: 'empty'
   }
 }
