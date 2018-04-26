@@ -1,4 +1,3 @@
-// const path = require('path')
 const { CONTRACT_NAMES } = require('../constants')
 
 export default async networkId => {
