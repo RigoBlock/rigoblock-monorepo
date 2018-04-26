@@ -15,7 +15,7 @@ module.exports.default = async networkId => {
           }
         }
       : console.error(
-          `Make sure contracts are deployed for network Id: ${networkId}`
+          `Make sure contracts are deployed for network Id ${networkId}`
         )
   })
   const abisMap = await Promise.all(abisPromises)

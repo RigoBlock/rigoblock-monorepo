@@ -1,4 +1,5 @@
-import Web3 from 'web3'
+const Web3 = require('web3')
+
 import { VaultFactory } from './pools/contracts/VaultFactory'
 import { VaultEventful } from './pools/contracts/VaultEventful'
 
@@ -24,6 +25,10 @@ const test = async () => {
   myEvent.watch((error, result) => {
     console.log(error || result.args)
   })
+  // console.log(myEvent)
+  vaultEventful.rawWeb3Contract
+    .VaultCreated({}, { fromBlock: 0 })
+    .get((err, data) => console.log(data))
 
   const randomString = () =>
     Math.random()

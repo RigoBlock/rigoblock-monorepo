@@ -1,4 +1,11 @@
 class Contract {
+  // TODO add correct types
+  Authority: any
+  DragoEventfulority: any
+  DragoFactory: any
+  DragoRegistry: any
+  VaultEventful: any
+  VaultFactory: any
   constructor(web3: object, contractsMap: object) {
     if (!web3) {
       throw new Error('web3 instance needs to be provided to Contract')
@@ -15,7 +22,7 @@ class Contract {
       )
 
       Object.defineProperty(this, contractName, {
-        get: () => this[`_${contractName}`].rawWeb3Contract
+        get: () => this[`_${contractName}`]
       })
     })
   }

@@ -6,9 +6,10 @@
     "node": ">=6.4"
   },
   "scripts": {
+    "build": "webpack -p ./webpack.config.js",
     "dev": "webpack-dev-server --mode development",
     "tsc": "rm -rf dist; tsc -d",
-    "build:watch": "rm -rf dist; tsc -w -m system -d",
+    "tsc:watch": "rm -rf dist; tsc -w -m system -d",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "typechain": "typechain --force --outDir src/pools/contracts '.tmp/*.json'"
   },
@@ -40,5 +41,7 @@
     "webpack": "^4.6.0",
     "webpack-dev-server": "^3.1.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@0xproject/web3-wrapper": "^0.6.1"
+  }
 }
