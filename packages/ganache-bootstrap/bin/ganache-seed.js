@@ -1,10 +1,10 @@
 #! /usr/bin/env node
-
-// TO BE FIXED, BABEL NOT PARSING RIGOBLOCK PROTOCOL
-require('babel-register')
-require('babel-polyfill')
-
+const c = require('chalk')
 const seed = require('../seed')
 const { GANACHE_URL } = require('../constants')
+const logger = require('../logger')
 
-seed(GANACHE_URL).catch(e => console.error('Error', e))
+seed(GANACHE_URL).catch(e => {
+  logger.error(c.red(`Error during seed: ${e.stack}`))
+  process.exit(1)
+})

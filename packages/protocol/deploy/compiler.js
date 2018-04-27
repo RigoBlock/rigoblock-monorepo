@@ -26,7 +26,12 @@ const compile = async (contracts, networkUrl) => {
   return compiler.compileAsync()
 }
 
-NETWORKS.forEach(network => {
+const compilePromises = NETWORKS.map(network => {
   const artifacts = CONTRACT_NAMES.map(contractName => `${contractName}.sol`)
   return compile(artifacts, network)
+})
+
+Promise.all(compilePromises).catch(e => {
+  logger.error(c.red(`Error during compilation: ${e.stack}`))
+  process.exit(1)
 })
