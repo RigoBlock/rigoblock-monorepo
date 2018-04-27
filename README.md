@@ -14,9 +14,11 @@
 | [`Ganache Bootstrap`](/packages/ganache-bootstrap)  | A bootstrapping package to deploy smart contracts and seed Ganache |
 
 
-### Install dependencies
+### Install
 
 ```
+yarn --frozen-lockfile
+
 yarn bootstrap
 ```
 
