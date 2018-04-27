@@ -1,10 +1,7 @@
-const path = require('path')
-// const webpack = require('webpack')
-
 module.exports = {
-  entry: path.join(__dirname, '/src/index.ts'),
+  entry: './src/index.ts',
   output: {
-    filename: 'src/index.js',
+    filename: 'dist/index.js',
     path: __dirname
   },
   module: {

@@ -1,27 +1,9 @@
 {
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "outDir": "dist",
-    "jsx": "react",
-    "sourceRoot": "./src",
-    "sourceMap": true,
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
-    "types": [
-      "node"
-    ],
-    "lib": [ "es2015", "dom" ]
-  },
-  "global": {
-    "baseSubscriber": true
+    "typeRoots": ["../../node_modules/@types", "node_modules/@types"]
   },
   "include": [
     "src/**/*.ts"
-  ],
-  "compileOnSave": false,
-  "exclude": [
-    "node_modules"
   ]
 }

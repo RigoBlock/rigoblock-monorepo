@@ -11,6 +11,7 @@
         "semi": false,
         "parser": "typescript"
       }
-    ]
+    ],
+    "typescript/no-unused-vars": "error"
   }
 }

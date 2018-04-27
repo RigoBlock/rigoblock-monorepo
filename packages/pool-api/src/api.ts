@@ -1,55 +1,42 @@
-import * as ProviderEngine from 'web3-provider-engine'
+import '@0xproject/typescript-typings/types/web3'
+import '@0xproject/typescript-typings/types/web3-provider-engine'
+
+import ProviderEngine = require('web3-provider-engine')
 import { InjectedWeb3Subprovider } from '@0xproject/subproviders'
 import * as RpcSubprovider from 'web3-provider-engine/subproviders/rpc.js'
-import { Web3Wrapper } from '@0xproject/web3-wrapper'
-import contracts from '@rigoblock/protocol/contracts'
-import Contract from './pools'
-class PoolsApi {
-  _contract: Contract
-  _web3: any
+import protocol from '@rigoblock/protocol'
+import * as Web3 from 'web3'
+import * as Contract from './contract'
 
-  async init() {
-    const engine = new ProviderEngine()
+interface Web3Window extends Window {
+  web3: Web3
+}
 
-    engine.addProvider(new InjectedWeb3Subprovider((<any>window).web3.currentProvider))
-    engine.addProvider(
+declare let window: Web3Window
+class PoolApi {
+  public contract: Contract
+  public web3: Web3
+  public engine: ProviderEngine
+
+  async init(web3: Web3 = window.web3) {
+    this.engine = new ProviderEngine()
+    this.engine.addProvider(new InjectedWeb3Subprovider(web3.currentProvider))
+    this.engine.addProvider(
       new RpcSubprovider({
         rpcUrl: 'http://localhost:8545'
       })
     )
 
-    // start polling for new blocks
-    engine.on('block', function(block) {
-      console.log('================================')
-      console.log(
-        'BLOCK CHANGED:',
-        '#' + block.number.toString('hex'),
-        '0x' + block.hash.toString('hex')
-      )
-      console.log('================================')
-    })
+    this.web3 = web3
+    const networkId = this.web3.version.network
+    const contractsMap: Contract.ContractsMap = await protocol(networkId)
+    const contracts = new Contract()
+    this.contract = await contracts.init(this.web3, contractsMap)
 
-    // network connectivity error
-    engine.on('error', function(err){
-      console.error(err.stack)
-    })
+    this.engine.start()
 
-    engine.start()
-
-    this._web3 = new Web3Wrapper(engine)
-    const networkId = await this._web3.getNetworkIdAsync()
-    const contractsMap: object = await contracts(networkId)
-    this._contract = await new Contract(engine._providers[0]._injectedWeb3, contractsMap)
-  }
-
-
-  get contract() {
-    return this._contract
-  }
-
-  get web3() {
-    return this._web3
+    return this
   }
 }
 
-export default PoolsApi
+export default PoolApi
