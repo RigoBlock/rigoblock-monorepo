@@ -27,7 +27,7 @@ jobs:
           key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Install lerna and monorepo dependencies
-          command: yarn
+          command: yarn install --frozen-lockfile
       - run:
           name: Installing all dependencies
           command: yarn bootstrap
