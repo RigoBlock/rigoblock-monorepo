@@ -12,6 +12,8 @@ const test = async () => {
     console.log(error || result)
   })
 
+  poolApi.contract.Authority
+
   poolApi.contract.VaultEventful.rawWeb3Contract
     .VaultCreated({}, { fromBlock: 0 })
     .get((err, data) => data.map(e => console.log(e.args)))

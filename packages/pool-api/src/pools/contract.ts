@@ -1,26 +1,10 @@
-import { Authority } from './contracts/Authority'
-import { ERC20 } from './contracts/ERC20'
-import { RigoToken } from './contracts/RigoToken'
-import { Distribution } from './contracts/Distribution'
-import { Inflation } from './contracts/Inflation'
-import { UnlimitedAllowanceToken } from './contracts/UnlimitedAllowanceToken'
-import { Drago } from './contracts/Drago'
-import { Migrations } from './contracts/Migrations'
-import { Vault } from './contracts/Vault'
-import { DragoEventful } from './contracts/DragoEventful'
-import { Owned } from './contracts/Owned'
-import { VaultEventful } from './contracts/VaultEventful'
-import { DragoFactory } from './contracts/DragoFactory'
-import { OwnedUninitialized } from './contracts/OwnedUninitialized'
-import { VaultFactory } from './contracts/VaultFactory'
-import { DragoRegistry } from './contracts/DragoRegistry'
-import { ProofOfPerformance } from './contracts/ProofOfPerformance'
 import '@0xproject/typescript-typings/types/web3'
+import { ContractModels } from '.'
 import * as Web3 from 'web3'
 import { TypeChainContract } from './contracts/typechain-runtime'
 
 class Contract {
-  public Authority: Authority
+  public models: ContractModels
 
   async init(web3: Web3, contractsMap: Contract.ContractsMap) {
     const deployedContracts: Array<string> = Object.keys(contractsMap).filter(

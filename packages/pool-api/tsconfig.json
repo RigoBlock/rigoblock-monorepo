@@ -1,7 +1,11 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "typeRoots": ["../../node_modules/@types", "node_modules/@types"]
+    "typeRoots": [
+      "../../node_modules/@types",
+      "node_modules/@types",
+      "./src/pools" // TODO: figure out why we need to import anyway
+    ]
   },
   "include": [
     "src/**/*.ts"
