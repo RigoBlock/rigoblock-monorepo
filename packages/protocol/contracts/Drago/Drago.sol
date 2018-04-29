@@ -16,16 +16,18 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { DragoEventfulFace as DragoEventful } from "../DragoEventful/DragoEventfulFace.sol";
+import { ERC20Face as Token } from "../utils/tokens/ERC20/ERC20Face.sol";
 
 import { DragoFace } from "./DragoFace.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
 import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
 import { DragoExchangeExtension } from "./DragoExchangeExtension/DragoExchangeExtension.sol";
+import { ExchangeAdapterFace as ExchangeAdapter } from '../ExchangeAdapters/ExchangeAdapterFace.sol';
 
 /// @title Drago - A set of rules for a drago.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -125,7 +127,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         _;
     }
 
-    function Drago(
+    constructor(
         string _dragoName,
         string _dragoSymbol,
         uint _dragoId,
@@ -149,11 +151,16 @@ contract Drago is Owned, SafeMath, DragoFace {
     // CORE FUNCTIONS
 
     /// @dev Allows an exchange contract to send Ether back
+    /// @dev or to send a raw transaction with data
     function()
         external
         payable
         whenApprovedExchange(msg.sender)
-    {}
+    {
+        if (msg.value == 0) {
+            DragoExchangeExtension.operateOnExchange(libraryAdmin, msg.sender, msg.data);
+        }
+    }
 
     /// @dev Allows a user to buy into a drago
     /// @return Bool the function executed correctly
@@ -271,22 +278,80 @@ contract Drago is Owned, SafeMath, DragoFace {
         data.minPeriod = _minPeriod;
     }
 
+    /// WE SHOULD RENAME THE FUNCTION WRAP/DEPOSIT AND SEPARATE LIST OF ENABLED WRAPPERS
+    /// POSSIBLE DOING IT IN THE EXCHANGE ADAPTER
     function depositToExchange(address _exchange, uint _amount)
         external
         onlyOwner
         whenApprovedExchange(_exchange)
     {
-        _exchange.transfer(_amount);
+        ExchangeAdapter(getExchangeAdapter(_exchange)).deposit.value(_amount);
+    }
+
+    /// WE SHOULD RENAME THE FUNCTION UNWRAP/WITHDRAW AND SEPARATE LIST OF ENABLED WRAPPERS
+    /// POSSIBLE DOING IT IN THE EXCHANGE ADAPTER
+    function withdrawFromExchange(address _exchange, uint _amount)
+        external
+        onlyOwner
+        whenApprovedExchange(_exchange)
+    {
+        ExchangeAdapter(getExchangeAdapter(_exchange)).withdraw(_amount);
+    }
+
+    /// @dev Allows owner to set an infinite allowance to an approved exchange
+    /// WE SHOULD SEPARATE THE APPROVED TRANSFERPROXIES FROM THE EXCHANGES
+    function setInfiniteAllowance(
+        address _tokenTransferProxy,
+        address _token)
+        public //external + internal
+        onlyOwner
+        whenApprovedExchange(_tokenTransferProxy)
+        returns (bool)
+    {
+        Token(_token).approve(_tokenTransferProxy, 2**256 - 1);
+        return true;
+    }    
+
+    /// @dev Allows owner to set allowances to multiple approved tokens with one call
+    function SetMultipleAllowances(
+        address _tokenTransferProxy,
+        address[] _token)
+        external
+    {
+        for (uint i = 0; i < _token.length; i++)
+            if (!setInfiniteAllowance(_tokenTransferProxy, _token[i])) continue;
+    }
+
+    /// @dev Allows approved exchange to send a transaction to exchange
+    /// @dev With data of signed/unsigned transaction
+    /// @param _exchange Address of the exchange
+    /// @param _assembledTransaction Bytes of the parameters of the call
+    function operateOnExchange(address _exchange, bytes _assembledTransaction)
+        external
+        whenApprovedExchange(msg.sender)
+    {
+        require(_exchange.delegatecall(_assembledTransaction));
+    }
+
+    function operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction)
+        external
+        ownerOrApprovedExchange()
+        whenApprovedExchange(_exchange)
+    {
+        require(_exchange.delegatecall(_assembledTransaction));
     }
 
     /// @dev Allows owner or approved exchange to send a transaction to exchange
     /// @dev With data of signed/unsigned transaction
     /// @param _exchange Address of the exchange
-    function operateOnExchange(address _exchange)
+    function operateOnExchangeThroughAdapter(
+        address _exchange,
+        bytes _assembledTransaction)
         external
         ownerOrApprovedExchange()
+        whenApprovedExchange(_exchange)
     {
-        DragoExchangeExtension.operateOnExchange(libraryAdmin, _exchange);
+        require(getExchangeAdapter(_exchange).delegatecall(_assembledTransaction));
     }
 
     // PUBLIC CONSTANT FUNCTIONS
@@ -459,8 +524,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @return Value of fee in shares to dao
     /// @return Value of net purchased shares
     function getPurchaseAmounts()
-        internal
-        view
+        internal view
         returns (
             uint grossAmount,
             uint feeDrago,
@@ -484,8 +548,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @return Value of net sold shares
     /// @return Value of sale amount for hodler
     function getSaleAmounts(uint _amount)
-        internal
-        view
+        internal view
         returns (
             uint feeDrago,
             uint feeDragoDao,
@@ -506,8 +569,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @param _exchange Address of the target exchange
     /// @return Address of the exchange adapter
     function getExchangeAdapter(address _exchange)
-        internal
-        view
+        internal view
         returns (address)
     {
         Authority auth = Authority(admin.authority);

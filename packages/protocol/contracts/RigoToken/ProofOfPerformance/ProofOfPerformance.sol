@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
@@ -57,7 +57,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         _;
     }
 
-    function ProofOfPerformance(
+    constructor(
         address _rigoTokenAddress,
         address _rigoblockDao,
         address _dragoRegistry)
@@ -222,7 +222,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         Inflation inflate = Inflation(getMinter());
         address fund;
         address group;
-        (fund,group) = addressFromId(_ofPool);
+        (fund, group) = addressFromId(_ofPool);
         return inflate.getInflationFactor(group);
     }
 
@@ -235,7 +235,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     {
         address fund;
         address group;
-        (fund,group) = addressFromId(_ofPool);
+        (fund, group) = addressFromId(_ofPool);
         return groups[group].rewardRatio;
     }
     
@@ -329,7 +329,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     {
         address fund;
         address group;
-        (fund,group) = addressFromId(_ofPool);
+        (fund, group) = addressFromId(_ofPool);
         address poolAddress = fund;
         Pool pool = Pool(poolAddress);
         ( , , thePoolPrice, ) = pool.getData();

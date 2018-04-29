@@ -23,9 +23,9 @@ pragma experimental "v0.5.0";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 interface CasperFace {
 
-    function deposit(address _validation, address _withdrawal) external payable;
-    function withdraw(uint128 _validatorIndex) external;
+    function deposit(address validation_addr, address withdrawal_addr) external payable;
+    function withdraw(uint128 _validator_index) external;
 
-    function get_deposit_size(uint128 _validatorIndex) external view returns (uint128);
-    function get_nextValidatorIndex() external view returns (uint128);
+    function deposit_size(uint128 _validator_index) external view returns (uint128);
+    function nextValidatorIndex() external view returns (uint128);
 }

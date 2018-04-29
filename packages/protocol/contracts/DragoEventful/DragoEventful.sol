@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
@@ -174,7 +174,7 @@ contract DragoEventful is DragoEventfulFace {
         _;
     }
 
-    function DragoEventful(address _authority) public {
+    constructor(address _authority) public {
         AUTHORITY = _authority;
     }
 
