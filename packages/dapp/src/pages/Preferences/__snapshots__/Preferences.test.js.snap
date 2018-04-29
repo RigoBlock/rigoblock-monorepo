@@ -1,13 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Preferences page renders correctly 1`] = `
-<div
-  className="Preferences"
->
-  <BaseTemplate>
-    <h1>
-      Preferences
-    </h1>
-  </BaseTemplate>
-</div>
+<BaseTemplate>
+  <h1>
+    Preferences
+  </h1>
+</BaseTemplate>
 `;

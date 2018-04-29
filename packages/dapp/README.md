@@ -45,6 +45,8 @@ The page will reload if you make edits.
 
 ### `yarn storybook`
 Launches Storybook on port 6006
+### `yarn storybook:build`
+Builds Storybook as static files
 ### `yarn test`
 Launches unit tests and feature tests sequentially.
 ### `yarn test:unit`

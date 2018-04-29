@@ -1,17 +1,20 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
+import { createEpicMiddleware } from 'redux-observable'
 import rootReducer from '../reducers'
+import rootEpic from '../epics'
 import history from './history'
 
 export default () => {
   let middlewares = []
   let storeCreator = createStore
 
+  middlewares.push(applyMiddleware(routerMiddleware(history)))
+  middlewares.push(applyMiddleware(createEpicMiddleware(rootEpic)))
+
   if (window !== null && window.devToolsExtension) {
     middlewares.push(window.devToolsExtension())
   }
-
-  middlewares.push(applyMiddleware(routerMiddleware(history)))
 
   if (process.env.NODE_ENV !== 'production') {
     const Reactotron = require('reactotron-react-js').default

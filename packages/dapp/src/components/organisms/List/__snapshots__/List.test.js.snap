@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List component renders correctly 1`] = `
+<div
+  className="list"
+>
+  <ListItem
+    currencyGrowth={0}
+    growth={0}
+    itemName="Rocksolid Vault"
+    itemSymbol="VLT"
+    itemValue={12489.51323}
+    key="1"
+  />
+</div>
+`;

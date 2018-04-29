@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListPanel component renders correctly 1`] = `
+<ContentWrapper
+  header={
+    <PanelHeader
+      title="ListPanel Component"
+      tooltip={null}
+    />
+  }
+>
+  <List
+    items={
+      Array [
+        Object {
+          "id": 1,
+          "name": "Rocksolid Vault",
+          "symbol": "VLT",
+          "value": 12489.51323,
+        },
+      ]
+    }
+  />
+</ContentWrapper>
+`;

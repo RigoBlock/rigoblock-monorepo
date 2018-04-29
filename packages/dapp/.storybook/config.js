@@ -6,4 +6,6 @@ function loadStories() {
   req.keys().forEach(filename => req(filename))
 }
 
+import './addons'
+
 configure(loadStories, module)

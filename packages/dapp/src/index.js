@@ -8,6 +8,7 @@ import { store, persistor } from './store'
 import Dashboard from './pages/Dashboard'
 import Preferences from './pages/Preferences'
 import Help from './pages/Help'
+import Login from './pages/Login'
 import './images/favicon.ico'
 import './components/_settings/_base.scss'
 import registerServiceWorker from './registerServiceWorker'
@@ -19,6 +20,7 @@ ReactDOM.render(
       <ConnectedRouter history={history}>
         <div>
           <Route exact path="/" render={() => <Dashboard />} />
+          <Route exact path="/login" render={() => <Login />} />
           <Route exact path="/preferences" render={() => <Preferences />} />
           <Route exact path="/help" render={() => <Help />} />
         </div>

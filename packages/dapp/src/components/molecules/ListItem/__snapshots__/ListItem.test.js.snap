@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem component renders correctly 1`] = `
+<div
+  className="list-item"
+>
+  <ItemName
+    name="Rocksolid Vault"
+    symbol="VLT"
+  />
+  <ItemValue
+    currency="ETH"
+    currencyGrowth={0}
+    growth={0}
+    itemValue={0}
+    precision={2}
+    valueSize="large"
+  />
+</div>
+`;

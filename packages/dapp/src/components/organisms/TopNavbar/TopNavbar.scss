@@ -6,4 +6,7 @@
   padding: $dist-s $dist-s 0 $dist-m;
   align-items: center;
   justify-content: space-between;
+  a {
+    color: $link-alternate;
+  }
 }

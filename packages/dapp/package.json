@@ -17,15 +17,18 @@
     "test:feature:debug": "codeceptjs run --debug",
     "cov": "npm run test:unit -- --coverage",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
-    "storybook": "start-storybook -p 6006 -c .storybook"
+    "storybook": "start-storybook -p 6006 -c .storybook",
+    "storybook:build": "build-storybook -c .storybook -o dist-storybook"
   },
   "config": {
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
   },
   "devDependencies": {
     "@rigoblock/ganache-bootstrap": "^0.1.2",
-    "@storybook/addon-actions": "^3.4.1",
-    "@storybook/addon-links": "^3.4.1",
+    "@storybook/addon-info": "^3.4.2",
+    "@storybook/addon-knobs": "^3.4.2",
+    "@storybook/addon-options": "^3.4.2",
+    "@storybook/addon-viewport": "^3.4.2",
     "@storybook/addons": "^3.4.1",
     "@storybook/react": "^3.4.1",
     "autoprefixer": "7.1.6",
@@ -73,7 +76,9 @@
     "reactotron-react-js": "^1.13.0",
     "reactotron-redux": "^1.13.0",
     "redux": "^3.7.2",
+    "redux-observable": "^0.18.0",
     "redux-persist": "^5.9.1",
+    "rxjs": "5",
     "sass-loader": "^6.0.7",
     "serve": "^6.5.5",
     "style-loader": "0.20.3",

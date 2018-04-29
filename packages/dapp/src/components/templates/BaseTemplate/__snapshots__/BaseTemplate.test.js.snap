@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseTemplate component renders correctly 1`] = `
+<div>
+  <TopNavbar />
+  <div
+    className="page-content-section"
+  >
+    <LeftNavbar />
+    <div
+      className="page-main-content"
+    >
+      Test Content
+    </div>
+  </div>
+</div>
+`;

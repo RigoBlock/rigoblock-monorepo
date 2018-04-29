@@ -1,0 +1,28 @@
+@import "../../components/_settings/_variables.scss";
+
+.login-content {
+  max-width: 16 * $dist-xl;
+  margin: $dist-xl auto 0 auto;
+
+  h3 {
+    padding: $dist-xs 0;
+  }
+
+  p {
+    padding: $dist-xs 0;
+  }
+
+  a {
+    display: inline-block;
+    color: $link-color;
+    padding: $dist-xs 0;
+    text-decoration: none;
+  }
+
+  .line-break {
+    max-width: 16 * $dist-xl;
+    margin: $dist-s 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}

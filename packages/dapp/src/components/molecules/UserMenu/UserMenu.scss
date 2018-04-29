@@ -1,6 +1,9 @@
 @import "../../_settings/variables.scss";
 
 .user-menu {
+  a {
+    color: $link-alternate;
+  }
   > *:not(:last-child) {
     margin-right: $dist-m;
   }

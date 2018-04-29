@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PanelHeader component renders correctly 1`] = `
+<div
+  className="panel-header"
+>
+  <h1>
+    Test Header
+  </h1>
+  <Tooltip
+    size="medium"
+    type="help"
+  />
+</div>
+`;

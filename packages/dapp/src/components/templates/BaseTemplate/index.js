@@ -1,3 +1,1 @@
-import BaseTemplate from './BaseTemplate'
-
-export default BaseTemplate
+export { default } from './BaseTemplate'

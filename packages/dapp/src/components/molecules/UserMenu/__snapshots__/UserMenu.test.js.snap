@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserMenu component renders correctly 1`] = `
+<div
+  className="user-menu"
+>
+  <Link
+    size="medium"
+    to="/preferences"
+  >
+    Preferences
+  </Link>
+  <Link
+    size="medium"
+    to="/help"
+  >
+    Help
+  </Link>
+</div>
+`;

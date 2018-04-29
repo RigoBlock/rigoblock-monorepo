@@ -1,0 +1,13 @@
+@import "../../_settings/variables.scss";
+
+.panel-header {
+  display: flex;
+  padding: $dist-s;
+  h1 {
+    flex-grow: 1;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.17;
+    letter-spacing: normal;
+  }
+}
