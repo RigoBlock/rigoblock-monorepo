@@ -1,11 +1,7 @@
-import '@0xproject/typescript-typings/types/web3'
-import '@0xproject/typescript-typings/types/web3-provider-engine'
-import './pools'
-
 import ProviderEngine = require('web3-provider-engine')
 import { InjectedWeb3Subprovider } from '@0xproject/subproviders'
 import * as RpcSubprovider from 'web3-provider-engine/subproviders/rpc.js'
-import protocol from '@rigoblock/protocol'
+import protocol from '@rigoblock/protocol/contracts'
 import * as Web3 from 'web3'
 import { ContractModels } from './pools'
 import * as Contract from './pools/contract'
@@ -37,7 +33,6 @@ class PoolApi {
     this.contract = contracts.models
 
     this.engine.start()
-
     return this
   }
 }

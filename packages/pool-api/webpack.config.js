@@ -15,9 +15,5 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js']
-  },
-  node: {
-    fs: 'empty',
-    module: 'empty'
   }
 }

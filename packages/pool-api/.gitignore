@@ -1,6 +1,6 @@
 coverage
 .tmp
-src/contracts
+src/pools/contracts
 dist
 lib
 node_modules
