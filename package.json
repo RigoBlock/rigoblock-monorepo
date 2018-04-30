@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap && npm run build",
     "build": "lerna run build",
     "lint": "lerna run lint",
     "test:unit": "lerna run test:unit --stream"
