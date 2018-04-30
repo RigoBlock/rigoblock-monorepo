@@ -22,6 +22,7 @@ pragma experimental "v0.5.0";
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { DragoEventfulFace as DragoEventful } from "../DragoEventful/DragoEventfulFace.sol";
 import { ERC20Face as Token } from "../utils/tokens/ERC20/ERC20Face.sol";
+import { KycFace as Kyc } from "../Kyc/KycFace.sol";
 
 import { DragoFace } from "./DragoFace.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
@@ -70,6 +71,8 @@ contract Drago is Owned, SafeMath, DragoFace {
         address authority;
         address dragoDao;
         address feeCollector;
+        address kycProvider;
+        bool kycEnforced;
         uint minOrder; // minimum stake to avoid dust clogging things up
         uint ratio; // ratio is 80%
     }
@@ -353,6 +356,16 @@ contract Drago is Owned, SafeMath, DragoFace {
     {
         require(getExchangeAdapter(_exchange).delegatecall(_assembledTransaction));
     }
+    
+    function enforceKyc(
+        bool _enforced,
+        address _kycProvider)
+        external
+        onlyOwner
+    {
+        admin.kycEnforced = _enforced;
+        admin.kycProvider = _kycProvider;
+    }
 
     // PUBLIC CONSTANT FUNCTIONS
 
@@ -395,6 +408,15 @@ contract Drago is Owned, SafeMath, DragoFace {
         sellPrice = data.sellPrice;
         buyPrice = data.buyPrice;
     }
+    
+    /// @dev Returns the price of a pool
+    /// @return Value of the share price in wei
+    function calcSharePrice()
+        external view
+        returns (uint)
+    {
+        return data.sellPrice;
+    }
 
     /// @dev Finds the administrative data of the pool
     /// @return Address of the account where a user collects fees
@@ -422,6 +444,15 @@ contract Drago is Owned, SafeMath, DragoFace {
             data.minPeriod
         );
     }
+    
+    function getKycProvider()
+        external view
+        returns (address)
+    {
+        if(admin.kycEnforced) {
+            return admin.kycProvider;
+        }
+    }
 
     /// @dev Returns the version of the type of vault
     /// @return String of the version
@@ -447,6 +478,9 @@ contract Drago is Owned, SafeMath, DragoFace {
         internal
         returns (bool success)
     {
+        if (admin.kycProvider != 0x0) {
+            require(Kyc(admin.kycProvider).isWhitelistedUser(_hodler));
+        }
         uint grossAmount;
         uint feeDrago;
         uint feeDragoDao;

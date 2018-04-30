@@ -326,6 +326,15 @@ contract Vault is Owned, SafeMath, VaultFace {
         );
     }
 
+    /// @dev Returns the price of a pool
+    /// @return Value of the share price in wei
+    function calcSharePrice()
+        external view
+        returns (uint)
+    {
+        return getNav();
+    }
+
     /// @dev Finds the administrative data of the pool
     /// @return Address of the account where a user collects fees
     /// @return Address of the vault dao/factory

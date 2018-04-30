@@ -42,13 +42,16 @@ interface DragoFace {
     function operateOnExchange(address _exchange, bytes _assembledTransaction) external;
     function operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction) external;
     function operateOnExchangeThroughAdapter(address _exchange, bytes _assembledTransaction) external;
+    function enforceKyc(bool _enforced, address _kycProvider) external;
 
     // PUBLIC CONSTANT FUNCTIONS
 
     function balanceOf(address _who) external view returns (uint);
     function getEventful() external view returns (address);
     function getData() external view returns (string name, string symbol, uint sellPrice, uint buyPrice);
+    function calcSharePrice() external view returns (uint);
     function getAdminData() external view returns (address, address feeCollector, address dragoDao, uint ratio, uint transactionFee, uint32 minPeriod);
     function totalSupply() external view returns (uint256);
+    function getKycProvider() external view returns (address);
     function getVersion() external view returns (string);
 }

@@ -329,6 +329,7 @@ contract DragoEventful is DragoEventfulFace {
         address _token,
         uint256 _value)
         external
+        approvedUserOnly(_who)
         approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_exchange)
         returns(bool success)
@@ -351,6 +352,7 @@ contract DragoEventful is DragoEventfulFace {
         address _token,
         uint256 _value)
         external
+        approvedUserOnly(_who)
         approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_exchange)
         returns(bool success)
@@ -377,7 +379,6 @@ contract DragoEventful is DragoEventfulFace {
         return true;
     }
 
-
     function placeOrderCFDExchange(
         address _who,
         address _targetDrago,
@@ -395,7 +396,6 @@ contract DragoEventful is DragoEventfulFace {
         emit OrderExchange(_targetDrago, _cfdExchange, _cfd, _stake, _adjustment);
         return true;
     }
-
 
     function placeTradeExchange(
         address _who,
