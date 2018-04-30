@@ -1,6 +1,6 @@
 import '@0xproject/typescript-typings/types/web3'
 import '@0xproject/typescript-typings/types/web3-provider-engine'
-import './pools/'
+import './pools'
 
 import ProviderEngine = require('web3-provider-engine')
 import { InjectedWeb3Subprovider } from '@0xproject/subproviders'

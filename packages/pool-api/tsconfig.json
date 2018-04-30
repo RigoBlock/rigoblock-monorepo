@@ -7,6 +7,7 @@
       "./src/pools" // TODO: figure out why we need to import anyway
     ]
   },
+  "typeRoots": ["node_modules/@0xproject/typescript-typings/types", "node_modules/@types"],
   "include": [
     "src/**/*.ts"
   ]

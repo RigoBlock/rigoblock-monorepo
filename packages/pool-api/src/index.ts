@@ -12,8 +12,6 @@ const test = async () => {
     console.log(error || result)
   })
 
-  poolApi.contract.Authority
-
   poolApi.contract.VaultEventful.rawWeb3Contract
     .VaultCreated({}, { fromBlock: 0 })
     .get((err, data) => data.map(e => console.log(e.args)))
@@ -27,7 +25,8 @@ const test = async () => {
   ).send({
     from: accountList[0],
     gas: 4700000,
-    gasPrice: 100000000000
+    gasPrice: 100000000000,
+    value: 0
   })
 }
 ;(async () => {
