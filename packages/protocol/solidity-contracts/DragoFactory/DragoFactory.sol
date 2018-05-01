@@ -33,7 +33,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
 
     DragoFactoryLibrary.NewDrago libraryData;
 
-    string public constant VERSION = 'VF 0.4.1';
+    string public constant VERSION = 'VF 0.4.2';
 
     Data data;
 

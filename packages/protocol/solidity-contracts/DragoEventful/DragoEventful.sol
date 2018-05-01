@@ -26,7 +26,7 @@ import { DragoEventfulFace } from "./DragoEventfulFace.sol";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract DragoEventful is DragoEventfulFace {
 
-    string public constant VERSION = 'DH0.4.1';
+    string public constant VERSION = 'DH0.4.2';
 
     address public AUTHORITY;
 
@@ -143,6 +143,36 @@ contract DragoEventful is DragoEventfulFace {
         string name,
         string symbol
     );
+    
+    /*
+    0x events
+    event LogFill(
+        address indexed maker,
+        address taker,
+        address indexed feeRecipient,
+        address makerToken,
+        address takerToken,
+        uint filledMakerTokenAmount,
+        uint filledTakerTokenAmount,
+        uint paidMakerFee,
+        uint paidTakerFee,
+        bytes32 indexed tokens, // keccak256(makerToken, takerToken), allows subscribing to a token pair
+        bytes32 orderHash
+    );
+
+    event LogCancel(
+        address indexed maker,
+        address indexed feeRecipient,
+        address makerToken,
+        address takerToken,
+        uint cancelledMakerTokenAmount,
+        uint cancelledTakerTokenAmount,
+        bytes32 indexed tokens,
+        bytes32 orderHash
+    );
+
+    event LogError(uint8 indexed errorId, bytes32 indexed orderHash);
+    */
 
     modifier approvedFactoryOnly(address _factory) {
         Authority auth = Authority(AUTHORITY);

@@ -26,7 +26,7 @@ import { VaultEventfulFace } from "./VaultEventfulFace.sol";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultEventful is VaultEventfulFace {
 
-    string public constant VERSION = 'DH 0.4.1';
+    string public constant VERSION = 'DH 0.4.2';
 
     address public AUTHORITY;
 

@@ -37,7 +37,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     using DragoExchangeExtension for *;
     DragoExchangeExtension.Admin libraryAdmin;
 
-    string constant VERSION = 'HF 0.4.1';
+    string constant VERSION = 'HF 0.4.2';
     uint constant BASE = 1000000; // tokens are divisible by 1 million
 
     mapping (address => Account) accounts;

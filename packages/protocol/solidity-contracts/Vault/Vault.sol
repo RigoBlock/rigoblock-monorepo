@@ -32,7 +32,7 @@ import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
 /// @dev includes pooled proof-of-stake mining
 contract Vault is Owned, SafeMath, VaultFace {
 
-    string constant VERSION = 'VC 0.5.1';
+    string constant VERSION = 'VC 0.5.2';
     uint constant BASE = 1000000; //tokens are divisible by 1 million
 
     VaultData data;
