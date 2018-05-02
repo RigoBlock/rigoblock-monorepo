@@ -5,7 +5,6 @@
       "lib": ["es2017", "dom"],
       "sourceMap": true,
       "declaration": true,
-      "experimentalDecorators": true,
       "noImplicitReturns": true,
       "pretty": true,
       "typeRoots": ["node_modules/@0xproject/typescript-typings/types", "node_modules/@types", "packages/pool-api/pools"]
