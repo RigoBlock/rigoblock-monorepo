@@ -16,22 +16,25 @@ import { VaultFactory } from './contracts/VaultFactory'
 import { DragoRegistry } from './contracts/DragoRegistry'
 import { ProofOfPerformance } from './contracts/ProofOfPerformance'
 
-export type ContractModels = {
-  Authority?: Authority
-  ERC20?: ERC20
-  RigoToken?: RigoToken
-  Distribution?: Distribution
-  Inflation?: Inflation
-  UnlimitedAllowanceToken?: UnlimitedAllowanceToken
-  Drago?: Drago
-  Migrations?: Migrations
-  Vault?: Vault
-  DragoEventful?: DragoEventful
-  Owned?: Owned
-  VaultEventful?: VaultEventful
-  DragoFactory?: DragoFactory
-  OwnedUninitialized?: OwnedUninitialized
-  VaultFactory?: VaultFactory
-  DragoRegistry?: DragoRegistry
-  ProofOfPerformance?: ProofOfPerformance
+// Custom extension
+import { ContractExtension } from './contract-extension'
+
+export abstract class ContractModels {
+  Authority: Authority & ContractExtension
+  ERC20: ERC20 & ContractExtension
+  RigoToken: RigoToken & ContractExtension
+  Distribution: Distribution & ContractExtension
+  Inflation: Inflation & ContractExtension
+  UnlimitedAllowanceToken: UnlimitedAllowanceToken & ContractExtension
+  Drago: Drago & ContractExtension
+  Migrations: Migrations & ContractExtension
+  Vault: Vault & ContractExtension
+  DragoEventful: DragoEventful & ContractExtension
+  Owned: Owned & ContractExtension
+  VaultEventful: VaultEventful & ContractExtension
+  DragoFactory: DragoFactory & ContractExtension
+  OwnedUninitialized: OwnedUninitialized & ContractExtension
+  VaultFactory: VaultFactory & ContractExtension
+  DragoRegistry: DragoRegistry & ContractExtension
+  ProofOfPerformance: ProofOfPerformance & ContractExtension
 }

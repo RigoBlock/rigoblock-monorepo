@@ -30,7 +30,7 @@ class PoolApi {
     const contractsMap: Contract.ContractsMap = await protocol(networkId)
     const contracts = new Contract()
     await contracts.init(this.web3, contractsMap)
-    this.contract = contracts.models
+    this.contract = contracts
 
     this.engine.start()
     return this

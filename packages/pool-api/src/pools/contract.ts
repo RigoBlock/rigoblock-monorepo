@@ -1,10 +1,9 @@
-import { ContractModels } from '.'
+import { ContractModels } from './'
 import * as Web3 from 'web3'
 import { TypeChainContract } from './contracts/typechain-runtime'
+import { ContractExtension } from './contract-extension'
 
-class Contract {
-  public models: ContractModels = {}
-
+class Contract extends ContractModels {
   async init(web3: Web3, contractsMap: Contract.ContractsMap) {
     const deployedContracts: Array<string> = Object.keys(contractsMap).filter(
       contractName => contractsMap[contractName].address
@@ -14,6 +13,10 @@ class Contract {
       Promise<TypeChainContract>
     > = deployedContracts.map(async contractName => {
       const contract: TypeChainContract = await import(`./contracts/${contractName}`)
+      Object.assign(
+        contract[contractName].prototype,
+        ContractExtension.prototype
+      )
       return new contract[contractName](
         web3,
         contractsMap[contractName].address
@@ -22,7 +25,10 @@ class Contract {
 
     const contracts = await Promise.all(contractsPromises)
     contracts.forEach(contract => {
-      this.models[contract.constructor.name] = contract
+      Object.defineProperty(this, contract.constructor.name, {
+        value: contract,
+        writable: false
+      })
     })
 
     return this
@@ -30,13 +36,11 @@ class Contract {
 }
 
 namespace Contract {
-  export interface ContractObject {
-    address: string
-    abi: string
-  }
-
   export interface ContractsMap {
-    [key: string]: ContractObject
+    [key: string]: {
+      address: string
+      abi: string
+    }
   }
 }
 
