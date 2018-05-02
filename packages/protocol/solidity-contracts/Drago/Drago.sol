@@ -158,11 +158,18 @@ contract Drago is Owned, SafeMath, DragoFace {
     function()
         external
         payable
-        whenApprovedExchange(msg.sender)
+        //had to comment this condition, otherwise the transaction would fail
+        //whenApprovedExchange(msg.sender)
     {
-        if (msg.value == 0) {
+        /*
+        // the call uses delegatecall, should use call
+        // it is highly unlikely exchanges will want to send raw calls
+        // commented for debugging
+        // if (msg.value == 0) {
+        if (msg.data != 0) {
             DragoExchangeExtension.operateOnExchange(libraryAdmin, msg.sender, msg.data);
         }
+        */
     }
 
     /// @dev Allows a user to buy into a drago
@@ -281,39 +288,44 @@ contract Drago is Owned, SafeMath, DragoFace {
         data.minPeriod = _minPeriod;
     }
 
-    /// WE SHOULD RENAME THE FUNCTION WRAP/DEPOSIT AND SEPARATE LIST OF ENABLED WRAPPERS
-    /// POSSIBLE DOING IT IN THE EXCHANGE ADAPTER
+    /// @dev allows a manager to deposit eth from an approved exchange/wrap eth
+    /// @param _exchange Address of the target exchange
+    /// @param _amount Value of the Eth in wei
     function depositToExchange(address _exchange, uint _amount)
         external
         onlyOwner
         whenApprovedExchange(_exchange)
     {
-        ExchangeAdapter(getExchangeAdapter(_exchange)).deposit.value(_amount);
+        ExchangeAdapter(getExchangeAdapter(_exchange))
+        .deposit
+        .value(_amount)();
     }
 
-    /// WE SHOULD RENAME THE FUNCTION UNWRAP/WITHDRAW AND SEPARATE LIST OF ENABLED WRAPPERS
-    /// POSSIBLE DOING IT IN THE EXCHANGE ADAPTER
+    /// @dev allows a manager to withdraw ETH from an approved exchange/unwrap eth
+    /// @param _exchange Address of the target exchange
+    /// @param _amount Value of the Eth in wei
     function withdrawFromExchange(address _exchange, uint _amount)
         external
         onlyOwner
         whenApprovedExchange(_exchange)
     {
-        ExchangeAdapter(getExchangeAdapter(_exchange)).withdraw(_amount);
+        ExchangeAdapter(getExchangeAdapter(_exchange))
+        .withdraw(_amount);
     }
 
     /// @dev Allows owner to set an infinite allowance to an approved exchange
-    /// WE SHOULD SEPARATE THE APPROVED TRANSFERPROXIES FROM THE EXCHANGES
+    /// @param _tokenTransferProxy Address of the tokentargetproxy to be approved
+    /// @param _token Address of the token to receive allowance for
+    /// @notice WE MIGHT WANT TO SEPARATE THE APPROVED TRANSFERPROXIES AND EXCHANGES
     function setInfiniteAllowance(
         address _tokenTransferProxy,
         address _token)
-        public //external + internal
+        external //external + internal
         onlyOwner
         whenApprovedExchange(_tokenTransferProxy)
-        returns (bool)
     {
-        Token(_token).approve(_tokenTransferProxy, 2**256 - 1);
-        return true;
-    }    
+        require(setInfiniteAllowanceInternal(_tokenTransferProxy, _token));
+    }
 
     /// @dev Allows owner to set allowances to multiple approved tokens with one call
     function SetMultipleAllowances(
@@ -322,7 +334,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         external
     {
         for (uint i = 0; i < _token.length; i++)
-            if (!setInfiniteAllowance(_tokenTransferProxy, _token[i])) continue;
+            if (!setInfiniteAllowanceInternal(_tokenTransferProxy, _token[i])) continue;
     }
 
     /// @dev Allows approved exchange to send a transaction to exchange
@@ -333,20 +345,32 @@ contract Drago is Owned, SafeMath, DragoFace {
         external
         whenApprovedExchange(msg.sender)
     {
-        require(_exchange.delegatecall(_assembledTransaction));
+        require(_exchange.call(_assembledTransaction));
     }
 
+    /// this function is used for debugging, direct operations on excange is for
+    /// approved exchanges only
     function operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction)
         external
         ownerOrApprovedExchange()
         whenApprovedExchange(_exchange)
     {
-        require(_exchange.delegatecall(_assembledTransaction));
+        bytes memory _data = _assembledTransaction;
+        address _target = getExchangeAdapter(_exchange);
+        bytes memory response;
+        bool failed;
+        assembly {
+            let succeeded := call(sub(gas, 10000), _target, 0, add(_data, 0x20), mload(_data), 0, 32)
+            response := mload(0)      // load delegatecall output
+            failed := iszero(succeeded)
+        }
+        require(!failed);
     }
 
     /// @dev Allows owner or approved exchange to send a transaction to exchange
     /// @dev With data of signed/unsigned transaction
     /// @param _exchange Address of the exchange
+    /// @notice check whether we have to enforce prevent selfdestruct method
     function operateOnExchangeThroughAdapter(
         address _exchange,
         bytes _assembledTransaction)
@@ -354,7 +378,16 @@ contract Drago is Owned, SafeMath, DragoFace {
         ownerOrApprovedExchange()
         whenApprovedExchange(_exchange)
     {
-        require(getExchangeAdapter(_exchange).delegatecall(_assembledTransaction));
+        bytes memory _data = _assembledTransaction;
+        address _target = getExchangeAdapter(_exchange);
+        bytes memory response;
+        bool failed;
+        assembly {
+            let succeeded := delegatecall(sub(gas, 10000), _target, add(_data, 0x20), mload(_data), 0, 32)
+            response := mload(0)      // load delegatecall output
+            failed := iszero(succeeded)
+        }
+        require(!failed);
     }
     
     function enforceKyc(
@@ -550,6 +583,20 @@ contract Drago is Owned, SafeMath, DragoFace {
         Authority auth = Authority(admin.authority);
         DragoEventful events = DragoEventful(auth.getDragoEventful());
         require(events.sellDrago(msg.sender, this, _amount, _netRevenue, name, symbol));
+    }
+    
+    /// @dev Allows owner to set an infinite allowance to an approved exchange
+    /// @param _tokenTransferProxy Address of the tokentargetproxy to be approved
+    /// @param _token Address of the token to receive allowance for
+    function setInfiniteAllowanceInternal(
+        address _tokenTransferProxy,
+        address _token)
+        internal
+        returns (bool)
+    {
+        Token(_token)
+            .approve(_tokenTransferProxy, 2**256 - 1);
+        return true;
     }
 
     /// @dev Calculates the correct purchase amounts
