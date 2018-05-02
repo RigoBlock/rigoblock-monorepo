@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const Web3 = require('web3')
-const { contracts } = require('@rigoblock/protocol')
+const contracts = require('@rigoblock/protocol').default
 
 const writeFilePromise = (name, content) =>
   new Promise((resolve, reject) =>
@@ -9,7 +9,7 @@ const writeFilePromise = (name, content) =>
   )
 
 const extractor = async network => {
-  const tmpFolder = path.join(__dirname, '.tmp')
+  const tmpFolder = path.join(__dirname, '..', '.tmp/')
   if (!fs.existsSync(tmpFolder)) {
     fs.mkdirSync(tmpFolder)
   }
@@ -18,7 +18,7 @@ const extractor = async network => {
   const contractsMap = await contracts(networkId)
   const abiPromises = Object.keys(contractsMap).map(contractName =>
     writeFilePromise(
-      path.join(__dirname, '.tmp', `${contractName}.json`),
+      path.join(tmpFolder, `${contractName}.json`),
       JSON.stringify(contractsMap[contractName].abi, null, 2)
     )
   )
