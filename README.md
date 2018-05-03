@@ -25,9 +25,9 @@ Bootstrap all packages and install all their dependencies
 ```
 yarn bootstrap
 ```
-Build all packages in order.
-NOTE: requires running Ganache client
+Build all packages in order. Ganache needs to be launched first as it is required for protocol contracts to be compiled
 ```
+lerna run --scope @rigoblock/dapp ganache --stream
 yarn build
 ```
 
@@ -35,6 +35,6 @@ yarn build
 
 Lint all packages
 
-```bash
+```
 yarn lint
 ```
