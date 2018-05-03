@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap && npm run build",
-    "build": "lerna run build",
+    "bootstrap": "lerna bootstrap",
+    "build": "npm run build:protocol && npm run build:api && npm run build:dapp",
+    "build:protocol": "lerna run --scope @rigoblock/protocol build --stream",
+    "build:api": "lerna run --scope @rigoblock/protocol build --stream",
+    "build:dapp": "lerna run --scope @rigoblock/protocol build --stream",
     "lint": "lerna run lint",
     "test:unit": "lerna run test:unit --stream"
   },
