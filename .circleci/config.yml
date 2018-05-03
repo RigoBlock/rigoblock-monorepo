@@ -55,7 +55,7 @@ jobs:
           key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Building dist
-          command: npx lerna run --scope @rigoblock/dapp build --stream
+          command: yarn build:dapp
       - persist_to_workspace:
           root: *workspace_root
           paths:
