@@ -4,6 +4,8 @@
       "target": "es5",
       "lib": ["es2017", "dom"],
       "noImplicitReturns": true,
+      "declaration": true,
+      "sourceMap": true,
       "pretty": true,
       "typeRoots": ["node_modules/@0xproject/typescript-typings/types", "node_modules/@types", "packages/api/contracts"]
   }

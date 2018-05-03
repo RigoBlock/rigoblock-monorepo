@@ -1,7 +1,5 @@
 {
   "extends": "../../tsconfig",
-  "declaration": true,
-  "sourceMap": true,
   "include": [
     "src/**/*.ts",
   ]

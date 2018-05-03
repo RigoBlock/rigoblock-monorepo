@@ -130,5 +130,7 @@
       "react-app"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "@rigoblock/api": "^0.1.0"
+  }
 }
