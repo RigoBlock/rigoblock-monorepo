@@ -1,2 +1,1 @@
-module.exports.contracts = require('./contracts')
-module.exports.deploy = require('./deploy')
+module.exports = require('./contracts')

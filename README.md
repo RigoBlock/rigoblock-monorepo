@@ -16,16 +16,25 @@
 
 ### Install
 
+Install lerna using yarn and the frozen lockfile option, so as not to accidentally update packages and break the build
 ```
 yarn --frozen-lockfile
+```
 
+Bootstrap all packages and install all their dependencies
+```
 yarn bootstrap
+```
+Build all packages in order. Ganache needs to be launched first as it is required for protocol contracts to be compiled
+```
+lerna run --scope @rigoblock/dapp ganache --stream
+yarn build
 ```
 
 ### Lint
 
 Lint all packages
 
-```bash
+```
 yarn lint
 ```

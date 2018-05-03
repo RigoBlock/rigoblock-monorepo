@@ -1,6 +1,6 @@
 const { CONTRACT_NAMES } = require('../constants')
 
-module.exports = async networkId => {
+module.exports.default = async networkId => {
   const artifacts = CONTRACT_NAMES.map(contractName => `${contractName}.json`)
   const abisPromises = artifacts.map(async artifact => {
     const json = await import('../artifacts/' + artifact)
@@ -15,7 +15,7 @@ module.exports = async networkId => {
           }
         }
       : console.error(
-          `Make sure contracts are deployed for network Id: ${networkId}`
+          `Make sure contracts are deployed for network Id ${networkId}`
         )
   })
   const abisMap = await Promise.all(abisPromises)
