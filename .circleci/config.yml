@@ -37,7 +37,7 @@ jobs:
             - node_modules
             - packages/dapp/node_modules
             - packages/ganache-bootstrap/node_modules
-            - packages/pool-api/node_modules
+            - packages/api/node_modules
             - packages/protocol/node_modules
             - ~/.cache/yarn
 

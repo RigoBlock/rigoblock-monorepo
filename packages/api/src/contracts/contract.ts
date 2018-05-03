@@ -1,6 +1,6 @@
 import { ContractModels } from './'
 import * as Web3 from 'web3'
-import { TypeChainContract } from './contracts/typechain-runtime'
+import { TypeChainContract } from './models/typechain-runtime'
 import { ContractExtension } from './contract-extension'
 
 class Contract extends ContractModels {
@@ -12,7 +12,7 @@ class Contract extends ContractModels {
     const contractsPromises: Array<
       Promise<TypeChainContract>
     > = deployedContracts.map(async contractName => {
-      const contract: TypeChainContract = await import(`./contracts/${contractName}`)
+      const contract: TypeChainContract = await import(`./models/${contractName}`)
       Object.assign(
         contract[contractName].prototype,
         ContractExtension.prototype

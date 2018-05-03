@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const Web3 = require('web3')
-const contracts = require('@rigoblock/protocol').default
+const protocol = require('@rigoblock/protocol').default
 
 const writeFilePromise = (name, content) =>
   new Promise((resolve, reject) =>
@@ -15,7 +15,7 @@ const extractor = async network => {
   }
   const web3 = new Web3(new Web3.providers.HttpProvider(network))
   const networkId = await web3.version.network
-  const contractsMap = await contracts(networkId)
+  const contractsMap = await protocol(networkId)
   const abiPromises = Object.keys(contractsMap).map(contractName =>
     writeFilePromise(
       path.join(tmpFolder, `${contractName}.json`),
