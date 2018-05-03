@@ -8,11 +8,13 @@
   },
   "scripts": {
     "build": "rm -rf dist/* && tsc --outDir './dist'",
-    "tsc:watch": "rm -rf dist; tsc -w -m system -d",
+    "tsc:watch": "rm -rf dist; tsc -w -m system --outDir './dist'",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "typechain": "rm -rf .tmp && node src/abi-extractor.js && typechain --force --outDir src/contracts/models '.tmp/*.json'"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@0xproject/subproviders": "^0.9.0",
     "@0xproject/typescript-typings": "^0.2.0",
@@ -26,6 +28,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
     "bignumber.js": "3.0.1",
+    "chalk": "^2.4.1",
     "cross-env": "^5.1.1",
     "es6-error": "^4.0.0",
     "es6-promise": "^4.1.1",
