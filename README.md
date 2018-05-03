@@ -16,10 +16,19 @@
 
 ### Install
 
+Install lerna using yarn and the frozen lockfile option, so as not to accidentally update packages and break the build
 ```
 yarn --frozen-lockfile
+```
 
+Bootstrap all packages and install all their dependencies
+```
 yarn bootstrap
+```
+Build all packages in order.
+NOTE: requires running Ganache client
+```
+yarn build
 ```
 
 ### Lint
