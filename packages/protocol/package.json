@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "main": "dist/contracts.js",
   "scripts": {
-    "build": "rm -rf dist && webpack",
+    "build": "npm run compile && rm -rf dist && webpack",
     "compile": "node deploy/compiler.js",
     "lint": "eslint . --ext js,jsx --fix"
   },
