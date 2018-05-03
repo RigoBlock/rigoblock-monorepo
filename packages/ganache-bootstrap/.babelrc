@@ -1,5 +1,0 @@
-{
-  "presets": ["env"],
-  "plugins": ["dynamic-import-node"],
-  "ignore":  ["/node_modules\/(?!@rigoblock\/protocol).*/g"]
-}
