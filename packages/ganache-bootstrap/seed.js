@@ -1,6 +1,6 @@
 const Web3 = require('web3')
 const c = require('chalk')
-const protocol = require('@rigoblock/protocol')
+const protocol = require('@rigoblock/protocol').default
 const logger = require('./logger')
 
 module.exports = async network => {
