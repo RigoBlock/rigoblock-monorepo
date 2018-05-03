@@ -8,9 +8,10 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "build": "rm -rf dist/* && tsc --outDir './dist'",
+    "build": "npm run typechain && npm run tsc",
+    "tsc": "rm -rf dist/* && tsc --outDir './dist'",
     "tsc:watch": "rm -rf dist; tsc -w -m system --outDir './dist'",
-    "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
+    "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
     "typechain": "rm -rf .tmp && node src/abi-extractor.js && typechain --force --outDir src/contracts/models '.tmp/*.json'"
   },
   "files": [

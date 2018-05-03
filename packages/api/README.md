@@ -1,7 +1,41 @@
 # Rigoblock smart contract API
-
 ## Usage
 
+Start Ganache
+```
+lerna run --scope @rigoblock/dapp ganache --stream
+```
+Then run the following command:
+```
+yarn typechain
+```
+
+## Available Scripts
+
+### From the project root you can run:
+```
+yarn lint
+```
+Lints all files.
+```
+yarn typechain
+```
+Extracts all abis of the deployed contracts, then copies them over to the .tmp folder in json format. Typechain will then proceed to generate Typescript classes of the contracts from said abis.
+```
+yarn tsc
+```
+Compiles all .ts files to Javascript, including map and declaration files.
+```
+yarn tsc:watch
+```
+Compiles on watch mode
+```
+yarn build
+```
+Executes in sequence the typechain and the tsc scripts
+
+
+## Calling methods
 ### Example
 Creating a Vault from the VaultFactory contract
 
