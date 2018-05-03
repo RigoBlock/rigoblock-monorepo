@@ -1,7 +1,7 @@
-import { ContractModels } from './'
 import * as Web3 from 'web3'
-import { TypeChainContract } from './models/typechain-runtime'
 import { ContractExtension } from './contract-extension'
+import { ContractModels } from './'
+import { TypeChainContract } from './models/typechain-runtime'
 
 class Contract extends ContractModels {
   async init(web3: Web3, contractsMap: Contract.ContractsMap) {
