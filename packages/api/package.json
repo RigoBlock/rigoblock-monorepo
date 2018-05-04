@@ -10,7 +10,7 @@
   "scripts": {
     "build": "npm run typechain && npm run tsc",
     "tsc": "rm -rf dist/* && tsc --outDir './dist'",
-    "tsc:watch": "rm -rf dist; tsc -w -m system --outDir './dist'",
+    "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
     "typechain": "rm -rf .tmp && node src/abi-extractor.js && typechain --force --outDir src/contracts/models '.tmp/*.json'"
   },
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@0xproject/subproviders": "^0.9.0",
     "@rigoblock/protocol": "^0.2.0",
-    "bignumber.js": "3.0.1",
+    "bignumber.js": "^5.0.0",
     "chalk": "^2.4.1",
     "typechain": "^0.1.5",
     "typescript-eslint-parser": "^15.0.0",
