@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/delay'
 import 'rxjs/add/operator/map'
 import { Scheduler } from 'rxjs/Scheduler'
-import { actionTypes } from '../constants/action-types'
+import { actionTypes } from '../../constants/action-types'
 
 export const counterEpic = (action$, store, ts = Scheduler.async) => {
   return action$

@@ -11,6 +11,7 @@ import Login from './pages/Login'
 import Preferences from './pages/Preferences'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import globalAction from './actions/global-actions'
 import history from './store/history'
 import registerServiceWorker from './registerServiceWorker'
 
@@ -29,6 +30,8 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
+
+store.dispatch(globalAction.init())
 
 registerServiceWorker()
 

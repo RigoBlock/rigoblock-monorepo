@@ -11,10 +11,15 @@ interface Web3Window extends Window {
 }
 
 declare let window: Web3Window
+
+// Fix until 0x types are in sync with provider engine
+export interface ProviderEngineFix extends ProviderEngine {
+  start(cb?: Function): void
+}
 class Api {
   public contract: ContractModels
   public web3: Web3
-  public engine: ProviderEngine
+  public engine: ProviderEngineFix
 
   async init(web3: Web3 = window.web3) {
     this.engine = new ProviderEngine()
@@ -32,7 +37,12 @@ class Api {
     await contracts.init(this.web3, contractsMap)
     this.contract = contracts
 
-    this.engine.start()
+    const startEnginePromise = new Promise((resolve, reject) => {
+      this.engine.start(err => (err ? reject(err) : resolve()))
+    })
+
+    await startEnginePromise
+
     return this
   }
 }
