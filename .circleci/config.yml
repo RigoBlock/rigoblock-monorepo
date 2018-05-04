@@ -41,6 +41,29 @@ jobs:
             - packages/protocol/node_modules
             - ~/.cache/yarn
 
+  build-protocol:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+      NODE_ENV: production
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - restore_cache:
+          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+      - run:
+          name: Starting ganache cli
+          command: npx lerna run --scope @rigoblock/dapp ganache --stream
+          background: true
+      - run:
+          name: Building dist
+          command: yarn build:protocol
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - packages/protocol/dist
+
   build-dapp:
     working_directory: *workspace_root
     environment:
@@ -230,12 +253,15 @@ workflows:
       - test-unit-dapp:
           requires:
             - setup
+      - build-protocol:
+          requires:
+            - test-unit-dapp
       - build-dapp:
           requires:
-            - test-unit-dapp
+            - build-protocol
       - build-api:
           requires:
-            - test-unit-dapp
+            - build-protocol
       - test-feature-dapp:
           requires:
             - build-dapp
