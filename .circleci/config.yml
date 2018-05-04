@@ -57,7 +57,13 @@ jobs:
           command: npx lerna run --scope @rigoblock/dapp ganache --stream
           background: true
       - run:
-          name: Building dist
+          name: Compiling contracts
+          command: npx lerna run --scope @rigoblock/protocol compile --stream
+      - run:
+          name: Deploying contracts
+          command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap --stream
+      - run:
+          name: Building protocol
           command: yarn build:protocol
       - persist_to_workspace:
           root: *workspace_root
@@ -93,6 +99,7 @@ jobs:
       - image: *node_image
     steps:
       - checkout
+      - *attach_workspace
       - restore_cache:
           key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
@@ -144,9 +151,6 @@ jobs:
       - run:
           name: Wait for HTTP server and ganache cli
           command: dockerize -wait tcp://localhost:8545 -wait tcp://localhost:8080 -timeout 1m
-      - run:
-          name: Compiling smart contracts for ganache
-          command: npx lerna run --scope @rigoblock/protocol compile --stream
       - run:
           name: Bootstrapping smart contracts to ganache cli
           command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap --stream
