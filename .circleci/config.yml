@@ -61,6 +61,25 @@ jobs:
           paths:
             - packages/dapp/dist
 
+  build-api:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+      NODE_ENV: production
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - restore_cache:
+          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+      - run:
+          name: Building dist
+          command: yarn build:api
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - packages/api/dist
+
   test-unit-dapp:
     working_directory: *workspace_root
     environment:
@@ -108,9 +127,9 @@ jobs:
       - run:
           name: Bootstrapping smart contracts to ganache cli
           command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap --stream
-    #   - run:
-    #       name: Seeding ganache cli
-    #       command: npx lerna run --scope @rigoblock/dapp ganache:seed --stream
+      - run:
+          name: Seeding ganache cli
+          command: npx lerna run --scope @rigoblock/dapp ganache:seed --stream
       - run:
           name: JS feature tests
           command: npx lerna run --scope @rigoblock/dapp test:feature --stream
@@ -212,6 +231,9 @@ workflows:
           requires:
             - setup
       - build-dapp:
+          requires:
+            - test-unit-dapp
+      - build-api:
           requires:
             - test-unit-dapp
       - test-feature-dapp:
