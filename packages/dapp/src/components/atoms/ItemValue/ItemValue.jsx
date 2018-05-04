@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import './ItemValue.scss'
+import PropTypes from 'prop-types'
+import React from 'react'
+import classNames from 'classnames'
 
 export const ITEM_VALUE_SIZES = {
   SMALL: 'small',

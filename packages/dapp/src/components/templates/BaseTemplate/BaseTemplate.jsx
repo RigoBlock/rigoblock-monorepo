@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import TopNavbar from '../../organisms/TopNavbar'
-import LeftNavbar from '../../organisms/LeftNavbar'
 import './BaseTemplate.scss'
+import LeftNavbar from '../../organisms/LeftNavbar'
+import PropTypes from 'prop-types'
+import React from 'react'
+import TopNavbar from '../../organisms/TopNavbar'
 
 const BaseTemplate = ({ children }) => (
   <div>

@@ -1,7 +1,7 @@
-import React from 'react'
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import BaseTemplate from './BaseTemplate.jsx'
+import React from 'react'
+import toJson from 'enzyme-to-json'
 
 describe('BaseTemplate component', () => {
   it('renders correctly', () => {

@@ -1,7 +1,7 @@
-import React from 'react'
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
+import React from 'react'
 import UserMenu from './UserMenu.jsx'
+import toJson from 'enzyme-to-json'
 
 describe('UserMenu component', () => {
   it('renders correctly', () => {

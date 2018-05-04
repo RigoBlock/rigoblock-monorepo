@@ -1,9 +1,9 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, text, selectV2 } from '@storybook/addon-knobs/react'
-import { MemoryRouter } from 'react-router-dom'
 import '../../_settings/_base.scss'
+import { MemoryRouter } from 'react-router-dom'
+import { selectV2, text, withKnobs } from '@storybook/addon-knobs/react'
+import { storiesOf } from '@storybook/react'
 import Link, { LINK_SIZES } from './Link'
+import React from 'react'
 
 storiesOf('Atoms/Link', module)
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)

@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run compile && rm -rf dist && webpack",
     "compile": "node deploy/compiler.js",
-    "lint": "eslint . --ext js,jsx --fix",
+    "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "prepublish": "npm run build"
   },
   "files": [

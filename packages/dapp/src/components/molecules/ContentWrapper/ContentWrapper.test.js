@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import ContentWrapper from './ContentWrapper.jsx'
+import toJson from 'enzyme-to-json'
 
 const props = { header: 'string header', children: 'test content' }
 

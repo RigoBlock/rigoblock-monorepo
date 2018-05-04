@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import './Login.scss'
 import BaseTemplate from '../../components/templates/BaseTemplate'
 import Link, { LINK_SIZES } from '../../components/atoms/Link'
-import './Login.scss'
+import React, { Component } from 'react'
 
 class Login extends Component {
   render() {

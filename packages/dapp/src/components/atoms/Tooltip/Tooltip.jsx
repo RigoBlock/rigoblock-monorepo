@@ -1,7 +1,7 @@
+import './Tooltip.scss'
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-import PropTypes from 'prop-types'
-import './Tooltip.scss'
 
 export const TOOLTIP_SIZES = {
   SMALL: 'small',

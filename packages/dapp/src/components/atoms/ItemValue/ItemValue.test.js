@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import ItemValue from './ItemValue.jsx'
+import toJson from 'enzyme-to-json'
 
 const props = { itemValue: 12489.51354 }
 

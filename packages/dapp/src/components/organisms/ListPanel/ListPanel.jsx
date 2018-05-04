@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import ContentWrapper from '../../molecules/ContentWrapper'
-import PanelHeader from '../../molecules/PanelHeader'
 import List from '../../organisms/List'
+import PanelHeader from '../../molecules/PanelHeader'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const ListPanel = ({ title, items, tooltip }) => {
   const header = <PanelHeader title={title} tooltip={tooltip} />

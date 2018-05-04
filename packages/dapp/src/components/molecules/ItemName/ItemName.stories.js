@@ -1,8 +1,8 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, text } from '@storybook/addon-knobs/react'
-import ItemName from './ItemName'
 import '../../_settings/_base.scss'
+import { storiesOf } from '@storybook/react'
+import { text, withKnobs } from '@storybook/addon-knobs/react'
+import ItemName from './ItemName'
+import React from 'react'
 
 storiesOf('Molecules/ItemName', module)
   .addDecorator(withKnobs)
