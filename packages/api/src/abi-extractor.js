@@ -18,7 +18,7 @@ const extractor = async network => {
   const networkId = await web3.version.network
   const contractsMap = await protocol(networkId)
   const abiPromises = Object.keys(contractsMap).map(contractName => {
-    console.log(clk.gray(`Extracting ${clk.magenta(contractName)}`))
+    console.log(`Extracting ${clk.magenta(contractName)}`)
     return writeFilePromise(
       path.join(tmpFolder, `${contractName}.json`),
       JSON.stringify(contractsMap[contractName].abi, null, 2)
