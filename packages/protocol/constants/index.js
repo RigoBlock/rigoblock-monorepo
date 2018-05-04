@@ -1,9 +1,13 @@
 const path = require('path')
 
+const NETWORKS = process.env.NETWORKS
+  ? process.env.NETWORKS.split(',')
+  : ['http://localhost:8545']
+
 module.exports = {
   ARTIFACTS_DIR: path.resolve(__dirname, '../artifacts'),
   CONTRACTS_DIR: path.resolve(__dirname, '../solidity-contracts'),
-  NETWORKS: process.env.NETWORKS || ['http://localhost:8545'],
+  NETWORKS,
   GAS_ESTIMATE: 5e6,
   CONTRACT_NAMES: [
     'Authority',
