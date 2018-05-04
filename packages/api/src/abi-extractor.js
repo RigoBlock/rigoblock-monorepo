@@ -1,7 +1,6 @@
 const path = require('path')
 const clk = require('chalk')
 const fs = require('fs')
-const Web3 = require('web3')
 const protocol = require('@rigoblock/protocol').default
 
 const writeFilePromise = (name, content) =>
@@ -9,13 +8,11 @@ const writeFilePromise = (name, content) =>
     fs.writeFile(name, content, err => (err ? reject(err) : resolve()))
   )
 
-const extractor = async network => {
+const extractor = async networkId => {
   const tmpFolder = path.join(__dirname, '..', '.tmp/')
   if (!fs.existsSync(tmpFolder)) {
     fs.mkdirSync(tmpFolder)
   }
-  const web3 = new Web3(new Web3.providers.HttpProvider(network))
-  const networkId = await web3.version.network
   const contractsMap = await protocol(networkId)
   const abiPromises = Object.keys(contractsMap).map(contractName => {
     console.log(`Extracting ${clk.magenta(contractName)}`)
@@ -27,6 +24,6 @@ const extractor = async network => {
   return Promise.all(abiPromises)
 }
 ;(async () => {
-  await extractor('http://localhost:8545')
+  await extractor(process.env.NETWORK_ID || 5777)
   console.log(clk.green('Correctly extracted all files'))
 })()

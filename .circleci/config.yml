@@ -116,6 +116,7 @@ jobs:
       - persist_to_workspace:
           root: *workspace_root
           paths:
+            - packages/api/artifacts
             - packages/api/dist
 
   test-unit-dapp:
