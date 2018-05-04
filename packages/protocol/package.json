@@ -1,11 +1,12 @@
 {
   "name": "@rigoblock/protocol",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "dist/contracts.js",
   "scripts": {
     "build": "npm run compile && rm -rf dist && webpack",
     "compile": "node deploy/compiler.js",
-    "lint": "eslint . --ext js,jsx --fix"
+    "lint": "eslint . --ext js,jsx --fix",
+    "prepublish": "npm run build"
   },
   "files": [
     "artifacts",
