@@ -39,3 +39,25 @@ Lint all packages
 ```
 yarn lint
 ```
+
+### Publishing packages
+
+To publish the packages in the monorepo to NPM you need to create a new branch and let lerna do the job.
+
+```
+git checkout master
+git checkout -b feature/publish-# # Use an incremental number
+git branch -u feature/publish-#
+yarn build
+npx lerna publish
+```
+
+Lerna will ask you for new versions and:
+- Updates package version
+- Updates packages that depend on that package
+- Commit
+- Tag the current commit with `package@version`
+- Publish to NPM
+- Push to Github
+
+So at the end you'll need to create a PR with your `feature/publish-#` branch and merge it to master in order to tag properly the main branch.
