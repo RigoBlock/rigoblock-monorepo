@@ -47,7 +47,7 @@ To publish the packages in the monorepo to NPM you need to create a new branch a
 ```
 git checkout master
 git checkout -b feature/publish-# # Use an incremental number
-git branch -u feature/publish-#
+git push -u origin feature/publish-#
 yarn build
 npx lerna publish
 ```
