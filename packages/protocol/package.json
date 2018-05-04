@@ -1,6 +1,6 @@
 {
   "name": "@rigoblock/protocol",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "dist/contracts.js",
   "scripts": {
     "build": "npm run compile && rm -rf dist && webpack",
