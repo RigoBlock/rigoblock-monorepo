@@ -6,7 +6,8 @@
   "commands": {
     "publish": {
       "ignore": [
-        "@rigoblock/dapp*"
+        "@rigoblock/dapp*",
+        "@rigoblock/pool-api*"
       ]
     }
   },
