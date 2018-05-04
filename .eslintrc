@@ -17,13 +17,18 @@
     "plugins": [
       "prettier",
       "react",
-      "import"
+      "import",
+      "sort-imports-es6-autofix"
     ],
     "rules": {
       "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
       "no-var": ["error"],
-      "import/order": ["error", {"newlines-between": "never"}],
       "import/newline-after-import": ["error", { "count": 1 }],
+      "sort-imports-es6-autofix/sort-imports-es6": [2, {
+        "ignoreCase": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }],
       "react/require-default-props": 2,
       "prettier/prettier": [
         "error", {

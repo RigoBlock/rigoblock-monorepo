@@ -9,7 +9,7 @@
 | Package| Description|
 | - | - |
 | [`Rigoblock DApp`](/packages/dapp)                  | Rigoblock DApp                                                     |
-| [`Pool API`](/packages/pool-api)                    | A wrapper library with preset RPC calls to our pools               |
+| [`API`](/packages/api)                    | A wrapper library with preset RPC calls to our contracts               |
 | [`Rigoblock Protocol`](/packages/protocol)          | Rigoblock Protocol                                                 |
 | [`Ganache Bootstrap`](/packages/ganache-bootstrap)  | A bootstrapping package to deploy smart contracts and seed Ganache |
 

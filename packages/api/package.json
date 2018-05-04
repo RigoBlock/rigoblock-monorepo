@@ -1,0 +1,36 @@
+{
+  "name": "@rigoblock/api",
+  "description": "A JS wrapper around RigoBlock Smart Contracts to simplify their consumption.",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=6.4"
+  },
+  "scripts": {
+    "build": "npm run typechain && npm run tsc",
+    "tsc": "rm -rf dist/* && tsc --outDir './dist'",
+    "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
+    "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
+    "typechain": "rm -rf .tmp && node src/abi-extractor.js && typechain --force --outDir src/contracts/models '.tmp/*.json'"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "eslint-plugin-typescript": "^0.12.0",
+    "chalk": "^2.4.1",
+    "typechain": "^0.1.5",
+    "typescript": "^2.8.3",
+    "typescript-eslint-parser": "^15.0.0"
+  },
+  "dependencies": {
+    "@0xproject/subproviders": "^0.9.0",
+    "@rigoblock/protocol": "^0.2.0",
+    "bignumber.js": "^5.0.0",
+    "@0xproject/typescript-typings": "^0.2.0",
+    "@types/node": "^9.6.6",
+    "web3": "0.20.6",
+    "web3-provider-engine": "^14.0.5"
+  }
+}
