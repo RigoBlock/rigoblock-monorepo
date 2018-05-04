@@ -1,5 +1,5 @@
-import { TestScheduler } from 'rxjs'
 import { ActionsObservable } from 'redux-observable'
+import { TestScheduler } from 'rxjs'
 import { actionTypes } from '../constants/action-types'
 import { counterEpic } from './counter'
 

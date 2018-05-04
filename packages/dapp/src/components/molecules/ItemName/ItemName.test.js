@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import ItemName from './ItemName.jsx'
+import toJson from 'enzyme-to-json'
 
 const props = { name: 'Rocksolid Vault', symbol: 'VLT' }
 

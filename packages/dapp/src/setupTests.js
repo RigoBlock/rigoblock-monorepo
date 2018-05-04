@@ -1,6 +1,6 @@
 import { configure } from 'enzyme'
-import React from 'react'
 import Adapter from 'enzyme-adapter-react-16'
+import React from 'react'
 import deepFreeze from 'deep-freeze'
 
 configure({ adapter: new Adapter() })

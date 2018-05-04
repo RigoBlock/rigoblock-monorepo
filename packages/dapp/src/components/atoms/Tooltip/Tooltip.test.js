@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import Tooltip from './Tooltip.jsx'
+import toJson from 'enzyme-to-json'
 
 const props = { type: 'help' }
 

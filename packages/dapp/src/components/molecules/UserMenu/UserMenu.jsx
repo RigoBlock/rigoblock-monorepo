@@ -1,7 +1,7 @@
-import React from 'react'
+import './UserMenu.scss'
 import Link, { LINK_SIZES } from '../../atoms/Link'
 import ROUTES from '../../../constants/routes'
-import './UserMenu.scss'
+import React from 'react'
 
 const UserMenu = () => {
   return (

@@ -1,7 +1,7 @@
-import React from 'react'
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import Dashboard from './Dashboard.jsx'
+import React from 'react'
+import toJson from 'enzyme-to-json'
 
 describe('Dashboard component', () => {
   it('renders correctly', () => {

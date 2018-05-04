@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import List from './List.jsx'
+import toJson from 'enzyme-to-json'
 
 const props = {
   title: 'List Component',

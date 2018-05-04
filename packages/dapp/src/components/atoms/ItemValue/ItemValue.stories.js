@@ -1,8 +1,8 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, number, selectV2 } from '@storybook/addon-knobs/react'
-import ItemValue, { ITEM_VALUE_SIZES } from './ItemValue'
 import '../../_settings/_base.scss'
+import { number, selectV2, withKnobs } from '@storybook/addon-knobs/react'
+import { storiesOf } from '@storybook/react'
+import ItemValue, { ITEM_VALUE_SIZES } from './ItemValue'
+import React from 'react'
 
 storiesOf('Atoms/ItemValue', module)
   .addDecorator(withKnobs)
