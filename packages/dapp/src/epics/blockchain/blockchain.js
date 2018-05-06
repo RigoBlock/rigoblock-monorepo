@@ -4,7 +4,7 @@ import 'rxjs/add/operator/mergeMap'
 import { Scheduler } from 'rxjs/Scheduler'
 import { Subject } from 'rxjs/Subject'
 import { actionTypes } from '../../constants/action-types'
-import BlockChainService from './BlockchainService'
+import BlockChainService from './BlockChainService'
 import api from '../../api'
 
 export const blockchainEpic = (action$, store, ts = Scheduler.async) => {

@@ -4,7 +4,11 @@ export default {
   init: () => ({
     type: actionTypes.GLOBAL_INIT
   }),
-  providerEngineInit: () => ({
-    type: actionTypes.PROVIDER_ENGINE_INIT
+  blockchainInit: () => ({
+    type: actionTypes.BLOCKCHAIN_INIT
+  }),
+  blockChainError: err => ({
+    type: actionTypes.BLOCKCHAIN_ERROR,
+    payload: err.toString()
   })
 }
