@@ -3,7 +3,7 @@ import { TestScheduler } from 'rxjs'
 import { actionTypes } from '../../constants/action-types'
 import BlockChainService from './BlockChainService'
 
-describe('BlockChainService', () => {
+describe.skip('BlockChainService', () => {
   it('Dispatches the same action back with COUNTER_SUBTRACT type', () => {
     const inputValues = {
       a: { type: actionTypes.COUNTER_ADD, amount: 1 }
