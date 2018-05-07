@@ -1,8 +1,8 @@
-import React from 'react'
+import './Link.scss'
 import { Link as RouterLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import React from 'react'
 import classNames from 'classnames'
-import './Link.scss'
 
 export const LINK_SIZES = {
   SMALL: 'small',

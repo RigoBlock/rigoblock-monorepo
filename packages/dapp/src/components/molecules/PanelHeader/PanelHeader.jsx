@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Tooltip from '../../atoms/Tooltip'
 import './PanelHeader.scss'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Tooltip from '../../atoms/Tooltip'
 
 const PanelHeader = ({ tooltip, title }) => {
   const tooltipComponent = tooltip && <Tooltip type={'help'} />

@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import ListItem from '../../molecules/ListItem'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const List = ({ items }) => {
   const listItems = items.map(item => (

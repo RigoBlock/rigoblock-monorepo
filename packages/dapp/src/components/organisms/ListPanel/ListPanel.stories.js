@@ -1,8 +1,8 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, text, object } from '@storybook/addon-knobs/react'
-import ListPanel from './ListPanel'
 import '../../_settings/_base.scss'
+import { object, text, withKnobs } from '@storybook/addon-knobs/react'
+import { storiesOf } from '@storybook/react'
+import ListPanel from './ListPanel'
+import React from 'react'
 
 const items = [
   {

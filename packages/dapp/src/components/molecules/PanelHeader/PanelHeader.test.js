@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import PanelHeader from './PanelHeader.jsx'
+import toJson from 'enzyme-to-json'
 
 const props = { title: 'Test Header', tooltip: 'empty tooltip' }
 

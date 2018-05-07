@@ -1,9 +1,9 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import { routerMiddleware } from 'react-router-redux'
+import { applyMiddleware, compose, createStore } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
-import rootReducer from '../reducers'
-import rootEpic from '../epics'
+import { routerMiddleware } from 'react-router-redux'
 import history from './history'
+import rootEpic from '../epics'
+import rootReducer from '../reducers'
 
 export default () => {
   let middlewares = []

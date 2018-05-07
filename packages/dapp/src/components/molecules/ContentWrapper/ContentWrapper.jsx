@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import './ContentWrapper.scss'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const ContentWrapper = ({ header, children }) => {
   return (

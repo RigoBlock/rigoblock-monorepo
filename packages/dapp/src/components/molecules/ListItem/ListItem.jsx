@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import './ListItem.scss'
 import ItemName from '../ItemName'
 import ItemValue from '../../atoms/ItemValue'
-import './ListItem.scss'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const ListItem = ({
   growth,

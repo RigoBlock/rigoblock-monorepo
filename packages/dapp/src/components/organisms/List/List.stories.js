@@ -1,8 +1,8 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, object } from '@storybook/addon-knobs/react'
-import List from './List'
 import '../../_settings/_base.scss'
+import { object, withKnobs } from '@storybook/addon-knobs/react'
+import { storiesOf } from '@storybook/react'
+import List from './List'
+import React from 'react'
 
 const items = [
   {

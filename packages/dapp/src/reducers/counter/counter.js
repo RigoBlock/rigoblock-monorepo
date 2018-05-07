@@ -1,6 +1,6 @@
-import persistentDecorator from '../../store/persistentDecorator'
 import { actionTypes } from '../../constants/action-types'
 import migrations from './counter.migrations'
+import persistentDecorator from '../../store/persistentDecorator'
 
 const VERSION = 0
 

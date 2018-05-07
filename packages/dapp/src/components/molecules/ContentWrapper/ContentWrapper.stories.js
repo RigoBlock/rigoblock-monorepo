@@ -1,7 +1,7 @@
-import React from 'react'
+import '../../_settings/_base.scss'
 import { storiesOf } from '@storybook/react'
 import ContentWrapper from './ContentWrapper'
-import '../../_settings/_base.scss'
+import React from 'react'
 
 const header = (
   <div style={{ height: '60px', padding: '16px', background: 'white' }}>

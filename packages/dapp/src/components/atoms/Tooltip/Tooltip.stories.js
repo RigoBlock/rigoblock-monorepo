@@ -1,7 +1,7 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, text, selectV2 } from '@storybook/addon-knobs/react'
 import '../../_settings/_base.scss'
+import { selectV2, text, withKnobs } from '@storybook/addon-knobs/react'
+import { storiesOf } from '@storybook/react'
+import React from 'react'
 import Tooltip, { TOOLTIP_SIZES } from './Tooltip'
 
 storiesOf('Atoms/Tooltip', module)

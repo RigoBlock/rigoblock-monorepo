@@ -1,1 +1,0 @@
-[{"constant":true,"inputs":[],"name":"estimateNAV","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_drago","type":"address"},{"name":"_exchanges","type":"address[]"}],"name":"estimateAUM","outputs":[{"name":"nav","type":"uint256"}],"payable":false,"type":"function"}]

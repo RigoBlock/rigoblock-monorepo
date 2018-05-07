@@ -9,7 +9,7 @@
 | Package| Description|
 | - | - |
 | [`Rigoblock DApp`](/packages/dapp)                  | Rigoblock DApp                                                     |
-| [`Pool API`](/packages/pool-api)                    | A wrapper library with preset RPC calls to our pools               |
+| [`API`](/packages/api)                    | A wrapper library with preset RPC calls to our contracts               |
 | [`Rigoblock Protocol`](/packages/protocol)          | Rigoblock Protocol                                                 |
 | [`Ganache Bootstrap`](/packages/ganache-bootstrap)  | A bootstrapping package to deploy smart contracts and seed Ganache |
 
@@ -25,10 +25,11 @@ Bootstrap all packages and install all their dependencies
 ```
 yarn bootstrap
 ```
-Build all packages in order. Ganache needs to be launched first as it is required for protocol contracts to be compiled
+Build all packages in order. Ganache needs to be launched first as it is required for protocol contracts to be compiled. Optionally you can open the Ganache client instead of using the CLI.
 ```
-lerna run --scope @rigoblock/dapp ganache --stream
+npx lerna run --loglevel silent --scope @rigoblock/dapp ganache &> /dev/null &
 yarn build
+kill %1
 ```
 
 ### Lint
@@ -38,3 +39,25 @@ Lint all packages
 ```
 yarn lint
 ```
+
+### Publishing packages
+
+To publish the packages in the monorepo to NPM you need to create a new branch and let lerna do the job.
+
+```
+git checkout master
+git checkout -b feature/publish-# # Use an incremental number
+git push -u origin feature/publish-#
+yarn build
+npx lerna publish
+```
+
+Lerna will ask you for new versions and:
+- Updates package version
+- Updates packages that depend on that package
+- Commit
+- Tag the current commit with `package@version`
+- Publish to NPM
+- Push to Github
+
+So at the end you'll need to create a PR with your `feature/publish-#` branch and merge it to master in order to tag properly the main branch.

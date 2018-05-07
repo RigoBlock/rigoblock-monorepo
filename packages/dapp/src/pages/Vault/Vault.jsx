@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
 import BaseTemplate from '../../components/templates/BaseTemplate'
+import React, { Component } from 'react'
 
 class Vault extends Component {
   render() {
