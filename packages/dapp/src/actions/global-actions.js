@@ -10,5 +10,12 @@ export default {
   blockChainError: err => ({
     type: actionTypes.BLOCKCHAIN_ERROR,
     payload: err.toString()
+  }),
+  blockChainLogIn: account => ({
+    type: actionTypes.LOGGED_IN,
+    payload: account
+  }),
+  blockChainLogout: () => ({
+    type: actionTypes.LOGGED_OUT
   })
 }

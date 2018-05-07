@@ -8,5 +8,7 @@ export const actionTypes = keyMirror({
   // Global actions
   GLOBAL_INIT: null,
   BLOCKCHAIN_INIT: null,
-  BLOCKCHAIN_ERROR: null
+  BLOCKCHAIN_ERROR: null,
+  LOGGED_IN: null,
+  LOGGED_OUT: null
 })

@@ -36,17 +36,18 @@ class BlockChainService {
         this.api.web3.eth.getAccounts((err, accounts) => {
           if (err) {
             this.account = null
-            observer.next({ type: 'error' })
+            observer.next(globalActions.blockChainError(err))
           }
 
           if (!accounts.length && this.account) {
             this.account = null
-            observer.next({ type: 'not logged' })
+            observer.next(globalActions.blockChainLogout)
           }
 
           if (accounts[0] != this.account) {
+            console.log(accounts[0])
             this.account = accounts[0]
-            observer.next({ type: 'logged in', payload: this.account })
+            observer.next(globalActions.blockChainLogIn(this.account))
           }
         })
       }
@@ -61,7 +62,6 @@ class BlockChainService {
 
   init() {
     const return$ = fromPromise(this.api.init(), this.scheduler)
-      // .do(() => console.log('returning stuff'))
       .mapTo(globalActions.blockchainInit())
       .merge(this.errorListener())
       .merge(this.connectListener())
