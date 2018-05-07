@@ -1,33 +1,47 @@
-import { ActionsObservable } from 'redux-observable'
+// import { ActionsObservable } from 'redux-observable'
+import { EventEmitter } from 'events'
 import { TestScheduler } from 'rxjs'
-import { actionTypes } from '../../constants/action-types'
-import BlockChainService from './BlockChainService'
+import { of } from 'rxjs/observable/of'
+import BlockChainServiceEpic from '../blockchain/BlockChainService'
+import globalActions from '../../actions/global-actions'
 
-describe.skip('BlockChainService', () => {
-  it('Dispatches the same action back with COUNTER_SUBTRACT type', () => {
-    const inputValues = {
-      a: { type: actionTypes.COUNTER_ADD, amount: 1 }
+const promiseModule = require('rxjs/observable/fromPromise')
+
+const fromPromiseMock = jest.fn(promise => of(promise))
+promiseModule.fromPromise = fromPromiseMock
+
+describe('blockchainServiceEpic', () => {
+  it('returns a blockchain init action', () => {
+    const apiMock = {
+      init: () => Promise.resolve('test'),
+      engine: new EventEmitter(),
+      web3: {
+        eth: {
+          getAccounts: () => {}
+        }
+      }
     }
+
     const expectedValues = {
-      b: { type: actionTypes.COUNTER_SUBTRACT, amount: 1 }
+      b: globalActions.blockchainInit()
     }
 
-    const inputMarble = ''
-    const expectedMarble = 'b|'
+    const expectedMarble = 'b'
 
     const ts = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)
     })
 
-    const action$ = new ActionsObservable(
-      ts.createHotObservable(inputMarble, inputValues)
+    const blockChainServiceEpic = new BlockChainServiceEpic(
+      apiMock,
+      null,
+      null,
+      ts
     )
-
-    const apiMock = { init: () => Promise.resolve('wtf') }
-    const service = new BlockChainService(apiMock, action$, null, ts)
-    const outputAction = service.init()
+    const outputAction = blockChainServiceEpic.init()
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
+
     ts.flush()
   })
 })

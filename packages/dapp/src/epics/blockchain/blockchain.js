@@ -19,6 +19,7 @@ export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
   return action$
     .ofType(actionTypes.GLOBAL_INIT)
     .mergeMap(() => blockchainService.init())
+    .do(() => console.log('returning stuff'))
     .merge(blockchainSubject)
 }
 

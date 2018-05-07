@@ -28,7 +28,7 @@ class BlockChainService {
     })
   }
 
-  connectListener() {
+  connectionListener() {
     return Observable.create(observer => {
       let accountInterval
 
@@ -45,7 +45,6 @@ class BlockChainService {
           }
 
           if (accounts[0] != this.account) {
-            console.log(accounts[0])
             this.account = accounts[0]
             observer.next(globalActions.blockChainLogIn(this.account))
           }
@@ -64,7 +63,7 @@ class BlockChainService {
     const return$ = fromPromise(this.api.init(), this.scheduler)
       .mapTo(globalActions.blockchainInit())
       .merge(this.errorListener())
-      .merge(this.connectListener())
+      .merge(this.connectionListener())
 
     return this.wrapError(return$)
   }
