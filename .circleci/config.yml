@@ -89,6 +89,7 @@ jobs:
       - image: *node_image
     steps:
       - checkout
+      - *attach_workspace
       - restore_cache:
           key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
@@ -269,12 +270,12 @@ workflows:
       - build-protocol:
           requires:
             - test-unit-dapp
-      - build-dapp:
-          requires:
-            - build-protocol
       - build-api:
           requires:
             - build-protocol
+      - build-dapp:
+          requires:
+            - build-api
       - test-feature-dapp:
           requires:
             - build-dapp

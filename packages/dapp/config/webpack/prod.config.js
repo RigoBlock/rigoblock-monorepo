@@ -74,7 +74,6 @@ module.exports = {
       cacheGroups: {
         vendor: {
           test: /node_modules/,
-          chunks: 'initial',
           name: 'vendor',
           filename: 'static/js/[id].[hash].vendor.bundle.js',
           enforce: true

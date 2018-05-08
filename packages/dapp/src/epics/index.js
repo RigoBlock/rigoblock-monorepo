@@ -1,4 +1,4 @@
 import { combineEpics } from 'redux-observable'
-import counter from './counter'
+import blockchain from './blockchain'
 
-export default combineEpics(...counter)
+export default combineEpics(...[...blockchain])
