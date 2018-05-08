@@ -39,7 +39,7 @@ jobs:
             - packages/ganache-bootstrap/node_modules
             - packages/api/node_modules
             - packages/protocol/node_modules
-            - ~/.cache/yarn
+            - .cache/yarn
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -48,7 +48,7 @@ jobs:
             - packages/ganache-bootstrap/node_modules
             - packages/api/node_modules
             - packages/protocol/node_modules
-            - ~/.cache/yarn
+            - .cache/yarn
 
   build-protocol:
     working_directory: *workspace_root
