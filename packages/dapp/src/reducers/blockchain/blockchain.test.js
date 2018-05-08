@@ -1,7 +1,7 @@
-import actions from '../../actions/global-actions'
+import actions from '../../actions/blockchain-actions'
 import blockChainReducer from './blockchain'
 
-describe('global reducer', () => {
+describe('blockchain reducer', () => {
   const blockChainTest = reducerTester(blockChainReducer)
 
   it('returns the initial state', () => {

@@ -1,7 +1,7 @@
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import BlockChainServiceEpic from '../blockchain/BlockChainService'
-import globalActions from '../../actions/global-actions'
+import actions from '../../actions/blockchain-actions'
 
 describe('epic for blockchain services', () => {
   const promiseModule = require('rxjs/observable/fromPromise')
@@ -31,7 +31,7 @@ describe('epic for blockchain services', () => {
 
   it('returns a blockchain init action', () => {
     const expectedValues = {
-      b: globalActions.blockChainInit()
+      b: actions.blockChainInit()
     }
 
     const expectedMarble = 'b'
@@ -63,7 +63,7 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        b: globalActions.blockChainInit()
+        b: actions.blockChainInit()
       }
 
       const expectedMarble = 'b'
@@ -101,8 +101,8 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        a: globalActions.blockChainInit(),
-        b: globalActions.blockChainError(testError)
+        a: actions.blockChainInit(),
+        b: actions.blockChainError(testError)
       }
 
       const expectedMarble = '(ab)'
@@ -136,10 +136,8 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        a: globalActions.blockChainInit(),
-        b: globalActions.blockChainLogIn(
-          '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-        )
+        a: actions.blockChainInit(),
+        b: actions.blockChainLogIn('0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196')
       }
 
       const expectedMarble = '(ab)'
@@ -172,8 +170,8 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        a: globalActions.blockChainInit(),
-        b: globalActions.blockChainLogout()
+        a: actions.blockChainInit(),
+        b: actions.blockChainLogout()
       }
 
       const expectedMarble = '(ab)'
@@ -209,8 +207,8 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        a: globalActions.blockChainInit(),
-        b: globalActions.blockChainError(testError)
+        a: actions.blockChainInit(),
+        b: actions.blockChainError(testError)
       }
 
       const expectedMarble = '(ab)'

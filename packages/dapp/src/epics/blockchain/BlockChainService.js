@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
-import globalActions from '../../actions/global-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 
 class BlockChainService {
   constructor(api, action$, subject$, ts = Scheduler.async) {
@@ -19,7 +19,7 @@ class BlockChainService {
     return Observable.create(observer => {
       const onError = err => {
         if (err) {
-          observer.next(globalActions.blockChainError(err))
+          observer.next(blockChainActions.blockChainError(err))
         }
       }
       this.api.engine.on('error', onError)
@@ -36,17 +36,17 @@ class BlockChainService {
         this.api.web3.eth.getAccounts((err, accounts) => {
           if (err) {
             this.account = null
-            observer.next(globalActions.blockChainError(err))
+            observer.next(blockChainActions.blockChainError(err))
           }
 
           if (!accounts.length && this.account) {
             this.account = null
-            observer.next(globalActions.blockChainLogout())
+            observer.next(blockChainActions.blockChainLogout())
           }
 
           if (accounts[0] != this.account) {
             this.account = accounts[0]
-            observer.next(globalActions.blockChainLogIn(this.account))
+            observer.next(blockChainActions.blockChainLogIn(this.account))
           }
         })
       }
@@ -61,7 +61,7 @@ class BlockChainService {
 
   init() {
     const return$ = fromPromise(this.api.init(), this.scheduler)
-      .mapTo(globalActions.blockChainInit())
+      .mapTo(blockChainActions.blockChainInit())
       .merge(this.errorListener())
       .merge(this.connectionListener())
 
@@ -70,7 +70,7 @@ class BlockChainService {
 
   wrapError(action$) {
     return action$.catch(err => {
-      return of(globalActions.blockChainError(err))
+      return of(blockChainActions.blockChainError(err))
     })
   }
 }

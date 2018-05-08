@@ -1,4 +1,4 @@
-import actions from '../../actions/global-actions'
+import actions from '../../actions/blockchain-actions'
 import globalReducer from './global'
 
 describe('global reducer', () => {
