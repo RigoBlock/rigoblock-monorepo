@@ -9,25 +9,29 @@ class Contract extends ContractModels {
       contractName => contractsMap[contractName].address
     )
 
-    const contractsPromises: Array<
-      Promise<TypeChainContract>
-    > = deployedContracts.map(async contractName => {
-      const contract: TypeChainContract = await import(`./models/${contractName}`)
-      Object.assign(
-        contract[contractName].prototype,
-        ContractExtension.prototype
-      )
-      return new contract[contractName](
-        web3,
-        contractsMap[contractName].address
-      )
-    })
+    type Return = {
+      0?: string
+      1?: TypeChainContract
+    }
+
+    const contractsPromises: Array<Promise<Return[]>> = deployedContracts.map(
+      async contractName => {
+        const contract: TypeChainContract = await import(`./models/${contractName}`)
+        Object.assign(
+          contract[contractName].prototype,
+          ContractExtension.prototype
+        )
+        return [
+          contractName,
+          new contract[contractName](web3, contractsMap[contractName].address)
+        ]
+      }
+    )
 
     const contracts = await Promise.all(contractsPromises)
     contracts.forEach(contract => {
-      Object.defineProperty(this, contract.constructor.name, {
-        value: contract,
-        writable: false
+      Object.defineProperty(this, contract[0].toString(), {
+        value: contract[1]
       })
     })
 
