@@ -9,6 +9,7 @@ const initialState = {
 function globalReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.BLOCKCHAIN_ERROR:
+      console.log(state)
       return {
         ...state,
         error: action.payload

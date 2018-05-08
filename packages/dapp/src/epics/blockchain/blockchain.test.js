@@ -3,7 +3,7 @@ import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import globalActions from '../../actions/global-actions'
 
-const initAction = globalActions.blockchainInit()
+const initAction = globalActions.blockChainInit()
 
 class BlockChainServiceMock {
   init = () => of(initAction)

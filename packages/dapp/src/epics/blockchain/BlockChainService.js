@@ -41,7 +41,7 @@ class BlockChainService {
 
           if (!accounts.length && this.account) {
             this.account = null
-            observer.next(globalActions.blockChainLogout)
+            observer.next(globalActions.blockChainLogout())
           }
 
           if (accounts[0] != this.account) {
@@ -61,7 +61,7 @@ class BlockChainService {
 
   init() {
     const return$ = fromPromise(this.api.init(), this.scheduler)
-      .mapTo(globalActions.blockchainInit())
+      .mapTo(globalActions.blockChainInit())
       .merge(this.errorListener())
       .merge(this.connectionListener())
 
@@ -69,7 +69,9 @@ class BlockChainService {
   }
 
   wrapError(action$) {
-    return action$.catch(err => of(globalActions.blockChainError(err)))
+    return action$.catch(err => {
+      return of(globalActions.blockChainError(err))
+    })
   }
 }
 
