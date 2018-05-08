@@ -15,7 +15,7 @@ function blockChainReducer(state = initialState, action) {
     case actionTypes.LOGGED_OUT:
       return {
         ...state,
-        account: ''
+        account: initialState.account
       }
     default:
       return state
