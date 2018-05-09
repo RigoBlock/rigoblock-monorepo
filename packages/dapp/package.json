@@ -132,6 +132,10 @@
       "enzyme-to-json/serializer"
     ]
   },
+  "jest-junit": {
+    "suiteName": "jest dapp tests",
+    "output": "../../reports/junit/dapp/test-results.xml"
+  },
   "babel": {
     "presets": [
       "react-app"
