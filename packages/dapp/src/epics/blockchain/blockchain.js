@@ -6,6 +6,7 @@ import { actionTypes } from '../../constants/action-types'
 import { of } from 'rxjs/observable/of'
 import { push } from 'react-router-redux'
 import BlockChainService from './BlockChainService'
+import ROUTES from '../../constants/routes'
 import api from '../../api'
 
 export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
@@ -19,7 +20,7 @@ export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
   return action$.ofType(actionTypes.GLOBAL_INIT).mergeMap(() => {
     return window.web3
       ? blockchainService.init().merge(blockchainSubject)
-      : of(push('/login'))
+      : of(push(ROUTES.LOGIN))
   })
 }
 

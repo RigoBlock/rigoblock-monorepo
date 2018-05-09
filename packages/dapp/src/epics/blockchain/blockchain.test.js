@@ -1,6 +1,8 @@
 import { ActionsObservable } from 'redux-observable'
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
+import { push } from 'react-router-redux'
+import ROUTES from '../../constants/routes'
 import blockChainActions from '../../actions/blockchain-actions'
 import globalActions from '../../actions/global-actions'
 
@@ -13,14 +15,6 @@ class BlockChainServiceMock {
 jest.doMock('./BlockChainService', () => BlockChainServiceMock)
 jest.doMock('../../api', () => ({}))
 const blockchainEpic = require('./blockchain').blockchainEpic
-
-const pushAction = () => ({
-  type: '@@router/CALL_HISTORY_METHOD',
-  payload: {
-    args: ['/login'],
-    method: 'push'
-  }
-})
 
 describe('blockchainEpic', () => {
   beforeEach(() => {
@@ -55,7 +49,7 @@ describe('blockchainEpic', () => {
       a: globalActions.init()
     }
     const expectedValues = {
-      b: pushAction()
+      b: push(ROUTES.LOGIN)
     }
 
     const inputMarble = 'a'

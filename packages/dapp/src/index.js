@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'
 import Help from './pages/Help'
 import Login from './pages/Login'
 import Preferences from './pages/Preferences'
+import ROUTES from './constants/routes'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import globalActions from './actions/global-actions'
@@ -20,10 +21,14 @@ ReactDOM.render(
     <PersistGate loading={null} persistor={persistor}>
       <ConnectedRouter history={history}>
         <div>
-          <Route exact path="/" render={() => <Dashboard />} />
-          <Route exact path="/login" render={() => <Login />} />
-          <Route exact path="/preferences" render={() => <Preferences />} />
-          <Route exact path="/help" render={() => <Help />} />
+          <Route exact path={ROUTES.DASHBOARD} render={() => <Dashboard />} />
+          <Route exact path={ROUTES.LOGIN} render={() => <Login />} />
+          <Route
+            exact
+            path={ROUTES.PREFERENCES}
+            render={() => <Preferences />}
+          />
+          <Route exact path={ROUTES.HELP} render={() => <Help />} />
         </div>
       </ConnectedRouter>
     </PersistGate>
