@@ -39,7 +39,16 @@ jobs:
             - packages/ganache-bootstrap/node_modules
             - packages/api/node_modules
             - packages/protocol/node_modules
-            - ~/.cache/yarn
+            - .cache/yarn
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - node_modules
+            - packages/dapp/node_modules
+            - packages/ganache-bootstrap/node_modules
+            - packages/api/node_modules
+            - packages/protocol/node_modules
+            - .cache/yarn
 
   build-protocol:
     working_directory: *workspace_root
@@ -50,8 +59,7 @@ jobs:
       - image: *node_image
     steps:
       - checkout
-      - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+      - *attach_workspace
       - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -90,8 +98,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Building dist
           command: yarn build:dapp
@@ -110,8 +116,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Building dist
           command: yarn build:api
@@ -128,8 +132,7 @@ jobs:
       - image: circleci/node:8.10-stretch
     steps:
       - checkout
-      - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+      - *attach_workspace
       - run:
           name: JS unit tests
           command: npx lerna run --scope @rigoblock/dapp test:unit --stream
@@ -143,8 +146,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -179,8 +180,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Install Flynn CLI
           command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
@@ -223,8 +222,6 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
       - run:
           name: Install Flynn CLI
           command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
