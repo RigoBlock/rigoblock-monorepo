@@ -96,7 +96,7 @@ async () => {
   })
 
   // fetch all VaultCreated events from block 0
-  poolsApi.contract.VaultEventful.rawWeb3Contract
+  api.contract.VaultEventful.rawWeb3Contract
     .VaultCreated({}, { fromBlock: 0 })
     .get((err, data) => data.map(e => console.log(e.args)))
 }
