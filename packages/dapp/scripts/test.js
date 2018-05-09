@@ -25,7 +25,7 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
 }
 
 if (process.env.CI) {
-  argv.push('--runInBand', '--testResultsProcessor=./node_modules/jest-junit')
+  argv.push('--runInBand')
 }
 
 jest.run(argv)

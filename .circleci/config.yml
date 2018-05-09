@@ -135,11 +135,11 @@ jobs:
       - *attach_workspace
       - run:
           name: JS unit tests
-          command: npx lerna run --scope @rigoblock/dapp test:unit --stream
+          command: npx lerna run --scope @rigoblock/dapp test:cov --stream
       - store_test_results:
-          path: reports/junit/dapp
+          path: packages/dapp/coverage
       - store_artifacts:
-          path: reports/junit/dapp
+          path: packages/dapp/coverage
 
   test-feature-dapp:
     working_directory: *workspace_root

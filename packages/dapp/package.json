@@ -15,7 +15,7 @@
     "test:unit:debug": "node --inspect-brk scripts/test.js --env=jsdom",
     "test:feature": "codeceptjs run --steps",
     "test:feature:debug": "codeceptjs run --debug",
-    "cov": "npm run test:unit -- --coverage && open ./coverage/lcov-report/index.html",
+    "test:cov": "npm run test:unit -- --coverage",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "storybook": "start-storybook -p 6006 -c .storybook",
     "storybook:build": "build-storybook -c .storybook -o dist-storybook"
@@ -57,7 +57,6 @@
     "ganache-cli": "^6.1.0",
     "html-webpack-plugin": "3.0.7",
     "jest": "20.0.4",
-    "jest-junit": "^3.7.0",
     "keymirror": "^0.1.1",
     "localforage": "^1.6.0",
     "node-sass": "^4.7.2",
@@ -131,10 +130,6 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
-  },
-  "jest-junit": {
-    "suiteName": "jest dapp tests",
-    "output": "../../reports/junit/dapp/test-results.xml"
   },
   "babel": {
     "presets": [
