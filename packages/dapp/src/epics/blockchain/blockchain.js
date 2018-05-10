@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject'
 import { actionTypes } from '../../constants/action-types'
 import BlockChainService from './BlockChainService'
 import api from '../../api'
+import blockChainActions from '../../actions/blockchain-actions'
 
 export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
   const blockchainSubject = new Subject()
@@ -15,12 +16,12 @@ export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
     blockchainSubject,
     ts
   )
-  console.log(window.location.pathname)
 
-  return action$
-    .filter(action => action.type === actionTypes.GLOBAL_INIT)
-    .mergeMap(() => blockchainService.init())
-    .merge(blockchainSubject)
+  return action$.ofType(actionTypes.GLOBAL_INIT).mergeMap(() => {
+    return window.web3
+      ? blockchainService.init().merge(blockchainSubject)
+      : of(blockChainActions.blockChainLogout())
+  })
 }
 
 export default [blockchainEpic]

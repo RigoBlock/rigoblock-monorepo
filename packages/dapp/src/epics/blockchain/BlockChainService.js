@@ -44,7 +44,7 @@ class BlockChainService {
             observer.next(blockChainActions.blockChainLogout())
           }
 
-          if (accounts[0] != this.account) {
+          if (accounts[0] !== this.account) {
             this.account = accounts[0]
             observer.next(blockChainActions.blockChainLogIn(this.account))
           }
