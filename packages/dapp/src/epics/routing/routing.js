@@ -8,7 +8,7 @@ import { of } from 'rxjs/observable/of'
 import ROUTES from '../../constants/routes'
 import routerActions from '../../actions/router-actions'
 
-export const logOutEpic = (action$, store) => {
+export const logoutEpic = (action$, store) => {
   const action$1 = action$
     .filter(
       action =>
@@ -19,7 +19,7 @@ export const logOutEpic = (action$, store) => {
       const state = store.getState()
       return !state.blockChain.account &&
         window.location.pathname !== ROUTES.LOGIN
-        ? of(routerActions.logOut())
+        ? of(routerActions.logout())
         : empty()
     })
 
@@ -29,19 +29,19 @@ export const logOutEpic = (action$, store) => {
         action.type === actionTypes.LOGGED_OUT ||
         action.type === actionTypes.BLOCKCHAIN_ERROR
     )
-    .mergeMap(() => of(routerActions.logOut()))
+    .mergeMap(() => of(routerActions.logout()))
 
   return merge(action$1, action$2)
 }
 
-export const logInEpic = action$ => {
+export const loginEpic = action$ => {
   return action$
     .filter(action => action.type === actionTypes.LOGGED_IN)
     .mergeMap(() => {
       return window.location.pathname === ROUTES.LOGIN
-        ? of(routerActions.logIn())
+        ? of(routerActions.login())
         : empty()
     })
 }
 
-export default [logOutEpic, logInEpic]
+export default [logoutEpic, loginEpic]
