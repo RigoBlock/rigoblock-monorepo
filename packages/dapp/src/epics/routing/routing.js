@@ -1,5 +1,6 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/mergeMap'
+import { LOCATION_CHANGE } from 'react-router-redux'
 import { actionTypes } from '../../constants/action-types'
 import { empty } from 'rxjs/observable/empty'
 import { merge } from 'rxjs/observable/merge'
@@ -9,7 +10,11 @@ import routerActions from '../../actions/router-actions'
 
 export const logOutEpic = (action$, store) => {
   const action$1 = action$
-    .filter(action => action.type === '@@router/LOCATION_CHANGE')
+    .filter(
+      action =>
+        action.type === LOCATION_CHANGE ||
+        action.type === actionTypes.GLOBAL_INIT
+    )
     .mergeMap(() => {
       const state = store.getState()
       return !state.blockChain.account &&
@@ -29,4 +34,14 @@ export const logOutEpic = (action$, store) => {
   return merge(action$1, action$2)
 }
 
-export default [logOutEpic]
+export const logInEpic = action$ => {
+  return action$
+    .filter(action => action.type === actionTypes.LOGGED_IN)
+    .mergeMap(() => {
+      return window.location.pathname === ROUTES.LOGIN
+        ? of(routerActions.logIn())
+        : empty()
+    })
+}
+
+export default [logOutEpic, logInEpic]
