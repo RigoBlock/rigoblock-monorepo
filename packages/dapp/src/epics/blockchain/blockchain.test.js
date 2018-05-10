@@ -3,7 +3,6 @@ import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
 import globalActions from '../../actions/global-actions'
-import routerActions from '../../actions/router-actions'
 
 const initAction = blockChainActions.blockChainInit()
 
@@ -48,7 +47,7 @@ describe('blockchainEpic', () => {
       a: globalActions.init()
     }
     const expectedValues = {
-      b: routerActions.logOut()
+      b: blockChainActions.blockChainLogout()
     }
 
     const inputMarble = 'a'
