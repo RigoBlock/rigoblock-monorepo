@@ -1,10 +1,13 @@
 import 'rxjs/add/operator/catch'
+// import 'rxjs/add/operator/concat'
 import 'rxjs/add/operator/mapTo'
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
+import { concat } from 'rxjs/observable/concat'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
+import routerActions from '../../actions/router-actions'
 
 class BlockChainService {
   constructor(api, action$, subject$, ts = Scheduler.async) {
@@ -37,16 +40,20 @@ class BlockChainService {
           if (err) {
             this.account = null
             observer.next(blockChainActions.blockChainError(err))
+            observer.next(routerActions.logOut())
+            return
           }
 
-          if (!accounts.length && this.account) {
+          if (!accounts.length) {
             this.account = null
             observer.next(blockChainActions.blockChainLogout())
+            observer.next(routerActions.logOut())
           }
 
           if (accounts[0] != this.account) {
             this.account = accounts[0]
             observer.next(blockChainActions.blockChainLogIn(this.account))
+            observer.next(routerActions.logIn())
           }
         })
       }
@@ -70,7 +77,10 @@ class BlockChainService {
 
   wrapError(action$) {
     return action$.catch(err => {
-      return of(blockChainActions.blockChainError(err))
+      return concat(
+        of(blockChainActions.blockChainError(err)),
+        of(routerActions.logOut())
+      )
     })
   }
 }

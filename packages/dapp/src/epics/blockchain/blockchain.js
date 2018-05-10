@@ -4,10 +4,9 @@ import { Scheduler } from 'rxjs/Scheduler'
 import { Subject } from 'rxjs/Subject'
 import { actionTypes } from '../../constants/action-types'
 import { of } from 'rxjs/observable/of'
-import { push } from 'react-router-redux'
 import BlockChainService from './BlockChainService'
-import ROUTES from '../../constants/routes'
 import api from '../../api'
+import routerActions from '../../actions/router-actions'
 
 export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
   const blockchainSubject = new Subject()
@@ -20,7 +19,7 @@ export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
   return action$.ofType(actionTypes.GLOBAL_INIT).mergeMap(() => {
     return window.web3
       ? blockchainService.init().merge(blockchainSubject)
-      : of(push(ROUTES.LOGIN))
+      : of(routerActions.logOut())
   })
 }
 

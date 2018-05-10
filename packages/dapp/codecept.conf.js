@@ -4,6 +4,9 @@ const config = {
     Puppeteer: {
       url: 'http://localhost:8080',
       show: true
+    },
+    Web3Puppeteer: {
+      require: './helpers/web3Puppeteer.js'
     }
   },
   include: {

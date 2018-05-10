@@ -1,10 +1,9 @@
 import { ActionsObservable } from 'redux-observable'
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
-import { push } from 'react-router-redux'
-import ROUTES from '../../constants/routes'
 import blockChainActions from '../../actions/blockchain-actions'
 import globalActions from '../../actions/global-actions'
+import routerActions from '../../actions/router-actions'
 
 const initAction = blockChainActions.blockChainInit()
 
@@ -49,7 +48,7 @@ describe('blockchainEpic', () => {
       a: globalActions.init()
     }
     const expectedValues = {
-      b: push(ROUTES.LOGIN)
+      b: routerActions.logOut()
     }
 
     const inputMarble = 'a'
