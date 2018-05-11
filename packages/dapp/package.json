@@ -1,6 +1,6 @@
 {
   "name": "@rigoblock/dapp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "scripts": {
     "start": "serve -s dist -p 8080",
@@ -15,7 +15,7 @@
     "test:unit:debug": "node --inspect-brk scripts/test.js --env=jsdom",
     "test:feature": "codeceptjs run --steps",
     "test:feature:debug": "codeceptjs run --debug",
-    "cov": "npm run test:unit -- --coverage",
+    "test:cov": "npm run test:unit -- --coverage",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "storybook": "start-storybook -p 6006 -c .storybook",
     "storybook:build": "build-storybook -c .storybook -o dist-storybook"
@@ -24,8 +24,8 @@
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
   },
   "devDependencies": {
-    "@rigoblock/api": "^0.1.0",
-    "@rigoblock/ganache-bootstrap": "^0.1.4",
+    "@rigoblock/api": "^0.1.1",
+    "@rigoblock/ganache-bootstrap": "^0.1.5",
     "@storybook/addon-info": "^3.4.2",
     "@storybook/addon-knobs": "^3.4.2",
     "@storybook/addon-options": "^3.4.2",
@@ -93,8 +93,14 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,mjs}"
+      "src/**/*.{js,jsx}",
+      "!src/**/*.stories.js",
+      "!src/components/**/index.js",
+      "!src/pages/**/index.js",
+      "!src/reducers/**/index.js",
+      "!src/epics/**/index.js"
     ],
+    "coverageDirectory": "../../coverage/dapp",
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
