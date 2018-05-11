@@ -1,35 +1,45 @@
 import { TestScheduler } from 'rxjs'
+import { _throw } from 'rxjs/observable/throw'
 import { of } from 'rxjs/observable/of'
-import BlockChainServiceEpic from '../blockchain/BlockChainService'
 import actions from '../../actions/blockchain-actions'
 
 describe('epic for blockchain services', () => {
-  const promiseModule = require('rxjs/observable/fromPromise')
-
   const testError = new Error('test error')
-  const fromPromiseMock = jest.fn(promise => of(promise))
-  promiseModule.fromPromise = fromPromiseMock
-  const apiMock = {
-    init: () => Promise.resolve(),
-    engine: {
-      on: (x, cb) => cb()
-    },
-    web3: {
-      eth: {
-        getAccounts: () => {}
-      }
-    }
-  }
+  let BlockChainServiceEpic
+  let fromPromiseSpy
+  let apiMock
 
   beforeEach(() => {
-    jest.useFakeTimers()
+    fromPromiseSpy = jest
+      .fn()
+      .mockReturnValueOnce(of(['just something to trigger api.init()']))
+
+    jest.resetModules()
+    jest.doMock('rxjs/observable/fromPromise', () => ({
+      fromPromise: fromPromiseSpy
+    }))
+
+    apiMock = {
+      init: () => Promise.resolve(),
+      engine: {
+        on: (x, cb) => cb(),
+        removeListener: () => {}
+      },
+      web3: {
+        getAvailableAddressesAsync: jest.fn(() => Promise.resolve([]))
+      }
+    }
+
+    BlockChainServiceEpic = require('../blockchain/BlockChainService').default
   })
 
   afterEach(() => {
-    jest.clearAllTimers()
+    fromPromiseSpy.mockReset()
   })
 
   it('returns a blockchain init action', () => {
+    fromPromiseSpy.mockReturnValueOnce(of([]))
+
     const expectedValues = {
       b: actions.blockChainInit()
     }
@@ -53,26 +63,31 @@ describe('epic for blockchain services', () => {
   })
   describe('connection listener', () => {
     it('gets called every 1000 milliseconds', () => {
-      const mockApi = {
-        ...apiMock,
-        web3: {
-          eth: {
-            getAccounts: jest.fn(callback => callback(null, []))
-          }
-        }
-      }
+      const address1 = 'address1'
+      const address2 = 'address2'
+
+      fromPromiseSpy
+        .mockReturnValueOnce(of([address1]))
+        .mockReturnValueOnce(of([address2]))
+        .mockReturnValueOnce(of([address1]))
 
       const expectedValues = {
-        b: actions.blockChainInit()
+        a: actions.blockChainInit(),
+        b: actions.blockChainLogIn(address1),
+        c: actions.blockChainLogIn(address2)
       }
 
-      const expectedMarble = 'b'
+      const expectedMarble =
+        '(ab)' +
+        '------------------------------------------------------------------------------------------------c' +
+        '---------------------------------------------------------------------------------------------------b'
+
       const ts = new TestScheduler((actual, expected) => {
         expect(actual).toEqual(expected)
       })
 
       const blockChainServiceEpic = new BlockChainServiceEpic(
-        mockApi,
+        apiMock,
         null,
         null,
         ts
@@ -81,38 +96,27 @@ describe('epic for blockchain services', () => {
 
       ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
 
+      ts.maxFrames = 2000
+
       ts.flush()
-
-      jest.runTimersToTime(2000)
-
-      expect(
-        blockChainServiceEpic.api.web3.eth.getAccounts
-      ).toHaveBeenCalledTimes(3)
     })
 
-    it('sends blockChainError action if web3 getAccounts fails', () => {
-      const mockApi = {
-        ...apiMock,
-        web3: {
-          eth: {
-            getAccounts: callback => callback(testError, [])
-          }
-        }
-      }
+    it('sends blockChainError action if web3 getAvailableAddressesAsync fails', () => {
+      fromPromiseSpy.mockReturnValueOnce(_throw(testError))
 
       const expectedValues = {
         a: actions.blockChainInit(),
         b: actions.blockChainError(testError)
       }
 
-      const expectedMarble = '(ab)'
+      const expectedMarble = '(ab|)'
 
       const ts = new TestScheduler((actual, expected) => {
         expect(actual).toEqual(expected)
       })
 
       const blockChainServiceEpic = new BlockChainServiceEpic(
-        mockApi,
+        apiMock,
         null,
         null,
         ts
@@ -125,19 +129,12 @@ describe('epic for blockchain services', () => {
     })
 
     it('sends blockChainLogin action if web3 retrieves accounts list', () => {
-      const mockApi = {
-        ...apiMock,
-        web3: {
-          eth: {
-            getAccounts: callback =>
-              callback(null, ['0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'])
-          }
-        }
-      }
+      const address = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      fromPromiseSpy.mockReturnValueOnce(of([address]))
 
       const expectedValues = {
         a: actions.blockChainInit(),
-        b: actions.blockChainLogIn('0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196')
+        b: actions.blockChainLogIn(address)
       }
 
       const expectedMarble = '(ab)'
@@ -147,7 +144,7 @@ describe('epic for blockchain services', () => {
       })
 
       const blockChainServiceEpic = new BlockChainServiceEpic(
-        mockApi,
+        apiMock,
         null,
         null,
         ts
@@ -160,14 +157,7 @@ describe('epic for blockchain services', () => {
     })
 
     it("sends blockChainLogout action if web3 doesn't retrieve accounts list", () => {
-      const mockApi = {
-        ...apiMock,
-        web3: {
-          eth: {
-            getAccounts: callback => callback(null, [])
-          }
-        }
-      }
+      fromPromiseSpy.mockReturnValueOnce(of([]))
 
       const expectedValues = {
         a: actions.blockChainInit(),
@@ -181,7 +171,7 @@ describe('epic for blockchain services', () => {
       })
 
       const blockChainServiceEpic = new BlockChainServiceEpic(
-        mockApi,
+        apiMock,
         null,
         null,
         ts
@@ -199,10 +189,13 @@ describe('epic for blockchain services', () => {
   })
   describe('error listener', () => {
     it('listens for connectivity issues', () => {
+      fromPromiseSpy.mockReturnValueOnce(of([]))
+
       const mockApi = {
         ...apiMock,
         engine: {
-          on: (_, cb) => cb(testError)
+          on: (_, cb) => cb(testError),
+          removeListener: () => {}
         }
       }
 
