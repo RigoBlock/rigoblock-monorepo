@@ -5,3 +5,6 @@ lerna-debug.log*
 yarn-error.log*
 .vscode
 .idea
+
+# testing
+coverage
