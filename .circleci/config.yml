@@ -135,7 +135,9 @@ jobs:
       - *attach_workspace
       - run:
           name: JS unit tests
-          command: npx lerna run --scope @rigoblock/dapp test:unit --stream
+          command: npx lerna run --scope @rigoblock/dapp test:cov --stream
+      - store_artifacts:
+          path: coverage/dapp/lcov-report
 
   test-feature-dapp:
     working_directory: *workspace_root
