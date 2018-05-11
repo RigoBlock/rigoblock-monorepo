@@ -9,8 +9,8 @@ export default () => {
   let middlewares = []
   let storeCreator = createStore
 
-  middlewares.push(applyMiddleware(createEpicMiddleware(rootEpic)))
   middlewares.push(applyMiddleware(routerMiddleware(history)))
+  middlewares.push(applyMiddleware(createEpicMiddleware(rootEpic)))
 
   if (window !== null && window.devToolsExtension) {
     middlewares.push(window.devToolsExtension())

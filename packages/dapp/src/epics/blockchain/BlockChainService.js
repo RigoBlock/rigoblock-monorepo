@@ -69,7 +69,9 @@ class BlockChainService {
   }
 
   wrapError(action$) {
-    return action$.catch(err => of(blockChainActions.blockChainError(err)))
+    return action$.catch(err => {
+      return of(blockChainActions.blockChainError(err))
+    })
   }
 }
 

@@ -1,7 +1,7 @@
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import BlockChainServiceEpic from '../blockchain/BlockChainService'
-import blockChainActions from '../../actions/blockchain-actions'
+import actions from '../../actions/blockchain-actions'
 
 describe('epic for blockchain services', () => {
   const promiseModule = require('rxjs/observable/fromPromise')
@@ -31,7 +31,7 @@ describe('epic for blockchain services', () => {
 
   it('returns a blockchain init action', () => {
     const expectedValues = {
-      b: blockChainActions.blockChainInit()
+      b: actions.blockChainInit()
     }
 
     const expectedMarble = 'b'
@@ -57,21 +57,16 @@ describe('epic for blockchain services', () => {
         ...apiMock,
         web3: {
           eth: {
-            getAccounts: jest.fn(callback =>
-              callback(null, ['0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'])
-            )
+            getAccounts: jest.fn(callback => callback(null, []))
           }
         }
       }
 
       const expectedValues = {
-        a: blockChainActions.blockChainInit(),
-        b: blockChainActions.blockChainLogIn(
-          '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-        )
+        b: actions.blockChainInit()
       }
 
-      const expectedMarble = '(ab)'
+      const expectedMarble = 'b'
       const ts = new TestScheduler((actual, expected) => {
         expect(actual).toEqual(expected)
       })
@@ -106,8 +101,8 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        a: blockChainActions.blockChainInit(),
-        b: blockChainActions.blockChainError(testError)
+        a: actions.blockChainInit(),
+        b: actions.blockChainError(testError)
       }
 
       const expectedMarble = '(ab)'
@@ -141,10 +136,8 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        a: blockChainActions.blockChainInit(),
-        b: blockChainActions.blockChainLogIn(
-          '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-        )
+        a: actions.blockChainInit(),
+        b: actions.blockChainLogIn('0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196')
       }
 
       const expectedMarble = '(ab)'
@@ -177,8 +170,8 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        a: blockChainActions.blockChainInit(),
-        b: blockChainActions.blockChainLogout()
+        a: actions.blockChainInit(),
+        b: actions.blockChainLogout()
       }
 
       const expectedMarble = '(ab)'
@@ -214,8 +207,8 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        a: blockChainActions.blockChainInit(),
-        b: blockChainActions.blockChainError(testError)
+        a: actions.blockChainInit(),
+        b: actions.blockChainError(testError)
       }
 
       const expectedMarble = '(ab)'
