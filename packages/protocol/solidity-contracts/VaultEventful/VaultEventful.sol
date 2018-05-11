@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
@@ -26,7 +26,7 @@ import { VaultEventfulFace } from "./VaultEventfulFace.sol";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract VaultEventful is VaultEventfulFace {
 
-    string public constant VERSION = 'DH 0.4.1';
+    string public constant VERSION = 'DH 0.4.2';
 
     address public AUTHORITY;
 
@@ -126,7 +126,7 @@ contract VaultEventful is VaultEventfulFace {
         _;
     }
 
-    function VaultEventful(address _authority) public {
+    constructor(address _authority) public {
         AUTHORITY = _authority;
     }
 

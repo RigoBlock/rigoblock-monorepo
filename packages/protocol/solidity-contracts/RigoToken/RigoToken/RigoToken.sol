@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { InflationFace as Inflation } from "../Inflation/InflationFace.sol";
@@ -54,7 +54,7 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
         _;
     }
 
-    function RigoToken(address _setMinter, address _setRigoblock) public {
+    constructor(address _setMinter, address _setRigoblock) public {
         minter = _setMinter;
         rigoblock = _setRigoblock;
         balances[msg.sender] = totalSupply;

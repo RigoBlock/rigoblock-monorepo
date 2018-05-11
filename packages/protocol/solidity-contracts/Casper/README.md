@@ -1,7 +1,7 @@
 # Casper Interface Contract
 a mock casper contract interface
 
-## Casper contract version 0.4.1
+## Casper contract version 0.4.2
 ```
 Mainnet:
 Ropsten:
@@ -21,7 +21,7 @@ mock ABI
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_validatorIndex",
+				"name": "_validator_index",
 				"type": "uint128"
 			}
 		],
@@ -33,8 +33,13 @@ mock ABI
 	},
 	{
 		"constant": true,
-		"inputs": [],
-		"name": "get_nextValidatorIndex",
+		"inputs": [
+			{
+				"name": "_validator_index",
+				"type": "uint128"
+			}
+		],
+		"name": "deposit_size",
 		"outputs": [
 			{
 				"name": "",
@@ -47,13 +52,8 @@ mock ABI
 	},
 	{
 		"constant": true,
-		"inputs": [
-			{
-				"name": "_validatorIndex",
-				"type": "uint128"
-			}
-		],
-		"name": "get_deposit_size",
+		"inputs": [],
+		"name": "nextValidatorIndex",
 		"outputs": [
 			{
 				"name": "",
@@ -68,11 +68,11 @@ mock ABI
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_validation",
+				"name": "validation_addr",
 				"type": "address"
 			},
 			{
-				"name": "_withdrawal",
+				"name": "withdrawal_addr",
 				"type": "address"
 			}
 		],

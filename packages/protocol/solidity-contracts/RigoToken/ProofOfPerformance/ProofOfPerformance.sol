@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
@@ -57,7 +57,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         _;
     }
 
-    function ProofOfPerformance(
+    constructor(
         address _rigoTokenAddress,
         address _rigoblockDao,
         address _dragoRegistry)
@@ -73,7 +73,6 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     function claimPop(uint _ofPool)
         external
     {
-        Inflation infl = Inflation(getMinter());
         DragoRegistry registry = DragoRegistry(dragoRegistry);
         address poolAddress;
         (poolAddress, , , , , ) = registry.fromId(_ofPool);
@@ -82,7 +81,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         uint supply;
         (price, supply) = getPoolPrice(_ofPool);
         poolPrice[_ofPool].highwatermark = price;
-        require(infl.mintInflation(poolAddress, pop));
+        require(Inflation(getMinter()).mintInflation(poolAddress, pop));
     }
 
     function setRegistry(address _dragoRegistry)
@@ -179,8 +178,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
             (fund, group) = addressFromId(i);
             pools[i] = fund;
             Pool pool = Pool(fund);
-            uint thePoolPrice;
-            ( , , thePoolPrice, ) = pool.getData();
+            uint thePoolPrice = pool.calcSharePrice();
             poolPrices[i] = thePoolPrice;
             totalTokens[i] = pool.totalSupply();
         }
@@ -219,11 +217,9 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         internal view
         returns (uint)
     {
-        Inflation inflate = Inflation(getMinter());
-        address fund;
         address group;
-        (fund,group) = addressFromId(_ofPool);
-        return inflate.getInflationFactor(group);
+        ( , group) = addressFromId(_ofPool);
+        return Inflation(getMinter()).getInflationFactor(group);
     }
 
     /// @dev Returns the split ratio of asset and performance reward
@@ -233,9 +229,8 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         internal view
         returns (uint)
     {
-        address fund;
         address group;
-        (fund,group) = addressFromId(_ofPool);
+        ( , group) = addressFromId(_ofPool);
         return groups[group].rewardRatio;
     }
     
@@ -327,15 +322,13 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
             uint totalTokens
         )
     {
-        address fund;
-        address group;
-        (fund,group) = addressFromId(_ofPool);
-        address poolAddress = fund;
+        address poolAddress;
+        (poolAddress, ) = addressFromId(_ofPool);
         Pool pool = Pool(poolAddress);
-        ( , , thePoolPrice, ) = pool.getData();
+        thePoolPrice = pool.calcSharePrice();
         totalTokens = pool.totalSupply();
     }
-    
+
     /// @dev Returns the address and the group of a pool from its id
     /// @param _ofPool Id of the pool
     /// @return Address of the target pool
@@ -349,7 +342,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     {
         uint price;
         uint supply;
-        (price,supply) = getPoolPrice(_ofPool);
+        (price, supply) = getPoolPrice(_ofPool);
         return (aum = price * supply / 1000000, true); //1000000 is the base (decimals)
     }
 }

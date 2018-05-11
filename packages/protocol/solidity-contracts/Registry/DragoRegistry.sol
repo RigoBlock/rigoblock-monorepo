@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { Owned } from "../utils/Owned/Owned.sol";
@@ -100,7 +100,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         _;
     }
 
-    function DragoRegistry(address _authority) public {
+    constructor(address _authority) public {
         AUTHORITY = _authority;
     }
 
@@ -172,6 +172,25 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     {
         fee = _fee;
     }
+    
+    /// @dev Allows anyone to update the owner in the registry
+    /// @notice pool owner can change; gets written in registry only when needed
+    /// @param _id Uint of the target pool
+    function updateOwner(uint _id)
+        external
+    {
+        updateOwnerInternal(_id);
+    }
+    
+    /// @dev Allows anyone to update many owners if they differ from registered
+    /// @param _id Uint of the target pool
+    function updateOwners(uint[] _id)
+        external
+    {
+        for (uint i = 0; i < _id.length; ++i) {
+            if (!updateOwnerInternal(_id[i])) continue;
+        }
+    }
 
     /// @dev Allows owner to create a new registry.
     /// @dev When the registry gets upgraded, a migration of all funds is required
@@ -219,7 +238,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @param _id Registration number of the pool
     /// @return Pool struct data
     function fromId(uint _id)
-        external view
+        public view //prev external
         returns (
             address drago,
             string name,
@@ -235,7 +254,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
             name = pool.name,
             symbol = pool.symbol,
             dragoId = pool.dragoId,
-            owner = pool.owner,
+            owner = getPoolOwner(drago),
             group = pool.group
         );
     }
@@ -261,7 +280,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
             name = pool.name,
             symbol = pool.symbol,
             dragoId = pool.dragoId,
-            owner = pool.owner,
+            owner = getPoolOwner(_drago),
             group = pool.group
         );
     }
@@ -287,7 +306,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
             drago = pool.drago,
             name = pool.name,
             dragoId = pool.dragoId,
-            owner = pool.owner,
+            owner = getPoolOwner(drago),
             group = pool.group
         );
     }
@@ -313,7 +332,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
             drago = pool.drago,
             symbol = pool.symbol,
             dragoId = pool.dragoId,
-            owner = pool.owner,
+            owner = getPoolOwner(drago),
             group = pool.group
         );
     }
@@ -387,7 +406,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         return fee;
     }
 
-    // INTERNAL CORE FUNCTIONS
+    // INTERNAL FUNCTIONS
 
     /// @dev Allows authority to register a pool for a certain group
     /// @param _drago Address of the pool
@@ -412,5 +431,32 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         mapFromSymbol[_symbol] = dragos.length;
         emit Registered(_name, _symbol, dragos.length - 1, _drago, _owner, _group);
         return true;
+    }
+    
+    /// @dev Allows anyone to update the owner in the registry
+    /// @notice pool owner can change, but gets written in registry only when needed
+    /// @param _id Uint of the target pool
+    /// @return Bollean the transaction was successful
+    function updateOwnerInternal(uint _id)
+        internal
+        returns (bool)
+    {
+        Drago storage pool = dragos[_id];
+        address targetPool;
+        ( targetPool, , , , , ) = fromId(_id);
+        require(getPoolOwner(targetPool) != pool.owner);
+        pool.owner = getPoolOwner(targetPool);
+        return true;
+    }
+
+    /// @dev Returns the actual owner of a pool
+    /// @notice queries from the target pool contract itself
+    /// @param pool Address of the target pool
+    /// @return Address of the pool owner
+    function getPoolOwner(address pool)
+        internal view
+        returns (address)
+    {
+        return Owned(pool).owner();
     }
 }

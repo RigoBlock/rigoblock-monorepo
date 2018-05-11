@@ -16,28 +16,33 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { ERC20Face as ERC20 } from "../utils/tokens/ERC20/ERC20Face.sol";
 
-/// @title Exchange Adapter - Allows interaction with decentralized exchanges.
+/// @title Exchange Adapter - Allows interaction with decentralized exchanges.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract ExchangeAdapter {
+interface ExchangeAdapterFace {
 
     // CORE FUNCTIONS
+    
+    function() external payable;
+    function deposit() external payable;
+    function withdraw(uint wad) external;
 
-    function depositToExchange(
+    function depositToken(
         address _exchange,
         address _token,
         uint _value)
-        external {}
+        external
+        payable;
 
-    function withdrawFromExchange(
+    function withdrawToken(
         address _exchange,
         address _token,
         uint _value)
-        external {}
+        external;
 
     function placeOrderExchange(
         address _exchange,
@@ -47,7 +52,7 @@ contract ExchangeAdapter {
         bool stableOrSufficient,
         uint8 v,
         bytes32[2] signature)
-        external {}
+        external;
 
     function placeTradeExchange(
         address _exchange,
@@ -57,33 +62,33 @@ contract ExchangeAdapter {
         bool stableOrSufficient,
         uint8 v,
         bytes32[2] signature)
-        external {}
+        external;
 
     function cancelOrderExchange(
         address _exchange,
         address[5] orderAddresses,
         uint[6] orderValues,
         uint cancelTakerTokenAmount)
-        external {}
+        external;
 
     function finalizeDeal(
         address _exchange,
         address[5] orderAddresses,
         uint[6] orderValues,
         uint cancelTakerTokenAmount)
-        external {}
+        external;
 
     // CONSTANT PUBLIC FUNCTIONS
 
     /// @notice the below functions have to be checked
     /// @notice they are read functions from the exchange, could be queried directly
-    function balanceOf(address token, address user) public view returns (uint) {}
-    function balanceOf(address _who) public view returns (uint) {}
-    function marginOf(address _who) public view returns (uint) {}
-    function availableVolume(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public view returns(uint) {}
-    function amountFilled(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) public view returns(uint) {}
-    function getLastOrderId() public view returns (uint) {}
-    function isActive(uint id) public view returns (bool) {}
-    function getOwner(uint id) public view returns (address) {}
-    function getOrder(uint id) public view returns (uint, ERC20, uint, ERC20) {}
+    function balanceOf(address token, address user) external view returns (uint);
+    function balanceOf(address _who) external view returns (uint);
+    function marginOf(address _who) external view returns (uint);
+    function availableVolume(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) external view returns(uint);
+    function amountFilled(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) external view returns(uint);
+    function getLastOrderId() external view returns (uint);
+    function isActive(uint id) external view returns (bool);
+    function getOwner(uint id) external view returns (address);
+    function getOrder(uint id) external view returns (uint, ERC20, uint, ERC20);
 }
