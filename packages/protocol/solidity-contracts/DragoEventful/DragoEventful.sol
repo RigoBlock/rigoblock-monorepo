@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
@@ -26,7 +26,7 @@ import { DragoEventfulFace } from "./DragoEventfulFace.sol";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract DragoEventful is DragoEventfulFace {
 
-    string public constant VERSION = 'DH0.4.1';
+    string public constant VERSION = 'DH0.4.2';
 
     address public AUTHORITY;
 
@@ -143,6 +143,36 @@ contract DragoEventful is DragoEventfulFace {
         string name,
         string symbol
     );
+    
+    /*
+    0x events
+    event LogFill(
+        address indexed maker,
+        address taker,
+        address indexed feeRecipient,
+        address makerToken,
+        address takerToken,
+        uint filledMakerTokenAmount,
+        uint filledTakerTokenAmount,
+        uint paidMakerFee,
+        uint paidTakerFee,
+        bytes32 indexed tokens, // keccak256(makerToken, takerToken), allows subscribing to a token pair
+        bytes32 orderHash
+    );
+
+    event LogCancel(
+        address indexed maker,
+        address indexed feeRecipient,
+        address makerToken,
+        address takerToken,
+        uint cancelledMakerTokenAmount,
+        uint cancelledTakerTokenAmount,
+        bytes32 indexed tokens,
+        bytes32 orderHash
+    );
+
+    event LogError(uint8 indexed errorId, bytes32 indexed orderHash);
+    */
 
     modifier approvedFactoryOnly(address _factory) {
         Authority auth = Authority(AUTHORITY);
@@ -174,7 +204,7 @@ contract DragoEventful is DragoEventfulFace {
         _;
     }
 
-    function DragoEventful(address _authority) public {
+    constructor(address _authority) public {
         AUTHORITY = _authority;
     }
 
@@ -329,6 +359,7 @@ contract DragoEventful is DragoEventfulFace {
         address _token,
         uint256 _value)
         external
+        approvedUserOnly(_who)
         approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_exchange)
         returns(bool success)
@@ -351,6 +382,7 @@ contract DragoEventful is DragoEventfulFace {
         address _token,
         uint256 _value)
         external
+        approvedUserOnly(_who)
         approvedDragoOnly(msg.sender)
         approvedExchangeOnly(_exchange)
         returns(bool success)
@@ -377,7 +409,6 @@ contract DragoEventful is DragoEventfulFace {
         return true;
     }
 
-
     function placeOrderCFDExchange(
         address _who,
         address _targetDrago,
@@ -395,7 +426,6 @@ contract DragoEventful is DragoEventfulFace {
         emit OrderExchange(_targetDrago, _cfdExchange, _cfd, _stake, _adjustment);
         return true;
     }
-
 
     function placeTradeExchange(
         address _who,

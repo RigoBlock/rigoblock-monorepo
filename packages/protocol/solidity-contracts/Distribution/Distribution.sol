@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { VaultFace as Vault } from "../Vault/Vault.sol";
@@ -52,8 +52,7 @@ contract Distribution is SafeMath {
         external
         payable
     {
-        Vault vault = Vault(_pool);
-        vault.buyVaultOnBehalf(_buyer);
+        Vault(_pool).buyVaultOnBehalf(_buyer);
         uint feeAmount = safeDiv(safeMul(msg.value, distributor[_distributor].fee), 10000); //fee is in basis points
         uint netAmount = safeSub(msg.value, feeAmount);
         _pool.transfer(netAmount);
