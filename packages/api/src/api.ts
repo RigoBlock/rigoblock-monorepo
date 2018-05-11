@@ -4,7 +4,7 @@ import * as RpcSubprovider from 'web3-provider-engine/subproviders/rpc.js'
 import * as Web3 from 'web3'
 import { ContractModels } from './contracts'
 import { InjectedWeb3Subprovider } from '@0xproject/subproviders'
-import protocol from '@rigoblock/protocol/contracts'
+import protocol from '@rigoblock/protocol'
 
 interface Web3Window extends Window {
   web3: Web3
