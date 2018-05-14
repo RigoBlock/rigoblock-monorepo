@@ -1,9 +1,13 @@
 import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/exhaustMap'
+import 'rxjs/add/operator/filter'
+import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mapTo'
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
+import { timer } from 'rxjs/observable/timer'
 import blockChainActions from '../../actions/blockchain-actions'
 
 class BlockChainService {
@@ -29,34 +33,23 @@ class BlockChainService {
   }
 
   connectionListener() {
-    return Observable.create(observer => {
-      let accountInterval
+    return timer(0, 1000, this.scheduler)
+      .exhaustMap(() =>
+        fromPromise(this.api.web3.getAvailableAddressesAsync(), this.scheduler)
+      )
+      .map(accounts => {
+        if (!accounts.length && this.account) {
+          this.account = null
+          return blockChainActions.blockChainLogout()
+        }
 
-      const onInterval = () => {
-        this.api.web3.eth.getAccounts((err, accounts) => {
-          if (err) {
-            this.account = null
-            observer.next(blockChainActions.blockChainError(err))
-          }
-
-          if (!accounts.length && this.account) {
-            this.account = null
-            observer.next(blockChainActions.blockChainLogout())
-          }
-
-          if (accounts[0] != this.account) {
-            this.account = accounts[0]
-            observer.next(blockChainActions.blockChainLogIn(this.account))
-          }
-        })
-      }
-
-      accountInterval = setInterval(onInterval, 1000)
-
-      onInterval()
-
-      return () => accountInterval && window.clearInterval(accountInterval)
-    })
+        // Using != to check if this.account is '' or null
+        if (accounts[0] != this.account) {
+          this.account = accounts[0]
+          return blockChainActions.blockChainLogIn(this.account)
+        }
+      })
+      .filter(action => !!action)
   }
 
   init() {
