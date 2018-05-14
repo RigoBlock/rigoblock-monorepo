@@ -53,11 +53,7 @@ class BlockChainService {
   }
 
   init() {
-    let return$ = fromPromise(this.api.init(), this.scheduler)
-
-    // console.log(return$)
-
-    return$ = return$
+    const return$ = fromPromise(this.api.init(), this.scheduler)
       .mapTo(blockChainActions.blockChainInit())
       .merge(this.errorListener())
       .merge(this.connectionListener())
@@ -66,9 +62,7 @@ class BlockChainService {
   }
 
   wrapError(action$) {
-    return action$.catch(err => {
-      return of(blockChainActions.blockChainError(err))
-    })
+    return action$.catch(err => of(blockChainActions.blockChainError(err)))
   }
 }
 
