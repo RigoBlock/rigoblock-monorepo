@@ -10,15 +10,11 @@ import routerActions from '../../actions/router-actions'
 
 export const logoutEpic = (action$, store) => {
   const action$1 = action$
-    .filter(
-      action =>
-        action.type === LOCATION_CHANGE ||
-        action.type === actionTypes.GLOBAL_INIT
-    )
+    .filter(action => action.type === LOCATION_CHANGE)
     .mergeMap(() => {
       const state = store.getState()
       return !state.blockChain.account &&
-        window.location.pathname !== ROUTES.LOGIN
+        state.routing.location.pathname !== ROUTES.LOGIN
         ? of(routerActions.logout())
         : empty()
     })
@@ -34,11 +30,12 @@ export const logoutEpic = (action$, store) => {
   return merge(action$1, action$2)
 }
 
-export const loginEpic = action$ => {
+export const loginEpic = (action$, store) => {
   return action$
     .filter(action => action.type === actionTypes.LOGGED_IN)
     .mergeMap(() => {
-      return window.location.pathname === ROUTES.LOGIN
+      const state = store.getState()
+      return state.routing.location.pathname === ROUTES.LOGIN
         ? of(routerActions.login())
         : empty()
     })
