@@ -33,10 +33,6 @@ describe('epic for blockchain services', () => {
     BlockChainServiceEpic = require('../blockchain/BlockChainService').default
   })
 
-  afterEach(() => {
-    fromPromiseSpy.mockReset()
-  })
-
   it('returns a blockchain init action', () => {
     fromPromiseSpy.mockReturnValueOnce(of([]))
 
