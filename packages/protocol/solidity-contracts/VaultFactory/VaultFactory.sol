@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistryFace.sol";
@@ -33,7 +33,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
     VaultFactoryLibrary.NewVault libraryData;
 
-    string public constant VERSION = 'VF 0.4.1';
+    string public constant VERSION = 'VF 0.4.2';
 
     Data data;
 
@@ -74,7 +74,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
         _;
     }
 
-    function VaultFactory(
+    constructor(
         address _registry,
         address _vaultDao,
         address _authority)
