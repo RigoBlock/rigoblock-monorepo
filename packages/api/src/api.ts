@@ -4,6 +4,7 @@ import * as RpcSubprovider from 'web3-provider-engine/subproviders/rpc.js'
 import * as Web3 from 'web3'
 import { ContractModels } from './contracts'
 import { InjectedWeb3Subprovider } from '@0xproject/subproviders'
+import { Web3Wrapper } from '@0xproject/web3-wrapper'
 import protocol from '@rigoblock/protocol'
 
 interface Web3Window extends Window {
@@ -18,7 +19,7 @@ export interface ProviderEngineFix extends ProviderEngine {
 }
 class Api {
   public contract: ContractModels
-  public web3: Web3
+  public web3: Web3Wrapper
   public engine: ProviderEngineFix
 
   async init(web3: Web3 = window.web3) {
@@ -30,11 +31,11 @@ class Api {
       })
     )
 
-    this.web3 = web3
-    const networkId = this.web3.version.network
+    this.web3 = new Web3Wrapper(this.engine)
+    const networkId = web3.version.network
     const contractsMap: Contract.ContractsMap = await protocol(networkId)
     const contracts = new Contract()
-    await contracts.init(this.web3, contractsMap)
+    await contracts.init(web3, contractsMap)
     this.contract = contracts
 
     const startEnginePromise = new Promise((resolve, reject) => {
