@@ -14,6 +14,7 @@ class Web3Puppeteer extends Helper {
       window.web3 = new window.Web3(
         new window.Web3.providers.HttpProvider('http://localhost:8545/node')
       )
+      console.log('HERE', window.init)
       window.init()
       return window.web3
     }, web3Raw)
