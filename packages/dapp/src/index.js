@@ -36,10 +36,16 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-store.dispatch(globalActions.init())
+const init = () => store.dispatch(globalActions.init())
 
 registerServiceWorker()
 
 if (module.hot) {
   module.hot.accept()
+}
+
+if (process.env.REACT_APP_TEST) {
+  window.init = init
+} else {
+  init()
 }

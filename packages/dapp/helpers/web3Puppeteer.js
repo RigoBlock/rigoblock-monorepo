@@ -4,17 +4,19 @@ const fs = require('fs')
 
 class Web3Puppeteer extends Helper {
   async _before() {
+    await this.helpers['Puppeteer'].amOnPage('/login')
+  }
+  inject() {
     const web3Raw = fs.readFileSync('../../node_modules/web3/dist/web3.min.js')
-    this.helpers['Puppeteer'].browser.on('targetchanged', async target => {
-      const targetPage = await target.page()
-      targetPage.evaluate(web3Raw => {
-        eval(web3Raw)
-        window.web3 = new window.Web3(
-          new window.Web3.providers.HttpProvider('http://localhost:8545/node')
-        )
-        console.log(window.web3.version.api)
-      }, web3Raw)
-    })
+    const page = this.helpers['Puppeteer'].page
+    return page.evaluate(function(web3Raw) {
+      eval(web3Raw)
+      window.web3 = new window.Web3(
+        new window.Web3.providers.HttpProvider('http://localhost:8545/node')
+      )
+      window.init()
+      return window.web3
+    }, web3Raw)
   }
 }
 

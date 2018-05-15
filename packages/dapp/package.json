@@ -9,6 +9,7 @@
     "ganache:seed": "ganache-seed",
     "build": "rm -rf dist/* && node scripts/build.js",
     "dev": "node scripts/start.js",
+    "dev:feature": "REACT_APP_TEST=true node scripts/start.js",
     "test": "npm run test:unit && npm run test:feature",
     "test:unit": "CI=true node scripts/test.js --env=jsdom",
     "test:unit:watch": "node scripts/test.js --env=jsdom",

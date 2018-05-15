@@ -3,7 +3,10 @@ const config = {
   helpers: {
     Puppeteer: {
       url: 'http://localhost:8080',
-      show: true
+      show: true,
+      chrome: {
+        headless: true
+      }
     },
     Web3Puppeteer: {
       require: './helpers/web3Puppeteer.js'

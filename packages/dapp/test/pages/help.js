@@ -6,6 +6,7 @@ module.exports = {
   },
 
   navigateTo() {
+    I.inject()
     I.amOnPage('/help')
   },
 
