@@ -3,7 +3,10 @@ const config = {
   helpers: {
     Puppeteer: {
       url: 'http://localhost:8080',
-      show: true
+      show: true,
+      chrome: {
+        slowMo: 200
+      }
     },
     Web3Puppeteer: {
       require: './helpers/web3Puppeteer.js'
@@ -17,7 +20,6 @@ const config = {
     help: './test/pages/help.js',
     login: './test/pages/login.js'
   },
-  // grep: 'Help',
   mocha: {},
   bootstrap: false,
   teardown: null,

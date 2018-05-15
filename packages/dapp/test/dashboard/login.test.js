@@ -1,4 +1,4 @@
-Feature('login')
+Feature('Login')
 
 Scenario('test correct render', (I, login) => {
   login.navigateTo()
