@@ -42,7 +42,7 @@ describe('blockchainEpic', () => {
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
     ts.flush()
   })
-  it('dispatches a router push action if web3 is not defined', () => {
+  it('dispatches blockChain logout action if web3 is not defined', () => {
     const inputValues = {
       a: globalActions.init()
     }
