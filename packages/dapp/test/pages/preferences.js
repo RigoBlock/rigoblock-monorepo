@@ -11,6 +11,6 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/preferences')
-    I.see('Preferences', 'h1')
+    I.waitForText('Preferences', 'h1')
   }
 }

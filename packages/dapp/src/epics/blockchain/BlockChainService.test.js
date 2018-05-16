@@ -1,7 +1,7 @@
 import { TestScheduler } from 'rxjs'
 import { _throw } from 'rxjs/observable/throw'
 import { of } from 'rxjs/observable/of'
-import actions from '../../actions/blockchain-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 
 describe('epic for blockchain services', () => {
   const testError = new Error('test error')
@@ -37,7 +37,7 @@ describe('epic for blockchain services', () => {
     fromPromiseSpy.mockReturnValueOnce(of([]))
 
     const expectedValues = {
-      b: actions.blockChainInit()
+      b: blockChainActions.blockChainInit()
     }
 
     const expectedMarble = 'b'
@@ -68,9 +68,9 @@ describe('epic for blockchain services', () => {
         .mockReturnValueOnce(of([address1]))
 
       const expectedValues = {
-        a: actions.blockChainInit(),
-        b: actions.blockChainLogIn(address1),
-        c: actions.blockChainLogIn(address2)
+        a: blockChainActions.blockChainInit(),
+        b: blockChainActions.blockChainLogIn(address1),
+        c: blockChainActions.blockChainLogIn(address2)
       }
 
       const expectedMarble =
@@ -101,8 +101,8 @@ describe('epic for blockchain services', () => {
       fromPromiseSpy.mockReturnValueOnce(_throw(testError))
 
       const expectedValues = {
-        a: actions.blockChainInit(),
-        b: actions.blockChainError(testError)
+        a: blockChainActions.blockChainInit(),
+        b: blockChainActions.blockChainError(testError)
       }
 
       const expectedMarble = '(ab|)'
@@ -129,8 +129,8 @@ describe('epic for blockchain services', () => {
       fromPromiseSpy.mockReturnValueOnce(of([address]))
 
       const expectedValues = {
-        a: actions.blockChainInit(),
-        b: actions.blockChainLogIn(address)
+        a: blockChainActions.blockChainInit(),
+        b: blockChainActions.blockChainLogIn(address)
       }
 
       const expectedMarble = '(ab)'
@@ -156,8 +156,8 @@ describe('epic for blockchain services', () => {
       fromPromiseSpy.mockReturnValueOnce(of([]))
 
       const expectedValues = {
-        a: actions.blockChainInit(),
-        b: actions.blockChainLogout()
+        a: blockChainActions.blockChainInit(),
+        b: blockChainActions.blockChainLogout()
       }
 
       const expectedMarble = '(ab)'
@@ -196,8 +196,8 @@ describe('epic for blockchain services', () => {
       }
 
       const expectedValues = {
-        a: actions.blockChainInit(),
-        b: actions.blockChainError(testError)
+        a: blockChainActions.blockChainInit(),
+        b: blockChainActions.blockChainError(testError)
       }
 
       const expectedMarble = '(ab)'

@@ -14,7 +14,7 @@
     "test:unit:watch": "node scripts/test.js --env=jsdom",
     "test:unit:debug": "node --inspect-brk scripts/test.js --env=jsdom",
     "test:feature": "codeceptjs run --steps",
-    "test:feature:debug": "codeceptjs run --debug",
+    "test:feature:debug": "codeceptjs run --steps --debug",
     "test:cov": "npm run test:unit -- --coverage",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "storybook": "start-storybook -p 6006 -c .storybook",
@@ -109,7 +109,6 @@
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
     ],
-    "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",

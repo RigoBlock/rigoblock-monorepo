@@ -1,5 +1,6 @@
 export default {
   DASHBOARD: '/',
   PREFERENCES: '/preferences',
-  HELP: '/help'
+  HELP: '/help',
+  LOGIN: '/login'
 }

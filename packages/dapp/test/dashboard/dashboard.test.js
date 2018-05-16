@@ -1,6 +1,5 @@
 Feature('Dashboard')
 
-Scenario('test correct div render', (I, dashboard) => {
-  dashboard.navigateTo()
+Scenario('test correct render', dashboard => {
   dashboard.assertImOnPage()
 })
