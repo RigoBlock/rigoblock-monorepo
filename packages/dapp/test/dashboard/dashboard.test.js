@@ -1,5 +1,5 @@
 Feature('Dashboard')
 
-Scenario('test correct div render', (I, dashboard) => {
+Scenario('test correct render', dashboard => {
   dashboard.assertImOnPage()
 })

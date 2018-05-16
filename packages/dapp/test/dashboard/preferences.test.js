@@ -1,7 +1,6 @@
 Feature('Preferences')
 
-Scenario('test correct div render', (I, preferences, navigation, dashboard) => {
-  dashboard.assertImOnPage()
+Scenario('test correct render', (preferences, navigation) => {
   navigation.navigateToPreferences()
   preferences.assertImOnPage()
 })

@@ -35,17 +35,14 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
-
 const init = () => store.dispatch(globalActions.init())
+
+window.init = process.env.REACT_APP_TEST ? init : undefined
+
+init()
 
 registerServiceWorker()
 
 if (module.hot) {
   module.hot.accept()
-}
-
-if (process.env.REACT_APP_TEST) {
-  window.init = init
-} else {
-  init()
 }
