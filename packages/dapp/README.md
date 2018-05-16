@@ -96,3 +96,7 @@ You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://facebook.gi
 We are using [redux-persist](https://github.com/rt2zz/redux-persist) and [localforage](https://github.com/localForage/localForage) libraries to manage redux store persistence on IndexedDB.
 
 [Info on migrations](docs/MIGRATIONS.md)
+
+## Feature Tests
+
+Please read the [documentation](docs/FEATURE_TESTS.md) for information about testing the DApp with CodeceptJS.
