@@ -1,4 +1,4 @@
-# Rigoblock smart contract API
+# API
 ## Usage
 
 Start Ganache

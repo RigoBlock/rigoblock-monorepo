@@ -13,16 +13,30 @@
 ├── public
 │   └── index.html  // Page template
 ├── src
-│   ├── components  // Components have their own folders here
-│   │   └── App
-│   │       ├── __snapshots__
-│   │       ├── App.css
-│   │       ├── App.jsx
-│   │       ├── App.test.js
-│   │       └── index.js
-│   ├── index.css
+│   ├── actions
+│   ├── components
+│   │   ├── _settings
+│   │   ├── atoms
+│   │   │   └── Link
+│   │   │       ├── __snapshots__
+│   │   │       ├── index.js
+│   │   │       ├── Link.jsx
+│   │   │       ├── Link.scss
+│   │   │       ├── Link.stories.js
+│   │   │       └── Link.test.js
+│   │   ├── molecules
+│   │   ├── organisms
+│   │   └── templates
+│   ├── constants
+│   ├── epics
+│   ├── images
+│   ├── pages
+│   ├── reducers
+│   ├── store
+│   ├── api.js    // API instance
 │   ├── index.js    // JavaScript entry point
-│   └── registerServiceWorker.js
+│   ├── registerServiceWorker.js
+│   └── setupTests.js // Jest tests setup file
 ├── test            // Feature tests are located inside this folder
 │   └── pages       // Folder for codecept page objects
 ├── package.json
@@ -35,7 +49,7 @@ In the project directory, you can run:
 ### `yarn build`
 Builds the app for production to the `dist` folder.
 ### `yarn start`
-Starts an http-server serving the 'dist' folder on port 8080.
+Starts an http-server serving the `dist` folder on port 8080.
 ### `yarn dev`
 Runs the app in the development mode.
 
@@ -73,7 +87,7 @@ Jest will look for test files with this naming:
 
 The `.test.js` file must be located in the same folder of the relative component.
 
-### Writing Tests
+### Writing Unit Tests
 
 To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this is neither required nor recommended.
 
@@ -99,4 +113,4 @@ We are using [redux-persist](https://github.com/rt2zz/redux-persist) and [localf
 
 ## Feature Tests
 
-Please read the [documentation](docs/FEATURE_TESTS.md) for information about testing the DApp with CodeceptJS.
+Please read the [documentation](docs/FEATURE_TESTS.md) for testing the DApp with CodeceptJS.
