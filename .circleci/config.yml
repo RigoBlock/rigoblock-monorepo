@@ -124,6 +124,7 @@ jobs:
     environment:
       TZ: *timezone
       CI: false
+      REACT_APP_TEST: true
       NODE_ENV: production
     docker:
       - image: *node_image
@@ -132,7 +133,7 @@ jobs:
       - *attach_workspace
       - run:
           name: Building dist
-          command: yarn build:dapp:CI
+          command: yarn build:dapp
       - persist_to_workspace:
           root: *workspace_root
           paths:

@@ -8,7 +8,6 @@
     "ganache:bootstrap": "ganache-bootstrap",
     "ganache:seed": "ganache-seed",
     "build": "rm -rf dist/* && node scripts/build.js",
-    "build:CI": "rm -rf dist/* && REACT_APP_TEST=true node scripts/build.js",
     "dev": "node scripts/start.js",
     "dev:feature": "REACT_APP_TEST=true node scripts/start.js",
     "test": "npm run test:unit && npm run test:feature",

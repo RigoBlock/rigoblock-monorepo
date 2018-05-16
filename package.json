@@ -8,7 +8,6 @@
     "build:protocol": "lerna run --scope @rigoblock/protocol build --stream",
     "build:api": "lerna run --scope @rigoblock/api build --stream",
     "build:dapp": "lerna run --scope @rigoblock/dapp build --stream",
-    "build:dapp:CI": "lerna run --scope @rigoblock/dapp build:CI --stream",
     "lint": "lerna run lint",
     "test:unit": "lerna run test:unit --stream"
   },

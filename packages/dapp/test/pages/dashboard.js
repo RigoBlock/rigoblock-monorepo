@@ -12,6 +12,6 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/')
-    I.see('RigoBlock')
+    I.waitForText('Dashboard', 'h1')
   }
 }

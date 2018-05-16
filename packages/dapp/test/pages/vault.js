@@ -6,12 +6,11 @@ module.exports = {
   },
 
   navigateTo() {
-    I.inject()
     I.amOnPage('/vault')
   },
 
   assertImOnPage() {
     I.waitInUrl('/vault')
-    I.see('Vault')
+    I.waitForText('Vault', 'h1')
   }
 }

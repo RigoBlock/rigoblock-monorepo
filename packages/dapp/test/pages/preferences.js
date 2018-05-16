@@ -6,12 +6,11 @@ module.exports = {
   },
 
   navigateTo() {
-    I.inject()
     I.amOnPage('/preferences')
   },
 
   assertImOnPage() {
     I.waitInUrl('/preferences')
-    I.see('Preferences', 'h1')
+    I.waitForText('Preferences', 'h1')
   }
 }
