@@ -35,8 +35,9 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
+const init = () => store.dispatch(globalActions.init())
 
-store.dispatch(globalActions.init())
+process.env.REACT_APP_TEST ? (window.init = init) : init()
 
 registerServiceWorker()
 

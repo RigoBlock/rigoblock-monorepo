@@ -49,6 +49,20 @@ jobs:
             - packages/api/node_modules
             - packages/protocol/node_modules
             - .cache/yarn
+  test-unit-dapp:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: circleci/node:8.10-stretch
+    steps:
+      - checkout
+      - *attach_workspace
+      - run:
+          name: JS unit tests
+          command: npx lerna run --scope @rigoblock/dapp test:cov --stream
+      - store_artifacts:
+          path: coverage/dapp/lcov-report
 
   build-protocol:
     working_directory: *workspace_root
@@ -87,25 +101,6 @@ jobs:
             - packages/protocol/artifacts
             - packages/protocol/dist
 
-  build-dapp:
-    working_directory: *workspace_root
-    environment:
-      TZ: *timezone
-      CI: false
-      NODE_ENV: production
-    docker:
-      - image: *node_image
-    steps:
-      - checkout
-      - *attach_workspace
-      - run:
-          name: Building dist
-          command: yarn build:dapp
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - packages/dapp/dist
-
   build-api:
     working_directory: *workspace_root
     environment:
@@ -124,20 +119,25 @@ jobs:
           paths:
             - packages/api/dist
 
-  test-unit-dapp:
+  build-dapp:
     working_directory: *workspace_root
     environment:
       TZ: *timezone
+      CI: false
+      REACT_APP_TEST: true
+      NODE_ENV: production
     docker:
-      - image: circleci/node:8.10-stretch
+      - image: *node_image
     steps:
       - checkout
       - *attach_workspace
       - run:
-          name: JS unit tests
-          command: npx lerna run --scope @rigoblock/dapp test:cov --stream
-      - store_artifacts:
-          path: coverage/dapp/lcov-report
+          name: Building dist
+          command: yarn build:dapp
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - packages/dapp/dist
 
   test-feature-dapp:
     working_directory: *workspace_root

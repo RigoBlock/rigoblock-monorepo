@@ -2,8 +2,7 @@ Feature('Navigation')
 
 Scenario(
   'test correct navigation to preferences page',
-  (I, navigation, dashboard, preferences) => {
-    dashboard.navigateTo()
+  (navigation, dashboard, preferences) => {
     navigation.navigateToPreferences()
     preferences.assertImOnPage()
   }
@@ -11,8 +10,7 @@ Scenario(
 
 Scenario(
   'test correct navigation to help page',
-  (I, navigation, dashboard, help) => {
-    dashboard.navigateTo()
+  (navigation, dashboard, help) => {
     navigation.navigateToHelp()
     help.assertImOnPage()
   }
@@ -20,8 +18,9 @@ Scenario(
 
 Scenario(
   'test correct navigation to dashboard page',
-  (I, navigation, dashboard, preferences) => {
-    preferences.navigateTo()
+  (navigation, dashboard, help) => {
+    navigation.navigateToHelp()
+    help.assertImOnPage()
     navigation.navigateToDashboard()
     dashboard.assertImOnPage()
   }

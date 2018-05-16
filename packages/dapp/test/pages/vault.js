@@ -11,6 +11,6 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/vault')
-    I.see('Vault')
+    I.waitForText('Vault', 'h1')
   }
 }
