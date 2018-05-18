@@ -9,12 +9,26 @@
 | Package| Description|
 | - | - |
 | [`Rigoblock DApp`](/packages/dapp)                  | Rigoblock DApp                                                     |
-| [`API`](/packages/api)                    | A wrapper library with preset RPC calls to our contracts               |
+| [`API`](/packages/api)                    | Rigoblock API               |
 | [`Rigoblock Protocol`](/packages/protocol)          | Rigoblock Protocol                                                 |
 | [`Ganache Bootstrap`](/packages/ganache-bootstrap)  | A bootstrapping package to deploy smart contracts and seed Ganache |
 
 
 ### Install
+
+Install nvm and use the correct node version
+```
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+
+nvm use
+```
+> If you are having issues following this step check out [nvm's documentation](https://github.com/creationix/nvm/blob/master/README.md)
+
+
+Install yarn
+```
+npm i -g yarn
+```
 
 Install lerna using yarn and the frozen lockfile option, so as not to accidentally update packages and break the build
 ```
