@@ -10,9 +10,9 @@ storiesOf('Atoms/Link', module)
   .addDecorator(withKnobs)
   .add('default', () => (
     <Link
-      size={selectV2('Tooltip size', LINK_SIZES, LINK_SIZES.SMALL)}
+      size={selectV2('Link size', LINK_SIZES, LINK_SIZES.SMALL)}
       to={text('Links to', '/')}
     >
-      Small Link
+      Example Link
     </Link>
   ))

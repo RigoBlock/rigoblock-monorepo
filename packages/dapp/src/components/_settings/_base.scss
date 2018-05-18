@@ -1,5 +1,8 @@
 @import './variables';
 @import './reset';
+@import '~react-md/src/scss/react-md';
+
+@include react-md-everything();
 
 * {
   box-sizing: border-box;
