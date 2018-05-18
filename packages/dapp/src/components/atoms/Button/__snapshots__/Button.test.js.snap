@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component renders correctly 1`] = `
+<withInk(withTooltip(Button))
+  className="b a s e - b u t t o n"
+  flat={true}
+  inkTransitionEnterTimeout={450}
+  inkTransitionLeaveTimeout={300}
+  inkTransitionOverlap={150}
+  onClick={[MockFunction]}
+  primary={true}
+  swapTheming={false}
+>
+  Test Button
+</withInk(withTooltip(Button))>
+`;

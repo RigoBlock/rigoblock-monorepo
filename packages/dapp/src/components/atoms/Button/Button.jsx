@@ -1,35 +1,64 @@
-import MaterializeButton from '@material-ui/core/Button'
+import './Button.scss'
+import MaterialButton from 'react-md/lib/Buttons'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 
-export const BUTTON_SIZES = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-  LARGE: 'large'
+export const BUTTON_TYPES = {
+  PRIMARY: 'primary',
+  INVERTED: 'inverted',
+  SUCCESS: 'success',
+  ERROR: 'error'
 }
 
-const Button = ({ size, text }) => {
-  const classProps = classNames('btn')
+const TYPE_PROPS = {
+  [BUTTON_TYPES.PRIMARY]: {
+    inverted: false,
+    class: 'base-button'
+  },
+  [BUTTON_TYPES.INVERTED]: {
+    inverted: true,
+    class: 'base-button'
+  },
+  [BUTTON_TYPES.SUCCESS]: {
+    inverted: true,
+    class: ['base-button', 'success-button']
+  },
+  [BUTTON_TYPES.ERROR]: {
+    inverted: true,
+    class: ['base-button', 'error-button']
+  }
+}
+
+const Button = ({ children, type, onClick }) => {
+  const styleProps = TYPE_PROPS[type]
+  const classProps = classNames(...styleProps.class)
   return (
-    <MaterializeButton variant="raised" classes={classProps}>
-      {text}
-    </MaterializeButton>
+    <MaterialButton
+      className={classProps}
+      flat
+      primary
+      onClick={onClick}
+      swapTheming={styleProps.inverted}
+    >
+      {children}
+    </MaterialButton>
   )
 }
 
 Button.propTypes = {
-  text: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
-  size: PropTypes.oneOf([
-    BUTTON_SIZES.SMALL,
-    BUTTON_SIZES.MEDIUM,
-    BUTTON_SIZES.LARGE
+  children: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  type: PropTypes.oneOf([
+    BUTTON_TYPES.PRIMARY,
+    BUTTON_TYPES.INVERTED,
+    BUTTON_TYPES.SUCCESS,
+    BUTTON_TYPES.ERROR
   ])
 }
 
 Button.defaultProps = {
-  size: BUTTON_SIZES.MEDIUM
+  type: BUTTON_TYPES.PRIMARY
 }
 
 export default Button

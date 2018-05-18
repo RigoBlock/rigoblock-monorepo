@@ -1,5 +1,22 @@
 @import "../../_settings/variables.scss";
 
-.btn {
-  background-color: #0076ff;
+.base-button {
+  border: solid 2px $md-secondary-color;
+  font-weight: bold;
+}
+
+.success-button {
+  background: $success-button-color;
+  border: none;
+  &:hover {
+    background: lighten($color: $success-button-color, $amount: 10%)
+  }
+}
+
+.error-button {
+  background: $error-button-color;
+  border: none;
+  &:hover {
+    background: darken($color: $error-button-color, $amount: 10%)
+  }
 }
