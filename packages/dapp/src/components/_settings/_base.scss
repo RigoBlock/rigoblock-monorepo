@@ -1,8 +1,11 @@
 @import './variables';
 @import './reset';
 @import '~react-md/src/scss/react-md';
+@import '~react-md/src/scss/globals';
+@import '~react-md/src/scss/colors';
 
-@include react-md-everything();
+@include react-md-buttons($md-primary-color, $md-secondary-color);
+@include react-md-colors;
 
 * {
   box-sizing: border-box;
