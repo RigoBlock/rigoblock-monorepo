@@ -12,15 +12,15 @@
 }
 
 .success-button {
-  background: $success-button-color;
+  background: $success-color;
   &:hover {
-    background: lighten($color: $success-button-color, $amount: 10%)
+    background: lighten($color: $success-color, $amount: 10%)
   }
 }
 
 .error-button {
-  background: $error-button-color;
+  background: $error-color;
   &:hover {
-    background: darken($color: $error-button-color, $amount: 10%)
+    background: darken($color: $error-color, $amount: 10%)
   }
 }
