@@ -34,8 +34,8 @@ SelectField.propTypes = {
       PropTypes.string,
       PropTypes.number,
       PropTypes.shape({
-        label: PropTypes.node.isRequired,
-        value: PropTypes.node.isRequired
+        label: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired
       })
     ])
   ).isRequired
