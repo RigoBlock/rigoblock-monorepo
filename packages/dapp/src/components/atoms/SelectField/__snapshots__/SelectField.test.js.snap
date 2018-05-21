@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectField component renders correctly 1`] = `
+<SelectField
+  anchor={
+    Object {
+      "x": "inner left",
+      "y": "overlap",
+    }
+  }
+  className="select-field"
+  defaultValue=""
+  defaultVisible={false}
+  dropdownIcon={
+    <span
+      className="material-icons"
+    >
+      keyboard_arrow_down
+    </span>
+  }
+  fixedTo={[Window]}
+  id="1"
+  itemLabel="label"
+  itemProps="getProps"
+  itemValue="value"
+  keyboardMatchingTimeout={1000}
+  lineDirection="left"
+  listClassName="select-field-list"
+  menuItems={
+    Array [
+      "item1",
+      2,
+      Object {
+        "label": "test",
+        "value": 1,
+      },
+    ]
+  }
+  onChange={[MockFunction]}
+  placeholder="placeholder"
+  position="below"
+  repositionOnResize={false}
+  repositionOnScroll={false}
+  transitionName="md-drop"
+  transitionTime={300}
+/>
+`;

@@ -1,0 +1,11 @@
+@import "../../_settings/variables.scss";
+
+.select-field {
+  background: $panels-color;
+  border-radius: $wrapper-radius;
+  box-shadow: $box-shadow;
+}
+
+.select-field-list {
+  border-radius: 4px 4px 0 0;
+}

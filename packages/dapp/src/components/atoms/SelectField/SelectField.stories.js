@@ -6,8 +6,13 @@ import SelectField from './SelectField'
 
 const itemList = ['item1', 'item2', 'item3', 'item4', 'item5', 'item6']
 
-storiesOf('Atoms/Selectfield', module)
+storiesOf('Atoms/SelectField', module)
   .addDecorator(withKnobs)
   .add('default', () => (
-    <SelectField items={itemList} placeholder={'placeholder'} />
+    <SelectField
+      items={itemList}
+      placeholder={'placeholder'}
+      id={'0'}
+      onChange={() => 'changed!'}
+    />
   ))

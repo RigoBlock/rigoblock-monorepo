@@ -1,8 +1,12 @@
 @import "../../_settings/variables.scss";
 
 .base-button {
-  border: solid 2px $md-secondary-color;
+  border: solid 2px;
   font-weight: bold;
+}
+
+.inverted-Button {
+  border: none;
 }
 
 .success-button {

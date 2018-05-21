@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 
-const SelectField = ({ id, items, placeholder }) => {
-  const classProps = classNames('md-cell', 'select-field')
+const SelectField = ({ id, items, placeholder, onChange }) => {
+  const classProps = classNames('select-field')
   const dropDownArrow = (
     <span className={'material-icons'}>keyboard_arrow_down</span>
   )
@@ -14,6 +14,9 @@ const SelectField = ({ id, items, placeholder }) => {
     <MaterialSelect
       id={id}
       placeholder={placeholder}
+      onChange={onChange}
+      repositionOnScroll={false}
+      listClassName={'select-field-list'}
       className={classProps}
       menuItems={items}
       position={MaterialSelect.Positions.BELOW}
@@ -23,14 +26,19 @@ const SelectField = ({ id, items, placeholder }) => {
 }
 
 SelectField.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired
+  onChange: PropTypes.func.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.shape({
+        label: PropTypes.node.isRequired,
+        value: PropTypes.node.isRequired
+      })
+    ])
+  ).isRequired
 }
-
-// ObjectMenuItem.propTypes = {
-//   label: PropTypes.string.isRequired,
-//   value: PropTypes.object.isRequired
-// }
 
 export default SelectField

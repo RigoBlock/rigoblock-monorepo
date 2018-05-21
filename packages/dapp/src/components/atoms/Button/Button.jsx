@@ -18,7 +18,7 @@ const TYPE_PROPS = {
   },
   [BUTTON_TYPES.INVERTED]: {
     inverted: true,
-    classes: ['base-button']
+    classes: ['inverted-button']
   },
   [BUTTON_TYPES.SUCCESS]: {
     inverted: true,
@@ -35,10 +35,10 @@ const Button = ({ children, type, onClick }) => {
   const classProps = classNames(...styleProps.classes)
   return (
     <MaterialButton
-      className={classProps}
       flat
       primary
       onClick={onClick}
+      className={classProps}
       swapTheming={styleProps.inverted}
     >
       {children}

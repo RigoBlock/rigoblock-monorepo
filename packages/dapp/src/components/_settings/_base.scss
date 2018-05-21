@@ -4,6 +4,7 @@
 @import '~react-md/src/scss/globals';
 @import '~react-md/src/scss/colors';
 
+@include react-md-typography;
 @include react-md-buttons($md-primary-color, $md-secondary-color);
 @include react-md-accessibility;
 @include react-md-transitions;
@@ -18,6 +19,7 @@
 @include react-md-helpers-everything;
 @include react-md-text-fields;
 @include react-md-colors;
+// @include react-md-everything;
 
 * {
   box-sizing: border-box;
