@@ -1,5 +1,6 @@
 import ContentWrapper from '../../molecules/ContentWrapper'
 import List from '../../organisms/List'
+import ListItem from '../../molecules/ListItem'
 import PanelHeader from '../../molecules/PanelHeader'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -15,7 +16,7 @@ const ListPanel = ({ title, items, tooltip }) => {
 
 ListPanel.propTypes = {
   title: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape(ListItem.propTypes)).isRequired,
   tooltip: PropTypes.string
 }
 
