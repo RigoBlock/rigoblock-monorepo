@@ -1,0 +1,20 @@
+@import "../../_settings/variables.scss";
+
+.select-field {
+  background: $panels-color;
+  border-radius: $wrapper-radius;
+  box-shadow: $box-shadow;
+  transition: border-radius $medium-animation;
+
+  .md-ink-container {
+    border-radius: $wrapper-radius;
+    transition: border-radius $medium-animation;
+  }
+
+  &[aria-expanded="true"] {
+    border-radius: $wrapper-radius $wrapper-radius 0 0;
+    .md-ink-container {
+      border-radius: $wrapper-radius $wrapper-radius 0 0;
+    }
+  }
+}

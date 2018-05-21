@@ -14,31 +14,31 @@ export const BUTTON_TYPES = {
 const TYPE_PROPS = {
   [BUTTON_TYPES.PRIMARY]: {
     inverted: false,
-    class: 'base-button'
+    classes: ['base-button']
   },
   [BUTTON_TYPES.INVERTED]: {
     inverted: true,
-    class: 'base-button'
+    classes: ['inverted-button']
   },
   [BUTTON_TYPES.SUCCESS]: {
     inverted: true,
-    class: ['base-button', 'success-button']
+    classes: ['inverted-button', 'success-button']
   },
   [BUTTON_TYPES.ERROR]: {
     inverted: true,
-    class: ['base-button', 'error-button']
+    classes: ['inverted-button', 'error-button']
   }
 }
 
 const Button = ({ children, type, onClick }) => {
   const styleProps = TYPE_PROPS[type]
-  const classProps = classNames(...styleProps.class)
+  const classProps = classNames(...styleProps.classes)
   return (
     <MaterialButton
-      className={classProps}
       flat
       primary
       onClick={onClick}
+      className={classProps}
       swapTheming={styleProps.inverted}
     >
       {children}

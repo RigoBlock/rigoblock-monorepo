@@ -2,7 +2,7 @@
 
 exports[`Button component renders correctly 1`] = `
 <withInk(withTooltip(Button))
-  className="b a s e - b u t t o n"
+  className="base-button"
   flat={true}
   inkTransitionEnterTimeout={450}
   inkTransitionLeaveTimeout={300}
