@@ -5,19 +5,16 @@
 $font-family: 'Tajawal', sans-serif;
 $base-font-size: 14px;
 
-// material design
+// colors
 $md-primary-color: #0576ff;
 $md-secondary-color: #F4F6F7;
-
-// colors
-$bg-color: #F5F7F8;
-$list-item-grey: #F4F6F7;
-$panels-color: #FFFFFF;
+$primary-bg-color: #F5F7F8;
+$secondary-bg-color: #FFFFFF;
 $light-grey: #C4C6C7;
 $link-alternate: #000000;
-$link-color: #0000ff;
-$success-button-color: #7ED323;
-$error-button-color: #FD3947;
+$blue: #0000ff;
+$success-color: #7ED323;
+$error-color: #FD3947;
 $border-size: 2px;
 $quick-animation: 100ms;
 $medium-animation: 300ms;
@@ -34,4 +31,4 @@ $dist-xl: 40px;
 $box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.15), 0 2px 5px -2px rgba(0, 0, 0, 0.12);
 
 // borders
-$wrapper-radius: 4px;
+$border-radius: 4px;
