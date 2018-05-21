@@ -4,8 +4,17 @@
   background: $panels-color;
   border-radius: $wrapper-radius;
   box-shadow: $box-shadow;
-}
+  transition: border-radius 300ms;
 
-.select-field-list {
-  border-radius: $wrapper-radius $wrapper-radius 0 0;
+  .md-ink-container {
+    border-radius: $wrapper-radius;
+    transition: border-radius 300ms;
+  }
+
+  &[aria-expanded="true"] {
+    border-radius: $wrapper-radius $wrapper-radius 0 0;
+    .md-ink-container {
+      border-radius: $wrapper-radius $wrapper-radius 0 0;
+    }
+  }
 }

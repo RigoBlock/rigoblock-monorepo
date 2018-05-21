@@ -25,7 +25,6 @@ exports[`SelectField component renders correctly 1`] = `
   itemValue="value"
   keyboardMatchingTimeout={1000}
   lineDirection="left"
-  listClassName="select-field-list"
   menuItems={
     Array [
       "item1",
