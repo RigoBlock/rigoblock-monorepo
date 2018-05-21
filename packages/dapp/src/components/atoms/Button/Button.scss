@@ -3,15 +3,16 @@
 .base-button {
   border: solid 2px;
   font-weight: bold;
+  padding: ($dist-xs - 2) ($dist-s - 2)
 }
 
-.inverted-Button {
+.inverted-button {
   border: none;
+  font-weight: bold;
 }
 
 .success-button {
   background: $success-button-color;
-  border: none;
   &:hover {
     background: lighten($color: $success-button-color, $amount: 10%)
   }
@@ -19,7 +20,6 @@
 
 .error-button {
   background: $error-button-color;
-  border: none;
   &:hover {
     background: darken($color: $error-button-color, $amount: 10%)
   }

@@ -22,11 +22,11 @@ const TYPE_PROPS = {
   },
   [BUTTON_TYPES.SUCCESS]: {
     inverted: true,
-    classes: ['base-button', 'success-button']
+    classes: ['inverted-button', 'success-button']
   },
   [BUTTON_TYPES.ERROR]: {
     inverted: true,
-    classes: ['base-button', 'error-button']
+    classes: ['inverted-button', 'error-button']
   }
 }
 
