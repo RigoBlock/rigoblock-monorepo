@@ -1,0 +1,23 @@
+@import "../../components/_settings/_variables.scss";
+
+.preferences-content {
+  max-width: 16 * $dist-xl;
+  margin: $dist-xl auto 0 auto;
+  height: 100%;
+
+  h1 {
+    padding: $dist-s 0;
+  }
+
+  h3 {
+    padding: $dist-xs 0;
+  }
+
+  p {
+    padding: $dist-xs 0;
+  }
+}
+
+.timezone-select-field {
+  padding: ($dist-xs / 2) 0 $dist-s 0;
+}

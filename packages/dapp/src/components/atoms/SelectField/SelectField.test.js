@@ -8,7 +8,7 @@ const props = {
   id: '1',
   items: itemList,
   onChange: jest.fn(),
-  placeholder: 'placeholder'
+  defaultValue: 'item1'
 }
 
 describe('SelectField component', () => {

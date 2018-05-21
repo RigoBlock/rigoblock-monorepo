@@ -78,6 +78,7 @@
     "reactotron-react-js": "^1.13.0",
     "reactotron-redux": "^1.13.0",
     "redux": "^3.7.2",
+    "redux-form": "^7.3.0",
     "redux-observable": "^0.18.0",
     "redux-persist": "^5.9.1",
     "rxjs": "5",

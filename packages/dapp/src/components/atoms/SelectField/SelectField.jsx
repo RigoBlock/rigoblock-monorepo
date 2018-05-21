@@ -43,8 +43,8 @@ SelectField.propTypes = {
 }
 
 SelectField.defaultProps = {
-  placeholder: '',
-  defaultValue: ''
+  placeholder: null,
+  defaultValue: null
 }
 
 export default SelectField
