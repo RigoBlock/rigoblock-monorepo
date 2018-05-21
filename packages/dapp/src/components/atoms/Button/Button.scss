@@ -1,9 +1,9 @@
 @import "../../_settings/variables.scss";
 
 .base-button {
-  border: solid 2px;
+  border: solid $border-size;
   font-weight: bold;
-  padding: ($dist-xs - 2) ($dist-s - 2)
+  padding: ($dist-xs - $border-size) ($dist-s - $border-size)
 }
 
 .inverted-button {

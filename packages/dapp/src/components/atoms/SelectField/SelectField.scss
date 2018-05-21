@@ -4,11 +4,11 @@
   background: $panels-color;
   border-radius: $wrapper-radius;
   box-shadow: $box-shadow;
-  transition: border-radius 300ms;
+  transition: border-radius $medium-animation;
 
   .md-ink-container {
     border-radius: $wrapper-radius;
-    transition: border-radius 300ms;
+    transition: border-radius $medium-animation;
   }
 
   &[aria-expanded="true"] {
