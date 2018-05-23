@@ -11,9 +11,13 @@
   .md-ink-container {
     border-radius: $border-radius;
     transition: border-radius $medium-animation;
-    height: $dist-l;
   }
-
+  .md-list-tile {
+    height: 32px;
+    div.md-ink-container {
+      border-radius: 0;
+    }
+  }
   .md-icon-separator {
     height: $dist-l;
   }

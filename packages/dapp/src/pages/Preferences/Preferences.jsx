@@ -1,7 +1,7 @@
 import './Preferences.scss'
 import BaseTemplate from '../../components/templates/BaseTemplate'
+import PreferencesForm from '../../components/organisms/PreferencesForm'
 import React, { Component } from 'react'
-import TimeZoneSelect from '../../components/atoms/TimeZoneSelect'
 
 class Preferences extends Component {
   render() {
@@ -9,8 +9,7 @@ class Preferences extends Component {
       <BaseTemplate>
         <div className="preferences-content">
           <h1>Preferences</h1>
-          <h3>Time zone</h3>
-          <TimeZoneSelect />
+          <PreferencesForm />
         </div>
       </BaseTemplate>
     )

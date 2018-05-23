@@ -12,10 +12,11 @@ const SelectField = ({ id, items, placeholder, onChange, defaultValue }) => {
   )
   return (
     <MaterialSelect
-      id={id}
+      id={id.toString()}
       placeholder={placeholder}
       defaultValue={defaultValue}
       onChange={onChange}
+      stripActiveItem={false}
       repositionOnScroll={false}
       className={classProps}
       menuItems={items}
@@ -26,10 +27,10 @@ const SelectField = ({ id, items, placeholder, onChange, defaultValue }) => {
 }
 
 SelectField.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   items: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.string,
@@ -44,7 +45,8 @@ SelectField.propTypes = {
 
 SelectField.defaultProps = {
   placeholder: null,
-  defaultValue: null
+  defaultValue: '',
+  onChange: () => {}
 }
 
 export default SelectField
