@@ -5,17 +5,26 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 
-const SelectField = ({ id, items, placeholder, onChange, defaultValue }) => {
+const SelectField = ({
+  id,
+  items,
+  placeholder,
+  onChange,
+  value,
+  defaultValue
+}) => {
   const classProps = classNames('select-field')
   const dropDownArrow = (
     <span className={'material-icons'}>keyboard_arrow_down</span>
   )
   return (
     <MaterialSelect
-      id={id}
+      id={id.toString()}
       placeholder={placeholder}
       defaultValue={defaultValue}
+      value={value}
       onChange={onChange}
+      stripActiveItem={false}
       repositionOnScroll={false}
       className={classProps}
       menuItems={items}
@@ -26,10 +35,11 @@ const SelectField = ({ id, items, placeholder, onChange, defaultValue }) => {
 }
 
 SelectField.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
   items: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.string,
@@ -43,8 +53,10 @@ SelectField.propTypes = {
 }
 
 SelectField.defaultProps = {
-  placeholder: '',
-  defaultValue: ''
+  placeholder: null,
+  defaultValue: '',
+  value: '',
+  onChange: () => {}
 }
 
 export default SelectField

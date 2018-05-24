@@ -7,8 +7,8 @@ const props = {
   items: [
     {
       id: 1,
-      name: 'Rocksolid Vault',
-      symbol: 'VLT',
+      itemName: 'Rocksolid Vault',
+      itemSymbol: 'VLT',
       value: 12489.51323
     }
   ]

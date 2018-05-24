@@ -1,6 +1,9 @@
 @import "../../_settings/variables.scss";
 
 .select-field {
+  height: $dist-l;
+  margin: $dist-xs 0;
+  min-width: 11 * $dist-m;
   background: $secondary-bg-color;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
@@ -9,6 +12,19 @@
   .md-ink-container {
     border-radius: $border-radius;
     transition: border-radius $medium-animation;
+  }
+  .md-list-tile {
+    height: 32px;
+    div.md-ink-container {
+      border-radius: 0;
+    }
+  }
+  .md-icon-separator {
+    height: $dist-l;
+  }
+
+  .md-list {
+    padding: 0;
   }
 
   &[aria-expanded="true"] {

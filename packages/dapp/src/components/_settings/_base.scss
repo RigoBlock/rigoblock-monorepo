@@ -4,7 +4,6 @@
 @import '~react-md/src/scss/globals';
 @import '~react-md/src/scss/colors';
 
-@include react-md-typography;
 @include react-md-buttons($md-primary-color, $md-secondary-color);
 @include react-md-accessibility;
 @include react-md-transitions;

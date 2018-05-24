@@ -7,10 +7,10 @@ import toJson from 'enzyme-to-json'
 const testFunction = () => null
 
 const buttons = [
-  <Button key={1} type={BUTTON_TYPES.PRIMARY} onClick={testFunction}>
+  <Button key={1} appearance={BUTTON_TYPES.PRIMARY} onClick={testFunction}>
     Cancel
   </Button>,
-  <Button key={2} type={BUTTON_TYPES.INVERTED} onClick={testFunction}>
+  <Button key={2} appearance={BUTTON_TYPES.INVERTED} onClick={testFunction}>
     Save
   </Button>
 ]

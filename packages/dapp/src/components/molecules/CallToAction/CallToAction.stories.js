@@ -11,10 +11,10 @@ storiesOf('Molecules/CallToAction', module)
   .addDecorator(withKnobs)
   .add('default', () => (
     <CallToAction>
-      <Button type={BUTTON_TYPES.PRIMARY} onClick={testFunction}>
+      <Button appearance={BUTTON_TYPES.PRIMARY} onClick={testFunction}>
         {text('button text', 'Cancel')}
       </Button>
-      <Button type={BUTTON_TYPES.INVERTED} onClick={testFunction}>
+      <Button appearance={BUTTON_TYPES.INVERTED} onClick={testFunction}>
         {text('button text', 'Save')}
       </Button>
     </CallToAction>

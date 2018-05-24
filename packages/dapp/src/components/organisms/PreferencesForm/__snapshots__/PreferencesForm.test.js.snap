@@ -1,0 +1,1300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PreferencesForm component renders correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [MockFunction],
+      "getState": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(ReduxForm)>
+    <ReduxForm
+      changePreferences={[Function]}
+      formObject={
+        Object {
+          "preferences": Object {
+            "initial": Object {
+              "timezone": "+02:00",
+            },
+            "values": Object {
+              "timezone": "+02:00",
+            },
+          },
+        }
+      }
+      initialValues={
+        Object {
+          "timezone": "+02:00",
+        }
+      }
+      user={
+        Object {
+          "timezone": "+02:00",
+        }
+      }
+    >
+      <Connect(Form(PreferencesForm))
+        changePreferences={[Function]}
+        destroyOnUnmount={true}
+        enableReinitialize={true}
+        forceUnregisterOnUnmount={false}
+        form="preferences"
+        formObject={
+          Object {
+            "preferences": Object {
+              "initial": Object {
+                "timezone": "+02:00",
+              },
+              "values": Object {
+                "timezone": "+02:00",
+              },
+            },
+          }
+        }
+        getFormState={[Function]}
+        initialValues={
+          Object {
+            "timezone": "+02:00",
+          }
+        }
+        keepDirtyOnReinitialize={false}
+        persistentSubmitErrors={false}
+        pure={true}
+        shouldAsyncValidate={[Function]}
+        shouldError={[Function]}
+        shouldValidate={[Function]}
+        shouldWarn={[Function]}
+        touchOnBlur={true}
+        touchOnChange={false}
+        updateUnregisteredFields={false}
+        user={
+          Object {
+            "timezone": "+02:00",
+          }
+        }
+      >
+        <Form(PreferencesForm)
+          anyTouched={false}
+          array={
+            Object {
+              "insert": [Function],
+              "move": [Function],
+              "pop": [Function],
+              "push": [Function],
+              "remove": [Function],
+              "removeAll": [Function],
+              "shift": [Function],
+              "splice": [Function],
+              "swap": [Function],
+              "unshift": [Function],
+            }
+          }
+          arrayInsert={[Function]}
+          arrayMove={[Function]}
+          arrayPop={[Function]}
+          arrayPush={[Function]}
+          arrayRemove={[Function]}
+          arrayRemoveAll={[Function]}
+          arrayShift={[Function]}
+          arraySplice={[Function]}
+          arraySwap={[Function]}
+          arrayUnshift={[Function]}
+          asyncValidating={false}
+          autofill={[Function]}
+          blur={[Function]}
+          change={[Function]}
+          changePreferences={[Function]}
+          clearAsyncError={[Function]}
+          clearFields={[Function]}
+          clearSubmit={[Function]}
+          clearSubmitErrors={[Function]}
+          destroy={[Function]}
+          destroyOnUnmount={true}
+          dirty={false}
+          dispatch={[MockFunction]}
+          enableReinitialize={true}
+          focus={[Function]}
+          forceUnregisterOnUnmount={false}
+          form="preferences"
+          formObject={
+            Object {
+              "preferences": Object {
+                "initial": Object {
+                  "timezone": "+02:00",
+                },
+                "values": Object {
+                  "timezone": "+02:00",
+                },
+              },
+            }
+          }
+          getFormState={[Function]}
+          initialValues={
+            Object {
+              "timezone": "+02:00",
+            }
+          }
+          initialize={[Function]}
+          initialized={true}
+          invalid={false}
+          keepDirtyOnReinitialize={false}
+          persistentSubmitErrors={false}
+          pristine={true}
+          pure={true}
+          registerField={[Function]}
+          reset={[Function]}
+          resetSection={[Function]}
+          setSubmitFailed={[Function]}
+          setSubmitSucceeded={[Function]}
+          shouldAsyncValidate={[Function]}
+          shouldError={[Function]}
+          shouldValidate={[Function]}
+          shouldWarn={[Function]}
+          startAsyncValidation={[Function]}
+          startSubmit={[Function]}
+          stopAsyncValidation={[Function]}
+          stopSubmit={[Function]}
+          submit={[Function]}
+          submitFailed={false}
+          submitSucceeded={false}
+          submitting={false}
+          syncErrors={Object {}}
+          syncWarnings={Object {}}
+          touch={[Function]}
+          touchOnBlur={true}
+          touchOnChange={false}
+          unregisterField={[Function]}
+          untouch={[Function]}
+          updateSyncErrors={[Function]}
+          updateSyncWarnings={[Function]}
+          updateUnregisteredFields={false}
+          user={
+            Object {
+              "timezone": "+02:00",
+            }
+          }
+          valid={true}
+          validExceptSubmit={true}
+          values={
+            Object {
+              "timezone": "+02:00",
+            }
+          }
+        >
+          <PreferencesForm
+            anyTouched={false}
+            array={
+              Object {
+                "insert": [Function],
+                "move": [Function],
+                "pop": [Function],
+                "push": [Function],
+                "remove": [Function],
+                "removeAll": [Function],
+                "shift": [Function],
+                "splice": [Function],
+                "swap": [Function],
+                "unshift": [Function],
+              }
+            }
+            asyncValidate={[Function]}
+            asyncValidating={false}
+            autofill={[Function]}
+            blur={[Function]}
+            change={[Function]}
+            changePreferences={[Function]}
+            clearAsyncError={[Function]}
+            clearFields={[Function]}
+            clearSubmit={[Function]}
+            clearSubmitErrors={[Function]}
+            destroy={[Function]}
+            dirty={false}
+            dispatch={[MockFunction]}
+            form="preferences"
+            formObject={
+              Object {
+                "preferences": Object {
+                  "initial": Object {
+                    "timezone": "+02:00",
+                  },
+                  "values": Object {
+                    "timezone": "+02:00",
+                  },
+                },
+              }
+            }
+            handleSubmit={[Function]}
+            initialValues={
+              Object {
+                "timezone": "+02:00",
+              }
+            }
+            initialize={[Function]}
+            initialized={true}
+            invalid={false}
+            pristine={true}
+            pure={true}
+            reset={[Function]}
+            resetSection={[Function]}
+            submit={[Function]}
+            submitFailed={false}
+            submitSucceeded={false}
+            submitting={false}
+            touch={[Function]}
+            untouch={[Function]}
+            user={
+              Object {
+                "timezone": "+02:00",
+              }
+            }
+            valid={true}
+          >
+            <form
+              onSubmit={[Function]}
+            >
+              <h3>
+                Time zone
+              </h3>
+              <SelectFieldRedux
+                fieldName="timezone"
+                fieldProps={
+                  Object {
+                    "id": 1,
+                    "items": Array [
+                      "-12:00",
+                      "-11:00",
+                      "-10:00",
+                      "-09:00",
+                      "-09:30",
+                      "-08:00",
+                      "-07:00",
+                      "-06:00",
+                      "-05:00",
+                      "-04:00",
+                      "-03:00",
+                      "-02:00",
+                      "-02:30",
+                      "-01:00",
+                      "+00:00",
+                      "+01:00",
+                      "+02:00",
+                      "+03:00",
+                      "+04:00",
+                      "+04:30",
+                      "+05:00",
+                      "+05:30",
+                      "+05:45",
+                      "+06:00",
+                      "+06:30",
+                      "+07:00",
+                      "+08:00",
+                      "+08:45",
+                      "+09:00",
+                      "+09:30",
+                      "+10:00",
+                      "+10:30",
+                      "+11:00",
+                      "+12:00",
+                      "+12:45",
+                      "+13:00",
+                      "+14:00",
+                    ],
+                  }
+                }
+              >
+                <Field
+                  component={[Function]}
+                  name="timezone"
+                >
+                  <Connect(ConnectedField)
+                    _reduxForm={
+                      Object {
+                        "anyTouched": false,
+                        "array": Object {
+                          "insert": [Function],
+                          "move": [Function],
+                          "pop": [Function],
+                          "push": [Function],
+                          "remove": [Function],
+                          "removeAll": [Function],
+                          "shift": [Function],
+                          "splice": [Function],
+                          "swap": [Function],
+                          "unshift": [Function],
+                        },
+                        "arrayInsert": [Function],
+                        "arrayMove": [Function],
+                        "arrayPop": [Function],
+                        "arrayPush": [Function],
+                        "arrayRemove": [Function],
+                        "arrayRemoveAll": [Function],
+                        "arrayShift": [Function],
+                        "arraySplice": [Function],
+                        "arraySwap": [Function],
+                        "arrayUnshift": [Function],
+                        "asyncErrors": undefined,
+                        "asyncValidate": [Function],
+                        "asyncValidating": false,
+                        "autofill": [Function],
+                        "blur": [Function],
+                        "change": [Function],
+                        "changePreferences": [Function],
+                        "clearAsyncError": [Function],
+                        "clearFields": [Function],
+                        "clearSubmit": [Function],
+                        "clearSubmitErrors": [Function],
+                        "destroy": [Function],
+                        "destroyOnUnmount": true,
+                        "dirty": false,
+                        "dispatch": [MockFunction],
+                        "enableReinitialize": true,
+                        "error": undefined,
+                        "focus": [Function],
+                        "forceUnregisterOnUnmount": false,
+                        "form": "preferences",
+                        "formObject": Object {
+                          "preferences": Object {
+                            "initial": Object {
+                              "timezone": "+02:00",
+                            },
+                            "values": Object {
+                              "timezone": "+02:00",
+                            },
+                          },
+                        },
+                        "getFormState": [Function],
+                        "getValues": [Function],
+                        "initialValues": Object {
+                          "timezone": "+02:00",
+                        },
+                        "initialize": [Function],
+                        "initialized": true,
+                        "invalid": false,
+                        "keepDirtyOnReinitialize": false,
+                        "persistentSubmitErrors": false,
+                        "pristine": true,
+                        "pure": true,
+                        "register": [Function],
+                        "registerField": [Function],
+                        "registerInnerOnSubmit": [Function],
+                        "registeredFields": undefined,
+                        "reset": [Function],
+                        "resetSection": [Function],
+                        "sectionPrefix": undefined,
+                        "setSubmitFailed": [Function],
+                        "setSubmitSucceeded": [Function],
+                        "shouldAsyncValidate": [Function],
+                        "shouldError": [Function],
+                        "shouldValidate": [Function],
+                        "shouldWarn": [Function],
+                        "startAsyncValidation": [Function],
+                        "startSubmit": [Function],
+                        "stopAsyncValidation": [Function],
+                        "stopSubmit": [Function],
+                        "submit": [Function],
+                        "submitFailed": false,
+                        "submitSucceeded": false,
+                        "submitting": false,
+                        "syncErrors": Object {},
+                        "syncWarnings": Object {},
+                        "touch": [Function],
+                        "touchOnBlur": true,
+                        "touchOnChange": false,
+                        "triggerSubmit": undefined,
+                        "unregister": [Function],
+                        "unregisterField": [Function],
+                        "untouch": [Function],
+                        "updateSyncErrors": [Function],
+                        "updateSyncWarnings": [Function],
+                        "updateUnregisteredFields": false,
+                        "user": Object {
+                          "timezone": "+02:00",
+                        },
+                        "valid": true,
+                        "validExceptSubmit": true,
+                        "values": Object {
+                          "timezone": "+02:00",
+                        },
+                        "warning": undefined,
+                      }
+                    }
+                    component={[Function]}
+                    name="timezone"
+                    normalize={[Function]}
+                  >
+                    <ConnectedField
+                      _reduxForm={
+                        Object {
+                          "anyTouched": false,
+                          "array": Object {
+                            "insert": [Function],
+                            "move": [Function],
+                            "pop": [Function],
+                            "push": [Function],
+                            "remove": [Function],
+                            "removeAll": [Function],
+                            "shift": [Function],
+                            "splice": [Function],
+                            "swap": [Function],
+                            "unshift": [Function],
+                          },
+                          "arrayInsert": [Function],
+                          "arrayMove": [Function],
+                          "arrayPop": [Function],
+                          "arrayPush": [Function],
+                          "arrayRemove": [Function],
+                          "arrayRemoveAll": [Function],
+                          "arrayShift": [Function],
+                          "arraySplice": [Function],
+                          "arraySwap": [Function],
+                          "arrayUnshift": [Function],
+                          "asyncErrors": undefined,
+                          "asyncValidate": [Function],
+                          "asyncValidating": false,
+                          "autofill": [Function],
+                          "blur": [Function],
+                          "change": [Function],
+                          "changePreferences": [Function],
+                          "clearAsyncError": [Function],
+                          "clearFields": [Function],
+                          "clearSubmit": [Function],
+                          "clearSubmitErrors": [Function],
+                          "destroy": [Function],
+                          "destroyOnUnmount": true,
+                          "dirty": false,
+                          "dispatch": [MockFunction],
+                          "enableReinitialize": true,
+                          "error": undefined,
+                          "focus": [Function],
+                          "forceUnregisterOnUnmount": false,
+                          "form": "preferences",
+                          "formObject": Object {
+                            "preferences": Object {
+                              "initial": Object {
+                                "timezone": "+02:00",
+                              },
+                              "values": Object {
+                                "timezone": "+02:00",
+                              },
+                            },
+                          },
+                          "getFormState": [Function],
+                          "getValues": [Function],
+                          "initialValues": Object {
+                            "timezone": "+02:00",
+                          },
+                          "initialize": [Function],
+                          "initialized": true,
+                          "invalid": false,
+                          "keepDirtyOnReinitialize": false,
+                          "persistentSubmitErrors": false,
+                          "pristine": true,
+                          "pure": true,
+                          "register": [Function],
+                          "registerField": [Function],
+                          "registerInnerOnSubmit": [Function],
+                          "registeredFields": undefined,
+                          "reset": [Function],
+                          "resetSection": [Function],
+                          "sectionPrefix": undefined,
+                          "setSubmitFailed": [Function],
+                          "setSubmitSucceeded": [Function],
+                          "shouldAsyncValidate": [Function],
+                          "shouldError": [Function],
+                          "shouldValidate": [Function],
+                          "shouldWarn": [Function],
+                          "startAsyncValidation": [Function],
+                          "startSubmit": [Function],
+                          "stopAsyncValidation": [Function],
+                          "stopSubmit": [Function],
+                          "submit": [Function],
+                          "submitFailed": false,
+                          "submitSucceeded": false,
+                          "submitting": false,
+                          "syncErrors": Object {},
+                          "syncWarnings": Object {},
+                          "touch": [Function],
+                          "touchOnBlur": true,
+                          "touchOnChange": false,
+                          "triggerSubmit": undefined,
+                          "unregister": [Function],
+                          "unregisterField": [Function],
+                          "untouch": [Function],
+                          "updateSyncErrors": [Function],
+                          "updateSyncWarnings": [Function],
+                          "updateUnregisteredFields": false,
+                          "user": Object {
+                            "timezone": "+02:00",
+                          },
+                          "valid": true,
+                          "validExceptSubmit": true,
+                          "values": Object {
+                            "timezone": "+02:00",
+                          },
+                          "warning": undefined,
+                        }
+                      }
+                      asyncValidating={false}
+                      component={[Function]}
+                      dirty={false}
+                      dispatch={[MockFunction]}
+                      initial="+02:00"
+                      name="timezone"
+                      normalize={[Function]}
+                      pristine={true}
+                      value="+02:00"
+                    >
+                      <renderSelectField
+                        input={
+                          Object {
+                            "name": "timezone",
+                            "onBlur": [Function],
+                            "onChange": [Function],
+                            "onDragStart": [Function],
+                            "onDrop": [Function],
+                            "onFocus": [Function],
+                            "value": "+02:00",
+                          }
+                        }
+                        meta={
+                          Object {
+                            "active": false,
+                            "asyncValidating": false,
+                            "autofilled": false,
+                            "dirty": false,
+                            "dispatch": [MockFunction],
+                            "error": undefined,
+                            "form": "preferences",
+                            "initial": "+02:00",
+                            "invalid": false,
+                            "pristine": true,
+                            "submitFailed": false,
+                            "submitting": false,
+                            "touched": false,
+                            "valid": true,
+                            "visited": false,
+                            "warning": undefined,
+                          }
+                        }
+                      >
+                        <SelectField
+                          defaultValue=""
+                          error={false}
+                          id={1}
+                          items={
+                            Array [
+                              "-12:00",
+                              "-11:00",
+                              "-10:00",
+                              "-09:00",
+                              "-09:30",
+                              "-08:00",
+                              "-07:00",
+                              "-06:00",
+                              "-05:00",
+                              "-04:00",
+                              "-03:00",
+                              "-02:00",
+                              "-02:30",
+                              "-01:00",
+                              "+00:00",
+                              "+01:00",
+                              "+02:00",
+                              "+03:00",
+                              "+04:00",
+                              "+04:30",
+                              "+05:00",
+                              "+05:30",
+                              "+05:45",
+                              "+06:00",
+                              "+06:30",
+                              "+07:00",
+                              "+08:00",
+                              "+08:45",
+                              "+09:00",
+                              "+09:30",
+                              "+10:00",
+                              "+10:30",
+                              "+11:00",
+                              "+12:00",
+                              "+12:45",
+                              "+13:00",
+                              "+14:00",
+                            ]
+                          }
+                          onChange={[Function]}
+                          placeholder={null}
+                          value="+02:00"
+                        >
+                          <SelectField
+                            anchor={
+                              Object {
+                                "x": "inner left",
+                                "y": "overlap",
+                              }
+                            }
+                            className="select-field"
+                            defaultValue=""
+                            defaultVisible={false}
+                            dropdownIcon={
+                              <span
+                                className="material-icons"
+                              >
+                                keyboard_arrow_down
+                              </span>
+                            }
+                            fixedTo={[Window]}
+                            id="1"
+                            itemLabel="label"
+                            itemProps="getProps"
+                            itemValue="value"
+                            keyboardMatchingTimeout={1000}
+                            lineDirection="left"
+                            menuItems={
+                              Array [
+                                "-12:00",
+                                "-11:00",
+                                "-10:00",
+                                "-09:00",
+                                "-09:30",
+                                "-08:00",
+                                "-07:00",
+                                "-06:00",
+                                "-05:00",
+                                "-04:00",
+                                "-03:00",
+                                "-02:00",
+                                "-02:30",
+                                "-01:00",
+                                "+00:00",
+                                "+01:00",
+                                "+02:00",
+                                "+03:00",
+                                "+04:00",
+                                "+04:30",
+                                "+05:00",
+                                "+05:30",
+                                "+05:45",
+                                "+06:00",
+                                "+06:30",
+                                "+07:00",
+                                "+08:00",
+                                "+08:45",
+                                "+09:00",
+                                "+09:30",
+                                "+10:00",
+                                "+10:30",
+                                "+11:00",
+                                "+12:00",
+                                "+12:45",
+                                "+13:00",
+                                "+14:00",
+                              ]
+                            }
+                            onChange={[Function]}
+                            placeholder={null}
+                            position="below"
+                            repositionOnResize={false}
+                            repositionOnScroll={false}
+                            stripActiveItem={false}
+                            transitionName="md-drop"
+                            transitionTime={300}
+                            value="+02:00"
+                          >
+                            <Menu
+                              anchor={
+                                Object {
+                                  "x": "inner left",
+                                  "y": "overlap",
+                                }
+                              }
+                              cascadingAnchor={
+                                Object {
+                                  "x": "right",
+                                  "y": "overlap",
+                                }
+                              }
+                              cascadingZDepth={3}
+                              className="md-menu--select-field select-field"
+                              fixedTo={[Window]}
+                              id="1-menu"
+                              listHeightRestricted={true}
+                              listId="1-menu-options"
+                              listProps={
+                                Object {
+                                  "aria-activedescendant": null,
+                                  "ref": [Function],
+                                  "role": "listbox",
+                                }
+                              }
+                              listZDepth={2}
+                              onClick={[Function]}
+                              onClose={[Function]}
+                              onKeyDown={[Function]}
+                              position="below"
+                              repositionOnResize={false}
+                              repositionOnScroll={false}
+                              sameWidth={true}
+                              simplified={true}
+                              toggle={
+                                <SelectFieldToggle
+                                  active={false}
+                                  activeLabel="+02:00"
+                                  below={true}
+                                  className={undefined}
+                                  dropdownIcon={
+                                    <span
+                                      className="material-icons"
+                                    >
+                                      keyboard_arrow_down
+                                    </span>
+                                  }
+                                  error={false}
+                                  id="1"
+                                  lineDirection="left"
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  placeholder={null}
+                                  style={undefined}
+                                  transitionName="md-drop"
+                                  transitionTime={300}
+                                  value="+02:00"
+                                  visible={false}
+                                />
+                              }
+                              visible={false}
+                            >
+                              <Layover
+                                anchor={
+                                  Object {
+                                    "x": "inner left",
+                                    "y": "overlap",
+                                  }
+                                }
+                                animationPosition="below"
+                                aria-expanded={false}
+                                aria-haspopup={true}
+                                aria-owns="1-menu-options"
+                                belowAnchor={
+                                  Object {
+                                    "x": "center",
+                                    "y": "bottom",
+                                  }
+                                }
+                                className="md-menu-container md-menu-container--menu-below md-menu--select-field select-field"
+                                closeOnOutsideClick={true}
+                                component="div"
+                                fillViewportHeight={false}
+                                fillViewportWidth={false}
+                                fixedTo={[Window]}
+                                id="1-menu"
+                                minBottom={0}
+                                minLeft={0}
+                                minRight={0}
+                                onClick={[Function]}
+                                onClose={[Function]}
+                                onKeyDown={[Function]}
+                                preventContextMenu={true}
+                                repositionOnResize={false}
+                                repositionOnScroll={false}
+                                sameWidth={true}
+                                simplified={true}
+                                toggle={
+                                  <SelectFieldToggle
+                                    active={false}
+                                    activeLabel="+02:00"
+                                    below={true}
+                                    className={undefined}
+                                    dropdownIcon={
+                                      <span
+                                        className="material-icons"
+                                      >
+                                        keyboard_arrow_down
+                                      </span>
+                                    }
+                                    error={false}
+                                    id="1"
+                                    lineDirection="left"
+                                    onBlur={[Function]}
+                                    onChange={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    placeholder={null}
+                                    style={undefined}
+                                    transitionName="md-drop"
+                                    transitionTime={300}
+                                    value="+02:00"
+                                    visible={false}
+                                  />
+                                }
+                                toggleQuery=".md-text-field-container,button,*[role=\\"button\\"],*[role=\\"listbox\\"]"
+                                transitionEnterTimeout={200}
+                                transitionLeaveTimeout={200}
+                                transitionName="md-layover"
+                                visible={false}
+                                xThreshold={0.38}
+                                yThreshold={0.38}
+                              >
+                                <CSSTransitionGroup
+                                  aria-expanded={false}
+                                  aria-haspopup={true}
+                                  className="md-layover md-layover--simplified md-inline-block md-menu-container md-menu-container--menu-below md-menu--select-field select-field"
+                                  component="div"
+                                  id="1-menu"
+                                  onClick={[Function]}
+                                  onContextMenu={[Function]}
+                                  onKeyDown={[Function]}
+                                  transitionAppear={false}
+                                  transitionEnter={true}
+                                  transitionEnterTimeout={200}
+                                  transitionLeave={true}
+                                  transitionLeaveTimeout={200}
+                                  transitionName="md-layover"
+                                >
+                                  <TransitionGroup
+                                    aria-expanded={false}
+                                    aria-haspopup={true}
+                                    childFactory={[Function]}
+                                    className="md-layover md-layover--simplified md-inline-block md-menu-container md-menu-container--menu-below md-menu--select-field select-field"
+                                    component="div"
+                                    id="1-menu"
+                                    onClick={[Function]}
+                                    onContextMenu={[Function]}
+                                    onKeyDown={[Function]}
+                                    transitionAppear={false}
+                                    transitionEnter={true}
+                                    transitionEnterTimeout={200}
+                                    transitionLeave={true}
+                                    transitionLeaveTimeout={200}
+                                    transitionName="md-layover"
+                                  >
+                                    <div
+                                      aria-expanded={false}
+                                      aria-haspopup={true}
+                                      className="md-layover md-layover--simplified md-inline-block md-menu-container md-menu-container--menu-below md-menu--select-field select-field"
+                                      id="1-menu"
+                                      onClick={[Function]}
+                                      onContextMenu={[Function]}
+                                      onKeyDown={[Function]}
+                                    >
+                                      <CSSTransitionGroupChild
+                                        appear={false}
+                                        enter={true}
+                                        enterTimeout={200}
+                                        key=".1"
+                                        leave={true}
+                                        leaveTimeout={200}
+                                        name="md-layover"
+                                      >
+                                        <SelectFieldToggle
+                                          active={false}
+                                          activeLabel="+02:00"
+                                          below={true}
+                                          dropdownIcon={
+                                            <span
+                                              className="material-icons"
+                                            >
+                                              keyboard_arrow_down
+                                            </span>
+                                          }
+                                          error={false}
+                                          id="1"
+                                          key=".1"
+                                          lineDirection="left"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onClick={[Function]}
+                                          onFocus={[Function]}
+                                          placeholder={null}
+                                          transitionName="md-drop"
+                                          transitionTime={300}
+                                          value="+02:00"
+                                          visible={false}
+                                        >
+                                          <div
+                                            className="md-select-field__toggle"
+                                          >
+                                            <FloatingLabel
+                                              active={false}
+                                              error={false}
+                                              floating={true}
+                                              htmlFor="1"
+                                            />
+                                            <SelectFieldInput
+                                              active={false}
+                                              activeLabel="+02:00"
+                                              below={true}
+                                              dropdownIcon={
+                                                <span
+                                                  className="material-icons"
+                                                >
+                                                  keyboard_arrow_down
+                                                </span>
+                                              }
+                                              error={false}
+                                              id="1"
+                                              lineDirection="left"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onClick={[Function]}
+                                              onFocus={[Function]}
+                                              placeholder={null}
+                                              transitionName="md-drop"
+                                              transitionTime={300}
+                                              value="+02:00"
+                                            >
+                                              <withInk(AccessibleFakeButton)
+                                                className="md-select-field md-text"
+                                                component={[Function]}
+                                                id="1-toggle"
+                                                inkDisabled={false}
+                                                inkTransitionEnterTimeout={450}
+                                                inkTransitionLeaveTimeout={300}
+                                                inkTransitionOverlap={150}
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                role="listbox"
+                                                zDepth={0}
+                                              >
+                                                <AccessibleFakeButton
+                                                  className="md-select-field md-text"
+                                                  component={[Function]}
+                                                  id="1-toggle"
+                                                  ink={
+                                                    <InkContainer
+                                                      className={undefined}
+                                                      disabledInteractions={undefined}
+                                                      inkClassName={undefined}
+                                                      inkStyle={undefined}
+                                                      pulse={undefined}
+                                                      style={undefined}
+                                                      transitionEnterTimeout={450}
+                                                      transitionLeaveTimeout={300}
+                                                      transitionOverlap={150}
+                                                      waitForInkTransition={undefined}
+                                                    />
+                                                  }
+                                                  listenToEnter={true}
+                                                  listenToSpace={true}
+                                                  noFocusOutline={true}
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onClick={[Function]}
+                                                  onFocus={[Function]}
+                                                  role="listbox"
+                                                  tabIndex={0}
+                                                  zDepth={0}
+                                                >
+                                                  <Paper
+                                                    aria-pressed={false}
+                                                    className="md-fake-btn md-pointer--hover md-fake-btn--no-outline md-select-field md-text"
+                                                    component="div"
+                                                    id="1-toggle"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onClick={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    onKeyUp={[Function]}
+                                                    role="listbox"
+                                                    tabIndex={0}
+                                                    zDepth={0}
+                                                  >
+                                                    <div
+                                                      aria-pressed={false}
+                                                      className="md-paper md-paper--0 md-fake-btn md-pointer--hover md-fake-btn--no-outline md-select-field md-text"
+                                                      id="1-toggle"
+                                                      onBlur={[Function]}
+                                                      onChange={[Function]}
+                                                      onClick={[Function]}
+                                                      onFocus={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      onKeyUp={[Function]}
+                                                      role="listbox"
+                                                      tabIndex={0}
+                                                    >
+                                                      <InkContainer
+                                                        key="ink-container"
+                                                        transitionEnterTimeout={450}
+                                                        transitionLeaveTimeout={300}
+                                                        transitionOverlap={150}
+                                                      >
+                                                        <TransitionGroup
+                                                          childFactory={[Function]}
+                                                          className="md-ink-container"
+                                                          component="div"
+                                                        >
+                                                          <div
+                                                            className="md-ink-container"
+                                                          />
+                                                        </TransitionGroup>
+                                                      </InkContainer>
+                                                      <IconSeparator
+                                                        className="md-text-field md-select-field--btn"
+                                                        component="div"
+                                                        key=".0"
+                                                        label="+02:00"
+                                                        labelClassName={null}
+                                                      >
+                                                        <div
+                                                          className="md-icon-separator md-text-field md-select-field--btn"
+                                                        >
+                                                          <span
+                                                            className="md-icon-text"
+                                                          >
+                                                            +02:00
+                                                          </span>
+                                                          <span
+                                                            className="material-icons"
+                                                          >
+                                                            keyboard_arrow_down
+                                                          </span>
+                                                        </div>
+                                                      </IconSeparator>
+                                                      <input
+                                                        id="1"
+                                                        key=".$value"
+                                                        type="hidden"
+                                                        value="+02:00"
+                                                      />
+                                                    </div>
+                                                  </Paper>
+                                                </AccessibleFakeButton>
+                                              </withInk(AccessibleFakeButton)>
+                                            </SelectFieldInput>
+                                            <TextFieldMessage
+                                              active={false}
+                                              error={false}
+                                              leftIcon={false}
+                                              rightIcon={false}
+                                            />
+                                          </div>
+                                        </SelectFieldToggle>
+                                      </CSSTransitionGroupChild>
+                                    </div>
+                                  </TransitionGroup>
+                                </CSSTransitionGroup>
+                              </Layover>
+                            </Menu>
+                          </SelectField>
+                        </SelectField>
+                      </renderSelectField>
+                    </ConnectedField>
+                  </Connect(ConnectedField)>
+                </Field>
+              </SelectFieldRedux>
+              <CallToAction>
+                <div
+                  className="call-to-action"
+                >
+                  <Button
+                    appearance="primary"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <withInk(withTooltip(Button))
+                      className="base-button"
+                      flat={true}
+                      inkTransitionEnterTimeout={450}
+                      inkTransitionLeaveTimeout={300}
+                      inkTransitionOverlap={150}
+                      onClick={[Function]}
+                      primary={true}
+                      swapTheming={false}
+                      type="button"
+                    >
+                      <withTooltip(Button)
+                        className="base-button"
+                        flat={true}
+                        ink={
+                          <InkContainer
+                            className={undefined}
+                            disabledInteractions={undefined}
+                            inkClassName={undefined}
+                            inkStyle={undefined}
+                            pulse={undefined}
+                            style={undefined}
+                            transitionEnterTimeout={450}
+                            transitionLeaveTimeout={300}
+                            transitionOverlap={150}
+                            waitForInkTransition={undefined}
+                          />
+                        }
+                        onClick={[Function]}
+                        primary={true}
+                        swapTheming={false}
+                        type="button"
+                      >
+                        <Button
+                          className="base-button"
+                          fixedPosition="br"
+                          flat={true}
+                          iconBefore={true}
+                          ink={
+                            <InkContainer
+                              className={undefined}
+                              disabledInteractions={undefined}
+                              inkClassName={undefined}
+                              inkStyle={undefined}
+                              pulse={undefined}
+                              style={undefined}
+                              transitionEnterTimeout={450}
+                              transitionLeaveTimeout={300}
+                              transitionOverlap={150}
+                              waitForInkTransition={undefined}
+                            />
+                          }
+                          onClick={[Function]}
+                          primary={true}
+                          swapTheming={false}
+                          type="button"
+                        >
+                          <button
+                            className="md-btn md-btn--flat md-btn--text md-pointer--hover md-text--theme-primary md-ink--primary md-inline-block base-button"
+                            onClick={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseUp={[Function]}
+                            onTouchEnd={[Function]}
+                            onTouchStart={[Function]}
+                            type="button"
+                          >
+                            <InkContainer
+                              key="ink-container"
+                              transitionEnterTimeout={450}
+                              transitionLeaveTimeout={300}
+                              transitionOverlap={150}
+                            >
+                              <TransitionGroup
+                                childFactory={[Function]}
+                                className="md-ink-container"
+                                component="div"
+                              >
+                                <div
+                                  className="md-ink-container"
+                                />
+                              </TransitionGroup>
+                            </InkContainer>
+                            Cancel
+                          </button>
+                        </Button>
+                      </withTooltip(Button)>
+                    </withInk(withTooltip(Button))>
+                  </Button>
+                  <Button
+                    appearance="inverted"
+                    onClick={[Function]}
+                    type="submit"
+                  >
+                    <withInk(withTooltip(Button))
+                      className="inverted-button"
+                      flat={true}
+                      inkTransitionEnterTimeout={450}
+                      inkTransitionLeaveTimeout={300}
+                      inkTransitionOverlap={150}
+                      onClick={[Function]}
+                      primary={true}
+                      swapTheming={true}
+                      type="submit"
+                    >
+                      <withTooltip(Button)
+                        className="inverted-button"
+                        flat={true}
+                        ink={
+                          <InkContainer
+                            className={undefined}
+                            disabledInteractions={undefined}
+                            inkClassName={undefined}
+                            inkStyle={undefined}
+                            pulse={undefined}
+                            style={undefined}
+                            transitionEnterTimeout={450}
+                            transitionLeaveTimeout={300}
+                            transitionOverlap={150}
+                            waitForInkTransition={undefined}
+                          />
+                        }
+                        onClick={[Function]}
+                        primary={true}
+                        swapTheming={true}
+                        type="submit"
+                      >
+                        <Button
+                          className="inverted-button"
+                          fixedPosition="br"
+                          flat={true}
+                          iconBefore={true}
+                          ink={
+                            <InkContainer
+                              className={undefined}
+                              disabledInteractions={undefined}
+                              inkClassName={undefined}
+                              inkStyle={undefined}
+                              pulse={undefined}
+                              style={undefined}
+                              transitionEnterTimeout={450}
+                              transitionLeaveTimeout={300}
+                              transitionOverlap={150}
+                              waitForInkTransition={undefined}
+                            />
+                          }
+                          onClick={[Function]}
+                          primary={true}
+                          swapTheming={true}
+                          type="submit"
+                        >
+                          <button
+                            className="md-btn md-btn--flat md-btn--text md-pointer--hover md-background--primary md-background--primary-hover md-inline-block inverted-button"
+                            onClick={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseUp={[Function]}
+                            onTouchEnd={[Function]}
+                            onTouchStart={[Function]}
+                            type="submit"
+                          >
+                            <InkContainer
+                              key="ink-container"
+                              transitionEnterTimeout={450}
+                              transitionLeaveTimeout={300}
+                              transitionOverlap={150}
+                            >
+                              <TransitionGroup
+                                childFactory={[Function]}
+                                className="md-ink-container"
+                                component="div"
+                              >
+                                <div
+                                  className="md-ink-container"
+                                />
+                              </TransitionGroup>
+                            </InkContainer>
+                            Save
+                          </button>
+                        </Button>
+                      </withTooltip(Button)>
+                    </withInk(withTooltip(Button))>
+                  </Button>
+                </div>
+              </CallToAction>
+            </form>
+          </PreferencesForm>
+        </Form(PreferencesForm)>
+      </Connect(Form(PreferencesForm))>
+    </ReduxForm>
+  </Connect(ReduxForm)>
+</Provider>
+`;

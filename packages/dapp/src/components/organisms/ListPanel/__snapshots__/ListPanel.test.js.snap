@@ -14,8 +14,8 @@ exports[`ListPanel component renders correctly 1`] = `
       Array [
         Object {
           "id": 1,
-          "name": "Rocksolid Vault",
-          "symbol": "VLT",
+          "itemName": "Rocksolid Vault",
+          "itemSymbol": "VLT",
           "value": 12489.51323,
         },
       ]

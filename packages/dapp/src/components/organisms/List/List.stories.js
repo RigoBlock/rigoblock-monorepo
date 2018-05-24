@@ -6,23 +6,20 @@ import React from 'react'
 
 const items = [
   {
-    id: 1,
-    name: 'Rocksolid Vault',
-    symbol: 'VLT',
-    value: 12489.51323
+    itemName: 'Rocksolid Vault',
+    itemSymbol: 'VLT',
+    itemValue: 12489.51323
   },
   {
-    id: 2,
-    name: 'Big Drago',
-    symbol: 'DRG',
+    itemName: 'Big Drago',
+    itemSymbol: 'DRG',
     growth: 0.25,
     currencyGrowth: 2.32
   },
   {
-    id: 3,
-    name: 'Rocksolid Vault',
-    symbol: 'VLT',
-    value: 12489.51323
+    itemName: 'Rocksolid Vault',
+    itemSymbol: 'VLT',
+    itemValue: 12489.51323
   }
 ]
 

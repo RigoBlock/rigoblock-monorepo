@@ -4,8 +4,12 @@
   max-width: 16 * $dist-xl;
   margin: $dist-xl auto 0 auto;
 
+  h1 {
+    padding: $dist-s 0;
+  }
+
   h3 {
-    padding: $dist-xs 0;
+    padding: $dist-s 0 $dist-xs 0;
   }
 
   p {
