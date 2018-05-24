@@ -1,6 +1,7 @@
 @import "../../_settings/variables.scss";
 
 .call-to-action {
+  padding-top: $dist-l;
   > *:not(:first-child) {
     margin-left: $dist-s;
   }

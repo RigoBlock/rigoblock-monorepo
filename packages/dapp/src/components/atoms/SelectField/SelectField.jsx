@@ -5,7 +5,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 
-const SelectField = ({ id, items, placeholder, onChange, value }) => {
+const SelectField = ({
+  id,
+  items,
+  placeholder,
+  onChange,
+  value,
+  defaultValue
+}) => {
   const classProps = classNames('select-field')
   const dropDownArrow = (
     <span className={'material-icons'}>keyboard_arrow_down</span>
@@ -14,6 +21,7 @@ const SelectField = ({ id, items, placeholder, onChange, value }) => {
     <MaterialSelect
       id={id.toString()}
       placeholder={placeholder}
+      defaultValue={defaultValue}
       value={value}
       onChange={onChange}
       stripActiveItem={false}

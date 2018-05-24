@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import Button, { BUTTON_TYPES } from '../../atoms/Button'
+import CallToAction from '../../molecules/CallToAction'
 import PropTypes from 'prop-types'
 import React from 'react'
 import SelectFieldRedux from '../../atoms/SelectFieldRedux'
@@ -34,16 +35,18 @@ let PreferencesForm = props => {
     <form onSubmit={handleSubmit}>
       <h3>Time zone</h3>
       <SelectFieldRedux fieldName={'timezone'} fieldProps={timeZoneProps} />
-      <Button
-        onClick={() => {
-          props.reset
-        }}
-      >
-        Cancel
-      </Button>
-      <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
-        Save
-      </Button>
+      <CallToAction>
+        <Button
+          onClick={() => {
+            props.reset
+          }}
+        >
+          Cancel
+        </Button>
+        <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
+          Save
+        </Button>
+      </CallToAction>
     </form>
   )
 }
@@ -59,14 +62,14 @@ PreferencesForm.propTypes = {
 }
 
 PreferencesForm = reduxForm({
-  form: 'preferences',
-  initialValues: { timezone: moment.tz(moment.tz.guess()).format('Z') }
+  form: 'preferences'
 })(PreferencesForm)
 
 PreferencesForm = connect(
   state => ({
     user: state.user,
-    formObject: state.form
+    formObject: state.form,
+    initialValues: state.user
   }),
   dispatch => bindActionCreators(UserActions, dispatch)
 )(PreferencesForm)

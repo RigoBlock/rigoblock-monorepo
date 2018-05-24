@@ -5,16 +5,18 @@ exports[`CallToAction component renders correctly 1`] = `
   className="call-to-action"
 >
   <Button
+    appearance="primary"
     key="1"
     onClick={[Function]}
-    type="primary"
+    type="button"
   >
     Cancel
   </Button>
   <Button
+    appearance="inverted"
     key="2"
     onClick={[Function]}
-    type="inverted"
+    type="button"
   >
     Save
   </Button>
