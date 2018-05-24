@@ -4,7 +4,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
 <Provider
   store={
     Object {
-      "dispatch": [Function],
+      "dispatch": [MockFunction],
       "getState": [Function],
       "subscribe": [Function],
     }
@@ -39,7 +39,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
       <Connect(Form(PreferencesForm))
         changePreferences={[Function]}
         destroyOnUnmount={true}
-        enableReinitialize={false}
+        enableReinitialize={true}
         forceUnregisterOnUnmount={false}
         form="preferences"
         formObject={
@@ -114,8 +114,8 @@ exports[`PreferencesForm component renders correctly 1`] = `
           destroy={[Function]}
           destroyOnUnmount={true}
           dirty={false}
-          dispatch={[Function]}
-          enableReinitialize={false}
+          dispatch={[MockFunction]}
+          enableReinitialize={true}
           focus={[Function]}
           forceUnregisterOnUnmount={false}
           form="preferences"
@@ -212,7 +212,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
             clearSubmitErrors={[Function]}
             destroy={[Function]}
             dirty={false}
-            dispatch={[Function]}
+            dispatch={[MockFunction]}
             form="preferences"
             formObject={
               Object {
@@ -349,8 +349,8 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         "destroy": [Function],
                         "destroyOnUnmount": true,
                         "dirty": false,
-                        "dispatch": [Function],
-                        "enableReinitialize": false,
+                        "dispatch": [MockFunction],
+                        "enableReinitialize": true,
                         "error": undefined,
                         "focus": [Function],
                         "forceUnregisterOnUnmount": false,
@@ -465,8 +465,8 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           "destroy": [Function],
                           "destroyOnUnmount": true,
                           "dirty": false,
-                          "dispatch": [Function],
-                          "enableReinitialize": false,
+                          "dispatch": [MockFunction],
+                          "enableReinitialize": true,
                           "error": undefined,
                           "focus": [Function],
                           "forceUnregisterOnUnmount": false,
@@ -540,7 +540,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                       asyncValidating={false}
                       component={[Function]}
                       dirty={false}
-                      dispatch={[Function]}
+                      dispatch={[MockFunction]}
                       initial="+02:00"
                       name="timezone"
                       normalize={[Function]}
@@ -565,7 +565,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                             "asyncValidating": false,
                             "autofilled": false,
                             "dirty": false,
-                            "dispatch": [Function],
+                            "dispatch": [MockFunction],
                             "error": undefined,
                             "form": "preferences",
                             "initial": "+02:00",

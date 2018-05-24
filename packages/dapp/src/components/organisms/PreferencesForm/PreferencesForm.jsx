@@ -30,7 +30,6 @@ let PreferencesForm = props => {
   const handleSubmit = e => {
     e.preventDefault()
     props.changePreferences(props.formObject.preferences.values)
-    props.initialize(props.formObject.preferences.values)
   }
   return (
     <form onSubmit={handleSubmit}>
@@ -58,7 +57,8 @@ PreferencesForm.propTypes = {
 }
 
 PreferencesForm = reduxForm({
-  form: 'preferences'
+  form: 'preferences',
+  enableReinitialize: true
 })(PreferencesForm)
 
 PreferencesForm = connect(

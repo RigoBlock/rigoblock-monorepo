@@ -1,16 +1,9 @@
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
+import PreferencesForm from './PreferencesForm.jsx'
 import React from 'react'
 import toJson from 'enzyme-to-json'
-
-const actionSpy = jest.fn()
-
-const userActionsMock = {
-  changePreferences: actionSpy
-}
-
-jest.doMock('../../../actions/user-actions', () => userActionsMock)
-const PreferencesForm = require('./PreferencesForm.jsx').default
+import userActions from '../../../actions/user-actions'
 
 const mockStore = {
   getState: () => ({
@@ -28,7 +21,7 @@ const mockStore = {
       }
     }
   }),
-  dispatch: () => null,
+  dispatch: jest.fn(),
   subscribe: () => null
 }
 
@@ -46,6 +39,8 @@ describe('PreferencesForm component', () => {
   it('fires the changePreferences action on submit', () => {
     const form = wrapper.find('form')
     form.simulate('submit')
-    expect(actionSpy).toHaveBeenCalled()
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      userActions.changePreferences({ timezone: '+02:00' })
+    )
   })
 })
