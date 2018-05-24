@@ -30,19 +30,14 @@ let PreferencesForm = props => {
   const handleSubmit = e => {
     e.preventDefault()
     props.changePreferences(props.formObject.preferences.values)
+    props.initialize(props.formObject.preferences.values)
   }
   return (
     <form onSubmit={handleSubmit}>
       <h3>Time zone</h3>
       <SelectFieldRedux fieldName={'timezone'} fieldProps={timeZoneProps} />
       <CallToAction>
-        <Button
-          onClick={() => {
-            props.reset
-          }}
-        >
-          Cancel
-        </Button>
+        <Button onClick={props.reset}>Cancel</Button>
         <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
           Save
         </Button>
@@ -52,6 +47,7 @@ let PreferencesForm = props => {
 }
 
 PreferencesForm.propTypes = {
+  initialize: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   changePreferences: PropTypes.func.isRequired,
   formObject: PropTypes.shape({
