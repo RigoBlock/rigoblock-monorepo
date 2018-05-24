@@ -8,10 +8,10 @@ exports[`List component renders correctly 1`] = `
     currencyGrowth={0}
     growth={0}
     id={1}
+    itemName="Rocksolid Vault"
+    itemSymbol="VLT"
     itemValue={0}
     key="0"
-    name="Rocksolid Vault"
-    symbol="VLT"
     value={12489.51323}
   />
 </div>

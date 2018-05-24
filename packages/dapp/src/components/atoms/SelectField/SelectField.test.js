@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json'
 const itemList = ['item1', 2, { label: 'test', value: '1' }]
 
 const props = {
-  id: '1',
+  id: 1,
   items: itemList,
   onChange: jest.fn(),
   defaultValue: 'item1'

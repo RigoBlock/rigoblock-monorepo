@@ -9,7 +9,7 @@ exports[`SelectField component renders correctly 1`] = `
     }
   }
   className="select-field"
-  defaultValue=""
+  defaultValue="item1"
   defaultVisible={false}
   dropdownIcon={
     <span
