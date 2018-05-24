@@ -1,0 +1,7 @@
+@import "../../_settings/variables.scss";
+
+.call-to-action {
+  > *:not(:first-child) {
+    margin-left: $dist-s;
+  }
+}
