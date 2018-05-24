@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CallToAction component renders correctly 1`] = `
+<div
+  className="call-to-action"
+>
+  <Button
+    key="1"
+    onClick={[Function]}
+    type="primary"
+  >
+    Cancel
+  </Button>
+  <Button
+    key="2"
+    onClick={[Function]}
+    type="inverted"
+  >
+    Save
+  </Button>
+</div>
+`;
