@@ -8,7 +8,7 @@ const List = ({ items }) => {
 }
 
 List.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape(ListItem.propTypes)).isRequired
+  items: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default List

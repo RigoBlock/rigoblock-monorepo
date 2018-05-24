@@ -24,7 +24,7 @@ const SelectFieldRedux = ({ fieldName, fieldProps }) => {
 
 SelectFieldRedux.propTypes = {
   fieldName: PropTypes.string.isRequired,
-  fieldProps: PropTypes.shape(SelectField.propTypes).isRequired
+  fieldProps: PropTypes.object.isRequired
 }
 
 export default SelectFieldRedux
