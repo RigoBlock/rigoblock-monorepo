@@ -1,4 +1,5 @@
-import actions from '../../actions/user-actions'
+import blockChainActions from '../../actions/blockchain-actions'
+import userActions from '../../actions/user-actions'
 import userReducer from './user'
 
 const initialState = {
@@ -21,12 +22,29 @@ describe('user reducer', () => {
   it("updates user's timezone", () => {
     userTest(
       undefined,
-      actions.changePreferences({
+      userActions.changePreferences({
         timezone: '+05:45'
       }),
       {
-        timezone: '+05:45'
+        timezone: '+05:45',
+        wallets: { Metamask: { account: '' } }
       }
     )
+  })
+  it('saves the default account number to the state', () => {
+    const exampleAccount = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
+    userTest(undefined, blockChainActions.blockChainLogIn(exampleAccount), {
+      timezone: '+02:00',
+      wallets: {
+        Metamask: { account: exampleAccount }
+      }
+    })
+  })
+
+  it('clears account number on logout', () => {
+    userTest(undefined, blockChainActions.blockChainLogout(), {
+      timezone: '+02:00',
+      wallets: { Metamask: { account: '' } }
+    })
   })
 })
