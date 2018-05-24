@@ -10,8 +10,9 @@ const SelectFieldRedux = ({ fieldName, fieldProps }) => {
   const renderSelectField = ({ input, meta: { touched, error } }) => {
     return (
       <SelectField
-        onChange={input.onChange}
         {...fieldProps}
+        onChange={input.onChange}
+        value={input.value}
         error={touched && !!error}
         errorText={error}
       />

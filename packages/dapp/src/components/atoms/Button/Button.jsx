@@ -30,11 +30,12 @@ const TYPE_PROPS = {
   }
 }
 
-const Button = ({ children, type, onClick }) => {
-  const styleProps = TYPE_PROPS[type]
+const Button = ({ children, appearance, onClick, type }) => {
+  const styleProps = TYPE_PROPS[appearance]
   const classProps = classNames(...styleProps.classes)
   return (
     <MaterialButton
+      type={type}
       flat
       primary
       onClick={onClick}
@@ -47,9 +48,10 @@ const Button = ({ children, type, onClick }) => {
 }
 
 Button.propTypes = {
+  type: PropTypes.string,
   children: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  type: PropTypes.oneOf([
+  onClick: PropTypes.func,
+  appearance: PropTypes.oneOf([
     BUTTON_TYPES.PRIMARY,
     BUTTON_TYPES.INVERTED,
     BUTTON_TYPES.SUCCESS,
@@ -58,7 +60,9 @@ Button.propTypes = {
 }
 
 Button.defaultProps = {
-  type: BUTTON_TYPES.PRIMARY
+  appearance: BUTTON_TYPES.PRIMARY,
+  type: 'button',
+  onClick: () => null
 }
 
 export default Button

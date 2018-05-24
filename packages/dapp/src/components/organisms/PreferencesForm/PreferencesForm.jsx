@@ -1,8 +1,12 @@
 import './PreferencesForm.scss'
-import 'react-md/lib/Helpers'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
+import Button, { BUTTON_TYPES } from '../../atoms/Button'
+import PropTypes from 'prop-types'
 import React from 'react'
 import SelectFieldRedux from '../../atoms/SelectFieldRedux'
+import UserActions from '../../../actions/user-actions'
 import moment from 'moment-timezone'
 
 const timeToDecimal = t => {
@@ -17,29 +21,54 @@ const timeZoneValues = [...timeZones].sort(
   (a, b) => timeToDecimal(a) - timeToDecimal(b)
 )
 
-const timeZoneProps = {
-  id: 1,
-  items: timeZoneValues,
-  defaultValue: moment.tz(moment.tz.guess()).format('Z')
-}
-
-const PreferencesForm = () => {
-  const onSubmit = values => console.log(values)
+let PreferencesForm = props => {
+  const timeZoneProps = {
+    id: 1,
+    items: timeZoneValues
+  }
+  const handleSubmit = e => {
+    e.preventDefault()
+    props.changePreferences(props.formObject.preferences.values)
+  }
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <h3>Time zone</h3>
       <SelectFieldRedux fieldName={'timezone'} fieldProps={timeZoneProps} />
+      <Button
+        onClick={() => {
+          props.reset
+        }}
+      >
+        Cancel
+      </Button>
+      <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
+        Save
+      </Button>
     </form>
   )
 }
 
-export default reduxForm({
-  form: 'preferences'
+PreferencesForm.propTypes = {
+  reset: PropTypes.func.isRequired,
+  changePreferences: PropTypes.func.isRequired,
+  formObject: PropTypes.shape({
+    preferences: PropTypes.shape({
+      values: PropTypes.object
+    })
+  }).isRequired
+}
+
+PreferencesForm = reduxForm({
+  form: 'preferences',
+  initialValues: { timezone: moment.tz(moment.tz.guess()).format('Z') }
 })(PreferencesForm)
 
-// const defaultValue = () => {
-//   const userTimezone = moment.tz.guess()
-//   let offset = parseInt(moment.tz(userTimezone).format('Z'), 10)
-//   offset = offset < 0 ? `GMT ${offset}` : `GMT +${offset}`
-//   return offset
-// }
+PreferencesForm = connect(
+  state => ({
+    user: state.user,
+    formObject: state.form
+  }),
+  dispatch => bindActionCreators(UserActions, dispatch)
+)(PreferencesForm)
+
+export default PreferencesForm

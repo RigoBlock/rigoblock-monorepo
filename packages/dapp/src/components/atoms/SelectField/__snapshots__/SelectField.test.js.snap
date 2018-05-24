@@ -9,7 +9,7 @@ exports[`SelectField component renders correctly 1`] = `
     }
   }
   className="select-field"
-  defaultValue="item1"
+  defaultValue=""
   defaultVisible={false}
   dropdownIcon={
     <span
@@ -40,7 +40,9 @@ exports[`SelectField component renders correctly 1`] = `
   position="below"
   repositionOnResize={false}
   repositionOnScroll={false}
+  stripActiveItem={false}
   transitionName="md-drop"
   transitionTime={300}
+  value=""
 />
 `;

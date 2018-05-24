@@ -10,6 +10,7 @@ exports[`Button component renders correctly 1`] = `
   onClick={[MockFunction]}
   primary={true}
   swapTheming={false}
+  type="button"
 >
   Test Button
 </withInk(withTooltip(Button))>

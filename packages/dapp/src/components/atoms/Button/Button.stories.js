@@ -9,7 +9,10 @@ const testFunction = () => console.log('button got clicked!')
 storiesOf('Atoms/Button', module)
   .addDecorator(withKnobs)
   .add('default', () => (
-    <Button type={selectV2('Button type', BUTTON_TYPES)} onClick={testFunction}>
+    <Button
+      appearance={selectV2('Button type', BUTTON_TYPES)}
+      onClick={testFunction}
+    >
       {text('button text', 'example button')}
     </Button>
   ))
