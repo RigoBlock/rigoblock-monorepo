@@ -15,11 +15,15 @@ Scenario('test timezone field functionality', (preferences, navigation) => {
   preferences.checkTimezoneHasChanged('GMT +03:00')
 })
 
-Scenario('test cancel button functionality', (preferences, navigation) => {
-  navigation.navigateToPreferences()
-  preferences.assertImOnPage()
-  preferences.changeTimezoneValue('GMT +03:00')
-  preferences.checkTimezoneHasChanged('GMT +03:00')
-  preferences.resetForm()
-  preferences.checkTimezoneHasChanged('GMT +02:00')
-})
+Scenario(
+  'test cancel button functionality',
+  async (preferences, navigation) => {
+    navigation.navigateToPreferences()
+    preferences.assertImOnPage()
+    const defaultValue = await preferences.grabTimezoneDefaultValue()
+    preferences.changeTimezoneValue('GMT +03:00')
+    preferences.checkTimezoneHasChanged('GMT +03:00')
+    preferences.resetForm()
+    preferences.checkTimezoneHasChanged(defaultValue)
+  }
+)

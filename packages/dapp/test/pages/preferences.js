@@ -14,6 +14,10 @@ module.exports = {
     I.waitForText('Preferences', 'h1')
   },
 
+  async grabTimezoneDefaultValue() {
+    return await I.grabTextFrom('.md-icon-text')
+  },
+
   changeTimezoneValue(val) {
     I.click('#\\31-menu')
     I.click(`div[data-value="${val}"]`)
