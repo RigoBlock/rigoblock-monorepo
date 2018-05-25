@@ -3,7 +3,7 @@ import moment from 'moment-timezone'
 import persistentDecorator from '../../store/persistentDecorator'
 
 const initialState = {
-  timezone: moment.tz(moment.tz.guess()).format('Z')
+  timezone: `GMT ${moment.tz(moment.tz.guess()).format('Z')}`
 }
 
 function userReducer(state = initialState, action) {
