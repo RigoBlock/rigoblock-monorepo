@@ -14,7 +14,7 @@ module.exports = {
     I.waitForText('Preferences', 'h1')
   },
 
-  async grabTimezoneDefaultValue() {
+  async grabTimezoneValue() {
     return await I.grabTextFrom('.md-icon-text')
   },
 

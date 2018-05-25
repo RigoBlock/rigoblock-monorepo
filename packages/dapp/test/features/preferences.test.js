@@ -20,10 +20,10 @@ Scenario(
   async (preferences, navigation) => {
     navigation.navigateToPreferences()
     preferences.assertImOnPage()
-    const defaultValue = await preferences.grabTimezoneDefaultValue()
+    const timezone = await preferences.grabTimezoneValue()
     preferences.changeTimezoneValue('GMT +03:00')
     preferences.checkTimezoneHasChanged('GMT +03:00')
     preferences.resetForm()
-    preferences.checkTimezoneHasChanged(defaultValue)
+    preferences.checkTimezoneHasChanged(timezone)
   }
 )
