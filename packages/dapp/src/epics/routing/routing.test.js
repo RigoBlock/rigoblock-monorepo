@@ -59,7 +59,7 @@ describe('routing epics', () => {
       getStateMock.mockReturnValue({
         user: {
           wallets: {
-            metamask: { account: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196' }
+            metamask: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
           }
         },
         routing: { location: { pathname: ROUTES.DASHBOARD } }

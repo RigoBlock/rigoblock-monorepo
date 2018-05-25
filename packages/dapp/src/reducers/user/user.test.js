@@ -19,7 +19,7 @@ describe('user reducer', () => {
       {
         timezone: '+02:00',
         type: CONSTANTS.INVESTOR,
-        wallets: {}
+        wallets: initialState.wallets
       }
     )
   })

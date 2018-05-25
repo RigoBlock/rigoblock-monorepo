@@ -3,7 +3,7 @@ import { _throw } from 'rxjs/observable/throw'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
 
-fdescribe('epic for blockchain services', () => {
+describe('epic for blockchain services', () => {
   const testError = new Error('test error')
   let BlockChainServiceEpic
   let fromPromiseSpy
