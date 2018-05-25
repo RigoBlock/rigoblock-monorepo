@@ -2,7 +2,7 @@ import actions from '../../actions/user-actions'
 import userReducer from './user'
 
 const initialState = {
-  timezone: '+02:00'
+  timezone: 'GMT +02:00'
 }
 
 describe('user reducer', () => {
@@ -13,7 +13,7 @@ describe('user reducer', () => {
       initialState,
       {},
       {
-        timezone: '+02:00'
+        timezone: 'GMT +02:00'
       }
     )
   })
@@ -22,10 +22,10 @@ describe('user reducer', () => {
     userTest(
       undefined,
       actions.changePreferences({
-        timezone: '+05:45'
+        timezone: 'GMT +05:45'
       }),
       {
-        timezone: '+05:45'
+        timezone: 'GMT +05:45'
       }
     )
   })
