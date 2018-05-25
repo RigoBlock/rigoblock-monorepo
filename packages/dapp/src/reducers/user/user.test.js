@@ -27,7 +27,7 @@ describe('user reducer', () => {
       }),
       {
         timezone: '+05:45',
-        wallets: { Metamask: { account: '' } }
+        wallets: { metamask: { account: '' } }
       }
     )
   })
@@ -36,7 +36,7 @@ describe('user reducer', () => {
     userTest(undefined, blockChainActions.blockChainLogIn(exampleAccount), {
       timezone: '+02:00',
       wallets: {
-        Metamask: { account: exampleAccount }
+        metamask: { account: exampleAccount }
       }
     })
   })
@@ -44,7 +44,7 @@ describe('user reducer', () => {
   it('clears account number on logout', () => {
     userTest(undefined, blockChainActions.blockChainLogout(), {
       timezone: '+02:00',
-      wallets: { Metamask: { account: '' } }
+      wallets: { metamask: { account: '' } }
     })
   })
 })

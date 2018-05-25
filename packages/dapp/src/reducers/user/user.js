@@ -5,7 +5,7 @@ import persistentDecorator from '../../store/persistentDecorator'
 const initialState = {
   timezone: moment.tz(moment.tz.guess()).format('Z'),
   wallets: {
-    Metamask: {
+    metamask: {
       account: ''
     }
   }
@@ -16,13 +16,13 @@ function userReducer(state = initialState, action) {
     case actionTypes.LOGGED_IN:
       return {
         ...state,
-        wallets: { Metamask: { account: action.payload } }
+        wallets: { metamask: { account: action.payload } }
       }
     case actionTypes.LOGGED_OUT:
       return {
         ...state,
         wallets: {
-          Metamask: { account: initialState.wallets.Metamask.account }
+          metamask: { account: initialState.wallets.metamask.account }
         }
       }
     case actionTypes.PREFERENCE_CHANGE:
