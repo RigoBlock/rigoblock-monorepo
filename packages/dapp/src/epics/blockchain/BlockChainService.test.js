@@ -3,7 +3,7 @@ import { _throw } from 'rxjs/observable/throw'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
 
-describe('epic for blockchain services', () => {
+fdescribe('epic for blockchain services', () => {
   const testError = new Error('test error')
   let BlockChainServiceEpic
   let fromPromiseSpy
@@ -26,7 +26,8 @@ describe('epic for blockchain services', () => {
         removeListener: () => {}
       },
       web3: {
-        getAvailableAddressesAsync: jest.fn(() => Promise.resolve([]))
+        getAvailableAddressesAsync: jest.fn(() => Promise.resolve([])),
+        getNodeVersionAsync: jest.fn(() => Promise.resolve(''))
       }
     }
 
@@ -34,7 +35,9 @@ describe('epic for blockchain services', () => {
   })
 
   it('returns a blockchain init action', () => {
-    fromPromiseSpy.mockReturnValueOnce(of([]))
+    fromPromiseSpy
+      .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+      .mockReturnValueOnce(of([]))
 
     const expectedValues = {
       b: blockChainActions.blockChainInit()
@@ -63,14 +66,17 @@ describe('epic for blockchain services', () => {
       const address2 = 'address2'
 
       fromPromiseSpy
+        .mockReturnValueOnce(of('MetaMask/v4.6.1'))
         .mockReturnValueOnce(of([address1]))
+        .mockReturnValueOnce(of('MetaMask/v4.6.1'))
         .mockReturnValueOnce(of([address2]))
+        .mockReturnValueOnce(of('MetaMask/v4.6.1'))
         .mockReturnValueOnce(of([address1]))
 
       const expectedValues = {
         a: blockChainActions.blockChainInit(),
-        b: blockChainActions.blockChainLogIn(address1),
-        c: blockChainActions.blockChainLogIn(address2)
+        b: blockChainActions.blockChainLogIn('metamask', address1),
+        c: blockChainActions.blockChainLogIn('metamask', address2)
       }
 
       const expectedMarble =
@@ -98,7 +104,9 @@ describe('epic for blockchain services', () => {
     })
 
     it('sends blockChainError action if web3 getAvailableAddressesAsync fails', () => {
-      fromPromiseSpy.mockReturnValueOnce(_throw(testError))
+      fromPromiseSpy
+        .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+        .mockReturnValueOnce(_throw(testError))
 
       const expectedValues = {
         a: blockChainActions.blockChainInit(),
@@ -126,11 +134,13 @@ describe('epic for blockchain services', () => {
 
     it('sends blockChainLogin action if web3 retrieves accounts list', () => {
       const address = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-      fromPromiseSpy.mockReturnValueOnce(of([address]))
+      fromPromiseSpy
+        .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+        .mockReturnValueOnce(of([address]))
 
       const expectedValues = {
         a: blockChainActions.blockChainInit(),
-        b: blockChainActions.blockChainLogIn(address)
+        b: blockChainActions.blockChainLogIn('metamask', address)
       }
 
       const expectedMarble = '(ab)'
@@ -153,7 +163,9 @@ describe('epic for blockchain services', () => {
     })
 
     it("sends blockChainLogout action if web3 doesn't retrieve accounts list", () => {
-      fromPromiseSpy.mockReturnValueOnce(of([]))
+      fromPromiseSpy
+        .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+        .mockReturnValueOnce(of([]))
 
       const expectedValues = {
         a: blockChainActions.blockChainInit(),
@@ -185,6 +197,7 @@ describe('epic for blockchain services', () => {
   })
   describe('error listener', () => {
     it('listens for connectivity issues', () => {
+      fromPromiseSpy.mockReturnValueOnce(of(''))
       fromPromiseSpy.mockReturnValueOnce(of([]))
 
       const mockApi = {

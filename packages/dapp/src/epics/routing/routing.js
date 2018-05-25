@@ -13,7 +13,7 @@ export const logoutEpic = (action$, store) => {
     .filter(action => action.type === LOCATION_CHANGE)
     .mergeMap(() => {
       const state = store.getState()
-      return (!state.user.wallets.metamask.account ||
+      return (!Object.keys(state.user.wallets).length ||
         state.globalReducer.error) &&
         state.routing.location.pathname !== ROUTES.LOGIN
         ? of(routerActions.logout())
