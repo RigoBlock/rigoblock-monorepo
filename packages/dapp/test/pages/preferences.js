@@ -14,13 +14,20 @@ module.exports = {
     I.waitForText('Preferences', 'h1')
   },
 
-  changeFormValue() {
+  changeTimezoneValue(val) {
     I.click('#\\31-menu')
-    I.click('div[data-value="GMT +03:00"]')
+    I.click(`div[data-value="${val}"]`)
+  },
+
+  submitForm() {
     I.click('Save')
   },
 
-  checkFormHasChanged() {
-    I.seeTextEquals('GMT +03:00\nkeyboard_arrow_down\n', '#\\31-menu')
+  checkTimezoneHasChanged(val) {
+    I.seeTextEquals(`${val}\nkeyboard_arrow_down\n`, '#\\31-menu')
+  },
+
+  resetForm() {
+    I.click('Cancel')
   }
 }
