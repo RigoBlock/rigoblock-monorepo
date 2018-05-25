@@ -20,7 +20,6 @@ const config = {
     help: './test/pages/help.js',
     login: './test/pages/login.js'
   },
-  grep: 'Preferences',
   mocha: {},
   bootstrap: false,
   teardown: null,
