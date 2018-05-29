@@ -11,7 +11,9 @@ describe('routing epics', () => {
   const testError = new Error('test error')
   const locationChangeAction = () => ({ type: LOCATION_CHANGE })
   const loggedOutState = {
-    blockChain: { account: '' },
+    user: {
+      wallets: {}
+    },
     routing: { location: ROUTES.DASHBOARD }
   }
   const getStateMock = jest.fn()
@@ -22,7 +24,11 @@ describe('routing epics', () => {
   describe('login Epic', () => {
     it('redirects the user from login to dashboard page upon metamask login', () => {
       getStateMock.mockReturnValue({
-        blockChain: { account: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196' },
+        user: {
+          wallets: {
+            metamask: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+          }
+        },
         routing: { location: { pathname: ROUTES.LOGIN } }
       })
       const inputValues = {
@@ -51,7 +57,11 @@ describe('routing epics', () => {
     })
     it("returns an empty observable if the user isn't on login page and changes account", () => {
       getStateMock.mockReturnValue({
-        blockChain: { account: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196' },
+        user: {
+          wallets: {
+            metamask: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+          }
+        },
         routing: { location: { pathname: ROUTES.DASHBOARD } }
       })
       const inputValues = {

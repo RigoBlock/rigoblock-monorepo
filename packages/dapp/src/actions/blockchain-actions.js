@@ -8,9 +8,9 @@ export default {
     type: actionTypes.BLOCKCHAIN_ERROR,
     payload: err.toString()
   }),
-  blockChainLogIn: account => ({
+  blockChainLogIn: (origin, account) => ({
     type: actionTypes.LOGGED_IN,
-    payload: account
+    payload: { origin, account }
   }),
   blockChainLogout: () => ({
     type: actionTypes.LOGGED_OUT
