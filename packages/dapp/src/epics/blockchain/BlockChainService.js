@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mapTo'
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
+import { from } from 'rxjs/observable/from'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
@@ -63,6 +64,24 @@ class BlockChainService {
 
   wrapError(action$) {
     return action$.catch(err => of(blockChainActions.blockChainError(err)))
+  }
+
+  fetchVaultEvents(fromBlock = 0, toBlock = 'latest') {
+    return Observable.create(observer => {
+      const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
+        fromBlock,
+        toBlock
+      })
+
+      events.get(
+        (err, events) =>
+          err ? observer.error(new Error(err)) : observer.next(events)
+      )
+
+      return () => events.stopWatching()
+    })
+      .mergeMap(events => from(events))
+      .do(e => console.log('e', e))
   }
 }
 
