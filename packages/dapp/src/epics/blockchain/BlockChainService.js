@@ -9,6 +9,7 @@ import { from } from 'rxjs/observable/from'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
+import { zip } from 'rxjs/observable/zip'
 import blockChainActions from '../../actions/blockchain-actions'
 
 class BlockChainService {
@@ -36,9 +37,19 @@ class BlockChainService {
   connectionListener() {
     return timer(0, 1000, this.scheduler)
       .exhaustMap(() =>
-        fromPromise(this.api.web3.getAvailableAddressesAsync(), this.scheduler)
+        zip(
+          fromPromise(this.api.web3.getNodeVersionAsync(), this.scheduler),
+          fromPromise(
+            this.api.web3.getAvailableAddressesAsync(),
+            this.scheduler
+          )
+        )
       )
-      .map(accounts => {
+      .map(([nodeVersion, accounts]) => {
+        nodeVersion = nodeVersion
+          .split('/')
+          .shift()
+          .toLowerCase()
         if (!accounts.length && this.account) {
           this.account = null
           return blockChainActions.blockChainLogout()
@@ -47,7 +58,7 @@ class BlockChainService {
         // Using != to check if this.account is '' or null
         if (accounts[0] != this.account) {
           this.account = accounts[0]
-          return blockChainActions.blockChainLogIn(this.account)
+          return blockChainActions.blockChainLogIn(nodeVersion, this.account)
         }
       })
       .filter(action => !!action)
