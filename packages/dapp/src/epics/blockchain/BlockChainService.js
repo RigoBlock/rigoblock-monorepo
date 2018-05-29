@@ -44,13 +44,11 @@ class BlockChainService {
           )
         )
       )
-      .map(values => {
-        const accountOrigin = values
-          .shift()
+      .map(([nodeVersion, accounts]) => {
+        nodeVersion = nodeVersion
           .split('/')
           .shift()
           .toLowerCase()
-        const accounts = values.pop()
         if (!accounts.length && this.account) {
           this.account = null
           return blockChainActions.blockChainLogout()
@@ -59,7 +57,7 @@ class BlockChainService {
         // Using != to check if this.account is '' or null
         if (accounts[0] != this.account) {
           this.account = accounts[0]
-          return blockChainActions.blockChainLogIn(accountOrigin, this.account)
+          return blockChainActions.blockChainLogIn(nodeVersion, this.account)
         }
       })
       .filter(action => !!action)
