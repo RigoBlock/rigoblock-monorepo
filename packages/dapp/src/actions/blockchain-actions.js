@@ -10,7 +10,7 @@ export default {
   }),
   blockChainLogIn: (origin, account) => ({
     type: actionTypes.LOGGED_IN,
-    payload: { origin: origin, account: account }
+    payload: { origin, account }
   }),
   blockChainLogout: () => ({
     type: actionTypes.LOGGED_OUT

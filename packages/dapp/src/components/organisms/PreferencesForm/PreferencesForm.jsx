@@ -18,9 +18,9 @@ const timeToDecimal = t => {
 const timeZones = moment.tz.names().reduce((acc, curr) => {
   return acc.add(moment.tz(curr).format('Z'))
 }, new Set())
-const timeZoneValues = [...timeZones].sort(
-  (a, b) => timeToDecimal(a) - timeToDecimal(b)
-)
+const timeZoneValues = [...timeZones]
+  .sort((a, b) => timeToDecimal(a) - timeToDecimal(b))
+  .map(timezone => `GMT ${timezone}`)
 
 let PreferencesForm = props => {
   const timeZoneProps = {

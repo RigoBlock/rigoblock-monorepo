@@ -1,4 +1,8 @@
-export default {
-  MANAGER: 'manager',
-  INVESTOR: 'investor'
-}
+import keyMirror from 'keymirror'
+
+const userConstants = keyMirror({
+  MANAGER: null,
+  INVESTOR: null
+})
+
+export default userConstants
