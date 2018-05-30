@@ -14,7 +14,6 @@ let blockchainService
 
 export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
   blockchainService = new BlockChainService(api, action$, blockchainSubject, ts)
-
   return action$
     .filter(action => action.type === actionTypes.GLOBAL_INIT)
     .mergeMap(() => {
