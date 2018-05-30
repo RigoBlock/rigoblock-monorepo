@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
+import 'rxjs/add/operator/last'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mapTo'
 import { Observable } from 'rxjs/Observable'
@@ -92,7 +93,12 @@ class BlockChainService {
       return () => events.stopWatching()
     })
       .mergeMap(events => from(events))
-      .do(e => console.log('e', e))
+      .filter(events =>
+        Object.keys(events.args)
+          .map(key => events.args[key])
+          .includes(this.account)
+      )
+      .map(e => blockChainActions.registerBlock(e))
   }
 }
 

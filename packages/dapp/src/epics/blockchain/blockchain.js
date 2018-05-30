@@ -24,12 +24,10 @@ export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
     })
 }
 
-export const vaultEventsEpic = (action$, store, ts = Scheduler.async) => {
+export const vaultEventsEpic = action$ => {
   return action$
-    .filter(action => action.type === actionTypes.BLOCKCHAIN_INIT)
-    .mergeMap(() =>
-      blockchainService.fetchVaultEvents(/* from block 0 or the latest saved */)
-    )
+    .filter(action => action.type === actionTypes.LOGGED_IN)
+    .mergeMap(() => blockchainService.fetchVaultEvents())
 }
 
 export default [blockchainEpic, vaultEventsEpic]

@@ -8,6 +8,7 @@ export const actionTypes = keyMirror({
   BLOCKCHAIN_ERROR: null,
   LOGGED_IN: null,
   LOGGED_OUT: null,
+  REGISTER_BLOCK: null,
   // User actions
   PREFERENCE_CHANGE: null
 })
