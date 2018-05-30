@@ -4,6 +4,8 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/last'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mapTo'
+import 'rxjs/add/operator/merge'
+import 'rxjs/add/operator/mergeMap'
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
 import { from } from 'rxjs/observable/from'
@@ -84,7 +86,6 @@ class BlockChainService {
         fromBlock,
         toBlock
       })
-
       events.get(
         (err, events) =>
           err ? observer.error(new Error(err)) : observer.next(events)
