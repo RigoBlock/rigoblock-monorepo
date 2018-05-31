@@ -5,7 +5,7 @@ import moment from 'moment-timezone'
 const initialState = {
   timezone: `GMT ${moment.tz(moment.tz.guess()).format('Z')}`,
   type: CONSTANTS.INVESTOR,
-  currentAccount: {}
+  currentAccount: null
 }
 
 function preferencesReducer(state = initialState, action) {
@@ -20,7 +20,7 @@ function preferencesReducer(state = initialState, action) {
     case actionTypes.LOGGED_OUT:
       return {
         ...state,
-        currentAccount: {}
+        currentAccount: null
       }
     case actionTypes.PREFERENCE_CHANGE:
       return {

@@ -13,7 +13,7 @@ describe('routing epics', () => {
   const loggedOutState = {
     user: {
       preferences: {
-        currentAccount: {}
+        currentAccount: null
       }
     },
     routing: { location: ROUTES.DASHBOARD }

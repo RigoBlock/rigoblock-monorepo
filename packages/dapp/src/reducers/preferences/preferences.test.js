@@ -33,7 +33,7 @@ describe('user reducer', () => {
       {
         timezone: 'GMT +05:45',
         type: CONSTANTS.INVESTOR,
-        currentAccount: {}
+        currentAccount: null
       }
     )
   })
@@ -56,7 +56,7 @@ describe('user reducer', () => {
     preferencesTest(undefined, blockChainActions.blockChainLogout(), {
       timezone: 'GMT +02:00',
       type: CONSTANTS.INVESTOR,
-      currentAccount: {}
+      currentAccount: null
     })
   })
 })
