@@ -1,31 +1,31 @@
 import CONSTANTS from '../../constants/user'
 import blockChainActions from '../../actions/blockchain-actions'
+import preferencesReducer from './preferences'
 import userActions from '../../actions/user-actions'
-import userReducer from './user'
 
 const initialState = {
   timezone: 'GMT +02:00',
   type: CONSTANTS.INVESTOR,
-  wallets: {}
+  currentAccount: {}
 }
 
 describe('user reducer', () => {
-  const userTest = reducerTester(userReducer)
+  const preferencesTest = reducerTester(preferencesReducer)
 
   it('returns the initial state', () => {
-    userTest(
+    preferencesTest(
       initialState,
       {},
       {
         timezone: 'GMT +02:00',
         type: CONSTANTS.INVESTOR,
-        wallets: initialState.wallets
+        currentAccount: initialState.currentAccount
       }
     )
   })
 
   it("updates user's timezone", () => {
-    userTest(
+    preferencesTest(
       undefined,
       userActions.changePreferences({
         timezone: 'GMT +05:45'
@@ -33,19 +33,19 @@ describe('user reducer', () => {
       {
         timezone: 'GMT +05:45',
         type: CONSTANTS.INVESTOR,
-        wallets: {}
+        currentAccount: {}
       }
     )
   })
   it('saves the default account number to the state', () => {
     const exampleAccount = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
-    userTest(
+    preferencesTest(
       undefined,
       blockChainActions.blockChainLogIn('metamask', exampleAccount),
       {
         timezone: 'GMT +02:00',
         type: CONSTANTS.INVESTOR,
-        wallets: {
+        currentAccount: {
           metamask: exampleAccount
         }
       }
@@ -53,10 +53,10 @@ describe('user reducer', () => {
   })
 
   it('clears account number on logout', () => {
-    userTest(undefined, blockChainActions.blockChainLogout(), {
+    preferencesTest(undefined, blockChainActions.blockChainLogout(), {
       timezone: 'GMT +02:00',
       type: CONSTANTS.INVESTOR,
-      wallets: {}
+      currentAccount: {}
     })
   })
 })

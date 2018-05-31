@@ -6,22 +6,22 @@ import persistentDecorator from '../../store/persistentDecorator'
 const initialState = {
   timezone: `GMT ${moment.tz(moment.tz.guess()).format('Z')}`,
   type: CONSTANTS.INVESTOR,
-  wallets: {}
+  currentAccount: {}
 }
 
-function userReducer(state = initialState, action) {
+function preferencesReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.LOGGED_IN:
       return {
         ...state,
-        wallets: {
+        currentAccount: {
           [action.payload.origin]: action.payload.account
         }
       }
     case actionTypes.LOGGED_OUT:
       return {
         ...state,
-        wallets: {}
+        currentAccount: {}
       }
     case actionTypes.PREFERENCE_CHANGE:
       return {
@@ -33,4 +33,4 @@ function userReducer(state = initialState, action) {
   }
 }
 
-export default persistentDecorator(userReducer, 'user')
+export default persistentDecorator(preferencesReducer, 'preferences')
