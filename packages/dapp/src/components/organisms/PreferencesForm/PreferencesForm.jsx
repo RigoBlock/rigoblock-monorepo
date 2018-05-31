@@ -65,7 +65,7 @@ PreferencesForm = connect(
   state => ({
     user: state.user,
     formObject: state.form,
-    initialValues: state.user
+    initialValues: state.user.preferences
   }),
   dispatch => bindActionCreators(UserActions, dispatch)
 )(PreferencesForm)

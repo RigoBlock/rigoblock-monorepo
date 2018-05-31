@@ -1,20 +1,21 @@
 import { actionTypes } from '../../constants/action-types'
-import persistentDecorator from '../../store/persistentDecorator'
 
 const initialState = {
-  lastBlock: null
+  accounts: {}
 }
 
 function blockChainReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.REGISTER_BLOCK:
-      return {
-        ...state,
-        lastBlock: action.payload
-      }
+    case actionTypes.LOGGED_IN:
+      return state.accounts[action.payload.account]
+        ? state
+        : {
+            ...state,
+            accounts: { ...state.accounts, [action.payload.account]: {} }
+          }
     default:
       return state
   }
 }
 
-export default persistentDecorator(blockChainReducer, 'blockChain')
+export default blockChainReducer
