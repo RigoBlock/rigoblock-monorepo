@@ -7,7 +7,6 @@ const initialState = {
 function vaultReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.ADD_VAULT:
-      console.log(state.vaults)
       return {
         ...state,
         vaults: state.vaults.add(action.payload)
