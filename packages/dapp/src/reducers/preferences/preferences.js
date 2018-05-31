@@ -1,7 +1,6 @@
 import { actionTypes } from '../../constants/action-types'
 import CONSTANTS from '../../constants/user'
 import moment from 'moment-timezone'
-import persistentDecorator from '../../store/persistentDecorator'
 
 const initialState = {
   timezone: `GMT ${moment.tz(moment.tz.guess()).format('Z')}`,
@@ -33,4 +32,4 @@ function preferencesReducer(state = initialState, action) {
   }
 }
 
-export default persistentDecorator(preferencesReducer, 'preferences')
+export default preferencesReducer
