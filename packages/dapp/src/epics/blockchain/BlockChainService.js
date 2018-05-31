@@ -8,6 +8,7 @@ import 'rxjs/add/operator/merge'
 import 'rxjs/add/operator/mergeMap'
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
+import { blockLabels } from '../../constants/blockchain'
 import { from } from 'rxjs/observable/from'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
@@ -99,7 +100,9 @@ class BlockChainService {
           .map(key => events.args[key])
           .includes(this.account)
       )
-      .map(e => blockChainActions.registerBlock(e))
+      .map(e =>
+        blockChainActions.registerBlock(this.account, blockLabels.VAULT, e)
+      )
   }
 }
 
