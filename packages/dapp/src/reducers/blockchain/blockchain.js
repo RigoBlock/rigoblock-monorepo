@@ -1,16 +1,18 @@
 import { actionTypes } from '../../constants/action-types'
 
 const initialState = {
-  account: null
+  accounts: {}
 }
 
 function blockChainReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.LOGGED_IN:
-      return {
-        ...state,
-        account: action.payload.account
-      }
+      return state.accounts[action.payload.account]
+        ? state
+        : {
+            ...state,
+            accounts: { ...state.accounts, [action.payload.account]: {} }
+          }
     default:
       return state
   }
