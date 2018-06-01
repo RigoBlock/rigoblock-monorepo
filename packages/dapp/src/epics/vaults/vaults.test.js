@@ -51,11 +51,14 @@ describe('vaults epics', () => {
 
   it('emits a addVault action with a vault object on REGISTER_BLOCK', () => {
     const inputValues = {
-      a: blockChainActions.registerBlock(owner, blockLabels.VAULT, vaultEvent)
+      a: blockChainActions.registerBlock(blockLabels.VAULT, vaultEvent)
     }
     const expectedValues = {
-      b: vaultActions.addRawVault(owner, vaultEvent),
-      c: vaultActions.addVault(owner, {
+      b: vaultActions.addRawVault({
+        label: blockLabels.VAULT,
+        block: vaultEvent
+      }),
+      c: vaultActions.addVault({
         ['0xc1Eba7b6F9f06E4491a499E653878464e40AB70e']: {
           id: 0,
           group: null,

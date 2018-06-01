@@ -100,9 +100,7 @@ class BlockChainService {
           .map(key => events.args[key])
           .includes(this.account)
       )
-      .map(e =>
-        blockChainActions.registerBlock(this.account, blockLabels.VAULT, e)
-      )
+      .map(e => blockChainActions.registerBlock(blockLabels.VAULT, e))
   }
 }
 

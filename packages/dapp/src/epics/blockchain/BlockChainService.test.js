@@ -269,11 +269,7 @@ describe('epic for blockchain services', () => {
   describe('fetch vault events', () => {
     it('fetches blocks and filters them by account', () => {
       const expectedValues = {
-        a: blockChainActions.registerBlock(
-          '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
-          blockLabels.VAULT,
-          blocks[0]
-        )
+        a: blockChainActions.registerBlock(blockLabels.VAULT, blocks[0])
       }
 
       const expectedMarble = 'a'

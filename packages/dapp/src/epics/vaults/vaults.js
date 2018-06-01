@@ -16,36 +16,29 @@ export const vaultsEpic = (action$, store, ts = Scheduler.async) => {
       action.type === actionTypes.REGISTER_BLOCK &&
       action.payload.label === blockLabels.VAULT
   )
-  const action$1 = vaultBlock$.map(action =>
-    vaultActions.addRawVault(action.payload.account, action.payload.block)
-  )
+  const action$1 = vaultBlock$.map(action => {
+    return vaultActions.addRawVault(action.payload)
+  })
   const action$2 = vaultBlock$
     .mergeMap(action => {
       const address = action.payload.block.args.vault
-      const account = action.payload.account
-      return fromPromise(api.contract.DragoRegistry.fromAddress(address)).map(
-        vaultData => ({ account, address, vaultData })
-      )
+      return fromPromise(
+        api.contract.DragoRegistry.fromAddress(address),
+        ts
+      ).map(vaultData => ({ address, vaultData }))
     })
-    .map(
-      ({
-        account,
-        address,
-        vaultData: [id, name, symbol, , owner, group]
-      }) => ({
-        account,
-        vault: {
-          [address]: {
-            id: id.toNumber(),
-            name,
-            symbol,
-            owner,
-            group
-          }
+    .map(({ address, vaultData: [id, name, symbol, , owner, group] }) => ({
+      vault: {
+        [address]: {
+          id: id.toNumber(),
+          name,
+          symbol,
+          owner,
+          group
         }
-      })
-    )
-    .map(({ account, vault }) => vaultActions.addVault(account, vault))
+      }
+    }))
+    .map(({ vault }) => vaultActions.addVault(vault))
   return merge(action$1, action$2)
 }
 

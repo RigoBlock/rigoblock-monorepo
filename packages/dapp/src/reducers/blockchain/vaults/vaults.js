@@ -6,13 +6,13 @@ function vaultReducer(state, action) {
   switch (action.type) {
     case actionTypes.ADD_RAW_VAULT:
       const blockNumber = action.payload.block.blockNumber
-      let lastBlock = state.accounts[action.payload.account].lastBlock
+      let lastBlock = state.accounts[action.account].lastBlock
       lastBlock =
         !lastBlock || lastBlock < blockNumber ? blockNumber : lastBlock
       return u(
         {
           accounts: {
-            [action.payload.account]: {
+            [action.account]: {
               vaultBlocks: {
                 [action.payload.block.blockNumber]: action.payload.block
               },
@@ -26,7 +26,7 @@ function vaultReducer(state, action) {
       return u(
         {
           accounts: {
-            [action.payload.account]: { vaults: action.payload.vault }
+            [action.account]: { vaults: action.payload }
           }
         },
         state

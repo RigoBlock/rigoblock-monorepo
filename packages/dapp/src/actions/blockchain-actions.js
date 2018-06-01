@@ -15,10 +15,9 @@ export default {
   blockChainLogout: () => ({
     type: actionTypes.LOGGED_OUT
   }),
-  registerBlock: (account, label, block) => ({
+  registerBlock: (label, block) => ({
     type: actionTypes.REGISTER_BLOCK,
     payload: {
-      account,
       label,
       block
     }

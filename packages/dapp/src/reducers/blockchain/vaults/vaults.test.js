@@ -1,3 +1,4 @@
+import { blockLabels } from '../../../constants/blockchain'
 import actions from '../../../actions/vault-actions'
 import vaultReducer from './vaults'
 
@@ -23,29 +24,40 @@ const otherVault = {
 }
 
 const firstBlock = {
-  logIndex: 0,
-  transactionIndex: 0,
-  transactionHash:
-    '0xc77b7d1123ffaada1a18b79112be8fcf7f65e6c9a5e5e93ad81c68be351c45b9',
-  blockHash:
-    '0x412a477a40ff05d6f9ef2d9db185918d45f950576df55c726f46ced4da2e0bb5',
-  blockNumber: 1,
-  address: '0x6dddcaede2071883c85c6e5781524985608d2460',
-  type: 'mined',
-  event: 'BuyVault'
+  block: {
+    logIndex: 0,
+    transactionIndex: 0,
+    transactionHash:
+      '0xc77b7d1123ffaada1a18b79112be8fcf7f65e6c9a5e5e93ad81c68be351c45b9',
+    blockHash:
+      '0x412a477a40ff05d6f9ef2d9db185918d45f950576df55c726f46ced4da2e0bb5',
+    blockNumber: 1,
+    address: '0x6dddcaede2071883c85c6e5781524985608d2460',
+    type: 'mined',
+    event: 'BuyVault'
+  },
+  label: blockLabels.VAULT
 }
 
 const secondBlock = {
-  logIndex: 0,
-  transactionIndex: 0,
-  transactionHash:
-    '0xc77b7d1123ffaada1a18b79112be8fcf7f65e6c9a5e5e93ad81c68be351c45b9',
-  blockHash:
-    '0x412a477a40ff05d6f9ef2d9db185918d45f950576df55c726f46ced4da2e0bb5',
-  blockNumber: 2,
-  address: '0x6dddcaede2071883c85c6e5781524985608d2460',
-  type: 'mined',
-  event: 'SellVault'
+  block: {
+    logIndex: 0,
+    transactionIndex: 0,
+    transactionHash:
+      '0xc77b7d1123ffaada1a18b79112be8fcf7f65e6c9a5e5e93ad81c68be351c45b9',
+    blockHash:
+      '0x412a477a40ff05d6f9ef2d9db185918d45f950576df55c726f46ced4da2e0bb5',
+    blockNumber: 2,
+    address: '0x6dddcaede2071883c85c6e5781524985608d2460',
+    type: 'mined',
+    event: 'SellVault'
+  },
+  label: blockLabels.VAULT
+}
+
+const middlewareMock = (account, action) => {
+  action.account = account
+  return action
 }
 
 describe('vaults reducer', () => {
@@ -59,7 +71,11 @@ describe('vaults reducer', () => {
         }
       }
     }
-    vaultTest(initialState, actions.addVault(owner, vault), expectedState)
+    vaultTest(
+      initialState,
+      middlewareMock(owner, actions.addVault(vault)),
+      expectedState
+    )
   })
 
   it('does not overwrite previous vaults if present', () => {
@@ -77,7 +93,11 @@ describe('vaults reducer', () => {
         }
       }
     }
-    vaultTest(state, actions.addVault(owner, otherVault), expectedState)
+    vaultTest(
+      state,
+      middlewareMock(owner, actions.addVault(otherVault)),
+      expectedState
+    )
   })
 
   it('adds a vault block to the state', () => {
@@ -89,19 +109,23 @@ describe('vaults reducer', () => {
     const expectedState = {
       accounts: {
         [owner]: {
-          vaultBlocks: { [firstBlock.blockNumber]: firstBlock },
-          lastBlock: firstBlock.blockNumber
+          lastBlock: firstBlock.block.blockNumber,
+          vaultBlocks: { [firstBlock.block.blockNumber]: firstBlock.block }
         }
       }
     }
-    vaultTest(state, actions.addRawVault(owner, firstBlock), expectedState)
+    vaultTest(
+      state,
+      middlewareMock(owner, actions.addRawVault(firstBlock)),
+      expectedState
+    )
   })
 
   it('does not overwrite previous vaultBlocks if present but updates lastBlock key', () => {
     const state = {
       accounts: {
         [owner]: {
-          vaultBlocks: { [firstBlock.blockNumber]: firstBlock },
+          vaultBlocks: { [firstBlock.block.blockNumber]: firstBlock.block },
           lastBlock: firstBlock.blockNumber
         }
       }
@@ -110,13 +134,17 @@ describe('vaults reducer', () => {
       accounts: {
         [owner]: {
           vaultBlocks: {
-            [firstBlock.blockNumber]: firstBlock,
-            [secondBlock.blockNumber]: secondBlock
+            [firstBlock.block.blockNumber]: firstBlock.block,
+            [secondBlock.block.blockNumber]: secondBlock.block
           },
-          lastBlock: secondBlock.blockNumber
+          lastBlock: secondBlock.block.blockNumber
         }
       }
     }
-    vaultTest(state, actions.addRawVault(owner, secondBlock), expectedState)
+    vaultTest(
+      state,
+      middlewareMock(owner, actions.addRawVault(secondBlock)),
+      expectedState
+    )
   })
 })
