@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
 import { routerMiddleware } from 'react-router-redux'
+import accountMiddleware from './accountMiddleware'
 import history from './history'
 import rootEpic from '../epics'
 import rootReducer from '../reducers'
@@ -11,6 +12,7 @@ export default () => {
 
   middlewares.push(applyMiddleware(createEpicMiddleware(rootEpic)))
   middlewares.push(applyMiddleware(routerMiddleware(history)))
+  middlewares.push(applyMiddleware(accountMiddleware))
 
   if (window !== null && window.devToolsExtension) {
     middlewares.push(window.devToolsExtension())
