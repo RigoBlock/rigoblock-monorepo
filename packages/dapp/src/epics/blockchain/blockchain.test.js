@@ -33,7 +33,8 @@ class BlockChainServiceMock {
 jest.doMock('./BlockChainService', () => BlockChainServiceMock)
 jest.doMock('../../api', () => ({}))
 const blockchainEpic = require('./blockchain').blockchainEpic
-const vaultEventsEpic = require('./blockchain').vaultEventsEpic
+const blockchainFetchEventsEpic = require('./blockchain')
+  .blockchainFetchEventsEpic
 
 describe('blockchainEpic', () => {
   beforeEach(() => {
@@ -90,7 +91,7 @@ describe('blockchainEpic', () => {
   })
 })
 
-describe('vaultEventsEpic', () => {
+describe('blockchainFetchEventsEpic', () => {
   it('dispatches a register block event on login', () => {
     const inputValues = {
       a: blockChainActions.blockChainLogIn(
@@ -112,7 +113,7 @@ describe('vaultEventsEpic', () => {
     const action$ = new ActionsObservable(
       ts.createHotObservable(inputMarble, inputValues)
     )
-    const outputAction = vaultEventsEpic(action$, null, ts)
+    const outputAction = blockchainFetchEventsEpic(action$, null, ts)
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
     ts.flush()
