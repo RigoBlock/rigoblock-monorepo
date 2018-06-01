@@ -23,10 +23,18 @@ export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
     })
 }
 
-export const blockchainFetchEventsEpic = action$ => {
+export const blockchainFetchEventsEpic = (action$, store) => {
   return action$
     .filter(action => action.type === actionTypes.LOGGED_IN)
-    .mergeMap(() => blockchainService.fetchVaultEvents())
+    .mergeMap(() => {
+      const state = store.getState()
+      const account = state.user.preferences.currentAccount.metamask
+      return state.user.blockChain.accounts[account].lastBlock
+        ? blockchainService.fetchVaultEvents(
+            state.user.blockChain.accounts[account].lastBlock
+          )
+        : blockchainService.fetchVaultEvents()
+    })
 }
 
 export default [blockchainEpic, blockchainFetchEventsEpic]
