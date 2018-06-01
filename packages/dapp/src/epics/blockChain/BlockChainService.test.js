@@ -67,7 +67,7 @@ describe('epic for blockchain services', () => {
       }
     }
 
-    BlockChainServiceEpic = require('../blockchain/BlockChainService').default
+    BlockChainServiceEpic = require('.//BlockChainService').default
   })
 
   it('returns a blockchain init action', () => {

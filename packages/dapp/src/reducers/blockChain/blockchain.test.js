@@ -1,5 +1,5 @@
 import actions from '../../actions/blockchain-actions'
-import blockChainReducer from './blockchain'
+import blockChainReducer from './blockChain'
 
 describe('blockchain reducer', () => {
   const blockChainTest = reducerTester(blockChainReducer)

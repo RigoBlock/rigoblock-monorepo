@@ -44,8 +44,8 @@ describe('blockchain epics', () => {
     jest.resetModules()
     jest.doMock('./BlockChainService', () => BlockChainServiceMock)
     jest.doMock('../../api', () => ({}))
-    blockchainEpic = require('./blockchain').blockchainEpic
-    blockchainFetchEventsEpic = require('./blockchain')
+    blockchainEpic = require('./blockChain').blockchainEpic
+    blockchainFetchEventsEpic = require('./blockChain')
       .blockchainFetchEventsEpic
   })
 
