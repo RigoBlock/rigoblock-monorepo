@@ -13,7 +13,8 @@ describe('routing epics', () => {
   const loggedOutState = {
     user: {
       preferences: {
-        currentAccount: null
+        currentAccount: null,
+        provider: null
       }
     },
     routing: { location: ROUTES.DASHBOARD }
@@ -28,9 +29,8 @@ describe('routing epics', () => {
       getStateMock.mockReturnValue({
         user: {
           preferences: {
-            currentAccount: {
-              metamask: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-            }
+            currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
+            provider: 'metamask'
           }
         },
         routing: { location: { pathname: ROUTES.LOGIN } }
@@ -63,9 +63,8 @@ describe('routing epics', () => {
       getStateMock.mockReturnValue({
         user: {
           preferences: {
-            currentAccount: {
-              metamask: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-            }
+            currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
+            provider: 'metamask'
           }
         },
         routing: { location: { pathname: ROUTES.DASHBOARD } }
