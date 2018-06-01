@@ -22,7 +22,7 @@ const apiMock = {
 jest.doMock('../../api', () => apiMock)
 const vaultsEpic = require('./vaults').vaultsEpic
 
-describe.skip('vaults epics', () => {
+describe('vaults epics', () => {
   const vaultEvent = {
     address: '0x001',
     args: {

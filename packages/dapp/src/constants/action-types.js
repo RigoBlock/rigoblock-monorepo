@@ -12,5 +12,6 @@ export const actionTypes = keyMirror({
   // User actions
   PREFERENCE_CHANGE: null,
   // Vault actions
+  ADD_RAW_VAULT: null,
   ADD_VAULT: null
 })
