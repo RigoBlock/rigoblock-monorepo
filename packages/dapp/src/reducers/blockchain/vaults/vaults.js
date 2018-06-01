@@ -1,12 +1,16 @@
 import { actionTypes } from '../../../constants/action-types'
-import updeep from 'updeep'
+import u from 'updeep'
 
-const initialState = {}
-
-function vaultReducer(state = initialState, action) {
+// This is a sub-reducer of blockchain, so it shouldn't have initialState
+function vaultReducer(state, action) {
   switch (action.type) {
     case actionTypes.ADD_VAULT:
-      return updeep(state, action.payload.vault)
+      const ret = u(state, {
+        accounts: {
+          [action.payload.account]: { vaults: action.payload.vault }
+        }
+      })
+      return ret
     default:
       return state
   }
