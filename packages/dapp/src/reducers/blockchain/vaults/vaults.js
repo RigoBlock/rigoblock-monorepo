@@ -6,34 +6,31 @@ function vaultReducer(state, action) {
   switch (action.type) {
     case actionTypes.ADD_RAW_VAULT:
       const blockNumber = action.payload.block.blockNumber
-      const lastBlock = state.accounts[action.payload.account].lastBlock
-      const ret = u(state, {
-        accounts: {
-          [action.payload.account]: {
-            vaultBlocks: {
-              [action.payload.block.blockNumber]: action.payload.block
+      let lastBlock = state.accounts[action.payload.account].lastBlock
+      lastBlock =
+        !lastBlock || lastBlock < blockNumber ? blockNumber : lastBlock
+      return u(
+        {
+          accounts: {
+            [action.payload.account]: {
+              vaultBlocks: {
+                [action.payload.block.blockNumber]: action.payload.block
+              },
+              lastBlock: lastBlock
             }
           }
-        }
-      })
-      return !lastBlock || lastBlock < blockNumber
-        ? u(
-            {
-              accounts: {
-                [action.payload.account]: {
-                  lastBlock: blockNumber
-                }
-              }
-            },
-            ret
-          )
-        : ret
+        },
+        state
+      )
     case actionTypes.ADD_VAULT:
-      return u(state, {
-        accounts: {
-          [action.payload.account]: { vaults: action.payload.vault }
-        }
-      })
+      return u(
+        {
+          accounts: {
+            [action.payload.account]: { vaults: action.payload.vault }
+          }
+        },
+        state
+      )
     default:
       return state
   }

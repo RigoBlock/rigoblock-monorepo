@@ -12,9 +12,12 @@ function blockChainReducer(state = initialState, action) {
     case actionTypes.LOGGED_IN:
       return state.accounts[action.payload.account]
         ? state
-        : u(state, {
-            accounts: { [action.payload.account]: {} }
-          })
+        : u(
+            {
+              accounts: { [action.payload.account]: {} }
+            },
+            state
+          )
     default:
       return state
   }
