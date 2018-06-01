@@ -23,10 +23,10 @@ export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
     })
 }
 
-export const vaultEventsEpic = action$ => {
+export const blockchainFetchEventsEpic = action$ => {
   return action$
     .filter(action => action.type === actionTypes.LOGGED_IN)
     .mergeMap(() => blockchainService.fetchVaultEvents())
 }
 
-export default [blockchainEpic, vaultEventsEpic]
+export default [blockchainEpic, blockchainFetchEventsEpic]
