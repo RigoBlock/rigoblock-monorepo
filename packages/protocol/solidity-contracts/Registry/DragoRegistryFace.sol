@@ -36,6 +36,8 @@ interface DragoRegistryFace {
     function setMeta(uint _id, bytes32 _key, bytes32 _value) external;
     function addGroup(address _group) external;
     function setFee(uint _fee) external;
+    function updateOwner(uint _id) external;
+    function updateOwners(uint[] _id) external;
     function upgrade(address _newAddress) external payable; //payable as there is a transfer of value, otherwise opcode might throw an error
     function setUpgraded(uint _version) external;
     function drain() external;
