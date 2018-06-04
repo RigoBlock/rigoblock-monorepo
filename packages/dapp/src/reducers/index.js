@@ -6,8 +6,6 @@ import globalReducer from './global'
 import persistentDecorator from '../store/persistentDecorator'
 import preferences from './preferences'
 
-// const blockChain = combineReducers({ blockChainReducer, vaults })
-
 const user = persistentDecorator(
   combineReducers({ preferences, blockChain }),
   'user'
