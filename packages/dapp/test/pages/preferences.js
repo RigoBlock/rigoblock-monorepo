@@ -19,12 +19,9 @@ module.exports = {
     return timezone.trim()
   },
 
-  async changeTimezoneValue() {
+  changeTimezoneValue(timezone) {
     I.click('[id="1-menu"]')
-    const id = await I.grabAttributeFrom('div[role="option"]', 'data-id')
-    let timezone = await I.grabTextFrom(`div[data-id="${id}"]`)
-    I.click(`div[data-id="${id}"]`)
-    return timezone.trim()
+    I.click(`div[data-value="${timezone}"]`)
   },
 
   submitForm() {
