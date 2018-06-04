@@ -11,7 +11,6 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/preferences')
-    I.waitForText('Preferences', 'h1')
   },
 
   async grabTimezoneValue() {
@@ -20,12 +19,16 @@ module.exports = {
   },
 
   changeTimezoneValue(timezone) {
-    I.waitForElement('div[id="1-menu"]')
+    I.waitForVisible('div[id="1-menu"]')
+    I.saveScreenshot('beforeClickField.png')
     I.click('div[id="1-menu"]')
-    I.waitForElement('ul.md-list')
+    I.saveScreenshot('afterClickField.png')
+    I.waitForVisible('ul[id="1-menu-options"]')
     I.executeScript(() => {
-      document.querySelector('ul.md-list').style.overflow = 'visible'
+      document.querySelector('ul[id="1-menu-options"]').style.overflow =
+        'visible'
     })
+    I.saveScreenshot('afterScript.png')
     I.click(`div[data-value="${timezone}"]`)
   },
 
