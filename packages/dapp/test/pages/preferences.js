@@ -19,12 +19,12 @@ module.exports = {
   },
 
   changeTimezoneValue(timezone) {
+    I.wait(0.2)
     I.click('div[id="1-toggle"]')
     I.executeScript(() => {
       document.querySelector('ul[id="1-menu-options"]').style.overflow =
         'visible'
     })
-    I.saveScreenshot('afterScript.png')
     I.click(`div[data-value="${timezone}"]`)
   },
 
