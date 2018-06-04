@@ -19,11 +19,7 @@ module.exports = {
   },
 
   changeTimezoneValue(timezone) {
-    I.waitForVisible('div[id="1-menu"]')
-    I.saveScreenshot('beforeClickField.png')
-    I.click('div[id="1-menu"]')
-    I.saveScreenshot('afterClickField.png')
-    I.waitForVisible('ul[id="1-menu-options"]')
+    I.click('div[id="1-toggle"]')
     I.executeScript(() => {
       document.querySelector('ul[id="1-menu-options"]').style.overflow =
         'visible'
