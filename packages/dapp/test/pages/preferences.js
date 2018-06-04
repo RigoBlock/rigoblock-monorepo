@@ -20,8 +20,9 @@ module.exports = {
   },
 
   changeTimezoneValue(timezone) {
-    I.click('[id="1-menu"]')
-    I.waitForElement('ul.md-list', 5)
+    I.waitForElement('div[id="1-menu"]')
+    I.click('div[id="1-menu"]')
+    I.waitForElement('ul.md-list')
     I.executeScript(() => {
       document.querySelector('ul.md-list').style.overflow = 'visible'
     })
