@@ -21,6 +21,9 @@ module.exports = {
 
   changeTimezoneValue(timezone) {
     I.click('[id="1-menu"]')
+    I.executeScript(() => {
+      document.querySelector('ul.md-list').style.overflow = 'visible'
+    })
     I.click(`div[data-value="${timezone}"]`)
   },
 
@@ -28,9 +31,9 @@ module.exports = {
     I.click('Save')
   },
 
-  checkTimezoneHasChanged(val) {
+  checkTimezoneHasChanged(timezone) {
     I.seeTextEquals(
-      `${val}\nkeyboard_arrow_down\n`,
+      `${timezone}\nkeyboard_arrow_down\n`,
       'div.md-select-field__toggle'
     )
   },
