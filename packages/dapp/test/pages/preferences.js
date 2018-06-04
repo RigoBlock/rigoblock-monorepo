@@ -15,12 +15,16 @@ module.exports = {
   },
 
   async grabTimezoneValue() {
-    return await I.grabTextFrom('.md-icon-text')
+    let timezone = await I.grabTextFrom('.md-icon-text')
+    return timezone.trim()
   },
 
-  changeTimezoneValue(val) {
-    I.click('#\\31-menu')
-    I.click(`div[data-value="${val}"]`)
+  async changeTimezoneValue() {
+    I.click('div.md-select-field__toggle')
+    const id = await I.grabAttributeFrom('div[role="option"]', 'data-id')
+    let timezone = await I.grabTextFrom(`div[data-id="${id}"]`)
+    I.click(`div[data-id="${id}"]`)
+    return timezone.trim()
   },
 
   submitForm() {
@@ -28,7 +32,10 @@ module.exports = {
   },
 
   checkTimezoneHasChanged(val) {
-    I.seeTextEquals(`${val}\nkeyboard_arrow_down\n`, '#\\31-menu')
+    I.seeTextEquals(
+      `${val}\nkeyboard_arrow_down\n`,
+      'div.md-select-field__toggle'
+    )
   },
 
   resetForm() {

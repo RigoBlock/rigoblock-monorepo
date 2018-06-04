@@ -5,7 +5,7 @@ const config = {
       url: 'http://localhost:8080',
       show: true,
       chrome: {
-        headless: true
+        // headless: true
       }
     },
     Web3Puppeteer: {

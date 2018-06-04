@@ -5,25 +5,28 @@ Scenario('test correct render', (preferences, navigation) => {
   preferences.assertImOnPage()
 })
 
-Scenario('test timezone field functionality', (preferences, navigation) => {
-  navigation.navigateToPreferences()
-  preferences.assertImOnPage()
-  preferences.changeTimezoneValue('GMT +03:00')
-  preferences.submitForm()
-  navigation.navigateToDashboard()
-  navigation.navigateToPreferences()
-  preferences.checkTimezoneHasChanged('GMT +03:00')
-})
+Scenario(
+  'test timezone field functionality',
+  async (preferences, navigation) => {
+    navigation.navigateToPreferences()
+    preferences.assertImOnPage()
+    const timezone = await preferences.changeTimezoneValue()
+    preferences.submitForm()
+    navigation.navigateToDashboard()
+    navigation.navigateToPreferences()
+    preferences.checkTimezoneHasChanged(timezone)
+  }
+)
 
 Scenario(
   'test cancel button functionality',
   async (preferences, navigation) => {
     navigation.navigateToPreferences()
     preferences.assertImOnPage()
-    const timezone = await preferences.grabTimezoneValue()
-    preferences.changeTimezoneValue('GMT +03:00')
-    preferences.checkTimezoneHasChanged('GMT +03:00')
+    const defaultTimezone = await preferences.grabTimezoneValue()
+    const newTimezone = await preferences.changeTimezoneValue()
+    preferences.checkTimezoneHasChanged(newTimezone)
     preferences.resetForm()
-    preferences.checkTimezoneHasChanged(timezone)
+    preferences.checkTimezoneHasChanged(defaultTimezone)
   }
 )
