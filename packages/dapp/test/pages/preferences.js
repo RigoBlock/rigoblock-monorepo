@@ -20,8 +20,7 @@ module.exports = {
   },
 
   async changeTimezoneValue() {
-    I.click('div.md-select-field__toggle')
-    I.waitForElement('ul[role="listbox"]')
+    I.click('[id="1-menu"]')
     const id = await I.grabAttributeFrom('div[role="option"]', 'data-id')
     let timezone = await I.grabTextFrom(`div[data-id="${id}"]`)
     I.click(`div[data-id="${id}"]`)
