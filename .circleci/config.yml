@@ -173,6 +173,9 @@ jobs:
       - run:
           name: JS feature tests
           command: npx lerna run --scope @rigoblock/dapp test:feature --stream
+      - store_artifacts:
+          path: packages/dapp/output
+
 
   deploy-dapp-staging:
     working_directory: *workspace_root

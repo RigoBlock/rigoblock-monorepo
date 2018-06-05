@@ -1,5 +1,6 @@
 import { TestScheduler } from 'rxjs'
 import { _throw } from 'rxjs/observable/throw'
+import { blockLabels } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
 
@@ -8,6 +9,31 @@ describe('epic for blockchain services', () => {
   let BlockChainServiceEpic
   let fromPromiseSpy
   let apiMock
+
+  const blocks = [
+    {
+      address: '0x001',
+      args: {
+        vault: '0x123',
+        from: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
+        to: '0x005',
+        amount: '1',
+        revenue: '1'
+      },
+      event: 'BuyVault'
+    },
+    {
+      address: '0x001',
+      args: {
+        vault: '0x123',
+        from: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9192',
+        to: '0x005',
+        amount: '1',
+        revenue: '1'
+      },
+      event: 'SellVault'
+    }
+  ]
 
   beforeEach(() => {
     fromPromiseSpy = jest
@@ -28,10 +54,20 @@ describe('epic for blockchain services', () => {
       web3: {
         getAvailableAddressesAsync: jest.fn(() => Promise.resolve([])),
         getNodeVersionAsync: jest.fn(() => Promise.resolve(''))
+      },
+      contract: {
+        VaultEventful: {
+          rawWeb3Contract: {
+            allEvents: () => ({
+              get: cb => cb(null, blocks),
+              stopWatching: jest.fn()
+            })
+          }
+        }
       }
     }
 
-    BlockChainServiceEpic = require('../blockchain/BlockChainService').default
+    BlockChainServiceEpic = require('./BlockChainService').default
   })
 
   it('returns a blockchain init action', () => {
@@ -226,6 +262,33 @@ describe('epic for blockchain services', () => {
         ts
       )
       const outputAction = blockChainServiceEpic.init()
+      ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
+      ts.flush()
+    })
+  })
+  describe('fetch vault events', () => {
+    it('fetches blocks and filters them by account', () => {
+      const expectedValues = {
+        a: blockChainActions.registerBlock(blockLabels.VAULT, blocks[0])
+      }
+
+      const expectedMarble = 'a'
+
+      const ts = new TestScheduler((actual, expected) => {
+        expect(actual).toEqual(expected)
+      })
+
+      const blockChainServiceEpic = new BlockChainServiceEpic(
+        apiMock,
+        null,
+        null,
+        ts
+      )
+
+      blockChainServiceEpic.account =
+        '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      const outputAction = blockChainServiceEpic.fetchVaultEvents()
+
       ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
       ts.flush()
     })

@@ -1,4 +1,7 @@
 import { actionTypes } from '../../constants/action-types'
+import { composeReducers } from '../utils'
+import u from 'updeep'
+import vaultsReducer from './vaults'
 
 const initialState = {
   accounts: {}
@@ -9,13 +12,15 @@ function blockChainReducer(state = initialState, action) {
     case actionTypes.LOGGED_IN:
       return state.accounts[action.payload.account]
         ? state
-        : {
-            ...state,
-            accounts: { ...state.accounts, [action.payload.account]: {} }
-          }
+        : u(
+            {
+              accounts: { [action.payload.account]: {} }
+            },
+            state
+          )
     default:
       return state
   }
 }
 
-export default blockChainReducer
+export default composeReducers(vaultsReducer, blockChainReducer)

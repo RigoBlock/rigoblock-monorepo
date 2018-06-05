@@ -1,10 +1,15 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
+import 'rxjs/add/operator/last'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mapTo'
+import 'rxjs/add/operator/merge'
+import 'rxjs/add/operator/mergeMap'
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
+import { blockLabels } from '../../constants/blockchain'
+import { from } from 'rxjs/observable/from'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
@@ -74,6 +79,28 @@ class BlockChainService {
 
   wrapError(action$) {
     return action$.catch(err => of(blockChainActions.blockChainError(err)))
+  }
+
+  fetchVaultEvents(fromBlock = 0, toBlock = 'latest') {
+    return Observable.create(observer => {
+      const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
+        fromBlock,
+        toBlock
+      })
+      events.get(
+        (err, events) =>
+          err ? observer.error(new Error(err)) : observer.next(events)
+      )
+
+      return () => events.stopWatching()
+    })
+      .mergeMap(events => from(events))
+      .filter(events =>
+        Object.keys(events.args)
+          .map(key => events.args[key])
+          .includes(this.account)
+      )
+      .map(e => blockChainActions.registerBlock(blockLabels.VAULT, e))
   }
 }
 
