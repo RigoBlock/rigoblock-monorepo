@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mergeMap'
@@ -8,7 +7,6 @@ import { actionTypes } from '../../constants/action-types'
 import { blockLabels } from '../../constants/blockchain'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { merge } from 'rxjs/observable/merge'
-import { of } from 'rxjs/observable/of'
 import BlockChainService from '../blockChain/BlockChainService'
 import api from '../../api'
 import vaultActions from '../../actions/vault-actions'
@@ -61,7 +59,9 @@ export const watchVaultEventsEpic = (action$, store) => {
     .filter(action => action.type === actionTypes.VAULT_FETCH_COMPLETE)
     .mergeMap(() => {
       const firstUnfetchedBlock = getFirstUnfetchedBlock(store)
-      return blockchainService.watchVaultEvents(firstUnfetchedBlock)
+      return blockchainService
+        .watchVaultEvents(firstUnfetchedBlock)
+        .takeUntil(action$.ofType(actionTypes.LOGGED_IN))
     })
 }
 
