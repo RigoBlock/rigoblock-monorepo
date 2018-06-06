@@ -36,7 +36,9 @@ describe('blockchain epics', () => {
     init = () => of(initAction)
     fetchVaultEvents = fetchVaultEventsSpy
   }
-
+  const serviceInstance = new BlockChainServiceMock()
+  BlockChainServiceMock.createInstance = () => serviceInstance
+  BlockChainServiceMock.getInstance = () => serviceInstance
   let blockchainEpic
   let blockchainFetchEventsEpic
 

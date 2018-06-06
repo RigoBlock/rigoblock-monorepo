@@ -13,7 +13,12 @@ const blockchainSubject = new Subject()
 let blockchainService
 
 export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
-  blockchainService = new BlockChainService(api, action$, blockchainSubject, ts)
+  blockchainService = BlockChainService.createInstance(
+    api,
+    action$,
+    blockchainSubject,
+    ts
+  )
   return action$
     .filter(action => action.type === actionTypes.GLOBAL_INIT)
     .mergeMap(() => {
@@ -23,12 +28,8 @@ export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
     })
 }
 
-export const blockchainFetchEventsEpic = (
-  action$,
-  store,
-  ts = Scheduler.async
-) => {
-  blockchainService = new BlockChainService(api, action$, blockchainSubject, ts)
+export const blockchainFetchEventsEpic = (action$, store) => {
+  blockchainService = BlockChainService.getInstance()
   return action$
     .filter(action => action.type === actionTypes.LOGGED_IN)
     .mergeMap(() => {

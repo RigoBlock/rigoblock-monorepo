@@ -82,26 +82,50 @@ class BlockChainService {
   }
 
   fetchVaultEvents(fromBlock = 0, toBlock = 'latest') {
-    return Observable.create(observer => {
-      const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
-        fromBlock,
-        toBlock
-      })
-      events.get(
-        (err, events) =>
-          err ? observer.error(new Error(err)) : observer.next(events)
-      )
+    return (
+      Observable.create(observer => {
+        const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents(
+          {
+            fromBlock,
+            toBlock
+          }
+        )
+        events.get(
+          (err, events) =>
+            err ? observer.error(new Error(err)) : observer.next(events)
+        )
 
-      return () => events.stopWatching()
-    })
-      .mergeMap(events => from(events))
-      .filter(events =>
-        Object.keys(events.args)
-          .map(key => events.args[key])
-          .includes(this.account)
-      )
-      .map(e => blockChainActions.registerBlock(blockLabels.VAULT, e))
+        // events.watch(
+        //   (err, events) =>
+        //     err ? observer.error(new Error(err)) : observer.next(events)
+        // )
+
+        return () => events.stopWatching()
+      })
+        .mergeMap(events => from(events))
+        // salvare in funzione
+        .filter(events =>
+          Object.keys(events.args)
+            .map(key => events.args[key])
+            .includes(this.account)
+        )
+        .map(e => blockChainActions.registerBlock(blockLabels.VAULT, e))
+    )
   }
 }
 
+let blockChainServiceInstance
+
+BlockChainService.createInstance = function getInstance(...args) {
+  blockChainServiceInstance = new BlockChainService(...args)
+  return blockChainServiceInstance
+}
+BlockChainService.getInstance = function getInstance() {
+  return blockChainServiceInstance
+}
+
 export default BlockChainService
+
+// const _filterBlocksByAccount = (account, label, obs) => {
+//   return obs.
+// }
