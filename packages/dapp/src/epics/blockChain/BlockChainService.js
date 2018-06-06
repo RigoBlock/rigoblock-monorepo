@@ -1,5 +1,6 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concat'
+import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/finally'
@@ -11,7 +12,6 @@ import 'rxjs/add/operator/mergeMap'
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
 import { blockLabels } from '../../constants/blockchain'
-// import { concat } from 'rxjs/observable/concat'
 import { from } from 'rxjs/observable/from'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
@@ -84,7 +84,8 @@ class BlockChainService {
     return action$.catch(err => of(blockChainActions.blockChainError(err)))
   }
 
-  fetchVaultEvents(fromBlock = 0, toBlock = 'latest') {
+  fetchVaultEvents(fromBlock, toBlock = 'latest') {
+    fromBlock = fromBlock || 0
     const allVaultEvents = Observable.create(observer => {
       const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
         fromBlock,
@@ -100,19 +101,33 @@ class BlockChainService {
       return () => events.stopWatching()
     }).mergeMap(events => from(events))
     const filteredBlocks = this._filterBlocksByAccount(
-      this.account,
       blockLabels.VAULT,
       allVaultEvents
     )
     return filteredBlocks.concat(of(blockChainActions.vaultFetchComplete()))
   }
 
-  _filterBlocksByAccount(account, label, obs) {
+  watchVaultEvents(fromBlock, toBlock = 'latest') {
+    fromBlock = fromBlock || 0
+    const allVaultEvents = Observable.create(observer => {
+      const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
+        fromBlock,
+        toBlock
+      })
+      events.watch((err, events) => {
+        return err ? observer.error(new Error(err)) : observer.next(events)
+      })
+      return () => events.stopWatching()
+    })
+    return this._filterBlocksByAccount(blockLabels.VAULT, allVaultEvents)
+  }
+
+  _filterBlocksByAccount(label, obs) {
     return obs
       .filter(block =>
         Object.keys(block.args)
           .map(key => block.args[key])
-          .includes(account)
+          .includes(this.account)
       )
       .map(block => blockChainActions.registerBlock(label, block))
   }

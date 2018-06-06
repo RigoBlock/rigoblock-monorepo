@@ -5,18 +5,13 @@ import u from 'updeep'
 function vaultReducer(state, action) {
   switch (action.type) {
     case actionTypes.ADD_RAW_VAULT:
-      const blockNumber = action.payload.block.blockNumber
-      let lastBlock = state.accounts[action.account].lastBlock
-      lastBlock =
-        !lastBlock || lastBlock < blockNumber ? blockNumber : lastBlock
       return u(
         {
           accounts: {
             [action.account]: {
               vaultBlocks: {
                 [action.payload.block.blockNumber]: action.payload.block
-              },
-              lastBlock: lastBlock
+              }
             }
           }
         },

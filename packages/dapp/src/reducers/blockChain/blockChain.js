@@ -18,6 +18,21 @@ function blockChainReducer(state = initialState, action) {
             },
             state
           )
+    case actionTypes.ADD_RAW_VAULT:
+      const blockNumber = action.payload.block.blockNumber
+      let lastBlock = state.accounts[action.account].lastBlock
+      lastBlock =
+        !lastBlock || lastBlock < blockNumber ? blockNumber : lastBlock
+      return u(
+        {
+          accounts: {
+            [action.account]: {
+              lastBlock: lastBlock
+            }
+          }
+        },
+        state
+      )
     default:
       return state
   }
