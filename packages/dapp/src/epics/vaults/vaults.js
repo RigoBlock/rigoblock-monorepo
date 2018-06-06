@@ -7,6 +7,7 @@ import { actionTypes } from '../../constants/action-types'
 import { blockLabels } from '../../constants/blockchain'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { merge } from 'rxjs/observable/merge'
+import BlockChainService from '../blockChain/BlockChainService'
 import api from '../../api'
 import vaultActions from '../../actions/vault-actions'
 
@@ -42,4 +43,19 @@ export const vaultsEpic = (action$, store, ts = Scheduler.async) => {
   return merge(action$1, action$2)
 }
 
-export default [vaultsEpic]
+export const fetchVaultEventsEpic = (action$, store) => {
+  const blockchainService = BlockChainService.getInstance()
+  return action$
+    .filter(action => action.type === actionTypes.LOGGED_IN)
+    .mergeMap(() => {
+      const state = store.getState()
+      const account = state.user.preferences.currentAccount
+      return state.user.blockChain.accounts[account].lastBlock
+        ? blockchainService.fetchVaultEvents(
+            state.user.blockChain.accounts[account].lastBlock
+          )
+        : blockchainService.fetchVaultEvents()
+    })
+}
+
+export default [vaultsEpic, fetchVaultEventsEpic]

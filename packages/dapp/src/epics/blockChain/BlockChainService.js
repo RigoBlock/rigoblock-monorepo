@@ -1,6 +1,8 @@
 import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/concat'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
+import 'rxjs/add/operator/finally'
 import 'rxjs/add/operator/last'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mapTo'
@@ -9,6 +11,7 @@ import 'rxjs/add/operator/mergeMap'
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
 import { blockLabels } from '../../constants/blockchain'
+// import { concat } from 'rxjs/observable/concat'
 import { from } from 'rxjs/observable/from'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
@@ -82,35 +85,36 @@ class BlockChainService {
   }
 
   fetchVaultEvents(fromBlock = 0, toBlock = 'latest') {
-    return (
-      Observable.create(observer => {
-        const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents(
-          {
-            fromBlock,
-            toBlock
-          }
-        )
-        events.get(
-          (err, events) =>
-            err ? observer.error(new Error(err)) : observer.next(events)
-        )
-
-        // events.watch(
-        //   (err, events) =>
-        //     err ? observer.error(new Error(err)) : observer.next(events)
-        // )
-
-        return () => events.stopWatching()
+    const allVaultEvents = Observable.create(observer => {
+      const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
+        fromBlock,
+        toBlock
       })
-        .mergeMap(events => from(events))
-        // salvare in funzione
-        .filter(events =>
-          Object.keys(events.args)
-            .map(key => events.args[key])
-            .includes(this.account)
-        )
-        .map(e => blockChainActions.registerBlock(blockLabels.VAULT, e))
+      events.get((err, events) => {
+        if (err) {
+          return observer.error(new Error(err))
+        }
+        observer.next(events)
+        return observer.complete()
+      })
+      return () => events.stopWatching()
+    }).mergeMap(events => from(events))
+    const filteredBlocks = this._filterBlocksByAccount(
+      this.account,
+      blockLabels.VAULT,
+      allVaultEvents
     )
+    return filteredBlocks.concat(of(blockChainActions.vaultFetchComplete()))
+  }
+
+  _filterBlocksByAccount(account, label, obs) {
+    return obs
+      .filter(block =>
+        Object.keys(block.args)
+          .map(key => block.args[key])
+          .includes(account)
+      )
+      .map(block => blockChainActions.registerBlock(label, block))
   }
 }
 
@@ -125,7 +129,3 @@ BlockChainService.getInstance = function getInstance() {
 }
 
 export default BlockChainService
-
-// const _filterBlocksByAccount = (account, label, obs) => {
-//   return obs.
-// }
