@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
@@ -32,7 +32,7 @@ import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
 /// @dev includes pooled proof-of-stake mining
 contract Vault is Owned, SafeMath, VaultFace {
 
-    string constant VERSION = 'VC 0.5.1';
+    string constant VERSION = 'VC 0.5.2';
     uint constant BASE = 1000000; //tokens are divisible by 1 million
 
     VaultData data;
@@ -104,7 +104,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         _;
     }
 
-    function Vault(
+    constructor(
         string _vaultName,
         string _vaultSymbol,
         uint _vaultId,
@@ -196,7 +196,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         require(_withdrawal == address(this));
         Authority auth = Authority(admin.authority);
         Casper casper = Casper(auth.getCasper());
-        data.validatorIndex = casper.get_nextValidatorIndex();
+        data.validatorIndex = casper.nextValidatorIndex();
         casper.deposit.value(_amount)(_validation, _withdrawal);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
         require(events.depositToCasper(msg.sender, this, auth.getCasper(), _validation, _withdrawal, _amount));
@@ -324,6 +324,15 @@ contract Vault is Owned, SafeMath, VaultFace {
             sellPrice = getNav(),
             buyPrice = getNav()
         );
+    }
+
+    /// @dev Returns the price of a pool
+    /// @return Value of the share price in wei
+    function calcSharePrice()
+        external view
+        returns (uint)
+    {
+        return getNav();
     }
 
     /// @dev Finds the administrative data of the pool
@@ -544,7 +553,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     {
         if (casperInitialized()) {
             Casper casper = Casper(getCasper());
-            return uint(casper.get_deposit_size(data.validatorIndex));
+            return uint(casper.deposit_size(data.validatorIndex));
         } else {
             return 0;
         }

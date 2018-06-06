@@ -16,16 +16,19 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { DragoEventfulFace as DragoEventful } from "../DragoEventful/DragoEventfulFace.sol";
+import { ERC20Face as Token } from "../utils/tokens/ERC20/ERC20Face.sol";
+import { KycFace as Kyc } from "../Kyc/KycFace.sol";
 
 import { DragoFace } from "./DragoFace.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
 import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
 import { DragoExchangeExtension } from "./DragoExchangeExtension/DragoExchangeExtension.sol";
+import { ExchangeAdapterFace as ExchangeAdapter } from '../ExchangeAdapters/ExchangeAdapterFace.sol';
 
 /// @title Drago - A set of rules for a drago.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -34,7 +37,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     using DragoExchangeExtension for *;
     DragoExchangeExtension.Admin libraryAdmin;
 
-    string constant VERSION = 'HF 0.4.1';
+    string constant VERSION = 'HF 0.4.2';
     uint constant BASE = 1000000; // tokens are divisible by 1 million
 
     mapping (address => Account) accounts;
@@ -68,6 +71,8 @@ contract Drago is Owned, SafeMath, DragoFace {
         address authority;
         address dragoDao;
         address feeCollector;
+        address kycProvider;
+        bool kycEnforced;
         uint minOrder; // minimum stake to avoid dust clogging things up
         uint ratio; // ratio is 80%
     }
@@ -125,7 +130,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         _;
     }
 
-    function Drago(
+    constructor(
         string _dragoName,
         string _dragoSymbol,
         uint _dragoId,
@@ -149,11 +154,23 @@ contract Drago is Owned, SafeMath, DragoFace {
     // CORE FUNCTIONS
 
     /// @dev Allows an exchange contract to send Ether back
+    /// @dev or to send a raw transaction with data
     function()
         external
         payable
-        whenApprovedExchange(msg.sender)
-    {}
+        //had to comment this condition, otherwise the transaction would fail
+        //whenApprovedExchange(msg.sender)
+    {
+        /*
+        // the call uses delegatecall, should use call
+        // it is highly unlikely exchanges will want to send raw calls
+        // commented for debugging
+        // if (msg.value == 0) {
+        if (msg.data != 0) {
+            DragoExchangeExtension.operateOnExchange(libraryAdmin, msg.sender, msg.data);
+        }
+        */
+    }
 
     /// @dev Allows a user to buy into a drago
     /// @return Bool the function executed correctly
@@ -271,22 +288,116 @@ contract Drago is Owned, SafeMath, DragoFace {
         data.minPeriod = _minPeriod;
     }
 
+    /// @dev allows a manager to deposit eth from an approved exchange/wrap eth
+    /// @param _exchange Address of the target exchange
+    /// @param _amount Value of the Eth in wei
     function depositToExchange(address _exchange, uint _amount)
         external
         onlyOwner
         whenApprovedExchange(_exchange)
     {
-        _exchange.transfer(_amount);
+        ExchangeAdapter(getExchangeAdapter(_exchange))
+        .deposit
+        .value(_amount)();
+    }
+
+    /// @dev allows a manager to withdraw ETH from an approved exchange/unwrap eth
+    /// @param _exchange Address of the target exchange
+    /// @param _amount Value of the Eth in wei
+    function withdrawFromExchange(address _exchange, uint _amount)
+        external
+        onlyOwner
+        whenApprovedExchange(_exchange)
+    {
+        ExchangeAdapter(getExchangeAdapter(_exchange))
+        .withdraw(_amount);
+    }
+
+    /// @dev Allows owner to set an infinite allowance to an approved exchange
+    /// @param _tokenTransferProxy Address of the tokentargetproxy to be approved
+    /// @param _token Address of the token to receive allowance for
+    /// @notice WE MIGHT WANT TO SEPARATE THE APPROVED TRANSFERPROXIES AND EXCHANGES
+    function setInfiniteAllowance(
+        address _tokenTransferProxy,
+        address _token)
+        external //external + internal
+        onlyOwner
+        whenApprovedExchange(_tokenTransferProxy)
+    {
+        require(setInfiniteAllowanceInternal(_tokenTransferProxy, _token));
+    }
+
+    /// @dev Allows owner to set allowances to multiple approved tokens with one call
+    function SetMultipleAllowances(
+        address _tokenTransferProxy,
+        address[] _token)
+        external
+    {
+        for (uint i = 0; i < _token.length; i++)
+            if (!setInfiniteAllowanceInternal(_tokenTransferProxy, _token[i])) continue;
+    }
+
+    /// @dev Allows approved exchange to send a transaction to exchange
+    /// @dev With data of signed/unsigned transaction
+    /// @param _exchange Address of the exchange
+    /// @param _assembledTransaction Bytes of the parameters of the call
+    function operateOnExchange(address _exchange, bytes _assembledTransaction)
+        external
+        whenApprovedExchange(msg.sender)
+    {
+        require(_exchange.call(_assembledTransaction));
+    }
+
+    /// this function is used for debugging, direct operations on excange is for
+    /// approved exchanges only
+    function operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction)
+        external
+        ownerOrApprovedExchange()
+        whenApprovedExchange(_exchange)
+    {
+        bytes memory _data = _assembledTransaction;
+        address _target = getExchangeAdapter(_exchange);
+        bytes memory response;
+        bool failed;
+        assembly {
+            let succeeded := call(sub(gas, 10000), _target, 0, add(_data, 0x20), mload(_data), 0, 32)
+            response := mload(0)      // load delegatecall output
+            failed := iszero(succeeded)
+        }
+        require(!failed);
     }
 
     /// @dev Allows owner or approved exchange to send a transaction to exchange
     /// @dev With data of signed/unsigned transaction
     /// @param _exchange Address of the exchange
-    function operateOnExchange(address _exchange)
+    /// @notice check whether we have to enforce prevent selfdestruct method
+    function operateOnExchangeThroughAdapter(
+        address _exchange,
+        bytes _assembledTransaction)
         external
         ownerOrApprovedExchange()
+        whenApprovedExchange(_exchange)
     {
-        DragoExchangeExtension.operateOnExchange(libraryAdmin, _exchange);
+        bytes memory _data = _assembledTransaction;
+        address _target = getExchangeAdapter(_exchange);
+        bytes memory response;
+        bool failed;
+        assembly {
+            let succeeded := delegatecall(sub(gas, 10000), _target, add(_data, 0x20), mload(_data), 0, 32)
+            response := mload(0)      // load delegatecall output
+            failed := iszero(succeeded)
+        }
+        require(!failed);
+    }
+    
+    function enforceKyc(
+        bool _enforced,
+        address _kycProvider)
+        external
+        onlyOwner
+    {
+        admin.kycEnforced = _enforced;
+        admin.kycProvider = _kycProvider;
     }
 
     // PUBLIC CONSTANT FUNCTIONS
@@ -330,6 +441,15 @@ contract Drago is Owned, SafeMath, DragoFace {
         sellPrice = data.sellPrice;
         buyPrice = data.buyPrice;
     }
+    
+    /// @dev Returns the price of a pool
+    /// @return Value of the share price in wei
+    function calcSharePrice()
+        external view
+        returns (uint)
+    {
+        return data.sellPrice;
+    }
 
     /// @dev Finds the administrative data of the pool
     /// @return Address of the account where a user collects fees
@@ -357,6 +477,15 @@ contract Drago is Owned, SafeMath, DragoFace {
             data.minPeriod
         );
     }
+    
+    function getKycProvider()
+        external view
+        returns (address)
+    {
+        if(admin.kycEnforced) {
+            return admin.kycProvider;
+        }
+    }
 
     /// @dev Returns the version of the type of vault
     /// @return String of the version
@@ -382,6 +511,9 @@ contract Drago is Owned, SafeMath, DragoFace {
         internal
         returns (bool success)
     {
+        if (admin.kycProvider != 0x0) {
+            require(Kyc(admin.kycProvider).isWhitelistedUser(_hodler));
+        }
         uint grossAmount;
         uint feeDrago;
         uint feeDragoDao;
@@ -452,6 +584,20 @@ contract Drago is Owned, SafeMath, DragoFace {
         DragoEventful events = DragoEventful(auth.getDragoEventful());
         require(events.sellDrago(msg.sender, this, _amount, _netRevenue, name, symbol));
     }
+    
+    /// @dev Allows owner to set an infinite allowance to an approved exchange
+    /// @param _tokenTransferProxy Address of the tokentargetproxy to be approved
+    /// @param _token Address of the token to receive allowance for
+    function setInfiniteAllowanceInternal(
+        address _tokenTransferProxy,
+        address _token)
+        internal
+        returns (bool)
+    {
+        Token(_token)
+            .approve(_tokenTransferProxy, 2**256 - 1);
+        return true;
+    }
 
     /// @dev Calculates the correct purchase amounts
     /// @return Number of new shares
@@ -459,8 +605,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @return Value of fee in shares to dao
     /// @return Value of net purchased shares
     function getPurchaseAmounts()
-        internal
-        view
+        internal view
         returns (
             uint grossAmount,
             uint feeDrago,
@@ -484,8 +629,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @return Value of net sold shares
     /// @return Value of sale amount for hodler
     function getSaleAmounts(uint _amount)
-        internal
-        view
+        internal view
         returns (
             uint feeDrago,
             uint feeDragoDao,
@@ -506,8 +650,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @param _exchange Address of the target exchange
     /// @return Address of the exchange adapter
     function getExchangeAdapter(address _exchange)
-        internal
-        view
+        internal view
         returns (address)
     {
         Authority auth = Authority(admin.authority);
