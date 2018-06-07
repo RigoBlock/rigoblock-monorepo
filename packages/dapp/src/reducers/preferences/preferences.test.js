@@ -10,7 +10,7 @@ const initialState = {
   provider: null
 }
 const account = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
-const origin = 'metamask'
+const provider = 'metamask'
 
 describe('user reducer', () => {
   const preferencesTest = reducerTester(preferencesReducer)
@@ -36,12 +36,12 @@ describe('user reducer', () => {
   it('saves the default account number to the state', () => {
     preferencesTest(
       undefined,
-      blockChainActions.blockChainLogIn(origin, account),
+      blockChainActions.blockChainLogIn(provider, account),
       {
         timezone: 'GMT +02:00',
         type: CONSTANTS.INVESTOR,
         currentAccount: account,
-        provider: origin
+        provider
       }
     )
   })
@@ -52,7 +52,7 @@ describe('user reducer', () => {
         timezone: 'GMT +02:00',
         type: CONSTANTS.INVESTOR,
         currentAccount: account,
-        provider: origin
+        provider
       },
       blockChainActions.blockChainLogout(),
       initialState

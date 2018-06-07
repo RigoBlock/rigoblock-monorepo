@@ -15,8 +15,3 @@ global.reducerTester = reducer => (currentState, action, expectedState) => {
   const newState = reducer(currentState, action)
   return expect(newState).toEqual(expectedState)
 }
-
-global.middlewareMock = (account, action) => {
-  action.account = account
-  return action
-}

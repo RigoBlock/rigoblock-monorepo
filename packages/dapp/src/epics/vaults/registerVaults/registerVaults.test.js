@@ -34,6 +34,15 @@ describe('registerVaults epic', () => {
       }
     }
   }
+  const storeMock = {
+    getState: () => ({
+      user: {
+        preferences: {
+          currentAccount: owner
+        }
+      }
+    })
+  }
   let fromPromiseSpy
   let registerVaults
 
@@ -54,19 +63,19 @@ describe('registerVaults epic', () => {
       a: blockChainActions.registerBlock(blockLabels.VAULT, vaultEvent)
     }
     const expectedValues = {
-      b: vaultActions.registerVaultBlock({
-        label: blockLabels.VAULT,
-        block: vaultEvent
-      }),
-      c: vaultActions.registerVault({
-        ['0xc1Eba7b6F9f06E4491a499E653878464e40AB70e']: {
-          id: 0,
-          group: null,
-          name: 'Rocksolid Vault',
-          symbol: 'VLT',
-          owner
-        }
-      })
+      b: vaultActions.registerVaultBlock(vaultEvent, owner),
+      c: vaultActions.registerVault(
+        {
+          ['0xc1Eba7b6F9f06E4491a499E653878464e40AB70e']: {
+            id: 0,
+            group: null,
+            name: 'Rocksolid Vault',
+            symbol: 'VLT',
+            owner
+          }
+        },
+        owner
+      )
     }
 
     const inputMarble = 'a'
@@ -79,7 +88,7 @@ describe('registerVaults epic', () => {
     const action$ = new ActionsObservable(
       ts.createHotObservable(inputMarble, inputValues)
     )
-    const outputAction = registerVaults(action$)
+    const outputAction = registerVaults(action$, storeMock)
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
 

@@ -66,11 +66,7 @@ describe('vaults reducer', () => {
         }
       }
     }
-    vaultTest(
-      initialState,
-      middlewareMock(owner, actions.registerVault(vault)),
-      expectedState
-    )
+    vaultTest(initialState, actions.registerVault(vault, owner), expectedState)
   })
 
   it('does not overwrite previous vaults if present', () => {
@@ -88,11 +84,7 @@ describe('vaults reducer', () => {
         }
       }
     }
-    vaultTest(
-      state,
-      middlewareMock(owner, actions.registerVault(otherVault)),
-      expectedState
-    )
+    vaultTest(state, actions.registerVault(otherVault, owner), expectedState)
   })
 
   it('adds a vault block to the state', () => {
@@ -110,7 +102,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      middlewareMock(owner, actions.registerVaultBlock(firstBlock)),
+      actions.registerVaultBlock(firstBlock, owner),
       expectedState
     )
   })
@@ -135,7 +127,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      middlewareMock(owner, actions.registerVaultBlock(secondBlock)),
+      actions.registerVaultBlock(secondBlock, owner),
       expectedState
     )
   })

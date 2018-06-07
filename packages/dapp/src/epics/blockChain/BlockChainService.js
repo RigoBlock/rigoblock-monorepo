@@ -70,7 +70,6 @@ class BlockChainService {
   }
 
   init() {
-    console.log('caaaaalled')
     const return$ = fromPromise(this.api.init(), this.scheduler)
       .mapTo(blockChainActions.blockChainInit())
       .merge(this.errorListener())
