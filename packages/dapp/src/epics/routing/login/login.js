@@ -6,7 +6,7 @@ import { of } from 'rxjs/observable/of'
 import ROUTES from '../../../constants/routes'
 import routerActions from '../../../actions/router-actions'
 
-export const login = (action$, store) => {
+const login = (action$, store) => {
   return action$
     .filter(action => action.type === actionTypes.LOGGED_IN)
     .mergeMap(() => {

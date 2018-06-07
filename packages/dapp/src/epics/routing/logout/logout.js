@@ -8,7 +8,7 @@ import { of } from 'rxjs/observable/of'
 import ROUTES from '../../../constants/routes'
 import routerActions from '../../../actions/router-actions'
 
-export const logout = (action$, store) => {
+const logout = (action$, store) => {
   const action$1 = action$
     .filter(action => action.type === LOCATION_CHANGE)
     .mergeMap(() => {
