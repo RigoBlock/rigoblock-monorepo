@@ -1,12 +1,14 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/mergeMap'
-import { actionTypes } from '../../../constants/action-types'
 import BlockChainService from '../../blockChain/BlockChainService'
+import blockChainActions from '../../../actions/blockChain-actions'
 
 const fetchVaultEventsEpic = (action$, store) => {
   const blockchainService = BlockChainService.getInstance()
   return action$
-    .filter(action => action.type === actionTypes.LOGGED_IN)
+    .filter(
+      action => action.type === blockChainActions.blockChainLogIn.getType()
+    )
     .mergeMap(() => {
       const firstUnfetchedBlock = getFirstUnfetchedBlock(store)
       return blockchainService.fetchVaultEvents(firstUnfetchedBlock)

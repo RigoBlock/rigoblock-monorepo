@@ -1,4 +1,4 @@
-import blockChainActions from '../../actions/blockchain-actions'
+import blockChainActions from '../../actions/blockChain-actions'
 import blockChainReducer from './blockChain'
 import vaultActions from '../../actions/vault-actions'
 

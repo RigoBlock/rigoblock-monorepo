@@ -1,7 +1,7 @@
 import { ActionsObservable } from 'redux-observable'
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
-import blockChainActions from '../../../actions/blockchain-actions'
+import blockChainActions from '../../../actions/blockChain-actions'
 
 describe('watchVaultEvents', () => {
   const block = {

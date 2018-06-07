@@ -1,7 +1,7 @@
 import { ActionsObservable } from 'redux-observable'
 import { TestScheduler } from 'rxjs'
 import ROUTES from '../../../constants/routes'
-import blockChainActions from '../../../actions/blockchain-actions'
+import blockChainActions from '../../../actions/blockChain-actions'
 import loginEpic from '.'
 import routerActions from '../../../actions/router-actions'
 

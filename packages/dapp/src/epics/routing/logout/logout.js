@@ -1,11 +1,11 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/mergeMap'
 import { LOCATION_CHANGE } from 'react-router-redux'
-import { actionTypes } from '../../../constants/action-types'
 import { empty } from 'rxjs/observable/empty'
 import { merge } from 'rxjs/observable/merge'
 import { of } from 'rxjs/observable/of'
 import ROUTES from '../../../constants/routes'
+import blockChainActions from '../../../actions/blockChain-actions'
 import routerActions from '../../../actions/router-actions'
 
 const logoutEpic = (action$, store) => {
@@ -23,8 +23,8 @@ const logoutEpic = (action$, store) => {
   const action$2 = action$
     .filter(
       action =>
-        action.type === actionTypes.LOGGED_OUT ||
-        action.type === actionTypes.BLOCKCHAIN_ERROR
+        action.type === blockChainActions.blockChainLogout.getType() ||
+        action.type === blockChainActions.blockChainError.getType()
     )
     .mergeMap(() => of(routerActions.logout()))
 

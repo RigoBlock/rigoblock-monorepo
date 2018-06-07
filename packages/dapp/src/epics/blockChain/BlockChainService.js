@@ -15,7 +15,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
 import { zip } from 'rxjs/observable/zip'
-import blockChainActions from '../../actions/blockchain-actions'
+import blockChainActions from '../../actions/blockChain-actions'
 
 class BlockChainService {
   constructor(api, action$, subject$, ts = Scheduler.async) {
@@ -70,6 +70,7 @@ class BlockChainService {
   }
 
   init() {
+    console.log('caaaaalled')
     const return$ = fromPromise(this.api.init(), this.scheduler)
       .mapTo(blockChainActions.blockChainInit())
       .merge(this.errorListener())
