@@ -4,7 +4,7 @@ import 'rxjs/add/operator/takeUntil'
 import { actionTypes } from '../../../constants/action-types'
 import BlockChainService from '../../blockChain/BlockChainService'
 
-const watchVaultEvents = (action$, store) => {
+const watchVaultEventsEpic = (action$, store) => {
   const blockchainService = BlockChainService.getInstance()
   return action$
     .filter(action => action.type === actionTypes.VAULT_FETCH_COMPLETED)
@@ -24,4 +24,4 @@ const getFirstUnfetchedBlock = store => {
     : null
 }
 
-export default watchVaultEvents
+export default watchVaultEventsEpic

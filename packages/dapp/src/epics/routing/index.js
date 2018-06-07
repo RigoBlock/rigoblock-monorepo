@@ -1,4 +1,4 @@
-import login from './login'
-import logout from './logout'
+import loginEpic from './login'
+import logoutEpic from './logout'
 
-export default [login, logout]
+export default [loginEpic, logoutEpic]
