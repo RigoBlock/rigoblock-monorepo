@@ -1,1 +1,3 @@
-export { default } from './blockChain'
+import blockChain from './blockChain'
+
+export default [blockChain]
