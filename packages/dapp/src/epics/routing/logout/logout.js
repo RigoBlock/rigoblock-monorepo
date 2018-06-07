@@ -5,7 +5,7 @@ import { empty } from 'rxjs/observable/empty'
 import { merge } from 'rxjs/observable/merge'
 import { of } from 'rxjs/observable/of'
 import ROUTES from '../../../constants/routes'
-import blockChainActions from '../../../actions/blockChain-actions'
+import blockChainActions from '../../../actions/blockchain-actions'
 import routerActions from '../../../actions/router-actions'
 
 const logoutEpic = (action$, store) => {

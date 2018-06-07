@@ -2,7 +2,7 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/takeUntil'
 import BlockChainService from '../../blockChain/BlockChainService'
-import blockChainActions from '../../../actions/blockChain-actions'
+import blockChainActions from '../../../actions/blockchain-actions'
 
 const watchVaultEventsEpic = (action$, store) => {
   const blockchainService = BlockChainService.getInstance()

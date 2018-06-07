@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject'
 import { of } from 'rxjs/observable/of'
 import BlockChainService from './BlockChainService'
 import api from '../../api'
-import blockChainActions from '../../actions/blockChain-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 import globalActions from '../../actions/global-actions'
 
 const blockchainSubject = new Subject()

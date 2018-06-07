@@ -1,6 +1,6 @@
 import { composeReducers } from '../utils'
 import { createReducer } from 'redux-act'
-import blockChainActions from '../../actions/blockChain-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 import u from 'updeep'
 import vaultActions from '../../actions/vault-actions'
 import vaultsReducer from './vaults'

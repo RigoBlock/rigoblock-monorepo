@@ -1,5 +1,5 @@
 import CONSTANTS from '../../constants/user'
-import blockChainActions from '../../actions/blockChain-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 import preferencesReducer from './preferences'
 import userActions from '../../actions/user-actions'
 

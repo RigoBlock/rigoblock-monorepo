@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import { TestScheduler } from 'rxjs'
 import { blockLabels } from '../../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
-import blockChainActions from '../../../actions/blockChain-actions'
+import blockChainActions from '../../../actions/blockchain-actions'
 import vaultActions from '../../../actions/vault-actions'
 
 describe('registerVaults epic', () => {

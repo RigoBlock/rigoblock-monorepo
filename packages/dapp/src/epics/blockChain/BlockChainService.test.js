@@ -2,7 +2,7 @@ import { TestScheduler } from 'rxjs'
 import { _throw } from 'rxjs/observable/throw'
 import { blockLabels } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
-import blockChainActions from '../../actions/blockChain-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 
 describe('epic for blockchain services', () => {
   const testError = new Error('test error')

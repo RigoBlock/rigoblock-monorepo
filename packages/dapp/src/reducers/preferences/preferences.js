@@ -1,6 +1,6 @@
 import { createReducer } from 'redux-act'
 import CONSTANTS from '../../constants/user'
-import blockChainActions from '../../actions/blockChain-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 import moment from 'moment-timezone'
 import u from 'updeep'
 import userActions from '../../actions/user-actions'

@@ -15,7 +15,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
 import { zip } from 'rxjs/observable/zip'
-import blockChainActions from '../../actions/blockChain-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 
 class BlockChainService {
   constructor(api, action$, subject$, ts = Scheduler.async) {
