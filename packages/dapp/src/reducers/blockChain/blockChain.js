@@ -18,7 +18,7 @@ function blockChainReducer(state = initialState, action) {
             },
             state
           )
-    case actionTypes.ADD_RAW_VAULT:
+    case actionTypes.REGISTER_VAULT_BLOCK:
       const blockNumber = action.payload.block.blockNumber
       let lastBlock = state.accounts[action.account].lastBlock
       lastBlock =

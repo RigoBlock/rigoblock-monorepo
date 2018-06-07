@@ -11,14 +11,36 @@ import BlockChainService from '../blockChain/BlockChainService'
 import api from '../../api'
 import vaultActions from '../../actions/vault-actions'
 
-export const vaultsEpic = (action$, store, ts = Scheduler.async) => {
+export const fetchVaultEventsEpic = (action$, store) => {
+  const blockchainService = BlockChainService.getInstance()
+  return action$
+    .filter(action => action.type === actionTypes.LOGGED_IN)
+    .mergeMap(() => {
+      const firstUnfetchedBlock = getFirstUnfetchedBlock(store)
+      return blockchainService.fetchVaultEvents(firstUnfetchedBlock)
+    })
+}
+
+export const watchVaultEventsEpic = (action$, store) => {
+  const blockchainService = BlockChainService.getInstance()
+  return action$
+    .filter(action => action.type === actionTypes.VAULT_FETCH_COMPLETED)
+    .mergeMap(() => {
+      const firstUnfetchedBlock = getFirstUnfetchedBlock(store)
+      return blockchainService
+        .watchVaultEvents(firstUnfetchedBlock)
+        .takeUntil(action$.ofType(actionTypes.LOGGED_IN))
+    })
+}
+
+export const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
   const vaultBlock$ = action$.filter(
     action =>
       action.type === actionTypes.REGISTER_BLOCK &&
       action.payload.label === blockLabels.VAULT
   )
   const action$1 = vaultBlock$.map(action => {
-    return vaultActions.addRawVault(action.payload)
+    return vaultActions.registerVaultBlock(action.payload)
   })
   const action$2 = vaultBlock$
     .mergeMap(action => {
@@ -39,30 +61,8 @@ export const vaultsEpic = (action$, store, ts = Scheduler.async) => {
         }
       }
     }))
-    .map(({ vault }) => vaultActions.addVault(vault))
+    .map(({ vault }) => vaultActions.registerVault(vault))
   return merge(action$1, action$2)
-}
-
-export const fetchVaultEventsEpic = (action$, store) => {
-  const blockchainService = BlockChainService.getInstance()
-  return action$
-    .filter(action => action.type === actionTypes.LOGGED_IN)
-    .mergeMap(() => {
-      const firstUnfetchedBlock = getFirstUnfetchedBlock(store)
-      return blockchainService.fetchVaultEvents(firstUnfetchedBlock)
-    })
-}
-
-export const watchVaultEventsEpic = (action$, store) => {
-  const blockchainService = BlockChainService.getInstance()
-  return action$
-    .filter(action => action.type === actionTypes.VAULT_FETCH_COMPLETE)
-    .mergeMap(() => {
-      const firstUnfetchedBlock = getFirstUnfetchedBlock(store)
-      return blockchainService
-        .watchVaultEvents(firstUnfetchedBlock)
-        .takeUntil(action$.ofType(actionTypes.LOGGED_IN))
-    })
 }
 
 const getFirstUnfetchedBlock = store => {
@@ -73,4 +73,4 @@ const getFirstUnfetchedBlock = store => {
     : null
 }
 
-export default [vaultsEpic, fetchVaultEventsEpic, watchVaultEventsEpic]
+export default [registerVaultsEpic, fetchVaultEventsEpic, watchVaultEventsEpic]

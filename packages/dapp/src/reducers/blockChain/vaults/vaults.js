@@ -4,7 +4,7 @@ import u from 'updeep'
 // This is a sub-reducer of blockchain, so it shouldn't have initialState
 function vaultReducer(state, action) {
   switch (action.type) {
-    case actionTypes.ADD_RAW_VAULT:
+    case actionTypes.REGISTER_VAULT_BLOCK:
       return u(
         {
           accounts: {
@@ -17,7 +17,7 @@ function vaultReducer(state, action) {
         },
         state
       )
-    case actionTypes.ADD_VAULT:
+    case actionTypes.REGISTER_VAULT:
       return u(
         {
           accounts: {

@@ -9,10 +9,10 @@ export const actionTypes = keyMirror({
   LOGGED_IN: null,
   LOGGED_OUT: null,
   REGISTER_BLOCK: null,
-  VAULT_FETCH_COMPLETE: null,
+  VAULT_FETCH_COMPLETED: null,
   // User actions
   PREFERENCE_CHANGE: null,
   // Vault actions
-  ADD_RAW_VAULT: null,
-  ADD_VAULT: null
+  REGISTER_VAULT_BLOCK: null,
+  REGISTER_VAULT: null
 })

@@ -22,7 +22,7 @@ export default {
       block
     }
   }),
-  vaultFetchComplete: () => ({
-    type: actionTypes.VAULT_FETCH_COMPLETE
+  vaultFetchCompleted: () => ({
+    type: actionTypes.VAULT_FETCH_COMPLETED
   })
 }

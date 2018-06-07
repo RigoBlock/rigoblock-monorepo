@@ -269,10 +269,11 @@ describe('epic for blockchain services', () => {
   describe('fetch vault events', () => {
     it('fetches blocks and filters them by account', () => {
       const expectedValues = {
-        a: blockChainActions.registerBlock(blockLabels.VAULT, blocks[0])
+        a: blockChainActions.registerBlock(blockLabels.VAULT, blocks[0]),
+        b: blockChainActions.vaultFetchCompleted()
       }
 
-      const expectedMarble = 'a'
+      const expectedMarble = '(ab|)'
 
       const ts = new TestScheduler((actual, expected) => {
         expect(actual).toEqual(expected)

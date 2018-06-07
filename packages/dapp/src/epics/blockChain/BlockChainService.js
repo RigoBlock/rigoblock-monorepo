@@ -72,7 +72,7 @@ class BlockChainService {
   }
 
   init() {
-    const return$ = fromPromise(this.api.init(), this.scheduler)
+    const return$ = fromPromise(this.api.init())
       .mapTo(blockChainActions.blockChainInit())
       .merge(this.errorListener())
       .merge(this.connectionListener())
@@ -104,7 +104,7 @@ class BlockChainService {
       blockLabels.VAULT,
       allVaultEvents
     )
-    return filteredBlocks.concat(of(blockChainActions.vaultFetchComplete()))
+    return filteredBlocks.concat(of(blockChainActions.vaultFetchCompleted()))
   }
 
   watchVaultEvents(fromBlock, toBlock = 'latest') {
