@@ -1,9 +1,7 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concat'
-import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
-import 'rxjs/add/operator/finally'
 import 'rxjs/add/operator/last'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mapTo'
@@ -72,7 +70,7 @@ class BlockChainService {
   }
 
   init() {
-    const return$ = fromPromise(this.api.init())
+    const return$ = fromPromise(this.api.init(), this.scheduler)
       .mapTo(blockChainActions.blockChainInit())
       .merge(this.errorListener())
       .merge(this.connectionListener())
@@ -135,7 +133,7 @@ class BlockChainService {
 
 let blockChainServiceInstance
 
-BlockChainService.createInstance = function getInstance(...args) {
+BlockChainService.createInstance = function createInstance(...args) {
   blockChainServiceInstance = new BlockChainService(...args)
   return blockChainServiceInstance
 }
