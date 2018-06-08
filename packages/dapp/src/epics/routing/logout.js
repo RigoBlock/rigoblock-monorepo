@@ -4,9 +4,9 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 import { empty } from 'rxjs/observable/empty'
 import { merge } from 'rxjs/observable/merge'
 import { of } from 'rxjs/observable/of'
-import ROUTES from '../../../constants/routes'
-import blockChainActions from '../../../actions/blockchain-actions'
-import routerActions from '../../../actions/router-actions'
+import ROUTES from '../../constants/routes'
+import blockChainActions from '../../actions/blockchain-actions'
+import routerActions from '../../actions/router-actions'
 
 const logoutEpic = (action$, store) => {
   const action$1 = action$

@@ -1,17 +1,20 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/mergeMap'
-import BlockChainService from '../../blockChain/BlockChainService'
-import blockChainActions from '../../../actions/blockchain-actions'
+import 'rxjs/add/operator/takeUntil'
+import BlockChainService from '../blockChain/BlockChainService'
+import blockChainActions from '../../actions/blockchain-actions'
 
-const fetchVaultEventsEpic = (action$, store) => {
+const watchVaultEventsEpic = (action$, store) => {
   const blockchainService = BlockChainService.getInstance()
   return action$
     .filter(
-      action => action.type === blockChainActions.blockChainLogIn.getType()
+      action => action.type === blockChainActions.vaultFetchCompleted.getType()
     )
     .mergeMap(() => {
       const firstUnfetchedBlock = getFirstUnfetchedBlock(store)
-      return blockchainService.fetchVaultEvents(firstUnfetchedBlock)
+      return blockchainService
+        .watchVaultEvents(firstUnfetchedBlock)
+        .takeUntil(action$.ofType(blockChainActions.blockChainLogIn.getType()))
     })
 }
 
@@ -23,4 +26,4 @@ const getFirstUnfetchedBlock = store => {
     : null
 }
 
-export default fetchVaultEventsEpic
+export default watchVaultEventsEpic

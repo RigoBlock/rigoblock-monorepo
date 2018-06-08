@@ -1,7 +1,7 @@
 import { ActionsObservable } from 'redux-observable'
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
-import blockChainActions from '../../../actions/blockchain-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 
 describe('watchVaultEvents', () => {
   const block = {
@@ -40,11 +40,8 @@ describe('watchVaultEvents', () => {
 
   beforeEach(() => {
     jest.resetModules()
-    jest.doMock(
-      '../../blockChain/BlockChainService',
-      () => BlockChainServiceMock
-    )
-    jest.doMock('../../../api', () => ({}))
+    jest.doMock('../blockChain/BlockChainService', () => BlockChainServiceMock)
+    jest.doMock('../../api', () => ({}))
     watchVaultEvents = require('./watchVaultEvents').default
   })
 

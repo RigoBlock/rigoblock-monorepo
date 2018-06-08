@@ -2,12 +2,12 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mergeMap'
 import { Scheduler } from 'rxjs/Scheduler'
-import { blockLabels } from '../../../constants/blockchain'
+import { blockLabels } from '../../constants/blockchain'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { merge } from 'rxjs/observable/merge'
-import api from '../../../api'
-import blockChainActions from '../../../actions/blockchain-actions'
-import vaultActions from '../../../actions/vault-actions'
+import api from '../../api'
+import blockChainActions from '../../actions/blockchain-actions'
+import vaultActions from '../../actions/vault-actions'
 
 const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
   const vaultBlock$ = action$.filter(

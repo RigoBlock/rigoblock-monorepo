@@ -1,9 +1,9 @@
 import { ActionsObservable } from 'redux-observable'
 import { TestScheduler } from 'rxjs'
-import ROUTES from '../../../constants/routes'
-import blockChainActions from '../../../actions/blockchain-actions'
-import loginEpic from '.'
-import routerActions from '../../../actions/router-actions'
+import ROUTES from '../../constants/routes'
+import blockChainActions from '../../actions/blockchain-actions'
+import loginEpic from './login'
+import routerActions from '../../actions/router-actions'
 
 describe('login Epic', () => {
   const getStateMock = jest.fn()

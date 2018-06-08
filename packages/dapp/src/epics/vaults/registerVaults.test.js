@@ -1,10 +1,10 @@
 import { ActionsObservable } from 'redux-observable'
 import { BigNumber } from 'bignumber.js'
 import { TestScheduler } from 'rxjs'
-import { blockLabels } from '../../../constants/blockchain'
+import { blockLabels } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
-import blockChainActions from '../../../actions/blockchain-actions'
-import vaultActions from '../../../actions/vault-actions'
+import blockChainActions from '../../actions/blockchain-actions'
+import vaultActions from '../../actions/vault-actions'
 
 describe('registerVaults epic', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
@@ -50,7 +50,7 @@ describe('registerVaults epic', () => {
     fromPromiseSpy = jest.fn().mockReturnValueOnce(of(vaultData))
 
     jest.resetModules()
-    jest.doMock('../../../api', () => apiMock)
+    jest.doMock('../../api', () => apiMock)
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy
     }))

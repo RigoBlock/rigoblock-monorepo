@@ -2,9 +2,9 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/mergeMap'
 import { empty } from 'rxjs/observable/empty'
 import { of } from 'rxjs/observable/of'
-import ROUTES from '../../../constants/routes'
-import blockChainActions from '../../../actions/blockchain-actions'
-import routerActions from '../../../actions/router-actions'
+import ROUTES from '../../constants/routes'
+import blockChainActions from '../../actions/blockchain-actions'
+import routerActions from '../../actions/router-actions'
 
 const loginEpic = (action$, store) => {
   return action$
