@@ -8,7 +8,7 @@ const vaultReducer = createReducer({
     u(
       {
         accounts: {
-          [payload.account]: {
+          [payload.currentAccount]: {
             vaultBlocks: {
               [payload.block.blockNumber]: payload.block
             }
@@ -21,7 +21,7 @@ const vaultReducer = createReducer({
     u(
       {
         accounts: {
-          [payload.account]: { vaults: payload.vault }
+          [payload.currentAccount]: { vaults: payload.vault }
         }
       },
       state

@@ -15,10 +15,9 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
       action.type === blockChainActions.registerBlock.getType() &&
       action.payload.label === blockLabels.VAULT
   )
-  const action$1 = vaultBlock$.map(action => {
-    const account = getAccount(store)
-    return vaultActions.registerVaultBlock(action.payload.block, account)
-  })
+  const action$1 = vaultBlock$.map(action =>
+    vaultActions.registerVaultBlock(action.payload.block)
+  )
   const action$2 = vaultBlock$
     .mergeMap(action => {
       const address = action.payload.block.args.vault
@@ -38,13 +37,8 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
         }
       }
     }))
-    .map(({ vault }) => {
-      const account = getAccount(store)
-      return vaultActions.registerVault(vault, account)
-    })
+    .map(({ vault }) => vaultActions.registerVault(vault))
   return merge(action$1, action$2)
 }
-
-const getAccount = store => store.getState().user.preferences.currentAccount
 
 export default registerVaultsEpic
