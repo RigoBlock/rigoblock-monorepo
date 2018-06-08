@@ -14,7 +14,7 @@ const vault = {
     owner
   }
 }
-const otherVault = {
+const secondVault = {
   '0xc1Eba7b55556E4491a499E653878464e406202r': {
     id: 1,
     name: 'Another Vault',
@@ -28,13 +28,21 @@ const firstBlock = {
     logIndex: 0,
     transactionIndex: 0,
     transactionHash:
-      '0xc77b7d1123ffaada1a18b79112be8fcf7f65e6c9a5e5e93ad81c68be351c45b9',
+      '0x3cfb9957565d2b850397234e47642ae748e78234f8feeca862f21dd878d1046e',
     blockHash:
-      '0x412a477a40ff05d6f9ef2d9db185918d45f950576df55c726f46ced4da2e0bb5',
-    blockNumber: 1,
+      '0xe5a7586f8456ecbad0f2c6f391c9559e0f2a988757d8fe19867057e9e571ea6f',
+    blockNumber: 10,
     address: '0x6dddcaede2071883c85c6e5781524985608d2460',
     type: 'mined',
-    event: 'BuyVault'
+    event: 'VaultCreated',
+    args: {
+      vault: '0x86a1ba4d485ce346bded508e2426798f825558be',
+      group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff',
+      owner: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196',
+      vaultId: '0',
+      name: 'First Vault',
+      symbol: 'asd'
+    }
   },
   label: blockLabels.VAULT
 }
@@ -44,13 +52,21 @@ const secondBlock = {
     logIndex: 0,
     transactionIndex: 0,
     transactionHash:
-      '0xc77b7d1123ffaada1a18b79112be8fcf7f65e6c9a5e5e93ad81c68be351c45b9',
+      '0x3cfb9957565d2b850397234e47642ae748e78234f8feeca862f21dd878d1046e',
     blockHash:
-      '0x412a477a40ff05d6f9ef2d9db185918d45f950576df55c726f46ced4da2e0bb5',
-    blockNumber: 2,
+      '0xe5a7586f8456ecbad0f2c6f391c9559e0f2a988757d8fe19867057e9e571ea6f',
+    blockNumber: 11,
     address: '0x6dddcaede2071883c85c6e5781524985608d2460',
     type: 'mined',
-    event: 'SellVault'
+    event: 'VaultCreated',
+    args: {
+      vault: '0x86a1ba4d485ce346bded508e2426798f825558be',
+      group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff',
+      owner: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196',
+      vaultId: '0',
+      name: 'Second Vault',
+      symbol: 'asd'
+    }
   },
   label: blockLabels.VAULT
 }
@@ -66,7 +82,11 @@ describe('vaults reducer', () => {
         }
       }
     }
-    vaultTest(initialState, actions.registerVault(vault, owner), expectedState)
+    vaultTest(
+      initialState,
+      accountMiddlewareMock(actions.registerVault(vault), owner),
+      expectedState
+    )
   })
 
   it('does not overwrite previous vaults if present', () => {
@@ -80,11 +100,15 @@ describe('vaults reducer', () => {
     const expectedState = {
       accounts: {
         [owner]: {
-          vaults: { ...vault, ...otherVault }
+          vaults: { ...vault, ...secondVault }
         }
       }
     }
-    vaultTest(state, actions.registerVault(otherVault, owner), expectedState)
+    vaultTest(
+      state,
+      accountMiddlewareMock(actions.registerVault(secondVault), owner),
+      expectedState
+    )
   })
 
   it('adds a vault block to the state', () => {
@@ -102,7 +126,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      actions.registerVaultBlock(firstBlock, owner),
+      accountMiddlewareMock(actions.registerVaultBlock(firstBlock), owner),
       expectedState
     )
   })
@@ -127,7 +151,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      actions.registerVaultBlock(secondBlock, owner),
+      accountMiddlewareMock(actions.registerVaultBlock(secondBlock), owner),
       expectedState
     )
   })

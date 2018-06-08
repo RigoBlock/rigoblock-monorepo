@@ -47,7 +47,7 @@ describe('blockchain reducer', () => {
           }
         }
       },
-      vaultActions.registerVaultBlock(eventBlock, owner),
+      accountMiddlewareMock(vaultActions.registerVaultBlock(eventBlock), owner),
       {
         accounts: {
           [owner]: {
