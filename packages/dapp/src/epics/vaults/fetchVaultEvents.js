@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/mergeMap'
-import { actionTypes } from '../../../constants/action-types'
-import BlockChainService from '../../blockChain/BlockChainService'
+import { actionTypes } from '../../constants/action-types'
+import BlockChainService from '../blockChain/BlockChainService'
 
 const fetchVaultEventsEpic = (action$, store) => {
   const blockchainService = BlockChainService.getInstance()

@@ -1,10 +1,10 @@
 import { ActionsObservable } from 'redux-observable'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { TestScheduler } from 'rxjs'
-import ROUTES from '../../../constants/routes'
-import blockChainActions from '../../../actions/blockchain-actions'
-import logoutEpic from '.'
-import routerActions from '../../../actions/router-actions'
+import ROUTES from '../../constants/routes'
+import blockChainActions from '../../actions/blockchain-actions'
+import logoutEpic from './logout'
+import routerActions from '../../actions/router-actions'
 
 describe('logout Epic', () => {
   const testError = new Error('test error')
