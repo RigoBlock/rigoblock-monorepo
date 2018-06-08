@@ -16,13 +16,15 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
-/// @title Pool Interface - Interface of pool generic view functions.
+/// @title Pool Interface - Interface of pool standard functions.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 /// @notice only public view functions are used
 interface PoolFace {
+    
+    // CORE FUNCTIONS
 
     // CONSTANT PUBLIC FUNCTIONS
 
@@ -30,5 +32,6 @@ interface PoolFace {
     function totalSupply() external view returns (uint256 totaSupply);
     function getEventful() external view returns (address);
     function getData() external view returns (string name, string symbol, uint sellPrice, uint buyPrice);
+    function calcSharePrice() external view returns (uint);
     function getAdminData() external view returns (address, address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod);
 }

@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 /// @title Drago Interface - Allows interaction with the Drago contract.
@@ -36,14 +36,22 @@ interface DragoFace {
     function changeFeeCollector(address _feeCollector) external;
     function changeDragoDao(address _dragoDao) external;
     function depositToExchange(address _exchange, uint _amount) external;
-    function operateOnExchange(address _exchange) external;
+    function withdrawFromExchange(address _exchange, uint _amount) external;
+    function setInfiniteAllowance(address _tokenTransferProxy, address _token) external;
+    function SetMultipleAllowances(address _tokenTransferProxy, address[] _token) external;
+    function operateOnExchange(address _exchange, bytes _assembledTransaction) external;
+    function operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction) external;
+    function operateOnExchangeThroughAdapter(address _exchange, bytes _assembledTransaction) external;
+    function enforceKyc(bool _enforced, address _kycProvider) external;
 
     // PUBLIC CONSTANT FUNCTIONS
 
     function balanceOf(address _who) external view returns (uint);
     function getEventful() external view returns (address);
     function getData() external view returns (string name, string symbol, uint sellPrice, uint buyPrice);
+    function calcSharePrice() external view returns (uint);
     function getAdminData() external view returns (address, address feeCollector, address dragoDao, uint ratio, uint transactionFee, uint32 minPeriod);
     function totalSupply() external view returns (uint256);
+    function getKycProvider() external view returns (address);
     function getVersion() external view returns (string);
 }

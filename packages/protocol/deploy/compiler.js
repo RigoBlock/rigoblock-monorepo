@@ -27,8 +27,7 @@ const compile = async (contracts, networkUrl) => {
 }
 
 const compilePromises = NETWORKS.map(network => {
-  const artifacts = CONTRACT_NAMES.map(contractName => `${contractName}.sol`)
-  return compile(artifacts, network)
+  return compile(CONTRACT_NAMES, network)
 })
 
 Promise.all(compilePromises).catch(e => {

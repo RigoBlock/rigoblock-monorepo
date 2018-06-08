@@ -16,10 +16,11 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
-import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
+//import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
+import { Owned } from "../../utils/Owned/Owned.sol";
 import { RigoToken } from "../RigoToken/RigoToken.sol";
 import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
 
@@ -81,7 +82,7 @@ contract Inflation is SafeMath, InflationFace {
         _;
     }
 
-    function Inflation(
+    constructor(
         address _rigoTokenAddress,
         address _proofOfPerformance,
         address _authority)
@@ -195,17 +196,16 @@ contract Inflation is SafeMath, InflationFace {
     {
         return groups[_group].epochReward;
     }
-    
+
     // INTERNAL FUNCTIONS
-    
+
     /// @dev Returns the address of the pool owner
     /// @param _ofPool Number of the registered pool
     /// @return Address of the pool owner
     function getPoolOwner(address _ofPool)
         internal view
-        returns (address poolOwner)
+        returns (address)
     {
-        Pool pool = Pool(_ofPool);
-        (poolOwner, , , , , ) = pool.getAdminData();
+        return Owned(_ofPool).owner();
     }
 }

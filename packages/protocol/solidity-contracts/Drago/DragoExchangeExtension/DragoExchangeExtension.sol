@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 pragma experimental "v0.5.0";
 
 import { Authority } from "../../Authority/Authority.sol";
@@ -31,19 +31,21 @@ library DragoExchangeExtension {
     address feeCollector;
     uint minOrder; // minimum stake to avoid dust clogging things up
     uint ratio; //ratio is 80%
+    bytes rawTransactionData;
   }
 
   /// @dev Enables operations with exchanges
   /// @param _exchange Address of the exchange
-  function operateOnExchange(Admin memory admin, address _exchange) internal {
-    assembleCall(_exchange, msg.data.length);
+  function operateOnExchange(Admin memory admin, address _exchange, bytes assembledData) internal {
+    //assembleCall(admin, _exchange, msg.data.length);
+    admin.rawTransactionData = assembledData;
+    assembleCall(_exchange, assembledData.length);
   }
 
   /// @dev Allows caller to delegate any call to the selected exchange adapter
   /// @param _exchange Address of the target exchange
   /// @param _callData size of the data of the call
   function assembleCall(address _exchange, uint _callData) internal {
-    Admin memory admin;
 
     uint size = _callData;
     bytes32 m_data = _malloc(size);

@@ -34,15 +34,6 @@ describe('registerVaults epic', () => {
       }
     }
   }
-  const storeMock = {
-    getState: () => ({
-      user: {
-        preferences: {
-          currentAccount: owner
-        }
-      }
-    })
-  }
   let fromPromiseSpy
   let registerVaults
 
@@ -88,7 +79,7 @@ describe('registerVaults epic', () => {
     const action$ = new ActionsObservable(
       ts.createHotObservable(inputMarble, inputValues)
     )
-    const outputAction = registerVaults(action$, storeMock)
+    const outputAction = registerVaults(action$)
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
 
