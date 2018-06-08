@@ -28,4 +28,4 @@ export const blockchainEpic = (action$, _, ts = Scheduler.async) => {
     })
 }
 
-export default [blockchainEpic]
+export default blockchainEpic
