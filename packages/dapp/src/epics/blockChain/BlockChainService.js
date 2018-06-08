@@ -1,4 +1,5 @@
 import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/concat'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/last'
@@ -81,27 +82,63 @@ class BlockChainService {
     return action$.catch(err => of(blockChainActions.blockChainError(err)))
   }
 
-  fetchVaultEvents(fromBlock = 0, toBlock = 'latest') {
-    return Observable.create(observer => {
+  fetchVaultEvents(fromBlock, toBlock = 'latest') {
+    fromBlock = fromBlock || 0
+    const allVaultEvents = Observable.create(observer => {
       const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
         fromBlock,
         toBlock
       })
-      events.get(
-        (err, events) =>
-          err ? observer.error(new Error(err)) : observer.next(events)
-      )
+      events.get((err, events) => {
+        if (err) {
+          return observer.error(new Error(err))
+        }
+        observer.next(events)
+        return observer.complete()
+      })
+      return () => events.stopWatching()
+    }).mergeMap(events => from(events))
+    const filteredBlocks = this._filterBlocksByAccount(
+      blockLabels.VAULT,
+      allVaultEvents
+    )
+    return filteredBlocks.concat(of(blockChainActions.vaultFetchCompleted()))
+  }
 
+  watchVaultEvents(fromBlock, toBlock = 'latest') {
+    fromBlock = fromBlock || 0
+    const allVaultEvents = Observable.create(observer => {
+      const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
+        fromBlock,
+        toBlock
+      })
+      events.watch((err, events) => {
+        return err ? observer.error(new Error(err)) : observer.next(events)
+      })
       return () => events.stopWatching()
     })
-      .mergeMap(events => from(events))
-      .filter(events =>
-        Object.keys(events.args)
-          .map(key => events.args[key])
+    return this._filterBlocksByAccount(blockLabels.VAULT, allVaultEvents)
+  }
+
+  _filterBlocksByAccount(label, obs) {
+    return obs
+      .filter(block =>
+        Object.keys(block.args)
+          .map(key => block.args[key])
           .includes(this.account)
       )
-      .map(e => blockChainActions.registerBlock(blockLabels.VAULT, e))
+      .map(block => blockChainActions.registerBlock(label, block))
   }
+}
+
+let blockChainServiceInstance
+
+BlockChainService.createInstance = function createInstance(...args) {
+  blockChainServiceInstance = new BlockChainService(...args)
+  return blockChainServiceInstance
+}
+BlockChainService.getInstance = function getInstance() {
+  return blockChainServiceInstance
 }
 
 export default BlockChainService

@@ -1,8 +1,24 @@
-import actions from '../../actions/blockchain-actions'
+import blockChainActions from '../../actions/blockchain-actions'
 import blockChainReducer from './blockChain'
+import vaultActions from '../../actions/vault-actions'
 
 describe('blockchain reducer', () => {
   const blockChainTest = reducerTester(blockChainReducer)
+  const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+  const eventBlock = {
+    label: '',
+    block: {
+      address: '0x001',
+      args: {
+        vault: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
+        from: owner,
+        to: '0x005',
+        amount: '1',
+        revenue: '1'
+      },
+      blockNumber: '10'
+    }
+  }
 
   it('returns the initial state', () => {
     blockChainTest(
@@ -17,11 +33,31 @@ describe('blockchain reducer', () => {
   it('adds an account to state on login action', () => {
     blockChainTest(
       undefined,
-      actions.blockChainLogIn(
-        'Metamask/4.6.1',
-        '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-      ),
-      { accounts: { '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196': {} } }
+      blockChainActions.blockChainLogIn('Metamask/4.6.1', owner),
+      { accounts: { [owner]: {} } }
+    )
+  })
+
+  it('updates lastBlock on REGISTER_VAULT_BLOCK action', () => {
+    blockChainTest(
+      {
+        accounts: {
+          [owner]: {
+            lastBlock: '1'
+          }
+        }
+      },
+      middlewareMock(owner, vaultActions.registerVaultBlock(eventBlock)),
+      {
+        accounts: {
+          [owner]: {
+            lastBlock: eventBlock.block.blockNumber,
+            vaultBlocks: {
+              [eventBlock.block.blockNumber]: eventBlock.block
+            }
+          }
+        }
+      }
     )
   })
 
@@ -29,18 +65,15 @@ describe('blockchain reducer', () => {
     blockChainTest(
       {
         accounts: {
-          '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196': {
+          [owner]: {
             dummyProp: 'dummyValue'
           }
         }
       },
-      actions.blockChainLogIn(
-        'Metamask/4.6.1',
-        '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-      ),
+      blockChainActions.blockChainLogIn('Metamask/4.6.1', owner),
       {
         accounts: {
-          '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196': {
+          [owner]: {
             dummyProp: 'dummyValue'
           }
         }

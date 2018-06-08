@@ -55,11 +55,6 @@ const secondBlock = {
   label: blockLabels.VAULT
 }
 
-const middlewareMock = (account, action) => {
-  action.account = account
-  return action
-}
-
 describe('vaults reducer', () => {
   const vaultTest = reducerTester(vaultReducer)
 
@@ -73,7 +68,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       initialState,
-      middlewareMock(owner, actions.addVault(vault)),
+      middlewareMock(owner, actions.registerVault(vault)),
       expectedState
     )
   })
@@ -95,7 +90,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      middlewareMock(owner, actions.addVault(otherVault)),
+      middlewareMock(owner, actions.registerVault(otherVault)),
       expectedState
     )
   })
@@ -109,24 +104,22 @@ describe('vaults reducer', () => {
     const expectedState = {
       accounts: {
         [owner]: {
-          lastBlock: firstBlock.block.blockNumber,
           vaultBlocks: { [firstBlock.block.blockNumber]: firstBlock.block }
         }
       }
     }
     vaultTest(
       state,
-      middlewareMock(owner, actions.addRawVault(firstBlock)),
+      middlewareMock(owner, actions.registerVaultBlock(firstBlock)),
       expectedState
     )
   })
 
-  it('does not overwrite previous vaultBlocks if present but updates lastBlock key', () => {
+  it('does not overwrite previous vaultBlocks', () => {
     const state = {
       accounts: {
         [owner]: {
-          vaultBlocks: { [firstBlock.block.blockNumber]: firstBlock.block },
-          lastBlock: firstBlock.blockNumber
+          vaultBlocks: { [firstBlock.block.blockNumber]: firstBlock.block }
         }
       }
     }
@@ -136,14 +129,13 @@ describe('vaults reducer', () => {
           vaultBlocks: {
             [firstBlock.block.blockNumber]: firstBlock.block,
             [secondBlock.block.blockNumber]: secondBlock.block
-          },
-          lastBlock: secondBlock.block.blockNumber
+          }
         }
       }
     }
     vaultTest(
       state,
-      middlewareMock(owner, actions.addRawVault(secondBlock)),
+      middlewareMock(owner, actions.registerVaultBlock(secondBlock)),
       expectedState
     )
   })

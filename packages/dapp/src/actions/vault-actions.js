@@ -1,12 +1,12 @@
 import { actionTypes } from '../constants/action-types'
 
 export default {
-  addRawVault: block => ({
-    type: actionTypes.ADD_RAW_VAULT,
+  registerVaultBlock: block => ({
+    type: actionTypes.REGISTER_VAULT_BLOCK,
     payload: block
   }),
-  addVault: vault => ({
-    type: actionTypes.ADD_VAULT,
+  registerVault: vault => ({
+    type: actionTypes.REGISTER_VAULT,
     payload: vault
   })
 }

@@ -21,5 +21,8 @@ export default {
       label,
       block
     }
+  }),
+  vaultFetchCompleted: () => ({
+    type: actionTypes.VAULT_FETCH_COMPLETED
   })
 }

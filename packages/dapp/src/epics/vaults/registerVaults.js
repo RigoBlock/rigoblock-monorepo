@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mergeMap'
@@ -10,14 +9,14 @@ import { merge } from 'rxjs/observable/merge'
 import api from '../../api'
 import vaultActions from '../../actions/vault-actions'
 
-export const vaultsEpic = (action$, store, ts = Scheduler.async) => {
+const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
   const vaultBlock$ = action$.filter(
     action =>
       action.type === actionTypes.REGISTER_BLOCK &&
       action.payload.label === blockLabels.VAULT
   )
   const action$1 = vaultBlock$.map(action => {
-    return vaultActions.addRawVault(action.payload)
+    return vaultActions.registerVaultBlock(action.payload)
   })
   const action$2 = vaultBlock$
     .mergeMap(action => {
@@ -38,8 +37,8 @@ export const vaultsEpic = (action$, store, ts = Scheduler.async) => {
         }
       }
     }))
-    .map(({ vault }) => vaultActions.addVault(vault))
+    .map(({ vault }) => vaultActions.registerVault(vault))
   return merge(action$1, action$2)
 }
 
-export default [vaultsEpic]
+export default registerVaultsEpic

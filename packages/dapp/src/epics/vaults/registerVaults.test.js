@@ -6,7 +6,7 @@ import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
 import vaultActions from '../../actions/vault-actions'
 
-describe('vaults epics', () => {
+describe('registerVaults epic', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const vaultEvent = {
     address: '0x001',
@@ -35,7 +35,7 @@ describe('vaults epics', () => {
     }
   }
   let fromPromiseSpy
-  let vaultsEpic
+  let registerVaults
 
   beforeEach(() => {
     fromPromiseSpy = jest.fn().mockReturnValueOnce(of(vaultData))
@@ -46,19 +46,19 @@ describe('vaults epics', () => {
       fromPromise: fromPromiseSpy
     }))
 
-    vaultsEpic = require('./vaults').vaultsEpic
+    registerVaults = require('./registerVaults').default
   })
 
-  it('emits a addVault action with a vault object on REGISTER_BLOCK', () => {
+  it('emits REGISTER_VAULT containing a parsed vault object + REGISTER_VAULT_BLOCK containing a vault event block', () => {
     const inputValues = {
       a: blockChainActions.registerBlock(blockLabels.VAULT, vaultEvent)
     }
     const expectedValues = {
-      b: vaultActions.addRawVault({
+      b: vaultActions.registerVaultBlock({
         label: blockLabels.VAULT,
         block: vaultEvent
       }),
-      c: vaultActions.addVault({
+      c: vaultActions.registerVault({
         ['0xc1Eba7b6F9f06E4491a499E653878464e40AB70e']: {
           id: 0,
           group: null,
@@ -79,7 +79,7 @@ describe('vaults epics', () => {
     const action$ = new ActionsObservable(
       ts.createHotObservable(inputMarble, inputValues)
     )
-    const outputAction = vaultsEpic(action$)
+    const outputAction = registerVaults(action$)
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
 

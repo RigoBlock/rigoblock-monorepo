@@ -12,8 +12,13 @@ import blockChainActions from '../../actions/blockchain-actions'
 const blockchainSubject = new Subject()
 let blockchainService
 
-export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
-  blockchainService = new BlockChainService(api, action$, blockchainSubject, ts)
+export const blockchainEpic = (action$, _, ts = Scheduler.async) => {
+  blockchainService = BlockChainService.createInstance(
+    api,
+    action$,
+    blockchainSubject,
+    ts
+  )
   return action$
     .filter(action => action.type === actionTypes.GLOBAL_INIT)
     .mergeMap(() => {
@@ -23,23 +28,4 @@ export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
     })
 }
 
-export const blockchainFetchEventsEpic = (
-  action$,
-  store,
-  ts = Scheduler.async
-) => {
-  blockchainService = new BlockChainService(api, action$, blockchainSubject, ts)
-  return action$
-    .filter(action => action.type === actionTypes.LOGGED_IN)
-    .mergeMap(() => {
-      const state = store.getState()
-      const account = state.user.preferences.currentAccount
-      return state.user.blockChain.accounts[account].lastBlock
-        ? blockchainService.fetchVaultEvents(
-            state.user.blockChain.accounts[account].lastBlock
-          )
-        : blockchainService.fetchVaultEvents()
-    })
-}
-
-export default [blockchainEpic, blockchainFetchEventsEpic]
+export default blockchainEpic
