@@ -29,13 +29,9 @@ const preferencesReducer = createReducer(
         },
         state
       ),
-    [userActions.changePreferences]: (state, payload) =>
-      u(
-        {
-          timezone: payload.timezone
-        },
-        state
-      )
+    [userActions.changePreferences]: (state, payload) => {
+      return u(payload, state)
+    }
   },
   initialState
 )
