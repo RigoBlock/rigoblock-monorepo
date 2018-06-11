@@ -11,7 +11,8 @@ const loginEpic = (action$, store) => {
     .filter(action => action.type === actionTypes.LOGGED_IN)
     .mergeMap(() => {
       const state = store.getState()
-      return state.routing.location.pathname === ROUTES.LOGIN
+      return !state.routing.location ||
+        state.routing.location.pathname === ROUTES.LOGIN
         ? of(routerActions.login())
         : empty()
     })
