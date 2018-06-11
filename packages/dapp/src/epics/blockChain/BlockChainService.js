@@ -70,6 +70,7 @@ class BlockChainService {
   }
 
   init() {
+    console.log(this.api)
     const return$ = fromPromise(this.api.init(), this.scheduler)
       .mapTo(blockChainActions.blockChainInit())
       .merge(this.errorListener())
@@ -127,6 +128,15 @@ class BlockChainService {
           .map(key => block.args[key])
           .includes(this.account)
       )
+      .mergeMap(block => {
+        return fromPromise(
+          this.api.web3.getBlockTimestampAsync(block.blockNumber),
+          this.scheduler
+        ).map(timestamp => {
+          timestamp = timestamp * 1000
+          return { ...block, timestamp }
+        })
+      })
       .map(block => blockChainActions.registerBlock(label, block))
   }
 }
