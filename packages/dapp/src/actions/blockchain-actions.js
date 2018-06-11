@@ -2,7 +2,7 @@ import { createAction } from 'redux-act'
 
 export default {
   blockChainInit: createAction('blockChain initiated!'),
-  blockChainError: createAction('something went wrong', err => err.toString()),
+  blockChainError: createAction('blockChain error!', err => err.toString()),
   blockChainLogIn: createAction('user login', (provider, account) => ({
     provider,
     account

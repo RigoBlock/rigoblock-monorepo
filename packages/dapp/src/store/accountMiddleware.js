@@ -1,5 +1,11 @@
+import actionVariables from '../constants/actions'
+
 export default ({ getState }) => next => action => {
-  if (action.type.match(/^persist/g) || action.type.match(/^@@redux-form/g)) {
+  const regexp = new RegExp(
+    '^' + actionVariables.persist + '|^' + actionVariables.form
+  )
+  console.log(regexp)
+  if (regexp.test(action.type)) {
     return next(action)
   }
   const account = getState().user.preferences.currentAccount
