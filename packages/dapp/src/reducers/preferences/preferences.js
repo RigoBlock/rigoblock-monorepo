@@ -1,6 +1,9 @@
-import { actionTypes } from '../../constants/action-types'
+import { createReducer } from 'redux-act'
 import CONSTANTS from '../../constants/user'
+import blockChainActions from '../../actions/blockchain-actions'
 import moment from 'moment-timezone'
+import u from 'updeep'
+import userActions from '../../actions/user-actions'
 
 const initialState = {
   timezone: `GMT ${moment.tz(moment.tz.guess()).format('Z')}`,
@@ -8,29 +11,29 @@ const initialState = {
   currentAccount: null,
   provider: null
 }
-
-function preferencesReducer(state = initialState, action) {
-  switch (action.type) {
-    case actionTypes.LOGGED_IN:
-      return {
-        ...state,
-        currentAccount: action.payload.account,
-        provider: action.payload.origin
-      }
-    case actionTypes.LOGGED_OUT:
-      return {
-        ...state,
-        currentAccount: null,
-        provider: null
-      }
-    case actionTypes.PREFERENCE_CHANGE:
-      return {
-        ...state,
-        timezone: action.payload.timezone
-      }
-    default:
-      return state
-  }
-}
+const preferencesReducer = createReducer(
+  {
+    [blockChainActions.blockChainLogIn]: (state, payload) =>
+      u(
+        {
+          currentAccount: payload.account,
+          provider: payload.provider
+        },
+        state
+      ),
+    [blockChainActions.blockChainLogout]: state =>
+      u(
+        {
+          currentAccount: null,
+          provider: null
+        },
+        state
+      ),
+    [userActions.changePreferences]: (state, payload) => {
+      return u(payload, state)
+    }
+  },
+  initialState
+)
 
 export default preferencesReducer

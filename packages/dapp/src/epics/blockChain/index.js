@@ -1,3 +1,3 @@
-import blockChain from './blockChain'
+import blockChainEpic from './blockChain'
 
-export default [blockChain]
+export default [blockChainEpic]

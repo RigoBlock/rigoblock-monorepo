@@ -1,28 +1,16 @@
-import { actionTypes } from '../constants/action-types'
+import { createAction } from 'redux-act'
 
 export default {
-  blockChainInit: () => ({
-    type: actionTypes.BLOCKCHAIN_INIT
-  }),
-  blockChainError: err => ({
-    type: actionTypes.BLOCKCHAIN_ERROR,
-    payload: err.toString()
-  }),
-  blockChainLogIn: (origin, account) => ({
-    type: actionTypes.LOGGED_IN,
-    payload: { origin, account }
-  }),
-  blockChainLogout: () => ({
-    type: actionTypes.LOGGED_OUT
-  }),
-  registerBlock: (label, block) => ({
-    type: actionTypes.REGISTER_BLOCK,
-    payload: {
-      label,
-      block
-    }
-  }),
-  vaultFetchCompleted: () => ({
-    type: actionTypes.VAULT_FETCH_COMPLETED
-  })
+  blockChainInit: createAction('blockChain initiated!'),
+  blockChainError: createAction('blockChain error!', err => err.toString()),
+  blockChainLogIn: createAction('user login', (provider, account) => ({
+    provider,
+    account
+  })),
+  blockChainLogout: createAction('user logout'),
+  registerBlock: createAction('event block registered', (label, block) => ({
+    label,
+    block
+  })),
+  vaultFetchCompleted: createAction('vault fetch completed')
 }
