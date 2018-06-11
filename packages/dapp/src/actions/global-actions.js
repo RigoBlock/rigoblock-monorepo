@@ -1,7 +1,5 @@
-import { actionTypes } from '../constants/action-types'
+import { createAction } from 'redux-act'
 
 export default {
-  init: () => ({
-    type: actionTypes.GLOBAL_INIT
-  })
+  init: createAction('DApp initialised')
 }

@@ -54,10 +54,7 @@ describe('registerVaults epic', () => {
       a: blockChainActions.registerBlock(blockLabels.VAULT, vaultEvent)
     }
     const expectedValues = {
-      b: vaultActions.registerVaultBlock({
-        label: blockLabels.VAULT,
-        block: vaultEvent
-      }),
+      b: vaultActions.registerVaultBlock(vaultEvent),
       c: vaultActions.registerVault({
         ['0xc1Eba7b6F9f06E4491a499E653878464e40AB70e']: {
           id: 0,

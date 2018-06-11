@@ -6,18 +6,15 @@ describe('blockchain reducer', () => {
   const blockChainTest = reducerTester(blockChainReducer)
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const eventBlock = {
-    label: '',
-    block: {
-      address: '0x001',
-      args: {
-        vault: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
-        from: owner,
-        to: '0x005',
-        amount: '1',
-        revenue: '1'
-      },
-      blockNumber: '10'
-    }
+    address: '0x001',
+    args: {
+      vault: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
+      from: owner,
+      to: '0x005',
+      amount: '1',
+      revenue: '1'
+    },
+    blockNumber: '10'
   }
 
   it('returns the initial state', () => {
@@ -47,13 +44,13 @@ describe('blockchain reducer', () => {
           }
         }
       },
-      middlewareMock(owner, vaultActions.registerVaultBlock(eventBlock)),
+      accountMiddlewareMock(vaultActions.registerVaultBlock(eventBlock), owner),
       {
         accounts: {
           [owner]: {
-            lastBlock: eventBlock.block.blockNumber,
+            lastBlock: eventBlock.blockNumber,
             vaultBlocks: {
-              [eventBlock.block.blockNumber]: eventBlock.block
+              [eventBlock.blockNumber]: eventBlock
             }
           }
         }

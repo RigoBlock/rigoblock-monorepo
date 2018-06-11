@@ -1,41 +1,43 @@
-import { actionTypes } from '../../constants/action-types'
 import { composeReducers } from '../utils'
+import { createReducer } from 'redux-act'
+import blockChainActions from '../../actions/blockchain-actions'
 import u from 'updeep'
+import vaultActions from '../../actions/vault-actions'
 import vaultsReducer from './vaults'
 
 const initialState = {
   accounts: {}
 }
 
-function blockChainReducer(state = initialState, action) {
-  switch (action.type) {
-    case actionTypes.LOGGED_IN:
-      return state.accounts[action.payload.account]
+const blockChainReducer = createReducer(
+  {
+    [blockChainActions.blockChainLogIn]: (state, payload) =>
+      state.accounts[payload.account]
         ? state
         : u(
             {
-              accounts: { [action.payload.account]: {} }
+              accounts: { [payload.account]: {} }
             },
             state
-          )
-    case actionTypes.REGISTER_VAULT_BLOCK:
-      const blockNumber = action.payload.block.blockNumber
-      let lastBlock = state.accounts[action.account].lastBlock
+          ),
+    [vaultActions.registerVaultBlock]: (state, payload) => {
+      const blockNumber = payload.block.blockNumber
+      let lastBlock = state.accounts[payload.currentAccount].lastBlock
       lastBlock =
         !lastBlock || lastBlock < blockNumber ? blockNumber : lastBlock
       return u(
         {
           accounts: {
-            [action.account]: {
+            [payload.currentAccount]: {
               lastBlock: lastBlock
             }
           }
         },
         state
       )
-    default:
-      return state
-  }
-}
+    }
+  },
+  initialState
+)
 
 export default composeReducers(vaultsReducer, blockChainReducer)

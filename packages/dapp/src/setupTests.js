@@ -16,7 +16,7 @@ global.reducerTester = reducer => (currentState, action, expectedState) => {
   return expect(newState).toEqual(expectedState)
 }
 
-global.middlewareMock = (account, action) => {
-  action.account = account
+global.accountMiddlewareMock = (action, account) => {
+  action.payload = { ...action.payload, currentAccount: account }
   return action
 }
