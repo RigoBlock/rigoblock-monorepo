@@ -1,8 +1,5 @@
-import { actionTypes } from '../constants/action-types'
+import { createAction } from 'redux-act'
 
 export default {
-  changePreferences: preferences => ({
-    type: actionTypes.PREFERENCE_CHANGE,
-    payload: preferences
-  })
+  changePreferences: createAction('preferences updated')
 }

@@ -1,12 +1,8 @@
-import { actionTypes } from '../constants/action-types'
+import { createAction } from 'redux-act'
 
 export default {
-  registerVaultBlock: block => ({
-    type: actionTypes.REGISTER_VAULT_BLOCK,
-    payload: block
-  }),
-  registerVault: vault => ({
-    type: actionTypes.REGISTER_VAULT,
-    payload: vault
-  })
+  registerVaultBlock: createAction('vault block saved to state', block => ({
+    block
+  })),
+  registerVault: createAction('vault saved to state', vault => ({ vault }))
 }
