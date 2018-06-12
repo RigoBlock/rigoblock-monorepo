@@ -18,10 +18,14 @@ module.exports = async network => {
   )
   const ETH_IN_MICRO = 10 ** 6
 
-  const vault1options = ['First Vault', 'asd']
-  const vault2options = ['Second Vault', 'sad']
-  const vault3options = ['Third Vault', 'das']
-  const vault4options = ['Fourth Vault', 'ads']
+  // const vault1options = ['First Vault', 'ASD']
+  // const vault2options = ['Second Vault', 'SAD']
+  // const vault3options = ['Third Vault', 'DAS']
+  // const vault4options = ['Fourth Vault', 'ADS']
+  const vault1options = ['Fifth Vault', 'BAF']
+  const vault2options = ['6 Vault', 'ABF']
+  const vault3options = ['7 Vault', 'FAB']
+  const vault4options = ['8 Vault', 'AFB']
 
   logger.info('options', vault1options)
 
