@@ -36,9 +36,7 @@ describe('epic for blockchain services', () => {
   ]
 
   beforeEach(() => {
-    fromPromiseSpy = jest
-      .fn()
-      .mockReturnValueOnce(of(['just something to trigger api.init()']))
+    fromPromiseSpy = jest.fn()
 
     jest.resetModules()
     jest.doMock('rxjs/observable/fromPromise', () => ({
@@ -53,7 +51,8 @@ describe('epic for blockchain services', () => {
       },
       web3: {
         getAvailableAddressesAsync: jest.fn(() => Promise.resolve([])),
-        getNodeVersionAsync: jest.fn(() => Promise.resolve(''))
+        getNodeVersionAsync: jest.fn(() => Promise.resolve('')),
+        getBlockTimestampAsync: jest.fn(() => Promise.resolve('1528811195'))
       },
       contract: {
         VaultEventful: {
@@ -69,9 +68,9 @@ describe('epic for blockchain services', () => {
 
     BlockChainServiceEpic = require('./BlockChainService').default
   })
-
   it('returns a blockchain init action', () => {
     fromPromiseSpy
+      .mockReturnValueOnce(of(['just something to trigger api.init()']))
       .mockReturnValueOnce(of('MetaMask/v4.6.1'))
       .mockReturnValueOnce(of([]))
 
@@ -102,6 +101,7 @@ describe('epic for blockchain services', () => {
       const address2 = 'address2'
 
       fromPromiseSpy
+        .mockReturnValueOnce(of(['just something to trigger api.init()']))
         .mockReturnValueOnce(of('MetaMask/v4.6.1'))
         .mockReturnValueOnce(of([address1]))
         .mockReturnValueOnce(of('MetaMask/v4.6.1'))
@@ -141,6 +141,7 @@ describe('epic for blockchain services', () => {
 
     it('sends blockChainError action if web3 getAvailableAddressesAsync fails', () => {
       fromPromiseSpy
+        .mockReturnValueOnce(of(['just something to trigger api.init()']))
         .mockReturnValueOnce(of('MetaMask/v4.6.1'))
         .mockReturnValueOnce(_throw(testError))
 
@@ -171,6 +172,7 @@ describe('epic for blockchain services', () => {
     it('sends blockChainLogin action if web3 retrieves accounts list', () => {
       const address = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
       fromPromiseSpy
+        .mockReturnValueOnce(of(['just something to trigger api.init()']))
         .mockReturnValueOnce(of('MetaMask/v4.6.1'))
         .mockReturnValueOnce(of([address]))
 
@@ -200,6 +202,7 @@ describe('epic for blockchain services', () => {
 
     it("sends blockChainLogout action if web3 doesn't retrieve accounts list", () => {
       fromPromiseSpy
+        .mockReturnValueOnce(of(['just something to trigger api.init()']))
         .mockReturnValueOnce(of('MetaMask/v4.6.1'))
         .mockReturnValueOnce(of([]))
 
@@ -233,8 +236,10 @@ describe('epic for blockchain services', () => {
   })
   describe('error listener', () => {
     it('listens for connectivity issues', () => {
-      fromPromiseSpy.mockReturnValueOnce(of(''))
-      fromPromiseSpy.mockReturnValueOnce(of([]))
+      fromPromiseSpy
+        .mockReturnValueOnce(of(['just something to trigger api.init()']))
+        .mockReturnValueOnce(of(''))
+        .mockReturnValueOnce(of([]))
 
       const mockApi = {
         ...apiMock,
@@ -266,10 +271,16 @@ describe('epic for blockchain services', () => {
       ts.flush()
     })
   })
+
   describe('fetch vault events', () => {
-    it('fetches blocks and filters them by account', () => {
+    it('fetches blocks, filters them by account and saves them to state with a timestamp', () => {
+      fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
+      const blockWithTimestamp = { ...blocks[0], timestamp: 1528811195000 }
       const expectedValues = {
-        a: blockChainActions.registerBlock(blockLabels.VAULT, blocks[0]),
+        a: blockChainActions.registerBlock(
+          blockLabels.VAULT,
+          blockWithTimestamp
+        ),
         b: blockChainActions.vaultFetchCompleted()
       }
 
