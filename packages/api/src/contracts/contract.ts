@@ -5,7 +5,7 @@ import { TypeChainContract } from './models/typechain-runtime'
 
 class Contract extends ContractModels {
   async init(web3: Web3, contractsMap: Contract.ContractsMap) {
-    const contractNames = Object.keys(contractsMap)
+    const contractNames: string[] = Object.keys(contractsMap)
     const contractsPromises: Promise<
       [string, TypeChainContract][]
     >[] = contractNames.map(async contractName => {

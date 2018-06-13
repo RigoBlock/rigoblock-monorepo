@@ -1,6 +1,5 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concat'
-import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/last'
@@ -134,7 +133,7 @@ class BlockChainService {
         events.watch((err, events) => {
           return err ? observer.error(new Error(err)) : observer.next(events)
         })
-        return () => {}
+        return () => events.stopWatching()
       })
     })
     return this._filterBlocksByAccount(blockLabels.VAULT, allVaultEvents)
