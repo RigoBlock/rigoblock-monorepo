@@ -56,12 +56,7 @@ describe('epic for blockchain services', () => {
       },
       contract: {
         VaultEventful: {
-          rawWeb3Contract: {
-            allEvents: () => ({
-              get: cb => cb(null, blocks),
-              stopWatching: jest.fn()
-            })
-          }
+          createAndValidate: jest.fn()
         }
       }
     }
@@ -274,8 +269,17 @@ describe('epic for blockchain services', () => {
 
   describe('fetch vault events', () => {
     it('fetches blocks, filters them by account and saves them to state with a timestamp', () => {
-      fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
       const blockWithTimestamp = { ...blocks[0], timestamp: 1528811195000 }
+      const vaultEventful = {
+        rawWeb3Contract: {
+          allEvents: () => ({
+            get: cb => cb(null, blocks),
+            stopWatching: jest.fn()
+          })
+        }
+      }
+      fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
+      fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
       const expectedValues = {
         a: blockChainActions.registerBlock(
           blockLabels.VAULT,

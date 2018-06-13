@@ -27,19 +27,28 @@ describe('registerVaults epic', () => {
     owner,
     null
   ]
+
+  class Registry {
+    fromAddress() {
+      return {}
+    }
+  }
   const apiMock = {
     contract: {
       DragoRegistry: {
-        fromAddress: jest.fn()
+        address: '0xf7cbb0849d4a8ec5ab4650030fa776c00eb52la4',
+        createAndValidate: jest.fn()
       }
+    },
+    web3: {
+      '._web3': {}
     }
   }
   let fromPromiseSpy
   let registerVaults
 
   beforeEach(() => {
-    fromPromiseSpy = jest.fn().mockReturnValueOnce(of(vaultData))
-
+    fromPromiseSpy = jest.fn()
     jest.resetModules()
     jest.doMock('../../api', () => apiMock)
     jest.doMock('rxjs/observable/fromPromise', () => ({
@@ -50,6 +59,10 @@ describe('registerVaults epic', () => {
   })
 
   it('emits REGISTER_VAULT containing a parsed vault object + REGISTER_VAULT_BLOCK containing a vault event block', () => {
+    fromPromiseSpy
+      .mockReturnValueOnce(of(new Registry()))
+      .mockReturnValueOnce(of(vaultData))
+
     const inputValues = {
       a: blockChainActions.registerBlock(blockLabels.VAULT, vaultEvent)
     }

@@ -2,13 +2,10 @@ import * as Web3 from 'web3'
 import { ContractExtension } from './contract-extension'
 import { ContractModels } from './'
 import { TypeChainContract } from './models/typechain-runtime'
-import contractNames from '../constants'
 
 class Contract extends ContractModels {
   async init(web3: Web3, contractsMap: Contract.ContractsMap) {
-    const deployedContracts: Array<string> = Object.keys(contractsMap).filter(
-      contractName => contractsMap[contractName].address
-    )
+    const contractNames: string[] = Object.keys(contractsMap)
     const contractsPromises: Promise<
       [string, TypeChainContract][]
     >[] = contractNames.map(async contractName => {
@@ -18,10 +15,7 @@ class Contract extends ContractModels {
         ContractExtension.prototype
       )
       if (contractsMap[contractName].address) {
-        return [
-          contractName,
-          new contract[contractName](web3, contractsMap[contractName].address)
-        ]
+        contract[contractName].address = contractsMap[contractName].address
       }
       return [contractName, contract[contractName]]
     })
