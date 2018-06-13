@@ -4,7 +4,6 @@ export default ({ getState }) => next => action => {
   const regexp = new RegExp(
     '^' + actionVariables.persist + '|^' + actionVariables.form
   )
-  console.log(regexp)
   if (regexp.test(action.type)) {
     return next(action)
   }
