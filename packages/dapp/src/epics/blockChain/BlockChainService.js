@@ -1,5 +1,6 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concat'
+import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/last'
@@ -84,20 +85,31 @@ class BlockChainService {
 
   fetchVaultEvents(fromBlock, toBlock = 'latest') {
     fromBlock = fromBlock || 0
-    const allVaultEvents = Observable.create(observer => {
-      const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
-        fromBlock,
-        toBlock
-      })
-      events.get((err, events) => {
-        if (err) {
-          return observer.error(new Error(err))
-        }
-        observer.next(events)
-        return observer.complete()
-      })
-      return () => events.stopWatching()
-    }).mergeMap(events => from(events))
+    const VaultEventful = this.api.contract.VaultEventful
+    const allVaultEvents = fromPromise(
+      VaultEventful.createAndValidate(
+        this.api.web3._web3,
+        VaultEventful.address
+      ),
+      this.scheduler
+    )
+      .mergeMap(vaultEventful =>
+        Observable.create(observer => {
+          const events = vaultEventful.rawWeb3Contract.allEvents({
+            fromBlock,
+            toBlock
+          })
+          events.get((err, events) => {
+            if (err) {
+              return observer.error(new Error(err))
+            }
+            observer.next(events)
+            return observer.complete()
+          })
+          return () => {}
+        })
+      )
+      .mergeMap(events => from(events))
     const filteredBlocks = this._filterBlocksByAccount(
       blockLabels.VAULT,
       allVaultEvents
@@ -107,15 +119,23 @@ class BlockChainService {
 
   watchVaultEvents(fromBlock, toBlock = 'latest') {
     fromBlock = fromBlock || 0
-    const allVaultEvents = Observable.create(observer => {
-      const events = this.api.contract.VaultEventful.rawWeb3Contract.allEvents({
-        fromBlock,
-        toBlock
+    const allVaultEvents = fromPromise(
+      this.api.contract.VaultEventful.createAndValidate(
+        this.api.web3._web3,
+        this.api.contract.VaultEventful.address
+      ),
+      this.scheduler
+    ).mergeMap(vaultEventful => {
+      return Observable.create(observer => {
+        const events = vaultEventful.rawWeb3Contract.allEvents({
+          fromBlock,
+          toBlock
+        })
+        events.watch((err, events) => {
+          return err ? observer.error(new Error(err)) : observer.next(events)
+        })
+        return () => {}
       })
-      events.watch((err, events) => {
-        return err ? observer.error(new Error(err)) : observer.next(events)
-      })
-      return () => events.stopWatching()
     })
     return this._filterBlocksByAccount(blockLabels.VAULT, allVaultEvents)
   }
