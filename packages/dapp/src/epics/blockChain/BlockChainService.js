@@ -1,6 +1,5 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concat'
-import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
