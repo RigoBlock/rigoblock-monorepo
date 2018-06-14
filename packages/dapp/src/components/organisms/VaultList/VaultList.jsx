@@ -38,9 +38,13 @@ vaultList.defaultProps = {
 
 vaultList = connect(state => {
   const { currentAccount } = state.user.preferences
-  return {
-    vaults: state.user.blockChain.accounts[currentAccount].vaults
-  }
+  return currentAccount
+    ? {
+        vaults: state.user.blockChain.accounts[currentAccount].vaults
+      }
+    : {
+        vaults: {}
+      }
 })(vaultList)
 
 export default vaultList
