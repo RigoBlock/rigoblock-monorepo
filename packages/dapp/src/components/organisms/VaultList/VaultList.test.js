@@ -40,8 +40,31 @@ const mockStore = {
   subscribe: () => null
 }
 
+const noVaultsStore = {
+  getState: () => ({
+    user: {
+      preferences: {
+        currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      },
+      blockChain: {
+        accounts: {
+          '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196': {}
+        }
+      }
+    }
+  }),
+  dispatch: jest.fn(),
+  subscribe: () => null
+}
+
 const wrapper = mount(
   <Provider store={mockStore}>
+    <VaultList />
+  </Provider>
+)
+
+const noVaultWrapper = mount(
+  <Provider store={noVaultsStore}>
     <VaultList />
   </Provider>
 )
@@ -49,5 +72,9 @@ const wrapper = mount(
 describe('PreferencesForm component', () => {
   it('renders correctly', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
+  })
+
+  it('renders correctly if there are no vaults on state', () => {
+    expect(toJson(noVaultWrapper)).toMatchSnapshot()
   })
 })

@@ -5,12 +5,23 @@ const initialState = {
   accounts: {}
 }
 const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+const supply = 14000000
+
 const vault = {
   '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e': {
     id: 0,
     name: 'Rocksolid Vault',
     symbol: 'VLT',
     owner
+  }
+}
+const vaultWithSupply = {
+  '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e': {
+    id: 0,
+    name: 'Rocksolid Vault',
+    symbol: 'VLT',
+    owner,
+    totalSupply: 14
   }
 }
 const secondVault = {
@@ -145,6 +156,34 @@ describe('vaults reducer', () => {
     vaultTest(
       state,
       accountMiddlewareMock(actions.registerVaultBlock(secondBlock), owner),
+      expectedState
+    )
+  })
+
+  it('saves total supply value to state', () => {
+    const state = {
+      accounts: {
+        [owner]: {
+          vaults: { ...vault }
+        }
+      }
+    }
+    const expectedState = {
+      accounts: {
+        [owner]: {
+          vaults: { ...vaultWithSupply }
+        }
+      }
+    }
+    vaultTest(
+      state,
+      accountMiddlewareMock(
+        actions.saveVaultSupply({
+          address: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
+          supply
+        }),
+        owner
+      ),
       expectedState
     )
   })

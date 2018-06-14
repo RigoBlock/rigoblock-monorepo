@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 let vaultList = ({ vaults }) => {
-  if (!vaults) {
+  if (!Object.keys(vaults).length) {
     return (
       <div className="vaultList">
         <ListPanel title="Vaults" items={[]} />

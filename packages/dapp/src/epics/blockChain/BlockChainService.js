@@ -1,5 +1,6 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concat'
+import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
@@ -99,7 +100,7 @@ class BlockChainService {
           })
           events.get((err, events) => {
             if (err) {
-              return observer.error(new Error(err))
+              return observer.error(err)
             }
             observer.next(events)
             return observer.complete()
@@ -109,11 +110,14 @@ class BlockChainService {
         })
       )
       .mergeMap(events => from(events))
+
     const filteredBlocks = this._filterBlocksByAccount(
       blockLabels.VAULT,
       allVaultEvents
     )
-    return filteredBlocks.concat(of(blockChainActions.vaultFetchCompleted()))
+    return this.wrapError(
+      filteredBlocks.concat(of(blockChainActions.vaultFetchCompleted()))
+    )
   }
 
   watchVaultEvents(fromBlock, toBlock = 'latest') {
@@ -131,12 +135,14 @@ class BlockChainService {
           toBlock
         })
         events.watch((err, events) => {
-          return err ? observer.error(new Error(err)) : observer.next(events)
+          return err ? observer.error(err) : observer.next(events)
         })
         return () => events.stopWatching(() => {})
       })
     })
-    return this._filterBlocksByAccount(blockLabels.VAULT, allVaultEvents)
+    return this.wrapError(
+      this._filterBlocksByAccount(blockLabels.VAULT, allVaultEvents)
+    )
   }
 
   _filterBlocksByAccount(label, obs) {

@@ -207,3 +207,73 @@ exports[`PreferencesForm component renders correctly 1`] = `
   </Connect(vaultList)>
 </Provider>
 `;
+
+exports[`PreferencesForm component renders correctly if there are no vaults on state 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [MockFunction],
+      "getState": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(vaultList)>
+    <vaultList
+      dispatch={[MockFunction]}
+      vaults={Object {}}
+    >
+      <div
+        className="vaultList"
+      >
+        <ListPanel
+          items={Array []}
+          title="Vaults"
+          tooltip={null}
+        >
+          <ContentWrapper
+            header={
+              <PanelHeader
+                title="Vaults"
+                tooltip={null}
+              />
+            }
+          >
+            <div
+              className="content-wrapper"
+            >
+              <div
+                className="content-wrapper-header"
+              >
+                <PanelHeader
+                  title="Vaults"
+                  tooltip={null}
+                >
+                  <div
+                    className="panel-header"
+                  >
+                    <h1>
+                      Vaults
+                    </h1>
+                  </div>
+                </PanelHeader>
+              </div>
+              <div
+                className="content-wrapper-content"
+              >
+                <List
+                  items={Array []}
+                >
+                  <div
+                    className="list"
+                  />
+                </List>
+              </div>
+            </div>
+          </ContentWrapper>
+        </ListPanel>
+      </div>
+    </vaultList>
+  </Connect(vaultList)>
+</Provider>
+`;
