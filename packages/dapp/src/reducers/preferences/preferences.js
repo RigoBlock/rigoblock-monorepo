@@ -13,11 +13,11 @@ const initialState = {
 }
 const preferencesReducer = createReducer(
   {
-    [blockChainActions.blockChainLogIn]: (state, payload) =>
+    [blockChainActions.blockChainLogIn]: (state, { provider, account }) =>
       u(
         {
-          currentAccount: payload.account,
-          provider: payload.provider
+          currentAccount: account,
+          provider
         },
         state
       ),

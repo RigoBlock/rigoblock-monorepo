@@ -17,6 +17,6 @@ global.reducerTester = reducer => (currentState, action, expectedState) => {
 }
 
 global.accountMiddlewareMock = (action, account) => {
-  action.payload = { ...action.payload, currentAccount: account }
+  action.meta = { currentAccount: account }
   return action
 }
