@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PreferencesForm component renders correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [MockFunction],
+      "getState": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(vaultList)>
+    <vaultList
+      dispatch={[MockFunction]}
+      vaults={
+        Object {
+          "0x421e1cef6e85e78da2470e54af64a626f45afb85": Object {
+            "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
+            "id": 2,
+            "name": "Third Vault",
+            "owner": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
+            "symbol": "das",
+            "totalSupply": 20,
+          },
+          "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
+            "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
+            "id": 0,
+            "name": "First Vault",
+            "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+            "symbol": "asd",
+            "totalSupply": 14,
+          },
+        }
+      }
+    >
+      <div
+        className="vaultList"
+      >
+        <ListPanel
+          items={
+            Array [
+              Object {
+                "itemName": "First Vault",
+                "itemSymbol": "asd",
+                "itemValue": 14,
+              },
+              Object {
+                "itemName": "Third Vault",
+                "itemSymbol": "das",
+                "itemValue": 20,
+              },
+            ]
+          }
+          title="Vaults"
+          tooltip={null}
+        >
+          <ContentWrapper
+            header={
+              <PanelHeader
+                title="Vaults"
+                tooltip={null}
+              />
+            }
+          >
+            <div
+              className="content-wrapper"
+            >
+              <div
+                className="content-wrapper-header"
+              >
+                <PanelHeader
+                  title="Vaults"
+                  tooltip={null}
+                >
+                  <div
+                    className="panel-header"
+                  >
+                    <h1>
+                      Vaults
+                    </h1>
+                  </div>
+                </PanelHeader>
+              </div>
+              <div
+                className="content-wrapper-content"
+              >
+                <List
+                  items={
+                    Array [
+                      Object {
+                        "itemName": "First Vault",
+                        "itemSymbol": "asd",
+                        "itemValue": 14,
+                      },
+                      Object {
+                        "itemName": "Third Vault",
+                        "itemSymbol": "das",
+                        "itemValue": 20,
+                      },
+                    ]
+                  }
+                >
+                  <div
+                    className="list"
+                  >
+                    <ListItem
+                      currencyGrowth={0}
+                      growth={0}
+                      itemName="First Vault"
+                      itemSymbol="asd"
+                      itemValue={14}
+                      key="0"
+                    >
+                      <div
+                        className="list-item"
+                      >
+                        <ItemName
+                          name="First Vault"
+                          symbol="asd"
+                        >
+                          <div>
+                            <span
+                              className="item-symbol"
+                            >
+                              asd
+                            </span>
+                            <span
+                              className="item-name"
+                            >
+                              First Vault
+                            </span>
+                          </div>
+                        </ItemName>
+                        <ItemValue
+                          currency="ETH"
+                          currencyGrowth={0}
+                          growth={0}
+                          itemValue={14}
+                          precision={2}
+                          valueSize="large"
+                        >
+                          <div>
+                            <span
+                              className="item-value item-value-large"
+                            >
+                              14
+                            </span>
+                          </div>
+                        </ItemValue>
+                      </div>
+                    </ListItem>
+                    <ListItem
+                      currencyGrowth={0}
+                      growth={0}
+                      itemName="Third Vault"
+                      itemSymbol="das"
+                      itemValue={20}
+                      key="1"
+                    >
+                      <div
+                        className="list-item"
+                      >
+                        <ItemName
+                          name="Third Vault"
+                          symbol="das"
+                        >
+                          <div>
+                            <span
+                              className="item-symbol"
+                            >
+                              das
+                            </span>
+                            <span
+                              className="item-name"
+                            >
+                              Third Vault
+                            </span>
+                          </div>
+                        </ItemName>
+                        <ItemValue
+                          currency="ETH"
+                          currencyGrowth={0}
+                          growth={0}
+                          itemValue={20}
+                          precision={2}
+                          valueSize="large"
+                        >
+                          <div>
+                            <span
+                              className="item-value item-value-large"
+                            >
+                              20
+                            </span>
+                          </div>
+                        </ItemValue>
+                      </div>
+                    </ListItem>
+                  </div>
+                </List>
+              </div>
+            </div>
+          </ContentWrapper>
+        </ListPanel>
+      </div>
+    </vaultList>
+  </Connect(vaultList)>
+</Provider>
+`;
