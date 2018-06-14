@@ -26,7 +26,7 @@ interface DragoRegistryFace {
     //EVENTS
 
     event Registered(string name, string symbol, uint id, address indexed drago, address indexed owner, address indexed group);
-    event Unregistered(string indexed symbol, uint indexed id);
+    event Unregistered(string indexed name, string indexed symbol, uint indexed id);
     event MetaChanged(uint indexed id, bytes32 indexed key, bytes32 value);
 
     // CORE FUNCTIONS

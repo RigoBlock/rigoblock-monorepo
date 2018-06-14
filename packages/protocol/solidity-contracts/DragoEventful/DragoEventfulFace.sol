@@ -35,7 +35,7 @@ interface DragoEventfulFace {
     event DepositExchange(address indexed drago, address indexed exchange, address indexed token, uint value, uint256 amount);
     event WithdrawExchange(address indexed drago, address indexed exchange, address indexed token, uint value, uint256 amount);
     event OrderExchange(address indexed drago, address indexed exchange, address indexed cfd, uint value, uint revenue);
-    event TradeExchange(address indexed drago, address indexed exchange, address tokenGet, address tokenGive, uint amountGet, uint amountGive, address get, address give);
+    event TradeExchange(address indexed drago, address indexed exchange, address tokenGet, address tokenGive, uint amountGet, uint amountGive, address get);
     event CancelOrder(address indexed drago, address indexed exchange, address indexed cfd, uint value, uint id);
     event DealFinalized(address indexed drago, address indexed exchange, address indexed cfd, uint value, uint id);
     event DragoCreated(address indexed drago, address indexed group, address indexed owner, uint dragoId, string name, string symbol);
