@@ -104,7 +104,8 @@ class BlockChainService {
             observer.next(events)
             return observer.complete()
           })
-          return () => {}
+          // we are passing an empty callback so that the function uses web3's sendAsync method
+          return () => events.stopWatching(() => {})
         })
       )
       .mergeMap(events => from(events))
@@ -132,7 +133,7 @@ class BlockChainService {
         events.watch((err, events) => {
           return err ? observer.error(new Error(err)) : observer.next(events)
         })
-        return () => events.stopWatching()
+        return () => events.stopWatching(() => {})
       })
     })
     return this._filterBlocksByAccount(blockLabels.VAULT, allVaultEvents)
