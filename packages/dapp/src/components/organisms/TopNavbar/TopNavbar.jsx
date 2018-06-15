@@ -1,6 +1,6 @@
 import './TopNavbar.scss'
+import * as ROUTES from '../../../constants/routes'
 import Link, { LINK_SIZES } from '../../atoms/Link'
-import ROUTES from '../../../constants/routes'
 import React from 'react'
 import UserMenu from '../../molecules/UserMenu'
 

@@ -1,4 +1,2 @@
-export default {
-  persist: 'persist',
-  form: '@@redux-form'
-}
+export const PERSIST = 'persist'
+export const FORM = '@@redux-form'

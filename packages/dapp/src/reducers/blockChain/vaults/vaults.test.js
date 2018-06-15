@@ -5,7 +5,7 @@ const initialState = {
   accounts: {}
 }
 const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-const supply = 14000000
+const totalSupply = 14
 
 const vault = {
   '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e': {
@@ -180,7 +180,7 @@ describe('vaults reducer', () => {
       accountMiddlewareMock(
         actions.saveVaultSupply({
           address: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
-          supply
+          totalSupply
         }),
         owner
       ),

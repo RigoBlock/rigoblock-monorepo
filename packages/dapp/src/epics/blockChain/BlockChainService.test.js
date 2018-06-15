@@ -1,6 +1,6 @@
 import { TestScheduler } from 'rxjs'
+import { VAULT } from '../../constants/blockchain'
 import { _throw } from 'rxjs/observable/throw'
-import { blockLabels } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
 
@@ -247,10 +247,7 @@ describe('blockChain services function', () => {
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
         const expectedValues = {
-          a: blockChainActions.registerBlock(
-            blockLabels.VAULT,
-            blockWithTimestamp
-          ),
+          a: blockChainActions.registerBlock(VAULT, blockWithTimestamp),
           b: blockChainActions.vaultFetchCompleted()
         }
 
@@ -314,10 +311,7 @@ describe('blockChain services function', () => {
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
         const expectedValues = {
-          a: blockChainActions.registerBlock(
-            blockLabels.VAULT,
-            blockWithTimestamp
-          )
+          a: blockChainActions.registerBlock(VAULT, blockWithTimestamp)
         }
 
         const expectedMarble = 'a'

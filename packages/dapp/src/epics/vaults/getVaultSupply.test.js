@@ -1,5 +1,6 @@
 import { ActionsObservable } from 'redux-observable'
 import { BigNumber } from 'bignumber.js'
+import { ETHTOMICRO } from '../../constants/utils'
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import vaultActions from '../../actions/vault-actions'
@@ -44,6 +45,7 @@ describe('getVaultSupply epics', () => {
   })
 
   it('dispatches a saveVaultSupply action whenever registerVault is fired', () => {
+    const totalSupply = supply / ETHTOMICRO
     fromPromiseSpy.mockReturnValueOnce(of(supply))
     const inputValues = {
       a: vaultActions.registerVault(vault)
@@ -51,7 +53,7 @@ describe('getVaultSupply epics', () => {
     const expectedValues = {
       b: vaultActions.saveVaultSupply({
         address: vaultAddress,
-        supply
+        totalSupply
       })
     }
 

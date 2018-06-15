@@ -1,9 +1,7 @@
-import actionVariables from '../constants/actions'
+import { FORM, PERSIST } from '../constants/actions'
 
 export default ({ getState }) => next => action => {
-  const regexp = new RegExp(
-    '^' + actionVariables.persist + '|^' + actionVariables.form
-  )
+  const regexp = new RegExp('^' + PERSIST + '|^' + FORM)
   if (regexp.test(action.type)) {
     return next(action)
   }

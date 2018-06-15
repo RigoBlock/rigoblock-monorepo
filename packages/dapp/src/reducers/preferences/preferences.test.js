@@ -1,11 +1,11 @@
-import CONSTANTS from '../../constants/user'
+import { INVESTOR } from '../../constants/user'
 import blockChainActions from '../../actions/blockchain-actions'
 import preferencesReducer from './preferences'
 import userActions from '../../actions/user-actions'
 
 const initialState = {
   timezone: 'GMT +02:00',
-  type: CONSTANTS.INVESTOR,
+  type: INVESTOR,
   currentAccount: null,
   provider: null
 }
@@ -27,7 +27,7 @@ describe('user reducer', () => {
       }),
       {
         timezone: 'GMT +05:45',
-        type: CONSTANTS.INVESTOR,
+        type: INVESTOR,
         currentAccount: null,
         provider: null
       }
@@ -39,7 +39,7 @@ describe('user reducer', () => {
       blockChainActions.blockChainLogIn(provider, account),
       {
         timezone: 'GMT +02:00',
-        type: CONSTANTS.INVESTOR,
+        type: INVESTOR,
         currentAccount: account,
         provider
       }
@@ -50,7 +50,7 @@ describe('user reducer', () => {
     preferencesTest(
       {
         timezone: 'GMT +02:00',
-        type: CONSTANTS.INVESTOR,
+        type: INVESTOR,
         currentAccount: account,
         provider
       },

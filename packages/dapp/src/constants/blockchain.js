@@ -1,4 +1,2 @@
-export const blockLabels = {
-  VAULT: 'vault',
-  DRAGO: 'drago'
-}
+export const VAULT = 'vault'
+export const DRAGO = 'drago'

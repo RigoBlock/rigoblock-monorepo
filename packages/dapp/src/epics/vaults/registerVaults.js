@@ -2,7 +2,7 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mergeMap'
 import { Scheduler } from 'rxjs/Scheduler'
-import { blockLabels } from '../../constants/blockchain'
+import { VAULT } from '../../constants/blockchain'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { merge } from 'rxjs/observable/merge'
 import api from '../../api'
@@ -13,7 +13,7 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
   const vaultBlock$ = action$.filter(
     action =>
       action.type === blockChainActions.registerBlock.getType() &&
-      action.payload.label === blockLabels.VAULT
+      action.payload.label === VAULT
   )
   const action$1 = vaultBlock$.map(action =>
     vaultActions.registerVaultBlock(action.payload.block)
