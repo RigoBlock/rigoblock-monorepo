@@ -10,12 +10,13 @@ describe('epic for blockchain services', () => {
   let fromPromiseSpy
   let apiMock
 
+  const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const blocks = [
     {
       address: '0x001',
       args: {
         vault: '0x123',
-        from: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
+        from: owner,
         to: '0x005',
         amount: '1',
         revenue: '1'
@@ -150,7 +151,7 @@ describe('epic for blockchain services', () => {
     })
 
     it('sends blockChainLogin action if web3 retrieves accounts list', () => {
-      const address = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      const address = owner
       fromPromiseSpy
         .mockReturnValueOnce(of(['just something to trigger api.init()']))
         .mockReturnValueOnce(of('MetaMask/v4.6.1'))
@@ -194,7 +195,7 @@ describe('epic for blockchain services', () => {
 
       const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
-      blockChainService.account = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      blockChainService.account = owner
 
       const outputAction = blockChainService.init()
 
@@ -265,7 +266,7 @@ describe('epic for blockchain services', () => {
 
       const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
-      blockChainService.account = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      blockChainService.account = owner
       const outputAction = blockChainService.fetchVaultEvents()
 
       ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
@@ -294,7 +295,7 @@ describe('epic for blockchain services', () => {
 
       const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
-      blockChainService.account = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      blockChainService.account = owner
       const outputAction = blockChainService.fetchVaultEvents()
 
       ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
@@ -329,7 +330,7 @@ describe('epic for blockchain services', () => {
 
       const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
-      blockChainService.account = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      blockChainService.account = owner
       const outputAction = blockChainService.watchVaultEvents()
 
       ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
@@ -358,7 +359,7 @@ describe('epic for blockchain services', () => {
 
       const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
-      blockChainService.account = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      blockChainService.account = owner
       const outputAction = blockChainService.watchVaultEvents()
 
       ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
