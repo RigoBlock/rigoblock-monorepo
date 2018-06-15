@@ -51,7 +51,8 @@ describe('epic for blockchain services', () => {
       },
       web3: {
         getAvailableAddressesAsync: jest.fn(() => Promise.resolve([])),
-        getNodeVersionAsync: jest.fn(() => Promise.resolve(''))
+        getNodeVersionAsync: jest.fn(() => Promise.resolve('')),
+        getBlockTimestampAsync: jest.fn(() => Promise.resolve('1528811195'))
       },
       contract: {
         VaultEventful: {
@@ -62,7 +63,6 @@ describe('epic for blockchain services', () => {
 
     BlockChainServiceEpic = require('./BlockChainService').default
   })
-
   it('returns a blockchain init action', () => {
     fromPromiseSpy
       .mockReturnValueOnce(of(['just something to trigger api.init()']))
@@ -266,8 +266,10 @@ describe('epic for blockchain services', () => {
       ts.flush()
     })
   })
+
   describe('fetch vault events', () => {
-    it('fetches blocks and filters them by account', () => {
+    it('fetches blocks, filters them by account and saves them to state with a timestamp', () => {
+      const blockWithTimestamp = { ...blocks[0], timestamp: 1528811195000 }
       const vaultEventful = {
         rawWeb3Contract: {
           allEvents: () => ({
@@ -277,8 +279,12 @@ describe('epic for blockchain services', () => {
         }
       }
       fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
+      fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
       const expectedValues = {
-        a: blockChainActions.registerBlock(blockLabels.VAULT, blocks[0]),
+        a: blockChainActions.registerBlock(
+          blockLabels.VAULT,
+          blockWithTimestamp
+        ),
         b: blockChainActions.vaultFetchCompleted()
       }
 

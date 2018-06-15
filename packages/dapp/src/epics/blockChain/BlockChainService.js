@@ -2,7 +2,6 @@ import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concat'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
-import 'rxjs/add/operator/last'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mapTo'
 import 'rxjs/add/operator/merge'
@@ -147,6 +146,12 @@ class BlockChainService {
           .map(key => block.args[key])
           .includes(this.account)
       )
+      .mergeMap(block => {
+        return fromPromise(
+          this.api.web3.getBlockTimestampAsync(block.blockNumber),
+          this.scheduler
+        ).map(timestamp => ({ ...block, timestamp: timestamp * 1000 }))
+      })
       .map(block => blockChainActions.registerBlock(label, block))
   }
 }
