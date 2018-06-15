@@ -16,8 +16,10 @@ const getVaultSupplyEpic = (action$, store, ts = Scheduler.async) =>
         new api.contract.Vault(api.web3._web3, address).totalSupply,
         ts
       ).map(supply => {
-        const totalSupply = supply / ETHTOMICRO
-        return vaultActions.saveVaultSupply({ address, totalSupply })
+        const vaultPatch = {
+          totalSupply: supply / ETHTOMICRO
+        }
+        return vaultActions.updateVaultData({ address, vaultPatch })
       })
     })
 

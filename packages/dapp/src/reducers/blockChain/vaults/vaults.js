@@ -26,26 +26,23 @@ const vaultReducer = createReducer({
       },
       state
     ),
-  [vaultActions.saveVaultSupply]: (
+  [vaultActions.updateVaultData]: (
     state,
-    { address, totalSupply },
+    { address, vaultPatch },
     { currentAccount }
-  ) => {
-    return u(
+  ) =>
+    u(
       {
         accounts: {
           [currentAccount]: {
             vaults: {
-              [address]: {
-                totalSupply
-              }
+              [address]: vaultPatch
             }
           }
         }
       },
       state
     )
-  }
 })
 
 export default vaultReducer

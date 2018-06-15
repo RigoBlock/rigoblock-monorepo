@@ -3,5 +3,5 @@ import { createAction } from 'redux-act'
 export default {
   registerVaultBlock: createAction('vault block saved to state'),
   registerVault: createAction('vault saved to state'),
-  saveVaultSupply: createAction("fetched vault's total supply")
+  updateVaultData: createAction("fetched vault's total supply")
 }
