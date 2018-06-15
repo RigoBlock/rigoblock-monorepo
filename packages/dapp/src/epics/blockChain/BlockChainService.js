@@ -109,7 +109,6 @@ class BlockChainService {
         })
       )
       .mergeMap(events => from(events))
-
     const filteredBlocks = this._filterBlocksByAccount(
       blockLabels.VAULT,
       allVaultEvents
@@ -155,10 +154,7 @@ class BlockChainService {
         return fromPromise(
           this.api.web3.getBlockTimestampAsync(block.blockNumber),
           this.scheduler
-        ).map(timestamp => {
-          timestamp = timestamp * 1000
-          return { ...block, timestamp }
-        })
+        ).map(timestamp => ({ ...block, timestamp: timestamp * 1000 }))
       })
       .map(block => blockChainActions.registerBlock(label, block))
   }

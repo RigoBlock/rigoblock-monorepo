@@ -235,6 +235,7 @@ describe('epic for blockchain services', () => {
       ts.flush()
     })
   })
+
   describe('fetch vault events', () => {
     it('fetches blocks, filters them by account and saves them to state with a timestamp', () => {
       const blockWithTimestamp = { ...blocks[0], timestamp: 1528811195000 }
