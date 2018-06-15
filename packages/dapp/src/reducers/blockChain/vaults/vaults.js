@@ -5,31 +5,32 @@ import vaultActions from '../../../actions/vault-actions'
 
 // This is a sub-reducer of blockchain, so it shouldn't have initialState
 const vaultReducer = createReducer({
-  [vaultActions.registerVaultBlock]: (state, { currentAccount, block }) =>
+  [vaultActions.registerVaultBlock]: (state, payload, { currentAccount }) =>
     u(
       {
         accounts: {
           [currentAccount]: {
             vaultBlocks: {
-              [block.blockNumber]: block
+              [payload.blockNumber]: payload
             }
           }
         }
       },
       state
     ),
-  [vaultActions.registerVault]: (state, { currentAccount, vault }) =>
+  [vaultActions.registerVault]: (state, payload, { currentAccount }) =>
     u(
       {
         accounts: {
-          [currentAccount]: { vaults: vault }
+          [currentAccount]: { vaults: payload }
         }
       },
       state
     ),
   [vaultActions.saveVaultSupply]: (
     state,
-    { currentAccount, supplyData: { address, supply } }
+    { address, supply },
+    { currentAccount }
   ) => {
     const totalSupply = supply / utils.ethToMicro
     return u(

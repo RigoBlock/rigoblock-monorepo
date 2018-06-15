@@ -11,24 +11,24 @@ const initialState = {
 
 const blockChainReducer = createReducer(
   {
-    [blockChainActions.blockChainLogIn]: (state, payload) =>
-      state.accounts[payload.account]
+    [blockChainActions.blockChainLogIn]: (state, { account }) =>
+      state.accounts[account]
         ? state
         : u(
             {
-              accounts: { [payload.account]: {} }
+              accounts: { [account]: {} }
             },
             state
           ),
-    [vaultActions.registerVaultBlock]: (state, payload) => {
-      const blockNumber = payload.block.blockNumber
-      let lastBlock = state.accounts[payload.currentAccount].lastBlock
+    [vaultActions.registerVaultBlock]: (state, payload, { currentAccount }) => {
+      const blockNumber = payload.blockNumber
+      let lastBlock = state.accounts[currentAccount].lastBlock
       lastBlock =
         !lastBlock || lastBlock < blockNumber ? blockNumber : lastBlock
       return u(
         {
           accounts: {
-            [payload.currentAccount]: {
+            [currentAccount]: {
               lastBlock: lastBlock
             }
           }

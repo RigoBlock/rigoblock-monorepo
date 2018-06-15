@@ -9,8 +9,8 @@ import vaultActions from '../../actions/vault-actions'
 const getVaultSupplyEpic = (action$, store, ts = Scheduler.async) =>
   action$
     .filter(action => action.type === vaultActions.registerVault.getType())
-    .mergeMap(({ payload: { vault } }) => {
-      const address = Object.keys(vault).pop()
+    .mergeMap(({ payload }) => {
+      const address = Object.keys(payload).pop()
       return fromPromise(
         new api.contract.Vault(api.web3._web3, address).totalSupply,
         ts
