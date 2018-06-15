@@ -5,22 +5,19 @@ import { TypeChainContract } from './models/typechain-runtime'
 
 class Contract extends ContractModels {
   async init(web3: Web3, contractsMap: Contract.ContractsMap) {
-    const deployedContracts: Array<string> = Object.keys(contractsMap).filter(
-      contractName => contractsMap[contractName].address
-    )
-
+    const contractNames: string[] = Object.keys(contractsMap)
     const contractsPromises: Promise<
       [string, TypeChainContract][]
-    >[] = deployedContracts.map(async contractName => {
+    >[] = contractNames.map(async contractName => {
       const contract: TypeChainContract = await import(`./models/${contractName}`)
       Object.assign(
         contract[contractName].prototype,
         ContractExtension.prototype
       )
-      return [
-        contractName,
-        new contract[contractName](web3, contractsMap[contractName].address)
-      ]
+      if (contractsMap[contractName].address) {
+        contract[contractName].address = contractsMap[contractName].address
+      }
+      return [contractName, contract[contractName]]
     })
 
     const contracts = await Promise.all(contractsPromises)
