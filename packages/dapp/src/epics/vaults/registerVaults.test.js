@@ -28,7 +28,7 @@ describe('registerVaults epic', () => {
     null
   ]
 
-  class Registry {
+  class RegistryMock {
     fromAddress() {
       return {}
     }
@@ -60,7 +60,7 @@ describe('registerVaults epic', () => {
 
   it('emits REGISTER_VAULT containing a parsed vault object + REGISTER_VAULT_BLOCK containing a vault event block', () => {
     fromPromiseSpy
-      .mockReturnValueOnce(of(new Registry()))
+      .mockReturnValueOnce(of(new RegistryMock()))
       .mockReturnValueOnce(of(vaultData))
 
     const inputValues = {
