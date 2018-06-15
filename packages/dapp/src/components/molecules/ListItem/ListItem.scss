@@ -6,7 +6,7 @@
   align-items: center;
   padding: $dist-s;
   background: $md-secondary-color;
-  &:nth-child(2) {
+  &:nth-child(2n) {
     background: $secondary-bg-color;
   }
 }

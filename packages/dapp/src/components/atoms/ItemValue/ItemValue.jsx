@@ -11,8 +11,13 @@ export const ITEM_VALUE_SIZES = {
 
 const roundProps = props => {
   return Object.keys(props)
-    .filter(k => !isNaN(props[k]) && props[k] % 1 !== 0)
-    .map(k => ({ [k]: parseFloat(props[k], 10).toFixed(props.precision) }))
+    .filter(k => !isNaN(props[k]))
+    .map(k => ({
+      [k]:
+        props[k] % 1 !== 0
+          ? parseFloat(props[k], 10).toFixed(props.precision)
+          : props[k]
+    }))
     .reduce((acc, curr) => ({ ...acc, ...curr }), {})
 }
 
