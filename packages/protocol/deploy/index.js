@@ -75,11 +75,11 @@ module.exports = async (baseAccount, network) => {
   authority.whitelistFactory(dragoFactory.address, true)
 
   return {
-    authority,
-    dragoRegistry,
-    vaultEventful,
-    vaultFactory,
-    dragoEventful,
-    dragoFactory
+    Authority: authority,
+    DragoRegistry: dragoRegistry,
+    VaultEventful: vaultEventful,
+    VaultFactory: vaultFactory,
+    DragoEventful: dragoEventful,
+    DragoFactory: dragoFactory
   }
 }
