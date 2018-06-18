@@ -4,7 +4,8 @@ const deploy = require('@rigoblock/protocol/deploy')
 
 beforeAll(async () => {
   const web3 = new Web3(new Web3.providers.HttpProvider(NETWORKS[0]))
-  global.accounts = await web3.eth.getAccounts()
+  const rawAccounts = await web3.eth.getAccounts()
+  global.accounts = rawAccounts.map(acc => acc.toLowerCase())
   const prevLog = console.log
   console.log = () => {}
   global.baseContracts = await deploy(accounts[0], NETWORKS[0])

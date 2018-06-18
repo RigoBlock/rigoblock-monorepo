@@ -92,7 +92,7 @@ describe('watchVaultEvents', () => {
     ts.flush()
   })
 
-  fit('stops watching after a LOGGED_IN action is fired', () => {
+  it('stops watching after a LOGGED_IN action is fired', () => {
     const lastBlock = 15
     getStateSpy.mockReturnValueOnce({
       user: {

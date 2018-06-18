@@ -74,12 +74,36 @@ module.exports = async (baseAccount, network) => {
   logger.info(c.bold('Whitelisting DragoFactory...'))
   authority.whitelistFactory(dragoFactory.address, true)
 
+  const rigoToken = await deploy(baseAccount, network, 'RigoToken', [
+    baseAccount,
+    baseAccount
+  ])
+  printAddress('RigoToken', rigoToken.address)
+
+  const proofOfPerformance = await deploy(
+    baseAccount,
+    network,
+    'ProofOfPerformance',
+    [rigoToken.address, baseAccount, dragoRegistry.address]
+  )
+  printAddress('ProofOfPerformance', proofOfPerformance.address)
+
+  const inflation = await deploy(baseAccount, network, 'Inflation', [
+    rigoToken.address,
+    proofOfPerformance.address,
+    authority.address
+  ])
+  printAddress('Inflation', inflation.address)
+
   return {
     Authority: authority,
     DragoRegistry: dragoRegistry,
     VaultEventful: vaultEventful,
     VaultFactory: vaultFactory,
     DragoEventful: dragoEventful,
-    DragoFactory: dragoFactory
+    DragoFactory: dragoFactory,
+    RigoToken: rigoToken,
+    ProofOfPerformance: proofOfPerformance,
+    Inflation: inflation
   }
 }
