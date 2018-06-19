@@ -1,5 +1,5 @@
+import * as ROUTES from '../constants/routes'
 import { push } from 'react-router-redux'
-import ROUTES from '../constants/routes'
 
 export default {
   logout: () => push(ROUTES.LOGIN),

@@ -1,3 +1,1 @@
-export default {
-  ethToMicro: 1e6
-}
+export const ETHTOMICRO = 1e6

@@ -8,7 +8,7 @@ import 'rxjs/add/operator/merge'
 import 'rxjs/add/operator/mergeMap'
 import { Observable } from 'rxjs/Observable'
 import { Scheduler } from 'rxjs/Scheduler'
-import { blockLabels } from '../../constants/blockchain'
+import { VAULT } from '../../constants/blockchain'
 import { from } from 'rxjs/observable/from'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
@@ -109,10 +109,7 @@ class BlockChainService {
         })
       )
       .mergeMap(events => from(events))
-    const filteredBlocks = this._filterBlocksByAccount(
-      blockLabels.VAULT,
-      allVaultEvents
-    )
+    const filteredBlocks = this._filterBlocksByAccount(VAULT, allVaultEvents)
     return this.wrapError(
       filteredBlocks.concat(of(blockChainActions.vaultFetchCompleted()))
     )
@@ -138,9 +135,7 @@ class BlockChainService {
         return () => events.stopWatching(() => {})
       })
     })
-    return this.wrapError(
-      this._filterBlocksByAccount(blockLabels.VAULT, allVaultEvents)
-    )
+    return this.wrapError(this._filterBlocksByAccount(VAULT, allVaultEvents))
   }
 
   _filterBlocksByAccount(label, obs) {

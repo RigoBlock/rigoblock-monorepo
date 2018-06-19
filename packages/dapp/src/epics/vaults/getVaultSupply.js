@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mergeMap'
+import { ETHTOMICRO } from '../../constants/utils'
 import { Scheduler } from 'rxjs/Scheduler'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import api from '../../api'
@@ -14,7 +15,12 @@ const getVaultSupplyEpic = (action$, store, ts = Scheduler.async) =>
       return fromPromise(
         new api.contract.Vault(api.web3._web3, address).totalSupply,
         ts
-      ).map(supply => vaultActions.saveVaultSupply({ address, supply }))
+      ).map(supply => {
+        const vaultPatch = {
+          totalSupply: supply / ETHTOMICRO
+        }
+        return vaultActions.updateVaultData({ address, vaultPatch })
+      })
     })
 
 export default getVaultSupplyEpic

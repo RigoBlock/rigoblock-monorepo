@@ -1,7 +1,7 @@
 import { ActionsObservable } from 'redux-observable'
 import { BigNumber } from 'bignumber.js'
 import { TestScheduler } from 'rxjs'
-import { blockLabels } from '../../constants/blockchain'
+import { VAULT } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
 import vaultActions from '../../actions/vault-actions'
@@ -28,7 +28,7 @@ describe('registerVaults epic', () => {
     null
   ]
 
-  class Registry {
+  class RegistryMock {
     fromAddress() {
       return {}
     }
@@ -60,11 +60,11 @@ describe('registerVaults epic', () => {
 
   it('emits REGISTER_VAULT containing a parsed vault object + REGISTER_VAULT_BLOCK containing a vault event block', () => {
     fromPromiseSpy
-      .mockReturnValueOnce(of(new Registry()))
+      .mockReturnValueOnce(of(new RegistryMock()))
       .mockReturnValueOnce(of(vaultData))
 
     const inputValues = {
-      a: blockChainActions.registerBlock(blockLabels.VAULT, vaultEvent)
+      a: blockChainActions.registerBlock(VAULT, vaultEvent)
     }
     const expectedValues = {
       b: vaultActions.registerVaultBlock(vaultEvent),

@@ -1,6 +1,5 @@
 import { createReducer } from 'redux-act'
 import u from 'updeep'
-import utils from '../../../constants/utils'
 import vaultActions from '../../../actions/vault-actions'
 
 // This is a sub-reducer of blockchain, so it shouldn't have initialState
@@ -27,27 +26,23 @@ const vaultReducer = createReducer({
       },
       state
     ),
-  [vaultActions.saveVaultSupply]: (
+  [vaultActions.updateVaultData]: (
     state,
-    { address, supply },
+    { address, vaultPatch },
     { currentAccount }
-  ) => {
-    const totalSupply = supply / utils.ethToMicro
-    return u(
+  ) =>
+    u(
       {
         accounts: {
           [currentAccount]: {
             vaults: {
-              [address]: {
-                totalSupply
-              }
+              [address]: vaultPatch
             }
           }
         }
       },
       state
     )
-  }
 })
 
 export default vaultReducer

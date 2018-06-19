@@ -28,7 +28,7 @@ const mockStore = {
                 symbol: 'das',
                 owner: '0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d',
                 group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff',
-                totalSupply: 20
+                totalSupply: 20.23498
               }
             }
           }
