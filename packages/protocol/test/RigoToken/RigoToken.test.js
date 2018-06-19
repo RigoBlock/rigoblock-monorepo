@@ -37,14 +37,6 @@ describe(contractName, () => {
       expect(dao).toBe(accounts[0])
     })
   })
-  // describe('getInflationFactor', () => {
-  //   it('returns something', async () => {
-  //     const inflactionFactor = await baseContracts[
-  //       contractName
-  //     ].getInflationFactor(baseContracts['VaultFactory'].address)
-  //     console.log(inflactionFactor)
-  //   })
-  // })
   describe('mintToken', () => {
     it('mints new tokens and emits a TokenMinted event', async () => {
       const tokenAmount = 10
@@ -83,12 +75,13 @@ describe(contractName, () => {
   })
   describe('changeMintingAddress', () => {
     it('sets a new minter given a valid account address', async () => {
+      const inflation = baseContracts['Inflation'].address
       const txHash = await baseContracts[contractName].changeMintingAddress(
-        accounts[1]
+        inflation
       )
       expect(txHash).toBeHash()
       const newMinter = await baseContracts[contractName].getMinter()
-      expect(newMinter).toBe(accounts[1])
+      expect(newMinter).toBe(inflation)
     })
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
@@ -104,6 +97,22 @@ describe(contractName, () => {
       ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
+
+  describe('getInflationFactor', async () => {
+    it('returns the inflation factor', async () => {
+      const group = baseContracts['VaultFactory'].address
+      const inflationFactor = 1
+      await baseContracts['Inflation'].setInflationFactor(
+        group,
+        inflationFactor
+      )
+      const retrievedFactor = await baseContracts[
+        contractName
+      ].getInflationFactor(group)
+      expect(retrievedFactor).toEqual(new BigNumber(inflationFactor))
+    })
+  })
+
   describe('changeRigoblockAddress', () => {
     it('sets a new dao', async () => {
       const txHash = await baseContracts[contractName].changeRigoblockAddress(

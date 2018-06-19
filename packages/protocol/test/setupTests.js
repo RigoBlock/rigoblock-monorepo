@@ -3,7 +3,8 @@ const Web3 = require('web3')
 const deploy = require('@rigoblock/protocol/deploy')
 
 beforeAll(async () => {
-  const web3 = new Web3(new Web3.providers.HttpProvider(NETWORKS[0]))
+  global.web3 = new Web3(new Web3.providers.HttpProvider(NETWORKS[0]))
+  global.networkId = 5777
   const rawAccounts = await web3.eth.getAccounts()
   global.accounts = rawAccounts.map(acc => acc.toLowerCase())
   const prevLog = console.log
