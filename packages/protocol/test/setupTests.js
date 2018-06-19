@@ -1,6 +1,7 @@
 const { NETWORKS } = require('../constants')
 const Web3 = require('web3')
 const deploy = require('@rigoblock/protocol/deploy')
+const BigNumber = require('bignumber.js').BigNumber
 
 beforeAll(async () => {
   global.web3 = new Web3(new Web3.providers.HttpProvider(NETWORKS[0]))
@@ -12,6 +13,10 @@ beforeAll(async () => {
   global.baseContracts = await deploy(accounts[0], NETWORKS[0])
   console.log = prevLog
 })
+
+global.toBigNumber = val => new BigNumber(val)
+global.fromWei = val => val / 1e18
+global.fromMicro = val => val / 1e6
 
 expect.extend({
   toBeHash(received) {

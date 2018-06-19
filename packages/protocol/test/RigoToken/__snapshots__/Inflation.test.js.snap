@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getInflationFactor setInflationFactor can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[`getInflationFactor setInflationFactor throws if we don't pass a whitelisted factory 1`] = `"VM Exception while processing transaction: revert"`;

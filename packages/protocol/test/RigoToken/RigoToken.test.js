@@ -1,4 +1,3 @@
-import { BigNumber } from 'bignumber.js'
 import { GAS_ESTIMATE } from '../../constants'
 
 const contractName = 'RigoToken'
@@ -22,7 +21,7 @@ describe(contractName, () => {
   describe('getDecimals', () => {
     it("returns Rigo Token's decimals", async () => {
       const decimals = await baseContracts[contractName].getDecimals()
-      expect(decimals).toEqual(new BigNumber(RIGOTOKEN_DECIMALS))
+      expect(decimals).toEqual(toBigNumber(RIGOTOKEN_DECIMALS))
     })
   })
   describe('getMinter', () => {
@@ -54,7 +53,7 @@ describe(contractName, () => {
       expect(txHash).toBeHash()
       expect(events.pop().args).toEqual({
         recipient: accounts[0],
-        amount: new BigNumber(tokenAmount)
+        amount: toBigNumber(tokenAmount)
       })
     })
     it('can only be called by the minter', async () => {
@@ -109,7 +108,7 @@ describe(contractName, () => {
       const retrievedFactor = await baseContracts[
         contractName
       ].getInflationFactor(group)
-      expect(retrievedFactor).toEqual(new BigNumber(inflationFactor))
+      expect(retrievedFactor).toEqual(toBigNumber(inflationFactor))
     })
   })
 
