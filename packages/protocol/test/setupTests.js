@@ -47,6 +47,7 @@ global.describeContracts = (name, f) => {
         )
       })
       await closePromise
+      return
     })
   })
 }

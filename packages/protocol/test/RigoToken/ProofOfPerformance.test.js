@@ -4,7 +4,7 @@ const vaultArtifact = require('../../artifacts/Vault.json')
 import { GAS_ESTIMATE } from '../../constants'
 
 describeContracts(contractName, () => {
-  const groupRatio = 2
+  const groupRatio = 5
   const minimumRigo = 50
   const vaultPrice = 1e18
   const inflationFactor = 2
@@ -102,6 +102,9 @@ describeContracts(contractName, () => {
         groupRatio
       )
       expect(txHash).toBeHash()
+      const poolData = await baseContracts[contractName].getPoolData(vaultId)
+      const ratio = poolData[7]
+      expect(ratio).toEqual(toBigNumber(groupRatio))
     })
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
@@ -144,6 +147,19 @@ describeContracts(contractName, () => {
     it("claims the token reward for the fund's wizard", async () => {
       const txHash = await baseContracts[contractName].claimPop(vaultId)
       expect(txHash).toBeHash()
+      // claimPop calls the mintInflation method from Inflation.sol,
+      // which emits two RigoToken 'TokenMinted' event, one for the DAO
+      // and one for the fund wizard
+      const mintEvent = baseContracts['RigoToken'].TokenMinted()
+      const eventsPromise = new Promise((resolve, reject) => {
+        mintEvent.get(
+          (err, data) => (err ? reject(new Error(err)) : resolve(data))
+        )
+      })
+      const events = await eventsPromise
+      expect(events.length).toEqual(2)
+      // events emitted correctly. TODO: understand what value the reward
+      // should be equal to
     })
   })
 
@@ -169,7 +185,7 @@ describeContracts(contractName, () => {
       expect(value).toEqual(toBigNumber(vaultSupply))
       expect(price.toNumber()).toEqual(vaultPrice)
       expect(epochReward).toEqual(toBigNumber(inflationFactor))
-      // todo: expect pop to be the correct value
+      // what should this be equal to?
       expect(pop)
     })
   })
@@ -182,7 +198,7 @@ describeContracts(contractName, () => {
   })
 
   describe.skip('getPoolPrices', () => {
-    // atm only works if there are no pools created
+    // atm only works if there are no pools created, needs fix
     it('returns the total vaultSupply and price for each fund', async () => {
       const prices = await baseContracts[contractName].getPoolPrices()
       console.log(prices)

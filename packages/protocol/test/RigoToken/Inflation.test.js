@@ -33,12 +33,25 @@ describeContracts(contractName, async () => {
   })
 
   describe('setInflationFactor', () => {
+    afterAll(async () => {
+      // we need to reset the minting address, or we won't be able to mint
+      // tokens in mintInflation test
+      await baseContracts['RigoToken'].changeMintingAddress(accounts[0])
+    })
     it('sets the inflation factor', async () => {
+      await baseContracts['RigoToken'].changeMintingAddress(
+        baseContracts['Inflation'].address
+      )
       const txHash = await baseContracts[contractName].setInflationFactor(
         group,
         inflationFactor
       )
       expect(txHash).toBeHash()
+      const poolData = await baseContracts['ProofOfPerformance'].getPoolData(
+        vaultId
+      )
+      const epoch = poolData[6]
+      expect(epoch).toEqual(toBigNumber(inflationFactor))
     })
 
     it('can only be called by the rigoblock DAO', async () => {
@@ -81,8 +94,7 @@ describeContracts(contractName, async () => {
         minimumRigo
       )
       expect(txHash).toBeHash()
-      // const newMinimum = await baseContracts[contractName].minimumRigo
-      // expect(newMinimum).toEqual(minimumRigo)
+      // no way to check this value at the moment
     })
 
     it('can only be called by the rigoblock DAO', async () => {
@@ -194,7 +206,7 @@ describeContracts(contractName, async () => {
   })
 
   describe('setPeriod', () => {
-    const defaultPeriod = 7257600
+    const defaultPeriod = 7257600 // 12 weeks
     afterAll(async () => {
       // reset period to default
       await baseContracts[contractName].setPeriod(defaultPeriod)
@@ -222,6 +234,7 @@ describeContracts(contractName, async () => {
     })
   })
 
+  // always returns true
   describe('canWithdraw', () => {
     it('returns whether a wizard can claim reward tokens', async () => {
       const canWithdraw = await baseContracts[contractName].canWithdraw(vaultId)
