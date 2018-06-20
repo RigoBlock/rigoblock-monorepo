@@ -1,6 +1,4 @@
-export default {
-  DASHBOARD: '/',
-  PREFERENCES: '/preferences',
-  HELP: '/help',
-  LOGIN: '/login'
-}
+export const DASHBOARD = '/'
+export const PREFERENCES = '/preferences'
+export const HELP = '/help'
+export const LOGIN = '/login'

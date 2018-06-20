@@ -21,7 +21,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
             "name": "Third Vault",
             "owner": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
             "symbol": "das",
-            "totalSupply": 20,
+            "totalSupply": 20.23498,
           },
           "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
             "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
@@ -48,7 +48,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
               Object {
                 "itemName": "Third Vault",
                 "itemSymbol": "das",
-                "itemValue": 20,
+                "itemValue": 20.23498,
               },
             ]
           }
@@ -96,7 +96,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                       Object {
                         "itemName": "Third Vault",
                         "itemSymbol": "das",
-                        "itemValue": 20,
+                        "itemValue": 20.23498,
                       },
                     ]
                   }
@@ -155,7 +155,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                       growth={0}
                       itemName="Third Vault"
                       itemSymbol="das"
-                      itemValue={20}
+                      itemValue={20.23498}
                       key="1"
                     >
                       <div
@@ -182,7 +182,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           currency="ETH"
                           currencyGrowth={0}
                           growth={0}
-                          itemValue={20}
+                          itemValue={20.23498}
                           precision={2}
                           valueSize="large"
                         >
@@ -190,7 +190,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                             <span
                               className="item-value item-value-large"
                             >
-                              20
+                              20.23
                             </span>
                           </div>
                         </ItemValue>

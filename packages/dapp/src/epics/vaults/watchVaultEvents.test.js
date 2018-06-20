@@ -1,6 +1,6 @@
 import { ActionsObservable } from 'redux-observable'
 import { TestScheduler } from 'rxjs'
-import { blockLabels } from '../../constants/blockchain'
+import { VAULT } from '../../constants/blockchain'
 import { merge } from 'rxjs/observable/merge'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
@@ -67,13 +67,13 @@ describe('watchVaultEvents', () => {
       }
     })
     watchVaultEventsSpy.mockReturnValueOnce(
-      of(blockChainActions.registerBlock(blockLabels.VAULT, block))
+      of(blockChainActions.registerBlock(VAULT, block))
     )
     const inputValues = {
       a: blockChainActions.vaultFetchCompleted()
     }
     const expectedValues = {
-      b: blockChainActions.registerBlock(blockLabels.VAULT, block)
+      b: blockChainActions.registerBlock(VAULT, block)
     }
 
     const inputMarble = 'a'
@@ -117,12 +117,9 @@ describe('watchVaultEvents', () => {
 
     watchVaultEventsSpy.mockReturnValueOnce(
       merge(
-        of(blockChainActions.registerBlock(blockLabels.VAULT, block)),
-        of(blockChainActions.registerBlock(blockLabels.VAULT, block)),
-        of(blockChainActions.registerBlock(blockLabels.VAULT, block)).delay(
-          20,
-          ts
-        )
+        of(blockChainActions.registerBlock(VAULT, block)),
+        of(blockChainActions.registerBlock(VAULT, block)),
+        of(blockChainActions.registerBlock(VAULT, block)).delay(20, ts)
       )
     )
     const inputValues = {
@@ -130,7 +127,7 @@ describe('watchVaultEvents', () => {
       b: blockChainActions.blockChainLogIn('1234', 'my provider')
     }
     const expectedValues = {
-      b: blockChainActions.registerBlock(blockLabels.VAULT, block)
+      b: blockChainActions.registerBlock(VAULT, block)
     }
 
     const inputMarble = 'a-b'
