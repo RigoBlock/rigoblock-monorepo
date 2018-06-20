@@ -4,6 +4,8 @@ const deploy = require('@rigoblock/protocol/deploy')
 const BigNumber = require('bignumber.js').BigNumber
 const ganache = require('ganache-cli')
 const mnemonic = require('../package.json').config.mnemonic
+const logger = require('../logger')
+const c = require('chalk')
 
 let server
 
@@ -16,7 +18,7 @@ const be = async () => {
     if (err) {
       console.err(err)
     }
-    console.log('Ganache started!')
+    logger.info(c.bold.green('Ganache starting!'))
   })
   global.web3 = new Web3(new Web3.providers.HttpProvider(NETWORKS[0]))
   global.networkId = 5777
@@ -41,10 +43,10 @@ global.describeContracts = (name, f) => {
           err =>
             err
               ? reject(new Error(err))
-              : resolve(console.log('server stopping'))
+              : resolve(logger.info(c.bold.yellow('Ganache stopping...')))
         )
       })
-      return await closePromise
+      await closePromise
     })
   })
 }

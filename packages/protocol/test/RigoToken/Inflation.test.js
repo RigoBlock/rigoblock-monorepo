@@ -40,6 +40,7 @@ describeContracts(contractName, async () => {
       )
       expect(txHash).toBeHash()
     })
+
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
         baseContracts[contractName].setInflationFactor.sendTransactionAsync(
@@ -54,6 +55,7 @@ describeContracts(contractName, async () => {
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })
+
     it("throws if we don't pass a whitelisted factory", async () => {
       await expect(
         baseContracts[contractName].setInflationFactor(
@@ -74,7 +76,7 @@ describeContracts(contractName, async () => {
   })
 
   describe('setMinimumRigo', () => {
-    it('sets the minimum of rigo tokens necessary to perform certain calls', async () => {
+    it('sets the minimum amount of rigo tokens necessary to perform certain calls', async () => {
       const txHash = await baseContracts[contractName].setMinimumRigo(
         minimumRigo
       )
@@ -82,6 +84,7 @@ describeContracts(contractName, async () => {
       // const newMinimum = await baseContracts[contractName].minimumRigo
       // expect(newMinimum).toEqual(minimumRigo)
     })
+
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
         baseContracts[contractName].setMinimumRigo.sendTransactionAsync(
@@ -109,11 +112,13 @@ describeContracts(contractName, async () => {
         }
       )
     })
+
     it('sets the rigoblock DAO address', async () => {
       await baseContracts[contractName].setRigoblock(accounts[1])
       const newDao = await baseContracts[contractName].rigoblockDao()
       expect(newDao).toBe(accounts[1])
     })
+
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
         baseContracts[contractName].setRigoblock.sendTransactionAsync(
@@ -137,11 +142,13 @@ describeContracts(contractName, async () => {
         baseContracts['Authority'].address
       )
     })
+
     it('sets the authority address', async () => {
       await baseContracts[contractName].setAuthority(fakeAuthority)
       const newAuthority = await baseContracts[contractName].authority()
       expect(newAuthority).toBe(fakeAuthority)
     })
+
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
         baseContracts[contractName].setAuthority.sendTransactionAsync(
@@ -164,11 +171,13 @@ describeContracts(contractName, async () => {
       const pop = baseContracts['ProofOfPerformance'].address
       await baseContracts[contractName].setProofOfPerformance(pop)
     })
+
     it('sets the proof of performance address', async () => {
       await baseContracts[contractName].setProofOfPerformance(fakePop)
       const newPop = await baseContracts[contractName].proofOfPerformance()
       expect(newPop).toBe(fakePop)
     })
+
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
         baseContracts[contractName].setProofOfPerformance.sendTransactionAsync(
@@ -190,12 +199,14 @@ describeContracts(contractName, async () => {
       // reset period to default
       await baseContracts[contractName].setPeriod(defaultPeriod)
     })
+
     it('sets the minimum time between withdrawals', async () => {
       const period = 864000 // 10 days
       await baseContracts[contractName].setPeriod(period)
       const newPeriod = await baseContracts[contractName].period()
       expect(newPeriod).toEqual(toBigNumber(period))
     })
+
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
         baseContracts[contractName].setPeriod.sendTransactionAsync(
@@ -224,6 +235,7 @@ describeContracts(contractName, async () => {
       const pop = baseContracts['ProofOfPerformance'].address
       await baseContracts['Inflation'].setProofOfPerformance(pop)
     })
+
     it('allows ProofOfPerformance to mint rewards', async () => {
       const inflation = baseContracts['Inflation'].address
       await baseContracts['RigoToken'].mintToken(accounts[0], 200)
@@ -237,6 +249,7 @@ describeContracts(contractName, async () => {
       )
       expect(txHash).toBeHash()
     })
+
     it('fails if called again before the period is over', async () => {
       // this throws an error correctly
       await expect(

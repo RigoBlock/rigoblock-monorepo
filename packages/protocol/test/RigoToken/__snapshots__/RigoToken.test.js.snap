@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` RigoToken changeMintingAddress can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` RigoToken changeRigoblockAddress can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` RigoToken mintToken can only be called by the minter 1`] = `"VM Exception while processing transaction: revert"`;
