@@ -3,7 +3,7 @@ const vaultArtifact = require('../../artifacts/Vault.json')
 
 import { GAS_ESTIMATE } from '../../constants'
 
-describe(contractName, () => {
+describeContracts(contractName, () => {
   const groupRatio = 2
   const minimumRigo = 50
   const vaultPrice = 1e18
@@ -42,10 +42,10 @@ describe(contractName, () => {
 
   describe('setRegistry', () => {
     it('changes the registry address', async () => {
-      const txHash = await baseContracts[contractName].setRegistry(
-        baseContracts['DragoRegistry'].address
-      )
-      expect(txHash).toBeHash()
+      const registry = baseContracts['DragoRegistry'].address
+      await baseContracts[contractName].setRegistry(registry)
+      const newRegistry = await baseContracts[contractName].dragoRegistry()
+      expect(newRegistry).toEqual(registry)
     })
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
@@ -64,10 +64,10 @@ describe(contractName, () => {
 
   describe('setRigoblockDao', () => {
     it('changes the dao address', async () => {
-      const txHash = await baseContracts[contractName].setRigoblockDao(
-        accounts[1]
-      )
-      expect(txHash).toBeHash()
+      await baseContracts[contractName].setRigoblockDao(accounts[1])
+      const newDao = await baseContracts[contractName].rigoblockDao()
+      expect(newDao).toEqual(accounts[1])
+
       // changing the DAO back to be able to call functions in next tests
       await baseContracts[contractName].setRigoblockDao.sendTransactionAsync(
         accounts[0],
@@ -95,6 +95,7 @@ describe(contractName, () => {
 
   describe('setRatio', () => {
     // perhaps we need a clearer description
+    // how do we check if the ratio has been set correctly?
     it('sets the groupRatio between asset and performance reward for given group', async () => {
       const txHash = await baseContracts[contractName].setRatio(
         group,
@@ -120,10 +121,9 @@ describe(contractName, () => {
 
   describe('setMinimumRigo', () => {
     it('sets the minimum rigo token amount needed to perform certain actions', async () => {
-      const txHash = await baseContracts[contractName].setMinimumRigo(
-        minimumRigo
-      )
-      expect(txHash).toBeHash()
+      await baseContracts[contractName].setMinimumRigo(minimumRigo)
+      const newMinimum = await baseContracts[contractName].minimumRigo()
+      expect(newMinimum).toEqual(toBigNumber(minimumRigo))
     })
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
@@ -150,7 +150,7 @@ describe(contractName, () => {
   describe('getPoolData', () => {
     it('gets the pool data being given a pool Id', async () => {
       const poolData = await baseContracts[contractName].getPoolData(vaultId)
-      let [
+      const [
         active,
         address,
         group,
@@ -182,9 +182,10 @@ describe(contractName, () => {
   })
 
   describe.skip('getPoolPrices', () => {
+    // atm only works if there are no pools created
     it('returns the total vaultSupply and price for each fund', async () => {
-      const test = await baseContracts[contractName].getPoolPrices()
-      console.log(test)
+      const prices = await baseContracts[contractName].getPoolPrices()
+      console.log(prices)
     })
   })
 

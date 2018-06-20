@@ -2,7 +2,7 @@ import { GAS_ESTIMATE } from '../../constants'
 
 const contractName = 'RigoToken'
 
-describe(contractName, () => {
+describeContracts(contractName, () => {
   const RIGOTOKEN = 'Rigo Token'
   const RIGOTOKEN_SYMBOL = 'GRG'
   const RIGOTOKEN_DECIMALS = 18
@@ -43,6 +43,7 @@ describe(contractName, () => {
         accounts[0],
         tokenAmount
       )
+      expect(txHash).toBeHash()
       const mintEvent = baseContracts[contractName].TokenMinted()
       const eventsPromise = new Promise((resolve, reject) => {
         mintEvent.get(
@@ -50,7 +51,6 @@ describe(contractName, () => {
         )
       })
       const events = await eventsPromise
-      expect(txHash).toBeHash()
       expect(events.pop().args).toEqual({
         recipient: accounts[0],
         amount: toBigNumber(tokenAmount)
@@ -79,7 +79,7 @@ describe(contractName, () => {
         inflation
       )
       expect(txHash).toBeHash()
-      const newMinter = await baseContracts[contractName].getMinter()
+      const newMinter = await baseContracts[contractName].minter()
       expect(newMinter).toBe(inflation)
     })
     it('can only be called by the rigoblock DAO', async () => {
@@ -118,7 +118,7 @@ describe(contractName, () => {
         accounts[1]
       )
       expect(txHash).toBeHash()
-      const newDao = await baseContracts[contractName].getRigoblock()
+      const newDao = await baseContracts[contractName].rigoblock()
       expect(newDao).toBe(accounts[1])
     })
     it('can only be called by the rigoblock DAO', async () => {

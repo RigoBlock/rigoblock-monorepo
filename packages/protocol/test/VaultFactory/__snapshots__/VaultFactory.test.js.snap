@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`VaultFactory createVault throws an error when provided with the same name 1`] = `"VM Exception while processing transaction: revert"`;
-
-exports[`VaultFactory createVault throws an exception when provided with a symbol longer smaller than 3 characters 1`] = `"VM Exception while processing transaction: revert"`;
-
-exports[`VaultFactory createVault throws an exception when provided with a symbol longer than 3 characters 1`] = `"VM Exception while processing transaction: revert"`;
