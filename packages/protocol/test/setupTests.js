@@ -4,7 +4,7 @@ const deploy = require('@rigoblock/protocol/deploy')
 const BigNumber = require('bignumber.js').BigNumber
 const ganache = require('ganache-cli')
 const mnemonic = require('../package.json').config.mnemonic
-const logger = require('../logger')
+const logger = require('../deploy/logger')
 const c = require('chalk')
 
 let server

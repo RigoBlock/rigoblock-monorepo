@@ -5,6 +5,7 @@ const loggerOpts = {
   timestamp: false
 }
 
+// silence deploy logs in tests
 if (process.env.NODE_ENV === 'test') loggerOpts.level = 'silent'
 
 module.exports = pino(loggerOpts)
