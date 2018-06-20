@@ -101,6 +101,20 @@ jobs:
             - packages/protocol/artifacts
             - packages/protocol/dist
 
+  test-protocol:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+      NODE_ENV: production
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - *attach_workspace
+      - run:
+         name: Test protocol
+         command: npx lerna run --scope @rigoblock/protocol test --stream
+
   build-api:
     working_directory: *workspace_root
     environment:
@@ -272,9 +286,12 @@ workflows:
       - build-protocol:
           requires:
             - test-unit-dapp
-      - build-api:
+      - test-protocol:
           requires:
             - build-protocol
+      - build-api:
+          requires:
+            - test-protocol
       - build-dapp:
           requires:
             - build-api
