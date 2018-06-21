@@ -1,12 +1,18 @@
 @import "../../_settings/variables.scss";
 
-.accountItem {
+.account-item {
   display: flex;
   span {
     display: block;
   }
   .account-item-provider {
     font-weight: 700;
+  }
+
+  .account-item-info {
+    :last-child {
+      padding-top: $dist-xs /2;
+    }
   }
 
   .account-item-logo {

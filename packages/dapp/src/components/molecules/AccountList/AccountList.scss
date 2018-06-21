@@ -1,0 +1,7 @@
+@import "../../_settings/variables.scss";
+
+.account-list {
+  > * {
+    padding-top: $dist-s;
+  }
+}

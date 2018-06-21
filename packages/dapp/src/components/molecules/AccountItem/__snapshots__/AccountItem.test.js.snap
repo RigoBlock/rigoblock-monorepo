@@ -2,7 +2,7 @@
 
 exports[`AccountItem component renders correctly 1`] = `
 <div
-  className="accountItem"
+  className="account-item"
 >
   <div
     className="account-item-logo"
