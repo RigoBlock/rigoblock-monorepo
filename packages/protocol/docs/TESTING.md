@@ -59,4 +59,20 @@ baseContracts[contractName].contractMethod.sendTransactionAsync(...args, {
 })
 ```
 
+When we expect a method call to fail, we use [jest's snapshot feature](https://facebook.github.io/jest/docs/en/snapshot-testing.html) same as we do in the DApp.
 
+```javaScript
+    it('can only be called by the rigoblock DAO', async () => {
+      await expect(
+        baseContracts['RigoToken'].changeRigoblockAddress.sendTransactionAsync(
+          accounts[1],
+          {
+            // non DAO account
+            from: accounts[1],
+            gas: GAS_ESTIMATE,
+            gasPrice: 1
+          }
+        )
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
+```
