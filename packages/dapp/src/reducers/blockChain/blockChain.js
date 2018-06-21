@@ -11,12 +11,16 @@ const initialState = {
 
 const blockChainReducer = createReducer(
   {
-    [blockChainActions.blockChainLogIn]: (state, { account }) =>
+    [blockChainActions.blockChainLogIn]: (state, { provider, account }) =>
       state.accounts[account]
         ? state
         : u(
             {
-              accounts: { [account]: {} }
+              accounts: {
+                [account]: {
+                  provider
+                }
+              }
             },
             state
           ),
