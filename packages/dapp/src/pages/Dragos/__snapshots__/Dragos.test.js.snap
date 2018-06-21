@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dragos page renders correctly 1`] = `
+<BaseTemplate>
+  <h1>
+    Dragos
+  </h1>
+</BaseTemplate>
+`;

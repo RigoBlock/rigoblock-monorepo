@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { persistor, store } from './store'
 import Dashboard from './pages/Dashboard'
+import Dragos from './pages/Dragos'
 import Help from './pages/Help'
 import Login from './pages/Login'
 import Preferences from './pages/Preferences'
@@ -31,6 +32,7 @@ ReactDOM.render(
           />
           <Route exact path={ROUTES.HELP} render={() => <Help />} />
           <Route exact path={ROUTES.VAULTS} render={() => <Vaults />} />
+          <Route exact path={ROUTES.DRAGOS} render={() => <Dragos />} />
         </div>
       </ConnectedRouter>
     </PersistGate>
