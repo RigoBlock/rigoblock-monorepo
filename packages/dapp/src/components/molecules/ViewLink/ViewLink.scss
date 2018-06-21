@@ -2,8 +2,8 @@
 
 .view-link {
   display: flex;
-  font-weight: $font-bold;
   line-height: $line-height;
+  color: black;
 
   .tooltip {
     color: black;
@@ -14,13 +14,22 @@
   }
 
   &:active {
-    color: red;
+    font-weight: $font-bold;
     .tooltip {
-      color: red;
+      font-weight: $font-bold;
     }
   }
 
   :last-child {
     padding-left: $dist-xxs;
+  }
+
+  &.active {
+    font-weight: $font-bold;
+    color: $link-active;
+
+    .tooltip {
+      color: $link-active;
+    }
   }
 }
