@@ -1,14 +1,19 @@
-import ListItem from '../../molecules/ListItem'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const List = ({ items }) => {
-  const listItems = items.map((item, i) => <ListItem key={i} {...item} />)
-  return <div className="list">{listItems}</div>
+const List = ({ className, Component, data }) => {
+  const listItems = data.map((data, i) => <Component key={i} {...data} />)
+  return <div className={className}>{listItems}</div>
 }
 
 List.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired
+  className: PropTypes.string,
+  Component: PropTypes.func.isRequired,
+  data: PropTypes.array.isRequired
+}
+
+List.defaultProps = {
+  className: null
 }
 
 export default List

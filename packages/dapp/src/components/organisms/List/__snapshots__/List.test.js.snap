@@ -2,7 +2,7 @@
 
 exports[`List component renders correctly 1`] = `
 <div
-  className="list"
+  className={null}
 >
   <ListItem
     currencyGrowth={0}

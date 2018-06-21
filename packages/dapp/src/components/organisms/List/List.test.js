@@ -1,10 +1,11 @@
 import { shallow } from 'enzyme'
 import List from './List.jsx'
+import ListItem from '../../molecules/ListItem'
 import toJson from 'enzyme-to-json'
 
 const props = {
-  title: 'List Component',
-  items: [
+  Component: ListItem,
+  data: [
     {
       id: 1,
       itemName: 'Rocksolid Vault',
