@@ -4,8 +4,8 @@ const deploy = require('@rigoblock/protocol/deploy')
 const BigNumber = require('bignumber.js').BigNumber
 const ganache = require('ganache-cli')
 const mnemonic = require('../package.json').config.mnemonic
-// const logger = require('../deploy/logger')
-// const c = require('chalk')
+const logger = require('../deploy/logger')
+const c = require('chalk')
 
 let server
 process.on('warning', e => console.error(e.stack))
@@ -41,7 +41,12 @@ global.describeContracts = (name, f) => {
     describe(name, f)
     afterAll(async () => {
       const closeGanachePromise = new Promise((resolve, reject) => {
-        server.close(err => (err ? reject(new Error(err)) : resolve()))
+        server.close(
+          err =>
+            err
+              ? reject(new Error(err))
+              : resolve(logger.info(c.bold.yellow('Ganache stopping...')))
+        )
       })
       return await closeGanachePromise
     })

@@ -94,7 +94,8 @@ describeContracts(contractName, async () => {
         minimumRigo
       )
       expect(txHash).toBeHash()
-      // no way to check this value at the moment
+      const newMinimum = await baseContracts[contractName].minimumRigo()
+      expect(newMinimum).toEqual(toBigNumber(minimumRigo))
     })
 
     it('can only be called by the rigoblock DAO', async () => {

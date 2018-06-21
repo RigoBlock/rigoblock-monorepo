@@ -34,7 +34,7 @@ contract Inflation is SafeMath, InflationFace {
     address public RIGOTOKENADDRESS;
 
     uint public period = 12 weeks; //inflation tokens can be minted every 3 months
-    uint minimumRigo;
+    uint public minimumRigo;
     address public proofOfPerformance;
     address public authority;
     address public rigoblockDao;

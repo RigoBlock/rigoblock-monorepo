@@ -41,11 +41,17 @@ describeContracts(contractName, () => {
   })
 
   describe('setRegistry', () => {
+    afterAll(async () => {
+      // reset the registry
+      await baseContracts[contractName].setRegistry(
+        baseContracts['DragoRegistry'].address
+      )
+    })
     it('changes the registry address', async () => {
-      const registry = baseContracts['DragoRegistry'].address
-      await baseContracts[contractName].setRegistry(registry)
+      const fakeRegistry = '0x7ce6e371085cb611fb46d5065397223ef2f000ff'
+      await baseContracts[contractName].setRegistry(fakeRegistry)
       const newRegistry = await baseContracts[contractName].dragoRegistry()
-      expect(newRegistry).toEqual(registry)
+      expect(newRegistry).toEqual(fakeRegistry)
     })
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
@@ -63,12 +69,7 @@ describeContracts(contractName, () => {
   })
 
   describe('setRigoblockDao', () => {
-    it('changes the dao address', async () => {
-      await baseContracts[contractName].setRigoblockDao(accounts[1])
-      const newDao = await baseContracts[contractName].rigoblockDao()
-      expect(newDao).toEqual(accounts[1])
-
-      // changing the DAO back to be able to call functions in next tests
+    afterAll(async () => {
       await baseContracts[contractName].setRigoblockDao.sendTransactionAsync(
         accounts[0],
         {
@@ -78,13 +79,18 @@ describeContracts(contractName, () => {
         }
       )
     })
+    it('changes the dao address', async () => {
+      await baseContracts[contractName].setRigoblockDao(accounts[1])
+      const newDao = await baseContracts[contractName].rigoblockDao()
+      expect(newDao).toEqual(accounts[1])
+    })
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
         baseContracts[contractName].setRigoblockDao.sendTransactionAsync(
-          accounts[1],
+          accounts[0],
           {
             // non DAO account
-            from: accounts[1],
+            from: accounts[0],
             gas: GAS_ESTIMATE,
             gasPrice: 1
           }
@@ -95,7 +101,6 @@ describeContracts(contractName, () => {
 
   describe('setRatio', () => {
     // perhaps we need a clearer description
-    // how do we check if the ratio has been set correctly?
     it('sets the groupRatio between asset and performance reward for given group', async () => {
       const txHash = await baseContracts[contractName].setRatio(
         group,
@@ -165,11 +170,12 @@ describeContracts(contractName, () => {
 
   describe('getPoolData', () => {
     it('gets the pool data being given a pool Id', async () => {
+      await baseContracts[contractName].setRatio(group, 2)
       const poolData = await baseContracts[contractName].getPoolData(vaultId)
       const [
         active,
         address,
-        group,
+        vaultGroup,
         price,
         supply,
         value,
@@ -179,9 +185,9 @@ describeContracts(contractName, () => {
       ] = poolData
       expect(active).toBe(true)
       expect(address).toBe(vaultAddress)
-      expect(group).toBe(group)
+      expect(vaultGroup).toBe(group)
       expect(fromMicro(supply)).toEqual(fromWei(vaultSupply))
-      expect(ratio).toEqual(toBigNumber(groupRatio))
+      expect(ratio).toEqual(toBigNumber(2))
       expect(value).toEqual(toBigNumber(vaultSupply))
       expect(price.toNumber()).toEqual(vaultPrice)
       expect(epochReward).toEqual(toBigNumber(inflationFactor))
