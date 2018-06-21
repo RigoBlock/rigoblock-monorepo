@@ -12,7 +12,7 @@ let AccountView = ({ accounts }) => {
   }))
   return (
     <div className="account-view">
-      <h1 />
+      <h1>Accounts</h1>
       <List
         Component={AccountItem}
         data={accountList}

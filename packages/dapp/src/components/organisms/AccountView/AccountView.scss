@@ -1,7 +1,7 @@
 @import "../../_settings/variables.scss";
 
 .account-list {
-  > * {
+  > *:not(:first-child) {
     padding-top: $dist-s;
   }
 }

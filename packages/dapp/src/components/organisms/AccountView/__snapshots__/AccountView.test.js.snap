@@ -36,7 +36,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
       <div
         className="account-view"
       >
-        <h1 />
+        <h1>
+          Accounts
+        </h1>
         <List
           Component={[Function]}
           className="account-list"
