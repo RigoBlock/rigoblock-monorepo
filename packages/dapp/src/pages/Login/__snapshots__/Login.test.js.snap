@@ -47,6 +47,7 @@ exports[`Login page renders correctly 1`] = `
       Need a hand?
     </h3>
     <Link
+      className={null}
       size="small"
       to="#"
     >
