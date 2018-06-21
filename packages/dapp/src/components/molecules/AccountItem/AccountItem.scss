@@ -2,11 +2,17 @@
 
 .account-item {
   display: flex;
+
   span {
     display: block;
   }
+
   .account-item-provider {
     font-weight: $font-bold;
+  }
+
+  .account-item-number {
+    text-transform: uppercase;
   }
 
   .account-item-info {

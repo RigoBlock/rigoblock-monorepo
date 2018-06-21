@@ -20,7 +20,7 @@ exports[`AccountItem component renders correctly 1`] = `
     <span
       className="account-item-number"
     >
-      ****9196
+      **** 2d6d
     </span>
   </div>
 </div>
