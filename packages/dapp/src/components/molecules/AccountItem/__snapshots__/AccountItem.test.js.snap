@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountItem component renders correctly 1`] = `
+<div
+  className="accountItem"
+>
+  <div
+    className="account-item-logo"
+  >
+    <MetaMaskLogo />
+  </div>
+  <div
+    className="account-item-info"
+  >
+    <span
+      className="account-item-provider"
+    >
+      MetaMask
+    </span>
+    <span
+      className="account-item-number"
+    >
+      ****9196
+    </span>
+  </div>
+</div>
+`;

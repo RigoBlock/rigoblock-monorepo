@@ -1,0 +1,20 @@
+@import "../../_settings/variables.scss";
+
+.accountItem {
+  display: flex;
+  span {
+    display: block;
+  }
+  .account-item-provider {
+    font-weight: 700;
+  }
+
+  .account-item-logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  > *:not(:last-child) {
+    margin-right: $dist-xs;
+  }
+}
