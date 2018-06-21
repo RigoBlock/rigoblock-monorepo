@@ -3,7 +3,7 @@ import { GAS_ESTIMATE } from '../../constants'
 const contractName = 'Inflation'
 const vaultArtifact = require('../../artifacts/Vault.json')
 
-describeContracts(contractName, async () => {
+describeContract(contractName, async () => {
   let vaultId
   let vaultAddress
   let value

@@ -2,7 +2,7 @@ import { GAS_ESTIMATE } from '../../constants'
 
 const contractName = 'RigoToken'
 
-describeContracts(contractName, () => {
+describeContract(contractName, () => {
   const RIGOTOKEN = 'Rigo Token'
   const RIGOTOKEN_SYMBOL = 'GRG'
   const RIGOTOKEN_DECIMALS = 18

@@ -3,7 +3,7 @@ const vaultArtifact = require('../../artifacts/Vault.json')
 
 import { GAS_ESTIMATE } from '../../constants'
 
-describeContracts(contractName, () => {
+describeContract(contractName, () => {
   const groupRatio = 5
   const minimumRigo = 50
   const vaultPrice = 1e18

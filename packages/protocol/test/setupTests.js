@@ -35,7 +35,7 @@ const setupGanache = async () => {
 global.toBigNumber = val => new BigNumber(val)
 global.fromWei = val => val / 1e18
 global.fromMicro = val => val / 1e6
-global.describeContracts = (name, f) => {
+global.describeContract = (name, f) => {
   describe('', async () => {
     beforeAll(setupGanache)
     describe(name, f)

@@ -1,6 +1,6 @@
 const contractName = 'VaultFactory'
 
-describeContracts(contractName, () => {
+describeContract(contractName, () => {
   describe('createVault', () => {
     it('creates a vault when provided with proper parameters', async () => {
       const txHash = await baseContracts[contractName].createVault(
