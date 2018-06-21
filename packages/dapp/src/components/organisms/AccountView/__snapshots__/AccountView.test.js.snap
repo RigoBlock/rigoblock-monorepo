@@ -231,7 +231,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   <span
                     className="account-item-number"
                   >
-                    ****9196
+                    **** 9196
                   </span>
                 </div>
               </div>
@@ -397,7 +397,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   <span
                     className="account-item-number"
                   >
-                    ****2d6d
+                    **** 2d6d
                   </span>
                 </div>
               </div>
@@ -563,7 +563,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   <span
                     className="account-item-number"
                   >
-                    ****a323
+                    **** a323
                   </span>
                 </div>
               </div>
@@ -729,7 +729,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   <span
                     className="account-item-number"
                   >
-                    ****d310
+                    **** d310
                   </span>
                 </div>
               </div>
@@ -895,7 +895,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   <span
                     className="account-item-number"
                   >
-                    ****c446
+                    **** c446
                   </span>
                 </div>
               </div>

@@ -4,7 +4,7 @@ import toJson from 'enzyme-to-json'
 
 const props = {
   provider: 'metamask',
-  number: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+  number: '0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d'
 }
 
 describe('AccountItem component', () => {
