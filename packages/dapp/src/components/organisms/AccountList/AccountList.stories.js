@@ -24,6 +24,6 @@ const props = {
   }
 }
 
-storiesOf('Molecules/AccountList', module)
+storiesOf('Organisms/AccountList', module)
   .addDecorator(withKnobs)
   .add('default', () => <AccountList {...props} />)

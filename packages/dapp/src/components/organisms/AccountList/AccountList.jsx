@@ -1,5 +1,5 @@
 import './AccountList.scss'
-import AccountItem from '../AccountItem'
+import AccountItem from '../../molecules/AccountItem'
 import PropTypes from 'prop-types'
 import React from 'react'
 
