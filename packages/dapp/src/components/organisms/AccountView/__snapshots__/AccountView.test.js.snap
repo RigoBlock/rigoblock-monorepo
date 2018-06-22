@@ -82,7 +82,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   className="account-item-logo"
                 >
                   <Component>
-                    something
+                    SVG image /Users/dev/workspace/rigoblock/rigoblock-monorepo/packages/dapp/src/images/metamask-fox.svg
                   </Component>
                 </div>
                 <div
@@ -113,7 +113,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   className="account-item-logo"
                 >
                   <Component>
-                    something
+                    SVG image /Users/dev/workspace/rigoblock/rigoblock-monorepo/packages/dapp/src/images/metamask-fox.svg
                   </Component>
                 </div>
                 <div
@@ -144,7 +144,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   className="account-item-logo"
                 >
                   <Component>
-                    something
+                    SVG image /Users/dev/workspace/rigoblock/rigoblock-monorepo/packages/dapp/src/images/metamask-fox.svg
                   </Component>
                 </div>
                 <div
@@ -175,7 +175,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   className="account-item-logo"
                 >
                   <Component>
-                    something
+                    SVG image /Users/dev/workspace/rigoblock/rigoblock-monorepo/packages/dapp/src/images/metamask-fox.svg
                   </Component>
                 </div>
                 <div
@@ -206,7 +206,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                   className="account-item-logo"
                 >
                   <Component>
-                    something
+                    SVG image /Users/dev/workspace/rigoblock/rigoblock-monorepo/packages/dapp/src/images/metamask-fox.svg
                   </Component>
                 </div>
                 <div
