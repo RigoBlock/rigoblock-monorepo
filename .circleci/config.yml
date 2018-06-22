@@ -283,12 +283,12 @@ workflows:
       - test-unit-dapp:
           requires:
             - setup
-      - build-protocol:
-          requires:
-            - test-unit-dapp
       - test-protocol:
           requires:
-            - build-protocol
+            - test-unit-dapp
+      - build-protocol:
+          requires:
+            - test-protocol
       - build-api:
           requires:
             - build-protocol
