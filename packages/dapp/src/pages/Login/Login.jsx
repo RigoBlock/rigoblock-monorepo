@@ -18,10 +18,13 @@ class Login extends Component {
           <a href={'https://metamask.io/'}>Metamask</a>
           <br />
           <a href={'https://www.parity.io/'}>Parity UI</a>
+          <p>Go get one and come back soon (~˘▾˘)~</p>
           <h3>2. Transfer some funds to your decentralized wallet</h3>
           <p>As you would do with a standard ETH wallet.</p>
           <h3>3. Start investing with RigoBlock</h3>
-          <p>Now you are ready to deposit and invest on RigoBlock!</p>
+          <p>
+            Now you are ready to deposit and invest with on Rigoblock ( ﾟヮﾟ)!
+          </p>
           <div className="line-break" />
           <h3>Need a hand?</h3>
           <Link to={'#'} size={LINK_SIZES.SMALL}>

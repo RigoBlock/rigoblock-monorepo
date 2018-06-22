@@ -5,12 +5,12 @@ import List from '../List'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-let AccountView = ({ accounts }) => {
+let AccountView = ({ currentAccount, accounts }) => {
   const accountList = Object.keys(accounts).map(account => ({
     number: account,
     provider: accounts[account].provider
   }))
-  return (
+  return currentAccount ? (
     <div className="account-view">
       <h1>Accounts</h1>
       <List
@@ -19,15 +19,26 @@ let AccountView = ({ accounts }) => {
         className={'account-list'}
       />
     </div>
+  ) : (
+    <div className="account-view">
+      <h1>Accounts</h1>
+      <div className="typeface">¯\_(ツ)_/¯</div>
+    </div>
   )
 }
 
 AccountView.propTypes = {
-  accounts: PropTypes.object.isRequired
+  accounts: PropTypes.object.isRequired,
+  currentAccount: PropTypes.string
 }
 
-AccountView = connect(state => ({ accounts: state.user.blockChain.accounts }))(
-  AccountView
-)
+AccountView.defaultProps = {
+  currentAccount: null
+}
+
+AccountView = connect(state => ({
+  currentAccount: state.user.preferences.currentAccount,
+  accounts: state.user.blockChain.accounts
+}))(AccountView)
 
 export default AccountView
