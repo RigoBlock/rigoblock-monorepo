@@ -58,6 +58,8 @@ yarn lint
 
 To publish the packages in the monorepo to NPM you need to create a new branch and let lerna do the job.
 
+**:warning: Make sure to start from a clean-state ganache when publishing! Otherwise staging won't be able to connect to the smart contracts deployed on ganache**
+
 ```
 git checkout master
 git checkout -b feature/publish-# # Use an incremental number
