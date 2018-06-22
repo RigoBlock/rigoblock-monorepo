@@ -291,7 +291,7 @@ workflows:
             - build-protocol
       - build-api:
           requires:
-            - test-protocol
+            - build-protocol
       - build-dapp:
           requires:
             - build-api

@@ -1,7 +1,9 @@
-import { GAS_ESTIMATE } from '../../constants'
+import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
+import { toBigNumber } from '../utils'
+import vaultArtifact from '../../artifacts/Vault.json'
+import web3 from '../web3'
 
 const contractName = 'Inflation'
-const vaultArtifact = require('../../artifacts/Vault.json')
 
 describeContract(contractName, async () => {
   let vaultId
@@ -20,7 +22,7 @@ describeContract(contractName, async () => {
     vaultId = id
     vaultAddress = address
     const vaultInstance = new web3.eth.Contract(
-      vaultArtifact.networks[networkId].abi,
+      vaultArtifact.networks[GANACHE_NETWORK_ID].abi,
       vaultAddress
     )
     value = web3.utils.toWei('2')

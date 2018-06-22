@@ -1,4 +1,5 @@
 import { GAS_ESTIMATE } from '../../constants'
+import { toBigNumber } from '../utils'
 
 const contractName = 'RigoToken'
 

@@ -1,29 +1,27 @@
-const { NETWORKS } = require('../constants')
-const Web3 = require('web3')
-const deploy = require('@rigoblock/protocol/deploy')
-const BigNumber = require('bignumber.js').BigNumber
-const ganache = require('ganache-cli')
-const mnemonic = require('../package.json').config.mnemonic
-const logger = require('../deploy/logger')
-const c = require('chalk')
+import { GANACHE_NETWORK_ID, GANACHE_PORT, NETWORKS } from '../constants'
+import c from 'chalk'
+import deploy from '@rigoblock/protocol/deploy'
+import ganache from 'ganache-cli'
+import logger from '../deploy/logger'
+import pkg from '../package.json'
+import web3 from './web3'
 
 let server
 process.on('warning', e => console.error(e.stack))
 process.on('error', e => console.error(e.stack))
 
 const setupGanache = async () => {
-  const port = 8545
-  const network_id = 5777
-  const ganacheOptions = { mnemonic, port, network_id }
+  const ganacheOptions = {
+    mnemonic: pkg.config.mnemonic,
+    port: GANACHE_PORT,
+    network_id: GANACHE_NETWORK_ID
+  }
   server = ganache.server(ganacheOptions)
-  server.listen(port, err => {
-    if (err) {
-      console.err(err)
-    }
-    logger.info(c.bold.green('Ganache starting!'))
-  })
-  global.web3 = new Web3(new Web3.providers.HttpProvider(NETWORKS[0]))
-  global.networkId = 5777
+  server.listen(
+    GANACHE_PORT,
+    err =>
+      err ? logger.error(err) : logger.info(c.bold.green('Ganache starting!'))
+  )
   const rawAccounts = await web3.eth.getAccounts()
   global.accounts = rawAccounts.map(acc => acc.toLowerCase())
   const prevLog = console.log
@@ -32,11 +30,8 @@ const setupGanache = async () => {
   console.log = prevLog
 }
 
-global.toBigNumber = val => new BigNumber(val)
-global.fromWei = val => val / 1e18
-global.fromMicro = val => val / 1e6
 global.describeContract = (name, f) => {
-  describe('', async () => {
+  describe('', () => {
     beforeAll(setupGanache)
     describe(name, f)
     afterAll(async () => {

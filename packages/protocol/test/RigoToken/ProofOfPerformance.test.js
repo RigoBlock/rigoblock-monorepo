@@ -1,7 +1,9 @@
-const contractName = 'ProofOfPerformance'
-const vaultArtifact = require('../../artifacts/Vault.json')
+import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
+import { fromMicro, fromWei, toBigNumber } from '../utils'
+import vaultArtifact from '../../artifacts/Vault.json'
+import web3 from '../web3'
 
-import { GAS_ESTIMATE } from '../../constants'
+const contractName = 'ProofOfPerformance'
 
 describeContract(contractName, () => {
   const groupRatio = 5
@@ -28,7 +30,7 @@ describeContract(contractName, () => {
     vaultId = id
     vaultAddress = address
     const vaultInstance = new web3.eth.Contract(
-      vaultArtifact.networks[networkId].abi,
+      vaultArtifact.networks[GANACHE_NETWORK_ID].abi,
       vaultAddress
     )
     vaultSupply = web3.utils.toWei('2')

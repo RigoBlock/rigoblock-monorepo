@@ -1,13 +1,12 @@
 const pino = require('pino')
 
 const loggerOpts = {
-  prettyPrint: true,
+  prettyPrint: false,
   timestamp: false
 }
 
 // silence deploy logs in tests
 if (process.env.NODE_ENV === 'test') {
-  loggerOpts.prettyPrint = false
   loggerOpts.level = 'silent'
 }
 
