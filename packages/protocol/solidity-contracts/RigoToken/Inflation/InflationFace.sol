@@ -30,6 +30,7 @@ interface InflationFace {
     function setMinimumRigo(uint _minimum) external;
     function setRigoblock(address _newRigoblock) external;
     function setAuthority(address _authority) external;
+    function setProofOfPerformance(address _pop) external;
     function setPeriod(uint _newPeriod) external;
 
     // CONSTANT PUBLIC FUNCTIONS

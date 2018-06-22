@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` ProofOfPerformance setMinimumRigo can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` ProofOfPerformance setRatio can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` ProofOfPerformance setRegistry can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` ProofOfPerformance setRigoblockDao can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
