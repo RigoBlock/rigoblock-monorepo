@@ -240,6 +240,7 @@ describeContract(contractName, async () => {
       await expect(
         baseContracts[contractName].mintInflation(vaultAddress, reward)
       ).rejects.toThrowErrorMatchingSnapshot()
+      // TODO: Fix this when contract is fixed
       // this returns true ?
       await baseContracts[contractName].canWithdraw(vaultId)
       // expect(canWithdraw).toBe(false)
