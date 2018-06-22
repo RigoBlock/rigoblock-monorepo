@@ -17,13 +17,13 @@
 
   .account-item-info {
     :last-child {
-      padding-top: $dist-xs /2;
+      padding-top: $dist-2xs;
     }
   }
 
   .account-item-logo {
-    width: 24px;
-    height: 24px;
+    width: $dist-m;
+    height: $dist-m;
   }
 
   > *:not(:last-child) {

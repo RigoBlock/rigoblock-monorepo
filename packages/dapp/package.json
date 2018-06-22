@@ -87,6 +87,7 @@
     "sass-loader": "^6.0.7",
     "serve": "^6.5.5",
     "style-loader": "0.20.3",
+    "svg-react-loader": "^0.4.5",
     "sw-precache-webpack-plugin": "0.11.5",
     "updeep": "^1.0.0",
     "url-loader": "0.6.2",
@@ -118,6 +119,7 @@
     "transform": {
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^.+\\.svg$": "<rootDir>/config/jest/componentMock.js",
       "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
