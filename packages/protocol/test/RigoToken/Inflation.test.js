@@ -10,10 +10,12 @@ describeContract(contractName, async () => {
   let vaultAddress
   let value
   let group
+  let transactionDefault
   const minimumRigo = 5
   const inflationFactor = 1
   const fakeFactory = '0x7ce6e371085cb611fb46d5065397223ef2f000ff'
   const reward = 20
+
   beforeAll(async () => {
     group = baseContracts['VaultFactory'].address
     await baseContracts['VaultFactory'].createVault('test vault', 'VLT')
@@ -26,11 +28,14 @@ describeContract(contractName, async () => {
       vaultAddress
     )
     value = web3.utils.toWei('2')
-    await vaultInstance.methods.buyVault().send({
+    transactionDefault = {
       from: accounts[1],
-      value,
       gas: GAS_ESTIMATE,
       gasPrice: 1
+    }
+    await vaultInstance.methods.buyVault().send({
+      ...transactionDefault,
+      value
     })
   })
 
@@ -53,12 +58,7 @@ describeContract(contractName, async () => {
         baseContracts[contractName].setInflationFactor.sendTransactionAsync(
           group,
           inflationFactor,
-          {
-            // non DAO account
-            from: accounts[1],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
-          }
+          transactionDefault
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })
@@ -96,12 +96,7 @@ describeContract(contractName, async () => {
       await expect(
         baseContracts[contractName].setMinimumRigo.sendTransactionAsync(
           minimumRigo,
-          {
-            // non DAO account
-            from: accounts[1],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
-          }
+          transactionDefault
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })
@@ -112,11 +107,7 @@ describeContract(contractName, async () => {
       // reset DAO address
       await baseContracts[contractName].setRigoblock.sendTransactionAsync(
         accounts[0],
-        {
-          from: accounts[1],
-          gas: GAS_ESTIMATE,
-          gasPrice: 1
-        }
+        transactionDefault
       )
     })
 
@@ -132,9 +123,8 @@ describeContract(contractName, async () => {
           accounts[0],
           {
             // non DAO account
-            from: accounts[0],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
+            ...transactionDefault,
+            from: accounts[0]
           }
         )
       ).rejects.toThrowErrorMatchingSnapshot()
@@ -160,12 +150,7 @@ describeContract(contractName, async () => {
       await expect(
         baseContracts[contractName].setAuthority.sendTransactionAsync(
           fakeAuthority,
-          {
-            // non DAO account
-            from: accounts[1],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
-          }
+          transactionDefault
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })
@@ -189,12 +174,7 @@ describeContract(contractName, async () => {
       await expect(
         baseContracts[contractName].setProofOfPerformance.sendTransactionAsync(
           fakePop,
-          {
-            // non DAO account
-            from: accounts[1],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
-          }
+          transactionDefault
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })
@@ -218,12 +198,7 @@ describeContract(contractName, async () => {
       await expect(
         baseContracts[contractName].setPeriod.sendTransactionAsync(
           defaultPeriod,
-          {
-            // non DAO account
-            from: accounts[1],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
-          }
+          transactionDefault
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })

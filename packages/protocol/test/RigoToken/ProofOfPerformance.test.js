@@ -14,6 +14,7 @@ describeContract(contractName, () => {
   let vaultAddress
   let vaultSupply
   let group
+  let transactionDefault
 
   beforeAll(async () => {
     group = baseContracts['VaultFactory'].address
@@ -30,11 +31,14 @@ describeContract(contractName, () => {
       vaultAddress
     )
     vaultSupply = web3.utils.toWei('2')
-    await vaultInstance.methods.buyVault().send({
+    transactionDefault = {
       from: accounts[1],
-      value: vaultSupply,
       gas: GAS_ESTIMATE,
       gasPrice: 1
+    }
+    await vaultInstance.methods.buyVault().send({
+      ...transactionDefault,
+      value: vaultSupply
     })
   })
 
@@ -55,12 +59,7 @@ describeContract(contractName, () => {
       await expect(
         baseContracts[contractName].setRegistry.sendTransactionAsync(
           baseContracts['DragoRegistry'].address,
-          {
-            // non DAO account
-            from: accounts[1],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
-          }
+          transactionDefault
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })
@@ -70,11 +69,7 @@ describeContract(contractName, () => {
     afterAll(async () => {
       await baseContracts[contractName].setRigoblockDao.sendTransactionAsync(
         accounts[0],
-        {
-          from: accounts[1],
-          gas: GAS_ESTIMATE,
-          gasPrice: 1
-        }
+        transactionDefault
       )
     })
     it('changes the dao address', async () => {
@@ -88,9 +83,8 @@ describeContract(contractName, () => {
           accounts[0],
           {
             // non DAO account
-            from: accounts[0],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
+            ...transactionDefault,
+            from: accounts[0]
           }
         )
       ).rejects.toThrowErrorMatchingSnapshot()
@@ -114,12 +108,7 @@ describeContract(contractName, () => {
         baseContracts[contractName].setRatio.sendTransactionAsync(
           group,
           groupRatio,
-          {
-            // non DAO account
-            from: accounts[1],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
-          }
+          transactionDefault
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })
@@ -135,12 +124,7 @@ describeContract(contractName, () => {
       await expect(
         baseContracts[contractName].setMinimumRigo.sendTransactionAsync(
           minimumRigo,
-          {
-            // non DAO account
-            from: accounts[1],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
-          }
+          transactionDefault
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })

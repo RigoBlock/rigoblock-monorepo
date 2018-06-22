@@ -8,9 +8,15 @@ describeContract(contractName, () => {
   const RIGOTOKEN_SYMBOL = 'GRG'
   const RIGOTOKEN_DECIMALS = 18
   let inflationAddress
+  let transactionDefault
 
   beforeAll(() => {
     inflationAddress = baseContracts['Inflation'].address
+    transactionDefault = {
+      from: accounts[1],
+      gas: GAS_ESTIMATE,
+      gasPrice: 1
+    }
   })
 
   describe('mintToken', () => {
@@ -47,12 +53,7 @@ describeContract(contractName, () => {
         baseContracts[contractName].mintToken.sendTransactionAsync(
           accounts[1],
           tokenAmount,
-          {
-            // non minter account
-            from: accounts[1],
-            gas: GAS_ESTIMATE,
-            gasPrice: 1
-          }
+          transactionDefault
         )
       ).rejects.toThrowErrorMatchingSnapshot()
     })
