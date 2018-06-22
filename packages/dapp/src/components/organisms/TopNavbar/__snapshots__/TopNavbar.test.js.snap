@@ -5,7 +5,7 @@ exports[`TopNavbar component renders correctly 1`] = `
   className="top-navbar"
 >
   <Link
-    className={null}
+    className="navbar-title"
     size="large"
     to="/"
   >

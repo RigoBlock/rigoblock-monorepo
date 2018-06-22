@@ -3,4 +3,18 @@
 .left-navbar {
   padding-left: $dist-m;
   min-width: 20 * $dist-xs;
+
+  &:first-child {
+    margin-top: $dist-2xl;
+  }
+  > *:not(:first-child) {
+    margin-top: $dist-m;
+  }
+}
+
+.navbar-divider {
+  width: $dist-l;
+  height: 1px;
+  margin: $dist-xl 0 !important;
+  background-color: $dark-grey;
 }

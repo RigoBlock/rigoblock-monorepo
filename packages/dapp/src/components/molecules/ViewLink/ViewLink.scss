@@ -5,6 +5,10 @@
   line-height: $line-height;
   color: black;
 
+  &.link {
+    display: flex;
+  }
+
   .tooltip {
     color: black;
   }
@@ -21,7 +25,7 @@
   }
 
   :last-child {
-    padding-left: $dist-xxs;
+    padding-left: $dist-2xs;
   }
 
   &.active {

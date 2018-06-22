@@ -81,9 +81,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component>
-                    something
-                  </Component>
+                  <Component />
                 </div>
                 <div
                   className="account-item-info"
@@ -112,9 +110,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component>
-                    something
-                  </Component>
+                  <Component />
                 </div>
                 <div
                   className="account-item-info"
@@ -143,9 +139,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component>
-                    something
-                  </Component>
+                  <Component />
                 </div>
                 <div
                   className="account-item-info"
@@ -174,9 +168,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component>
-                    something
-                  </Component>
+                  <Component />
                 </div>
                 <div
                   className="account-item-info"
@@ -205,9 +197,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component>
-                    something
-                  </Component>
+                  <Component />
                 </div>
                 <div
                   className="account-item-info"

@@ -1,0 +1,7 @@
+@import "../../_settings/variables.scss";
+
+.navigation-view {
+  > *:not(:first-child) {
+    padding-top: $dist-xs;
+  }
+}
