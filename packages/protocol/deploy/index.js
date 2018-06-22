@@ -44,7 +44,7 @@ module.exports = async (baseAccount, network) => {
   printAddress('VaultEventful', vaultEventful.address)
 
   logger.info(c.bold('Setting up VaultEventful...'))
-  authority.setVaultEventful(vaultEventful.address)
+  await authority.setVaultEventful(vaultEventful.address)
 
   const vaultFactory = await deploy(baseAccount, network, 'VaultFactory', [
     dragoRegistry.address,
@@ -54,7 +54,7 @@ module.exports = async (baseAccount, network) => {
   printAddress('VaultFactory', vaultFactory.address)
 
   logger.info(c.bold('Whitelisting VaultFactory...'))
-  authority.whitelistFactory(vaultFactory.address, true)
+  await authority.whitelistFactory(vaultFactory.address, true)
 
   const dragoEventful = await deploy(baseAccount, network, 'DragoEventful', [
     authority.address
@@ -62,7 +62,7 @@ module.exports = async (baseAccount, network) => {
   printAddress('DragoEventful', dragoEventful.address)
 
   logger.info(c.bold('Setting up DragoEventful...'))
-  authority.setDragoEventful(dragoEventful.address)
+  await authority.setDragoEventful(dragoEventful.address)
 
   const dragoFactory = await deploy(baseAccount, network, 'DragoFactory', [
     dragoRegistry.address,
@@ -72,14 +72,41 @@ module.exports = async (baseAccount, network) => {
   printAddress('DragoFactory', dragoFactory.address)
 
   logger.info(c.bold('Whitelisting DragoFactory...'))
-  authority.whitelistFactory(dragoFactory.address, true)
+  await authority.whitelistFactory(dragoFactory.address, true)
+
+  const rigoToken = await deploy(baseAccount, network, 'RigoToken', [
+    baseAccount,
+    baseAccount
+  ])
+  printAddress('RigoToken', rigoToken.address)
+
+  const proofOfPerformance = await deploy(
+    baseAccount,
+    network,
+    'ProofOfPerformance',
+    [rigoToken.address, baseAccount, dragoRegistry.address]
+  )
+  printAddress('ProofOfPerformance', proofOfPerformance.address)
+
+  const inflation = await deploy(baseAccount, network, 'Inflation', [
+    rigoToken.address,
+    proofOfPerformance.address,
+    authority.address
+  ])
+  printAddress('Inflation', inflation.address)
+
+  await rigoToken.changeMintingAddress(inflation.address)
+  printAddress('Setting minting address...', inflation.address)
 
   return {
-    authority,
-    dragoRegistry,
-    vaultEventful,
-    vaultFactory,
-    dragoEventful,
-    dragoFactory
+    Authority: authority,
+    DragoRegistry: dragoRegistry,
+    VaultEventful: vaultEventful,
+    VaultFactory: vaultFactory,
+    DragoEventful: dragoEventful,
+    DragoFactory: dragoFactory,
+    RigoToken: rigoToken,
+    ProofOfPerformance: proofOfPerformance,
+    Inflation: inflation
   }
 }
