@@ -35,15 +35,7 @@ describeContract(contractName, async () => {
   })
 
   describe('setInflationFactor', () => {
-    afterAll(async () => {
-      // we need to reset the minting address, or we won't be able to mint
-      // tokens in mintInflation test
-      await baseContracts['RigoToken'].changeMintingAddress(accounts[0])
-    })
     it('sets the inflation factor', async () => {
-      await baseContracts['RigoToken'].changeMintingAddress(
-        baseContracts['Inflation'].address
-      )
       const txHash = await baseContracts[contractName].setInflationFactor(
         group,
         inflationFactor
@@ -254,6 +246,8 @@ describeContract(contractName, async () => {
 
     it('allows ProofOfPerformance to mint rewards', async () => {
       const inflation = baseContracts['Inflation'].address
+      // Setting accounts[0] as minter to be able to call mintToken
+      await baseContracts['RigoToken'].changeMintingAddress(accounts[0])
       await baseContracts['RigoToken'].mintToken(accounts[0], 200)
       await baseContracts['Inflation'].setMinimumRigo(20)
       await baseContracts['RigoToken'].changeMintingAddress(inflation)

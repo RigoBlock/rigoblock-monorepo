@@ -7,9 +7,20 @@ describeContract(contractName, () => {
   const RIGOTOKEN = 'Rigo Token'
   const RIGOTOKEN_SYMBOL = 'GRG'
   const RIGOTOKEN_DECIMALS = 18
+  let inflationAddress
+
+  beforeAll(() => {
+    inflationAddress = baseContracts['Inflation'].address
+  })
 
   describe('mintToken', () => {
+    afterAll(async () => {
+      // reset minting address
+      await baseContracts[contractName].changeMintingAddress(inflationAddress)
+    })
+
     it('mints new tokens and emits a TokenMinted event', async () => {
+      await baseContracts[contractName].changeMintingAddress(accounts[0])
       const tokenAmount = 10
       const txHash = await baseContracts[contractName].mintToken(
         accounts[0],
@@ -48,11 +59,6 @@ describeContract(contractName, () => {
   })
 
   describe('changeMintingAddress', () => {
-    afterAll(async () => {
-      // reset minting address
-      await baseContracts[contractName].changeMintingAddress(accounts[0])
-    })
-
     it('sets a new minter given a valid account address', async () => {
       const inflation = baseContracts['Inflation'].address
       const txHash = await baseContracts[contractName].changeMintingAddress(
@@ -138,7 +144,7 @@ describeContract(contractName, () => {
   describe('getMinter', () => {
     it('returns the address of the minter', async () => {
       const minter = await baseContracts[contractName].getMinter()
-      expect(minter).toBe(accounts[0])
+      expect(minter).toBe(inflationAddress)
     })
   })
 
@@ -150,15 +156,7 @@ describeContract(contractName, () => {
   })
 
   describe('getInflationFactor', async () => {
-    afterAll(async () => {
-      // reset minter
-      await baseContracts[contractName].changeMintingAddress(accounts[0])
-    })
     it('returns the inflation factor', async () => {
-      // minter needs to be Inflation contract
-      await baseContracts[contractName].changeMintingAddress(
-        baseContracts['Inflation'].address
-      )
       const group = baseContracts['VaultFactory'].address
       const inflationFactor = 1
       await baseContracts['Inflation'].setInflationFactor(

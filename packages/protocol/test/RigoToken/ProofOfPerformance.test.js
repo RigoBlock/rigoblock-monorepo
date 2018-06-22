@@ -17,10 +17,6 @@ describeContract(contractName, () => {
 
   beforeAll(async () => {
     group = baseContracts['VaultFactory'].address
-    // claimPop function requires the minting address to be the Inflation contract
-    await baseContracts['RigoToken'].changeMintingAddress(
-      baseContracts['Inflation'].address
-    )
     // setting inflation factor to later gather the data with getPoolData
     await baseContracts['Inflation'].setInflationFactor(group, inflationFactor)
     // creating vault to test functions
