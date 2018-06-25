@@ -19,4 +19,9 @@ describe('Button component', () => {
     button.simulate('click')
     expect(props.onClick).toHaveBeenCalledTimes(1)
   })
+  it('calls onClick function when clicked', () => {
+    const button = shallow(createComponentWithProps(Button, props))
+    button.simulate('click')
+    expect(props.onClick).toHaveBeenCalledTimes(1)
+  })
 })

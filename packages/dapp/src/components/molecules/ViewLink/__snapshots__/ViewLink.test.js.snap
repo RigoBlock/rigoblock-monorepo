@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewLink component renders correctly 1`] = `
+<Link
+  className="view-link"
+  size="medium"
+  to="/"
+>
+  <Tooltip
+    size="small"
+    type="dashboard"
+  />
+  <span>
+    Dashboard
+  </span>
+</Link>
+`;

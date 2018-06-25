@@ -6,7 +6,11 @@ import UserMenu from '../../molecules/UserMenu'
 
 const TopNavbar = () => (
   <div className="top-navbar">
-    <Link to={ROUTES.DASHBOARD} size={LINK_SIZES.LARGE}>
+    <Link
+      to={ROUTES.DASHBOARD}
+      size={LINK_SIZES.LARGE}
+      className="navbar-title"
+    >
       RigoBlock
     </Link>
     <UserMenu />

@@ -12,7 +12,7 @@ Scenario(
     preferences.assertImOnPage()
     preferences.changeTimezoneValue('GMT -12:00')
     preferences.submitForm()
-    navigation.navigateToDashboard()
+    navigation.navigateToHome()
     navigation.navigateToPreferences()
     preferences.checkTimezoneHasChanged('GMT -12:00')
   }

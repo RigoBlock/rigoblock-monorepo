@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Vault page renders correctly 1`] = `
+exports[`Vaults page renders correctly 1`] = `
 <BaseTemplate>
   <h1>
-    Vault
+    Vaults
   </h1>
 </BaseTemplate>
 `;

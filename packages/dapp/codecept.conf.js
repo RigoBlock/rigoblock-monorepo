@@ -18,7 +18,9 @@ const config = {
     dashboard: './test/pages/dashboard.js',
     preferences: './test/pages/preferences.js',
     help: './test/pages/help.js',
-    login: './test/pages/login.js'
+    login: './test/pages/login.js',
+    vaults: './test/pages/vaults.js',
+    dragos: './test/pages/dragos.js'
   },
   mocha: {},
   bootstrap: false,

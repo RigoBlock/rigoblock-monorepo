@@ -10,8 +10,8 @@ export const LINK_SIZES = {
   LARGE: 'large'
 }
 
-const Link = ({ size, children, to }) => {
-  const classProps = classNames('link', `link-${size}`)
+const Link = ({ size, children, to, className }) => {
+  const classProps = classNames('link', `link-${size}`, className)
   return (
     <RouterLink to={to} className={classProps}>
       {children}
@@ -21,12 +21,14 @@ const Link = ({ size, children, to }) => {
 
 Link.propTypes = {
   to: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   size: PropTypes.oneOf([LINK_SIZES.SMALL, LINK_SIZES.MEDIUM, LINK_SIZES.LARGE])
 }
 
 Link.defaultProps = {
-  size: LINK_SIZES.MEDIUM
+  size: LINK_SIZES.MEDIUM,
+  className: null
 }
 
 export default Link

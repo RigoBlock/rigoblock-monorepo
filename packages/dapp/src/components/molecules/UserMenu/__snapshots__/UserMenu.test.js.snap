@@ -5,12 +5,14 @@ exports[`UserMenu component renders correctly 1`] = `
   className="user-menu"
 >
   <Link
+    className={null}
     size="medium"
     to="/preferences"
   >
     Preferences
   </Link>
   <Link
+    className={null}
     size="medium"
     to="/help"
   >

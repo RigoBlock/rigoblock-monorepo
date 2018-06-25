@@ -1,0 +1,39 @@
+@import "../../_settings/variables.scss";
+
+.view-link {
+  display: flex;
+  line-height: $line-height;
+  color: black;
+
+  &.link {
+    display: flex;
+  }
+
+  .tooltip {
+    color: black;
+  }
+
+  &:visited {
+    color: black;
+  }
+
+  &:active {
+    font-weight: $font-bold;
+    .tooltip {
+      font-weight: $font-bold;
+    }
+  }
+
+  :last-child {
+    padding-left: $dist-2xs;
+  }
+
+  &.active {
+    font-weight: $font-bold;
+    color: $azure-radiance;
+
+    .tooltip {
+      color: $azure-radiance;
+    }
+  }
+}

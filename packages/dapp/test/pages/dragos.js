@@ -1,4 +1,4 @@
-const dashboardRoute = '/'
+const dragosRoute = '/dragos'
 
 let I
 
@@ -8,14 +8,14 @@ module.exports = {
   },
 
   navigateTo() {
-    I.amOnPage('/')
+    I.amOnPage('/dragos')
   },
 
   assertImOnPage() {
-    I.waitInUrl('/')
-    I.waitForText('Dashboard', 'h1')
+    I.waitInUrl('/dragos')
+    I.waitForText('Dragos', 'h1')
     I.seeElement('div.account-view')
     I.seeElement('div.navigation-view')
-    I.seeElement(`a[href='${dashboardRoute}'].active`)
+    I.seeElement(`a[href='${dragosRoute}'].active`)
   }
 }
