@@ -87,12 +87,6 @@ jobs:
           name: Wait for HTTP server and ganache cli
           command: dockerize -wait tcp://localhost:8545 -timeout 1m
       - run:
-          name: Compiling contracts
-          command: npx lerna run --scope @rigoblock/protocol compile --stream
-      - run:
-          name: Deploying contracts
-          command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap --stream
-      - run:
           name: Building protocol
           command: yarn build:protocol
       - persist_to_workspace:
