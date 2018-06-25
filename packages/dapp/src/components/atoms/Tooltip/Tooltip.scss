@@ -2,16 +2,16 @@
 
 .tooltip {
   color: $silver-sand;
-}
 
-.tooltip-small {
-  font-size: 1.2 * $base-font-size !important;
-}
+  &.small {
+    font-size: $medium-font-size;
+  }
 
-.tooltip-medium {
-  font-size: 1.7 * $base-font-size !important;
-}
+  &.medium {
+    font-size: $large-font-size;
+  }
 
-.tooltip-large {
-  font-size: 2.6 * $base-font-size !important;
+  &.large {
+    font-size: $xl-font-size;
+  }
 }
