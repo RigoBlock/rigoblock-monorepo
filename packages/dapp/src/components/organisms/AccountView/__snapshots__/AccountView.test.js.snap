@@ -82,7 +82,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component />
+                  <Component>
+                    SVG image metamask-fox.svg
+                  </Component>
                 </div>
                 <div
                   className="account-item-info"
@@ -111,7 +113,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component />
+                  <Component>
+                    SVG image metamask-fox.svg
+                  </Component>
                 </div>
                 <div
                   className="account-item-info"
@@ -140,7 +144,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component />
+                  <Component>
+                    SVG image metamask-fox.svg
+                  </Component>
                 </div>
                 <div
                   className="account-item-info"
@@ -169,7 +175,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component />
+                  <Component>
+                    SVG image metamask-fox.svg
+                  </Component>
                 </div>
                 <div
                   className="account-item-info"
@@ -198,7 +206,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 <div
                   className="account-item-logo"
                 >
-                  <Component />
+                  <Component>
+                    SVG image metamask-fox.svg
+                  </Component>
                 </div>
                 <div
                   className="account-item-info"

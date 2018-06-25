@@ -1,7 +1,9 @@
 'use strict'
 
 module.exports = {
-  process() {
-    return `module.exports = function () { return '' }`
+  process(src, filename) {
+    return `module.exports = function () { return 'SVG image ${filename
+      .split('/')
+      .pop()}' } `
   }
 }
