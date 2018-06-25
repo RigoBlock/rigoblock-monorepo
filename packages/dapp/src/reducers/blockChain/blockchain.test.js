@@ -23,7 +23,8 @@ describe('blockchain reducer', () => {
       undefined,
       {},
       {
-        accounts: {}
+        accounts: {},
+        totalBalance: ''
       }
     )
   })
@@ -37,7 +38,8 @@ describe('blockchain reducer', () => {
           [owner]: {
             provider
           }
-        }
+        },
+        totalBalance: ''
       }
     )
   })
@@ -49,7 +51,8 @@ describe('blockchain reducer', () => {
           [owner]: {
             lastBlock: '1'
           }
-        }
+        },
+        totalBalance: ''
       },
       accountMiddlewareMock(vaultActions.registerVaultBlock(eventBlock), owner),
       {
@@ -60,7 +63,8 @@ describe('blockchain reducer', () => {
               [eventBlock.blockNumber]: eventBlock
             }
           }
-        }
+        },
+        totalBalance: ''
       }
     )
   })
@@ -72,7 +76,8 @@ describe('blockchain reducer', () => {
           [owner]: {
             dummyProp: 'dummyValue'
           }
-        }
+        },
+        totalBalance: ''
       },
       blockChainActions.blockChainLogIn('metamask', owner),
       {
@@ -80,7 +85,30 @@ describe('blockchain reducer', () => {
           [owner]: {
             dummyProp: 'dummyValue'
           }
-        }
+        },
+        totalBalance: ''
+      }
+    )
+  })
+
+  it(`updates total accounts balance whe updateTotalAccountBalance is fired `, () => {
+    blockChainTest(
+      {
+        accounts: {
+          [owner]: {
+            dummyProp: 'dummyValue'
+          }
+        },
+        totalBalance: ''
+      },
+      blockChainActions.updateTotalAccountBalance('256.999999999952600881'),
+      {
+        accounts: {
+          [owner]: {
+            dummyProp: 'dummyValue'
+          }
+        },
+        totalBalance: '256.999999999952600881'
       }
     )
   })

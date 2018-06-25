@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/merge'
 import 'rxjs/add/operator/mergeMap'
 import { Scheduler } from 'rxjs/Scheduler'

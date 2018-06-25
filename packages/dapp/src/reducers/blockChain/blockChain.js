@@ -6,7 +6,8 @@ import vaultActions from '../../actions/vault-actions'
 import vaultsReducer from './vaults'
 
 const initialState = {
-  accounts: {}
+  accounts: {},
+  totalBalance: ''
 }
 
 const blockChainReducer = createReducer(
@@ -39,7 +40,29 @@ const blockChainReducer = createReducer(
         },
         state
       )
-    }
+    },
+    [blockChainActions.updateAccountBalance]: (
+      state,
+      payload,
+      { currentAccount }
+    ) =>
+      u(
+        {
+          accounts: {
+            [currentAccount]: {
+              balance: payload
+            }
+          }
+        },
+        state
+      ),
+    [blockChainActions.updateTotalAccountBalance]: (state, payload) =>
+      u(
+        {
+          totalBalance: payload
+        },
+        state
+      )
   },
   initialState
 )
