@@ -2,6 +2,7 @@ import '../../_settings/_base.scss'
 import { object, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import List from './List'
+import ListItem from '../../molecules/ListItem'
 import React from 'react'
 
 const items = [
@@ -30,4 +31,6 @@ storiesOf('Organisms/List', module)
       {story()}
     </div>
   ))
-  .add('default', () => <List items={object('Items', items)} />)
+  .add('default', () => (
+    <List Component={ListItem} data={object('Items', items)} />
+  ))

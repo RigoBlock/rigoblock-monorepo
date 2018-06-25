@@ -15,6 +15,14 @@ module.exports = {
             loader: require.resolve('sass-loader')
           }
         ]
+      },
+      {
+        test: /\.svg$/,
+        exclude: /node_modules/,
+        loader: require.resolve('svg-react-loader'),
+        query: {
+          xmlnsTest: /^xmlns.*$/
+        }
       }
     ]
   }

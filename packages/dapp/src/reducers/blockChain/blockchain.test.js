@@ -5,6 +5,7 @@ import vaultActions from '../../actions/vault-actions'
 describe('blockchain reducer', () => {
   const blockChainTest = reducerTester(blockChainReducer)
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+  const provider = 'metamask'
   const eventBlock = {
     address: '0x001',
     args: {
@@ -30,8 +31,14 @@ describe('blockchain reducer', () => {
   it('adds an account to state on login action', () => {
     blockChainTest(
       undefined,
-      blockChainActions.blockChainLogIn('Metamask/4.6.1', owner),
-      { accounts: { [owner]: {} } }
+      blockChainActions.blockChainLogIn(provider, owner),
+      {
+        accounts: {
+          [owner]: {
+            provider
+          }
+        }
+      }
     )
   })
 
@@ -67,7 +74,7 @@ describe('blockchain reducer', () => {
           }
         }
       },
-      blockChainActions.blockChainLogIn('Metamask/4.6.1', owner),
+      blockChainActions.blockChainLogIn('metamask', owner),
       {
         accounts: {
           [owner]: {

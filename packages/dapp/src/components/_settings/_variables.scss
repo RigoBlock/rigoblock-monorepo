@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Tajawal');
+@import url('https://fonts.googleapis.com/css?family=Tajawal:400,700');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 // font styles
 $font-family: 'Tajawal', sans-serif;
 $base-font-size: 14px;
+$font-bold: 700;
 
 // colors
 $md-primary-color: #0576ff;
@@ -21,6 +22,7 @@ $medium-animation: 300ms;
 $slow-animation: 500ms;
 
 // distances
+$dist-2xs: 4px;
 $dist-xs: 8px;
 $dist-s: 16px;
 $dist-m: 24px;

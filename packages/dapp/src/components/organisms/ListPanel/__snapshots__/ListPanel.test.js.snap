@@ -10,7 +10,9 @@ exports[`ListPanel component renders correctly 1`] = `
   }
 >
   <List
-    items={
+    Component={[Function]}
+    className={null}
+    data={
       Array [
         Object {
           "id": 1,

@@ -1,0 +1,18 @@
+@import "../../_settings/variables.scss";
+
+.account-view {
+  h1 {
+    font-size: 20px;
+    font-weight: 700px;
+  }
+
+  .account-list {
+    :first-child {
+      padding-top: $dist-2xs;
+    }
+
+    > *:not(:first-child) {
+      padding-top: $dist-s;
+    }
+  }
+}

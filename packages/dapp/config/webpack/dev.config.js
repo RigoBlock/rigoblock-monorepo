@@ -171,6 +171,14 @@ module.exports = {
               }
             ]
           },
+          {
+            test: /\.svg$/,
+            exclude: /node_modules/,
+            loader: 'svg-react-loader',
+            query: {
+              xmlnsTest: /^xmlns.*$/
+            }
+          },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
