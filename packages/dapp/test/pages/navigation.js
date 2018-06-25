@@ -5,7 +5,7 @@ module.exports = {
     I = require('../steps')()
   },
 
-  navigateToDashboard() {
+  navigateToHome() {
     I.click('RigoBlock')
   },
 
@@ -15,5 +15,17 @@ module.exports = {
 
   navigateToHelp() {
     I.click('Help')
+  },
+
+  navigateToDashboard() {
+    I.click('Dashboard')
+  },
+
+  navigateToVaults() {
+    I.click('Vaults')
+  },
+
+  navigateToDragos() {
+    I.click('Dragos')
   }
 }
