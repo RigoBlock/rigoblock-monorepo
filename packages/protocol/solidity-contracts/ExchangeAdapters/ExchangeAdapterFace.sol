@@ -29,26 +29,26 @@ interface ExchangeAdapterFace {
     
     function() external payable;
     function deposit() external payable;
-    function withdraw(uint wad) external;
+    function withdraw(uint256 wad) external;
 
     function depositToken(
         address _exchange,
         address _token,
-        uint _value)
+        uint256 _value)
         external
         payable;
 
     function withdrawToken(
         address _exchange,
         address _token,
-        uint _value)
+        uint256 _value)
         external;
 
     function placeOrderExchange(
         address _exchange,
         address[5] orderAddresses,
-        uint[6] orderValues,
-        uint fillTakerTokenAmount,
+        uint256[6] orderValues,
+        uint256 fillTakerTokenAmount,
         bool stableOrSufficient,
         uint8 v,
         bytes32[2] signature)
@@ -57,8 +57,8 @@ interface ExchangeAdapterFace {
     function placeTradeExchange(
         address _exchange,
         address[5] orderAddresses,
-        uint[6] orderValues,
-        uint fillTakerTokenAmount,
+        uint256[6] orderValues,
+        uint256 fillTakerTokenAmount,
         bool stableOrSufficient,
         uint8 v,
         bytes32[2] signature)
@@ -67,28 +67,28 @@ interface ExchangeAdapterFace {
     function cancelOrderExchange(
         address _exchange,
         address[5] orderAddresses,
-        uint[6] orderValues,
-        uint cancelTakerTokenAmount)
+        uint256[6] orderValues,
+        uint256 cancelTakerTokenAmount)
         external;
 
     function finalizeDeal(
         address _exchange,
         address[5] orderAddresses,
-        uint[6] orderValues,
-        uint cancelTakerTokenAmount)
+        uint256[6] orderValues,
+        uint256 cancelTakerTokenAmount)
         external;
 
     // CONSTANT PUBLIC FUNCTIONS
 
     /// @notice the below functions have to be checked
     /// @notice they are read functions from the exchange, could be queried directly
-    function balanceOf(address token, address user) external view returns (uint);
-    function balanceOf(address _who) external view returns (uint);
-    function marginOf(address _who) external view returns (uint);
-    function availableVolume(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) external view returns(uint);
-    function amountFilled(address tokenGet, uint amountGet, address tokenGive, uint amountGive, uint expires, address user) external view returns(uint);
-    function getLastOrderId() external view returns (uint);
-    function isActive(uint id) external view returns (bool);
-    function getOwner(uint id) external view returns (address);
-    function getOrder(uint id) external view returns (uint, ERC20, uint, ERC20);
+    function balanceOf(address token, address user) external view returns (uint256);
+    function balanceOf(address _who) external view returns (uint256);
+    function marginOf(address _who) external view returns (uint256);
+    function availableVolume(address tokenGet, uint256 amountGet, address tokenGive, uint256 amountGive, uint256 expires, address user) external view returns(uint256);
+    function amountFilled(address tokenGet, uint256 amountGet, address tokenGive, uint256 amountGive, uint256 expires, address user) external view returns(uint256);
+    function getLastOrderId() external view returns (uint256);
+    function isActive(uint256 id) external view returns (bool);
+    function getOwner(uint256 id) external view returns (address);
+    function getOrder(uint256 id) external view returns (uint256, ERC20, uint256, ERC20);
 }

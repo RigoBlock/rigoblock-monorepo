@@ -46,7 +46,7 @@ library VaultFactoryLibrary {
         string _name,
         string _symbol,
         address _owner,
-        uint _vaultId,
+        uint256 _vaultId,
         address _authority)
         internal
         returns (bool success)

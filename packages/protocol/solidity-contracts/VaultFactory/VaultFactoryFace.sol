@@ -23,18 +23,18 @@ pragma experimental "v0.5.0";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 interface VaultFactoryFace {
 
-    event VaultCreated(string name, string symbol, address indexed vault, address indexed owner, uint vaultId);
+    event VaultCreated(string name, string symbol, address indexed vault, address indexed owner, uint256 vaultId);
 
     function createVault(string _name, string _symbol) external payable returns (bool success);
     function setTargetVaultDao(address _targetVault, address _vaultDao) external;
     function changeVaultDao(address _newVaultDao) external;
     function setRegistry(address _newRegistry) external;
     function setBeneficiary(address _vaultDao) external;
-    function setFee(uint _fee) external;
+    function setFee(uint256 _fee) external;
     function drain() external;
 
     function getRegistry() external view returns (address);
-    function getStorage() external view returns (address vaultDao, string version, uint nextVaultId);
+    function getStorage() external view returns (address vaultDao, string version, uint256 nextVaultId);
     function getEventful() external view returns (address);
     function getVaultsByAddress(address _owner) external view returns (address[]);
 }

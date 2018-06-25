@@ -46,7 +46,7 @@ library DragoFactoryLibrary {
         string _name,
         string _symbol,
         address _owner,
-        uint _dragoId,
+        uint256 _dragoId,
         address _authority)
         internal
         returns (bool success)

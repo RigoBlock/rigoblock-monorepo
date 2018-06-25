@@ -33,8 +33,8 @@ contract Inflation is SafeMath, InflationFace {
 
     address public RIGOTOKENADDRESS;
 
-    uint public period = 12 weeks; //inflation tokens can be minted every 3 months
-    uint public minimumRigo;
+    uint256 public period = 12 weeks; //inflation tokens can be minted every 3 months
+    uint256 public minimumRigo;
     address public proofOfPerformance;
     address public authority;
     address public rigoblockDao;
@@ -43,15 +43,15 @@ contract Inflation is SafeMath, InflationFace {
     mapping(address => Group) groups;
 
     struct Performer {
-        uint claimedTokens;
-        mapping(uint => bool) claim;
-        uint startTime;
-        uint endTime;
-        uint epoch;
+        uint256 claimedTokens;
+        mapping(uint256 => bool) claim;
+        uint256 startTime;
+        uint256 endTime;
+        uint256 epoch;
     }
 
     struct Group {
-        uint epochReward;
+        uint256 epochReward;
     }
 
     /// @notice in order to qualify for PoP user has to told minimum rigo token
@@ -100,7 +100,7 @@ contract Inflation is SafeMath, InflationFace {
     /// @param _thePool Address of the target pool
     /// @param _reward Number of reward in Rigo tokens
     /// @return Bool the transaction executed correctly
-    function mintInflation(address _thePool, uint _reward)
+    function mintInflation(address _thePool, uint256 _reward)
         external
         onlyProofOfPerformance
         minimumRigoblock(_thePool)
@@ -110,8 +110,8 @@ contract Inflation is SafeMath, InflationFace {
         performers[_thePool].startTime = now;
         performers[_thePool].endTime = now + period;
         ++performers[_thePool].epoch;
-        uint reward = _reward * 95 / 100; //5% royalty to rigoblock dao
-        uint rigoblockReward = safeSub(_reward, reward);
+        uint256 reward = _reward * 95 / 100; //5% royalty to rigoblock dao
+        uint256 rigoblockReward = safeSub(_reward, reward);
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
         rigoToken.mintToken(getPoolOwner(_thePool), reward);
         rigoToken.mintToken(rigoblockDao, rigoblockReward);
@@ -121,7 +121,7 @@ contract Inflation is SafeMath, InflationFace {
     /// @dev Allows rigoblock dao to set the inflation factor for a group
     /// @param _group Address of the group/factory
     /// @param _inflationFactor Value of the reward factor
-    function setInflationFactor(address _group, uint _inflationFactor)
+    function setInflationFactor(address _group, uint256 _inflationFactor)
         external
         onlyRigoblockDao
         isApprovedFactory(_group)
@@ -131,7 +131,7 @@ contract Inflation is SafeMath, InflationFace {
 
     /// @dev Allows rigoblock dao to set the minimum number of required tokens
     /// @param _minimum Number of minimum tokens
-    function setMinimumRigo(uint _minimum)
+    function setMinimumRigo(uint256 _minimum)
         external
         onlyRigoblockDao
     {
@@ -168,7 +168,7 @@ contract Inflation is SafeMath, InflationFace {
     /// @dev Allows rigoblock dao to set the minimum time between reward collection
     /// @param _newPeriod Number of blocks from 2 rewards
     /// @notice set period on shorter subsets of time for testing
-    function setPeriod(uint _newPeriod)
+    function setPeriod(uint256 _newPeriod)
         external
         onlyRigoblockDao
     {
@@ -184,7 +184,9 @@ contract Inflation is SafeMath, InflationFace {
         external view
         returns (bool)
     {
-        return (now >= performers[_thePool].endTime ? true : false);
+        if (now >= performers[_thePool].endTime) {
+            return true;
+        }
     }
 
     /// @dev Return the reward factor for a group
@@ -192,7 +194,7 @@ contract Inflation is SafeMath, InflationFace {
     /// @return Value of the reward factor
     function getInflationFactor(address _group)
         external view
-        returns (uint)
+        returns (uint256)
     {
         return groups[_group].epochReward;
     }

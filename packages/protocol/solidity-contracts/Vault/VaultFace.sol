@@ -29,10 +29,10 @@ interface VaultFace {
     function buyVault() external payable returns (bool success);
     function buyVaultOnBehalf(address _hodler) external payable returns (bool success);
     function sellVault(uint256 amount) external returns (bool success);
-    function depositCasper(address _validation, address _withdrawal, uint _amount) external returns (bool success);
+    function depositCasper(address _validation, address _withdrawal, uint256 _amount) external returns (bool success);
     function withdrawCasper() external;
     function changeRatio(uint256 _ratio) external;
-    function setTransactionFee(uint _transactionFee) external;
+    function setTransactionFee(uint256 _transactionFee) external;
     function changeFeeCollector(address _feeCollector) external;
     function changeVaultDao(address _vaultDao) external;
     function updatePrice() external;
@@ -40,12 +40,12 @@ interface VaultFace {
 
     // CONSTANT PUBLIC FUNCTIONS
 
-    function balanceOf(address _who) external view returns (uint);
+    function balanceOf(address _who) external view returns (uint256);
     function getEventful() external view returns (address);
-    function getData() external view returns (string name, string symbol, uint sellPrice, uint buyPrice);
-    function calcSharePrice() external view returns (uint);
-    function getAdminData() external view returns (address, address feeCollector, address vaultDao, uint ratio, uint transactionFee, uint32 minPeriod);
+    function getData() external view returns (string name, string symbol, uint256 sellPrice, uint256 buyPrice);
+    function calcSharePrice() external view returns (uint256);
+    function getAdminData() external view returns (address, address feeCollector, address vaultDao, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
     function totalSupply() external view returns (uint256);
     function getVersion() external view returns (string);
-    function getCasperDeposit() external view returns (uint);
+    function getCasperDeposit() external view returns (uint256);
 }

@@ -38,7 +38,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     Data data;
 
     struct Data {
-        uint fee;
+        uint256 fee;
         address dragoRegistry;
         address dragoDao;
         address authority;
@@ -50,7 +50,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
         string symbol,
         address indexed drago,
         address indexed owner,
-        uint dragoId
+        uint256 dragoId
     );
 
     modifier whitelistedFactory(address _authority) {
@@ -98,8 +98,8 @@ contract DragoFactory is Owned, DragoFactoryFace {
         returns (bool success)
     {
         DragoRegistry registry = DragoRegistry(data.dragoRegistry);
-        uint regFee = registry.getFee();
-        uint dragoId = registry.dragoCount();
+        uint256 regFee = registry.getFee();
+        uint256 dragoId = registry.dragoCount();
         require(createDragoInternal(_name, _symbol, msg.sender, dragoId));
         assert(registry.register.value(regFee)(
             libraryData.newAddress,
@@ -153,7 +153,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
 
     /// @dev Allows owner to set the drago creation fee
     /// @param _fee Value of the fee in wei
-    function setFee(uint _fee)
+    function setFee(uint256 _fee)
         external
         onlyOwner
     {
@@ -189,7 +189,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
         returns (
             address dragoDao,
             string version,
-            uint nextDragoId
+            uint256 nextDragoId
         )
     {
         return (
@@ -233,7 +233,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
         string _name,
         string _symbol,
         address _owner,
-        uint _dragoId)
+        uint256 _dragoId)
         internal
         returns (bool success)
     {
@@ -265,7 +265,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @return Number of the next Id from the registry
     function getNextId()
         internal view
-        returns (uint nextDragoId)
+        returns (uint256 nextDragoId)
     {
         DragoRegistry registry = DragoRegistry(data.dragoRegistry);
         nextDragoId = registry.dragoCount();

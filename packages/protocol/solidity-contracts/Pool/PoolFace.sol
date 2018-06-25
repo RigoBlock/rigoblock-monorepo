@@ -31,7 +31,7 @@ interface PoolFace {
     function balanceOf(address _who) external view returns (uint256);
     function totalSupply() external view returns (uint256 totaSupply);
     function getEventful() external view returns (address);
-    function getData() external view returns (string name, string symbol, uint sellPrice, uint buyPrice);
-    function calcSharePrice() external view returns (uint);
-    function getAdminData() external view returns (address, address feeCollector, address dragodAO, uint ratio, uint transactionFee, uint32 minPeriod);
+    function getData() external view returns (string name, string symbol, uint256 sellPrice, uint256 buyPrice);
+    function calcSharePrice() external view returns (uint256);
+    function getAdminData() external view returns (address, address feeCollector, address dragodAO, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
 }

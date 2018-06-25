@@ -32,15 +32,15 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
 
     string constant public name = "Rigo Token";
     string constant public symbol = "GRG";
-    uint constant public decimals = 18;
+    uint8 constant public decimals = 18;
 
-    uint public totalSupply = 10**25; // 10 million tokens, 18 decimal places
+    uint256 public totalSupply = 10**25; // 10 million tokens, 18 decimal places
     address public minter;
     address public rigoblock;
 
     // EVENTS
 
-    event TokenMinted(address indexed recipient, uint amount);
+    event TokenMinted(address indexed recipient, uint256 amount);
 
     // MODIFIERS
 
@@ -65,7 +65,7 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
     /// @dev Allows minter to create new tokens
     /// @param _recipient Address of who receives new tokens
     /// @param _amount Number of new tokens
-    function mintToken(address _recipient, uint _amount) external onlyMinter {
+    function mintToken(address _recipient, uint256 _amount) external onlyMinter {
         balances[_recipient] = safeAdd(balances[_recipient], _amount);
         totalSupply = safeAdd(totalSupply, _amount);
         emit TokenMinted(_recipient, _amount);
@@ -99,7 +99,7 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
 
     /// @dev Returns decimals of Rigo token
     /// @return Number of decimals
-    function getDecimals() external view returns (uint) {
+    function getDecimals() external view returns (uint256) {
         return decimals;
     }
 
@@ -118,7 +118,7 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
     /// @dev Returns the reward/inflation factor for a said group
     /// @param _group Address of the group/factory
     /// @return Value of the inflation factor
-    function getInflationFactor(address _group) external view returns (uint) {
+    function getInflationFactor(address _group) external view returns (uint256) {
         Inflation inflation = Inflation(minter);
         return inflation.getInflationFactor(_group);
     }

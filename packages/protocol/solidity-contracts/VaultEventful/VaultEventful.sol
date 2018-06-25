@@ -53,7 +53,7 @@ contract VaultEventful is VaultEventfulFace {
     event NewRatio(
         address indexed vault,
         address indexed from,
-        uint newRatio
+        uint256 newRatio
     );
 
 
@@ -61,7 +61,7 @@ contract VaultEventful is VaultEventfulFace {
         address indexed vault,
         address indexed from,
         address indexed to,
-        uint fee
+        uint256 fee
     );
 
     event NewCollector(
@@ -83,21 +83,21 @@ contract VaultEventful is VaultEventfulFace {
         address indexed validator,
         address indexed casper,
         address withdrawal,
-        uint amount
+        uint256 amount
     );
 
     event WithdrawCasper(
         address indexed vault,
         address indexed validator,
         address indexed casper,
-        uint validatorIndex
+        uint256 validatorIndex
     );
 
     event VaultCreated(
         address indexed vault,
         address indexed group,
         address indexed owner,
-        uint vaultId,
+        uint256 vaultId,
         string name,
         string symbol
     );
@@ -142,8 +142,8 @@ contract VaultEventful is VaultEventfulFace {
     function buyVault(
         address _who,
         address _targetVault,
-        uint _value,
-        uint _amount,
+        uint256 _value,
+        uint256 _amount,
         bytes _name,
         bytes _symbol)
         external
@@ -164,8 +164,8 @@ contract VaultEventful is VaultEventfulFace {
     function sellVault(
         address _who,
         address _targetVault,
-        uint _amount,
-        uint _revenue,
+        uint256 _amount,
+        uint256 _revenue,
         bytes _name,
         bytes _symbol)
         external
@@ -204,7 +204,7 @@ contract VaultEventful is VaultEventfulFace {
     function setTransactionFee(
         address _who,
         address _targetVault,
-        uint _transactionFee)
+        uint256 _transactionFee)
         external
         approvedVaultOnly(msg.sender)
         approvedUserOnly(_who)
@@ -263,7 +263,7 @@ contract VaultEventful is VaultEventfulFace {
         address _casper,
         address _validation,
         address _withdrawal,
-        uint _amount)
+        uint256 _amount)
         external
         approvedVaultOnly(msg.sender)
         approvedUserOnly(_who)
@@ -283,7 +283,7 @@ contract VaultEventful is VaultEventfulFace {
         address _who,
         address _targetVault,
         address _casper,
-        uint _validatorIndex)
+        uint256 _validatorIndex)
         external
         approvedVaultOnly(msg.sender)
         approvedUserOnly(_who)
@@ -305,7 +305,7 @@ contract VaultEventful is VaultEventfulFace {
         address _newVault,
         string _name,
         string _symbol,
-        uint _vaultId)
+        uint256 _vaultId)
         external
         approvedFactoryOnly(msg.sender)
         returns(bool success)
@@ -328,8 +328,8 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         address _who,
         address _factory,
-        uint _value,
-        uint _amount,
+        uint256 _value,
+        uint256 _amount,
         bytes _name,
         bytes _symbol)
         internal
@@ -349,8 +349,8 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         address _who,
         address _factory,
-        uint _amount,
-        uint _revenue,
+        uint256 _amount,
+        uint256 _revenue,
         bytes _name,
         bytes _symbol)
         internal
@@ -371,7 +371,7 @@ contract VaultEventful is VaultEventfulFace {
         address _who,
         string _name,
         string _symbol,
-        uint _vaultId)
+        uint256 _vaultId)
         internal
     {
         emit VaultCreated(_newVault, _factory, _who, _vaultId, _name, _symbol);

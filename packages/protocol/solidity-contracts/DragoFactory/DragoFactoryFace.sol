@@ -23,18 +23,18 @@ pragma experimental "v0.5.0";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 interface DragoFactoryFace {
 
-    event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint dragoId);
+    event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint256 dragoId);
 
     function createDrago(string _name, string _symbol) external payable returns (bool success);
     function setTargetDragoDao(address _targetDrago, address _dragoDao) external;
     function changeDragoDao(address _newDragoDao) external;
     function setRegistry(address _newRegistry) external;
     function setBeneficiary(address _dragoDao) external;
-    function setFee(uint _fee) external;
+    function setFee(uint256 _fee) external;
     function drain() external;
 
     function getRegistry() external view returns (address);
-    function getStorage() external view returns (address dragoDao, string version, uint nextDragoId);
+    function getStorage() external view returns (address dragoDao, string version, uint256 nextDragoId);
     function getEventful() external view returns (address);
     function getDragosByAddress(address _owner) external view returns (address[]);
 }
