@@ -1,0 +1,17 @@
+@import "../../_settings/variables.scss";
+
+.title {
+  font-weight: $font-bold;
+}
+
+.title-small {
+  font-size: $medium-font-size;
+}
+
+.title-medium {
+  font-size: $large-font-size;
+}
+
+.title-large {
+  font-size: $xl-font-size;
+}
