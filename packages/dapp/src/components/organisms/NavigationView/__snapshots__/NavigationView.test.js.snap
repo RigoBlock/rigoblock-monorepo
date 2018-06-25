@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavigationView component renders correctly 1`] = `
+<div>
+  <List
+    Component={[Function]}
+    className="navigation-view"
+    data={
+      Array [
+        Object {
+          "className": "",
+          "icon": "dashboard",
+          "link": Object {
+            "text": "Dashboard",
+            "to": "/",
+          },
+        },
+        Object {
+          "className": "active",
+          "icon": "account_balance_wallet",
+          "link": Object {
+            "text": "Dragos",
+            "to": "/dragos",
+          },
+        },
+        Object {
+          "className": "",
+          "icon": "lock",
+          "link": Object {
+            "text": "Vaults",
+            "to": "/vaults",
+          },
+        },
+      ]
+    }
+  />
+</div>
+`;
