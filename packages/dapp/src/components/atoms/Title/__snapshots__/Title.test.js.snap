@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Title component renders correctly 1`] = `
+<div
+  className="title title-medium"
+>
+  Test title
+</div>
+`;
