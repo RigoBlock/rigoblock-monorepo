@@ -2,7 +2,7 @@
 
 exports[`Title component renders correctly 1`] = `
 <div
-  className="title title-medium"
+  className="title medium"
 >
   Test title
 </div>

@@ -42,7 +42,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
           size="small"
         >
           <div
-            className="title title-small"
+            className="title small"
           >
             Accounts
           </div>

@@ -1,7 +1,8 @@
 @import "../../_settings/variables.scss";
 
-.title {
-  font-weight: $font-bold;
+.amount {
+  display: flex;
+  justify-content: space-between;
 
   &.small {
     font-size: $medium-font-size;
