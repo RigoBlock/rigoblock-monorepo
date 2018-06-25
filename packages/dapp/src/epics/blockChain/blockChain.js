@@ -10,10 +10,9 @@ import blockChainActions from '../../actions/blockchain-actions'
 import globalActions from '../../actions/global-actions'
 
 const blockchainSubject = new Subject()
-let blockchainService
 
 export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
-  blockchainService = BlockChainService.createInstance(
+  const blockchainService = BlockChainService.createInstance(
     api,
     action$,
     blockchainSubject,
