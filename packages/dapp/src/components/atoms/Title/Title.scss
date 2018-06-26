@@ -1,7 +1,7 @@
 @import "../../_settings/variables.scss";
 
-.tooltip {
-  color: $silver-sand;
+.title {
+  font-weight: $font-bold;
 
   &.small {
     font-size: $medium-font-size;

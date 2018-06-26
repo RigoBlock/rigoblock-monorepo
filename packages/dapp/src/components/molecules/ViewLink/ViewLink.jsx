@@ -8,7 +8,7 @@ import classNames from 'classnames'
 const ViewLink = ({ icon, link, className }) => {
   const classProps = classNames('view-link', className)
   return (
-    <Link size={LINK_SIZES.MEDIUM} to={link.to} className={classProps}>
+    <Link size={LINK_SIZES.SMALL} to={link.to} className={classProps}>
       <Tooltip type={icon} size={TOOLTIP_SIZES.SMALL} />
       <span>{link.text}</span>
     </Link>

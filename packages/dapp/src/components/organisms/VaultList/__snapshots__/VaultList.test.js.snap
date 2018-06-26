@@ -144,7 +144,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         >
                           <div>
                             <span
-                              className="item-value item-value-large"
+                              className="item-value large"
                             >
                               14
                             </span>
@@ -190,7 +190,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         >
                           <div>
                             <span
-                              className="item-value item-value-large"
+                              className="item-value large"
                             >
                               20.23
                             </span>

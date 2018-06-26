@@ -2,7 +2,7 @@
 
 exports[`Tooltip component renders correctly 1`] = `
 <span
-  className="material-icons tooltip tooltip-medium"
+  className="material-icons tooltip medium"
 >
   help
 </span>
