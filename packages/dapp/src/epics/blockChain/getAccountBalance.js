@@ -1,4 +1,4 @@
-import 'rxjs/add/operator/auditTime'
+import 'rxjs/add/operator/debounceTime'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/merge'
 import 'rxjs/add/operator/mergeMap'
@@ -25,9 +25,9 @@ export const getAccountBalanceEpic = (action$, store, ts = Scheduler.async) => {
         .map(key => block.args[key])
         .includes(currentAccount)
     )
-    // limit the requests to once per second, will be called one second after the first
-    // event block is registered and ignore intermediate values
-    .auditTime(1000, ts)
+    // wait 500ms of silence between requests. If more blocks are being fired within this
+    // time period, function will wait them to end to call request
+    .debounceTime(500, ts)
     .mergeMap(({ meta: { currentAccount } }) => {
       return fromPromise(api.web3.getBalanceInWeiAsync(currentAccount), ts).map(
         balance => blockChainActions.updateAccountBalance(balance)

@@ -66,7 +66,7 @@ describe('getAccountBalanceEpic', () => {
     ts.flush()
   })
 
-  fit('dispatches an updateAccountBalance action if we register a block which interests the current account', () => {
+  it('dispatches an updateAccountBalance action if we register a block which interests the current account', () => {
     fromPromiseSpy.mockReturnValueOnce(of('10000000000000000000'))
     const inputAction = blockChainActions.registerBlock(VAULT, vaultEvent)
     inputAction.meta = { currentAccount: owner }
@@ -79,8 +79,7 @@ describe('getAccountBalanceEpic', () => {
     }
 
     const inputMarble = 'a'
-    const expectedMarble =
-      '----------------------------------------------------------------------------------------------------b'
+    const expectedMarble = addTimeFrames(50, 'b')
 
     const ts = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)
@@ -98,9 +97,10 @@ describe('getAccountBalanceEpic', () => {
     ts.flush()
   })
 
-  it('dispatches an updateAccountBalance action only once per second', () => {
-    fromPromiseSpy.mockReturnValueOnce(of('10000000000000000000'))
-    fromPromiseSpy.mockReturnValueOnce(of('20000000000000000000'))
+  it('dispatches the action after emissions stopped for 500ms, only taking last received value', () => {
+    fromPromiseSpy
+      .mockReturnValueOnce(of('10000000000000000000'))
+      .mockReturnValueOnce(of('20000000000000000000'))
 
     const inputAction = blockChainActions.registerBlock(VAULT, vaultEvent)
     inputAction.meta = { currentAccount: owner }
@@ -112,12 +112,9 @@ describe('getAccountBalanceEpic', () => {
       b: blockChainActions.updateAccountBalance('20000000000000000000')
     }
 
-    const inputMarble =
-      'aaa-----------------------------aa----------aa---------------aaa-------------------------------------a'
+    const inputMarble = 'a' + addTimeFrames(50) + 'aaaaa'
 
-    const expectedMarble =
-      '----------------------------------------------------------------------------------------------------a' +
-      '----------------------------------------------------------------------------------------------------b'
+    const expectedMarble = addTimeFrames(50, 'a') + addTimeFrames(54, 'b')
 
     const ts = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)

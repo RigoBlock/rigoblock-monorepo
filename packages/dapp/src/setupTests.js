@@ -20,3 +20,6 @@ global.accountMiddlewareMock = (action, account) => {
   action.meta = { currentAccount: account }
   return action
 }
+
+global.addTimeFrames = (frames, value = undefined) =>
+  value ? '-'.repeat(frames) + value : '-'.repeat(frames)
