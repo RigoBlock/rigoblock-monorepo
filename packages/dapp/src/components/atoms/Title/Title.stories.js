@@ -9,7 +9,7 @@ storiesOf('Atoms/Title', module)
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
   .addDecorator(withKnobs)
   .add('default', () => (
-    <Title size={selectV2('Title size', TITLE_SIZES)}>
+    <Title size={selectV2('Title size', TITLE_SIZES, TITLE_SIZES.SMALL)}>
       {text('Title text', 'Example Title')}
     </Title>
   ))

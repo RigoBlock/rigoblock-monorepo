@@ -10,7 +10,7 @@ export const TITLE_SIZES = {
 }
 
 const Title = ({ size, children, className }) => {
-  const classProps = classNames('title', `title-${size}`, className)
+  const classProps = classNames('title', size, className)
   return <div className={classProps}>{children}</div>
 }
 

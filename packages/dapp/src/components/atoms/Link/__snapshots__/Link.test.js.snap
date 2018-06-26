@@ -2,7 +2,7 @@
 
 exports[`Link component renders correctly 1`] = `
 <Link
-  className="link link-medium"
+  className="link medium"
   replace={false}
   to="#"
 >

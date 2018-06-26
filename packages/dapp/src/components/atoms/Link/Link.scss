@@ -3,16 +3,16 @@
 .link {
   text-decoration: none;
   display: inline-block;
-}
 
-.link-small {
-  font-size: $base-font-size;
-}
+  &.small {
+    font-size: $medium-font-size;
+  }
 
-.link-medium {
-  font-size: $medium-font-size;
-}
+  &.medium {
+    font-size: $large-font-size;
+  }
 
-.link-large {
-  font-size: $large-font-size;
+  &.large {
+    font-size: $xl-font-size;
+  }
 }

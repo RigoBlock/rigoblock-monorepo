@@ -11,7 +11,7 @@ export const LINK_SIZES = {
 }
 
 const Link = ({ size, children, to, className }) => {
-  const classProps = classNames('link', `link-${size}`, className)
+  const classProps = classNames('link', size, className)
   return (
     <RouterLink to={to} className={classProps}>
       {children}

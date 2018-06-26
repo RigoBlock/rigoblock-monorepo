@@ -24,7 +24,7 @@ const roundProps = props => {
 const ItemValue = props => {
   const { valueSize, currencyGrowth, growth, currency } = props
   const res = roundProps(props)
-  const classProps = classNames('item-value', `item-value-${valueSize}`)
+  const classProps = classNames('item-value', valueSize)
   return growth && currencyGrowth ? (
     <div>
       <span className={classProps}>{`+${res.growth}%`}</span>
