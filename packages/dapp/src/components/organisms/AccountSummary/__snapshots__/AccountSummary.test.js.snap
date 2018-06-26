@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountSummary component renders correctly (short version) 1`] = `
+<div
+  className="account-summary"
+>
+  <AccountItem
+    appearance="full"
+    number="0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196"
+    provider="metamask"
+  />
+  <div
+    className="balances"
+  >
+    <Amount
+      size="small"
+      symbol="ETH"
+      value={57.9999999999602}
+    />
+  </div>
+</div>
+`;

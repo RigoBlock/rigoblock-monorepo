@@ -1,0 +1,22 @@
+@import "../../_settings/variables.scss";
+
+.account-summary {
+  padding: $dist-m $dist-s $dist-s $dist-s;
+
+  .account-item-full {
+    .account-number {
+      font-size: $small-font-size;
+    }
+  }
+
+  .balances {
+    width: 118px;
+    margin-left: $dist-l;
+    padding-top: $dist-s;
+
+    > *:not(:first-child) {
+      padding-top: $dist-2xs;
+    }
+  }
+}
+
