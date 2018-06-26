@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountSummary component renders correctly (short version) 1`] = `
+exports[`AccountSummary component renders correctly 1`] = `
 <div
   className="account-summary"
 >
@@ -16,6 +16,11 @@ exports[`AccountSummary component renders correctly (short version) 1`] = `
       size="small"
       symbol="ETH"
       value={57.9999999999602}
+    />
+    <Amount
+      size="small"
+      symbol="GRG"
+      value={0}
     />
   </div>
 </div>

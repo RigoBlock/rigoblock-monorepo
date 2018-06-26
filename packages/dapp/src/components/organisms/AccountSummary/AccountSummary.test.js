@@ -9,7 +9,7 @@ const props = {
 }
 
 describe('AccountSummary component', () => {
-  it('renders correctly (short version)', () => {
+  it('renders correctly', () => {
     expect(
       toJson(shallow(createComponentWithProps(AccountSummary, props)))
     ).toMatchSnapshot()

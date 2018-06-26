@@ -107,6 +107,7 @@ exports[`AccountPanel component renders correctly 1`] = `
                     key="0"
                     number="0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196"
                     provider="metamask"
+                    tokenBalance={0}
                   >
                     <div
                       className="account-summary"
@@ -190,6 +191,37 @@ exports[`AccountPanel component renders correctly 1`] = `
                             </ItemValue>
                           </div>
                         </Amount>
+                        <Amount
+                          size="small"
+                          symbol="GRG"
+                          value={0}
+                        >
+                          <div
+                            className="amount small"
+                          >
+                            <div
+                              className="amount-symbol"
+                            >
+                              GRG
+                            </div>
+                            <ItemValue
+                              currency="ETH"
+                              currencyGrowth={0}
+                              growth={0}
+                              itemValue={0}
+                              precision={2}
+                              valueSize="small"
+                            >
+                              <div>
+                                <span
+                                  className="item-value small"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </ItemValue>
+                          </div>
+                        </Amount>
                       </div>
                     </div>
                   </AccountSummary>
@@ -205,6 +237,7 @@ exports[`AccountPanel component renders correctly 1`] = `
                     key="1"
                     number="0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d"
                     provider="metamask"
+                    tokenBalance={0}
                   >
                     <div
                       className="account-summary"
@@ -288,6 +321,37 @@ exports[`AccountPanel component renders correctly 1`] = `
                             </ItemValue>
                           </div>
                         </Amount>
+                        <Amount
+                          size="small"
+                          symbol="GRG"
+                          value={0}
+                        >
+                          <div
+                            className="amount small"
+                          >
+                            <div
+                              className="amount-symbol"
+                            >
+                              GRG
+                            </div>
+                            <ItemValue
+                              currency="ETH"
+                              currencyGrowth={0}
+                              growth={0}
+                              itemValue={0}
+                              precision={2}
+                              valueSize="small"
+                            >
+                              <div>
+                                <span
+                                  className="item-value small"
+                                >
+                                  0
+                                </span>
+                              </div>
+                            </ItemValue>
+                          </div>
+                        </Amount>
                       </div>
                     </div>
                   </AccountSummary>
@@ -303,6 +367,7 @@ exports[`AccountPanel component renders correctly 1`] = `
                     key="2"
                     number="0x8bb7481495d45ccd5cffae1c3a84155fea85a323"
                     provider="metamask"
+                    tokenBalance={0}
                   >
                     <div
                       className="account-summary"
@@ -381,6 +446,37 @@ exports[`AccountPanel component renders correctly 1`] = `
                                   className="item-value small"
                                 >
                                   88.00
+                                </span>
+                              </div>
+                            </ItemValue>
+                          </div>
+                        </Amount>
+                        <Amount
+                          size="small"
+                          symbol="GRG"
+                          value={0}
+                        >
+                          <div
+                            className="amount small"
+                          >
+                            <div
+                              className="amount-symbol"
+                            >
+                              GRG
+                            </div>
+                            <ItemValue
+                              currency="ETH"
+                              currencyGrowth={0}
+                              growth={0}
+                              itemValue={0}
+                              precision={2}
+                              valueSize="small"
+                            >
+                              <div>
+                                <span
+                                  className="item-value small"
+                                >
+                                  0
                                 </span>
                               </div>
                             </ItemValue>

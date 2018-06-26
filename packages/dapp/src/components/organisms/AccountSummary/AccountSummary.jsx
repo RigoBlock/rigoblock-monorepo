@@ -5,7 +5,7 @@ import Amount, { AMOUNT_SIZES } from '../../molecules/Amount'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const AccountSummary = ({ provider, number, balance }) => {
+const AccountSummary = ({ provider, number, balance, tokenBalance }) => {
   const ethBalance = balance / ETHTOWEI
   return (
     <div className="account-summary">
@@ -16,6 +16,7 @@ const AccountSummary = ({ provider, number, balance }) => {
       />
       <div className="balances">
         <Amount value={ethBalance} symbol={'ETH'} size={AMOUNT_SIZES.SMALL} />
+        <Amount value={tokenBalance} symbol={'GRG'} size={AMOUNT_SIZES.SMALL} />
       </div>
     </div>
   )
@@ -23,12 +24,14 @@ const AccountSummary = ({ provider, number, balance }) => {
 
 AccountSummary.propTypes = {
   provider: PropTypes.string.isRequired,
-  balance: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  balance: PropTypes.node,
+  tokenBalance: PropTypes.node,
   number: PropTypes.string.isRequired
 }
 
 AccountSummary.defaultProps = {
-  balance: '0'
+  balance: 0,
+  tokenBalance: 0
 }
 
 export default AccountSummary
