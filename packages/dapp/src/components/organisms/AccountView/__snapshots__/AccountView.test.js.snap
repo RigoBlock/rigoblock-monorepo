@@ -49,6 +49,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
         </Title>
         <List
           Component={[Function]}
+          Divider={null}
           className="account-list"
           data={
             Array [

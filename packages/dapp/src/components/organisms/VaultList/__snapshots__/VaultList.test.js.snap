@@ -87,6 +87,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
               >
                 <List
                   Component={[Function]}
+                  Divider={null}
                   className={null}
                   data={
                     Array [
@@ -265,6 +266,7 @@ exports[`PreferencesForm component renders correctly if there are no vaults on s
               >
                 <List
                   Component={[Function]}
+                  Divider={null}
                   className={null}
                   data={Array []}
                 >
