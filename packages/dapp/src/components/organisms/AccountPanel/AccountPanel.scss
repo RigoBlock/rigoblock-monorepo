@@ -1,0 +1,16 @@
+@import "../../_settings/variables.scss";
+
+.account-panel {
+  max-width: 4 * $dist-6xl;
+
+  .navbar-divider {
+    width: $dist-l;
+    height: 1px;
+    margin: 0 $dist-2xl !important;
+    background-color: $dark-grey;
+  }
+
+  .account-summary:first-of-type {
+    padding-top: 0;
+  }
+}

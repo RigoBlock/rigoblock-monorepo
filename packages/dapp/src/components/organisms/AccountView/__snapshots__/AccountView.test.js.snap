@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PreferencesForm component renders correctly 1`] = `
+exports[`AccountView component renders correctly 1`] = `
 <Provider
   store={
     Object {
