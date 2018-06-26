@@ -8,6 +8,7 @@ exports[`PanelHeader component renders correctly 1`] = `
     Test Header
   </h1>
   <Tooltip
+    onClick={[Function]}
     size="medium"
     type="help"
   />

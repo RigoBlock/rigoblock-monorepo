@@ -1,7 +1,11 @@
 @import "../../_settings/variables.scss";
 
-.account-item {
+.account-item-short, .account-item-full {
   display: flex;
+
+  > *:not(:last-child) {
+    margin-right: $dist-xs;
+  }
 
   span {
     display: block;
@@ -13,6 +17,18 @@
 
   .account-number {
     text-transform: uppercase;
+
+    span {
+      display: inline;
+    }
+
+    .tooltip {
+      color: $black;
+    }
+
+    > *:not(:first-child) {
+      margin-left: $dist-xs;
+    }
   }
 
   .info {
@@ -25,8 +41,22 @@
     width: $dist-m;
     height: $dist-m;
   }
+}
 
-  > *:not(:last-child) {
-    margin-right: $dist-xs;
+.account-item-full {
+  flex-direction: column;
+  .provider {
+    font-size: $medium-font-size;
+    display: flex;
+    align-items: center;
+
+    .name {
+      padding-top: $dist-2xs;
+      padding-left: $dist-xs;
+    }
+  }
+  .account-number {
+    padding-left: $dist-l;
   }
 }
+
