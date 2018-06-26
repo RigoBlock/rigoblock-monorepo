@@ -23,8 +23,12 @@ const AccountSummary = ({ provider, number, balance }) => {
 
 AccountSummary.propTypes = {
   provider: PropTypes.string.isRequired,
-  balance: PropTypes.string.isRequired,
+  balance: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   number: PropTypes.string.isRequired
+}
+
+AccountSummary.defaultProps = {
+  balance: '0'
 }
 
 export default AccountSummary
