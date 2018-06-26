@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/merge'
 import 'rxjs/add/operator/mergeMap'
+import 'rxjs/add/operator/throttleTime'
 import { Scheduler } from 'rxjs/Scheduler'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { merge } from 'rxjs/observable/merge'
@@ -24,6 +25,8 @@ export const getAccountBalanceEpic = (action$, store, ts = Scheduler.async) => {
         .map(key => block.args[key])
         .includes(currentAccount)
     )
+    // limit the requests to once per second
+    .throttleTime(1000, ts)
     .mergeMap(({ meta: { currentAccount } }) => {
       return fromPromise(api.web3.getBalanceInWeiAsync(currentAccount), ts).map(
         balance => blockChainActions.updateAccountBalance(balance)
