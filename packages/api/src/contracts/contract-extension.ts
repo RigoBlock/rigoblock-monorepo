@@ -1,5 +1,7 @@
 export abstract class ContractExtension {
-  emit() {
-    console.log('test')
+  public static address: string
+
+  static isDeployed() {
+    return !!this.address
   }
 }
