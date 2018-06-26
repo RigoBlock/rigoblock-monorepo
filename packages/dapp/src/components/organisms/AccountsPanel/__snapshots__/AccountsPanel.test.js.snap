@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountPanel component renders correctly 1`] = `
+exports[`AccountsPanel component renders correctly 1`] = `
 <Provider
   store={
     Object {
@@ -10,8 +10,8 @@ exports[`AccountPanel component renders correctly 1`] = `
     }
   }
 >
-  <Connect(AccountPanel)>
-    <AccountPanel
+  <Connect(AccountsPanel)>
+    <AccountsPanel
       accounts={
         Object {
           "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196": Object {
@@ -31,7 +31,7 @@ exports[`AccountPanel component renders correctly 1`] = `
       dispatch={[MockFunction]}
     >
       <div
-        className="account-panel"
+        className="accounts-panel"
       >
         <ContentWrapper
           header={
@@ -491,7 +491,7 @@ exports[`AccountPanel component renders correctly 1`] = `
           </div>
         </ContentWrapper>
       </div>
-    </AccountPanel>
-  </Connect(AccountPanel)>
+    </AccountsPanel>
+  </Connect(AccountsPanel)>
 </Provider>
 `;

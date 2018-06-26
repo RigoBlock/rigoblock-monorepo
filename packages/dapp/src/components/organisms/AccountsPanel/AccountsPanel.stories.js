@@ -2,7 +2,7 @@ import '../../_settings/_base.scss'
 import { Provider } from 'react-redux'
 import { storiesOf } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs/react'
-import AccountPanel from './AccountPanel'
+import AccountsPanel from './AccountsPanel'
 import React from 'react'
 
 const mockStore = {
@@ -30,7 +30,7 @@ const mockStore = {
   subscribe: () => null
 }
 
-storiesOf('Organisms/AccountPanel', module)
+storiesOf('Organisms/AccountsPanel', module)
   .addDecorator(withKnobs)
   .addDecorator(story => <Provider store={mockStore}>{story()}</Provider>)
-  .add('default', () => <AccountPanel />)
+  .add('default', () => <AccountsPanel />)

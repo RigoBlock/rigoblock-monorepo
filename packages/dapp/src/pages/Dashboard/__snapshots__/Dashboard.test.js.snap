@@ -4,7 +4,7 @@ exports[`Dashboard component renders correctly 1`] = `
 <BaseTemplate
   className="dashboard"
 >
-  <Connect(AccountPanel) />
+  <Connect(AccountsPanel) />
   <Connect(vaultList) />
 </BaseTemplate>
 `;

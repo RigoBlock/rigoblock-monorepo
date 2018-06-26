@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
-import AccountPanel from './AccountPanel.jsx'
+import AccountsPanel from './AccountsPanel.jsx'
 import React from 'react'
 import toJson from 'enzyme-to-json'
 
@@ -31,11 +31,11 @@ const mockStore = {
 
 const wrapper = mount(
   <Provider store={mockStore}>
-    <AccountPanel />
+    <AccountsPanel />
   </Provider>
 )
 
-describe('AccountPanel component', () => {
+describe('AccountsPanel component', () => {
   it('renders correctly', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })
