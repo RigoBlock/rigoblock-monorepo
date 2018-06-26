@@ -7,21 +7,21 @@
     display: block;
   }
 
-  .account-item-provider {
+  .provider {
     font-weight: $font-bold;
   }
 
-  .account-item-number {
+  .account-number {
     text-transform: uppercase;
   }
 
-  .account-item-info {
+  .info {
     :last-child {
       padding-top: $dist-2xs;
     }
   }
 
-  .account-item-logo {
+  .logo {
     width: $dist-m;
     height: $dist-m;
   }

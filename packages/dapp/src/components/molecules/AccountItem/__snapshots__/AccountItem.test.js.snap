@@ -5,20 +5,20 @@ exports[`AccountItem component renders correctly 1`] = `
   className="account-item"
 >
   <div
-    className="account-item-logo"
+    className="logo"
   >
     <Component />
   </div>
   <div
-    className="account-item-info"
+    className="info"
   >
     <span
-      className="account-item-provider"
+      className="provider"
     >
       MetaMask
     </span>
     <span
-      className="account-item-number"
+      className="account-number"
     >
       **** 2d6d
     </span>

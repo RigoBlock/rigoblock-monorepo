@@ -15,10 +15,10 @@ const AccountItem = ({ provider, number }) => {
   // conditional logic for Parity to be added
   return (
     <div className="account-item">
-      <div className="account-item-logo">{logoComponent}</div>
-      <div className="account-item-info">
-        <span className="account-item-provider">{displayedProvider}</span>
-        <span className="account-item-number">{displayedAccount}</span>
+      <div className="logo">{logoComponent}</div>
+      <div className="info">
+        <span className="provider">{displayedProvider}</span>
+        <span className="account-number">{displayedAccount}</span>
       </div>
     </div>
   )
