@@ -14,10 +14,7 @@ export const getAccountBalanceEpic = (action$, store, ts = Scheduler.async) => {
     )
     .mergeMap(({ payload: { account } }) => {
       return fromPromise(api.web3.getBalanceInWeiAsync(account), ts).map(
-        balance => {
-          const ethBalance = api.web3._web3.fromWei(balance)
-          return blockChainActions.updateAccountBalance(ethBalance)
-        }
+        balance => blockChainActions.updateAccountBalance(balance)
       )
     })
   const action$2 = action$
@@ -29,10 +26,7 @@ export const getAccountBalanceEpic = (action$, store, ts = Scheduler.async) => {
     )
     .mergeMap(({ meta: { currentAccount } }) => {
       return fromPromise(api.web3.getBalanceInWeiAsync(currentAccount), ts).map(
-        balance => {
-          const ethBalance = api.web3._web3.fromWei(balance)
-          return blockChainActions.updateAccountBalance(ethBalance)
-        }
+        balance => blockChainActions.updateAccountBalance(balance)
       )
     })
   return merge(action$1, action$2)
