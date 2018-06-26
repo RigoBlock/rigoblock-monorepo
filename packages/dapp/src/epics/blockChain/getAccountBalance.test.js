@@ -66,8 +66,8 @@ describe('getAccountBalanceEpic', () => {
     ts.flush()
   })
 
-  it('dispatches an updateAccountBalance action if we register a block which interests the current account', () => {
-    fromPromiseSpy.mockReturnValueOnce(of('25999999999952600000'))
+  fit('dispatches an updateAccountBalance action if we register a block which interests the current account', () => {
+    fromPromiseSpy.mockReturnValueOnce(of('10000000000000000000'))
     const inputAction = blockChainActions.registerBlock(VAULT, vaultEvent)
     inputAction.meta = { currentAccount: owner }
 
@@ -75,11 +75,12 @@ describe('getAccountBalanceEpic', () => {
       a: inputAction
     }
     const expectedValues = {
-      b: blockChainActions.updateAccountBalance('25999999999952600000')
+      b: blockChainActions.updateAccountBalance('10000000000000000000')
     }
 
     const inputMarble = 'a'
-    const expectedMarble = 'b'
+    const expectedMarble =
+      '----------------------------------------------------------------------------------------------------b'
 
     const ts = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)
@@ -91,13 +92,15 @@ describe('getAccountBalanceEpic', () => {
     const outputAction = getAccountBalanceEpic(action$, null, ts)
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
+
+    ts.maxFrames = 2000
+
     ts.flush()
   })
 
   it('dispatches an updateAccountBalance action only once per second', () => {
-    fromPromiseSpy
-      .mockReturnValueOnce(of('25999999999952600000'))
-      .mockReturnValueOnce(of('25999999999952600000'))
+    fromPromiseSpy.mockReturnValueOnce(of('10000000000000000000'))
+    fromPromiseSpy.mockReturnValueOnce(of('20000000000000000000'))
 
     const inputAction = blockChainActions.registerBlock(VAULT, vaultEvent)
     inputAction.meta = { currentAccount: owner }
@@ -105,14 +108,16 @@ describe('getAccountBalanceEpic', () => {
       a: inputAction
     }
     const expectedValues = {
-      a: blockChainActions.updateAccountBalance('25999999999952600000')
+      a: blockChainActions.updateAccountBalance('10000000000000000000'),
+      b: blockChainActions.updateAccountBalance('20000000000000000000')
     }
 
     const inputMarble =
-      'a---------a-------------------------------------------------------------------------------------------a'
+      'aaa-----------------------------aa----------aa---------------aaa-------------------------------------a'
 
     const expectedMarble =
-      'a-----------------------------------------------------------------------------------------------------a'
+      '----------------------------------------------------------------------------------------------------a' +
+      '----------------------------------------------------------------------------------------------------b'
 
     const ts = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)
@@ -125,7 +130,7 @@ describe('getAccountBalanceEpic', () => {
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
 
-    ts.maxFrames = 3000
+    ts.maxFrames = 2000
 
     ts.flush()
   })
