@@ -3,7 +3,7 @@
 exports[`ViewLink component renders correctly 1`] = `
 <Link
   className="view-link"
-  size="medium"
+  size="small"
   to="/"
 >
   <Tooltip

@@ -8,7 +8,7 @@ const TopNavbar = () => (
   <div className="top-navbar">
     <Link
       to={ROUTES.DASHBOARD}
-      size={LINK_SIZES.LARGE}
+      size={LINK_SIZES.MEDIUM}
       className="navbar-title"
     >
       RigoBlock
