@@ -35,7 +35,7 @@ exports[`VaultList component renders correctly 1`] = `
       }
     >
       <div
-        className="vaultList"
+        className="vault-list"
       >
         <ListPanel
           items={

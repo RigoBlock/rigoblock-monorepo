@@ -10,7 +10,7 @@ exports[`PanelHeader component renders correctly 1`] = `
   <Icon
     onClick={[Function]}
     size="medium"
-    tooltipText=""
+    tooltipText="empty tooltip"
     type="help"
   />
 </div>

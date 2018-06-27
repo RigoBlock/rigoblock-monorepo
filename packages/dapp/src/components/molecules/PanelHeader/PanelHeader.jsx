@@ -4,7 +4,9 @@ import React from 'react'
 import Tooltip from '../../atoms/Icon'
 
 const PanelHeader = ({ tooltip, title }) => {
-  const tooltipComponent = tooltip && <Tooltip type={'help'} />
+  const tooltipComponent = tooltip && (
+    <Tooltip type={'help'} tooltipText={tooltip} />
+  )
 
   return (
     <div className="panel-header">

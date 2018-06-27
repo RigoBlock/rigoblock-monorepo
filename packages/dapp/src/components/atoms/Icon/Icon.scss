@@ -24,6 +24,7 @@
     font-family: $font-family;
     font-size: $medium-font-size;
     color: $black;
+    z-index: 100;
     background: $secondary-bg-color;
     border-radius: $border-radius;
     line-height: $line-height;
@@ -41,6 +42,7 @@
     bottom: calc(100% + #{$dist-xs});
     content:"";
     background: $secondary-bg-color;
+    z-index: 100;
     width: $dist-s;
     height: $dist-s;
     box-shadow: 1px 1px 0.009em 0 rgba(0, 0, 0, 0.05);
