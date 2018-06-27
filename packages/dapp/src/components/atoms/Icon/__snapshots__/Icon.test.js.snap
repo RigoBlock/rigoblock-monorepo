@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tooltip component renders correctly 1`] = `
+exports[`Icon component renders correctly 1`] = `
 <div
   className="material-icons icon medium"
   onClick={[MockFunction]}
