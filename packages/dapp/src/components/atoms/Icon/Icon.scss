@@ -27,8 +27,8 @@
     background: $secondary-bg-color;
     border-radius: $border-radius;
     line-height: $line-height;
-    box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.15), 0 2px 5px -2px rgba(0, 0, 0, 0.12);
-    bottom: calc(100% + 15px);
+    box-shadow: $box-shadow;
+    bottom: calc(100% + #{$dist-s});
     white-space: nowrap;
     content: attr(tooltip);
     padding: $dist-s;
@@ -38,14 +38,14 @@
   }
 
   &:after {
-    bottom: calc(100% + 5px);
+    bottom: calc(100% + #{$dist-xs});
     content:"";
-    width: 0;
+    background: $secondary-bg-color;
+    width: $dist-s;
+    height: $dist-s;
+    box-shadow: 1px 1px 0.009em 0 rgba(0, 0, 0, 0.05);
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) rotate(45deg);
     position: absolute;
-    border-left: solid transparent 10px;
-    border-right: solid transparent 10px;
-    border-top: solid $secondary-bg-color 10px;
   }
 }
