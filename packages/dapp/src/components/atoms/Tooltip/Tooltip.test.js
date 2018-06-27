@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme'
-import TooltipIcon from './TooltipIcon.jsx'
+import Tooltip from './Tooltip.jsx'
 import toJson from 'enzyme-to-json'
 
 const props = {
@@ -7,14 +7,14 @@ const props = {
   onClick: jest.fn()
 }
 
-describe('TooltipIcon component', () => {
+describe('Tooltip component', () => {
   it('renders correctly', () => {
     expect(
-      toJson(shallow(createComponentWithProps(TooltipIcon, props)))
+      toJson(shallow(createComponentWithProps(Tooltip, props)))
     ).toMatchSnapshot()
   })
   it('calls onClick function when clicked', () => {
-    const tooltip = shallow(createComponentWithProps(TooltipIcon, props))
+    const tooltip = shallow(createComponentWithProps(Tooltip, props))
     tooltip.simulate('click')
     expect(props.onClick).toHaveBeenCalledTimes(1)
   })

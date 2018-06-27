@@ -9,7 +9,7 @@
     display: flex;
   }
 
-  .tooltip-icon {
+  .icon {
     color: black;
   }
 
@@ -19,7 +19,7 @@
 
   &:active {
     font-weight: $font-bold;
-    .tooltip-icon {
+    .icon {
       font-weight: $font-bold;
     }
   }
@@ -32,7 +32,7 @@
     font-weight: $font-bold;
     color: $azure-radiance;
 
-    .tooltip-icon {
+    .icon {
       color: $azure-radiance;
     }
   }
