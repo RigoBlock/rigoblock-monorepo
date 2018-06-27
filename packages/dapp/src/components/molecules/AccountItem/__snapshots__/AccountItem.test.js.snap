@@ -24,7 +24,7 @@ exports[`AccountItem component renders correctly (full version) 1`] = `
     <span>
       0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
     </span>
-    <Tooltip
+    <TooltipIcon
       onClick={[Function]}
       size="small"
       type="filter_none"
