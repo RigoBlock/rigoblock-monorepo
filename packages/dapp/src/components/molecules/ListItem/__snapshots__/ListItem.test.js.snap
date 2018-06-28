@@ -3,6 +3,7 @@
 exports[`ListItem component renders correctly 1`] = `
 <div
   className="list-item"
+  onClick={[Function]}
 >
   <ItemName
     name="Rocksolid Vault"

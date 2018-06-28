@@ -9,7 +9,7 @@ import routerActions from '../../../actions/router-actions'
 
 import React from 'react'
 
-let vaultSelect = ({ vaults, dispatch, pathname }) => {
+let vaultSelect = ({ vaults, dispatch, location }) => {
   if (!Object.keys(vaults).length) {
     return 'Nothing here!'
   }
@@ -30,7 +30,7 @@ let vaultSelect = ({ vaults, dispatch, pathname }) => {
   vaultsList = vaultsList.map(vault => ({
     ...vault,
     className: classNames({
-      active: pathname === `${ROUTES.VAULTS}/${vault.id}`
+      active: location === `${ROUTES.VAULTS}/${vault.id}`
     })
   }))
 
@@ -42,7 +42,7 @@ let vaultSelect = ({ vaults, dispatch, pathname }) => {
 vaultSelect.propTypes = {
   vaults: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
-  pathname: PropTypes.string.isRequired
+  location: PropTypes.string.isRequired
 }
 
 vaultSelect.defaultProps = {

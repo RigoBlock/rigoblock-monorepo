@@ -5,6 +5,7 @@ exports[`List component renders correctly 1`] = `
   className={null}
 >
   <ListItem
+    className=""
     currencyGrowth={0}
     growth={0}
     id={1}
@@ -12,6 +13,7 @@ exports[`List component renders correctly 1`] = `
     itemSymbol="VLT"
     itemValue={0}
     key="0"
+    onClick={[Function]}
     value={12489.51323}
   />
 </div>

@@ -1,7 +1,8 @@
+import * as ROUTES from '../../../constants/routes'
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
 import React from 'react'
-import VaultList from './VaultList.jsx'
+import VaultSelect from './VaultSelect.jsx'
 import toJson from 'enzyme-to-json'
 
 const mockStore = {
@@ -34,6 +35,11 @@ const mockStore = {
           }
         }
       }
+    },
+    routing: {
+      location: {
+        pathname: `${ROUTES.VAULTS}/0`
+      }
     }
   }),
   dispatch: jest.fn(),
@@ -51,6 +57,11 @@ const noVaultsStore = {
           '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196': {}
         }
       }
+    },
+    routing: {
+      location: {
+        pathname: ROUTES.VAULTS
+      }
     }
   }),
   dispatch: jest.fn(),
@@ -59,17 +70,17 @@ const noVaultsStore = {
 
 const wrapper = mount(
   <Provider store={mockStore}>
-    <VaultList />
+    <VaultSelect />
   </Provider>
 )
 
 const noVaultWrapper = mount(
   <Provider store={noVaultsStore}>
-    <VaultList />
+    <VaultSelect />
   </Provider>
 )
 
-describe('PreferencesForm component', () => {
+describe('VaultSelect component', () => {
   it('renders correctly', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })

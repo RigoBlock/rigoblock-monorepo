@@ -4,6 +4,7 @@
   max-width: 4 * $dist-6xl;
   .active {
     border: solid 2px $azure-radiance;
+    padding: ($dist-s - 2px);
   }
   text-decoration: none;
   .list-item {
