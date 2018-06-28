@@ -4,7 +4,6 @@ exports[`Icon component renders correctly 1`] = `
 <div
   className="material-icons icon medium"
   onClick={[MockFunction]}
-  tooltip=""
 >
   help
 </div>

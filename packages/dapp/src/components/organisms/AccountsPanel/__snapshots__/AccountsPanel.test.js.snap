@@ -64,10 +64,25 @@ exports[`AccountsPanel component renders correctly 1`] = `
                     type="help"
                   >
                     <div
-                      className="material-icons icon medium tooltip"
+                      className="material-icons icon medium"
                       onClick={[Function]}
-                      tooltip="List of all accounts"
                     >
+                      <Tooltip
+                        tooltipText="List of all accounts"
+                      >
+                        <div
+                          className="tooltip-container"
+                        >
+                          <div
+                            className="tooltip-text"
+                          >
+                            List of all accounts
+                          </div>
+                          <div
+                            className="tooltip-tip"
+                          />
+                        </div>
+                      </Tooltip>
                       help
                     </div>
                   </Icon>
@@ -153,7 +168,6 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               <div
                                 className="material-icons icon small"
                                 onClick={[Function]}
-                                tooltip=""
                               >
                                 filter_none
                               </div>
@@ -285,7 +299,6 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               <div
                                 className="material-icons icon small"
                                 onClick={[Function]}
-                                tooltip=""
                               >
                                 filter_none
                               </div>
@@ -417,7 +430,6 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               <div
                                 className="material-icons icon small"
                                 onClick={[Function]}
-                                tooltip=""
                               >
                                 filter_none
                               </div>

@@ -20,6 +20,7 @@
 
   .tooltip-container {
     opacity: 0;
+    transition: all $medium-animation ease-out;
   }
 
   &:hover {
