@@ -9,6 +9,8 @@
   }
   text-decoration: none;
   .list-item {
+    cursor: pointer;
+    user-select: none;
     background: $porcelain;
     &:nth-child(2n) {
       background: $md-secondary-color;

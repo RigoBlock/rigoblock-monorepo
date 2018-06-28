@@ -1,5 +1,6 @@
 import './VaultSelect.scss'
 import * as ROUTES from '../../../constants/routes'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import List from '../../organisms/List'
 import ListItem from '../../molecules/ListItem'
@@ -14,6 +15,13 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   if (!Object.keys(vaults).length) {
     return <div className="vault-select">Nothing here!</div>
   }
+
+  if (location === ROUTES.VAULTS) {
+    const firstVaultAddress = Object.keys(vaults).shift()
+    const firstVaultId = vaults[firstVaultAddress].id
+    return <Redirect to={`${ROUTES.VAULTS}/${firstVaultId}`} />
+  }
+
   const handleClick = ({ target }) => {
     return location === `${ROUTES.VAULTS}/${target.id}`
       ? null
