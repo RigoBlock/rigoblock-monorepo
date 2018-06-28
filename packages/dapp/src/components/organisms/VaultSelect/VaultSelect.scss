@@ -1,0 +1,15 @@
+@import "../../_settings/variables.scss";
+
+.vault-select {
+  max-width: 4 * $dist-6xl;
+  .active {
+    border: solid 2px $azure-radiance;
+  }
+  text-decoration: none;
+  .list-item {
+    background: $porcelain;
+    &:nth-child(2n) {
+      background: $md-secondary-color;
+    }
+  }
+}
