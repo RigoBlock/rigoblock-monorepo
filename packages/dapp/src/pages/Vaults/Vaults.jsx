@@ -4,9 +4,10 @@ import VaultSelect from '../../components/organisms/VaultSelect'
 
 class Vaults extends Component {
   render() {
+    // TODO: use the match prop to render the correct Vault
+    // depending on url
     return (
       <BaseTemplate>
-        <h1>Vaults</h1>
         <VaultSelect />
       </BaseTemplate>
     )

@@ -187,7 +187,11 @@ exports[`VaultSelect component renders correctly if there are no vaults on state
       location="/vaults"
       vaults={Object {}}
     >
-      Nothing here!
+      <div
+        className="vault-select"
+      >
+        Nothing here!
+      </div>
     </vaultSelect>
   </Connect(vaultSelect)>
 </Provider>

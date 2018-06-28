@@ -11,7 +11,7 @@ import React from 'react'
 
 let vaultSelect = ({ vaults, dispatch, location }) => {
   if (!Object.keys(vaults).length) {
-    return 'Nothing here!'
+    return <div className="vault-select">Nothing here!</div>
   }
   const handleClick = ({ target }) =>
     dispatch(routerActions.goToVault(target.id))
