@@ -24,9 +24,14 @@ let NavigationView = ({ currentUrl }) => {
   ]
 
   navLinks = navLinks.map(navLink => {
+    const linkUrl = navLink.link.to
     return {
       ...navLink,
-      className: classNames({ active: currentUrl === navLink.link.to })
+      className: classNames({
+        active:
+          (currentUrl.startsWith(linkUrl) && linkUrl !== ROUTES.DASHBOARD) ||
+          currentUrl === linkUrl
+      })
     }
   })
 
