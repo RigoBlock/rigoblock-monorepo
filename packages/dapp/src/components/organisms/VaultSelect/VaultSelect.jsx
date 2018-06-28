@@ -10,11 +10,15 @@ import routerActions from '../../../actions/router-actions'
 import React from 'react'
 
 let vaultSelect = ({ vaults, dispatch, location }) => {
+  // TODO: remove this and implement a correct page
   if (!Object.keys(vaults).length) {
     return <div className="vault-select">Nothing here!</div>
   }
-  const handleClick = ({ target }) =>
-    dispatch(routerActions.goToVault(target.id))
+  const handleClick = ({ target }) => {
+    return location === `${ROUTES.VAULTS}/${target.id}`
+      ? null
+      : dispatch(routerActions.goToVault(target.id))
+  }
 
   let vaultsList = Object.keys(vaults).map(vault => {
     const { name, symbol, totalSupply, id } = vaults[vault]

@@ -82,7 +82,9 @@ exports[`VaultSelect component renders correctly 1`] = `
                 name="First Vault"
                 symbol="asd"
               >
-                <div>
+                <div
+                  className="no-events"
+                >
                   <span
                     className="item-symbol"
                   >
@@ -103,7 +105,9 @@ exports[`VaultSelect component renders correctly 1`] = `
                 precision={2}
                 valueSize="large"
               >
-                <div>
+                <div
+                  className="no-events"
+                >
                   <span
                     className="item-value large"
                   >
@@ -133,7 +137,9 @@ exports[`VaultSelect component renders correctly 1`] = `
                 name="Third Vault"
                 symbol="das"
               >
-                <div>
+                <div
+                  className="no-events"
+                >
                   <span
                     className="item-symbol"
                   >
@@ -154,7 +160,9 @@ exports[`VaultSelect component renders correctly 1`] = `
                 precision={2}
                 valueSize="large"
               >
-                <div>
+                <div
+                  className="no-events"
+                >
                   <span
                     className="item-value large"
                   >

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ItemName component renders correctly 1`] = `
-<div>
+<div
+  className="no-events"
+>
   <span
     className="item-symbol"
   >

@@ -26,14 +26,14 @@ const ItemValue = props => {
   const res = roundProps(props)
   const classProps = classNames('item-value', valueSize)
   return growth && currencyGrowth ? (
-    <div>
+    <div className="no-events">
       <span className={classProps}>{`+${res.growth}%`}</span>
       <span className={'currency-growth'}>{`+${
         res.currencyGrowth
       } ${currency}`}</span>
     </div>
   ) : (
-    <div>
+    <div className="no-events">
       <span className={classProps}>{res.itemValue}</span>
     </div>
   )
