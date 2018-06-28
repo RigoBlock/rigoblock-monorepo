@@ -17,37 +17,14 @@
   &.large {
     font-size: $xl-font-size;
   }
-}
 
-.tooltip:hover {
-  &:before {
-    font-family: $font-family;
-    font-size: $medium-font-size;
-    color: $black;
-    z-index: 100;
-    background: $secondary-bg-color;
-    border-radius: $border-radius;
-    line-height: $line-height;
-    box-shadow: $box-shadow;
-    bottom: calc(100% + #{$dist-s});
-    white-space: nowrap;
-    content: attr(tooltip);
-    padding: $dist-s;
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
+  .tooltip-container {
+    opacity: 0;
   }
 
-  &:after {
-    bottom: calc(100% + #{$dist-xs});
-    content:"";
-    background: $secondary-bg-color;
-    z-index: 100;
-    width: $dist-s;
-    height: $dist-s;
-    box-shadow: 1px 1px 0.009em 0 rgba(0, 0, 0, 0.05);
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    position: absolute;
+  &:hover {
+    .tooltip-container {
+      opacity: 1;
+    }
   }
 }

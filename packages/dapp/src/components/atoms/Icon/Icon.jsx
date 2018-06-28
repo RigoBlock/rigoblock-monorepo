@@ -1,6 +1,7 @@
 import './Icon.scss'
 import PropTypes from 'prop-types'
 import React from 'react'
+import Tooltip from '../Tooltip'
 import classNames from 'classnames'
 
 export const ICON_SIZES = {
@@ -10,11 +11,14 @@ export const ICON_SIZES = {
 }
 
 const Icon = ({ size, type, onClick, tooltipText }) => {
-  const classProps = classNames('material-icons', 'icon', size, {
-    tooltip: !!tooltipText
-  })
-  return (
-    <div className={classProps} onClick={onClick} tooltip={tooltipText}>
+  const classProps = classNames('material-icons', 'icon', size)
+  return tooltipText ? (
+    <div className={classProps} onClick={onClick}>
+      <Tooltip tooltipText={tooltipText} />
+      {type}
+    </div>
+  ) : (
+    <div className={classProps} onClick={onClick}>
       {type}
     </div>
   )

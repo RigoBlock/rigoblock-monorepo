@@ -1,17 +1,20 @@
 @import "../../_settings/variables.scss";
 
-/* here's where the magic happens */
-
 .tooltip-container {
   position: absolute;
+  font-family: $font-family;
+  font-size: $medium-font-size;
+  border-radius: $border-radius;
+  color: $black;
   z-index:0;
-  top: calc(-100% - 2.5rem);
+  bottom: calc(100% + #{$dist-s});
   left: 50%;
   transform: translateX(-50%);
 }
 
 .tooltip-text:before,
 .tooltip-text:after{
+  border-radius: $border-radius;
   display: block;
   content: "";
   position: absolute;
@@ -24,18 +27,22 @@
 }
 
 .tooltip-text:before {
+  border-radius: $border-radius;
   left: 0;
   border-bottom-right-radius: 1rem;
 }
 
 .tooltip-text:after{
+  border-radius: $border-radius;
   right: 0;
   border-bottom-left-radius: 1rem;
 }
 
 .tooltip-text {
-  background: #fff;
-  padding: 0.75rem 1rem;
+  line-height: $line-height;
+  border-radius: $border-radius;
+  background: $secondary-bg-color;
+  padding: $dist-s;
 }
 
 .tooltip-tip {
@@ -44,7 +51,7 @@
   display: block;
   width: 1rem;
   height: 1rem;
-  background: #fff;
+  background: $secondary-bg-color;
   left: 50%;
   bottom: -0.5rem;
   transform:
@@ -52,10 +59,4 @@
     rotate(45deg);
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
   transition: transform 200ms ease-out;
-}
-
-.tooltip-source {
-  font-size: 2rem;
-  line-height: 1.5rem;
-  font-style: italic;
 }
