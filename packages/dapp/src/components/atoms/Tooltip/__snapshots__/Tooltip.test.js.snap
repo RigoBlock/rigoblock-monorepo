@@ -1,9 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Tooltip component renders correctly 1`] = `
-<span
-  className="material-icons tooltip medium"
+<div
+  className="tooltip-container"
 >
-  help
-</span>
+  <div
+    className="tooltip-text"
+  >
+    Test tooltip.
+  </div>
+  <div
+    className="tooltip-tip"
+  />
+</div>
 `;

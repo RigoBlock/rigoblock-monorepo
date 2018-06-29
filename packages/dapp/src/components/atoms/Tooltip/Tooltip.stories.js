@@ -1,16 +1,21 @@
 import '../../_settings/_base.scss'
-import { selectV2, text, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
+import { text, withKnobs } from '@storybook/addon-knobs/react'
 import React from 'react'
-import Tooltip, { TOOLTIP_SIZES } from './Tooltip'
+import Tooltip from './Tooltip'
 
 storiesOf('Atoms/Tooltip', module)
   .addDecorator(withKnobs)
-  .add('default', () => (
-    <Tooltip
-      size={selectV2('Tooltip size', TOOLTIP_SIZES, TOOLTIP_SIZES.SMALL)}
-      type={text('Icon type', 'help')}
+  .addDecorator(story => (
+    <div
+      style={{
+        marginTop: '100px',
+        marginLeft: '100px'
+      }}
     >
-      Small Tooltip
-    </Tooltip>
+      {story()}
+    </div>
+  ))
+  .add('default', () => (
+    <Tooltip tooltipText={text('Tooltip text', "Hello I'm a tooltip")} />
   ))
