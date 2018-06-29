@@ -21,5 +21,4 @@ global.accountMiddlewareMock = (action, account) => {
   return action
 }
 
-global.addTimeFrames = (frames, value = undefined) =>
-  value ? '-'.repeat(frames) + value : '-'.repeat(frames)
+global.addTimeFrames = (frames, value = '') => `${'-'.repeat(frames)}${value}`
