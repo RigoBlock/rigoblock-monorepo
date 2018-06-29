@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/merge'
 import 'rxjs/add/operator/mergeMap'
 import { Scheduler } from 'rxjs/Scheduler'
@@ -10,10 +9,9 @@ import blockChainActions from '../../actions/blockchain-actions'
 import globalActions from '../../actions/global-actions'
 
 const blockchainSubject = new Subject()
-let blockchainService
 
 export const blockchainEpic = (action$, store, ts = Scheduler.async) => {
-  blockchainService = BlockChainService.createInstance(
+  const blockchainService = BlockChainService.createInstance(
     api,
     action$,
     blockchainSubject,

@@ -1,3 +1,4 @@
+import { BigNumber } from 'bignumber.js'
 import blockChainActions from '../../actions/blockchain-actions'
 import blockChainReducer from './blockChain'
 import vaultActions from '../../actions/vault-actions'
@@ -23,7 +24,8 @@ describe('blockchain reducer', () => {
       undefined,
       {},
       {
-        accounts: {}
+        accounts: {},
+        totalBalance: new BigNumber(0)
       }
     )
   })
@@ -37,7 +39,8 @@ describe('blockchain reducer', () => {
           [owner]: {
             provider
           }
-        }
+        },
+        totalBalance: new BigNumber(0)
       }
     )
   })
@@ -49,7 +52,8 @@ describe('blockchain reducer', () => {
           [owner]: {
             lastBlock: '1'
           }
-        }
+        },
+        totalBalance: new BigNumber(0)
       },
       accountMiddlewareMock(vaultActions.registerVaultBlock(eventBlock), owner),
       {
@@ -60,7 +64,8 @@ describe('blockchain reducer', () => {
               [eventBlock.blockNumber]: eventBlock
             }
           }
-        }
+        },
+        totalBalance: new BigNumber(0)
       }
     )
   })
@@ -72,13 +77,64 @@ describe('blockchain reducer', () => {
           [owner]: {
             dummyProp: 'dummyValue'
           }
-        }
+        },
+        totalBalance: new BigNumber(0)
       },
       blockChainActions.blockChainLogIn('metamask', owner),
       {
         accounts: {
           [owner]: {
             dummyProp: 'dummyValue'
+          }
+        },
+        totalBalance: new BigNumber(0)
+      }
+    )
+  })
+
+  it(`updates total accounts balance whe updateTotalAccountBalance is fired `, () => {
+    blockChainTest(
+      {
+        accounts: {
+          [owner]: {
+            dummyProp: 'dummyValue'
+          }
+        },
+        totalBalance: new BigNumber(0)
+      },
+      blockChainActions.updateTotalAccountBalance(
+        new BigNumber('256.999999999952600881')
+      ),
+      {
+        accounts: {
+          [owner]: {
+            dummyProp: 'dummyValue'
+          }
+        },
+        totalBalance: new BigNumber('256.999999999952600881')
+      }
+    )
+  })
+
+  it(`updates total accounts balance whe updateTotalAccountBalance is fired `, () => {
+    blockChainTest(
+      {
+        accounts: {
+          [owner]: {
+            balance: new BigNumber(0)
+          }
+        }
+      },
+      accountMiddlewareMock(
+        blockChainActions.updateAccountBalance(
+          new BigNumber('90.999999999952600881')
+        ),
+        owner
+      ),
+      {
+        accounts: {
+          [owner]: {
+            balance: new BigNumber('90.999999999952600881')
           }
         }
       }
