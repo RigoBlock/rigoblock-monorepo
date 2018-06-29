@@ -3,8 +3,7 @@ import Tooltip from './Tooltip.jsx'
 import toJson from 'enzyme-to-json'
 
 const props = {
-  type: 'help',
-  onClick: jest.fn()
+  tooltipText: 'Test tooltip.'
 }
 
 describe('Tooltip component', () => {
@@ -12,10 +11,5 @@ describe('Tooltip component', () => {
     expect(
       toJson(shallow(createComponentWithProps(Tooltip, props)))
     ).toMatchSnapshot()
-  })
-  it('calls onClick function when clicked', () => {
-    const tooltip = shallow(createComponentWithProps(Tooltip, props))
-    tooltip.simulate('click')
-    expect(props.onClick).toHaveBeenCalledTimes(1)
   })
 })

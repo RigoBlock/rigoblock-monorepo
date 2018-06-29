@@ -1,9 +1,9 @@
 import './AccountItem.scss'
 import { METAMASK } from '../../../constants/user'
+import Icon, { ICON_SIZES } from '../../atoms/Icon'
 import MetaMaskLogo from '../../../images/metamask-fox.svg'
 import PropTypes from 'prop-types'
 import React from 'react'
-import Tooltip, { TOOLTIP_SIZES } from '../../atoms/Tooltip'
 
 export const ACCOUNT_ITEM_TYPES = {
   FULL: 'full',
@@ -39,7 +39,7 @@ const AccountItem = ({ provider, number, appearance }) => {
       <span className="account-number">
         <span>{number}</span>
         {/* TODO: add copy to clipboard function */}
-        <Tooltip type="filter_none" size={TOOLTIP_SIZES.SMALL} />
+        <Icon type="filter_none" size={ICON_SIZES.SMALL} />
       </span>
     </div>
   )

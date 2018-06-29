@@ -1,6 +1,7 @@
 @import "../../components/_settings/variables.scss";
 
 .dashboard {
+  margin-top: 2 * $dist-3xl;
   > * {
     margin-bottom: $dist-m;
   }

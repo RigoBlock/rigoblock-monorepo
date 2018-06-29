@@ -37,7 +37,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
           header={
             <PanelHeader
               title="Accounts"
-              tooltip="tooltip"
+              tooltip="List of all accounts"
             />
           }
         >
@@ -49,7 +49,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
             >
               <PanelHeader
                 title="Accounts"
-                tooltip="tooltip"
+                tooltip="List of all accounts"
               >
                 <div
                   className="panel-header"
@@ -57,18 +57,35 @@ exports[`AccountsPanel component renders correctly 1`] = `
                   <h1>
                     Accounts
                   </h1>
-                  <Tooltip
+                  <Icon
                     onClick={[Function]}
                     size="medium"
+                    tooltipText="List of all accounts"
                     type="help"
                   >
-                    <span
-                      className="material-icons tooltip medium"
+                    <div
+                      className="material-icons icon medium"
                       onClick={[Function]}
                     >
+                      <Tooltip
+                        tooltipText="List of all accounts"
+                      >
+                        <div
+                          className="tooltip-container"
+                        >
+                          <div
+                            className="tooltip-text"
+                          >
+                            List of all accounts
+                          </div>
+                          <div
+                            className="tooltip-tip"
+                          />
+                        </div>
+                      </Tooltip>
                       help
-                    </span>
-                  </Tooltip>
+                    </div>
+                  </Icon>
                 </div>
               </PanelHeader>
             </div>
@@ -142,18 +159,19 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             <span>
                               0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196
                             </span>
-                            <Tooltip
+                            <Icon
                               onClick={[Function]}
                               size="small"
+                              tooltipText=""
                               type="filter_none"
                             >
-                              <span
-                                className="material-icons tooltip small"
+                              <div
+                                className="material-icons icon small"
                                 onClick={[Function]}
                               >
                                 filter_none
-                              </span>
-                            </Tooltip>
+                              </div>
+                            </Icon>
                           </span>
                         </div>
                       </AccountItem>
@@ -272,18 +290,19 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             <span>
                               0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
                             </span>
-                            <Tooltip
+                            <Icon
                               onClick={[Function]}
                               size="small"
+                              tooltipText=""
                               type="filter_none"
                             >
-                              <span
-                                className="material-icons tooltip small"
+                              <div
+                                className="material-icons icon small"
                                 onClick={[Function]}
                               >
                                 filter_none
-                              </span>
-                            </Tooltip>
+                              </div>
+                            </Icon>
                           </span>
                         </div>
                       </AccountItem>
@@ -402,18 +421,19 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             <span>
                               0x8bb7481495d45ccd5cffae1c3a84155fea85a323
                             </span>
-                            <Tooltip
+                            <Icon
                               onClick={[Function]}
                               size="small"
+                              tooltipText=""
                               type="filter_none"
                             >
-                              <span
-                                className="material-icons tooltip small"
+                              <div
+                                className="material-icons icon small"
                                 onClick={[Function]}
                               >
                                 filter_none
-                              </span>
-                            </Tooltip>
+                              </div>
+                            </Icon>
                           </span>
                         </div>
                       </AccountItem>

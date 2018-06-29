@@ -1,1 +1,1 @@
-export { default, TOOLTIP_SIZES } from './Tooltip'
+export { default } from './Tooltip'

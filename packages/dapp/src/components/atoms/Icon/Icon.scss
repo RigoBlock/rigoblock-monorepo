@@ -1,0 +1,31 @@
+@import "../../_settings/variables.scss";
+
+.icon {
+  color: $silver-sand;
+  display: inline;
+  position: relative;
+  cursor: pointer;
+
+  &.small {
+    font-size: 10px;
+  }
+
+  &.medium {
+    font-size: $large-font-size;
+  }
+
+  &.large {
+    font-size: $xl-font-size;
+  }
+
+  .tooltip-container {
+    opacity: 0;
+    transition: all $medium-animation ease-out;
+  }
+
+  &:hover {
+    .tooltip-container {
+      opacity: 1;
+    }
+  }
+}

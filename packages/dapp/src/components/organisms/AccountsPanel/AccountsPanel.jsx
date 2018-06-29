@@ -7,14 +7,15 @@ import PanelHeader from '../../molecules/PanelHeader'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+const tooltip = 'List of all accounts'
+
 let AccountsPanel = ({ accounts }) => {
   const values = Object.keys(accounts).map(accNum => ({
     provider: accounts[accNum].provider,
     number: accNum,
     balance: accounts[accNum].balance
   }))
-  // TODO: add proper tooltip
-  const header = <PanelHeader title={'Accounts'} tooltip={'tooltip'} />
+  const header = <PanelHeader title={'Accounts'} tooltip={tooltip} />
   const divider = () => <div className="navbar-divider" />
   return (
     <div className="accounts-panel">
