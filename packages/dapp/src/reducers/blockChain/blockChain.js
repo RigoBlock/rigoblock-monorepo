@@ -1,3 +1,4 @@
+import { BigNumber } from 'bignumber.js'
 import { composeReducers } from '../utils'
 import { createReducer } from 'redux-act'
 import blockChainActions from '../../actions/blockchain-actions'
@@ -7,7 +8,7 @@ import vaultsReducer from './vaults'
 
 const initialState = {
   accounts: {},
-  totalBalance: ''
+  totalBalance: new BigNumber(0)
 }
 
 const blockChainReducer = createReducer(
