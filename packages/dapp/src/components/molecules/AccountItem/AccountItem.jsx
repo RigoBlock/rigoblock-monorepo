@@ -12,10 +12,12 @@ export const ACCOUNT_ITEM_TYPES = {
 
 const AccountItem = ({ provider, number, appearance }) => {
   const hiddenAccount = `**** ${number.substr(number.length - 4, 4)}`
-  let displayedProvider
-  let logoComponent
+  let displayedProvider = provider && provider.toLowerCase()
+  let logoComponent = (
+    <img src={`https://identicon-api.herokuapp.com/${number}/24?format=png`} />
+  )
 
-  if (provider.toLowerCase() === METAMASK.toLowerCase()) {
+  if (displayedProvider === METAMASK.toLowerCase()) {
     displayedProvider = METAMASK
     logoComponent = <MetaMaskLogo />
   }
