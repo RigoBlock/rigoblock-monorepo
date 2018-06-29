@@ -16,7 +16,7 @@ Scenario(
     navigation.navigateToPreferences()
     preferences.checkTimezoneHasChanged('GMT -12:00')
   }
-)
+).retry(3)
 
 Scenario(
   'test cancel button functionality',
@@ -29,4 +29,4 @@ Scenario(
     preferences.resetForm()
     preferences.checkTimezoneHasChanged(defaultTimezone)
   }
-)
+).retry(3)
