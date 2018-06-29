@@ -199,7 +199,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               precision={2}
                               valueSize="small"
                             >
-                              <div>
+                              <div
+                                className="no-events"
+                              >
                                 <span
                                   className="item-value small"
                                 >
@@ -230,7 +232,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               precision={2}
                               valueSize="small"
                             >
-                              <div>
+                              <div
+                                className="no-events"
+                              >
                                 <span
                                   className="item-value small"
                                 >
@@ -330,7 +334,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               precision={2}
                               valueSize="small"
                             >
-                              <div>
+                              <div
+                                className="no-events"
+                              >
                                 <span
                                   className="item-value small"
                                 >
@@ -361,7 +367,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               precision={2}
                               valueSize="small"
                             >
-                              <div>
+                              <div
+                                className="no-events"
+                              >
                                 <span
                                   className="item-value small"
                                 >
@@ -461,7 +469,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               precision={2}
                               valueSize="small"
                             >
-                              <div>
+                              <div
+                                className="no-events"
+                              >
                                 <span
                                   className="item-value small"
                                 >
@@ -492,7 +502,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               precision={2}
                               valueSize="small"
                             >
-                              <div>
+                              <div
+                                className="no-events"
+                              >
                                 <span
                                   className="item-value small"
                                 >

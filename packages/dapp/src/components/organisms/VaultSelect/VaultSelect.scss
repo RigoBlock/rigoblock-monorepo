@@ -1,0 +1,19 @@
+@import "../../_settings/variables.scss";
+
+.vault-select {
+  margin-top: 2 * $dist-3xl;
+  max-width: 4 * $dist-6xl;
+  .active {
+    border: solid 2px $azure-radiance;
+    padding: ($dist-s - 2px);
+  }
+  text-decoration: none;
+  .list-item {
+    cursor: pointer;
+    user-select: none;
+    background: $porcelain;
+    &:nth-child(2n) {
+      background: $md-secondary-color;
+    }
+  }
+}

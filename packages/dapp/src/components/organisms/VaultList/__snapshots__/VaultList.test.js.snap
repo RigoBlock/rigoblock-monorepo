@@ -108,21 +108,26 @@ exports[`VaultList component renders correctly 1`] = `
                     className={null}
                   >
                     <ListItem
+                      className=""
                       currencyGrowth={0}
                       growth={0}
                       itemName="First Vault"
                       itemSymbol="asd"
                       itemValue={14}
                       key="0"
+                      onClick={[Function]}
                     >
                       <div
                         className="list-item"
+                        onClick={[Function]}
                       >
                         <ItemName
                           name="First Vault"
                           symbol="asd"
                         >
-                          <div>
+                          <div
+                            className="no-events"
+                          >
                             <span
                               className="item-symbol"
                             >
@@ -143,7 +148,9 @@ exports[`VaultList component renders correctly 1`] = `
                           precision={2}
                           valueSize="large"
                         >
-                          <div>
+                          <div
+                            className="no-events"
+                          >
                             <span
                               className="item-value large"
                             >
@@ -154,21 +161,26 @@ exports[`VaultList component renders correctly 1`] = `
                       </div>
                     </ListItem>
                     <ListItem
+                      className=""
                       currencyGrowth={0}
                       growth={0}
                       itemName="Third Vault"
                       itemSymbol="das"
                       itemValue={20.23498}
                       key="1"
+                      onClick={[Function]}
                     >
                       <div
                         className="list-item"
+                        onClick={[Function]}
                       >
                         <ItemName
                           name="Third Vault"
                           symbol="das"
                         >
-                          <div>
+                          <div
+                            className="no-events"
+                          >
                             <span
                               className="item-symbol"
                             >
@@ -189,7 +201,9 @@ exports[`VaultList component renders correctly 1`] = `
                           precision={2}
                           valueSize="large"
                         >
-                          <div>
+                          <div
+                            className="no-events"
+                          >
                             <span
                               className="item-value large"
                             >

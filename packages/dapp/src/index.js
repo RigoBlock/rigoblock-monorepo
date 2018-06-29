@@ -23,16 +23,15 @@ ReactDOM.render(
     <PersistGate loading={null} persistor={persistor}>
       <ConnectedRouter history={history}>
         <div>
-          <Route exact path={ROUTES.DASHBOARD} render={() => <Dashboard />} />
-          <Route exact path={ROUTES.LOGIN} render={() => <Login />} />
+          <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
+          <Route exact path={ROUTES.LOGIN} component={Login} />
+          <Route exact path={ROUTES.PREFERENCES} component={Preferences} />
+          <Route exact path={ROUTES.HELP} component={Help} />
           <Route
-            exact
-            path={ROUTES.PREFERENCES}
-            render={() => <Preferences />}
+            path={ROUTES.VAULTS || `${ROUTES.VAULTS}/:id`}
+            component={Vaults}
           />
-          <Route exact path={ROUTES.HELP} render={() => <Help />} />
-          <Route exact path={ROUTES.VAULTS} render={() => <Vaults />} />
-          <Route exact path={ROUTES.DRAGOS} render={() => <Dragos />} />
+          <Route exact path={ROUTES.DRAGOS} component={Dragos} />
         </div>
       </ConnectedRouter>
     </PersistGate>
