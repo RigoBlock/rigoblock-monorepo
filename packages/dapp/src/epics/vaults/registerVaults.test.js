@@ -48,8 +48,8 @@ describe('registerVaults epic', () => {
   let registerVaults
 
   beforeEach(() => {
-    fromPromiseSpy = jest.fn()
     jest.resetModules()
+    fromPromiseSpy = jest.fn()
     jest.doMock('../../api', () => apiMock)
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy

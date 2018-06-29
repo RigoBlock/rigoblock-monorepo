@@ -22,7 +22,7 @@ let vaultList = ({ vaults }) => {
     }
   })
   return (
-    <div className="vaultList">
+    <div className="vault-list">
       <ListPanel title="Vaults" items={vaultsList} />
     </div>
   )

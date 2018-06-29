@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Dashboard component renders correctly 1`] = `
-<BaseTemplate>
-  <h1>
-    Dashboard
-  </h1>
+<BaseTemplate
+  className="dashboard"
+>
+  <Connect(AccountsPanel) />
   <Connect(vaultList) />
 </BaseTemplate>
 `;

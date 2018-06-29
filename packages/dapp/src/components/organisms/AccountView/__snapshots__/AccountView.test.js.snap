@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PreferencesForm component renders correctly 1`] = `
+exports[`AccountView component renders correctly 1`] = `
 <Provider
   store={
     Object {
@@ -49,6 +49,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
         </Title>
         <List
           Component={[Function]}
+          Divider={null}
           className="account-list"
           data={
             Array [
@@ -79,30 +80,31 @@ exports[`PreferencesForm component renders correctly 1`] = `
             className="account-list"
           >
             <AccountItem
+              appearance="short"
               key="0"
               number="0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196"
               provider="metamask"
             >
               <div
-                className="account-item"
+                className="account-item-short"
               >
                 <div
-                  className="account-item-logo"
+                  className="logo"
                 >
                   <Component>
                     SVG image metamask-fox.svg
                   </Component>
                 </div>
                 <div
-                  className="account-item-info"
+                  className="info"
                 >
                   <span
-                    className="account-item-provider"
+                    className="provider"
                   >
                     MetaMask
                   </span>
                   <span
-                    className="account-item-number"
+                    className="account-number"
                   >
                     **** 9196
                   </span>
@@ -110,30 +112,31 @@ exports[`PreferencesForm component renders correctly 1`] = `
               </div>
             </AccountItem>
             <AccountItem
+              appearance="short"
               key="1"
               number="0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d"
               provider="metamask"
             >
               <div
-                className="account-item"
+                className="account-item-short"
               >
                 <div
-                  className="account-item-logo"
+                  className="logo"
                 >
                   <Component>
                     SVG image metamask-fox.svg
                   </Component>
                 </div>
                 <div
-                  className="account-item-info"
+                  className="info"
                 >
                   <span
-                    className="account-item-provider"
+                    className="provider"
                   >
                     MetaMask
                   </span>
                   <span
-                    className="account-item-number"
+                    className="account-number"
                   >
                     **** 2d6d
                   </span>
@@ -141,30 +144,31 @@ exports[`PreferencesForm component renders correctly 1`] = `
               </div>
             </AccountItem>
             <AccountItem
+              appearance="short"
               key="2"
               number="0x8bb7481495d45ccd5cffae1c3a84155fea85a323"
               provider="metamask"
             >
               <div
-                className="account-item"
+                className="account-item-short"
               >
                 <div
-                  className="account-item-logo"
+                  className="logo"
                 >
                   <Component>
                     SVG image metamask-fox.svg
                   </Component>
                 </div>
                 <div
-                  className="account-item-info"
+                  className="info"
                 >
                   <span
-                    className="account-item-provider"
+                    className="provider"
                   >
                     MetaMask
                   </span>
                   <span
-                    className="account-item-number"
+                    className="account-number"
                   >
                     **** a323
                   </span>
@@ -172,30 +176,31 @@ exports[`PreferencesForm component renders correctly 1`] = `
               </div>
             </AccountItem>
             <AccountItem
+              appearance="short"
               key="3"
               number="0xe198d98b76c529886affb5a74be8b435624bd310"
               provider="metamask"
             >
               <div
-                className="account-item"
+                className="account-item-short"
               >
                 <div
-                  className="account-item-logo"
+                  className="logo"
                 >
                   <Component>
                     SVG image metamask-fox.svg
                   </Component>
                 </div>
                 <div
-                  className="account-item-info"
+                  className="info"
                 >
                   <span
-                    className="account-item-provider"
+                    className="provider"
                   >
                     MetaMask
                   </span>
                   <span
-                    className="account-item-number"
+                    className="account-number"
                   >
                     **** d310
                   </span>
@@ -203,30 +208,31 @@ exports[`PreferencesForm component renders correctly 1`] = `
               </div>
             </AccountItem>
             <AccountItem
+              appearance="short"
               key="4"
               number="0x927aa991a628aab6851a890fb790a4a7cd0ec446"
               provider="metamask"
             >
               <div
-                className="account-item"
+                className="account-item-short"
               >
                 <div
-                  className="account-item-logo"
+                  className="logo"
                 >
                   <Component>
                     SVG image metamask-fox.svg
                   </Component>
                 </div>
                 <div
-                  className="account-item-info"
+                  className="info"
                 >
                   <span
-                    className="account-item-provider"
+                    className="provider"
                   >
                     MetaMask
                   </span>
                   <span
-                    className="account-item-number"
+                    className="account-number"
                   >
                     **** c446
                   </span>

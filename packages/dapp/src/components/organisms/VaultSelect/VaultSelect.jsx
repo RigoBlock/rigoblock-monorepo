@@ -25,7 +25,7 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   const handleClick = ({ target }) => {
     return location === `${ROUTES.VAULTS}/${target.id}`
       ? null
-      : dispatch(routerActions.goToVault(target.id))
+      : dispatch(routerActions.navigateToVault(target.id))
   }
 
   let vaultsList = Object.keys(vaults).map(vault => {

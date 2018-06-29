@@ -30,8 +30,8 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
         )
       })
     })
-    .map(({ address, vaultData: [id, name, symbol, , owner, group] }) => ({
-      vault: {
+    .map(({ address, vaultData: [id, name, symbol, , owner, group] }) =>
+      vaultActions.registerVault({
         [address]: {
           id: id.toNumber(),
           name,
@@ -39,9 +39,8 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
           owner,
           group
         }
-      }
-    }))
-    .map(({ vault }) => vaultActions.registerVault(vault))
+      })
+    )
   return merge(action$1, action$2)
 }
 

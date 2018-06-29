@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PreferencesForm component renders correctly 1`] = `
+exports[`VaultList component renders correctly 1`] = `
 <Provider
   store={
     Object {
@@ -35,7 +35,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
       }
     >
       <div
-        className="vaultList"
+        className="vault-list"
       >
         <ListPanel
           items={
@@ -87,6 +87,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
               >
                 <List
                   Component={[Function]}
+                  Divider={null}
                   className={null}
                   data={
                     Array [
@@ -224,7 +225,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
 </Provider>
 `;
 
-exports[`PreferencesForm component renders correctly if there are no vaults on state 1`] = `
+exports[`VaultList component renders correctly if there are no vaults on state 1`] = `
 <Provider
   store={
     Object {
@@ -279,6 +280,7 @@ exports[`PreferencesForm component renders correctly if there are no vaults on s
               >
                 <List
                   Component={[Function]}
+                  Divider={null}
                   className={null}
                   data={Array []}
                 >

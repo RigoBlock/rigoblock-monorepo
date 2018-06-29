@@ -41,7 +41,7 @@ const wrapper = mount(
   </Provider>
 )
 
-describe('PreferencesForm component', () => {
+describe('AccountView component', () => {
   it('renders correctly', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })

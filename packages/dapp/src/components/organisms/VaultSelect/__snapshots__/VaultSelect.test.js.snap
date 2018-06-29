@@ -37,6 +37,7 @@ exports[`VaultSelect component renders correctly 1`] = `
     >
       <List
         Component={[Function]}
+        Divider={null}
         className="vault-select"
         data={
           Array [

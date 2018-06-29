@@ -69,7 +69,7 @@ const noVaultWrapper = mount(
   </Provider>
 )
 
-describe('PreferencesForm component', () => {
+describe('VaultList component', () => {
   it('renders correctly', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })

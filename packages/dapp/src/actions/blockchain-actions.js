@@ -12,5 +12,7 @@ export default {
     label,
     block
   })),
-  vaultFetchCompleted: createAction('vault fetch completed')
+  vaultFetchCompleted: createAction('vault fetch completed'),
+  updateAccountBalance: createAction('updating accounts balance'),
+  updateTotalAccountBalance: createAction('updating total accounts balance')
 }
