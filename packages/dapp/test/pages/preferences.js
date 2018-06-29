@@ -20,7 +20,6 @@ module.exports = {
   },
 
   changeTimezoneValue(timezone) {
-    I.wait(0.4)
     I.click('div[id="1-toggle"]')
     I.waitForVisible('ul[id="1-menu-options"]')
     I.executeScript(() => {
