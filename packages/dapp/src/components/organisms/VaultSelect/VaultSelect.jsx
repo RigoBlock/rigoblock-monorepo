@@ -64,7 +64,9 @@ vaultSelect.defaultProps = {
 vaultSelect = connect(state => {
   const { currentAccount } = state.user.preferences
   return {
-    vaults: state.user.blockChain.accounts[currentAccount].vaults,
+    vaults: currentAccount
+      ? state.user.blockChain.accounts[currentAccount].vaults
+      : {},
     location: state.routing.location.pathname
   }
 })(vaultSelect)

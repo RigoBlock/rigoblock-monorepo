@@ -3,6 +3,6 @@ import { push } from 'react-router-redux'
 
 export default {
   logout: () => push(ROUTES.LOGIN),
-  login: () => push(ROUTES.DASHBOARD),
+  login: url => push(url || ROUTES.DASHBOARD),
   navigateToVault: id => push(`${ROUTES.VAULTS}/${id}`)
 }
