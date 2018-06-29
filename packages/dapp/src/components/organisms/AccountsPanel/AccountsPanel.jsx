@@ -15,7 +15,6 @@ let AccountsPanel = ({ accounts }) => {
     number: accNum,
     balance: accounts[accNum].balance
   }))
-  // TODO: add proper tooltip
   const header = <PanelHeader title={'Accounts'} tooltip={tooltip} />
   const divider = () => <div className="navbar-divider" />
   return (
