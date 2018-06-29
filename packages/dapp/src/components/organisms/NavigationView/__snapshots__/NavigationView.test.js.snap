@@ -4,6 +4,7 @@ exports[`NavigationView component renders correctly 1`] = `
 <div>
   <List
     Component={[Function]}
+    Divider={null}
     className="navigation-view"
     data={
       Array [

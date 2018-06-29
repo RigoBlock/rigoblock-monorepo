@@ -1,7 +1,7 @@
 import '../../_settings/_base.scss'
+import { selectV2, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs/react'
-import AccountItem from './AccountItem'
+import AccountItem, { ACCOUNT_ITEM_TYPES } from './AccountItem'
 import React from 'react'
 
 const props = {
@@ -11,4 +11,13 @@ const props = {
 
 storiesOf('Molecules/AccountItem', module)
   .addDecorator(withKnobs)
-  .add('default', () => <AccountItem {...props} />)
+  .add('default', () => (
+    <AccountItem
+      {...props}
+      appearance={selectV2(
+        'Item Appearance',
+        ACCOUNT_ITEM_TYPES,
+        ACCOUNT_ITEM_TYPES.SHORT
+      )}
+    />
+  ))

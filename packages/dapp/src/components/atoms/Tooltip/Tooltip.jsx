@@ -9,13 +9,18 @@ export const TOOLTIP_SIZES = {
   LARGE: 'large'
 }
 
-const Tooltip = ({ size, type }) => {
+const Tooltip = ({ size, type, onClick }) => {
   const classProps = classNames('material-icons', 'tooltip', size)
-  return <span className={classProps}>{type}</span>
+  return (
+    <span className={classProps} onClick={onClick}>
+      {type}
+    </span>
+  )
 }
 
 Tooltip.propTypes = {
   type: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   size: PropTypes.oneOf([
     TOOLTIP_SIZES.SMALL,
     TOOLTIP_SIZES.MEDIUM,
@@ -24,7 +29,8 @@ Tooltip.propTypes = {
 }
 
 Tooltip.defaultProps = {
-  size: TOOLTIP_SIZES.MEDIUM
+  size: TOOLTIP_SIZES.MEDIUM,
+  onClick: () => {}
 }
 
 export default Tooltip

@@ -9,7 +9,7 @@ const ViewLink = ({ icon, link, className }) => {
   const classProps = classNames('view-link', className)
   return (
     <Link size={LINK_SIZES.SMALL} to={link.to} className={classProps}>
-      <Tooltip type={icon} size={TOOLTIP_SIZES.SMALL} />
+      <Tooltip type={icon} size={TOOLTIP_SIZES.MEDIUM} />
       <span>{link.text}</span>
     </Link>
   )

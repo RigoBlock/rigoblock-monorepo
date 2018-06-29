@@ -10,11 +10,11 @@
   > *:not(:first-child) {
     margin-top: $dist-m;
   }
-}
 
-.navbar-divider {
-  width: $dist-l;
-  height: 1px;
-  margin: $dist-xl 0 !important;
-  background-color: $dark-grey;
+  .navbar-divider {
+    width: $dist-l;
+    height: 1px;
+    margin: $dist-xl 0;
+    background-color: $dark-grey;
+  }
 }

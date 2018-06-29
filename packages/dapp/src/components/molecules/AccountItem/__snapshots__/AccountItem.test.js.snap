@@ -1,24 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountItem component renders correctly 1`] = `
+exports[`AccountItem component renders correctly (full version) 1`] = `
 <div
-  className="account-item"
+  className="account-item-full"
 >
   <div
-    className="account-item-logo"
+    className="provider"
+  >
+    <div
+      className="logo"
+    >
+      <Component />
+    </div>
+    <span
+      className="name"
+    >
+      MetaMask
+    </span>
+  </div>
+  <span
+    className="account-number"
+  >
+    <span>
+      0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
+    </span>
+    <Tooltip
+      onClick={[Function]}
+      size="small"
+      type="filter_none"
+    />
+  </span>
+</div>
+`;
+
+exports[`AccountItem component renders correctly (short version) 1`] = `
+<div
+  className="account-item-short"
+>
+  <div
+    className="logo"
   >
     <Component />
   </div>
   <div
-    className="account-item-info"
+    className="info"
   >
     <span
-      className="account-item-provider"
+      className="provider"
     >
       MetaMask
     </span>
     <span
-      className="account-item-number"
+      className="account-number"
     >
       **** 2d6d
     </span>

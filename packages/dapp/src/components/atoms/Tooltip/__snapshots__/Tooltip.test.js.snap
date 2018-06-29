@@ -3,6 +3,7 @@
 exports[`Tooltip component renders correctly 1`] = `
 <span
   className="material-icons tooltip medium"
+  onClick={[MockFunction]}
 >
   help
 </span>

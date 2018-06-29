@@ -7,7 +7,8 @@ exports[`ViewLink component renders correctly 1`] = `
   to="/"
 >
   <Tooltip
-    size="small"
+    onClick={[Function]}
+    size="medium"
     type="dashboard"
   />
   <span>

@@ -11,6 +11,7 @@ exports[`ListPanel component renders correctly 1`] = `
 >
   <List
     Component={[Function]}
+    Divider={null}
     className={null}
     data={
       Array [
