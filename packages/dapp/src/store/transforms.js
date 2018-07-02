@@ -1,9 +1,11 @@
 import { BigNumber } from 'bignumber.js'
 import { createTransform } from 'redux-persist'
-import _ from 'lodash'
+import isArray from 'lodash/isArray'
+import isObject from 'lodash/isObject'
+import mapValues from 'lodash/mapValues'
 
 const fromBigNumber = val =>
-  val && Object.keys(val).includes('c') && _.isArray(val.c)
+  isObject(val) && Object.keys(val).includes('c') && isArray(val.c)
     ? `bN-${val.toString()}`
     : val
 
@@ -14,8 +16,8 @@ const toBigNumber = val =>
 
 const mapValuesDeep = (v, callback) => {
   // TODO: use a better way to identify bigNumbers when TypeChain updates BigNumber
-  if (_.isObject(v) && !(Object.keys(v).includes('c') && _.isArray(v.c))) {
-    return _.mapValues(v, v => mapValuesDeep(v, callback))
+  if (isObject(v) && !Object.keys(v).includes('c') /*&& isArray(v.c) */) {
+    return mapValues(v, v => mapValuesDeep(v, callback))
   } else {
     return callback(v)
   }
