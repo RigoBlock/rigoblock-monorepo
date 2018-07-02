@@ -1,4 +1,5 @@
 import './ListItem.scss'
+import { BigNumber } from 'bignumber.js'
 import ItemName from '../ItemName'
 import ItemValue from '../../atoms/ItemValue'
 import PropTypes from 'prop-types'
@@ -16,7 +17,9 @@ const ListItem = ({
   ...rest
 }) => {
   const valueProps =
-    growth && currencyGrowth ? { growth, currencyGrowth } : { itemValue }
+    growth.toNumber() && currencyGrowth.toNumber()
+      ? { growth, currencyGrowth }
+      : { itemValue }
   const classProps = classNames('list-item', className)
   return (
     <div className={classProps} onClick={onClick} {...rest}>
@@ -30,16 +33,16 @@ ListItem.propTypes = {
   itemName: PropTypes.string.isRequired,
   itemSymbol: PropTypes.string.isRequired,
   itemValue: PropTypes.object,
-  growth: PropTypes.number,
+  growth: PropTypes.object,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  currencyGrowth: PropTypes.number
+  currencyGrowth: PropTypes.object
 }
 
 ListItem.defaultProps = {
-  itemValue: 0,
-  growth: 0,
-  currencyGrowth: 0,
+  itemValue: new BigNumber(0),
+  growth: new BigNumber(0),
+  currencyGrowth: new BigNumber(0),
   className: '',
   onClick: () => {}
 }

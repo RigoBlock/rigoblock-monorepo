@@ -30,9 +30,8 @@ const vaultReducer = createReducer({
     state,
     { address, totalSupply },
     { currentAccount }
-  ) => {
-    // console.log('IN THE REDUCER', totalSupply)
-    return u(
+  ) =>
+    u(
       {
         accounts: {
           [currentAccount]: {
@@ -44,7 +43,6 @@ const vaultReducer = createReducer({
       },
       state
     )
-  }
 })
 
 export default vaultReducer

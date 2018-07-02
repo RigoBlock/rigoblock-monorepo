@@ -11,9 +11,9 @@ exports[`Amount component renders correctly 1`] = `
   </div>
   <ItemValue
     currency="ETH"
-    currencyGrowth={0}
-    growth={0}
-    itemValue={8000.23}
+    currencyGrowth={"0"}
+    growth={"0"}
+    itemValue={"8000.23"}
     precision={2}
     valueSize="medium"
   />

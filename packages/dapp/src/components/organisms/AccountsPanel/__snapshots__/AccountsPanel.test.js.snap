@@ -120,11 +120,11 @@ exports[`AccountsPanel component renders correctly 1`] = `
                   className={null}
                 >
                   <AccountSummary
-                    balance="57999999999960203063"
+                    balance={"57999999999960203063"}
                     key="0"
                     number="0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196"
                     provider="metamask"
-                    tokenBalance={0}
+                    tokenBalance={"0"}
                   >
                     <div
                       className="account-summary"
@@ -181,7 +181,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="ETH"
-                          value={57.9999999999602}
+                          value={"57.999999999960203063"}
                         >
                           <div
                             className="amount small"
@@ -193,9 +193,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={0}
-                              growth={0}
-                              itemValue={57.9999999999602}
+                              currencyGrowth={"0"}
+                              growth={"0"}
+                              itemValue={"57.999999999960203063"}
                               precision={2}
                               valueSize="small"
                             >
@@ -205,7 +205,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                 <span
                                   className="item-value small"
                                 >
-                                  58.00
+                                  57.99
                                 </span>
                               </div>
                             </ItemValue>
@@ -214,7 +214,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="GRG"
-                          value={0}
+                          value={"0"}
                         >
                           <div
                             className="amount small"
@@ -226,9 +226,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={0}
-                              growth={0}
-                              itemValue={0}
+                              currencyGrowth={"0"}
+                              growth={"0"}
+                              itemValue={"0"}
                               precision={2}
                               valueSize="small"
                             >
@@ -238,7 +238,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                 <span
                                   className="item-value small"
                                 >
-                                  0
+                                  0.00
                                 </span>
                               </div>
                             </ItemValue>
@@ -255,11 +255,11 @@ exports[`AccountsPanel component renders correctly 1`] = `
                     />
                   </divider>
                   <AccountSummary
-                    balance="67999999999977505798"
+                    balance={"67999999999977505798"}
                     key="1"
                     number="0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d"
                     provider="metamask"
-                    tokenBalance={0}
+                    tokenBalance={"0"}
                   >
                     <div
                       className="account-summary"
@@ -316,7 +316,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="ETH"
-                          value={67.9999999999775}
+                          value={"67.999999999977505798"}
                         >
                           <div
                             className="amount small"
@@ -328,9 +328,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={0}
-                              growth={0}
-                              itemValue={67.9999999999775}
+                              currencyGrowth={"0"}
+                              growth={"0"}
+                              itemValue={"67.999999999977505798"}
                               precision={2}
                               valueSize="small"
                             >
@@ -340,7 +340,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                 <span
                                   className="item-value small"
                                 >
-                                  68.00
+                                  67.99
                                 </span>
                               </div>
                             </ItemValue>
@@ -349,7 +349,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="GRG"
-                          value={0}
+                          value={"0"}
                         >
                           <div
                             className="amount small"
@@ -361,9 +361,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={0}
-                              growth={0}
-                              itemValue={0}
+                              currencyGrowth={"0"}
+                              growth={"0"}
+                              itemValue={"0"}
                               precision={2}
                               valueSize="small"
                             >
@@ -373,7 +373,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                 <span
                                   className="item-value small"
                                 >
-                                  0
+                                  0.00
                                 </span>
                               </div>
                             </ItemValue>
@@ -390,11 +390,11 @@ exports[`AccountsPanel component renders correctly 1`] = `
                     />
                   </divider>
                   <AccountSummary
-                    balance="87999999999999410580"
+                    balance={"87999999999999410580"}
                     key="2"
                     number="0x8bb7481495d45ccd5cffae1c3a84155fea85a323"
                     provider="metamask"
-                    tokenBalance={0}
+                    tokenBalance={"0"}
                   >
                     <div
                       className="account-summary"
@@ -451,7 +451,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="ETH"
-                          value={87.9999999999994}
+                          value={"87.99999999999941058"}
                         >
                           <div
                             className="amount small"
@@ -463,9 +463,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={0}
-                              growth={0}
-                              itemValue={87.9999999999994}
+                              currencyGrowth={"0"}
+                              growth={"0"}
+                              itemValue={"87.99999999999941058"}
                               precision={2}
                               valueSize="small"
                             >
@@ -475,7 +475,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                 <span
                                   className="item-value small"
                                 >
-                                  88.00
+                                  87.99
                                 </span>
                               </div>
                             </ItemValue>
@@ -484,7 +484,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="GRG"
-                          value={0}
+                          value={"0"}
                         >
                           <div
                             className="amount small"
@@ -496,9 +496,9 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={0}
-                              growth={0}
-                              itemValue={0}
+                              currencyGrowth={"0"}
+                              growth={"0"}
+                              itemValue={"0"}
                               precision={2}
                               valueSize="small"
                             >
@@ -508,7 +508,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                 <span
                                   className="item-value small"
                                 >
-                                  0
+                                  0.00
                                 </span>
                               </div>
                             </ItemValue>
