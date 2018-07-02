@@ -29,7 +29,7 @@ const ListItem = ({
 ListItem.propTypes = {
   itemName: PropTypes.string.isRequired,
   itemSymbol: PropTypes.string.isRequired,
-  itemValue: PropTypes.number,
+  itemValue: PropTypes.object,
   growth: PropTypes.number,
   className: PropTypes.string,
   onClick: PropTypes.func,

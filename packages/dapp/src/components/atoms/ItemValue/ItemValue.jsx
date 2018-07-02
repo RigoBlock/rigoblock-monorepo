@@ -1,4 +1,5 @@
 import './ItemValue.scss'
+import { BigNumber } from 'bignumber.js'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
@@ -11,13 +12,14 @@ export const ITEM_VALUE_SIZES = {
 
 const roundProps = props => {
   return Object.keys(props)
-    .filter(k => !isNaN(props[k]))
-    .map(k => ({
-      [k]:
-        props[k] % 1 !== 0
-          ? parseFloat(props[k], 10).toFixed(props.precision)
-          : props[k]
-    }))
+    .filter(k => {
+      return props[k] && props[k].constructor.name === 'BigNumber'
+    })
+    .map(k => {
+      return {
+        [k]: props[k].toFormat(props.precision, BigNumber.ROUND_FLOOR)
+      }
+    })
     .reduce((acc, curr) => ({ ...acc, ...curr }), {})
 }
 
@@ -40,7 +42,7 @@ const ItemValue = props => {
 }
 
 ItemValue.propTypes = {
-  itemValue: PropTypes.number,
+  itemValue: PropTypes.object,
   growth: PropTypes.number,
   currencyGrowth: PropTypes.number,
   valueSize: PropTypes.string,

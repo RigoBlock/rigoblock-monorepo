@@ -30,8 +30,11 @@ AccountsPanel.propTypes = {
   accounts: PropTypes.object.isRequired
 }
 
-AccountsPanel = connect(state => ({
-  accounts: state.user.blockChain.accounts
-}))(AccountsPanel)
+AccountsPanel = connect(state => {
+  console.log(state)
+  return {
+    accounts: state.user.blockChain.accounts
+  }
+})(AccountsPanel)
 
 export default AccountsPanel
