@@ -193,8 +193,8 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={"0"}
-                              growth={"0"}
+                              currencyGrowth={null}
+                              growth={null}
                               itemValue={"57.999999999960203063"}
                               precision={2}
                               valueSize="small"
@@ -226,8 +226,8 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={"0"}
-                              growth={"0"}
+                              currencyGrowth={null}
+                              growth={null}
                               itemValue={"0"}
                               precision={2}
                               valueSize="small"
@@ -328,8 +328,8 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={"0"}
-                              growth={"0"}
+                              currencyGrowth={null}
+                              growth={null}
                               itemValue={"67.999999999977505798"}
                               precision={2}
                               valueSize="small"
@@ -361,8 +361,8 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={"0"}
-                              growth={"0"}
+                              currencyGrowth={null}
+                              growth={null}
                               itemValue={"0"}
                               precision={2}
                               valueSize="small"
@@ -463,8 +463,8 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={"0"}
-                              growth={"0"}
+                              currencyGrowth={null}
+                              growth={null}
                               itemValue={"87.99999999999941058"}
                               precision={2}
                               valueSize="small"
@@ -496,8 +496,8 @@ exports[`AccountsPanel component renders correctly 1`] = `
                             </div>
                             <ItemValue
                               currency="ETH"
-                              currencyGrowth={"0"}
-                              growth={"0"}
+                              currencyGrowth={null}
+                              growth={null}
                               itemValue={"0"}
                               precision={2}
                               valueSize="small"

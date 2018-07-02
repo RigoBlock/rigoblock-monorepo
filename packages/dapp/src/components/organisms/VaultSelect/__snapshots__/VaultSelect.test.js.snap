@@ -100,8 +100,8 @@ exports[`VaultSelect component renders correctly 1`] = `
               </ItemName>
               <ItemValue
                 currency="ETH"
-                currencyGrowth={"0"}
-                growth={"0"}
+                currencyGrowth={null}
+                growth={null}
                 itemValue={"14"}
                 precision={2}
                 valueSize="large"
@@ -155,8 +155,8 @@ exports[`VaultSelect component renders correctly 1`] = `
               </ItemName>
               <ItemValue
                 currency="ETH"
-                currencyGrowth={"0"}
-                growth={"0"}
+                currencyGrowth={null}
+                growth={null}
                 itemValue={"2.023498"}
                 precision={2}
                 valueSize="large"

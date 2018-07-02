@@ -32,7 +32,7 @@ const ItemValue = props => {
   const { valueSize, currencyGrowth, growth, currency } = props
   const res = roundProps(props)
   const classProps = classNames('item-value', valueSize)
-  return growth.toNumber() && currencyGrowth.toNumber() ? (
+  return growth && currencyGrowth ? (
     <div className="no-events">
       <span className={classProps}>{`+${res.growth}%`}</span>
       <span className={'currency-growth'}>{`+${
@@ -58,8 +58,8 @@ ItemValue.propTypes = {
 ItemValue.defaultProps = {
   valueSize: ITEM_VALUE_SIZES.LARGE,
   itemValue: new BigNumber(0),
-  growth: new BigNumber(0),
-  currencyGrowth: new BigNumber(0),
+  growth: null,
+  currencyGrowth: null,
   precision: 2,
   currency: 'ETH'
 }

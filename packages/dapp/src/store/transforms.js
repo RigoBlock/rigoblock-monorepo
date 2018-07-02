@@ -16,7 +16,7 @@ const toBigNumber = val =>
 
 const mapValuesDeep = (v, callback) => {
   // TODO: use a better way to identify bigNumbers when TypeChain updates BigNumber
-  if (isObject(v) && !Object.keys(v).includes('c') /*&& isArray(v.c) */) {
+  if (isObject(v) && !Object.keys(v).includes('c') && isArray(v.c)) {
     return mapValues(v, v => mapValuesDeep(v, callback))
   } else {
     return callback(v)
