@@ -6,5 +6,5 @@ export const ETHTOWEI = 1e18
 
 // we are filtering for BigNumbers
 // TODO: remove once isBigNumber() starts working
-export const checkBigNumber = val =>
+export const isBigNumber = val =>
   isObject(val) && Object.keys(val).includes('c') && isArray(val.c)

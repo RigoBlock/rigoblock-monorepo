@@ -1,6 +1,6 @@
 import './ItemValue.scss'
 import { BigNumber } from 'bignumber.js'
-import { checkBigNumber } from '../../../constants/utils'
+import { isBigNumber } from '../../../constants/utils'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
@@ -15,8 +15,8 @@ export const roundProps = props => {
   return Object.keys(props)
     .filter(k =>
       // we are filtering for BigNumbers
-      // TODO: remove once isBigNumber() starts working
-      checkBigNumber(props[k])
+      // TODO: remove once BigNumber.isBigNumber(x) starts working
+      isBigNumber(props[k])
     )
     .map(k => ({
       // round to [props.precision] number of decimals, by defect

@@ -11,3 +11,5 @@ exports[`ItemValue component renders correctly 1`] = `
   </span>
 </div>
 `;
+
+exports[`ItemValue component roundProps function throws error if precision is < 0 1`] = `"toFormat() decimal places out of range: -1"`;

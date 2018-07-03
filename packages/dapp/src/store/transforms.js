@@ -1,22 +1,22 @@
 import { BigNumber } from 'bignumber.js'
-import { checkBigNumber } from '../constants/utils'
 import { createTransform } from 'redux-persist'
+import { isBigNumber } from '../constants/utils'
 import isObject from 'lodash/isObject'
 import mapValues from 'lodash/mapValues'
 
-const bigNumberPrefix = 'bN-'
+const BIGNUMBER_PREFIX = 'bN-'
 
 const fromBigNumber = val =>
-  checkBigNumber(val) ? bigNumberPrefix + val.toString() : val
+  isBigNumber(val) ? BIGNUMBER_PREFIX + val.toString() : val
 
 const toBigNumber = val =>
-  typeof val === 'string' && val.startsWith(bigNumberPrefix)
-    ? new BigNumber(val.split(bigNumberPrefix).pop())
+  typeof val === 'string' && val.startsWith(BIGNUMBER_PREFIX)
+    ? new BigNumber(val.split(BIGNUMBER_PREFIX).pop())
     : val
 
 const mapValuesDeep = (v, callback) => {
   // TODO: use a better way to identify bigNumbers when TypeChain updates BigNumber
-  if (isObject(v) && !checkBigNumber(v)) {
+  if (isObject(v) && !isBigNumber(v)) {
     return mapValues(v, v => mapValuesDeep(v, callback))
   }
   return callback(v)
