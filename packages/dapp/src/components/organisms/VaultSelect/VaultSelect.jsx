@@ -46,7 +46,7 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   vaultsList = vaultsList.map(vault => ({
     ...vault,
     className: classNames({
-      active: location === `${ROUTES.VAULTS}/${vault.id}`
+      active: location === `${ROUTES.VAULTS}/${vault.id.toString()}`
     })
   }))
 
