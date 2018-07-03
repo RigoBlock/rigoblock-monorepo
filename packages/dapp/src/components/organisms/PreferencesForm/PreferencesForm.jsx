@@ -63,7 +63,6 @@ PreferencesForm = reduxForm({
 
 PreferencesForm = connect(
   state => ({
-    user: state,
     formObject: state.form,
     initialValues: state.preferences
   }),
