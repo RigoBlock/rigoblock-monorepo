@@ -6,8 +6,8 @@ exports[`List component renders correctly 1`] = `
 >
   <ListItem
     className=""
-    currencyGrowth={"0"}
-    growth={"0"}
+    currencyGrowth={null}
+    growth={null}
     id={"1"}
     itemName="Rocksolid Vault"
     itemSymbol="VLT"

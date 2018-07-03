@@ -109,8 +109,8 @@ exports[`VaultList component renders correctly 1`] = `
                   >
                     <ListItem
                       className=""
-                      currencyGrowth={"0"}
-                      growth={"0"}
+                      currencyGrowth={null}
+                      growth={null}
                       itemName="First Vault"
                       itemSymbol="asd"
                       itemValue={"14"}
@@ -162,8 +162,8 @@ exports[`VaultList component renders correctly 1`] = `
                     </ListItem>
                     <ListItem
                       className=""
-                      currencyGrowth={"0"}
-                      growth={"0"}
+                      currencyGrowth={null}
+                      growth={null}
                       itemName="Third Vault"
                       itemSymbol="das"
                       itemValue={"2.023498"}

@@ -65,8 +65,8 @@ exports[`VaultSelect component renders correctly 1`] = `
         >
           <ListItem
             className="active"
-            currencyGrowth={"0"}
-            growth={"0"}
+            currencyGrowth={null}
+            growth={null}
             id={"0"}
             itemName="First Vault"
             itemSymbol="asd"
@@ -120,8 +120,8 @@ exports[`VaultSelect component renders correctly 1`] = `
           </ListItem>
           <ListItem
             className=""
-            currencyGrowth={"0"}
-            growth={"0"}
+            currencyGrowth={null}
+            growth={null}
             id={2}
             itemName="Third Vault"
             itemSymbol="das"

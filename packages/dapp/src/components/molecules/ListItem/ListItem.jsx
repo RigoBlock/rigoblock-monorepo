@@ -17,9 +17,7 @@ const ListItem = ({
   ...rest
 }) => {
   const valueProps =
-    growth.toNumber() && currencyGrowth.toNumber()
-      ? { growth, currencyGrowth }
-      : { itemValue }
+    growth && currencyGrowth ? { growth, currencyGrowth } : { itemValue }
   const classProps = classNames('list-item', className)
   return (
     <div className={classProps} onClick={onClick} {...rest}>
@@ -41,8 +39,8 @@ ListItem.propTypes = {
 
 ListItem.defaultProps = {
   itemValue: new BigNumber(0),
-  growth: new BigNumber(0),
-  currencyGrowth: new BigNumber(0),
+  growth: null,
+  currencyGrowth: null,
   className: '',
   onClick: () => {}
 }

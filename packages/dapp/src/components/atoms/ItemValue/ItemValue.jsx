@@ -1,10 +1,9 @@
 import './ItemValue.scss'
 import { BigNumber } from 'bignumber.js'
+import { checkBigNumber } from '../../../constants/utils'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-import isArray from 'lodash/isArray'
-import isObject from 'lodash/isObject'
 
 export const ITEM_VALUE_SIZES = {
   SMALL: 'small',
@@ -12,14 +11,12 @@ export const ITEM_VALUE_SIZES = {
   LARGE: 'large'
 }
 
-const roundProps = props => {
+export const roundProps = props => {
   return Object.keys(props)
-    .filter(
-      k =>
-        // we are filtering for BigNumbers
-        isObject(props[k]) &&
-        Object.keys(props[k]).includes('c') &&
-        isArray(props[k].c)
+    .filter(k =>
+      // we are filtering for BigNumbers
+      // TODO: remove once isBigNumber() starts working
+      checkBigNumber(props[k])
     )
     .map(k => ({
       // round to [props.precision] number of decimals, by defect
