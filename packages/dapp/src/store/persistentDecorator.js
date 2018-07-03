@@ -1,3 +1,4 @@
+import { bigNumberTransform } from './transforms'
 import { createMigrate, persistReducer } from 'redux-persist'
 import localforage from 'localforage'
 
@@ -11,6 +12,7 @@ export default (reducer, key, migrations = null, version = -1) =>
       key,
       version: version,
       storage: localforage,
+      transforms: [bigNumberTransform],
       migrate: createMigrate(migrations, {
         debug: process.env.NODE_ENV === 'development'
       })

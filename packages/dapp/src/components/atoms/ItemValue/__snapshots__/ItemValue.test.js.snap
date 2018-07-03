@@ -7,7 +7,9 @@ exports[`ItemValue component renders correctly 1`] = `
   <span
     className="item-value large"
   >
-    12489.51
+    12,489.51
   </span>
 </div>
 `;
+
+exports[`ItemValue component roundProps function throws error if precision is < 0 1`] = `"toFormat() decimal places out of range: -1"`;
