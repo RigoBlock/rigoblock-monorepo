@@ -1,8 +1,9 @@
 import './VaultList.scss'
+import { BigNumber } from 'bignumber.js'
+import { ETHTOMICRO } from '../../../constants/utils'
 import { connect } from 'react-redux'
 import ListPanel from '../../organisms/ListPanel'
 import PropTypes from 'prop-types'
-
 import React from 'react'
 
 let vaultList = ({ vaults }) => {
@@ -15,10 +16,13 @@ let vaultList = ({ vaults }) => {
   }
   const vaultsList = Object.keys(vaults).map(vault => {
     const { name, symbol, totalSupply } = vaults[vault]
+    const ethSupply = totalSupply
+      ? totalSupply.div(ETHTOMICRO)
+      : new BigNumber(0)
     return {
       itemName: name,
       itemSymbol: symbol,
-      itemValue: totalSupply
+      itemValue: ethSupply
     }
   })
   return (

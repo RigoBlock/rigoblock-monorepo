@@ -11,9 +11,9 @@ exports[`ListItem component renders correctly 1`] = `
   />
   <ItemValue
     currency="ETH"
-    currencyGrowth={0}
-    growth={0}
-    itemValue={0}
+    currencyGrowth={null}
+    growth={null}
+    itemValue={"0"}
     precision={2}
     valueSize="large"
   />

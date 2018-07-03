@@ -17,19 +17,19 @@ exports[`VaultList component renders correctly 1`] = `
         Object {
           "0x421e1cef6e85e78da2470e54af64a626f45afb85": Object {
             "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
-            "id": 2,
+            "id": "2",
             "name": "Third Vault",
             "owner": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
             "symbol": "das",
-            "totalSupply": 20.23498,
+            "totalSupply": "2023498",
           },
           "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
             "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
-            "id": 0,
+            "id": "0",
             "name": "First Vault",
             "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
             "symbol": "asd",
-            "totalSupply": 14,
+            "totalSupply": "14000000",
           },
         }
       }
@@ -43,12 +43,12 @@ exports[`VaultList component renders correctly 1`] = `
               Object {
                 "itemName": "First Vault",
                 "itemSymbol": "asd",
-                "itemValue": 14,
+                "itemValue": "14",
               },
               Object {
                 "itemName": "Third Vault",
                 "itemSymbol": "das",
-                "itemValue": 20.23498,
+                "itemValue": "2.023498",
               },
             ]
           }
@@ -94,12 +94,12 @@ exports[`VaultList component renders correctly 1`] = `
                       Object {
                         "itemName": "First Vault",
                         "itemSymbol": "asd",
-                        "itemValue": 14,
+                        "itemValue": "14",
                       },
                       Object {
                         "itemName": "Third Vault",
                         "itemSymbol": "das",
-                        "itemValue": 20.23498,
+                        "itemValue": "2.023498",
                       },
                     ]
                   }
@@ -109,11 +109,11 @@ exports[`VaultList component renders correctly 1`] = `
                   >
                     <ListItem
                       className=""
-                      currencyGrowth={0}
-                      growth={0}
+                      currencyGrowth={null}
+                      growth={null}
                       itemName="First Vault"
                       itemSymbol="asd"
-                      itemValue={14}
+                      itemValue={"14"}
                       key="0"
                       onClick={[Function]}
                     >
@@ -142,9 +142,9 @@ exports[`VaultList component renders correctly 1`] = `
                         </ItemName>
                         <ItemValue
                           currency="ETH"
-                          currencyGrowth={0}
-                          growth={0}
-                          itemValue={14}
+                          currencyGrowth={null}
+                          growth={null}
+                          itemValue={"14"}
                           precision={2}
                           valueSize="large"
                         >
@@ -154,7 +154,7 @@ exports[`VaultList component renders correctly 1`] = `
                             <span
                               className="item-value large"
                             >
-                              14
+                              14.00
                             </span>
                           </div>
                         </ItemValue>
@@ -162,11 +162,11 @@ exports[`VaultList component renders correctly 1`] = `
                     </ListItem>
                     <ListItem
                       className=""
-                      currencyGrowth={0}
-                      growth={0}
+                      currencyGrowth={null}
+                      growth={null}
                       itemName="Third Vault"
                       itemSymbol="das"
-                      itemValue={20.23498}
+                      itemValue={"2.023498"}
                       key="1"
                       onClick={[Function]}
                     >
@@ -195,9 +195,9 @@ exports[`VaultList component renders correctly 1`] = `
                         </ItemName>
                         <ItemValue
                           currency="ETH"
-                          currencyGrowth={0}
-                          growth={0}
-                          itemValue={20.23498}
+                          currencyGrowth={null}
+                          growth={null}
+                          itemValue={"2.023498"}
                           precision={2}
                           valueSize="large"
                         >
@@ -207,7 +207,7 @@ exports[`VaultList component renders correctly 1`] = `
                             <span
                               className="item-value large"
                             >
-                              20.23
+                              2.02
                             </span>
                           </div>
                         </ItemValue>
