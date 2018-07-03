@@ -31,7 +31,7 @@ AccountsPanel.propTypes = {
 }
 
 AccountsPanel = connect(state => ({
-  accounts: state.user.blockChain.accounts
+  accounts: state.blockChain.accounts
 }))(AccountsPanel)
 
 export default AccountsPanel

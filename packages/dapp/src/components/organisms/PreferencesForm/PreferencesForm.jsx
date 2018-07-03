@@ -63,9 +63,9 @@ PreferencesForm = reduxForm({
 
 PreferencesForm = connect(
   state => ({
-    user: state.user,
+    user: state,
     formObject: state.form,
-    initialValues: state.user.preferences
+    initialValues: state.preferences
   }),
   dispatch => bindActionCreators(UserActions, dispatch)
 )(PreferencesForm)

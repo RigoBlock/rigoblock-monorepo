@@ -9,17 +9,15 @@ import React from 'react'
 
 const mockStore = {
   getState: () => ({
-    user: {
-      blockChain: {
-        accounts: {
-          '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196': {
-            provider: 'metamask'
-          }
+    blockChain: {
+      accounts: {
+        '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196': {
+          provider: 'metamask'
         }
-      },
-      preferences: {
-        currentAccount: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
       }
+    },
+    preferences: {
+      currentAccount: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
     },
     routing: {
       location: {

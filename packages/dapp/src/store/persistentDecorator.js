@@ -6,16 +6,25 @@ localforage.config({
   storeName: 'rigoblock'
 })
 
-export default (reducer, key, migrations = null, version = -1) =>
-  persistReducer(
+export default (
+  reducer,
+  key,
+  blacklist = [],
+  migrations = null,
+  version = -1
+) => {
+  const newReducer = persistReducer(
     {
       key,
       version: version,
       storage: localforage,
       transforms: [bigNumberTransform],
+      blacklist,
       migrate: createMigrate(migrations, {
         debug: process.env.NODE_ENV === 'development'
       })
     },
     reducer
   )
+  return newReducer
+}

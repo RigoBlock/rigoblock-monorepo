@@ -20,9 +20,9 @@ const watchVaultEventsEpic = (action$, store) => {
 
 const getFirstUnfetchedBlock = store => {
   const state = store.getState()
-  const account = state.user.preferences.currentAccount
-  return state.user.blockChain.accounts[account].lastBlock
-    ? state.user.blockChain.accounts[account].lastBlock + 1
+  const account = state.preferences.currentAccount
+  return state.blockChain.accounts[account].lastBlock
+    ? state.blockChain.accounts[account].lastBlock + 1
     : null
 }
 

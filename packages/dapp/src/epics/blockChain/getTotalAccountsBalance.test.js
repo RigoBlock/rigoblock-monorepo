@@ -9,18 +9,16 @@ describe('getTotalAccountsBalanceEpic', () => {
   const thirdBalance = '256999999999952600881'
   const storeMock = {
     getState: () => ({
-      user: {
-        blockChain: {
-          accounts: {
-            '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196': {
-              balance: firstBalance
-            },
-            '0x7328eF1d7Ab7583Eb9968B2f4a9c900f8a2e2d6d': {
-              balance: secondBalance
-            },
-            '0x8bB7481495D45cCd5cfFAE1C3A84155fEA85A323': {
-              balance: thirdBalance
-            }
+      blockChain: {
+        accounts: {
+          '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196': {
+            balance: firstBalance
+          },
+          '0x7328eF1d7Ab7583Eb9968B2f4a9c900f8a2e2d6d': {
+            balance: secondBalance
+          },
+          '0x8bB7481495D45cCd5cfFAE1C3A84155fEA85A323': {
+            balance: thirdBalance
           }
         }
       }

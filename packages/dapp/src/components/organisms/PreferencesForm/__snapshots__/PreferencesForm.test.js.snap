@@ -25,9 +25,26 @@ exports[`PreferencesForm component renders correctly 1`] = `
           },
         }
       }
-      user={
+      initialValues={
         Object {
           "timezone": "+02:00",
+        }
+      }
+      user={
+        Object {
+          "form": Object {
+            "preferences": Object {
+              "initial": Object {
+                "timezone": "+02:00",
+              },
+              "values": Object {
+                "timezone": "+02:00",
+              },
+            },
+          },
+          "preferences": Object {
+            "timezone": "+02:00",
+          },
         }
       }
     >
@@ -50,6 +67,11 @@ exports[`PreferencesForm component renders correctly 1`] = `
           }
         }
         getFormState={[Function]}
+        initialValues={
+          Object {
+            "timezone": "+02:00",
+          }
+        }
         keepDirtyOnReinitialize={false}
         persistentSubmitErrors={false}
         pure={true}
@@ -62,7 +84,19 @@ exports[`PreferencesForm component renders correctly 1`] = `
         updateUnregisteredFields={false}
         user={
           Object {
-            "timezone": "+02:00",
+            "form": Object {
+              "preferences": Object {
+                "initial": Object {
+                  "timezone": "+02:00",
+                },
+                "values": Object {
+                  "timezone": "+02:00",
+                },
+              },
+            },
+            "preferences": Object {
+              "timezone": "+02:00",
+            },
           }
         }
       >
@@ -122,6 +156,11 @@ exports[`PreferencesForm component renders correctly 1`] = `
             }
           }
           getFormState={[Function]}
+          initialValues={
+            Object {
+              "timezone": "+02:00",
+            }
+          }
           initialize={[Function]}
           initialized={true}
           invalid={false}
@@ -158,7 +197,19 @@ exports[`PreferencesForm component renders correctly 1`] = `
           updateUnregisteredFields={false}
           user={
             Object {
-              "timezone": "+02:00",
+              "form": Object {
+                "preferences": Object {
+                  "initial": Object {
+                    "timezone": "+02:00",
+                  },
+                  "values": Object {
+                    "timezone": "+02:00",
+                  },
+                },
+              },
+              "preferences": Object {
+                "timezone": "+02:00",
+              },
             }
           }
           valid={true}
@@ -212,6 +263,11 @@ exports[`PreferencesForm component renders correctly 1`] = `
               }
             }
             handleSubmit={[Function]}
+            initialValues={
+              Object {
+                "timezone": "+02:00",
+              }
+            }
             initialize={[Function]}
             initialized={true}
             invalid={false}
@@ -227,7 +283,19 @@ exports[`PreferencesForm component renders correctly 1`] = `
             untouch={[Function]}
             user={
               Object {
-                "timezone": "+02:00",
+                "form": Object {
+                  "preferences": Object {
+                    "initial": Object {
+                      "timezone": "+02:00",
+                    },
+                    "values": Object {
+                      "timezone": "+02:00",
+                    },
+                  },
+                },
+                "preferences": Object {
+                  "timezone": "+02:00",
+                },
               }
             }
             valid={true}
@@ -347,7 +415,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         },
                         "getFormState": [Function],
                         "getValues": [Function],
-                        "initialValues": undefined,
+                        "initialValues": Object {
+                          "timezone": "+02:00",
+                        },
                         "initialize": [Function],
                         "initialized": true,
                         "invalid": false,
@@ -389,7 +459,19 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         "updateSyncWarnings": [Function],
                         "updateUnregisteredFields": false,
                         "user": Object {
-                          "timezone": "+02:00",
+                          "form": Object {
+                            "preferences": Object {
+                              "initial": Object {
+                                "timezone": "+02:00",
+                              },
+                              "values": Object {
+                                "timezone": "+02:00",
+                              },
+                            },
+                          },
+                          "preferences": Object {
+                            "timezone": "+02:00",
+                          },
                         },
                         "valid": true,
                         "validExceptSubmit": true,
@@ -461,7 +543,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           },
                           "getFormState": [Function],
                           "getValues": [Function],
-                          "initialValues": undefined,
+                          "initialValues": Object {
+                            "timezone": "+02:00",
+                          },
                           "initialize": [Function],
                           "initialized": true,
                           "invalid": false,
@@ -503,7 +587,19 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           "updateSyncWarnings": [Function],
                           "updateUnregisteredFields": false,
                           "user": Object {
-                            "timezone": "+02:00",
+                            "form": Object {
+                              "preferences": Object {
+                                "initial": Object {
+                                  "timezone": "+02:00",
+                                },
+                                "values": Object {
+                                  "timezone": "+02:00",
+                                },
+                              },
+                            },
+                            "preferences": Object {
+                              "timezone": "+02:00",
+                            },
                           },
                           "valid": true,
                           "validExceptSubmit": true,
