@@ -22,6 +22,6 @@ storiesOf('Molecules/Amount', module)
     <Amount
       size={selectV2('Amount size', AMOUNT_SIZES, AMOUNT_SIZES.SMALL)}
       symbol={text('Amount symbol', 'ETH')}
-      value={new BigNumber(8000.23)}
+      value={new BigNumber('8000.23')}
     />
   ))

@@ -18,7 +18,7 @@ let vaultList = ({ vaults }) => {
     const { name, symbol, totalSupply } = vaults[vault]
     const ethSupply = totalSupply
       ? totalSupply.div(ETHTOMICRO)
-      : new BigNumber(0)
+      : new BigNumber('0')
     return {
       itemName: name,
       itemSymbol: symbol,

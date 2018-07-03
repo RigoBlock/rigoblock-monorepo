@@ -54,7 +54,7 @@ ItemValue.propTypes = {
 
 ItemValue.defaultProps = {
   valueSize: ITEM_VALUE_SIZES.LARGE,
-  itemValue: new BigNumber(0),
+  itemValue: new BigNumber('0'),
   growth: null,
   currencyGrowth: null,
   precision: 2,

@@ -11,7 +11,7 @@ export const getTotalAccountsBalanceEpic = (action$, store) =>
       const accounts = store.getState().blockChain.accounts
       const totalBalance = Object.keys(accounts)
         .map(acc => new BigNumber(accounts[acc].balance))
-        .reduce((acc, curr) => acc.plus(curr), new BigNumber(0))
+        .reduce((acc, curr) => acc.plus(curr), new BigNumber('0'))
       return blockChainActions.updateTotalAccountBalance(totalBalance)
     })
 

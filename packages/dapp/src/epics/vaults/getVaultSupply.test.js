@@ -13,7 +13,7 @@ describe('getVaultSupply epics', () => {
 
   const vault = {
     [vaultAddress]: {
-      id: new BigNumber(0),
+      id: new BigNumber('0'),
       name: 'Rocksolid Vault',
       symbol: 'VLT',
       owner,

@@ -20,7 +20,7 @@ storiesOf('Atoms/ItemValue', module)
   ))
   .add('default', () => (
     <ItemValue
-      itemValue={number('Item value', new BigNumber(12489.51354))}
+      itemValue={number('Item value', new BigNumber('12489.51354'))}
       valueSize={selectV2(
         'Value size',
         ITEM_VALUE_SIZES,
@@ -30,7 +30,7 @@ storiesOf('Atoms/ItemValue', module)
   ))
   .add('growth', () => (
     <ItemValue
-      growth={number('Growth', new BigNumber(0.25423))}
-      currencyGrowth={number('Currency growth', new BigNumber(2.32))}
+      growth={number('Growth', new BigNumber('0.25423'))}
+      currencyGrowth={number('Currency growth', new BigNumber('2.32'))}
     />
   ))

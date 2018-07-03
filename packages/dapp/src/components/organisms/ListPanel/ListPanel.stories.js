@@ -9,18 +9,18 @@ const items = [
   {
     itemName: 'Rocksolid Vault',
     itemSymbol: 'VLT',
-    itemValue: new BigNumber(12489.51323)
+    itemValue: new BigNumber('12489.51323')
   },
   {
     itemName: 'Big Drago',
     itemSymbol: 'DRG',
-    growth: new BigNumber(0.25),
-    currencyGrowth: new BigNumber(2.32)
+    growth: new BigNumber('0.25'),
+    currencyGrowth: new BigNumber('2.32')
   },
   {
     itemName: 'Rocksolid Vault',
     itemSymbol: 'VLT',
-    itemValue: new BigNumber(12489.51323)
+    itemValue: new BigNumber('12489.51323')
   }
 ]
 

@@ -9,7 +9,7 @@ import vaultsReducer from './vaults'
 
 const initialState = {
   accounts: {},
-  totalBalance: new BigNumber(0)
+  totalBalance: new BigNumber('0')
 }
 
 const blockChainReducer = createReducer(
