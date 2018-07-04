@@ -6,7 +6,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
     Object {
       "dispatch": [MockFunction],
       "getState": [Function],
-      "subscribe": [Function],
+      "subscribe": [MockFunction],
     }
   }
 >
@@ -27,6 +27,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
       }
       initialValues={
         Object {
+          "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
           "timezone": "+02:00",
         }
       }
@@ -52,6 +53,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
         getFormState={[Function]}
         initialValues={
           Object {
+            "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
             "timezone": "+02:00",
           }
         }
@@ -124,6 +126,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
           getFormState={[Function]}
           initialValues={
             Object {
+              "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
               "timezone": "+02:00",
             }
           }
@@ -214,6 +217,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
             handleSubmit={[Function]}
             initialValues={
               Object {
+                "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
                 "timezone": "+02:00",
               }
             }
@@ -348,6 +352,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         "getFormState": [Function],
                         "getValues": [Function],
                         "initialValues": Object {
+                          "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
                           "timezone": "+02:00",
                         },
                         "initialize": [Function],
@@ -461,6 +466,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           "getFormState": [Function],
                           "getValues": [Function],
                           "initialValues": Object {
+                            "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
                             "timezone": "+02:00",
                           },
                           "initialize": [Function],

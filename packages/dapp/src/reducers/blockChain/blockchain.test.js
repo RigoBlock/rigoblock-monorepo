@@ -25,7 +25,7 @@ describe('blockchain reducer', () => {
       {},
       {
         accounts: {},
-        totalBalance: new BigNumber(0)
+        totalBalance: new BigNumber('0')
       }
     )
   })
@@ -40,7 +40,7 @@ describe('blockchain reducer', () => {
             provider
           }
         },
-        totalBalance: new BigNumber(0)
+        totalBalance: new BigNumber('0')
       }
     )
   })
@@ -53,7 +53,7 @@ describe('blockchain reducer', () => {
             lastBlock: '1'
           }
         },
-        totalBalance: new BigNumber(0)
+        totalBalance: new BigNumber('0')
       },
       accountMiddlewareMock(vaultActions.registerVaultBlock(eventBlock), owner),
       {
@@ -65,7 +65,7 @@ describe('blockchain reducer', () => {
             }
           }
         },
-        totalBalance: new BigNumber(0)
+        totalBalance: new BigNumber('0')
       }
     )
   })
@@ -78,7 +78,7 @@ describe('blockchain reducer', () => {
             dummyProp: 'dummyValue'
           }
         },
-        totalBalance: new BigNumber(0)
+        totalBalance: new BigNumber('0')
       },
       blockChainActions.blockChainLogIn('metamask', owner),
       {
@@ -87,7 +87,7 @@ describe('blockchain reducer', () => {
             dummyProp: 'dummyValue'
           }
         },
-        totalBalance: new BigNumber(0)
+        totalBalance: new BigNumber('0')
       }
     )
   })
@@ -100,7 +100,7 @@ describe('blockchain reducer', () => {
             dummyProp: 'dummyValue'
           }
         },
-        totalBalance: new BigNumber(0)
+        totalBalance: new BigNumber('0')
       },
       blockChainActions.updateTotalAccountBalance(
         new BigNumber('256.999999999952600881')
@@ -121,7 +121,7 @@ describe('blockchain reducer', () => {
       {
         accounts: {
           [owner]: {
-            balance: new BigNumber(0)
+            balance: new BigNumber('0')
           }
         }
       },

@@ -17,7 +17,7 @@ exports[`NavigationView component renders correctly 1`] = `
           },
         },
         Object {
-          "className": "active",
+          "className": "",
           "icon": "account_balance_wallet",
           "link": Object {
             "text": "Dragos",
@@ -25,7 +25,7 @@ exports[`NavigationView component renders correctly 1`] = `
           },
         },
         Object {
-          "className": "",
+          "className": "active",
           "icon": "lock",
           "link": Object {
             "text": "Vaults",

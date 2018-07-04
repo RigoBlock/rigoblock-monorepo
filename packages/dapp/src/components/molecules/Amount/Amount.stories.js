@@ -1,4 +1,5 @@
 import '../../_settings/_base.scss'
+import { BigNumber } from 'bignumber.js'
 import { selectV2, text, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import Amount, { AMOUNT_SIZES } from './Amount'
@@ -21,6 +22,6 @@ storiesOf('Molecules/Amount', module)
     <Amount
       size={selectV2('Amount size', AMOUNT_SIZES, AMOUNT_SIZES.SMALL)}
       symbol={text('Amount symbol', 'ETH')}
-      value={8000.23}
+      value={new BigNumber('8000.23')}
     />
   ))

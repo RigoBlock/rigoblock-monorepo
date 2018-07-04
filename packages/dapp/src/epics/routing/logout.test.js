@@ -14,7 +14,7 @@ describe('logout Epic', () => {
       currentAccount: null,
       provider: null
     },
-    routing: { location: ROUTES.DASHBOARD }
+    routing: { location: ROUTES.LOGIN }
   }
   const getStateMock = jest.fn()
   const mockStore = {

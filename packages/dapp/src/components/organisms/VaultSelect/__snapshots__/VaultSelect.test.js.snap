@@ -6,7 +6,7 @@ exports[`VaultSelect component renders correctly 1`] = `
     Object {
       "dispatch": [MockFunction],
       "getState": [Function],
-      "subscribe": [Function],
+      "subscribe": [MockFunction],
     }
   }
 >
@@ -18,7 +18,7 @@ exports[`VaultSelect component renders correctly 1`] = `
         Object {
           "0x421e1cef6e85e78da2470e54af64a626f45afb85": Object {
             "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
-            "id": 2,
+            "id": "2",
             "name": "Third Vault",
             "owner": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
             "symbol": "das",
@@ -51,7 +51,7 @@ exports[`VaultSelect component renders correctly 1`] = `
             },
             Object {
               "className": "",
-              "id": 2,
+              "id": "2",
               "itemName": "Third Vault",
               "itemSymbol": "das",
               "itemValue": "2.023498",
@@ -122,7 +122,7 @@ exports[`VaultSelect component renders correctly 1`] = `
             className=""
             currencyGrowth={null}
             growth={null}
-            id={2}
+            id={"2"}
             itemName="Third Vault"
             itemSymbol="das"
             itemValue={"2.023498"}
@@ -131,7 +131,7 @@ exports[`VaultSelect component renders correctly 1`] = `
           >
             <div
               className="list-item"
-              id={2}
+              id={"2"}
               onClick={[Function]}
             >
               <ItemName
@@ -186,7 +186,7 @@ exports[`VaultSelect component renders correctly if there are no vaults on state
     Object {
       "dispatch": [MockFunction],
       "getState": [Function],
-      "subscribe": [Function],
+      "subscribe": [MockFunction],
     }
   }
 >

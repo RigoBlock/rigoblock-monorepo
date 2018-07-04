@@ -6,7 +6,7 @@ exports[`VaultList component renders correctly 1`] = `
     Object {
       "dispatch": [MockFunction],
       "getState": [Function],
-      "subscribe": [Function],
+      "subscribe": [MockFunction],
     }
   }
 >
@@ -231,7 +231,7 @@ exports[`VaultList component renders correctly if there are no vaults on state 1
     Object {
       "dispatch": [MockFunction],
       "getState": [Function],
-      "subscribe": [Function],
+      "subscribe": [MockFunction],
     }
   }
 >

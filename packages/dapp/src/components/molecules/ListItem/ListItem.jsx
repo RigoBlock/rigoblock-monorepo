@@ -38,7 +38,7 @@ ListItem.propTypes = {
 }
 
 ListItem.defaultProps = {
-  itemValue: new BigNumber(0),
+  itemValue: new BigNumber('0'),
   growth: null,
   currencyGrowth: null,
   className: '',

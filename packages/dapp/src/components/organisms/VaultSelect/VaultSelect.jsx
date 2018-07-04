@@ -33,7 +33,7 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
     const { name, symbol, totalSupply, id } = vaults[vault]
     const ethSupply = totalSupply
       ? totalSupply.div(ETHTOMICRO)
-      : new BigNumber(0)
+      : new BigNumber('0')
     return {
       itemName: name,
       itemSymbol: symbol,
@@ -46,7 +46,7 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   vaultsList = vaultsList.map(vault => ({
     ...vault,
     className: classNames({
-      active: location === `${ROUTES.VAULTS}/${vault.id}`
+      active: location === `${ROUTES.VAULTS}/${vault.id.toString()}`
     })
   }))
 

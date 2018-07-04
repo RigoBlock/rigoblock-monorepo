@@ -31,8 +31,8 @@ AccountSummary.propTypes = {
 }
 
 AccountSummary.defaultProps = {
-  balance: new BigNumber(0),
-  tokenBalance: new BigNumber(0)
+  balance: new BigNumber('0'),
+  tokenBalance: new BigNumber('0')
 }
 
 export default AccountSummary

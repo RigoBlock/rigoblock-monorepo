@@ -8,10 +8,10 @@ const props = {
   Component: ListItem,
   data: [
     {
-      id: new BigNumber(1),
+      id: new BigNumber('1'),
       itemName: 'Rocksolid Vault',
       itemSymbol: 'VLT',
-      value: new BigNumber(12489.51323)
+      value: new BigNumber('12489.51323')
     }
   ]
 }

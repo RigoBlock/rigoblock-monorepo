@@ -15,12 +15,6 @@ describe('login Epic', () => {
     ROUTES.LOGIN
   }`, () => {
     getStateMock.mockReturnValue({
-      user: {
-        preferences: {
-          currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
-          provider: 'metamask'
-        }
-      },
       routing: { location: { pathname: ROUTES.LOGIN } }
     })
     const inputValues = {
@@ -50,12 +44,6 @@ describe('login Epic', () => {
 
   it('redirects to dashboard upon login action if location key in store is null (after we clear application storage)', () => {
     getStateMock.mockReturnValue({
-      user: {
-        preferences: {
-          currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
-          provider: 'metamask'
-        }
-      },
       routing: { location: null }
     })
     const inputValues = {
@@ -84,12 +72,6 @@ describe('login Epic', () => {
   })
   it("returns an empty observable if the user isn't on login page and changes account", () => {
     getStateMock.mockReturnValue({
-      user: {
-        preferences: {
-          currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
-          provider: 'metamask'
-        }
-      },
       routing: { location: { pathname: ROUTES.DRAGOS } }
     })
     const inputValues = {

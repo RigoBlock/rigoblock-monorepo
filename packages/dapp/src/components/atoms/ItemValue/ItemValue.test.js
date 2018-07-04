@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import ItemValue, { roundProps } from './ItemValue.jsx'
 import toJson from 'enzyme-to-json'
 
-const props = { itemValue: new BigNumber(12489.51354), precision: 2 }
+const props = { itemValue: new BigNumber('12489.51354'), precision: 2 }
 
 describe('ItemValue component', () => {
   it('renders correctly', () => {

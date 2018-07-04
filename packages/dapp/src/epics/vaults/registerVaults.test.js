@@ -20,7 +20,7 @@ describe('registerVaults epic', () => {
     event: 'BuyVault'
   }
   const vaultData = [
-    new BigNumber(0),
+    new BigNumber('0'),
     'Rocksolid Vault',
     'VLT',
     owner,
