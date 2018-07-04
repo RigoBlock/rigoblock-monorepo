@@ -10,6 +10,7 @@ class Contract extends ContractModels {
       [string, TypeChainContract][]
     >[] = contractNames.map(async contractName => {
       const contract: TypeChainContract = await import(`./models/${contractName}`)
+      Object.assign(contract[contractName], ContractExtension)
       Object.assign(
         contract[contractName].prototype,
         ContractExtension.prototype
@@ -21,8 +22,7 @@ class Contract extends ContractModels {
     })
 
     const contracts = await Promise.all(contractsPromises)
-    contracts.forEach(item => {
-      const [contractName, contract] = item
+    contracts.forEach(([contractName, contract]) => {
       Object.defineProperty(this, contractName.toString(), {
         value: contract
       })

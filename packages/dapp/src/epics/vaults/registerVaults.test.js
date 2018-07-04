@@ -20,7 +20,7 @@ describe('registerVaults epic', () => {
     event: 'BuyVault'
   }
   const vaultData = [
-    new BigNumber(0),
+    new BigNumber('0'),
     'Rocksolid Vault',
     'VLT',
     owner,
@@ -48,8 +48,8 @@ describe('registerVaults epic', () => {
   let registerVaults
 
   beforeEach(() => {
-    fromPromiseSpy = jest.fn()
     jest.resetModules()
+    fromPromiseSpy = jest.fn()
     jest.doMock('../../api', () => apiMock)
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy

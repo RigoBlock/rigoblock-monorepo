@@ -8,15 +8,13 @@ import NavigationView from './NavigationView'
 import React from 'react'
 
 const mockStore = {
-  getState: () => {
-    return {
-      routing: {
-        location: {
-          pathname: selectV2('url', ROUTES, ROUTES.DASHBOARD)
-        }
+  getState: () => ({
+    routing: {
+      location: {
+        pathname: selectV2('url', ROUTES, ROUTES.DASHBOARD)
       }
     }
-  },
+  }),
   dispatch: () => null,
   subscribe: () => null
 }

@@ -2,18 +2,18 @@
 
 .item-value, .currency-growth {
   display: block;
-}
 
-.item-value-small {
-  font-size: $base-font-size;
-}
+  &.small {
+    font-size: $base-font-size;
+  }
 
-.item-value-medium {
-  font-size: 1.3 * $base-font-size;
-}
+  &.medium {
+    font-size: $large-font-size;
+  }
 
-.item-value-large {
-  font-size: 2 * $base-font-size;
+  &.large {
+    font-size: $xl-font-size;
+  }
 }
 
 .currency-growth {

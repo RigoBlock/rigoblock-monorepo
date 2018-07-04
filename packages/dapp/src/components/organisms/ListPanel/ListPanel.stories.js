@@ -1,4 +1,5 @@
 import '../../_settings/_base.scss'
+import { BigNumber } from 'bignumber.js'
 import { object, text, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import ListPanel from './ListPanel'
@@ -8,18 +9,18 @@ const items = [
   {
     itemName: 'Rocksolid Vault',
     itemSymbol: 'VLT',
-    itemValue: 12489.51323
+    itemValue: new BigNumber('12489.51323')
   },
   {
     itemName: 'Big Drago',
     itemSymbol: 'DRG',
-    growth: 0.25,
-    currencyGrowth: 2.32
+    growth: new BigNumber('0.25'),
+    currencyGrowth: new BigNumber('2.32')
   },
   {
     itemName: 'Rocksolid Vault',
     itemSymbol: 'VLT',
-    itemValue: 12489.51323
+    itemValue: new BigNumber('12489.51323')
   }
 ]
 

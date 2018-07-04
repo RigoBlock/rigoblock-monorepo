@@ -1,11 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ItemValue component renders correctly 1`] = `
-<div>
+<div
+  className="no-events"
+>
   <span
-    className="item-value item-value-large"
+    className="item-value large"
   >
-    12489.51
+    12,489.51
   </span>
 </div>
 `;
+
+exports[`ItemValue component roundProps function throws error if precision is < 0 1`] = `"toFormat() decimal places out of range: -1"`;

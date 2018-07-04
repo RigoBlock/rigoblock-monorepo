@@ -1,1 +1,1 @@
-export { default } from './AccountItem'
+export { default, ACCOUNT_ITEM_TYPES } from './AccountItem'

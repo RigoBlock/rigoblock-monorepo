@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VaultSelect component renders correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [MockFunction],
+      "getState": [Function],
+      "subscribe": [MockFunction],
+    }
+  }
+>
+  <Connect(vaultSelect)>
+    <vaultSelect
+      dispatch={[MockFunction]}
+      location="/vaults/0"
+      vaults={
+        Object {
+          "0x421e1cef6e85e78da2470e54af64a626f45afb85": Object {
+            "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
+            "id": "2",
+            "name": "Third Vault",
+            "owner": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
+            "symbol": "das",
+            "totalSupply": "2023498",
+          },
+          "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
+            "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
+            "id": "0",
+            "name": "First Vault",
+            "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+            "symbol": "asd",
+            "totalSupply": "14000000",
+          },
+        }
+      }
+    >
+      <List
+        Component={[Function]}
+        Divider={null}
+        className="vault-select"
+        data={
+          Array [
+            Object {
+              "className": "active",
+              "id": "0",
+              "itemName": "First Vault",
+              "itemSymbol": "asd",
+              "itemValue": "14",
+              "onClick": [Function],
+            },
+            Object {
+              "className": "",
+              "id": "2",
+              "itemName": "Third Vault",
+              "itemSymbol": "das",
+              "itemValue": "2.023498",
+              "onClick": [Function],
+            },
+          ]
+        }
+      >
+        <div
+          className="vault-select"
+        >
+          <ListItem
+            className="active"
+            currencyGrowth={null}
+            growth={null}
+            id={"0"}
+            itemName="First Vault"
+            itemSymbol="asd"
+            itemValue={"14"}
+            key="0"
+            onClick={[Function]}
+          >
+            <div
+              className="list-item active"
+              id={"0"}
+              onClick={[Function]}
+            >
+              <ItemName
+                name="First Vault"
+                symbol="asd"
+              >
+                <div
+                  className="no-events"
+                >
+                  <span
+                    className="item-symbol"
+                  >
+                    asd
+                  </span>
+                  <span
+                    className="item-name"
+                  >
+                    First Vault
+                  </span>
+                </div>
+              </ItemName>
+              <ItemValue
+                currency="ETH"
+                currencyGrowth={null}
+                growth={null}
+                itemValue={"14"}
+                precision={2}
+                valueSize="large"
+              >
+                <div
+                  className="no-events"
+                >
+                  <span
+                    className="item-value large"
+                  >
+                    14.00
+                  </span>
+                </div>
+              </ItemValue>
+            </div>
+          </ListItem>
+          <ListItem
+            className=""
+            currencyGrowth={null}
+            growth={null}
+            id={"2"}
+            itemName="Third Vault"
+            itemSymbol="das"
+            itemValue={"2.023498"}
+            key="1"
+            onClick={[Function]}
+          >
+            <div
+              className="list-item"
+              id={"2"}
+              onClick={[Function]}
+            >
+              <ItemName
+                name="Third Vault"
+                symbol="das"
+              >
+                <div
+                  className="no-events"
+                >
+                  <span
+                    className="item-symbol"
+                  >
+                    das
+                  </span>
+                  <span
+                    className="item-name"
+                  >
+                    Third Vault
+                  </span>
+                </div>
+              </ItemName>
+              <ItemValue
+                currency="ETH"
+                currencyGrowth={null}
+                growth={null}
+                itemValue={"2.023498"}
+                precision={2}
+                valueSize="large"
+              >
+                <div
+                  className="no-events"
+                >
+                  <span
+                    className="item-value large"
+                  >
+                    2.02
+                  </span>
+                </div>
+              </ItemValue>
+            </div>
+          </ListItem>
+        </div>
+      </List>
+    </vaultSelect>
+  </Connect(vaultSelect)>
+</Provider>
+`;
+
+exports[`VaultSelect component renders correctly if there are no vaults on state 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [MockFunction],
+      "getState": [Function],
+      "subscribe": [MockFunction],
+    }
+  }
+>
+  <Connect(vaultSelect)>
+    <vaultSelect
+      dispatch={[MockFunction]}
+      location="/vaults"
+      vaults={Object {}}
+    >
+      <div
+        className="vault-select"
+      >
+        Nothing here!
+      </div>
+    </vaultSelect>
+  </Connect(vaultSelect)>
+</Provider>
+`;

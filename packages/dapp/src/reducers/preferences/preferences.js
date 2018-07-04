@@ -2,6 +2,7 @@ import { INVESTOR } from '../../constants/user'
 import { createReducer } from 'redux-act'
 import blockChainActions from '../../actions/blockchain-actions'
 import moment from 'moment-timezone'
+import persistentDecorator from '../../store/persistentDecorator'
 import u from 'updeep'
 import userActions from '../../actions/user-actions'
 
@@ -36,4 +37,8 @@ const preferencesReducer = createReducer(
   initialState
 )
 
-export default preferencesReducer
+export default persistentDecorator(preferencesReducer, 'preferences', [
+  'type',
+  'currentAccount',
+  'provider'
+])

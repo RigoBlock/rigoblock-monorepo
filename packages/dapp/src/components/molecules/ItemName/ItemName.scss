@@ -2,7 +2,9 @@
 
 .item-symbol {
   font-size: 1.2 * $base-font-size;
-  display: block
+  font-weight: $font-bold;
+  text-transform: uppercase;
+  display: block;
 }
 
 .item-name {

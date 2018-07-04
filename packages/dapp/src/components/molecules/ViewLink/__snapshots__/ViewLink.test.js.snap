@@ -3,11 +3,13 @@
 exports[`ViewLink component renders correctly 1`] = `
 <Link
   className="view-link"
-  size="medium"
+  size="small"
   to="/"
 >
-  <Tooltip
-    size="small"
+  <Icon
+    onClick={[Function]}
+    size="medium"
+    tooltipText=""
     type="dashboard"
   />
   <span>

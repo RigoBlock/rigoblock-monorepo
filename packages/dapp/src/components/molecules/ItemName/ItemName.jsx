@@ -4,7 +4,7 @@ import React from 'react'
 
 const ItemName = ({ symbol, name }) => {
   return (
-    <div>
+    <div className="no-events">
       <span className="item-symbol">{symbol}</span>
       <span className="item-name">{name}</span>
     </div>

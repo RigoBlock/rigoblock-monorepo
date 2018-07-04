@@ -2,8 +2,6 @@
 
 exports[`Vaults page renders correctly 1`] = `
 <BaseTemplate>
-  <h1>
-    Vaults
-  </h1>
+  <Connect(vaultSelect) />
 </BaseTemplate>
 `;

@@ -108,9 +108,7 @@ describe('blockChain services function', () => {
         }
 
         const expectedMarble =
-          '(ab)' +
-          '------------------------------------------------------------------------------------------------c' +
-          '---------------------------------------------------------------------------------------------------b'
+          '(ab)' + addTimeFrames(96, 'c') + addTimeFrames(99, 'b')
 
         const ts = new TestScheduler((actual, expected) => {
           expect(actual).toEqual(expected)

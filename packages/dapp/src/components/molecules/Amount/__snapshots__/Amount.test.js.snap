@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Amount component renders correctly 1`] = `
+<div
+  className="amount medium"
+>
+  <div
+    className="amount-symbol"
+  >
+    ETH
+  </div>
+  <ItemValue
+    currency="ETH"
+    currencyGrowth={null}
+    growth={null}
+    itemValue={"8000.23"}
+    precision={2}
+    valueSize="medium"
+  />
+</div>
+`;

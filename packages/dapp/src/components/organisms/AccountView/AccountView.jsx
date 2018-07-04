@@ -4,6 +4,7 @@ import AccountItem from '../../molecules/AccountItem'
 import List from '../List'
 import PropTypes from 'prop-types'
 import React from 'react'
+import Title, { TITLE_SIZES } from '../../atoms/Title'
 
 let AccountView = ({ currentAccount, accounts }) => {
   const accountList = Object.keys(accounts).map(account => ({
@@ -12,7 +13,7 @@ let AccountView = ({ currentAccount, accounts }) => {
   }))
   return currentAccount ? (
     <div className="account-view">
-      <h1>Accounts</h1>
+      <Title size={TITLE_SIZES.SMALL}>Accounts</Title>
       <List
         Component={AccountItem}
         data={accountList}
@@ -37,8 +38,8 @@ AccountView.defaultProps = {
 }
 
 AccountView = connect(state => ({
-  currentAccount: state.user.preferences.currentAccount,
-  accounts: state.user.blockChain.accounts
+  currentAccount: state.preferences.currentAccount,
+  accounts: state.blockChain.accounts
 }))(AccountView)
 
 export default AccountView

@@ -1,30 +1,24 @@
 import './Tooltip.scss'
 import PropTypes from 'prop-types'
 import React from 'react'
-import classNames from 'classnames'
 
-export const TOOLTIP_SIZES = {
+export const ICON_SIZES = {
   SMALL: 'small',
   MEDIUM: 'medium',
   LARGE: 'large'
 }
 
-const Tooltip = ({ size, type }) => {
-  const classProps = classNames('material-icons', 'tooltip', `tooltip-${size}`)
-  return <span className={classProps}>{type}</span>
+const Tooltip = ({ tooltipText }) => {
+  return (
+    <div className="tooltip-container">
+      <div className="tooltip-text">{tooltipText}</div>
+      <div className="tooltip-tip" />
+    </div>
+  )
 }
 
 Tooltip.propTypes = {
-  type: PropTypes.string.isRequired,
-  size: PropTypes.oneOf([
-    TOOLTIP_SIZES.SMALL,
-    TOOLTIP_SIZES.MEDIUM,
-    TOOLTIP_SIZES.LARGE
-  ])
-}
-
-Tooltip.defaultProps = {
-  size: TOOLTIP_SIZES.MEDIUM
+  tooltipText: PropTypes.string.isRequired
 }
 
 export default Tooltip

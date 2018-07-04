@@ -1,12 +1,15 @@
+import { BigNumber } from 'bignumber.js'
 import { composeReducers } from '../utils'
 import { createReducer } from 'redux-act'
 import blockChainActions from '../../actions/blockchain-actions'
+import persistentDecorator from '../../store/persistentDecorator'
 import u from 'updeep'
 import vaultActions from '../../actions/vault-actions'
 import vaultsReducer from './vaults'
 
 const initialState = {
-  accounts: {}
+  accounts: {},
+  totalBalance: new BigNumber('0')
 }
 
 const blockChainReducer = createReducer(
@@ -39,9 +42,34 @@ const blockChainReducer = createReducer(
         },
         state
       )
-    }
+    },
+    [blockChainActions.updateAccountBalance]: (
+      state,
+      payload,
+      { currentAccount }
+    ) =>
+      u(
+        {
+          accounts: {
+            [currentAccount]: {
+              balance: payload
+            }
+          }
+        },
+        state
+      ),
+    [blockChainActions.updateTotalAccountBalance]: (state, payload) =>
+      u(
+        {
+          totalBalance: payload
+        },
+        state
+      )
   },
   initialState
 )
 
-export default composeReducers(vaultsReducer, blockChainReducer)
+export default persistentDecorator(
+  composeReducers(vaultsReducer, blockChainReducer),
+  'blockChain'
+)
