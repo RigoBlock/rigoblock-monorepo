@@ -14,8 +14,8 @@ const Icon = ({ size, type, onClick, tooltipText }) => {
   const classProps = classNames('material-icons', 'icon', size)
   return tooltipText ? (
     <div className={classProps} onClick={onClick}>
+      <span className="tooltip-hover">{type}</span>
       <Tooltip tooltipText={tooltipText} />
-      {type}
     </div>
   ) : (
     <div className={classProps} onClick={onClick}>
