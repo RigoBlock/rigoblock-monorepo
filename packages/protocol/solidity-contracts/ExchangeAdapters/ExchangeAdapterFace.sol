@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { ERC20Face as ERC20 } from "../utils/tokens/ERC20/ERC20Face.sol";

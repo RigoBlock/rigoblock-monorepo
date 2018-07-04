@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Casper Interface - Allows interaction with the Casoper contract.
