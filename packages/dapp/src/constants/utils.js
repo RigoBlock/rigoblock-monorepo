@@ -5,6 +5,7 @@ import isObject from 'lodash/isObject'
 
 export const ETHTOMICRO = 1e6
 export const ETHTOWEI = 1e18
+export const MICROTOWEI = 1e12
 
 // we are filtering for BigNumbers
 // TODO: remove once isBigNumber() starts working

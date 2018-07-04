@@ -1,5 +1,6 @@
 import './ItemValue.scss'
 import { BigNumber } from 'bignumber.js'
+import { ETH } from '../../../constants/blockchain'
 import { isBigNumber } from '../../../constants/utils'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -58,7 +59,7 @@ ItemValue.defaultProps = {
   growth: null,
   currencyGrowth: null,
   precision: 2,
-  currency: 'ETH'
+  currency: ETH
 }
 
 export default ItemValue
