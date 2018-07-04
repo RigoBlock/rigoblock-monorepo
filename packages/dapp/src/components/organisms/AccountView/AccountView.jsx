@@ -38,8 +38,8 @@ AccountView.defaultProps = {
 }
 
 AccountView = connect(state => ({
-  currentAccount: state.user.preferences.currentAccount,
-  accounts: state.user.blockChain.accounts
+  currentAccount: state.preferences.currentAccount,
+  accounts: state.blockChain.accounts
 }))(AccountView)
 
 export default AccountView

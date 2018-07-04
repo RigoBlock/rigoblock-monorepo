@@ -9,7 +9,7 @@ import React from 'react'
 let vaultList = ({ vaults }) => {
   if (!Object.keys(vaults).length) {
     return (
-      <div className="vaultList">
+      <div className="vault-list">
         <ListPanel title="Vaults" items={[]} />
       </div>
     )
@@ -41,14 +41,12 @@ vaultList.defaultProps = {
 }
 
 vaultList = connect(state => {
-  const { currentAccount } = state.user.preferences
-  return currentAccount
-    ? {
-        vaults: state.user.blockChain.accounts[currentAccount].vaults
-      }
-    : {
-        vaults: {}
-      }
+  const { currentAccount } = state.preferences
+  return {
+    vaults: currentAccount
+      ? state.blockChain.accounts[currentAccount].vaults
+      : {}
+  }
 })(vaultList)
 
 export default vaultList

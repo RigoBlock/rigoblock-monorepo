@@ -241,7 +241,7 @@ exports[`VaultList component renders correctly if there are no vaults on state 1
       vaults={Object {}}
     >
       <div
-        className="vaultList"
+        className="vault-list"
       >
         <ListPanel
           items={Array []}

@@ -13,8 +13,7 @@ const logoutEpic = (action$, store) => {
     .filter(action => action.type === LOCATION_CHANGE)
     .mergeMap(() => {
       const state = store.getState()
-      return (!state.user.preferences.currentAccount ||
-        state.globalReducer.error) &&
+      return (!state.preferences.currentAccount || state.globalReducer.error) &&
         state.routing.location.pathname !== ROUTES.LOGIN
         ? of(routerActions.logout())
         : empty()

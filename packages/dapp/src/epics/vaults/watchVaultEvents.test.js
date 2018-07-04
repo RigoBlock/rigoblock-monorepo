@@ -51,17 +51,15 @@ describe('watchVaultEvents', () => {
   it('fetches from the last block saved on redux state', () => {
     const lastBlock = 15
     getStateSpy.mockReturnValueOnce({
-      user: {
-        preferences: {
-          currentAccount: owner
-        },
-        blockChain: {
-          accounts: {
-            [owner]: {
-              lastBlock,
-              vaults: [],
-              vaultBlocks: []
-            }
+      preferences: {
+        currentAccount: owner
+      },
+      blockChain: {
+        accounts: {
+          [owner]: {
+            lastBlock,
+            vaults: [],
+            vaultBlocks: []
           }
         }
       }
@@ -95,17 +93,15 @@ describe('watchVaultEvents', () => {
   it('stops watching after a LOGGED_IN action is fired', () => {
     const lastBlock = 15
     getStateSpy.mockReturnValueOnce({
-      user: {
-        preferences: {
-          currentAccount: owner
-        },
-        blockChain: {
-          accounts: {
-            [owner]: {
-              lastBlock,
-              vaults: [],
-              vaultBlocks: []
-            }
+      preferences: {
+        currentAccount: owner
+      },
+      blockChain: {
+        accounts: {
+          [owner]: {
+            lastBlock,
+            vaults: [],
+            vaultBlocks: []
           }
         }
       }

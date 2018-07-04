@@ -1,9 +1,9 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/mergeMap'
 import * as ROUTES from '../../constants/routes'
-import { empty } from 'rxjs/observable/empty'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
+import get from 'lodash/get'
 import routerActions from '../../actions/router-actions'
 
 const loginEpic = (action$, store) => {
@@ -13,10 +13,16 @@ const loginEpic = (action$, store) => {
     )
     .mergeMap(() => {
       const state = store.getState()
-      return !state.routing.location ||
-        state.routing.location.pathname === ROUTES.LOGIN
-        ? of(routerActions.login())
-        : empty()
+      const redirectUrl = get(
+        state,
+        'routing.location.pathname',
+        ROUTES.DASHBOARD
+      )
+      return of(
+        routerActions.login(
+          redirectUrl !== ROUTES.LOGIN ? redirectUrl : undefined
+        )
+      )
     })
 }
 

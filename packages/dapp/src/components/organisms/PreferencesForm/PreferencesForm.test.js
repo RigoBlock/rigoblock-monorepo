@@ -7,7 +7,7 @@ import userActions from '../../../actions/user-actions'
 
 const mockStore = {
   getState: () => ({
-    user: {
+    preferences: {
       timezone: '+02:00'
     },
     form: {

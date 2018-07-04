@@ -2,6 +2,7 @@ import { BigNumber } from 'bignumber.js'
 import { composeReducers } from '../utils'
 import { createReducer } from 'redux-act'
 import blockChainActions from '../../actions/blockchain-actions'
+import persistentDecorator from '../../store/persistentDecorator'
 import u from 'updeep'
 import vaultActions from '../../actions/vault-actions'
 import vaultsReducer from './vaults'
@@ -68,4 +69,7 @@ const blockChainReducer = createReducer(
   initialState
 )
 
-export default composeReducers(vaultsReducer, blockChainReducer)
+export default persistentDecorator(
+  composeReducers(vaultsReducer, blockChainReducer),
+  'blockChain'
+)

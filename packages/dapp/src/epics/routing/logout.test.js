@@ -10,11 +10,9 @@ describe('logout Epic', () => {
   const testError = new Error('test error')
   const locationChangeAction = () => ({ type: LOCATION_CHANGE })
   const loggedOutState = {
-    user: {
-      preferences: {
-        currentAccount: null,
-        provider: null
-      }
+    preferences: {
+      currentAccount: null,
+      provider: null
     },
     routing: { location: ROUTES.DASHBOARD }
   }
