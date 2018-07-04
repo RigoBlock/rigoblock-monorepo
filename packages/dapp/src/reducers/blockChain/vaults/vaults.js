@@ -43,9 +43,8 @@ const vaultReducer = createReducer({
       },
       state
     ),
-  [vaultActions.registerTransaction]: (state, payload, { currentAccount }) => {
-    console.log('PAYLOAD', payload)
-    return u(
+  [vaultActions.registerTransaction]: (state, payload, { currentAccount }) =>
+    u(
       {
         accounts: {
           [currentAccount]: {
@@ -59,7 +58,6 @@ const vaultReducer = createReducer({
       },
       state
     )
-  }
 })
 
 export default vaultReducer

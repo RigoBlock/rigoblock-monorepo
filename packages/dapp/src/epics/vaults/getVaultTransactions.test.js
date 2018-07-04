@@ -4,7 +4,7 @@ import { TestScheduler } from 'rxjs'
 import getVaultTransactions from './getVaultTransactions'
 import vaultActions from '../../actions/vault-actions'
 
-describe('getVaultTransactions epics', () => {
+describe('getVaultTransactions epic', () => {
   const buyVaultEvent = {
     logIndex: 0,
     transactionIndex: 0,
