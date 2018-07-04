@@ -85,6 +85,11 @@ exports[`AccountsPanel component renders correctly 1`] = `
                       className="material-icons icon medium"
                       onClick={[Function]}
                     >
+                      <span
+                        className="tooltip-hover"
+                      >
+                        help
+                      </span>
                       <Tooltip
                         tooltipText="List of all accounts"
                       >
@@ -101,7 +106,6 @@ exports[`AccountsPanel component renders correctly 1`] = `
                           />
                         </div>
                       </Tooltip>
-                      help
                     </div>
                   </Icon>
                 </div>
