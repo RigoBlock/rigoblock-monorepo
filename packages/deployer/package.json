@@ -2,25 +2,27 @@
     "name": "@rigoblock/deployer",
     "version": "0.1.0",
     "description": "Smart contract deployer",
-    "main": "lib/src/index.js",
-    "types": "lib/src/index.d.ts",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build:watch": "tsc -w",
-        "build": "yarn clean && copyfiles 'test/fixtures/contracts/**/*' ./lib && tsc --outDir './lib/src'",
+        "build": "rm -rf dist/* && tsc --outDir './dist'",
         "test": "run-s build run_mocha",
         "run_mocha": "mocha lib/test/*_test.js --bail --exit",
         "test:coverage": "nyc npm run test --all && yarn coverage:report:lcov",
         "coverage:report:lcov": "nyc report --reporter=text-lcov > coverage/lcov.info",
         "compile": "npm run build; node lib/src/cli.js compile",
-        "clean": "shx rm -rf lib scripts",
         "migrate": "npm run build; node lib/src/cli.js migrate",
         "lint": "eslint src --ext ts --fix",
         "test:circleci": "yarn test:coverage",
         "docs:json": "typedoc --excludePrivate --excludeExternals --target ES5 --json $JSON_FILE_PATH $PROJECT_FILES"
     },
     "bin": {
-        "0x-deployer": "lib/src/cli.js"
+        "rigoblock-deployer": "dist/cli.js"
     },
+    "files": [
+      "dist"
+    ],
     "devDependencies": {
         "@0xproject/dev-utils": "^0.3.6",
         "@0xproject/monorepo-scripts": "^0.1.18",

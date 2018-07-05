@@ -43,7 +43,7 @@ import { utils } from './utils/utils'
 import solcVersionFetch from './utils/solcVersionFetch'
 
 const ALL_CONTRACTS_IDENTIFIER = '*'
-const SOLC_BIN_DIR = path.join(__dirname, '..', '..', 'solc_bin')
+const SOLC_BIN_DIR = path.join(__dirname, '..', 'solc_bin')
 
 /**
  * The Compiler facilitates compiling Solidity smart contracts and saves the results
@@ -131,6 +131,11 @@ export class Compiler {
       availableCompilerVersions,
       solcVersionRange
     )
+    if (!solcVersion) {
+      throw new Error(
+        `Could not find Sol compiler for Solidity ${solcVersionRange}`
+      )
+    }
     const fullSolcVersion = solcReleases[solcVersion]
     const compilerBinFilename = path.join(SOLC_BIN_DIR, fullSolcVersion)
     let solcjs: string
