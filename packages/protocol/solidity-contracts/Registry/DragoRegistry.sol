@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity 0.4.23;
 pragma experimental "v0.5.0";
 
 import { Owned } from "../utils/Owned/Owned.sol";
@@ -172,7 +172,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     {
         fee = _fee;
     }
-    
+
     /// @dev Allows anyone to update the owner in the registry
     /// @notice pool owner can change; gets written in registry only when needed
     /// @param _id Uint of the target pool
@@ -181,7 +181,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     {
         updateOwnerInternal(_id);
     }
-    
+
     /// @dev Allows anyone to update many owners if they differ from registered
     /// @param _id Uint of the target pool
     function updateOwners(uint[] _id)
@@ -432,7 +432,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         emit Registered(_name, _symbol, dragos.length - 1, _drago, _owner, _group);
         return true;
     }
-    
+
     /// @dev Allows anyone to update the owner in the registry
     /// @notice pool owner can change, but gets written in registry only when needed
     /// @param _id Uint of the target pool

@@ -30,7 +30,6 @@ import {
   ContractSourceData,
   ContractSpecificSourceData
 } from './utils/types'
-import { binPaths } from './solc/bin_paths'
 import { constants } from './utils/constants'
 import {
   createDirIfDoesNotExistAsync,
@@ -41,6 +40,7 @@ import {
 } from './utils/compiler'
 import { fsWrapper } from './utils/fs_wrapper'
 import { utils } from './utils/utils'
+import solcVersionFetch from './utils/solcVersionFetch'
 
 const ALL_CONTRACTS_IDENTIFIER = '*'
 const SOLC_BIN_DIR = path.join(__dirname, '..', '..', 'solc_bin')
@@ -125,12 +125,13 @@ export class Compiler {
       return
     }
     const solcVersionRange = parseSolidityVersionRange(contractSource.source)
-    const availableCompilerVersions = _.keys(binPaths)
+    const solcReleases = await solcVersionFetch()
+    const availableCompilerVersions = Object.keys(solcReleases)
     const solcVersion = semver.maxSatisfying(
       availableCompilerVersions,
       solcVersionRange
     )
-    const fullSolcVersion = binPaths[solcVersion]
+    const fullSolcVersion = solcReleases[solcVersion]
     const compilerBinFilename = path.join(SOLC_BIN_DIR, fullSolcVersion)
     let solcjs: string
     const isCompilerAvailableLocally = fs.existsSync(compilerBinFilename)
