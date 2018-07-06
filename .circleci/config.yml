@@ -99,6 +99,7 @@ jobs:
           paths:
             - packages/protocol/artifacts
             - packages/protocol/dist
+            - packages/deployer/dist
 
   test-protocol:
     working_directory: *workspace_root
