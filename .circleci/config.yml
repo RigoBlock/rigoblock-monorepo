@@ -39,6 +39,7 @@ jobs:
             - packages/ganache-bootstrap/node_modules
             - packages/api/node_modules
             - packages/protocol/node_modules
+            - packages/deployer/node_modules
             - .cache/yarn
       - persist_to_workspace:
           root: *workspace_root
@@ -48,6 +49,7 @@ jobs:
             - packages/ganache-bootstrap/node_modules
             - packages/api/node_modules
             - packages/protocol/node_modules
+            - packages/deployer/node_modules
             - .cache/yarn
   test-unit-dapp:
     working_directory: *workspace_root
