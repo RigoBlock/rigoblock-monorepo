@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity 0.4.23;
 pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
@@ -116,11 +116,10 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     }
 
     // CONSTANT PUBLIC FUNCTIONS
-    
+
     /// @dev Gets data of a pool
     /// @param _ofPool Id of the pool
     /// @return Bool the pool is active
-    /// @return 
     function getPoolData(uint _ofPool)
         external view
         returns (
@@ -143,7 +142,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         ratio = getRatio(_ofPool);
         pop = proofOfPerformance(_ofPool);
     }
-    
+
     /// @dev Returns the highwatermark of a pool
     /// @param _ofPool Id of the pool
     /// @return Value of the all-time-high pool nav
@@ -207,7 +206,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         }
         return (networkValue, length);
     }
-    
+
     // INTERNAL FUNCTIONS
 
     /// @dev Returns the reward factor for a pool
@@ -233,7 +232,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         ( , group) = addressFromId(_ofPool);
         return groups[group].rewardRatio;
     }
-    
+
     /// @dev Returns the address of the Inflation contract
     /// @return Address of the minter/inflation
     function getMinter()
@@ -253,7 +252,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @notice rigo token has 10^18 decimals
     function proofOfPerformance(uint _ofPool)
         internal view
-        returns (uint256) 
+        returns (uint256)
     {
         uint highwatermark;
         if (poolPrice[_ofPool].highwatermark == 0) {
@@ -276,7 +275,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         uint assetsReward = poolValue * epochReward * (10000 - rewardRatio) / 10000 ether;
         return performanceReward + assetsReward;
     }
-    
+
     /// @dev Checks whether a pool is registered and active
     /// @param _ofPool Id of the pool
     /// @return Bool the pool is active

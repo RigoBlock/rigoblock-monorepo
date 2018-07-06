@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity 0.4.23;
 pragma experimental "v0.5.0";
 
 import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistryFace.sol";
@@ -260,7 +260,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
         emit DragoCreated(_name, _symbol, libraryData.newAddress, _owner, _dragoId);
         return true;
     }
-    
+
     /// @dev Returns the next Id for a drago
     /// @return Number of the next Id from the registry
     function getNextId()

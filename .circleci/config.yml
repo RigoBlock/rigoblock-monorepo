@@ -39,6 +39,7 @@ jobs:
             - packages/ganache-bootstrap/node_modules
             - packages/api/node_modules
             - packages/protocol/node_modules
+            - packages/deployer/node_modules
             - .cache/yarn
       - persist_to_workspace:
           root: *workspace_root
@@ -48,6 +49,7 @@ jobs:
             - packages/ganache-bootstrap/node_modules
             - packages/api/node_modules
             - packages/protocol/node_modules
+            - packages/deployer/node_modules
             - .cache/yarn
   test-unit-dapp:
     working_directory: *workspace_root
@@ -75,6 +77,9 @@ jobs:
       - checkout
       - *attach_workspace
       - run:
+          name: Building deployer
+          command: yarn build:deployer
+      - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           environment:
@@ -94,6 +99,7 @@ jobs:
           paths:
             - packages/protocol/artifacts
             - packages/protocol/dist
+            - packages/deployer/dist
 
   test-protocol:
     working_directory: *workspace_root

@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity 0.4.23;
 pragma experimental "v0.5.0";
 
 import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistryFace.sol";
@@ -163,7 +163,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
     /// @dev Allows owner to collect fees
     function drain()
-        external 
+        external
         onlyOwner
     {
         data.vaultDao.transfer(address(this).balance);
