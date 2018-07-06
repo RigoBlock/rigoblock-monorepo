@@ -1,0 +1,56 @@
+{
+    "name": "@rigoblock/deployer",
+    "version": "0.1.0",
+    "description": "Smart contract deployer",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build:watch": "tsc -w",
+        "build": "rm -rf dist/* && tsc --outDir './dist'",
+        "test": "run-s build run_mocha",
+        "run_mocha": "mocha lib/test/*_test.js --bail --exit",
+        "lint": "eslint src --ext ts --fix"
+    },
+    "bin": {
+        "rigoblock-deployer": "dist/cli.js"
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "@types/require-from-string": "^1.2.0",
+        "@types/semver": "^5.5.0",
+        "chai": "^4.0.1",
+        "chai-as-promised": "^7.1.0",
+        "copyfiles": "^1.2.0",
+        "dirty-chai": "^2.0.1",
+        "eslint-plugin-typescript": "^0.12.0",
+        "mocha": "^4.0.1",
+        "node-fetch": "^2.1.2",
+        "npm-run-all": "^4.1.2",
+        "types-bn": "^0.0.1",
+        "typescript": "2.9.2",
+        "typescript-eslint-parser": "^16.0.1",
+        "web3-typescript-typings": "^0.10.2",
+        "zeppelin-solidity": "1.8.0"
+    },
+    "dependencies": {
+        "@0xproject/json-schemas": "^0.7.21",
+        "@0xproject/sol-resolver": "^0.0.2",
+        "@0xproject/types": "^0.6.1",
+        "@0xproject/typescript-typings": "^0.2.0",
+        "@0xproject/utils": "^0.5.2",
+        "@0xproject/web3-wrapper": "^0.6.1",
+        "@types/yargs": "^11.0.0",
+        "chalk": "^2.3.0",
+        "ethereumjs-util": "^5.1.1",
+        "isomorphic-fetch": "^2.2.1",
+        "lodash": "^4.17.4",
+        "require-from-string": "^2.0.1",
+        "semver": "^5.5.0",
+        "solc": "^0.4.23",
+        "web3": "^0.20.0",
+        "web3-eth-abi": "^1.0.0-beta.24",
+        "yargs": "^10.0.3"
+    }
+}

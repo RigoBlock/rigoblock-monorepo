@@ -16,7 +16,11 @@
 
 */
 
+<<<<<<< HEAD
 pragma solidity ^0.4.24;
+=======
+pragma solidity 0.4.23;
+>>>>>>> 796df49aabf4f8ff31cb7a3e97947638f1f0d1f0
 pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
@@ -114,12 +118,16 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     }
 
     // CONSTANT PUBLIC FUNCTIONS
-    
+
     /// @dev Gets data of a pool
     /// @param _ofPool Id of the pool
     /// @return Bool the pool is active
+<<<<<<< HEAD
     /// @return 
     function getPoolData(uint256 _ofPool)
+=======
+    function getPoolData(uint _ofPool)
+>>>>>>> 796df49aabf4f8ff31cb7a3e97947638f1f0d1f0
         external view
         returns (
             bool active,
@@ -152,7 +160,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
             pop
         );
     }
-    
+
     /// @dev Returns the highwatermark of a pool
     /// @param _ofPool Id of the pool
     /// @return Value of the all-time-high pool nav
@@ -213,7 +221,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         }
         return (networkValue, length);
     }
-    
+
     // INTERNAL FUNCTIONS
 
     /// @dev Returns the reward factor for a pool
@@ -237,7 +245,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         ( , address group) = addressFromId(_ofPool);
         return groups[group].rewardRatio;
     }
-    
+
     /// @dev Returns the address of the Inflation contract
     /// @return Address of the minter/inflation
     function getMinter()
@@ -257,7 +265,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @notice rigo token has 10^18 decimals
     function proofOfPerformance(uint256 _ofPool)
         internal view
-        returns (uint256) 
+        returns (uint256)
     {
         uint256 highwatermark = 1000 ether; //initialize variable with arbitrarity high value
         if (poolPrice[_ofPool].highwatermark == 0) {
@@ -277,7 +285,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         uint256 assetsReward = poolValue * epochReward * (10000 - rewardRatio) / 10000 ether;
         return (performanceReward + assetsReward);
     }
-    
+
     /// @dev Checks whether a pool is registered and active
     /// @param _ofPool Id of the pool
     /// @return Bool the pool is active

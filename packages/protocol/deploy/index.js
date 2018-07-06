@@ -1,6 +1,6 @@
 const path = require('path')
 const Web3 = require('web3')
-const Deployer = require('@0xproject/deployer').Deployer
+const Deployer = require('@rigoblock/deployer').Deployer
 const c = require('chalk')
 const { GAS_ESTIMATE } = require('../constants')
 const logger = require('./logger')
