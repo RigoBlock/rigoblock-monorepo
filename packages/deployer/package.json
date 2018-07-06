@@ -15,7 +15,7 @@
         "rigoblock-deployer": "dist/cli.js"
     },
     "files": [
-      "dist"
+        "dist"
     ],
     "devDependencies": {
         "@types/require-from-string": "^1.2.0",
