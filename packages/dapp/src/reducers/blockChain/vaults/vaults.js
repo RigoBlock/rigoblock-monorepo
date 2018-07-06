@@ -42,6 +42,21 @@ const vaultReducer = createReducer({
         }
       },
       state
+    ),
+  [vaultActions.registerTransaction]: (state, payload, { currentAccount }) =>
+    u(
+      {
+        accounts: {
+          [currentAccount]: {
+            vaultTransactions: {
+              [payload.vault]: {
+                [payload.hash]: payload.data
+              }
+            }
+          }
+        }
+      },
+      state
     )
 })
 
