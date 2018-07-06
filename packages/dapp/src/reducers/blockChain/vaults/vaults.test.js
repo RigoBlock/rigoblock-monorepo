@@ -1,3 +1,4 @@
+import { ETH } from '../../../constants/blockchain'
 import BigNumber from 'bignumber.js'
 import actions from '../../../actions/vault-actions'
 import vaultReducer from './vaults'
@@ -73,6 +74,32 @@ const secondBlock = {
     vaultId: '0',
     name: 'Second Vault',
     symbol: 'asd'
+  }
+}
+
+const vaultTransaction = {
+  hash: '0x9b0fa2f07100ccb96a75d975252553d27d3aef14c0dc9b5fbda8541b37c26e69',
+  vault: '0x03910164aa522fb1a68bebea515e54610e4a9b94',
+  data: {
+    date: 1530698497000,
+    type: 'Deposit',
+    symbol: ETH,
+    value: '3000000000000000000',
+    units: '3000000',
+    account: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323'
+  }
+}
+
+const secondVaultTransaction = {
+  hash: '0x9b0fa2f07100ccb96a75d975252553d27d3aef14c0dc9b5fbda1111111c26e68',
+  vault: '0x03910164aa522fb1a68bebea515e54610e4a9b94',
+  data: {
+    date: 1530698497123,
+    type: 'Withdraw',
+    symbol: ETH,
+    value: '1000000000000000000',
+    units: '1000000',
+    account: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323'
   }
 }
 
@@ -183,6 +210,95 @@ describe('vaults reducer', () => {
           address: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
           totalSupply
         }),
+        owner
+      ),
+      expectedState
+    )
+  })
+
+  it('saves a vault transaction', () => {
+    const state = {
+      accounts: {
+        [owner]: {}
+      }
+    }
+    const expectedState = {
+      accounts: {
+        [owner]: {
+          vaultTransactions: {
+            '0x03910164aa522fb1a68bebea515e54610e4a9b94': {
+              '0x9b0fa2f07100ccb96a75d975252553d27d3aef14c0dc9b5fbda8541b37c26e69': {
+                date: 1530698497000,
+                type: 'Deposit',
+                symbol: ETH,
+                value: '3000000000000000000',
+                units: '3000000',
+                account: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323'
+              }
+            }
+          }
+        }
+      }
+    }
+    vaultTest(
+      state,
+      accountMiddlewareMock(
+        actions.registerTransaction(vaultTransaction),
+        owner
+      ),
+      expectedState
+    )
+  })
+
+  it('does not overwrite previous transactions', () => {
+    const state = {
+      accounts: {
+        [owner]: {
+          vaultTransactions: {
+            '0x03910164aa522fb1a68bebea515e54610e4a9b94': {
+              '0x9b0fa2f07100ccb96a75d975252553d27d3aef14c0dc9b5fbda8541b37c26e69': {
+                date: 1530698497000,
+                type: 'Deposit',
+                symbol: ETH,
+                value: '3000000000000000000',
+                units: '3000000',
+                account: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323'
+              }
+            }
+          }
+        }
+      }
+    }
+    const expectedState = {
+      accounts: {
+        [owner]: {
+          vaultTransactions: {
+            '0x03910164aa522fb1a68bebea515e54610e4a9b94': {
+              '0x9b0fa2f07100ccb96a75d975252553d27d3aef14c0dc9b5fbda8541b37c26e69': {
+                date: 1530698497000,
+                type: 'Deposit',
+                symbol: ETH,
+                value: '3000000000000000000',
+                units: '3000000',
+                account: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323'
+              },
+              '0x9b0fa2f07100ccb96a75d975252553d27d3aef14c0dc9b5fbda1111111c26e68': {
+                date: 1530698497123,
+                type: 'Withdraw',
+                symbol: ETH,
+                value: '1000000000000000000',
+                units: '1000000',
+                account: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323'
+              }
+            }
+          }
+        }
+      }
+    }
+    vaultTest(
+      state,
+      accountMiddlewareMock(
+        actions.registerTransaction(secondVaultTransaction),
         owner
       ),
       expectedState
