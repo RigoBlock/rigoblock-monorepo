@@ -208,7 +208,7 @@ describe('vaults reducer', () => {
       accountMiddlewareMock(
         actions.updateVaultData({
           address: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
-          totalSupply
+          data: { totalSupply }
         }),
         owner
       ),

@@ -12,11 +12,13 @@ const getVaultSupplyEpic = (action$, store, ts = Scheduler.async) =>
     .mergeMap(({ payload }) => {
       const address = Object.keys(payload).pop()
       return fromPromise(
-        new api.contract.Vault(api.web3._web3, address).totalSupply,
+        api.contract.Vault.createAndValidate(api.web3._web3, address),
         ts
-      ).map(totalSupply =>
-        vaultActions.updateVaultData({ address, totalSupply })
       )
+        .mergeMap(vault => fromPromise(vault.totalSupply, ts))
+        .map(totalSupply =>
+          vaultActions.updateVaultData({ address, data: { totalSupply } })
+        )
     })
 
 export default getVaultSupplyEpic

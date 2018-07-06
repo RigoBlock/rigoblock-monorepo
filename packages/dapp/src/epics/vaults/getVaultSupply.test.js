@@ -29,7 +29,9 @@ describe('getVaultSupply epics', () => {
       _web3: {}
     },
     contract: {
-      Vault: VaultMock
+      Vault: {
+        createAndValidate: () => VaultMock
+      }
     }
   }
 
@@ -44,6 +46,7 @@ describe('getVaultSupply epics', () => {
   })
 
   it("dispatches a updateVaultData to save the vault's totalsupply action whenever registerVault is fired", () => {
+    fromPromiseSpy.mockReturnValueOnce(of(VaultMock))
     fromPromiseSpy.mockReturnValueOnce(of(supply))
     const inputValues = {
       a: vaultActions.registerVault(vault)
@@ -51,7 +54,7 @@ describe('getVaultSupply epics', () => {
     const expectedValues = {
       b: vaultActions.updateVaultData({
         address: vaultAddress,
-        totalSupply: supply
+        data: { totalSupply: supply }
       })
     }
 
