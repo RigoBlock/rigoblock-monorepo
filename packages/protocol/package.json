@@ -1,6 +1,6 @@
 {
   "name": "@rigoblock/protocol",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "main": "dist/contracts.js",
   "scripts": {
     "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
