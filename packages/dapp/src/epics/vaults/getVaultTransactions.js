@@ -1,12 +1,9 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import { BUY_VAULT, SELL_VAULT } from '../../constants/blockchain'
-import { ETH } from '../../constants/blockchain'
+import { DEPOSIT, ETH, WITHDRAW } from '../../constants/blockchain'
 import { merge } from 'rxjs/observable/merge'
 import vaultActions from '../../actions/vault-actions'
-
-const DEPOSIT = 'Deposit'
-const WITHDRAW = 'Withdraw'
 
 const getVaultTransactions = action$ => {
   const action$1 = action$

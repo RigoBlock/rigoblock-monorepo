@@ -1,5 +1,5 @@
 import { ActionsObservable } from 'redux-observable'
-import { ETH } from '../../constants/blockchain'
+import { DEPOSIT, ETH, WITHDRAW } from '../../constants/blockchain'
 import { TestScheduler } from 'rxjs'
 import getVaultTransactions from './getVaultTransactions'
 import vaultActions from '../../actions/vault-actions'
@@ -47,7 +47,7 @@ describe('getVaultTransactions epic', () => {
     vault: '0x03910164aa522fb1a68bebea515e54610e4a9b94',
     data: {
       date: 1530698497000,
-      type: 'Deposit',
+      type: DEPOSIT,
       symbol: ETH,
       value: '3000000000000000000',
       units: '3000000',
@@ -59,7 +59,7 @@ describe('getVaultTransactions epic', () => {
     ...parsedBuyVault,
     data: {
       date: 1530698497000,
-      type: 'Withdraw',
+      type: WITHDRAW,
       symbol: ETH,
       value: '3000000000000000000',
       units: '3000000',
