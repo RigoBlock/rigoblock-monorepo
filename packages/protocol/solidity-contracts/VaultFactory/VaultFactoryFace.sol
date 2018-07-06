@@ -16,11 +16,7 @@
 
 */
 
-<<<<<<< HEAD
 pragma solidity ^0.4.24;
-=======
-pragma solidity 0.4.23;
->>>>>>> 796df49aabf4f8ff31cb7a3e97947638f1f0d1f0
 pragma experimental "v0.5.0";
 
 /// @title Vault Factory Interface - Allows external interaction with Vault Factory.

@@ -16,11 +16,7 @@
 
 */
 
-<<<<<<< HEAD
 pragma solidity ^0.4.24;
-=======
-pragma solidity 0.4.23;
->>>>>>> 796df49aabf4f8ff31cb7a3e97947638f1f0d1f0
 pragma experimental "v0.5.0";
 
 /// @title Proof of Performance Interface - Allows interaction with the PoP contract.
@@ -36,13 +32,8 @@ interface ProofOfPerformanceFace {
     function setMinimumRigo(uint256 _amount) external;
 
     // CONSTANT PUBLIC FUNCTIONS
-<<<<<<< HEAD
-    
-    function getPoolData(uint256 _ofPool)
-=======
 
-    function getPoolData(uint _ofPool)
->>>>>>> 796df49aabf4f8ff31cb7a3e97947638f1f0d1f0
+    function getPoolData(uint256 _ofPool)
         external view
         returns (
             bool active,

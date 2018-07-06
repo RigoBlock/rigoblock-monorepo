@@ -16,11 +16,7 @@
 
 */
 
-<<<<<<< HEAD
 pragma solidity ^0.4.24;
-=======
-pragma solidity 0.4.23;
->>>>>>> 796df49aabf4f8ff31cb7a3e97947638f1f0d1f0
 pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
@@ -122,12 +118,15 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
     /// @dev Gets data of a pool
     /// @param _ofPool Id of the pool
     /// @return Bool the pool is active
-<<<<<<< HEAD
-    /// @return 
-    function getPoolData(uint256 _ofPool)
-=======
+    /// @return address of the pool
+    /// @return address of the pool factory
+    /// @return price of the pool in wei
+    /// @return total supply of the pool in units
+    /// @return total value of the pool in wei
+    /// @return value of the reward factor or said pool
+    /// @return ratio of assets/performance reward (from 0 to 10000)
+    /// @return value of the pop reward to be claimed in GRGs
     function getPoolData(uint _ofPool)
->>>>>>> 796df49aabf4f8ff31cb7a3e97947638f1f0d1f0
         external view
         returns (
             bool active,
@@ -153,7 +152,7 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
             thePoolAddress,
             thePoolGroup,
             thePoolPrice,
-            thePoolSupply, 
+            thePoolSupply,
             poolValue,
             epochReward,
             ratio,
