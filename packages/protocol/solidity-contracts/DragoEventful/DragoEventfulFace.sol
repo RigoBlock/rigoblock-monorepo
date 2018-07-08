@@ -38,7 +38,8 @@ interface DragoEventfulFace {
     event TradeExchange(address indexed drago, address indexed exchange, address tokenGet, address tokenGive, uint256 amountGet, uint256 amountGive, address get);
     event CancelOrder(address indexed drago, address indexed exchange, address indexed cfd, uint256 value, uint256 id);
     event DealFinalized(address indexed drago, address indexed exchange, address indexed cfd, uint256 value, uint256 id);
-    event CustomDragoLog(bytes4 indexed method, bytes encodedParams);
+    event CustomDragoLog(bytes4 indexed methodHash, bytes encodedParams);
+    event CustomDragoLog2(bytes4 indexed methodHash,  bytes32 topic2, bytes32 topic3, bytes encodedParams);
     event DragoCreated(address indexed drago, address indexed group, address indexed owner, uint256 dragoId, string name, string symbol);
 
     // CORE FUNCTIONS
@@ -52,7 +53,9 @@ interface DragoEventfulFace {
     function setTransactionFee(address _who, address _targetDrago, uint256 _transactionFee) external returns(bool success);
     function depositToExchange(address _who, address _targetDrago, address _exchange, address _token, uint256 _value) external returns(bool success);
     function withdrawFromExchange(address _who, address _targetDrago, address _exchange, address _token, uint256 _value) external returns(bool success);
-    function customDragoLog(bytes4 _method, bytes _encodedParams) external returns (bool success);
-    function customExchangeLog(bytes4 _method, bytes _encodedParams) external returns (bool success);
+    function customDragoLog(bytes4 _methodHash, bytes _encodedParams) external returns (bool success);
+    function customDragoLog2(bytes4 _methodHash, bytes32 topic2, bytes32 topic3, bytes _encodedParams) external returns (bool success);
+    function customExchangeLog(bytes4 _methodHash, bytes _encodedParams) external returns (bool success);
+    function customExchangeLog2(bytes4 _methodHash, bytes32 topic2, bytes32 topic3,bytes _encodedParams) external returns (bool success);
     function createDrago(address _who, address _newDrago, string _name, string _symbol, uint256 _dragoId) external returns(bool success);
 }

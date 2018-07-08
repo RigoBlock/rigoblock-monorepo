@@ -139,6 +139,13 @@ contract DragoEventful is DragoEventfulFace {
         bytes4 indexed method, 
         bytes encodedParams
     );
+    
+    event CustomDragoLog2(
+        bytes4 indexed methodHash, 
+        bytes32 indexed topic2,
+        bytes32 indexed topic3,
+        bytes encodedParams
+    );
 
     event DragoCreated(
         address indexed drago,
@@ -365,34 +372,68 @@ contract DragoEventful is DragoEventfulFace {
         emit WithdrawExchange(_targetDrago, _exchange, _token, _value, 0);
         return true;
     }
-    
+
     /// @dev Logs an event sent from a drago
-    /// @param _method the method of the call
+    /// @param _methodHash the method of the call
     /// @param _encodedParams the arbitrary data array
     /// @return Bool the transaction executed successfully
     function customDragoLog(
-        bytes4 _method,
+        bytes4 _methodHash,
         bytes _encodedParams)
         external
         approvedDragoOnly(msg.sender)
         returns (bool success)
     {
-        emit CustomDragoLog(_method, _encodedParams);
+        emit CustomDragoLog(_methodHash, _encodedParams);
         return true;
     }
-    
+
+    /// @dev Logs an event sent from a drago
+    /// @param _methodHash the method of the call
+    /// @param _encodedParams the arbitrary data array
+    /// @return Bool the transaction executed successfully
+    function customDragoLog2(
+        bytes4 _methodHash,
+        bytes32 topic2,
+        bytes32 topic3,
+        bytes _encodedParams)
+        external
+        approvedDragoOnly(msg.sender)
+        returns (bool success)
+    {
+        emit CustomDragoLog2(_methodHash, topic2, topic3, _encodedParams);
+        return true;
+    }
+
     /// @dev Logs an event sent from an approved exchange
-    /// @param _method the method of the call
+    /// @param _methodHash the method of the call
     /// @param _encodedParams the arbitrary data array
     /// @return Bool the transaction executed successfully
     function customExchangeLog(
-        bytes4 _method,
+        bytes4 _methodHash,
         bytes _encodedParams)
         external
         approvedExchangeOnly(msg.sender)
         returns (bool success)
     {
-        emit CustomDragoLog(_method, _encodedParams);
+        emit CustomDragoLog(_methodHash, _encodedParams);
+        return true;
+    }
+
+    /// @dev Logs an event sent from an approved exchange
+    /// @param _methodHash the method of the call
+    /// @param _encodedParams the arbitrary data array
+    /// @return Bool the transaction executed successfully
+    function customExchangeLog2(
+        bytes4 _methodHash,
+        bytes32 topic2,
+        bytes32 topic3,
+        bytes _encodedParams)
+        external
+        approvedExchangeOnly(msg.sender)
+        returns (bool success)
+    {
+        emit CustomDragoLog2(_methodHash, topic2, topic3, _encodedParams);
         return true;
     }
 
