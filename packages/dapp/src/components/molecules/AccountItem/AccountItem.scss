@@ -54,9 +54,10 @@
       padding-top: $dist-2xs;
       padding-left: $dist-xs;
     }
-  }
-  .account-number {
-    padding-left: $dist-l;
+    .account-number {
+      font-weight: normal;
+      padding-left: $dist-xs;
+    }
   }
 }
 

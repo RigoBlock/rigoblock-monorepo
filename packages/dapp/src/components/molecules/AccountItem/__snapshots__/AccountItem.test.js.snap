@@ -12,25 +12,27 @@ exports[`AccountItem component renders correctly (full version) 1`] = `
     >
       <Component />
     </div>
-    <span
-      className="name"
-    >
-      MetaMask
-    </span>
+    <div>
+      <span
+        className="name"
+      >
+        MetaMask
+      </span>
+      <span
+        className="account-number"
+      >
+        <span>
+          0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
+        </span>
+        <Icon
+          onClick={[Function]}
+          size="small"
+          tooltipText=""
+          type="filter_none"
+        />
+      </span>
+    </div>
   </div>
-  <span
-    className="account-number"
-  >
-    <span>
-      0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
-    </span>
-    <Icon
-      onClick={[Function]}
-      size="small"
-      tooltipText=""
-      type="filter_none"
-    />
-  </span>
 </div>
 `;
 

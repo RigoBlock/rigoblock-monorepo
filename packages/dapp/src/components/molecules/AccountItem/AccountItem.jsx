@@ -34,13 +34,15 @@ const AccountItem = ({ provider, number, appearance }) => {
     <div className="account-item-full">
       <div className="provider">
         <div className="logo">{logoComponent}</div>
-        <span className="name">{displayedProvider}</span>
+        <div>
+          <span className="name">{displayedProvider}</span>
+          <span className="account-number">
+            <span>{number}</span>
+            {/* TODO: add copy to clipboard function */}
+            <Icon type="filter_none" size={ICON_SIZES.SMALL} />
+          </span>
+        </div>
       </div>
-      <span className="account-number">
-        <span>{number}</span>
-        {/* TODO: add copy to clipboard function */}
-        <Icon type="filter_none" size={ICON_SIZES.SMALL} />
-      </span>
     </div>
   )
 }
