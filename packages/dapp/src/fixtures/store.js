@@ -1,7 +1,9 @@
 import * as ROUTES from '../constants/routes'
 import { BigNumber } from 'bignumber.js'
 
-export default (mockFn, optionalState = {}) => ({
+const storiesFunc = () => () => {}
+
+export default (mockFn = storiesFunc, optionalState = {}) => ({
   getState: () => ({
     ...{
       preferences: {
