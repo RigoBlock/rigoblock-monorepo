@@ -28,7 +28,7 @@ const vaultReducer = createReducer({
     ),
   [vaultActions.updateVaultData]: (
     state,
-    { address, totalSupply },
+    { address, data },
     { currentAccount }
   ) =>
     u(
@@ -36,7 +36,7 @@ const vaultReducer = createReducer({
         accounts: {
           [currentAccount]: {
             vaults: {
-              [address]: { totalSupply }
+              [address]: data
             }
           }
         }

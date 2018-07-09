@@ -3,6 +3,9 @@
 .user-menu {
   a {
     color: $black;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   > *:not(:last-child) {
     margin-right: $dist-m;

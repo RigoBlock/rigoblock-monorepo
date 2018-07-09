@@ -21,7 +21,7 @@ describe('account middleware', () => {
     const { next, invoke } = create()
     const action = vaultActions.updateVaultData({
       address: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
-      supply: 14000000
+      data: { supply: 14000000 }
     })
     invoke(action)
     expect(next).toHaveBeenCalledWith(action)

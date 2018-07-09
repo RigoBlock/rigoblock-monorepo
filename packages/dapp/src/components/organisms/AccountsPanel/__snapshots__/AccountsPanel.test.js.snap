@@ -169,32 +169,34 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                 SVG image metamask-fox.svg
                               </Component>
                             </div>
-                            <span
-                              className="name"
-                            >
-                              MetaMask
-                            </span>
-                          </div>
-                          <span
-                            className="account-number"
-                          >
-                            <span>
-                              0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196
-                            </span>
-                            <Icon
-                              onClick={[Function]}
-                              size="small"
-                              tooltipText=""
-                              type="filter_none"
-                            >
-                              <div
-                                className="material-icons icon small"
-                                onClick={[Function]}
+                            <div>
+                              <span
+                                className="name"
                               >
-                                filter_none
-                              </div>
-                            </Icon>
-                          </span>
+                                MetaMask
+                              </span>
+                              <span
+                                className="account-number"
+                              >
+                                <span>
+                                  0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196
+                                </span>
+                                <Icon
+                                  onClick={[Function]}
+                                  size="small"
+                                  tooltipText=""
+                                  type="filter_none"
+                                >
+                                  <div
+                                    className="material-icons icon small"
+                                    onClick={[Function]}
+                                  >
+                                    filter_none
+                                  </div>
+                                </Icon>
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </AccountItem>
                       <div
@@ -304,32 +306,34 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                 SVG image metamask-fox.svg
                               </Component>
                             </div>
-                            <span
-                              className="name"
-                            >
-                              MetaMask
-                            </span>
-                          </div>
-                          <span
-                            className="account-number"
-                          >
-                            <span>
-                              0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
-                            </span>
-                            <Icon
-                              onClick={[Function]}
-                              size="small"
-                              tooltipText=""
-                              type="filter_none"
-                            >
-                              <div
-                                className="material-icons icon small"
-                                onClick={[Function]}
+                            <div>
+                              <span
+                                className="name"
                               >
-                                filter_none
-                              </div>
-                            </Icon>
-                          </span>
+                                MetaMask
+                              </span>
+                              <span
+                                className="account-number"
+                              >
+                                <span>
+                                  0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
+                                </span>
+                                <Icon
+                                  onClick={[Function]}
+                                  size="small"
+                                  tooltipText=""
+                                  type="filter_none"
+                                >
+                                  <div
+                                    className="material-icons icon small"
+                                    onClick={[Function]}
+                                  >
+                                    filter_none
+                                  </div>
+                                </Icon>
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </AccountItem>
                       <div
@@ -439,32 +443,34 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                 SVG image metamask-fox.svg
                               </Component>
                             </div>
-                            <span
-                              className="name"
-                            >
-                              MetaMask
-                            </span>
-                          </div>
-                          <span
-                            className="account-number"
-                          >
-                            <span>
-                              0x8bb7481495d45ccd5cffae1c3a84155fea85a323
-                            </span>
-                            <Icon
-                              onClick={[Function]}
-                              size="small"
-                              tooltipText=""
-                              type="filter_none"
-                            >
-                              <div
-                                className="material-icons icon small"
-                                onClick={[Function]}
+                            <div>
+                              <span
+                                className="name"
                               >
-                                filter_none
-                              </div>
-                            </Icon>
-                          </span>
+                                MetaMask
+                              </span>
+                              <span
+                                className="account-number"
+                              >
+                                <span>
+                                  0x8bb7481495d45ccd5cffae1c3a84155fea85a323
+                                </span>
+                                <Icon
+                                  onClick={[Function]}
+                                  size="small"
+                                  tooltipText=""
+                                  type="filter_none"
+                                >
+                                  <div
+                                    className="material-icons icon small"
+                                    onClick={[Function]}
+                                  >
+                                    filter_none
+                                  </div>
+                                </Icon>
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </AccountItem>
                       <div

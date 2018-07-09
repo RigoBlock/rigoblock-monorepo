@@ -3,7 +3,7 @@
 .page-content-section {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  min-height: calc(100vh - #{$dist-xl});
 }
 
 .page-main-content {
