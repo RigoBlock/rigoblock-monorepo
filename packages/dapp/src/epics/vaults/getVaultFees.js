@@ -1,3 +1,4 @@
+import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mergeMap'
@@ -6,7 +7,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise'
 import api from '../../api'
 import vaultActions from '../../actions/vault-actions'
 
-const getVaultSupplyEpic = (action$, store, ts = Scheduler.async) =>
+const getVaultFees = (action$, store, ts = Scheduler.async) =>
   action$
     .filter(action => action.type === vaultActions.registerVault.getType())
     .mergeMap(({ payload }) => {
@@ -15,10 +16,14 @@ const getVaultSupplyEpic = (action$, store, ts = Scheduler.async) =>
         api.contract.Vault.createAndValidate(api.web3._web3, address),
         ts
       )
-        .mergeMap(vault => fromPromise(vault.totalSupply, ts))
-        .map(totalSupply =>
-          vaultActions.updateVaultData({ address, data: { totalSupply } })
-        )
+        .mergeMap(vault => fromPromise(vault.getAdminData(), ts))
+        .map(vaultData => {
+          const transactionFee = vaultData[4]
+          return vaultActions.updateVaultData({
+            address,
+            data: { transactionFee }
+          })
+        })
     })
 
-export default getVaultSupplyEpic
+export default getVaultFees

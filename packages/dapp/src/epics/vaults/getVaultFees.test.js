@@ -4,12 +4,13 @@ import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import vaultActions from '../../actions/vault-actions'
 
-describe('getVaultSupply epics', () => {
+describe('getVaultFees epics', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const vaultAddress = '0x86a1ba4d485ce346bded508e2426798f825558be'
-  const supply = new BigNumber('14000000')
+  const transactionFee = new BigNumber('1')
+  const vaultData = ['0x123', '0x123', '0x123', '1', transactionFee]
   let fromPromiseSpy
-  let getVaultSupply
+  let getVaultFees
 
   const vault = {
     [vaultAddress]: {
@@ -22,7 +23,7 @@ describe('getVaultSupply epics', () => {
   }
 
   class VaultMock {
-    totalSupply
+    getAdminData = () => transactionFee
   }
   const apiMock = {
     web3: {
@@ -30,7 +31,7 @@ describe('getVaultSupply epics', () => {
     },
     contract: {
       Vault: {
-        createAndValidate: () => VaultMock
+        createAndValidate: () => new VaultMock()
       }
     }
   }
@@ -42,19 +43,20 @@ describe('getVaultSupply epics', () => {
       fromPromise: fromPromiseSpy
     }))
     jest.doMock('../../api', () => apiMock)
-    getVaultSupply = require('./getVaultSupply').default
+    getVaultFees = require('./getVaultFees').default
   })
 
-  it("dispatches a updateVaultData action to save the vault's totalsupply whenever registerVault is fired", () => {
+  it("dispatches a updateVaultData action to save the vault's transaction fee whenever registerVault is fired", () => {
     fromPromiseSpy.mockReturnValueOnce(of(new VaultMock()))
-    fromPromiseSpy.mockReturnValueOnce(of(supply))
+    fromPromiseSpy.mockReturnValueOnce(of(vaultData))
+
     const inputValues = {
       a: vaultActions.registerVault(vault)
     }
     const expectedValues = {
       b: vaultActions.updateVaultData({
         address: vaultAddress,
-        data: { totalSupply: supply }
+        data: { transactionFee }
       })
     }
 
@@ -68,7 +70,7 @@ describe('getVaultSupply epics', () => {
     const action$ = new ActionsObservable(
       ts.createHotObservable(inputMarble, inputValues)
     )
-    const outputAction = getVaultSupply(action$, null, ts)
+    const outputAction = getVaultFees(action$, null, ts)
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
     ts.flush()
