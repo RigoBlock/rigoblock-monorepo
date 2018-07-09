@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
@@ -38,7 +38,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     DragoExchangeExtension.Admin libraryAdmin;
 
     string constant VERSION = 'HF 0.4.2';
-    uint constant BASE = 1000000; // tokens are divisible by 1 million
+    uint256 constant BASE = 1000000; // tokens are divisible by 1 million
 
     mapping (address => Account) accounts;
 
@@ -46,12 +46,12 @@ contract Drago is Owned, SafeMath, DragoFace {
     Admin admin;
 
     struct Receipt {
-        uint units;
+        uint256 units;
         uint32 activation;
     }
 
     struct Account {
-        uint balance;
+        uint256 balance;
         Receipt receipt;
         mapping(address => address[]) approvedAccount;
     }
@@ -59,11 +59,11 @@ contract Drago is Owned, SafeMath, DragoFace {
     struct DragoData {
         string name;
         string symbol;
-        uint dragoId;
-        uint totalSupply;
-        uint sellPrice;
-        uint buyPrice;
-        uint transactionFee; // in basis points 1 = 0.01%
+        uint256 dragoId;
+        uint256 totalSupply;
+        uint256 sellPrice;
+        uint256 buyPrice;
+        uint256 transactionFee; // in basis points 1 = 0.01%
         uint32 minPeriod;
     }
 
@@ -73,8 +73,8 @@ contract Drago is Owned, SafeMath, DragoFace {
         address feeCollector;
         address kycProvider;
         bool kycEnforced;
-        uint minOrder; // minimum stake to avoid dust clogging things up
-        uint ratio; // ratio is 80%
+        uint256 minOrder; // minimum stake to avoid dust clogging things up
+        uint256 ratio; // ratio is 80%
     }
 
     modifier onlyDragoDao {
@@ -85,6 +85,12 @@ contract Drago is Owned, SafeMath, DragoFace {
     modifier onlyOwnerOrAuthority {
         Authority auth = Authority(admin.authority);
         require(auth.isAuthority(msg.sender) || msg.sender == owner);
+        _;
+    }
+    
+    modifier returnUnapprovedExchange {
+        Authority auth = Authority(admin.authority);
+        if (!auth.isWhitelistedExchange(msg.sender)) return;
         _;
     }
 
@@ -100,17 +106,17 @@ contract Drago is Owned, SafeMath, DragoFace {
         _;
     }
 
-    modifier minimumStake(uint amount) {
+    modifier minimumStake(uint256 amount) {
         require (amount >= admin.minOrder);
         _;
     }
 
-    modifier hasEnough(uint _amount) {
+    modifier hasEnough(uint256 _amount) {
         require(accounts[msg.sender].balance >= _amount);
         _;
     }
 
-    modifier positiveAmount(uint _amount) {
+    modifier positiveAmount(uint256 _amount) {
         require(accounts[msg.sender].balance + _amount > accounts[msg.sender].balance);
         _;
     }
@@ -120,12 +126,12 @@ contract Drago is Owned, SafeMath, DragoFace {
         _;
     }
 
-    modifier buyPriceHigherOrEqual(uint _sellPrice, uint _buyPrice) {
+    modifier buyPriceHigherOrEqual(uint256 _sellPrice, uint256 _buyPrice) {
         require(_sellPrice <= _buyPrice);
         _;
     }
 
-    modifier notPriceError(uint _sellPrice, uint _buyPrice) {
+    modifier notPriceError(uint256 _sellPrice, uint256 _buyPrice) {
         if (_sellPrice <= data.sellPrice / 10 || _buyPrice >= data.buyPrice * 10) return;
         _;
     }
@@ -133,7 +139,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     constructor(
         string _dragoName,
         string _dragoSymbol,
-        uint _dragoId,
+        uint256 _dragoId,
         address _owner,
         address _authority)
         public
@@ -158,8 +164,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     function()
         external
         payable
-        //had to comment this condition, otherwise the transaction would fail
-        //whenApprovedExchange(msg.sender)
+        returnUnapprovedExchange
     {
         /*
         // the call uses delegatecall, should use call
@@ -207,10 +212,10 @@ contract Drago is Owned, SafeMath, DragoFace {
         minimumPeriodPast
         returns (bool success)
     {
-        uint feeDrago;
-        uint feeDragoDao;
-        uint netAmount;
-        uint netRevenue;
+        uint256 feeDrago;
+        uint256 feeDragoDao;
+        uint256 netAmount;
+        uint256 netRevenue;
         (feeDrago, feeDragoDao, netAmount, netRevenue) = getSaleAmounts(_amount);
         addSaleLog(_amount, netRevenue);
         allocateSaleTokens(msg.sender, _amount, feeDrago, feeDragoDao);
@@ -222,7 +227,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @dev Allows drago owner or authority to set the price for a drago
     /// @param _newSellPrice Price in wei
     /// @param _newBuyPrice Price in wei
-    function setPrices(uint _newSellPrice, uint _newBuyPrice)
+    function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice)
         external
         onlyOwnerOrAuthority
         buyPriceHigherOrEqual(_newSellPrice, _newBuyPrice)
@@ -236,7 +241,7 @@ contract Drago is Owned, SafeMath, DragoFace {
 
     /// @dev Allows drago dao/factory to change fee split ratio
     /// @param _ratio Number of ratio for wizard, from 0 to 100
-    function changeRatio(uint _ratio)
+    function changeRatio(uint256 _ratio)
         external
         onlyDragoDao
     {
@@ -247,7 +252,7 @@ contract Drago is Owned, SafeMath, DragoFace {
 
     /// @dev Allows drago owner to set the transaction fee
     /// @param _transactionFee Value of the transaction fee in basis points
-    function setTransactionFee(uint _transactionFee)
+    function setTransactionFee(uint256 _transactionFee)
         external
         onlyOwner
     {
@@ -291,7 +296,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @dev allows a manager to deposit eth from an approved exchange/wrap eth
     /// @param _exchange Address of the target exchange
     /// @param _amount Value of the Eth in wei
-    function depositToExchange(address _exchange, uint _amount)
+    function depositToExchange(address _exchange, uint256 _amount)
         external
         onlyOwner
         whenApprovedExchange(_exchange)
@@ -304,7 +309,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @dev allows a manager to withdraw ETH from an approved exchange/unwrap eth
     /// @param _exchange Address of the target exchange
     /// @param _amount Value of the Eth in wei
-    function withdrawFromExchange(address _exchange, uint _amount)
+    function withdrawFromExchange(address _exchange, uint256 _amount)
         external
         onlyOwner
         whenApprovedExchange(_exchange)
@@ -333,7 +338,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         address[] _token)
         external
     {
-        for (uint i = 0; i < _token.length; i++)
+        for (uint256 i = 0; i < _token.length; i++)
             if (!setInfiniteAllowanceInternal(_tokenTransferProxy, _token[i])) continue;
     }
 
@@ -432,8 +437,8 @@ contract Drago is Owned, SafeMath, DragoFace {
         returns (
             string name,
             string symbol,
-            uint sellPrice,
-            uint buyPrice
+            uint256 sellPrice,
+            uint256 buyPrice
         )
     {
         name = data.name;
@@ -446,7 +451,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @return Value of the share price in wei
     function calcSharePrice()
         external view
-        returns (uint)
+        returns (uint256)
     {
         return data.sellPrice;
     }
@@ -463,8 +468,8 @@ contract Drago is Owned, SafeMath, DragoFace {
             address, //owner
             address feeCollector,
             address dragoDao,
-            uint ratio,
-            uint transactionFee,
+            uint256 ratio,
+            uint256 transactionFee,
             uint32 minPeriod
         )
     {
@@ -514,10 +519,10 @@ contract Drago is Owned, SafeMath, DragoFace {
         if (admin.kycProvider != 0x0) {
             require(Kyc(admin.kycProvider).isWhitelistedUser(_hodler));
         }
-        uint grossAmount;
-        uint feeDrago;
-        uint feeDragoDao;
-        uint amount;
+        uint256 grossAmount;
+        uint256 feeDrago;
+        uint256 feeDragoDao;
+        uint256 amount;
         (grossAmount, feeDrago, feeDragoDao, amount) = getPurchaseAmounts();
         addPurchaseLog(amount);
         allocatePurchaseTokens(_hodler, amount, feeDrago, feeDragoDao);
@@ -532,9 +537,9 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @param _feeDragoDao Number of shares as fee to dao
     function allocatePurchaseTokens(
         address _hodler,
-        uint _amount,
-        uint _feeDrago,
-        uint _feeDragoDao)
+        uint256 _amount,
+        uint256 _feeDrago,
+        uint256 _feeDragoDao)
         internal
     {
         accounts[_hodler].balance = safeAdd(accounts[_hodler].balance, _amount);
@@ -550,9 +555,9 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @param _feeDragoDao Number of shares as fee to dao
     function allocateSaleTokens(
         address _hodler,
-        uint _amount,
-        uint _feeDrago,
-        uint _feeDragoDao)
+        uint256 _amount,
+        uint256 _feeDrago,
+        uint256 _feeDragoDao)
         internal
     {
         accounts[_hodler].balance = safeSub(accounts[_hodler].balance, _amount);
@@ -562,7 +567,7 @@ contract Drago is Owned, SafeMath, DragoFace {
 
     /// @dev Sends a buy log to the eventful contract
     /// @param _amount Number of purchased shares
-    function addPurchaseLog(uint _amount)
+    function addPurchaseLog(uint256 _amount)
         internal
     {
         bytes memory name = bytes(data.name);
@@ -575,7 +580,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @dev Sends a sell log to the eventful contract
     /// @param _amount Number of sold shares
     /// @param _netRevenue Value of sale for hodler
-    function addSaleLog(uint _amount, uint _netRevenue)
+    function addSaleLog(uint256 _amount, uint256 _netRevenue)
         internal
     {
         bytes memory name = bytes(data.name);
@@ -607,14 +612,14 @@ contract Drago is Owned, SafeMath, DragoFace {
     function getPurchaseAmounts()
         internal view
         returns (
-            uint grossAmount,
-            uint feeDrago,
-            uint feeDragoDao,
-            uint amount
+            uint256 grossAmount,
+            uint256 feeDrago,
+            uint256 feeDragoDao,
+            uint256 amount
         )
     {
         grossAmount = safeDiv(msg.value * BASE, data.buyPrice);
-        uint fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
+        uint256 fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
         return (
             grossAmount = safeDiv(msg.value * BASE, data.buyPrice),
             feeDrago = safeMul(fee , admin.ratio) / 100,
@@ -628,16 +633,16 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @return Value of fee in shares to dao
     /// @return Value of net sold shares
     /// @return Value of sale amount for hodler
-    function getSaleAmounts(uint _amount)
+    function getSaleAmounts(uint256 _amount)
         internal view
         returns (
-            uint feeDrago,
-            uint feeDragoDao,
-            uint netAmount,
-            uint netRevenue
+            uint256 feeDrago,
+            uint256 feeDragoDao,
+            uint256 netAmount,
+            uint256 netRevenue
         )
     {
-        uint fee = safeMul(_amount, data.transactionFee) / 10000; //fee is in basis points
+        uint256 fee = safeMul(_amount, data.transactionFee) / 10000; //fee is in basis points
         return (
             feeDrago = safeMul(fee, admin.ratio) / 100,
             feeDragoDao = safeSub(fee, feeDragoDao),

@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
@@ -46,7 +46,7 @@ library DragoFactoryLibrary {
         string _name,
         string _symbol,
         address _owner,
-        uint _dragoId,
+        uint256 _dragoId,
         address _authority)
         internal
         returns (bool success)

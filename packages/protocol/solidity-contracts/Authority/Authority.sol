@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { Owned } from "../utils/Owned/Owned.sol";
@@ -107,7 +107,7 @@ contract Authority is Owned, AuthorityFace {
     {
         setAuthorityInternal(_authority, _isWhitelisted);
     }
-    
+
     /// @dev Allows the owner to whitelist a whitelister
     /// @param _whitelister Address of the whitelister
     /// @param _isWhitelisted Bool whitelisted
@@ -417,7 +417,7 @@ contract Authority is Owned, AuthorityFace {
     }
 
     // INTERNAL FUNCTIONS
-    
+
     /// @dev Allows to whitelist an authority
     /// @param _authority Address of the authority
     /// @param _isWhitelisted Bool whitelisted
@@ -433,7 +433,7 @@ contract Authority is Owned, AuthorityFace {
         types.list.push(List(_authority));
         emit SetAuthority(_authority);
     }
-    
+
     /// @dev Allows the owner to whitelist a whitelister
     /// @param _whitelister Address of the whitelister
     /// @param _isWhitelisted Bool whitelisted

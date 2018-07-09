@@ -16,16 +16,16 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Distribution Interface - Allows to interact with the distribution.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 interface DistributionFace {
 
-    event Subscription(address indexed buyer, address indexed distributor, uint amount);
+    event Subscription(address indexed buyer, address indexed distributor, uint256 amount);
 
     function subscribe(address _pool, address _distributor, address _buyer) external payable;
-    function setFee(uint _fee, address _distributor) external;
-    function getFee(address _distributor) external view returns (uint);
+    function setFee(uint256 _fee, address _distributor) external;
+    function getFee(address _distributor) external view returns (uint256);
 }

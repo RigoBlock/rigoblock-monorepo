@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistryFace.sol";
@@ -38,7 +38,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     Data data;
 
     struct Data {
-        uint fee;
+        uint256 fee;
         address vaultRegistry;
         address vaultDao;
         address authority;
@@ -50,7 +50,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
         string symbol,
         address indexed vault,
         address indexed owner,
-        uint vaultId
+        uint256 vaultId
     );
 
     modifier whitelistedFactory(address _authority) {
@@ -99,8 +99,8 @@ contract VaultFactory is Owned, VaultFactoryFace {
         returns (bool success)
     {
         DragoRegistry registry = DragoRegistry(data.vaultRegistry);
-        uint regFee = registry.getFee();
-        uint vaultId = registry.dragoCount();
+        uint256 regFee = registry.getFee();
+        uint256 vaultId = registry.dragoCount();
         require(createVaultInternal(_name, _symbol, msg.sender, vaultId));
         assert(registry.register.value(regFee)(
             libraryData.newAddress,
@@ -154,7 +154,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
     /// @dev Allows owner to set the vault creation fee
     /// @param _fee Value of the fee in wei
-    function setFee(uint _fee)
+    function setFee(uint256 _fee)
         external
         onlyOwner
     {
@@ -189,7 +189,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
         returns (
             address vaultDao,
             string version,
-            uint nextVaultId
+            uint256 nextVaultId
         )
     {
         return (
@@ -232,7 +232,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
         string _name,
         string _symbol,
         address _owner,
-        uint _vaultId)
+        uint256 _vaultId)
         internal
         returns (bool success)
     {
@@ -264,7 +264,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @return Number of the next Id from the registry
     function getNextId()
         internal view
-        returns (uint nextVaultId)
+        returns (uint256 nextVaultId)
     {
         DragoRegistry registry = DragoRegistry(data.vaultRegistry);
         nextVaultId = registry.dragoCount();
