@@ -20,6 +20,10 @@ module.exports = {
   },
 
   changeTimezoneValue(timezone) {
+    I.waitUntil(() => {
+      const el = document.querySelector('div[id="1-toggle"]')
+      return el.onclick !== null
+    })
     I.click('div[id="1-toggle"]')
     I.waitForVisible('ul[id="1-menu-options"]')
     I.executeScript(() => {
