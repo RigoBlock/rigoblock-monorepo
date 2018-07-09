@@ -6,21 +6,23 @@ import { selectV2, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import NavigationView from './NavigationView'
 import React from 'react'
+import mockStore, { defaultState } from '../../../fixtures/store'
 
-const mockStore = {
-  getState: () => ({
+const getState = () => ({
+  ...defaultState,
+  ...{
     routing: {
       location: {
         pathname: selectV2('url', ROUTES, ROUTES.DASHBOARD)
       }
     }
-  }),
-  dispatch: () => null,
-  subscribe: () => null
-}
+  }
+})
+
+const store = mockStore(undefined, undefined, getState)
 
 storiesOf('Organisms/NavigationView', module)
   .addDecorator(withKnobs)
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
-  .addDecorator(story => <Provider store={mockStore}>{story()}</Provider>)
+  .addDecorator(story => <Provider store={store}>{story()}</Provider>)
   .add('default', () => <NavigationView />)
