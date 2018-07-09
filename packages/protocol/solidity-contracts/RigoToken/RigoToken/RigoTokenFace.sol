@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Rigo Token Interface - Allows interaction with the Rigo token.
@@ -25,11 +25,11 @@ interface RigoTokenFace {
 
     // EVENTS
 
-    event TokenMinted(address indexed recipient, uint amount);
+    event TokenMinted(address indexed recipient, uint256 amount);
 
     // CORE FUNCTIONS
 
-    function mintToken(address _recipient, uint _amount) external;
+    function mintToken(address _recipient, uint256 _amount) external;
     function changeMintingAddress(address _newAddress) external;
     function changeRigoblockAddress(address _newAddress) external;
 
@@ -37,8 +37,8 @@ interface RigoTokenFace {
 
     function getName() external view returns (string);
     function getSymbol() external view returns (string);
-    function getDecimals() external view returns (uint);
+    function getDecimals() external view returns (uint256);
     function getMinter() external view returns (address);
     function getRigoblock() external view returns (address);
-    function getInflationFactor(address _group) external view returns (uint);
+    function getInflationFactor(address _group) external view returns (uint256);
 }

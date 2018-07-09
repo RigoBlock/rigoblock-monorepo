@@ -1,5 +1,6 @@
 import '../../_settings/_base.scss'
 import * as ROUTES from '../../../constants/routes'
+import { BigNumber } from 'bignumber.js'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { selectV2, withKnobs } from '@storybook/addon-knobs/react'
@@ -9,17 +10,16 @@ import React from 'react'
 
 const mockStore = {
   getState: () => ({
-    user: {
-      blockChain: {
-        accounts: {
-          '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196': {
-            provider: 'metamask'
-          }
+    blockChain: {
+      accounts: {
+        '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196': {
+          provider: 'metamask',
+          balance: new BigNumber('57999999999960203063')
         }
-      },
-      preferences: {
-        currentAccount: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
       }
+    },
+    preferences: {
+      currentAccount: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
     },
     routing: {
       location: {

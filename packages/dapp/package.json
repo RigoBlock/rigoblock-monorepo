@@ -1,6 +1,6 @@
 {
   "name": "@rigoblock/dapp",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "scripts": {
     "start": "serve -s dist -p 8080",
@@ -24,8 +24,8 @@
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
   },
   "devDependencies": {
-    "@rigoblock/api": "^0.2.1",
-    "@rigoblock/ganache-bootstrap": "^0.1.8",
+    "@rigoblock/api": "^0.2.2",
+    "@rigoblock/ganache-bootstrap": "^0.1.9",
     "@storybook/addon-info": "^3.4.2",
     "@storybook/addon-knobs": "^3.4.2",
     "@storybook/addon-options": "^3.4.2",
@@ -59,6 +59,7 @@
     "jest": "22.4.3",
     "keymirror": "^0.1.1",
     "localforage": "^1.6.0",
+    "lodash-es": "^4.17.10",
     "moment-timezone": "^0.5.17",
     "node-sass": "^4.7.2",
     "object-assign": "4.1.1",

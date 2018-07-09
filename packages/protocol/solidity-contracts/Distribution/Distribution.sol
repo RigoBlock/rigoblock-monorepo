@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { VaultFace as Vault } from "../Vault/Vault.sol";
@@ -28,12 +28,12 @@ import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract Distribution is SafeMath {
 
-    event Subscription(address indexed buyer, address indexed distributor, uint amount);
+    event Subscription(address indexed buyer, address indexed distributor, uint256 amount);
 
     mapping (address => Distributor) distributor;
 
     struct Distributor {
-        uint fee;
+        uint256 fee;
     }
 
     modifier addressFree(address _distributor) {
@@ -53,14 +53,14 @@ contract Distribution is SafeMath {
         payable
     {
         Vault(_pool).buyVaultOnBehalf(_buyer);
-        uint feeAmount = safeDiv(safeMul(msg.value, distributor[_distributor].fee), 10000); //fee is in basis points
-        uint netAmount = safeSub(msg.value, feeAmount);
+        uint256 feeAmount = safeDiv(safeMul(msg.value, distributor[_distributor].fee), 10000); //fee is in basis points
+        uint256 netAmount = safeSub(msg.value, feeAmount);
         _pool.transfer(netAmount);
         _distributor.transfer(feeAmount);
         emit Subscription(_buyer, _distributor, netAmount);
     }
 
-    function setFee(uint _fee, address _distributor)
+    function setFee(uint256 _fee, address _distributor)
         external
         addressFree(_distributor)
         nonZeroAddress(_distributor)
@@ -72,7 +72,7 @@ contract Distribution is SafeMath {
 
     function getFee(address _distributor)
         external view
-        returns (uint)
+        returns (uint256)
     {
         return distributor[_distributor].fee;
     }

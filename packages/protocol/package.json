@@ -1,6 +1,6 @@
 {
   "name": "@rigoblock/protocol",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "main": "dist/contracts.js",
   "scripts": {
     "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
@@ -8,7 +8,6 @@
     "compile": "node deploy/compiler.js",
     "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
     "test": "NODE_ENV=test node --trace-warnings node_modules/.bin/jest --env=node --runInBand",
-    "test:watch": "NODE_ENV=test jest --watch --env=node",
     "prepublish": "npm run build"
   },
   "files": [
@@ -38,7 +37,7 @@
     ]
   },
   "devDependencies": {
-    "@0xproject/deployer": "^0.4.3",
+    "@rigoblock/deployer": "^0.1.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.0.1",
     "babel-preset-es2015": "^6.24.1",

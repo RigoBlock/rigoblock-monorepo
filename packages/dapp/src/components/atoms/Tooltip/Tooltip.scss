@@ -1,6 +1,8 @@
 @import "../../_settings/variables.scss";
 
 .tooltip-container {
+  cursor: default;
+  user-select: none;
   position: absolute;
   font-family: $font-family;
   font-size: $medium-font-size;
@@ -10,15 +12,6 @@
   bottom: calc(100% + #{$dist-s});
   left: 50%;
   transform: translateX(-50%);
-  &:before {
-    bottom: -20px;
-    content: " ";
-    display: block;
-    height: 20px;
-    left: 0;
-    position: absolute;
-    width: 100%;
-  }
 }
 
 .tooltip-text {

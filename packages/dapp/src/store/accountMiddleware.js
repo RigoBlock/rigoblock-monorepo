@@ -5,7 +5,7 @@ export default ({ getState }) => next => action => {
   if (regexp.test(action.type)) {
     return next(action)
   }
-  const account = getState().user.preferences.currentAccount
+  const account = getState().preferences.currentAccount
   action.meta = { currentAccount: account }
   return next(action)
 }

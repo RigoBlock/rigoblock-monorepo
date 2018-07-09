@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { Owned } from "../utils/Owned/Owned.sol";
@@ -28,24 +28,24 @@ import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 contract DragoRegistry is DragoRegistryFace, Owned {
 
     address public AUTHORITY;
-    uint public VERSION;
+    uint256 public VERSION;
 
-    uint public fee = 0;
+    uint256 public fee = 0;
 
     address[] groups;
 
     Drago[] dragos;
 
     mapping (bytes32 => address) mapFromKey;
-    mapping (address => uint) mapFromAddress;
-    mapping (string => uint) mapFromName;
-    mapping (string => uint) mapFromSymbol;
+    mapping (address => uint256) mapFromAddress;
+    mapping (string => uint256) mapFromName;
+    mapping (string => uint256) mapFromSymbol;
 
     struct Drago {
         address drago;
         string name;
         string symbol;
-        uint dragoId;
+        uint256 dragoId;
         address owner;
         address group;
         mapping (bytes32 => bytes32) meta;
@@ -53,9 +53,9 @@ contract DragoRegistry is DragoRegistryFace, Owned {
 
     // EVENTS
 
-    event Registered(string name, string symbol, uint id, address indexed drago, address indexed owner, address indexed group);
-    event Unregistered(string indexed name, string indexed symbol, uint indexed id);
-    event MetaChanged(uint indexed id, bytes32 indexed key, bytes32 value);
+    event Registered(string name, string symbol, uint256 id, address indexed drago, address indexed owner, address indexed group);
+    event Unregistered(string indexed name, string indexed symbol, uint256 indexed id);
+    event MetaChanged(uint256 indexed id, bytes32 indexed key, bytes32 value);
 
     // MODIFIERS
 
@@ -79,7 +79,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         _;
     }
 
-    modifier onlyDragoOwner(uint _id) {
+    modifier onlyDragoOwner(uint256 _id) {
         require(dragos[_id].owner == msg.sender);
         _;
     }
@@ -116,7 +116,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         address _drago,
         string _name,
         string _symbol,
-        uint _dragoId,
+        uint256 _dragoId,
         address _owner)
         external
         payable
@@ -132,7 +132,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
 
     /// @dev Allows owner to unregister a pool
     /// @param _id Number of the pool
-    function unregister(uint _id)
+    function unregister(uint256 _id)
         external
         onlyOwner
     {
@@ -147,7 +147,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @param _id Number corresponding to pool id
     /// @param _key Bytes32 of the key
     /// @param _value Bytes32 of the value
-    function setMeta(uint _id, bytes32 _key, bytes32 _value)
+    function setMeta(uint256 _id, bytes32 _key, bytes32 _value)
         external
         onlyDragoOwner(_id)
     {
@@ -166,28 +166,28 @@ contract DragoRegistry is DragoRegistryFace, Owned {
 
     /// @dev Allows owner to set a fee to register pools
     /// @param _fee Value of the fee in wei
-    function setFee(uint _fee)
+    function setFee(uint256 _fee)
         external
         onlyOwner
     {
         fee = _fee;
     }
-    
+
     /// @dev Allows anyone to update the owner in the registry
     /// @notice pool owner can change; gets written in registry only when needed
-    /// @param _id Uint of the target pool
-    function updateOwner(uint _id)
+    /// @param _id uint256 of the target pool
+    function updateOwner(uint256 _id)
         external
     {
         updateOwnerInternal(_id);
     }
-    
+
     /// @dev Allows anyone to update many owners if they differ from registered
-    /// @param _id Uint of the target pool
-    function updateOwners(uint[] _id)
+    /// @param _id uint256 of the target pool
+    function updateOwners(uint256[] _id)
         external
     {
-        for (uint i = 0; i < _id.length; ++i) {
+        for (uint256 i = 0; i < _id.length; ++i) {
             if (!updateOwnerInternal(_id[i])) continue;
         }
     }
@@ -208,7 +208,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
 
     /// @dev Allows owner to update version on registry upgrade
     /// @param _version Number of the new version
-    function setUpgraded(uint _version)
+    function setUpgraded(uint256 _version)
         external
         onlyOwner
     {
@@ -229,7 +229,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @return Number of pools
     function dragoCount()
         external view
-        returns (uint)
+        returns (uint256)
     {
         return dragos.length;
     }
@@ -237,13 +237,13 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @dev Provides a pool's struct data
     /// @param _id Registration number of the pool
     /// @return Pool struct data
-    function fromId(uint _id)
+    function fromId(uint256 _id)
         public view //prev external
         returns (
             address drago,
             string name,
             string symbol,
-            uint dragoId,
+            uint256 dragoId,
             address owner,
             address group
         )
@@ -265,10 +265,10 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     function fromAddress(address _drago)
         external view
         returns (
-            uint id,
+            uint256 id,
             string name,
             string symbol,
-            uint dragoId,
+            uint256 dragoId,
             address owner,
             address group
         )
@@ -291,10 +291,10 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     function fromSymbol(string _symbol)
         external view
         returns (
-            uint id,
+            uint256 id,
             address drago,
             string name,
-            uint dragoId,
+            uint256 dragoId,
             address owner,
             address group
         )
@@ -317,10 +317,10 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     function fromName(string _name)
         external view
         returns (
-            uint id,
+            uint256 id,
             address drago,
             string symbol,
-            uint dragoId,
+            uint256 dragoId,
             address owner,
             address group
         )
@@ -345,8 +345,8 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         external view
         returns (address)
     {
-        uint id = mapFromName[_name] - 1;
-        uint idCheck = mapFromSymbol[_symbol] - 1;
+        uint256 id = mapFromName[_name] - 1;
+        uint256 idCheck = mapFromSymbol[_symbol] - 1;
         Drago memory pool = dragos[id];
         require(id == idCheck);
         address drago = pool.drago;
@@ -358,11 +358,11 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @return Name of the pool
     function getNameFromAddress(address _pool)
         external view
-        returns (bytes32)
+        returns (string)
     {
-        uint id = mapFromAddress[_pool] - 1;
+        uint256 id = mapFromAddress[_pool] - 1;
         Drago memory pool = dragos[id];
-        return keccak256(pool.name);
+        return pool.name;
     }
 
     /// @dev Provides a pool's symbol from its address
@@ -370,18 +370,18 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @return Symbol of the pool
     function getSymbolFromAddress(address _pool)
         external view
-        returns (bytes32)
+        returns (string)
     {
-        uint id = mapFromAddress[_pool] - 1;
+        uint256 id = mapFromAddress[_pool] - 1;
         Drago memory pool = dragos[id];
-        return keccak256(pool.symbol);
+        return pool.symbol;
     }
 
     /// @dev Provides a pool's metadata
     /// @param _id Id number of the pool
     /// @param _key Bytes32 key
     /// @return Pool metadata
-    function meta(uint _id, bytes32 _key)
+    function meta(uint256 _id, bytes32 _key)
         external view
         returns (bytes32)
     {
@@ -401,7 +401,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @return Number of the fee in wei
     function getFee()
         external view
-        returns (uint)
+        returns (uint256)
     {
         return fee;
     }
@@ -419,7 +419,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         address _drago,
         string _name,
         string _symbol,
-        uint _dragoId,
+        uint256 _dragoId,
         address _owner,
         address _group)
         internal
@@ -432,12 +432,12 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         emit Registered(_name, _symbol, dragos.length - 1, _drago, _owner, _group);
         return true;
     }
-    
+
     /// @dev Allows anyone to update the owner in the registry
     /// @notice pool owner can change, but gets written in registry only when needed
-    /// @param _id Uint of the target pool
+    /// @param _id uint256 of the target pool
     /// @return Bollean the transaction was successful
-    function updateOwnerInternal(uint _id)
+    function updateOwnerInternal(uint256 _id)
         internal
         returns (bool)
     {

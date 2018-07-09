@@ -1,32 +1,23 @@
 import * as ROUTES from '../../../constants/routes'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { mockStore } from '../../../constants/utils'
 import { mount, shallow } from 'enzyme'
 import NavigationView from './NavigationView.jsx'
 import React from 'react'
 import toJson from 'enzyme-to-json'
 
-const mockStore = {
-  getState: () => ({
-    routing: {
-      location: {
-        pathname: ROUTES.DRAGOS
-      }
-    }
-  }),
-  dispatch: jest.fn(),
-  subscribe: () => null
-}
+const store = mockStore(jest.fn)
 
 const wrapper = mount(
-  <Provider store={mockStore}>
+  <Provider store={store}>
     <MemoryRouter>
       <NavigationView />
     </MemoryRouter>
   </Provider>
 )
 
-const shallowWrapper = shallow(<NavigationView store={mockStore} />).dive()
+const shallowWrapper = shallow(<NavigationView store={store} />).dive()
 
 describe('NavigationView component', () => {
   it('renders correctly', () => {
@@ -36,7 +27,7 @@ describe('NavigationView component', () => {
   it(`adds active class to drago link if we are in ${
     ROUTES.DRAGOS
   } route`, () => {
-    const dragoLink = wrapper.find(`a[href='${ROUTES.DRAGOS}']`)
-    expect(dragoLink.hasClass('active')).toBe(true)
+    const vaultLink = wrapper.find(`a[href='${ROUTES.VAULTS}']`)
+    expect(vaultLink.hasClass('active')).toBe(true)
   })
 })

@@ -1,14 +1,15 @@
 import './VaultSelect.scss'
 import * as ROUTES from '../../../constants/routes'
+import { BigNumber } from 'bignumber.js'
+import { ETHTOMICRO } from '../../../constants/utils'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import List from '../../organisms/List'
 import ListItem from '../../molecules/ListItem'
 import PropTypes from 'prop-types'
+import React from 'react'
 import classNames from 'classnames'
 import routerActions from '../../../actions/router-actions'
-
-import React from 'react'
 
 let vaultSelect = ({ vaults, dispatch, location }) => {
   // TODO: remove this and implement a correct page
@@ -30,10 +31,13 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
 
   let vaultsList = Object.keys(vaults).map(vault => {
     const { name, symbol, totalSupply, id } = vaults[vault]
+    const ethSupply = totalSupply
+      ? totalSupply.div(ETHTOMICRO)
+      : new BigNumber('0')
     return {
       itemName: name,
       itemSymbol: symbol,
-      itemValue: totalSupply,
+      itemValue: ethSupply,
       id,
       onClick: handleClick
     }
@@ -42,7 +46,7 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   vaultsList = vaultsList.map(vault => ({
     ...vault,
     className: classNames({
-      active: location === `${ROUTES.VAULTS}/${vault.id}`
+      active: location === `${ROUTES.VAULTS}/${vault.id.toString()}`
     })
   }))
 
@@ -62,9 +66,11 @@ vaultSelect.defaultProps = {
 }
 
 vaultSelect = connect(state => {
-  const { currentAccount } = state.user.preferences
+  const { currentAccount } = state.preferences
   return {
-    vaults: state.user.blockChain.accounts[currentAccount].vaults,
+    vaults: currentAccount
+      ? state.blockChain.accounts[currentAccount].vaults
+      : {},
     location: state.routing.location.pathname
   }
 })(vaultSelect)

@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
@@ -33,7 +33,7 @@ import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
 contract Vault is Owned, SafeMath, VaultFace {
 
     string constant VERSION = 'VC 0.5.2';
-    uint constant BASE = 1000000; //tokens are divisible by 1 million
+    uint256 constant BASE = 1000000; //tokens are divisible by 1 million
 
     VaultData data;
     Admin admin;
@@ -45,17 +45,17 @@ contract Vault is Owned, SafeMath, VaultFace {
     }
 
     struct Account {
-        uint balance;
+        uint256 balance;
         Receipt receipt;
     }
 
     struct VaultData {
         string name;
         string symbol;
-        uint vaultId;
-        uint totalSupply;
-        uint price;
-        uint transactionFee; // fee is in basis points (1 bps = 0.01%)
+        uint256 vaultId;
+        uint256 totalSupply;
+        uint256 price;
+        uint256 transactionFee; // fee is in basis points (1 bps = 0.01%)
         uint32 minPeriod;
         uint128 validatorIndex;
     }
@@ -64,8 +64,8 @@ contract Vault is Owned, SafeMath, VaultFace {
         address authority;
         address vaultDao;
         address feeCollector;
-        uint minOrder; // minimum stake to avoid dust clogging things up
-        uint ratio; // ratio is 80%
+        uint256 minOrder; // minimum stake to avoid dust clogging things up
+        uint256 ratio; // ratio is 80%
     }
 
     modifier onlyVaultDao {
@@ -80,21 +80,21 @@ contract Vault is Owned, SafeMath, VaultFace {
 
     modifier casperContractOnly {
         Authority auth = Authority(admin.authority);
-        require(msg.sender == auth.getCasper());
+        if (msg.sender != auth.getCasper()) return;
         _;
     }
 
-    modifier minimumStake(uint _amount) {
+    modifier minimumStake(uint256 _amount) {
         require(_amount >= admin.minOrder);
         _;
     }
 
-    modifier hasEnough(uint _amount) {
+    modifier hasEnough(uint256 _amount) {
         require(accounts[msg.sender].balance >= _amount);
         _;
     }
 
-    modifier positiveAmount(uint _amount) {
+    modifier positiveAmount(uint256 _amount) {
         require(accounts[msg.sender].balance + _amount > accounts[msg.sender].balance);
         _;
     }
@@ -107,7 +107,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     constructor(
         string _vaultName,
         string _vaultSymbol,
-        uint _vaultId,
+        uint256 _vaultId,
         address _owner,
         address _authority)
         public
@@ -169,10 +169,10 @@ contract Vault is Owned, SafeMath, VaultFace {
         returns (bool success)
     {
         updatePriceInternal();
-        uint feeVault;
-        uint feeVaultDao;
-        uint netAmount;
-        uint netRevenue;
+        uint256 feeVault;
+        uint256 feeVaultDao;
+        uint256 netAmount;
+        uint256 netRevenue;
         (feeVault, feeVaultDao, netAmount, netRevenue) = getSaleAmounts(_amount);
         addSaleLog(_amount, netRevenue);
         allocateSaleTokens(msg.sender, _amount, feeVault, feeVaultDao);
@@ -187,7 +187,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @param _withdrawal Address where to withdraw
     /// @param _amount Value of deposit in wei
     /// @return Bool the function executed correctly
-    function depositCasper(address _validation, address _withdrawal, uint _amount)
+    function depositCasper(address _validation, address _withdrawal, uint256 _amount)
         external
         onlyOwner
         minimumStake(_amount)
@@ -229,7 +229,7 @@ contract Vault is Owned, SafeMath, VaultFace {
 
     /// @dev Allows vault owner to set the transaction fee
     /// @param _transactionFee Value of the transaction fee in basis points
-    function setTransactionFee(uint _transactionFee)
+    function setTransactionFee(uint256 _transactionFee)
         external
         onlyOwner
     {
@@ -314,8 +314,8 @@ contract Vault is Owned, SafeMath, VaultFace {
         returns (
             string name,
             string symbol,
-            uint sellPrice,
-            uint buyPrice
+            uint256 sellPrice,
+            uint256 buyPrice
         )
     {
         return(
@@ -330,7 +330,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of the share price in wei
     function calcSharePrice()
         external view
-        returns (uint)
+        returns (uint256)
     {
         return getNav();
     }
@@ -347,8 +347,8 @@ contract Vault is Owned, SafeMath, VaultFace {
             address,
             address feeCollector,
             address vaultDao,
-            uint ratio,
-            uint transactionFee,
+            uint256 ratio,
+            uint256 transactionFee,
             uint32 minPeriod
         )
     {
@@ -364,7 +364,7 @@ contract Vault is Owned, SafeMath, VaultFace {
 
     /// @dev Finds the value of the deposit of this vault at the casper contract
     /// @return Value of the deposit at casper in wei
-    function getCasperDeposit() external view returns (uint) {
+    function getCasperDeposit() external view returns (uint256) {
         return getCasperDepositInternal();
     }
 
@@ -391,15 +391,15 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Executes purchase function
     /// @param _hodler Address of the target user
     /// @return Bool the function executed correctly
-    function buyVaultInternal(address _hodler, uint _totalEth)
+    function buyVaultInternal(address _hodler, uint256 _totalEth)
         internal
         returns (bool success)
     {
         updatePriceInternal();
-        uint grossAmount;
-        uint feeVault;
-        uint feeVaultDao;
-        uint amount;
+        uint256 grossAmount;
+        uint256 feeVault;
+        uint256 feeVaultDao;
+        uint256 amount;
         (grossAmount, feeVault, feeVaultDao, amount) = getPurchaseAmounts(_totalEth);
         addPurchaseLog(amount);
         allocatePurchaseTokens(_hodler, amount, feeVault, feeVaultDao);
@@ -423,9 +423,9 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @param _feeVaultDao Number of shares as fee to dao
     function allocatePurchaseTokens(
         address _hodler,
-        uint _amount,
-        uint _feeVault,
-        uint _feeVaultDao)
+        uint256 _amount,
+        uint256 _feeVault,
+        uint256 _feeVaultDao)
         internal
     {
         accounts[_hodler].balance = safeAdd(accounts[_hodler].balance, _amount);
@@ -441,9 +441,9 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @param _feeVaultDao Number of shares as fee to dao
     function allocateSaleTokens(
         address _hodler,
-        uint _amount,
-        uint _feeVault,
-        uint _feeVaultDao)
+        uint256 _amount,
+        uint256 _feeVault,
+        uint256 _feeVaultDao)
         internal
     {
         accounts[_hodler].balance = safeSub(accounts[_hodler].balance, _amount);
@@ -453,7 +453,7 @@ contract Vault is Owned, SafeMath, VaultFace {
 
     /// @dev Sends a buy log to the eventful contract
     /// @param _amount Number of purchased shares
-    function addPurchaseLog(uint _amount)
+    function addPurchaseLog(uint256 _amount)
         internal
     {
         bytes memory name = bytes(data.name);
@@ -466,7 +466,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Sends a sell log to the eventful contract
     /// @param _amount Number of sold shares
     /// @param _netRevenue Value of sale for hodler
-    function addSaleLog(uint _amount, uint _netRevenue)
+    function addSaleLog(uint256 _amount, uint256 _netRevenue)
         internal
     {
         bytes memory name = bytes(data.name);
@@ -481,17 +481,17 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of fee in shares
     /// @return Value of fee in shares to dao
     /// @return Value of net purchased shares
-    function getPurchaseAmounts(uint _totalEth)
+    function getPurchaseAmounts(uint256 _totalEth)
         internal view
         returns (
-            uint grossAmount,
-            uint feeVault,
-            uint feeVaultDao,
-            uint amount
+            uint256 grossAmount,
+            uint256 feeVault,
+            uint256 feeVaultDao,
+            uint256 amount
         )
     {
         grossAmount = safeDiv(_totalEth * BASE, data.price);
-        uint fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
+        uint256 fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
         return (
             grossAmount,
             feeVault = safeMul(fee , admin.ratio) / 100,
@@ -505,16 +505,16 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of fee in shares to dao
     /// @return Value of net sold shares
     /// @return Value of sale amount for hodler
-    function getSaleAmounts(uint _amount)
+    function getSaleAmounts(uint256 _amount)
         internal view
         returns (
-            uint feeVault,
-            uint feeVaultDao,
-            uint netAmount,
-            uint netRevenue
+            uint256 feeVault,
+            uint256 feeVaultDao,
+            uint256 netAmount,
+            uint256 netRevenue
         )
     {
-        uint fee = safeMul(_amount, data.transactionFee) / 10000; //fee is in basis points
+        uint256 fee = safeMul(_amount, data.transactionFee) / 10000; //fee is in basis points
         return (
             feeVault = safeMul(fee, admin.ratio) / 100,
             feeVaultDao = safeSub(fee, feeVaultDao),
@@ -549,11 +549,11 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of the deposit at casper in wei
     function getCasperDepositInternal()
         internal view
-        returns (uint)
+        returns (uint256)
     {
         if (casperInitialized()) {
             Casper casper = Casper(getCasper());
-            return uint(casper.deposit_size(data.validatorIndex));
+            return uint256(casper.deposit_size(data.validatorIndex));
         } else {
             return 0;
         }
@@ -563,10 +563,10 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of the shares in wei
     function getNav()
         internal view
-        returns (uint)
+        returns (uint256)
     {
-        uint casperDeposit = (casperInitialized() ? getCasperDepositInternal() : 0);
-        uint aum = safeAdd(address(this).balance, casperDeposit) - msg.value;
+        uint256 casperDeposit = (casperInitialized() ? getCasperDepositInternal() : 0);
+        uint256 aum = safeAdd(address(this).balance, casperDeposit) - msg.value;
         return (data.totalSupply == 0 ? data.price : safeDiv(aum * BASE, data.totalSupply));
     }
 }

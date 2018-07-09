@@ -1,4 +1,5 @@
 import './AccountSummary.scss'
+import { BigNumber } from 'bignumber.js'
 import { ETHTOWEI } from '../../../constants/utils'
 import AccountItem, { ACCOUNT_ITEM_TYPES } from '../../molecules/AccountItem'
 import Amount, { AMOUNT_SIZES } from '../../molecules/Amount'
@@ -6,7 +7,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 const AccountSummary = ({ provider, number, balance, tokenBalance }) => {
-  const ethBalance = balance / ETHTOWEI
+  const ethBalance = balance.div(ETHTOWEI)
   return (
     <div className="account-summary">
       <AccountItem
@@ -24,14 +25,14 @@ const AccountSummary = ({ provider, number, balance, tokenBalance }) => {
 
 AccountSummary.propTypes = {
   provider: PropTypes.string.isRequired,
-  balance: PropTypes.node,
-  tokenBalance: PropTypes.node,
+  balance: PropTypes.object,
+  tokenBalance: PropTypes.object,
   number: PropTypes.string.isRequired
 }
 
 AccountSummary.defaultProps = {
-  balance: 0,
-  tokenBalance: 0
+  balance: new BigNumber('0'),
+  tokenBalance: new BigNumber('0')
 }
 
 export default AccountSummary

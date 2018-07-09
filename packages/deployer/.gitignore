@@ -1,0 +1,4 @@
+dist
+solc_bin
+coverage
+node_modules

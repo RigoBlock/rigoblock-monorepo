@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { Authority } from "../../Authority/Authority.sol";
@@ -29,8 +29,8 @@ library DragoExchangeExtension {
     address authority;
     address dragoDao;
     address feeCollector;
-    uint minOrder; // minimum stake to avoid dust clogging things up
-    uint ratio; //ratio is 80%
+    uint256 minOrder; // minimum stake to avoid dust clogging things up
+    uint256 ratio; //ratio is 80%
     bytes rawTransactionData;
   }
 
@@ -45,9 +45,9 @@ library DragoExchangeExtension {
   /// @dev Allows caller to delegate any call to the selected exchange adapter
   /// @param _exchange Address of the target exchange
   /// @param _callData size of the data of the call
-  function assembleCall(address _exchange, uint _callData) internal {
+  function assembleCall(address _exchange, uint256 _callData) internal {
 
-    uint size = _callData;
+    uint256 size = _callData;
     bytes32 m_data = _malloc(size);
 
     assembly {
@@ -64,7 +64,7 @@ library DragoExchangeExtension {
   /// @dev Builds the bytes from the call data
   /// @param size Given size of the call
   /// @return Bytes32 of the pointer
-  function _malloc(uint size) internal pure returns(bytes32) {
+  function _malloc(uint256 size) internal pure returns(bytes32) {
     bytes32 m_data;
 
     assembly {
@@ -81,7 +81,7 @@ library DragoExchangeExtension {
   /// @param size Given size of the call
   /// @param adapter Address of the exchange adapter which receives a delegatecall
   /// @return A pointer to memory which contain the 32 first bytes of the delegatecall output
-  function _call(bytes32 m_data, uint size, address adapter) internal returns(bytes32) {
+  function _call(bytes32 m_data, uint256 size, address adapter) internal returns(bytes32) {
     address target = adapter;
     bytes32 m_result = _malloc(32);
     bool failed;

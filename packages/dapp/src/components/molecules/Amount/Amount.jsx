@@ -21,7 +21,7 @@ const Amount = ({ value, size, symbol }) => {
 }
 
 Amount.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.object.isRequired,
   symbol: PropTypes.string.isRequired,
   size: PropTypes.oneOf([
     AMOUNT_SIZES.SMALL,

@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Proof of Performance Interface - Allows interaction with the PoP contract.
@@ -25,29 +25,29 @@ interface ProofOfPerformanceFace {
 
     // CORE FUNCTIONS
 
-    function claimPop(uint _ofPool) external;
+    function claimPop(uint256 _ofPool) external;
     function setRegistry(address _dragoRegistry) external;
     function setRigoblockDao(address _rigoblockDao) external;
-    function setRatio(address _ofGroup, uint _ratio) external;
+    function setRatio(address _ofGroup, uint256 _ratio) external;
     function setMinimumRigo(uint256 _amount) external;
 
     // CONSTANT PUBLIC FUNCTIONS
-    
-    function getPoolData(uint _ofPool)
+
+    function getPoolData(uint256 _ofPool)
         external view
         returns (
             bool active,
             address thePoolAddress,
             address thePoolGroup,
-            uint thePoolPrice,
-            uint thePoolSupply,
-            uint poolValue,
-            uint epochReward,
-            uint ratio,
-            uint pop
+            uint256 thePoolPrice,
+            uint256 thePoolSupply,
+            uint256 poolValue,
+            uint256 epochReward,
+            uint256 ratio,
+            uint256 pop
         );
 
-    function getHwm(uint _ofPool) external view returns (uint);
-    function getPoolPrices() external view returns (address[] pools, uint[] poolPrices, uint[] totalTokens);
-    function calcNetworkValue() external view returns (uint networkValue, uint numberOfFunds);
+    function getHwm(uint256 _ofPool) external view returns (uint256);
+    function getPoolPrices() external view returns (address[] pools, uint256[] poolPrices, uint256[] totalTokens);
+    function calcNetworkValue() external view returns (uint256 networkValue, uint256 numberOfFunds);
 }

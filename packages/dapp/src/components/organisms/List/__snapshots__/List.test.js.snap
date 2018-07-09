@@ -6,15 +6,15 @@ exports[`List component renders correctly 1`] = `
 >
   <ListItem
     className=""
-    currencyGrowth={0}
-    growth={0}
-    id={1}
+    currencyGrowth={null}
+    growth={null}
+    id={"1"}
     itemName="Rocksolid Vault"
     itemSymbol="VLT"
-    itemValue={0}
+    itemValue={"0"}
     key="0"
     onClick={[Function]}
-    value={12489.51323}
+    value={"12489.51323"}
   />
 </div>
 `;

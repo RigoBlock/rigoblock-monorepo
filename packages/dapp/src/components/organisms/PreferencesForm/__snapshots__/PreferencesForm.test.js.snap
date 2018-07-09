@@ -6,7 +6,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
     Object {
       "dispatch": [MockFunction],
       "getState": [Function],
-      "subscribe": [Function],
+      "subscribe": [MockFunction],
     }
   }
 >
@@ -25,8 +25,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
           },
         }
       }
-      user={
+      initialValues={
         Object {
+          "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
           "timezone": "+02:00",
         }
       }
@@ -50,6 +51,12 @@ exports[`PreferencesForm component renders correctly 1`] = `
           }
         }
         getFormState={[Function]}
+        initialValues={
+          Object {
+            "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
+            "timezone": "+02:00",
+          }
+        }
         keepDirtyOnReinitialize={false}
         persistentSubmitErrors={false}
         pure={true}
@@ -60,11 +67,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
         touchOnBlur={true}
         touchOnChange={false}
         updateUnregisteredFields={false}
-        user={
-          Object {
-            "timezone": "+02:00",
-          }
-        }
       >
         <Form(PreferencesForm)
           anyTouched={false}
@@ -122,6 +124,12 @@ exports[`PreferencesForm component renders correctly 1`] = `
             }
           }
           getFormState={[Function]}
+          initialValues={
+            Object {
+              "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
+              "timezone": "+02:00",
+            }
+          }
           initialize={[Function]}
           initialized={true}
           invalid={false}
@@ -156,11 +164,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
           updateSyncErrors={[Function]}
           updateSyncWarnings={[Function]}
           updateUnregisteredFields={false}
-          user={
-            Object {
-              "timezone": "+02:00",
-            }
-          }
           valid={true}
           validExceptSubmit={true}
           values={
@@ -212,6 +215,12 @@ exports[`PreferencesForm component renders correctly 1`] = `
               }
             }
             handleSubmit={[Function]}
+            initialValues={
+              Object {
+                "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
+                "timezone": "+02:00",
+              }
+            }
             initialize={[Function]}
             initialized={true}
             invalid={false}
@@ -225,11 +234,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
             submitting={false}
             touch={[Function]}
             untouch={[Function]}
-            user={
-              Object {
-                "timezone": "+02:00",
-              }
-            }
             valid={true}
           >
             <form
@@ -347,7 +351,10 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         },
                         "getFormState": [Function],
                         "getValues": [Function],
-                        "initialValues": undefined,
+                        "initialValues": Object {
+                          "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
+                          "timezone": "+02:00",
+                        },
                         "initialize": [Function],
                         "initialized": true,
                         "invalid": false,
@@ -388,9 +395,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         "updateSyncErrors": [Function],
                         "updateSyncWarnings": [Function],
                         "updateUnregisteredFields": false,
-                        "user": Object {
-                          "timezone": "+02:00",
-                        },
                         "valid": true,
                         "validExceptSubmit": true,
                         "values": Object {
@@ -461,7 +465,10 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           },
                           "getFormState": [Function],
                           "getValues": [Function],
-                          "initialValues": undefined,
+                          "initialValues": Object {
+                            "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
+                            "timezone": "+02:00",
+                          },
                           "initialize": [Function],
                           "initialized": true,
                           "invalid": false,
@@ -502,9 +509,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           "updateSyncErrors": [Function],
                           "updateSyncWarnings": [Function],
                           "updateUnregisteredFields": false,
-                          "user": Object {
-                            "timezone": "+02:00",
-                          },
                           "valid": true,
                           "validExceptSubmit": true,
                           "values": Object {

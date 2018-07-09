@@ -23,9 +23,10 @@
     transition: all $medium-animation ease-out;
   }
 
-  &:hover {
-    .tooltip-container {
+  .tooltip-hover:hover {
+    ~.tooltip-container {
       opacity: 1;
+      cursor: pointer;
     }
   }
 }
