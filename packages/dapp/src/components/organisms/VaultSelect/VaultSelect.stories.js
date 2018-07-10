@@ -29,6 +29,4 @@ storiesOf('Organisms/VaultSelect', module)
   .addDecorator(withKnobs)
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
   .addDecorator(story => <Provider store={store}>{story()}</Provider>)
-  .add('default', () => (
-    <VaultSelect>{console.log(store.getState().routing.location)}</VaultSelect>
-  ))
+  .add('default', () => <VaultSelect />)
