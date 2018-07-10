@@ -7,6 +7,11 @@ class Web3Puppeteer extends Helper {
     await this.helpers['Puppeteer'].amOnPage('/login')
     await this.inject()
     await this.helpers['Puppeteer'].page.waitForNavigation()
+    const page = await this.helpers['Puppeteer'].page
+    page.on('console', msg => {
+      for (let i = 0; i < msg.args().length; ++i)
+        console.log(`${i}: ${msg.args()[i]}`)
+    })
   }
   async inject() {
     const web3Raw = fs.readFileSync('../../node_modules/web3/dist/web3.min.js')

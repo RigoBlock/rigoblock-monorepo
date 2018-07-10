@@ -1,6 +1,6 @@
 Feature('Dashboard')
 
-Scenario('test correct render', dashboard => {
+Scenario('test correct dashboard render', dashboard => {
   dashboard.assertImOnPage()
 })
 

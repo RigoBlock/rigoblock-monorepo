@@ -1,6 +1,6 @@
 Feature('Preferences')
 
-Scenario('test correct render', (preferences, navigation) => {
+Scenario('test correct preferences render', (preferences, navigation) => {
   navigation.navigateToPreferences()
   preferences.assertImOnPage()
 })

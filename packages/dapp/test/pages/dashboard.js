@@ -13,11 +13,11 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/')
-    I.seeElement('div.account-view')
-    I.seeElement('div.navigation-view')
-    I.seeElement(`a[href='${dashboardRoute}'].active`)
-    I.seeElement('div.accounts-panel')
-    I.seeElement('div.vault-list')
+    I.waitForVisible('div.account-view')
+    I.waitForVisible('div.navigation-view')
+    I.waitForVisible(`a[href='${dashboardRoute}'].active`)
+    I.waitForVisible('div.accounts-panel')
+    I.waitForVisible('div.vault-list')
     I.moveCursorTo('div.icon')
     I.see('List of all accounts')
   }

@@ -13,15 +13,17 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/vaults')
-    I.seeElement('div.account-view')
-    I.seeElement('div.navigation-view')
-    I.seeElement(`a[href='${vaultsRoute}'].active`)
-    I.seeNumberOfElements('div.list-item', 2)
+    I.waitForVisible('div.account-view')
+    I.waitForVisible('div.navigation-view')
+    I.waitForVisible(`a[href='${vaultsRoute}'].active`)
+    I.waitForVisible('div.vault-select', 5)
+    I.waitNumberOfVisibleElements('div.list-item', 2, 5)
+  },
+
+  testVaultSelect() {
     I.click("div.list-item[id='2']")
     I.waitUrlEquals('/vaults/2')
     I.click("div.list-item[id='0']")
     I.waitUrlEquals('/vaults/0')
-  },
-
-  selectVault() {}
+  }
 }
