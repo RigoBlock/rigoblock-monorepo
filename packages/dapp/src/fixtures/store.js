@@ -64,10 +64,11 @@ export const defaultGetState = optionalState => () => ({
   ...optionalState
 })
 
-export default (config = {}) => {
-  let { mockFn, optionalState, getState } = config
-  mockFn = mockFn || emptyFunc
-  optionalState = optionalState || {}
+export default ({
+  mockFn = emptyFunc,
+  optionalState = {},
+  getState = null
+} = {}) => {
   getState = getState || defaultGetState(optionalState)
   return {
     getState,
