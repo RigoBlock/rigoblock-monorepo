@@ -23,7 +23,7 @@ const getState = () => ({
   }
 })
 
-const store = mockStore(undefined, undefined, getState)
+const store = mockStore({ getState })
 
 storiesOf('Organisms/VaultSelect', module)
   .addDecorator(withKnobs)

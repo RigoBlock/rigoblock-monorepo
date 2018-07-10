@@ -7,7 +7,7 @@ import React from 'react'
 import mockStore from '../../../fixtures/store'
 import toJson from 'enzyme-to-json'
 
-const store = mockStore(jest.fn)
+const store = mockStore({ mockFn: jest.fn })
 
 const wrapper = mount(
   <Provider store={store}>

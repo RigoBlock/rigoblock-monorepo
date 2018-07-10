@@ -19,7 +19,7 @@ const getState = () => ({
   }
 })
 
-const store = mockStore(undefined, undefined, getState)
+const store = mockStore({ getState })
 
 storiesOf('Templates/BaseTemplate', module)
   .addDecorator(withKnobs)

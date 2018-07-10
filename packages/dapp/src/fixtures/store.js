@@ -1,7 +1,7 @@
 import * as ROUTES from '../constants/routes'
 import { BigNumber } from 'bignumber.js'
 
-const storiesFunc = () => () => {}
+const emptyFunc = () => () => {}
 
 export const defaultState = {
   preferences: {
@@ -59,12 +59,16 @@ export const defaultState = {
   }
 }
 
-export default (mockFn = storiesFunc, optionalState = {}, getStateFunc) => {
-  const defaultGetState = () => ({
-    ...defaultState,
-    ...optionalState
-  })
-  const getState = getStateFunc ? getStateFunc : defaultGetState
+export const defaultGetState = optionalState => () => ({
+  ...defaultState,
+  ...optionalState
+})
+
+export default (config = {}) => {
+  let { mockFn, optionalState, getState } = config
+  mockFn = mockFn || emptyFunc
+  optionalState = optionalState || {}
+  getState = getState || defaultGetState(optionalState)
   return {
     getState,
     dispatch: mockFn(),
