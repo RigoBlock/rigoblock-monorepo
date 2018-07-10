@@ -26,7 +26,9 @@ const items = [
 
 storiesOf('Organisms/ListPanel', module)
   .addDecorator(withKnobs)
-  .addDecorator(story => <div style={{ width: '400px' }}>{story()}</div>)
+  .addDecorator(story => (
+    <div style={{ width: '400px', margin: '50px' }}>{story()}</div>
+  ))
   .add('default', () => (
     <ListPanel
       title={text('Title', 'Example ListPanel')}
