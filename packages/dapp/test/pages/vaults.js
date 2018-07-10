@@ -12,7 +12,7 @@ module.exports = {
   },
 
   assertImOnPage() {
-    I.waitInUrl('/vaults')
+    I.waitInUrl('/vaults', 5)
     I.waitForVisible('div.account-view')
     I.waitForVisible('div.navigation-view')
     I.waitForVisible(`a[href='${vaultsRoute}'].active`)

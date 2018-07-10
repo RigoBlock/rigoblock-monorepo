@@ -10,7 +10,9 @@ module.exports = {
   },
 
   navigateToPreferences() {
+    I.saveScreenshot('BeforeClick.png')
     I.click('Preferences')
+    I.saveScreenshot('AfterClick.png')
   },
 
   navigateToHelp() {

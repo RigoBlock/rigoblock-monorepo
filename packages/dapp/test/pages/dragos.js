@@ -12,7 +12,7 @@ module.exports = {
   },
 
   assertImOnPage() {
-    I.waitInUrl('/dragos')
+    I.waitInUrl('/dragos', 5)
     I.waitForText('Dragos', 'h1')
     I.waitForVisible('div.account-view')
     I.waitForVisible('div.navigation-view')

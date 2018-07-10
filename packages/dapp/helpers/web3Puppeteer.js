@@ -8,7 +8,7 @@ class Web3Puppeteer extends Helper {
     await this.inject()
     await this.helpers['Puppeteer'].page.waitForNavigation()
     const page = await this.helpers['Puppeteer'].page
-    page.on('console', msg => {
+    return page.on('console', msg => {
       for (let i = 0; i < msg.args().length; ++i)
         console.log(`${i}: ${msg.args()[i]}`)
     })
@@ -21,8 +21,9 @@ class Web3Puppeteer extends Helper {
       window.web3 = new window.Web3(
         new window.Web3.providers.HttpProvider('http://localhost:8545/node')
       )
-      window.init()
+      return window.init()
     }, web3Raw)
+    return
   }
 }
 

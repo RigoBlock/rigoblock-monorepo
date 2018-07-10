@@ -10,7 +10,7 @@ module.exports = {
   },
 
   assertImOnPage() {
-    I.waitInUrl('/preferences')
+    I.waitInUrl('/preferences', 5)
     I.waitForText('Preferences', 'h1')
   },
 
@@ -19,16 +19,13 @@ module.exports = {
     return timezone.trim()
   },
 
-  changeTimezoneValue(timezone) {
-    I.waitUntil(() => {
-      const el = document.querySelector('div[id="1-toggle"]')
-      return el.onclick !== null
-    })
-    I.click('div[id="1-toggle"]')
+  async changeTimezoneValue(timezone) {
+    I.waitForVisible('div[id="1-toggle"]')
+    await I.click('div[id="1-toggle"]')
     I.waitForVisible('ul[id="1-menu-options"]')
     I.executeScript(() => {
-      document.querySelector('ul[id="1-menu-options"]').style.overflow =
-        'visible'
+      return (document.querySelector('ul[id="1-menu-options"]').style.overflow =
+        'visible')
     })
     I.click(`div[data-value="${timezone}"]`)
   },
