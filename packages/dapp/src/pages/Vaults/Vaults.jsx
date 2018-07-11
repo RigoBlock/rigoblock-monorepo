@@ -4,7 +4,6 @@ import BaseTemplate from '../../components/templates/BaseTemplate'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import VaultSelect from '../../components/organisms/VaultSelect'
-import VaultTransactionsTable from '../../components/organisms/VaultTransactionsTable'
 
 class Vaults extends Component {
   render() {
@@ -17,7 +16,7 @@ class Vaults extends Component {
     ) : (
       <BaseTemplate>
         <VaultSelect />
-        <VaultTransactionsTable vaultId="0" />
+        {/* vault view component */}
       </BaseTemplate>
     )
   }
