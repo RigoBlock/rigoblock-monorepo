@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { storiesOf } from '@storybook/react'
-// import { withKnobs } from '@storybook/addon-knobs/react'
+import { withKnobs } from '@storybook/addon-knobs/react'
 import React from 'react'
 import VaultTransactionsTable from './VaultTransactionsTable'
 import mockStore, { defaultState } from '../../../fixtures/store'
@@ -253,6 +253,7 @@ const store = mockStore({ getState })
 const VAULT_ADDRESS = '0x86a1ba4d485ce346bded508e2426798f825558be'
 
 storiesOf('Organisms/VaultTransactionsTable', module)
+  .addDecorator(withKnobs)
   .addDecorator(story => <div style={{ width: '446px' }}>{story()}</div>)
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
   .addDecorator(story => <Provider store={store}>{story()}</Provider>)

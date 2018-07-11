@@ -29,7 +29,8 @@ let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
         transactionLink: linkComponent('#')
       }))
     : []
-  const maxColumnWidth = 60
+  const MAX_COLUMN_WIDTH = 60
+  const LINK_COLUMN_WIDTH = 40
   return (
     <ReactTable
       data={parsedTransactions}
@@ -39,29 +40,29 @@ let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
           Header: 'ID',
           id: 'id',
           accessor: d => d.id.substr(d.id.length - 5, 5).toUpperCase(),
-          maxWidth: maxColumnWidth
+          maxWidth: MAX_COLUMN_WIDTH
         },
         {
           Header: 'Date',
           id: 'date',
           accessor: d => moment(d.date).format('DD/MM/YY'),
-          maxWidth: maxColumnWidth
+          maxWidth: MAX_COLUMN_WIDTH
         },
         {
           Header: 'Type',
           accessor: 'type',
-          maxWidth: maxColumnWidth
+          maxWidth: MAX_COLUMN_WIDTH
         },
         {
           Header: 'Symbol',
           accessor: 'symbol',
-          maxWidth: maxColumnWidth
+          maxWidth: MAX_COLUMN_WIDTH
         },
         {
           Header: 'Value',
           id: 'value',
           accessor: d => d.value.div(ETHTOWEI).toString(),
-          maxWidth: maxColumnWidth
+          maxWidth: MAX_COLUMN_WIDTH
         },
         {
           Header: 'Units',
@@ -71,7 +72,7 @@ let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
         {
           Header: '',
           accessor: 'transactionLink',
-          width: 40,
+          width: LINK_COLUMN_WIDTH,
           sortable: false
         }
       ]}

@@ -4,16 +4,13 @@
   border: none;
   background: $secondary-bg-color;
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: $small-border-radius;
   font-size: $base-font-size;
-
-  .rt-th.rt-resizable-header {
-    &:focus {
-      outline: none;
-    }
+  .rt-th.rt-resizable-header:focus, .rt-th:focus {
+    outline: none;
   }
   .rt-tr-group {
-    border-radius: 2px;
+    border-radius: $small-border-radius;
   }
   .rt-tr.-even {
     background-color: $secondary-bg-color;
@@ -21,17 +18,15 @@
   .rt-tbody .rt-tr-group {
     border: none;
   }
-
   .rt-tr.-odd {
     background-color: $porcelain;
-    border-radius: 2px;
+    border-radius: $small-border-radius;
   }
-
   .rt-thead.-header {
     font-weight: bold;
     background-color: $porcelain;
     box-shadow: none;
-    border-bottom: 1px solid #dadada;
+    border-bottom: 1px solid $dark-grey;
   }
   .link-icon {
     color: $azure-radiance;

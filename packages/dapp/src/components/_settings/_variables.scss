@@ -11,6 +11,8 @@ $xl-font-size: 27px;
 $xxl-font-size: 34px;
 $font-bold: 600;
 
+$line-height: 1.7;
+
 // colors
 $md-primary-color: #0576FF;
 $md-secondary-color: #F4F6F7;
@@ -45,4 +47,5 @@ $dist-6xl: 80px;
 $box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.15), 0 2px 5px -2px rgba(0, 0, 0, 0.12);
 
 // borders
-$border-radius: 4px;
+$small-border-radius: 2px;
+$base-border-radius: 4px;
