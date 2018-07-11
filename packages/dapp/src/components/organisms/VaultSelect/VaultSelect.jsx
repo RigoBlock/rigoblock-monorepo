@@ -1,7 +1,7 @@
 import './VaultSelect.scss'
 import * as ROUTES from '../../../constants/routes'
 import { BigNumber } from 'bignumber.js'
-import { ETHTOMICRO } from '../../../constants/utils'
+import { ETH_TO_WEI } from '../../../constants/utils'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import List from '../../organisms/List'
@@ -32,7 +32,7 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   let vaultsList = Object.keys(vaults).map(vault => {
     const { name, symbol, totalSupply, id } = vaults[vault]
     const ethSupply = totalSupply
-      ? totalSupply.div(ETHTOMICRO)
+      ? totalSupply.div(ETH_TO_WEI)
       : new BigNumber('0')
     return {
       itemName: name,

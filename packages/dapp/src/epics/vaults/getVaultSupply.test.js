@@ -1,5 +1,6 @@
 import { ActionsObservable } from 'redux-observable'
 import { BigNumber } from 'bignumber.js'
+import { MICRO_TO_WEI } from '../../constants/utils'
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import vaultActions from '../../actions/vault-actions'
@@ -54,7 +55,7 @@ describe('getVaultSupply epics', () => {
     const expectedValues = {
       b: vaultActions.updateVaultData({
         address: vaultAddress,
-        data: { totalSupply: supply }
+        data: { totalSupply: supply.times(MICRO_TO_WEI) }
       })
     }
 
