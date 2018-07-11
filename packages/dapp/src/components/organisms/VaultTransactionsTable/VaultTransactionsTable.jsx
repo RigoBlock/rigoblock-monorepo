@@ -31,6 +31,7 @@ let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
     : []
   const MAX_COLUMN_WIDTH = 60
   const LINK_COLUMN_WIDTH = 40
+  const DATE_COLUMN_WIDTH = 70
   return (
     <ReactTable
       data={parsedTransactions}
@@ -46,7 +47,7 @@ let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
           Header: 'Date',
           id: 'date',
           accessor: d => moment(d.date).format('DD/MM/YY'),
-          maxWidth: MAX_COLUMN_WIDTH
+          maxWidth: DATE_COLUMN_WIDTH
         },
         {
           Header: 'Type',

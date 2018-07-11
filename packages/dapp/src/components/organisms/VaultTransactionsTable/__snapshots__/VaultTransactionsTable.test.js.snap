@@ -166,7 +166,7 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                   "Header": "Date",
                   "accessor": [Function],
                   "id": "date",
-                  "maxWidth": 60,
+                  "maxWidth": 70,
                 },
                 Object {
                   "Header": "Type",
@@ -336,7 +336,7 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                     className="-header"
                     style={
                       Object {
-                        "minWidth": "440px",
+                        "minWidth": "450px",
                       }
                     }
                   >
@@ -344,7 +344,7 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                       className="rt-thead -header"
                       style={
                         Object {
-                          "minWidth": "440px",
+                          "minWidth": "450px",
                         }
                       }
                     >
@@ -400,9 +400,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                             key="1-date"
                             style={
                               Object {
-                                "flex": "60 0 auto",
-                                "maxWidth": "60px",
-                                "width": "60px",
+                                "flex": "70 0 auto",
+                                "maxWidth": "70px",
+                                "width": "70px",
                               }
                             }
                             toggleSort={[Function]}
@@ -413,9 +413,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                               role="columnheader"
                               style={
                                 Object {
-                                  "flex": "60 0 auto",
-                                  "maxWidth": "60px",
-                                  "width": "60px",
+                                  "flex": "70 0 auto",
+                                  "maxWidth": "70px",
+                                  "width": "70px",
                                 }
                               }
                               tabIndex="-1"
@@ -653,7 +653,7 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                     className=""
                     style={
                       Object {
-                        "minWidth": "440px",
+                        "minWidth": "450px",
                       }
                     }
                   >
@@ -661,7 +661,7 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                       className="rt-tbody"
                       style={
                         Object {
-                          "minWidth": "440px",
+                          "minWidth": "450px",
                         }
                       }
                     >
@@ -712,9 +712,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -724,9 +724,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -950,9 +950,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 onClick={[Function]}
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -962,9 +962,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -1189,9 +1189,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 key="1-date"
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -1200,9 +1200,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -1398,9 +1398,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 key="1-date"
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -1409,9 +1409,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -1607,9 +1607,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 key="1-date"
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -1618,9 +1618,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -1816,9 +1816,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 key="1-date"
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -1827,9 +1827,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -2025,9 +2025,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 key="1-date"
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -2036,9 +2036,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -2234,9 +2234,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 key="1-date"
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -2245,9 +2245,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -2443,9 +2443,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 key="1-date"
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -2454,9 +2454,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -2652,9 +2652,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                 key="1-date"
                                 style={
                                   Object {
-                                    "flex": "60 0 auto",
-                                    "maxWidth": "60px",
-                                    "width": "60px",
+                                    "flex": "70 0 auto",
+                                    "maxWidth": "70px",
+                                    "width": "70px",
                                   }
                                 }
                               >
@@ -2663,9 +2663,9 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                                   role="gridcell"
                                   style={
                                     Object {
-                                      "flex": "60 0 auto",
-                                      "maxWidth": "60px",
-                                      "width": "60px",
+                                      "flex": "70 0 auto",
+                                      "maxWidth": "70px",
+                                      "width": "70px",
                                     }
                                   }
                                 >
@@ -2895,8 +2895,8 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                         "headerClassName": "",
                         "headerStyle": Object {},
                         "id": "date",
-                        "maxWidth": 60,
-                        "minWidth": 60,
+                        "maxWidth": 70,
+                        "minWidth": 70,
                         "resizable": undefined,
                         "show": true,
                         "sortMethod": undefined,
@@ -3115,8 +3115,8 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                         "headerClassName": "",
                         "headerStyle": Object {},
                         "id": "date",
-                        "maxWidth": 60,
-                        "minWidth": 60,
+                        "maxWidth": 70,
+                        "minWidth": 70,
                         "resizable": undefined,
                         "show": true,
                         "sortMethod": undefined,
@@ -3326,7 +3326,7 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                         "Header": "Date",
                         "accessor": [Function],
                         "id": "date",
-                        "maxWidth": 60,
+                        "maxWidth": 70,
                       },
                       Object {
                         "Header": "Type",

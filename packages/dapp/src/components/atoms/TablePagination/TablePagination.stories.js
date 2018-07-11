@@ -15,16 +15,5 @@ const props = {
 
 storiesOf('Atoms/TablePagination', module)
   .addDecorator(withKnobs)
-  .addDecorator(story => (
-    <div
-      style={{
-        height: '60px',
-        padding: '10px',
-        background: 'white'
-      }}
-    >
-      {story()}
-    </div>
-  ))
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
   .add('default', () => <TablePagination {...props} />)
