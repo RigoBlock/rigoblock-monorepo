@@ -5,23 +5,23 @@ module.exports = {
     I = require('../steps')()
   },
 
-  async navigateToPreferences() {
+  navigateToPreferences() {
     I.cssClick('a[href="/preferences"]')
   },
 
-  async navigateToHelp() {
+  navigateToHelp() {
     I.cssClick('a[href="/help"]')
   },
 
-  async navigateToDashboard() {
+  navigateToDashboard() {
     I.cssClick('div.navigation-view a[href="/"]')
   },
 
-  async navigateToVaults() {
+  navigateToVaults() {
     I.cssClick('a[href="/vaults"]')
   },
 
-  async navigateToDragos() {
+  navigateToDragos() {
     I.cssClick('a[href="/dragos"]')
   }
 }

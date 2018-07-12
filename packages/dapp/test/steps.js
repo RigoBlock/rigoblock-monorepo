@@ -7,11 +7,10 @@ module.exports = function() {
     // It is recommended to place a general 'login' function here.
     cssClick: function(element) {
       this.waitForVisible(element)
-      return this.executeScript(el => {
-        console.log('ELEMENT', el)
-        console.log('ELEMENT EXISTS YET', !!document.querySelector(el))
-        return document.querySelector(el).click()
-      }, element)
+      return this.executeScript(
+        el => document.querySelector(el).click(),
+        element
+      )
     }
   })
 }

@@ -1,7 +1,6 @@
 Feature('Help')
 
-Scenario('test correct help render', (help, navigation, dashboard) => {
-  dashboard.assertImOnPage()
+Scenario('test correct help render', (help, navigation) => {
   navigation.navigateToHelp()
   help.assertImOnPage()
 })

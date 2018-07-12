@@ -1,7 +1,6 @@
 Feature('Dragos')
 
-Scenario('test correct dragos render', (dragos, navigation, dashboard) => {
-  dashboard.assertImOnPage()
+Scenario('test correct dragos render', (dragos, navigation) => {
   navigation.navigateToDragos()
   dragos.assertImOnPage()
 })

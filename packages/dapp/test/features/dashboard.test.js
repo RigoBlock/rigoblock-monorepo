@@ -7,7 +7,6 @@ Scenario('test correct dashboard render', dashboard => {
 Scenario(
   'test navigation view functionality',
   (dashboard, dragos, vaults, navigation) => {
-    dashboard.assertImOnPage()
     navigation.navigateToVaults()
     vaults.assertImOnPage()
     navigation.navigateToDragos()
