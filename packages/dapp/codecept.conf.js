@@ -6,8 +6,7 @@ const config = {
       show: true,
       chrome: {
         headless: true
-      },
-      waitForAction: 300
+      }
     },
     Web3Puppeteer: {
       require: './helpers/web3Puppeteer.js'
@@ -23,7 +22,6 @@ const config = {
     vaults: './test/pages/vaults.js',
     dragos: './test/pages/dragos.js'
   },
-  // grep: 'Preferences',
   mocha: {},
   bootstrap: false,
   teardown: null,
