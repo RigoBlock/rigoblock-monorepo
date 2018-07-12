@@ -1,6 +1,7 @@
 Feature('Vaults')
 
-Scenario('test correct render', (vaults, navigation) => {
+Scenario('test correct vaults render', (vaults, navigation) => {
   navigation.navigateToVaults()
   vaults.assertImOnPage()
+  vaults.testVaultSelect()
 })

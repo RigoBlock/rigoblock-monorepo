@@ -25,6 +25,7 @@ exports[`AccountItem component renders correctly (full version) 1`] = `
           0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
         </span>
         <Icon
+          className=""
           onClick={[Function]}
           size="small"
           tooltipText=""

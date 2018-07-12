@@ -10,7 +10,7 @@ module.exports = {
   },
 
   assertImOnPage() {
-    I.waitInUrl('/preferences')
+    I.waitInUrl('/preferences', 5)
     I.waitForText('Preferences', 'h1')
   },
 
@@ -20,18 +20,18 @@ module.exports = {
   },
 
   changeTimezoneValue(timezone) {
-    I.wait(0.4)
-    I.click('div[id="1-toggle"]')
-    I.waitForVisible('ul[id="1-menu-options"]')
-    I.executeScript(() => {
-      document.querySelector('ul[id="1-menu-options"]').style.overflow =
-        'visible'
-    })
-    I.click(`div[data-value="${timezone}"]`)
+    const timezoneOptions = 'ul[id="1-menu-options"]'
+    I.cssClick('div[id="1-toggle"]')
+    I.waitForVisible(timezoneOptions)
+    I.executeScript(
+      el => (document.querySelector(el).style.overflow = 'visible'),
+      timezoneOptions
+    )
+    I.cssClick(`div[data-value="${timezone}"]`)
   },
 
   submitForm() {
-    I.click('Save')
+    I.cssClick('div.call-to-action button[type="submit"]')
   },
 
   checkTimezoneHasChanged(timezone) {
@@ -42,6 +42,6 @@ module.exports = {
   },
 
   resetForm() {
-    I.click('Cancel')
+    I.cssClick('div.call-to-action button[type="button"]')
   }
 }

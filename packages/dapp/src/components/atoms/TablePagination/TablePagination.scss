@@ -1,0 +1,37 @@
+@import "../../_settings/variables.scss";
+
+.pagination {
+  background: $secondary-bg-color;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: $dist-s;
+  width: 100%;
+
+  .icon {
+    color: $azure-radiance;
+    user-select: none;
+  }
+  .page-number {
+    line-height: $line-height;
+    padding: 0 $dist-xs;
+    user-select: none;
+  }
+  .table-navigation {
+    display: flex;
+    align-content: center;
+  }
+
+  .first-page {
+    .stacked-icon {
+      left: $dist-s;
+      position: relative;
+    }
+  }
+
+  .last-page {
+    .stacked-icon {
+      position: relative;
+      right: $dist-s;
+    }
+  }
+}
