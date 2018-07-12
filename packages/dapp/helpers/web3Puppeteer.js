@@ -7,11 +7,6 @@ class Web3Puppeteer extends Helper {
     await this.helpers['Puppeteer'].amOnPage('/login')
     await this.inject()
     await this.helpers['Puppeteer'].page.waitForNavigation()
-    const page = await this.helpers['Puppeteer'].page
-    return page.on('console', msg => {
-      for (let i = 0; i < msg.args().length; ++i)
-        console.log(`${i}: ${msg.args()[i]}`)
-    })
   }
   async inject() {
     const web3Raw = fs.readFileSync('../../node_modules/web3/dist/web3.min.js')
@@ -21,9 +16,8 @@ class Web3Puppeteer extends Helper {
       window.web3 = new window.Web3(
         new window.Web3.providers.HttpProvider('http://localhost:8545/node')
       )
-      return window.init()
+      window.init()
     }, web3Raw)
-    return
   }
 }
 
