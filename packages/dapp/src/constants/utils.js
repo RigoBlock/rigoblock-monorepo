@@ -1,8 +1,9 @@
 import isArray from 'lodash/isArray'
 import isObject from 'lodash/isObject'
 
-export const ETHTOMICRO = 1e6
-export const ETHTOWEI = 1e18
+export const ETH_TO_MICRO = 1e6
+export const ETH_TO_WEI = 1e18
+export const MICRO_TO_WEI = 1e12
 
 // we are filtering for BigNumbers
 // TODO: remove once isBigNumber() starts working

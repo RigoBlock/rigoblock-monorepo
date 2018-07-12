@@ -20,7 +20,7 @@ export const defaultState = {
             symbol: 'asd',
             owner: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196',
             group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff',
-            totalSupply: new BigNumber('14000000')
+            totalSupply: new BigNumber('14000000000000000000')
           },
           '0x421e1cef6e85e78da2470e54af64a626f45afb85': {
             id: new BigNumber('1'),
@@ -28,7 +28,7 @@ export const defaultState = {
             symbol: 'das',
             owner: '0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d',
             group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff',
-            totalSupply: new BigNumber('2023498')
+            totalSupply: new BigNumber('2023498000000000000')
           }
         },
         vaultTransactions: {
