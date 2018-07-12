@@ -2,6 +2,36 @@
 
 exports[`WrapperWithDivider component renders correctly 1`] = `
 <div>
-  test content
+  <div
+    key="0"
+  >
+    <div
+      className="first-children"
+      key="asd"
+    />
+    <Divider />
+  </div>
+  <div
+    key="1"
+  >
+    <div
+      className="second-children"
+      key="asd"
+    />
+    <Divider />
+  </div>
+  <div
+    key="2"
+  >
+    <div
+      className="third-children"
+      key="asd"
+    />
+    <Divider />
+  </div>
+  <div
+    className="fourth-children"
+    key="asd"
+  />
 </div>
 `;
