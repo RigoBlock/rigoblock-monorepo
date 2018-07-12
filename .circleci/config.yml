@@ -186,7 +186,7 @@ jobs:
           command: npx lerna run --scope @rigoblock/dapp ganache:seed --stream
       - run:
           name: JS feature tests
-          command: npx lerna run --scope @rigoblock/dapp test:feature --stream
+          command: npx lerna run --scope @rigoblock/dapp test:feature:debug --stream
       - store_artifacts:
           path: packages/dapp/output
 
@@ -314,3 +314,4 @@ workflows:
           filters:
             branches:
               only: master
+
