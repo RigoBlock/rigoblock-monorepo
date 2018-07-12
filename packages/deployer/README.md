@@ -1,104 +1,41 @@
-## @0xproject/deployer
+## Smart Contracts Deployer
 
-This repository contains a CLI tool that facilitates compiling and deployment of smart contracts.
+A packages that facilitates the compilation and deployment of smart contracts. Deployer will automatically fetch and download the appropriate version of _Sol Compiler_ to compile each contract.
 
-### Read the [Documentation](https://0xproject.com/docs/deployer).
+## Importing the package
 
-## Installation
-
-#### CLI Installation
-
-```bash
-yarn global add @0xproject/deployer
-```
-
-#### API Installation
-
-```bash
-yarn add @0xproject/deployer
-```
-
-If your project is in [TypeScript](https://www.typescriptlang.org/), add the following to your `tsconfig.json`:
-
-```json
-"compilerOptions": {
-    "typeRoots": ["node_modules/@0xproject/typescript-typings/types", "node_modules/@types"],
-}
-```
-
-**Import**
-
-```typescript
-import { Deployer, Compiler } from '@0xproject/deployer';
+```javascript
+import { Deployer, Compiler } from '@rigoblock/deployer';
 ```
 
 or
 
 ```javascript
-var Deployer = require('@0xproject/deployer').Deployer;
-var Compiler = require('@0xproject/deployer').Compiler;
+const Deployer = require('@rigoblock/deployer').Deployer;
+const Compiler = require('@rigoblock/deployer').Compiler;
 ```
 
-## Contributing
 
-We welcome improvements and fixes from the wider community! To report bugs within this package, please create an issue in this repository.
+## Available Scripts
 
-Please read our [contribution guidelines](../../CONTRIBUTING.md) before getting started.
+In the project directory, you can run:
 
-### Install dependencies
+### `yarn build`
+Builds the app for production to the `dist` folder.
 
-If you don't have yarn workspaces enabled (Yarn < v1.0) - enable them:
+### `yarn build:watch`
+Builds the app and watches for changes.
 
-```bash
-yarn config set workspaces-experimental true
-```
+### `yarn run_mocha`
+Runs tests with Mocha and Chai.
 
-Then install dependencies
+### `yarn test`
+Builds the app, transpiling TypeScript, then runs `yarn run_mocha`
 
-```bash
-yarn install
-```
+### `yarn lint`
+Lints all typescript files.
 
-### Build
 
-If this is your **first** time building this package, you must first build **all** packages within the monorepo. This is because packages that depend on other packages located inside this monorepo are symlinked when run from **within** the monorepo. This allows you to make changes across multiple packages without first publishing dependent packages to NPM. To build all packages, run the following from the monorepo root directory:
+### Note
 
-```bash
-yarn lerna:rebuild
-```
-
-Or continuously rebuild on change:
-
-```bash
-yarn dev
-```
-
-You can also build this specific package by running the following from within its directory:
-
-```bash
-yarn build
-```
-
-or continuously rebuild on change:
-
-```bash
-yarn build:watch
-```
-
-### Clean
-
-```bash
-yarn clean
-```
-
-### Lint
-
-```bash
-yarn lint
-```
-
-### Run Tests
-
-```bash
-yarn test
-```
+When developing the package locally, make sure to run `yarn bootstrap` in the root directory of the monorepo, and build the package before running it in other packages.
