@@ -280,9 +280,15 @@ workflows:
   rigoblock:
     jobs:
       - setup
-      - build-protocol:
+      - test-unit-dapp:
           requires:
             - setup
+      - build-protocol:
+          requires:
+            - test-unit-dapp
+      - test-protocol:
+          requires:
+            - build-protocol
       - build-api:
           requires:
             - build-protocol
@@ -292,3 +298,20 @@ workflows:
       - test-feature-dapp:
           requires:
             - build-dapp
+      - deploy-dapp-staging:
+          requires:
+            - test-unit-dapp
+            - build-dapp
+            - test-feature-dapp
+          filters:
+            branches:
+              only: master
+      - deploy-storybook-staging:
+          requires:
+            - test-unit-dapp
+            - build-dapp
+            - test-feature-dapp
+          filters:
+            branches:
+              only: master
+
