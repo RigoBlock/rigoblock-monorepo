@@ -6,10 +6,11 @@ module.exports = function() {
     // Define custom steps here, use 'this' to access default methods of I.
     // It is recommended to place a general 'login' function here.
     betterClick: function(element) {
-      return this.executeScript(
-        el => document.querySelector(el).click(),
-        element
-      )
+      return this.executeScript(el => {
+        console.log('ELEMENT', el)
+        console.log('ELEMENT EXISTS YET', !!document.querySelector(el))
+        return document.querySelector(el).click()
+      }, element)
     }
   })
 }
