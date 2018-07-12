@@ -10,7 +10,7 @@ module.exports = {
   },
 
   assertImOnPage() {
-    I.waitInUrl('/login')
+    I.waitInUrl('/login', 5)
     I.waitForText('Hello there!', 'h1')
   }
 }

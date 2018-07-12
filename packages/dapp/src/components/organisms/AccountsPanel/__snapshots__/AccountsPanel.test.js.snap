@@ -17,6 +17,26 @@ exports[`AccountsPanel component renders correctly 1`] = `
           "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196": Object {
             "balance": "57999999999960203063",
             "provider": "metamask",
+            "vaultTransactions": Object {
+              "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
+                "0x2c3cdebdba5271d54780f3368f90982582b734610175e620c8b964382de9f351": Object {
+                  "account": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+                  "date": 1531227188000,
+                  "symbol": "ETH",
+                  "type": "Deposit",
+                  "units": "10000000",
+                  "value": "10000000000000000000",
+                },
+                "0xc8c775cec1666c7bd55eb60956dc2aad39beea0846396c051410838c74c6d37c": Object {
+                  "account": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+                  "date": 1531227188000,
+                  "symbol": "ETH",
+                  "type": "Withdraw",
+                  "units": "1000000",
+                  "value": "1000000000000000000",
+                },
+              },
+            },
             "vaults": Object {
               "0x421e1cef6e85e78da2470e54af64a626f45afb85": Object {
                 "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
@@ -24,7 +44,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                 "name": "Third Vault",
                 "owner": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
                 "symbol": "das",
-                "totalSupply": "2023498",
+                "totalSupply": "2023498000000000000",
               },
               "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
                 "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
@@ -32,7 +52,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                 "name": "First Vault",
                 "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
                 "symbol": "asd",
-                "totalSupply": "14000000",
+                "totalSupply": "14000000000000000000",
               },
             },
           },
@@ -76,6 +96,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                     Accounts
                   </h1>
                   <Icon
+                    className=""
                     onClick={[Function]}
                     size="medium"
                     tooltipText="List of all accounts"
@@ -182,6 +203,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                   0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196
                                 </span>
                                 <Icon
+                                  className=""
                                   onClick={[Function]}
                                   size="small"
                                   tooltipText=""
@@ -319,6 +341,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                   0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
                                 </span>
                                 <Icon
+                                  className=""
                                   onClick={[Function]}
                                   size="small"
                                   tooltipText=""
@@ -456,6 +479,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                                   0x8bb7481495d45ccd5cffae1c3a84155fea85a323
                                 </span>
                                 <Icon
+                                  className=""
                                   onClick={[Function]}
                                   size="small"
                                   tooltipText=""

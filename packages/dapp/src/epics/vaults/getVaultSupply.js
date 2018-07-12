@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mergeMap'
+import { MICRO_TO_WEI } from '../../constants/utils'
 import { Scheduler } from 'rxjs/Scheduler'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import api from '../../api'
@@ -17,7 +18,10 @@ const getVaultSupplyEpic = (action$, store, ts = Scheduler.async) =>
       )
         .mergeMap(vault => fromPromise(vault.totalSupply, ts))
         .map(totalSupply =>
-          vaultActions.updateVaultData({ address, data: { totalSupply } })
+          vaultActions.updateVaultData({
+            address,
+            data: { totalSupply: totalSupply.times(MICRO_TO_WEI) }
+          })
         )
     })
 

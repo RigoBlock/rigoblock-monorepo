@@ -6,7 +6,7 @@
   position: absolute;
   font-family: $font-family;
   font-size: $medium-font-size;
-  border-radius: $border-radius;
+  border-radius: $base-border-radius;
   color: $black;
   z-index:0;
   bottom: calc(100% + #{$dist-s});
@@ -15,7 +15,7 @@
 }
 
 .tooltip-text {
-  border-radius: $border-radius;
+  border-radius: $base-border-radius;
   background: $secondary-bg-color;
   padding: $dist-s;
   &:before {
@@ -28,7 +28,7 @@
 
 .tooltip-text:before,
 .tooltip-text:after{
-  border-radius: $border-radius;
+  border-radius: $base-border-radius;
   display: block;
   content: "";
   position: absolute;
