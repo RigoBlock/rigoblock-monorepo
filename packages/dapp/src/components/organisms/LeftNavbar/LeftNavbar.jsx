@@ -4,7 +4,7 @@ import NavigationView from '../NavigationView'
 import React from 'react'
 import WrapperWithDivider from '../../molecules/WrapperWIthDivider'
 
-const divider = () => <div className="navbar-divider" />
+const divider = () => <div className="left-navbar-divider" />
 
 const LeftNavbar = () => {
   return (
