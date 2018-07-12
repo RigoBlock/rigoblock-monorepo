@@ -11,7 +11,7 @@ import ReactTable from 'react-table'
 import TablePagination from '../../atoms/TablePagination'
 import moment from 'moment'
 
-let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
+let vaultTransactionsTable = ({ vaultAddress, transactions, columnWidths }) => {
   const linkComponent = link => (
     <Link to={link}>
       <Icon type="error_outline" className="link-icon" />
@@ -20,18 +20,12 @@ let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
   const vaultTransactions = transactions[vaultAddress]
   const parsedTransactions = vaultTransactions
     ? Object.keys(vaultTransactions).map(hash => ({
+        ...vaultTransactions[hash],
         id: hash,
-        date: vaultTransactions[hash].date,
-        type: vaultTransactions[hash].type,
-        symbol: vaultTransactions[hash].symbol,
-        units: vaultTransactions[hash].units,
-        value: vaultTransactions[hash].value,
         transactionLink: linkComponent('#')
       }))
     : []
-  const MAX_COLUMN_WIDTH = 60
-  const LINK_COLUMN_WIDTH = 40
-  const DATE_COLUMN_WIDTH = 70
+  const [DATE_COLUMN_WIDTH, MAX_COLUMN_WIDTH, LINK_COLUMN_WIDTH] = columnWidths
   return (
     <ReactTable
       data={parsedTransactions}
@@ -41,29 +35,29 @@ let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
           Header: 'ID',
           id: 'id',
           accessor: d => d.id.substr(d.id.length - 5, 5).toUpperCase(),
-          maxWidth: MAX_COLUMN_WIDTH
+          maxWidth: MAX_COLUMN_WIDTH || null
         },
         {
           Header: 'Date',
           id: 'date',
           accessor: d => moment(d.date).format('DD/MM/YY'),
-          maxWidth: DATE_COLUMN_WIDTH
+          maxWidth: DATE_COLUMN_WIDTH || null
         },
         {
           Header: 'Type',
           accessor: 'type',
-          maxWidth: MAX_COLUMN_WIDTH
+          maxWidth: MAX_COLUMN_WIDTH || null
         },
         {
           Header: 'Symbol',
           accessor: 'symbol',
-          maxWidth: MAX_COLUMN_WIDTH
+          maxWidth: MAX_COLUMN_WIDTH || null
         },
         {
           Header: 'Value',
           id: 'value',
           accessor: d => d.value.div(ETHTOWEI).toString(),
-          maxWidth: MAX_COLUMN_WIDTH
+          maxWidth: MAX_COLUMN_WIDTH || null
         },
         {
           Header: 'Units',
@@ -73,7 +67,7 @@ let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
         {
           Header: '',
           accessor: 'transactionLink',
-          width: LINK_COLUMN_WIDTH,
+          width: LINK_COLUMN_WIDTH || null,
           sortable: false
         }
       ]}
@@ -85,12 +79,14 @@ let vaultTransactionsTable = ({ vaultAddress, transactions }) => {
 
 vaultTransactionsTable.propTypes = {
   transactions: PropTypes.object,
-  vaultAddress: PropTypes.string.isRequired
+  vaultAddress: PropTypes.string.isRequired,
+  columnWidths: PropTypes.array
 }
 
 vaultTransactionsTable.defaultProps = {
   transactions: {},
-  vaults: {}
+  vaults: {},
+  columnWidths: []
 }
 
 vaultTransactionsTable = connect(state => {
