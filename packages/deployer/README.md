@@ -2,6 +2,8 @@
 
 A packages that facilitates the compilation and deployment of smart contracts. Deployer will automatically fetch and download the appropriate version of _Sol Compiler_ to compile each contract.
 
+#### This package is a fork from the 0xproject Monorepo. [Link to the original package](https://github.com/0xProject/0x-monorepo/tree/d08bfbf7054d0d98680daab3d1fdc0ac878dcc16/packages/deployer)
+
 ## Importing the package
 
 ```javascript
