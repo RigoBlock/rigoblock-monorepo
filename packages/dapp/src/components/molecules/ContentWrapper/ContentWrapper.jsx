@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 const ContentWrapper = ({ header, children }) => {
+  console.log('CHILDREN', children)
   return (
     <div className="content-wrapper">
       <div className="content-wrapper-header">{header}</div>
