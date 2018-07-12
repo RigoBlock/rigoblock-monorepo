@@ -11,6 +11,7 @@
 | [`Rigoblock DApp`](/packages/dapp)                  | Rigoblock DApp                                                     |
 | [`API`](/packages/api)                    | Rigoblock API               |
 | [`Rigoblock Protocol`](/packages/protocol)          | Rigoblock Protocol                                                 |
+| [`Deployer`](/packages/deployer)          | A package to compile and deploy our smart contracts                                       |
 | [`Ganache Bootstrap`](/packages/ganache-bootstrap)  | A bootstrapping package to deploy smart contracts and seed Ganache |
 
 
