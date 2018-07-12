@@ -2,13 +2,17 @@ import './LeftNavbar.scss'
 import AccountView from '../AccountView'
 import NavigationView from '../NavigationView'
 import React from 'react'
+import WrapperWithDivider from '../../molecules/WrapperWIthDivider'
+
+const divider = () => <div className="navbar-divider" />
 
 const LeftNavbar = () => {
   return (
     <div className="left-navbar">
-      <AccountView />
-      <div className="navbar-divider" />
-      <NavigationView />
+      <WrapperWithDivider Divider={divider}>
+        <AccountView />
+        <NavigationView />
+      </WrapperWithDivider>
     </div>
   )
 }

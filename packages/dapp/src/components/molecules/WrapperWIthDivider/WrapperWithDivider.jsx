@@ -4,26 +4,27 @@ import React from 'react'
 import isArray from 'lodash/isArray'
 
 const WrapperWithDivider = ({ Divider, children }) => {
+  let content = children
+  console.log(children.length)
   if (isArray(children)) {
-    let content = children.map(
+    content = children.map(
       (Component, index) =>
-        index % 2 === 0 || index === children.length - 1 ? (
-          <Component />
-        ) : (
-          <div key={index}>
-            <Component />
+        index !== children.length - 1 ? (
+          <div key={index} className="thisisthediv">
+            {Component}
             <Divider />
           </div>
+        ) : (
+          Component
         )
     )
   }
-  const content = children
 
-  return <div className="content-wrapper">{content}</div>
+  return <div>{content}</div>
 }
 
 WrapperWithDivider.propTypes = {
-  Divider: PropTypes.node.isRequired,
+  Divider: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired
 }
 
