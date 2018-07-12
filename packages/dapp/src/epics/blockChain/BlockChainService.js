@@ -62,7 +62,6 @@ class BlockChainService {
         // Using != to check if this.account is '' or null
         if (accounts[0] != this.account) {
           this.account = accounts[0]
-          console.log(this.account)
           return blockChainActions.blockChainLogIn(nodeVersion, this.account)
         }
       })

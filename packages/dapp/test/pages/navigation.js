@@ -5,23 +5,23 @@ module.exports = {
     I = require('../steps')()
   },
 
-  navigateToPreferences() {
-    I.betterClick('a[href="/preferences"]')
+  async navigateToPreferences() {
+    I.cssClick('a[href="/preferences"]')
   },
 
-  navigateToHelp() {
-    I.betterClick('a[href="/help"]')
+  async navigateToHelp() {
+    I.cssClick('a[href="/help"]')
   },
 
-  navigateToDashboard() {
-    I.betterClick('div.navigation-view a[href="/"]')
+  async navigateToDashboard() {
+    I.cssClick('div.navigation-view a[href="/"]')
   },
 
-  navigateToVaults() {
-    I.betterClick('a[href="/vaults"]')
+  async navigateToVaults() {
+    I.cssClick('a[href="/vaults"]')
   },
 
-  navigateToDragos() {
-    I.betterClick('a[href="/dragos"]')
+  async navigateToDragos() {
+    I.cssClick('a[href="/dragos"]')
   }
 }

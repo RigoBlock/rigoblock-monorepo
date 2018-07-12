@@ -20,18 +20,18 @@ module.exports = {
   },
 
   changeTimezoneValue(timezone) {
-    I.waitForVisible('div[id="1-toggle"]')
-    I.betterClick('div[id="1-toggle"]')
+    I.cssClick('div[id="1-toggle"]')
     I.executeScript(
       () =>
         (document.querySelector('ul[id="1-menu-options"]').style.overflow =
           'visible')
     )
-    I.betterClick(`div[data-value="${timezone}"]`)
+    I.cssClick(`div[data-value="${timezone}"]`)
+    I.saveScreenshot('after timezone click.png')
   },
 
   submitForm() {
-    I.betterClick('div.call-to-action button[type="submit"]')
+    I.cssClick('div.call-to-action button[type="submit"]')
   },
 
   checkTimezoneHasChanged(timezone) {
@@ -42,6 +42,6 @@ module.exports = {
   },
 
   resetForm() {
-    I.betterClick('div.call-to-action button[type="button"]')
+    I.cssClick('div.call-to-action button[type="button"]')
   }
 }
