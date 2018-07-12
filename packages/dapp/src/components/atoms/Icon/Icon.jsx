@@ -10,8 +10,8 @@ export const ICON_SIZES = {
   LARGE: 'large'
 }
 
-const Icon = ({ size, type, onClick, tooltipText }) => {
-  const classProps = classNames('material-icons', 'icon', size)
+const Icon = ({ size, type, onClick, tooltipText, className }) => {
+  const classProps = classNames('material-icons', 'icon', size, className)
   return tooltipText ? (
     <div className={classProps} onClick={onClick}>
       <span className="tooltip-hover">{type}</span>
@@ -28,12 +28,14 @@ Icon.propTypes = {
   type: PropTypes.string.isRequired,
   tooltipText: PropTypes.string,
   onClick: PropTypes.func,
+  className: PropTypes.string,
   size: PropTypes.oneOf([ICON_SIZES.SMALL, ICON_SIZES.MEDIUM, ICON_SIZES.LARGE])
 }
 
 Icon.defaultProps = {
   size: ICON_SIZES.MEDIUM,
   onClick: () => {},
+  className: '',
   tooltipText: ''
 }
 

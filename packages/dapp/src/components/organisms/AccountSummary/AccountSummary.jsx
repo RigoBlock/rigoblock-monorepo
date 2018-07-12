@@ -1,13 +1,13 @@
 import './AccountSummary.scss'
 import { BigNumber } from 'bignumber.js'
-import { ETHTOWEI } from '../../../constants/utils'
+import { ETH_TO_WEI } from '../../../constants/utils'
 import AccountItem, { ACCOUNT_ITEM_TYPES } from '../../molecules/AccountItem'
 import Amount, { AMOUNT_SIZES } from '../../molecules/Amount'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 const AccountSummary = ({ provider, number, balance, tokenBalance }) => {
-  const ethBalance = balance.div(ETHTOWEI)
+  const ethBalance = balance.div(ETH_TO_WEI)
   return (
     <div className="account-summary">
       <AccountItem

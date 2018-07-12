@@ -5,12 +5,12 @@
   margin: $dist-xs 0;
   min-width: 11 * $dist-m;
   background: $secondary-bg-color;
-  border-radius: $border-radius;
+  border-radius: $base-border-radius;
   box-shadow: $box-shadow;
   transition: border-radius $medium-animation;
 
   .md-ink-container {
-    border-radius: $border-radius;
+    border-radius: $base-border-radius;
     transition: border-radius $medium-animation;
   }
   .md-list-tile {
@@ -28,9 +28,9 @@
   }
 
   &[aria-expanded="true"] {
-    border-radius: $border-radius $border-radius 0 0;
+    border-radius: $base-border-radius $base-border-radius 0 0;
     .md-ink-container {
-      border-radius: $border-radius $border-radius 0 0;
+      border-radius: $base-border-radius $base-border-radius 0 0;
     }
   }
 }

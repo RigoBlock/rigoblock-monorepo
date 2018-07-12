@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TablePagination component renders correctly 1`] = `
+<div
+  className="pagination"
+>
+  <div
+    className="table-navigation"
+  >
+    <span
+      className="first-page"
+      onClick={[Function]}
+    >
+      <Icon
+        className="stacked-icon"
+        onClick={[Function]}
+        size="medium"
+        tooltipText=""
+        type="navigate_before"
+      />
+      <Icon
+        className=""
+        onClick={[Function]}
+        size="medium"
+        tooltipText=""
+        type="navigate_before"
+      />
+    </span>
+    <Icon
+      className=""
+      onClick={[Function]}
+      size="medium"
+      tooltipText=""
+      type="navigate_before"
+    />
+    <span
+      className="page-number"
+    >
+      1
+    </span>
+    <Icon
+      className=""
+      onClick={[Function]}
+      size="medium"
+      tooltipText=""
+      type="navigate_next"
+    />
+    <span
+      className="last-page"
+      onClick={[Function]}
+    >
+      <Icon
+        className=""
+        onClick={[Function]}
+        size="medium"
+        tooltipText=""
+        type="navigate_next"
+      />
+      <Icon
+        className="stacked-icon"
+        onClick={[Function]}
+        size="medium"
+        tooltipText=""
+        type="navigate_next"
+      />
+    </span>
+  </div>
+</div>
+`;

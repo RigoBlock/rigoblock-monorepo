@@ -1,5 +1,5 @@
 import { ActionsObservable } from 'redux-observable'
-import { ETHTOWEI } from '../../constants/utils'
+import { ETH_TO_WEI } from '../../constants/utils'
 import { TestScheduler } from 'rxjs'
 import { VAULT } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
@@ -11,7 +11,7 @@ describe('getAccountBalanceEpic', () => {
   const apiMock = {
     web3: {
       _web3: {
-        fromWei: val => val / ETHTOWEI
+        fromWei: val => val / ETH_TO_WEI
       },
       getBalanceInWeiAsync: getBalanceSpy
     }

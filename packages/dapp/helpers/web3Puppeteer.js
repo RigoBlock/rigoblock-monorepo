@@ -11,7 +11,7 @@ class Web3Puppeteer extends Helper {
   async inject() {
     const web3Raw = fs.readFileSync('../../node_modules/web3/dist/web3.min.js')
     const page = this.helpers['Puppeteer'].page
-    await page.evaluate(function(web3Raw) {
+    await page.evaluate(web3Raw => {
       eval(web3Raw)
       window.web3 = new window.Web3(
         new window.Web3.providers.HttpProvider('http://localhost:8545/node')

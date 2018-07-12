@@ -6,7 +6,9 @@ const config = {
       show: true,
       chrome: {
         headless: true
-      }
+      },
+      waitForNavigation: 'domcontentloaded',
+      waitForAction: 200
     },
     Web3Puppeteer: {
       require: './helpers/web3Puppeteer.js'
