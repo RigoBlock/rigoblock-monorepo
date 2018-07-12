@@ -19,6 +19,6 @@ module.exports = {
     I.waitForVisible('div.accounts-panel')
     I.waitForVisible('div.vault-list')
     I.moveCursorTo('div.icon')
-    I.waitForVisible('div.tooltip-container')
+    I.see('List of all accounts')
   }
 }

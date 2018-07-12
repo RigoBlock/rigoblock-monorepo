@@ -8,11 +8,11 @@ Feature('Preferences')
 Scenario('test timezone field functionality', (preferences, navigation) => {
   navigation.navigateToPreferences()
   preferences.assertImOnPage()
-  preferences.changeTimezoneValue('GMT -12:00')
-  // preferences.submitForm()
-  // navigation.navigateToHome()
-  // navigation.navigateToPreferences()
-  // preferences.checkTimezoneHasChanged('GMT -12:00')
+  preferences.changeTimezoneValue('GMT +07:00')
+  preferences.submitForm()
+  navigation.navigateToDashboard()
+  navigation.navigateToPreferences()
+  preferences.checkTimezoneHasChanged('GMT +07:00')
 })
 
 // Scenario(
@@ -21,8 +21,8 @@ Scenario('test timezone field functionality', (preferences, navigation) => {
 //     navigation.navigateToPreferences()
 //     preferences.assertImOnPage()
 //     const defaultTimezone = await preferences.grabTimezoneValue()
-//     preferences.changeTimezoneValue('GMT -12:00')
-//     preferences.checkTimezoneHasChanged('GMT -12:00')
+//     preferences.changeTimezoneValue('GMT +07:00')
+//     preferences.checkTimezoneHasChanged('GMT +07:00')
 //     preferences.resetForm()
 //     preferences.checkTimezoneHasChanged(defaultTimezone)
 //   }

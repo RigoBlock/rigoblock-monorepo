@@ -5,29 +5,23 @@ module.exports = {
     I = require('../steps')()
   },
 
-  navigateToHome() {
-    I.click('RigoBlock')
-  },
-
   navigateToPreferences() {
-    I.saveScreenshot('BeforeClick.png')
-    I.click('Preferences')
-    I.saveScreenshot('AfterClick.png')
+    I.betterClick('a[href="/preferences"]')
   },
 
   navigateToHelp() {
-    I.click('Help')
+    I.betterClick('a[href="/help"]')
   },
 
   navigateToDashboard() {
-    I.click('Dashboard')
+    I.betterClick('div.navigation-view a[href="/"]')
   },
 
   navigateToVaults() {
-    I.click('Vaults')
+    I.betterClick('a[href="/vaults"]')
   },
 
   navigateToDragos() {
-    I.click('Dragos')
+    I.betterClick('a[href="/dragos"]')
   }
 }

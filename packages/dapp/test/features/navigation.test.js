@@ -21,7 +21,7 @@ Scenario(
   (navigation, dashboard, help) => {
     navigation.navigateToHelp()
     help.assertImOnPage()
-    navigation.navigateToHome()
+    navigation.navigateToDashboard()
     dashboard.assertImOnPage()
   }
 )

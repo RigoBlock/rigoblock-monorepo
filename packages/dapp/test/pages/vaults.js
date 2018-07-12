@@ -21,9 +21,9 @@ module.exports = {
   },
 
   testVaultSelect() {
-    I.click("div.list-item[id='2']")
+    I.betterClick("div.list-item[id='2']")
     I.waitUrlEquals('/vaults/2')
-    I.click("div.list-item[id='0']")
+    I.betterClick("div.list-item[id='0']")
     I.waitUrlEquals('/vaults/0')
   }
 }
