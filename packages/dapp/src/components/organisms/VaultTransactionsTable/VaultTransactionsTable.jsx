@@ -1,7 +1,7 @@
 import 'react-table/react-table.css'
 // eslint-disable-next-line sort-imports-es6-autofix/sort-imports-es6
 import './VaultTransactionsTable.scss'
-import { ETHTOWEI } from '../../../constants/utils'
+import { ETH_TO_WEI } from '../../../constants/utils'
 import { connect } from 'react-redux'
 import Icon from '../../atoms/Icon'
 import Link from '../../atoms/Link'
@@ -56,7 +56,7 @@ let vaultTransactionsTable = ({ vaultAddress, transactions, columnWidths }) => {
         {
           Header: 'Value',
           id: 'value',
-          accessor: d => d.value.div(ETHTOWEI).toString(),
+          accessor: d => d.value.div(ETH_TO_WEI).toString(),
           maxWidth: MAX_COLUMN_WIDTH || null
         },
         {
