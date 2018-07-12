@@ -1,6 +1,6 @@
 Feature('Login')
 
-Scenario('test correct render', login => {
+Scenario('test correct login render', login => {
   login.navigateTo()
   login.assertImOnPage()
 })

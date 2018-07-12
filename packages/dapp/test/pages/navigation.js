@@ -5,27 +5,23 @@ module.exports = {
     I = require('../steps')()
   },
 
-  navigateToHome() {
-    I.click('RigoBlock')
-  },
-
   navigateToPreferences() {
-    I.click('Preferences')
+    I.cssClick('a[href="/preferences"]')
   },
 
   navigateToHelp() {
-    I.click('Help')
+    I.cssClick('a[href="/help"]')
   },
 
   navigateToDashboard() {
-    I.click('Dashboard')
+    I.cssClick('div.navigation-view a[href="/"]')
   },
 
   navigateToVaults() {
-    I.click('Vaults')
+    I.cssClick('a[href="/vaults"]')
   },
 
   navigateToDragos() {
-    I.click('Dragos')
+    I.cssClick('a[href="/dragos"]')
   }
 }
