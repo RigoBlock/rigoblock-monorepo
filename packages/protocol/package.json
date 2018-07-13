@@ -1,6 +1,6 @@
 {
   "name": "@rigoblock/protocol",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "main": "dist/contracts.js",
   "scripts": {
     "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
@@ -36,7 +36,7 @@
     ]
   },
   "devDependencies": {
-    "@rigoblock/deployer": "^0.1.0",
+    "@rigoblock/deployer": "^0.1.1",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.0.1",
     "babel-preset-es2015": "^6.24.1",
