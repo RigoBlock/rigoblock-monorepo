@@ -1,6 +1,15 @@
 @import "../../_settings/variables.scss";
 
-h3 {
-  padding-bottom: $dist-2xs;
-  padding-top: $dist-m
+.preferences-form {
+  h3 {
+    padding-bottom: $dist-2xs;
+    padding-top: $dist-m
+  }
+  .call-to-action {
+    padding-top: $dist-l;
+  }
 }
+
+
+
+

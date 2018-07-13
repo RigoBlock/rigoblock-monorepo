@@ -32,7 +32,7 @@ let PreferencesForm = props => {
     props.changePreferences(props.formObject.preferences.values)
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="preferences-form">
       <h3>Time zone</h3>
       <SelectFieldRedux fieldName={'timezone'} fieldProps={timeZoneProps} />
       <CallToAction>
