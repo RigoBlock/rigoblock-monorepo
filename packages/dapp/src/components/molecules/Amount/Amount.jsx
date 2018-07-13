@@ -39,8 +39,8 @@ Amount.propTypes = {
 }
 
 Amount.defaultProps = {
-  valueSize: AMOUNT_SIZES.MEDIUM,
-  symbolSize: AMOUNT_SIZES.MEDIUM
+  valueSize: AMOUNT_SIZES.SMALL,
+  symbolSize: AMOUNT_SIZES.SMALL
 }
 
 export default Amount

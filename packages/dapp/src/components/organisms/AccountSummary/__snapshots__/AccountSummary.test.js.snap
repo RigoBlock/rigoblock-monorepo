@@ -15,16 +15,16 @@ exports[`AccountSummary component renders correctly 1`] = `
     <Amount
       size="small"
       symbol="ETH"
-      symbolSize="medium"
+      symbolSize="small"
       value={"57.999999999960203063"}
-      valueSize="medium"
+      valueSize="small"
     />
     <Amount
       size="small"
       symbol="GRG"
-      symbolSize="medium"
+      symbolSize="small"
       value={"0"}
-      valueSize="medium"
+      valueSize="small"
     />
   </div>
 </div>
