@@ -1,9 +1,11 @@
 import { createReducer } from 'redux-act'
 import blockChainActions from '../../actions/blockchain-actions'
+import globalActions from '../../actions/global-actions'
 import u from 'updeep'
 
 const initialState = {
-  error: ''
+  error: '',
+  modalComponent: null
 }
 
 const globalReducer = createReducer(
@@ -12,6 +14,20 @@ const globalReducer = createReducer(
       u(
         {
           error: payload
+        },
+        state
+      ),
+    [globalActions.openModal]: (state, component) =>
+      u(
+        {
+          modalComponent: component
+        },
+        state
+      ),
+    [globalActions.closeModal]: state =>
+      u(
+        {
+          modalComponent: null
         },
         state
       )

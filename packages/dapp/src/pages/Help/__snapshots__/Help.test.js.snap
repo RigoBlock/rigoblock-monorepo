@@ -4,10 +4,10 @@ exports[`Help page renders correctly 1`] = `
 <div
   className="Help"
 >
-  <BaseTemplate>
+  <Connect(BaseTemplate)>
     <h1>
       Help
     </h1>
-  </BaseTemplate>
+  </Connect(BaseTemplate)>
 </div>
 `;

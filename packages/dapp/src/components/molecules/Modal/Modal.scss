@@ -1,0 +1,25 @@
+@import "../../_settings/variables.scss";
+
+.modal-wrapper {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  overflow: hidden;
+  background: $white-semi-transparent;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  .modal-content {
+    background: $white;
+    border-radius: $dist-2xs;
+    min-height: 200px;
+    min-width: 200px;
+    box-shadow: $box-shadow2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
