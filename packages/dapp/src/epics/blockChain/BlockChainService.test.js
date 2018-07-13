@@ -192,6 +192,7 @@ describe('blockChain services function', () => {
         const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
         blockChainService.account = owner
+        blockChainService.accounts.add(owner)
 
         const outputAction = blockChainService.init()
 
@@ -245,7 +246,7 @@ describe('blockChain services function', () => {
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
         const expectedValues = {
-          a: blockChainActions.registerBlock(VAULT, blockWithTimestamp),
+          a: blockChainActions.registerBlock(owner, VAULT, blockWithTimestamp),
           b: blockChainActions.vaultFetchCompleted()
         }
 
@@ -258,6 +259,8 @@ describe('blockChain services function', () => {
         const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
         blockChainService.account = owner
+        blockChainService.accounts.add(owner)
+
         const outputAction = blockChainService.fetchVaultEvents()
 
         ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
@@ -288,6 +291,8 @@ describe('blockChain services function', () => {
         const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
         blockChainService.account = owner
+        blockChainService.accounts.add(owner)
+
         const outputAction = blockChainService.fetchVaultEvents()
 
         ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
@@ -309,7 +314,7 @@ describe('blockChain services function', () => {
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
         const expectedValues = {
-          a: blockChainActions.registerBlock(VAULT, blockWithTimestamp)
+          a: blockChainActions.registerBlock(owner, VAULT, blockWithTimestamp)
         }
 
         const expectedMarble = 'a'
@@ -321,6 +326,8 @@ describe('blockChain services function', () => {
         const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
         blockChainService.account = owner
+        blockChainService.accounts.add(owner)
+
         const outputAction = blockChainService.watchVaultEvents()
 
         ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
@@ -354,6 +361,8 @@ describe('blockChain services function', () => {
         const blockChainService = new BlockChainService(apiMock, null, null, ts)
 
         blockChainService.account = owner
+        blockChainService.accounts.add(owner)
+
         const outputAction = blockChainService.watchVaultEvents()
 
         ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
