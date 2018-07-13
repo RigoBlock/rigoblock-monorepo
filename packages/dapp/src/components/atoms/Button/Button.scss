@@ -1,4 +1,22 @@
 @import "../../_settings/variables.scss";
+@import '~react-md/src/scss/react-md';
+@import '~react-md/src/scss/globals';
+@import '~react-md/src/scss/colors';
+
+@include react-md-buttons($md-primary-color, $md-secondary-color);
+@include react-md-accessibility;
+@include react-md-transitions;
+@include react-md-grid;
+@include react-md-inks;
+@include react-md-menus;
+@include react-md-lists;
+@include react-md-dividers;
+@include react-md-icons;
+@include react-md-layovers;
+@include react-md-select-fields;
+@include react-md-helpers-everything;
+@include react-md-text-fields;
+@include react-md-colors;
 
 .base-button {
   border: solid $border-size;

@@ -237,6 +237,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
             valid={true}
           >
             <form
+              className="preferences-form"
               onSubmit={[Function]}
             >
               <h3>

@@ -8,7 +8,7 @@ import VaultTitle from './VaultTitle'
 import mockStore from '../../../fixtures/store'
 
 const store = mockStore()
-const VAULT_ADDRESS = '0x86a1ba4d485ce346bded508e2426798f825558be'
+const props = { vaultAddress: '0x86a1ba4d485ce346bded508e2426798f825558be' }
 
 storiesOf('Organisms/VaultTitle', module)
   .addDecorator(withKnobs)
@@ -19,4 +19,4 @@ storiesOf('Organisms/VaultTitle', module)
   ))
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
   .addDecorator(story => <Provider store={store}>{story()}</Provider>)
-  .add('default', () => <VaultTitle vaultAddress={VAULT_ADDRESS} />)
+  .add('default', () => <VaultTitle {...props} />)
