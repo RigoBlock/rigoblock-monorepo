@@ -20,7 +20,7 @@ export const getAccountBalanceEpic = (action$, store, ts = Scheduler.async) => {
       obs
         // wait 500ms of silence between requests. If more blocks are being fired within this
         // time period, function will wait 500ms from last one before sending request
-        .debounceTime(1000, ts)
+        .debounceTime(500, ts)
     )
 
   return merge(action$1, action$2).mergeMap(({ payload: { account } }) => {

@@ -116,7 +116,7 @@ describe('blockchain reducer', () => {
     )
   })
 
-  it(`updates total accounts balance whe updateTotalAccountBalance is fired `, () => {
+  it(`updates total accounts balance whe updateAccountBalance is fired `, () => {
     blockChainTest(
       {
         accounts: {
@@ -127,6 +127,7 @@ describe('blockchain reducer', () => {
       },
       accountMiddlewareMock(
         blockChainActions.updateAccountBalance(
+          owner,
           new BigNumber('90.999999999952600881')
         ),
         owner
