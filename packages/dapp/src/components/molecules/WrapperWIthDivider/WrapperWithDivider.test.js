@@ -9,6 +9,7 @@ const children = [
   <div className="third-children" key="asd" />,
   <div className="fourth-children" key="asd" />
 ]
+
 const Divider = () => <div className="divider-div" />
 const props = { children, Divider }
 
