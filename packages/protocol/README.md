@@ -24,10 +24,6 @@ Runs tests for the solidity contracts. **Ganache must not be up** when running t
 
 Lints all JS files.
 
-### `yarn prepublish`
-
-Same as `yarn build` gets called automatically by lerna when publishing packages.
-
 ## Writing Tests
 
 Read the [testing documentation.](docs/TESTING.md)
