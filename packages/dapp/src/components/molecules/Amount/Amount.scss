@@ -3,16 +3,23 @@
 .amount {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 
-  &.small {
-    font-size: $base-font-size;
-  }
+  .amount-symbol {
+    &.small {
+      font-size: $base-font-size;
+    }
 
-  &.medium {
-    font-size: $large-font-size;
-  }
+    &.medium {
+      font-size: $large-font-size;
+    }
 
-  &.large {
-    font-size: $xxl-font-size;
+    &.large {
+      font-size: $xl-font-size;
+    }
+
+    &.x-large {
+      font-size: $xxl-font-size;
+    }
   }
 }

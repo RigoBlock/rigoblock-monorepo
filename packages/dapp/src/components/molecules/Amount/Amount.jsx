@@ -3,19 +3,21 @@ import ItemValue from '../../atoms/ItemValue'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
+import values from 'lodash/values'
 
 export const AMOUNT_SIZES = {
   SMALL: 'small',
   MEDIUM: 'medium',
-  LARGE: 'large'
+  LARGE: 'large',
+  XL: 'x-large'
 }
 
-const Amount = ({ value, size, symbol }) => {
-  const classProps = classNames('amount', size)
+const Amount = ({ value, symbol, valueSize, symbolSize }) => {
+  const symbolClassProps = classNames('amount-symbol', symbolSize)
   return (
-    <div className={classProps}>
-      <div className="amount-symbol">{symbol}</div>
-      <ItemValue itemValue={value} valueSize={size} />
+    <div className="amount">
+      <div className={symbolClassProps}>{symbol}</div>
+      <ItemValue itemValue={value} valueSize={valueSize} />
     </div>
   )
 }
@@ -23,15 +25,13 @@ const Amount = ({ value, size, symbol }) => {
 Amount.propTypes = {
   value: PropTypes.object.isRequired,
   symbol: PropTypes.string.isRequired,
-  size: PropTypes.oneOf([
-    AMOUNT_SIZES.SMALL,
-    AMOUNT_SIZES.MEDIUM,
-    AMOUNT_SIZES.LARGE
-  ])
+  valueSize: PropTypes.oneOf([...values(AMOUNT_SIZES)]),
+  symbolSize: PropTypes.oneOf([...values(AMOUNT_SIZES)])
 }
 
 Amount.defaultProps = {
-  size: AMOUNT_SIZES.MEDIUM
+  valueSize: AMOUNT_SIZES.SMALL,
+  symbolSize: AMOUNT_SIZES.SMALL
 }
 
 export default Amount

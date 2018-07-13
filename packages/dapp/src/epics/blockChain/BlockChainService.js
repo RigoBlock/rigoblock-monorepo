@@ -23,6 +23,7 @@ class BlockChainService {
     this.subject$ = subject$
     this.scheduler = ts
     this.account = null
+    this.accounts = new Set()
   }
 
   errorListener() {
@@ -56,12 +57,14 @@ class BlockChainService {
           .toLowerCase()
         if (!accounts.length && this.account) {
           this.account = null
+          this.accounts = new Set()
           return blockChainActions.blockChainLogout()
         }
 
         // Using != to check if this.account is '' or null
         if (accounts[0] != this.account) {
           this.account = accounts[0]
+          this.accounts.add(this.account)
           return blockChainActions.blockChainLogIn(nodeVersion, this.account)
         }
       })
@@ -109,7 +112,7 @@ class BlockChainService {
         })
       )
       .mergeMap(events => from(events))
-    const filteredBlocks = this._filterBlocksByAccount(VAULT, allVaultEvents)
+    const filteredBlocks = this._filterBlocksByAccounts(VAULT, allVaultEvents)
     return this.wrapError(
       filteredBlocks.concat(of(blockChainActions.vaultFetchCompleted()))
     )
@@ -135,23 +138,32 @@ class BlockChainService {
         return () => events.stopWatching(() => {})
       })
     })
-    return this.wrapError(this._filterBlocksByAccount(VAULT, allVaultEvents))
+    return this.wrapError(this._filterBlocksByAccounts(VAULT, allVaultEvents))
   }
 
-  _filterBlocksByAccount(label, obs) {
+  _filterBlocksByAccounts(label, obs) {
     return obs
-      .filter(block =>
-        Object.keys(block.args)
+      .map(block => {
+        const account = Object.keys(block.args)
           .map(key => block.args[key])
-          .includes(this.account)
-      )
+          .reduce(
+            (accountInvolved, blockAcc) =>
+              this.accounts.has(blockAcc) ? blockAcc : accountInvolved,
+            null
+          )
+        return account && { ...block, account }
+      })
+      .filter(block => !!block)
       .mergeMap(block => {
         return fromPromise(
           this.api.web3.getBlockTimestampAsync(block.blockNumber),
           this.scheduler
         ).map(timestamp => ({ ...block, timestamp: timestamp * 1000 }))
       })
-      .map(block => blockChainActions.registerBlock(label, block))
+      .map(decoratedBlock => {
+        const { account, ...block } = decoratedBlock
+        return blockChainActions.registerBlock(account, label, block)
+      })
   }
 }
 
