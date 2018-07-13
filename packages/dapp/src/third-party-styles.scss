@@ -1,9 +1,9 @@
+@import './variables';
+
+// react-md
 @import '~react-md/src/scss/react-md';
 @import '~react-md/src/scss/globals';
 @import '~react-md/src/scss/colors';
-@import './variables';
-@import './reset';
-@import url('~react-table/react-table.css');
 
 @include react-md-buttons($md-primary-color, $md-secondary-color);
 @include react-md-accessibility;
@@ -20,18 +20,4 @@
 @include react-md-text-fields;
 @include react-md-colors;
 
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  background-color: $md-secondary-color;
-  font-size: $base-font-size;
-  font-family: $font-family;
-}
-
-.no-events {
-  pointer-events: none;
-}
+// react-table

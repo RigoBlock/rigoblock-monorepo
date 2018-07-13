@@ -1,4 +1,4 @@
-import 'react-table/react-table.css'
+// import 'react-table/react-table.css'
 // eslint-disable-next-line sort-imports-es6-autofix/sort-imports-es6
 import './VaultTransactionsTable.scss'
 import { ETH_TO_WEI } from '../../../constants/utils'
