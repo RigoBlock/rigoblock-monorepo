@@ -4,10 +4,11 @@ exports[`LeftNavbar component renders correctly 1`] = `
 <div
   className="left-navbar"
 >
-  <Connect(AccountView) />
-  <div
-    className="navbar-divider"
-  />
-  <Connect(NavigationView) />
+  <WrapperWithDivider
+    Divider={[Function]}
+  >
+    <Connect(AccountView) />
+    <Connect(NavigationView) />
+  </WrapperWithDivider>
 </div>
 `;

@@ -3,6 +3,7 @@ import ItemValue from '../../atoms/ItemValue'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
+import values from 'lodash/values'
 
 export const AMOUNT_SIZES = {
   SMALL: 'small',
@@ -24,18 +25,8 @@ const Amount = ({ value, symbol, valueSize, symbolSize }) => {
 Amount.propTypes = {
   value: PropTypes.object.isRequired,
   symbol: PropTypes.string.isRequired,
-  valueSize: PropTypes.oneOf([
-    AMOUNT_SIZES.SMALL,
-    AMOUNT_SIZES.MEDIUM,
-    AMOUNT_SIZES.LARGE,
-    AMOUNT_SIZES.XL
-  ]),
-  symbolSize: PropTypes.oneOf([
-    AMOUNT_SIZES.SMALL,
-    AMOUNT_SIZES.MEDIUM,
-    AMOUNT_SIZES.LARGE,
-    AMOUNT_SIZES.XL
-  ])
+  valueSize: PropTypes.oneOf([...values(AMOUNT_SIZES)]),
+  symbolSize: PropTypes.oneOf([...values(AMOUNT_SIZES)])
 }
 
 Amount.defaultProps = {
