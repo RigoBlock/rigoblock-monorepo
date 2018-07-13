@@ -1,11 +1,10 @@
-import './SelectFieldRedux.scss'
 import 'react-md/lib/Helpers'
 import { Field } from 'redux-form'
 import PropTypes from 'prop-types'
 import React from 'react'
 import SelectField from '../SelectField'
 
-const SelectFieldRedux = ({ fieldName, fieldProps }) => {
+const SelectFieldForm = ({ fieldName, fieldProps }) => {
   /* eslint-disable react/prop-types */
   const renderSelectField = ({ input, meta: { touched, error } }) => {
     return (
@@ -22,9 +21,9 @@ const SelectFieldRedux = ({ fieldName, fieldProps }) => {
   return <Field name={fieldName} component={renderSelectField} />
 }
 
-SelectFieldRedux.propTypes = {
+SelectFieldForm.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldProps: PropTypes.object.isRequired
 }
 
-export default SelectFieldRedux
+export default SelectFieldForm

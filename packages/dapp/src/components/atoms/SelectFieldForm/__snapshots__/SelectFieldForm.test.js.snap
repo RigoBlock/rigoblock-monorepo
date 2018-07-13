@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SelectFieldRedux component renders correctly 1`] = `
+exports[`SelectFieldForm component renders correctly 1`] = `
 <Field
   component={[Function]}
   name="testField"

@@ -1,5 +1,5 @@
 import { shallow } from 'enzyme'
-import SelectFieldRedux from './SelectFieldRedux.jsx'
+import SelectFieldForm from './SelectFieldForm.jsx'
 import toJson from 'enzyme-to-json'
 
 const itemList = ['item1', 2, { label: 'test', value: '1' }]
@@ -13,10 +13,10 @@ const props = {
   }
 }
 
-describe('SelectFieldRedux component', () => {
+describe('SelectFieldForm component', () => {
   it('renders correctly', () => {
     expect(
-      toJson(shallow(createComponentWithProps(SelectFieldRedux, props)))
+      toJson(shallow(createComponentWithProps(SelectFieldForm, props)))
     ).toMatchSnapshot()
   })
 })
