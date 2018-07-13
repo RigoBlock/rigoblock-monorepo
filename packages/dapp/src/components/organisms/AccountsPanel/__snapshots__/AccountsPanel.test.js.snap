@@ -227,13 +227,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="ETH"
+                          symbolSize="medium"
                           value={"57.999999999960203063"}
+                          valueSize="medium"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol medium"
                             >
                               ETH
                             </div>
@@ -243,13 +245,13 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               growth={null}
                               itemValue={"57.999999999960203063"}
                               precision={2}
-                              valueSize="small"
+                              valueSize="medium"
                             >
                               <div
                                 className="no-events"
                               >
                                 <span
-                                  className="item-value small"
+                                  className="item-value medium"
                                 >
                                   57.99
                                 </span>
@@ -260,13 +262,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="GRG"
+                          symbolSize="medium"
                           value={"0"}
+                          valueSize="medium"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol medium"
                             >
                               GRG
                             </div>
@@ -276,13 +280,13 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               growth={null}
                               itemValue={"0"}
                               precision={2}
-                              valueSize="small"
+                              valueSize="medium"
                             >
                               <div
                                 className="no-events"
                               >
                                 <span
-                                  className="item-value small"
+                                  className="item-value medium"
                                 >
                                   0.00
                                 </span>
@@ -365,13 +369,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="ETH"
+                          symbolSize="medium"
                           value={"67.999999999977505798"}
+                          valueSize="medium"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol medium"
                             >
                               ETH
                             </div>
@@ -381,13 +387,13 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               growth={null}
                               itemValue={"67.999999999977505798"}
                               precision={2}
-                              valueSize="small"
+                              valueSize="medium"
                             >
                               <div
                                 className="no-events"
                               >
                                 <span
-                                  className="item-value small"
+                                  className="item-value medium"
                                 >
                                   67.99
                                 </span>
@@ -398,13 +404,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="GRG"
+                          symbolSize="medium"
                           value={"0"}
+                          valueSize="medium"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol medium"
                             >
                               GRG
                             </div>
@@ -414,13 +422,13 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               growth={null}
                               itemValue={"0"}
                               precision={2}
-                              valueSize="small"
+                              valueSize="medium"
                             >
                               <div
                                 className="no-events"
                               >
                                 <span
-                                  className="item-value small"
+                                  className="item-value medium"
                                 >
                                   0.00
                                 </span>
@@ -503,13 +511,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="ETH"
+                          symbolSize="medium"
                           value={"87.99999999999941058"}
+                          valueSize="medium"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol medium"
                             >
                               ETH
                             </div>
@@ -519,13 +529,13 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               growth={null}
                               itemValue={"87.99999999999941058"}
                               precision={2}
-                              valueSize="small"
+                              valueSize="medium"
                             >
                               <div
                                 className="no-events"
                               >
                                 <span
-                                  className="item-value small"
+                                  className="item-value medium"
                                 >
                                   87.99
                                 </span>
@@ -536,13 +546,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="GRG"
+                          symbolSize="medium"
                           value={"0"}
+                          valueSize="medium"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol medium"
                             >
                               GRG
                             </div>
@@ -552,13 +564,13 @@ exports[`AccountsPanel component renders correctly 1`] = `
                               growth={null}
                               itemValue={"0"}
                               precision={2}
-                              valueSize="small"
+                              valueSize="medium"
                             >
                               <div
                                 className="no-events"
                               >
                                 <span
-                                  className="item-value small"
+                                  className="item-value medium"
                                 >
                                   0.00
                                 </span>

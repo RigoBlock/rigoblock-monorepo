@@ -2,10 +2,10 @@
 
 exports[`Amount component renders correctly 1`] = `
 <div
-  className="amount medium"
+  className="amount"
 >
   <div
-    className="amount-symbol"
+    className="amount-symbol medium"
   >
     ETH
   </div>

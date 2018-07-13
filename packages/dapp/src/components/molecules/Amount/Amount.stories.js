@@ -21,7 +21,8 @@ storiesOf('Molecules/Amount', module)
   ))
   .add('default', () => (
     <Amount
-      size={selectV2('Amount size', AMOUNT_SIZES, AMOUNT_SIZES.SMALL)}
+      valueSize={selectV2('Value size', AMOUNT_SIZES, AMOUNT_SIZES.SMALL)}
+      symbolSize={selectV2('Symbol size', AMOUNT_SIZES, AMOUNT_SIZES.SMALL)}
       symbol={text('Amount symbol', ETH)}
       value={new BigNumber('8000.23')}
     />

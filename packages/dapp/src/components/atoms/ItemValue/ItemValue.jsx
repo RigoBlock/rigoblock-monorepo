@@ -9,7 +9,8 @@ import classNames from 'classnames'
 export const ITEM_VALUE_SIZES = {
   SMALL: 'small',
   MEDIUM: 'medium',
-  LARGE: 'large'
+  LARGE: 'large',
+  XL: 'x-large'
 }
 
 export const roundProps = props => {
