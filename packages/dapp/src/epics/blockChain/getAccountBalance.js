@@ -20,13 +20,8 @@ export const getAccountBalanceEpic = (action$, store, ts = Scheduler.async) => {
     })
   const action$2 = action$
     .filter(action => action.type === blockChainActions.registerBlock.getType())
-    .filter(({ payload: { block }, meta: { currentAccount } }) =>
-      Object.keys(block.args)
-        .map(key => block.args[key])
-        .includes(currentAccount)
-    )
     // wait 500ms of silence between requests. If more blocks are being fired within this
-    // time period, function will 500ms from last one before sending request
+    // time period, function will wait 500ms from last one before sending request
     .debounceTime(500, ts)
     .mergeMap(({ meta: { currentAccount } }) => {
       return fromPromise(api.web3.getBalanceInWeiAsync(currentAccount), ts).map(
