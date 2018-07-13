@@ -2,10 +2,10 @@
 
 exports[`Amount component renders correctly 1`] = `
 <div
-  className="amount medium"
+  className="amount"
 >
   <div
-    className="amount-symbol"
+    className="amount-symbol small"
   >
     ETH
   </div>
@@ -15,7 +15,7 @@ exports[`Amount component renders correctly 1`] = `
     growth={null}
     itemValue={"8000.23"}
     precision={2}
-    valueSize="medium"
+    valueSize="small"
   />
 </div>
 `;

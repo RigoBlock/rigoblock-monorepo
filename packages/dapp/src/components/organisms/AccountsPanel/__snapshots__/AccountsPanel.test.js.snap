@@ -227,13 +227,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="ETH"
+                          symbolSize="small"
                           value={"57.999999999960203063"}
+                          valueSize="small"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol small"
                             >
                               ETH
                             </div>
@@ -260,13 +262,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="GRG"
+                          symbolSize="small"
                           value={"0"}
+                          valueSize="small"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol small"
                             >
                               GRG
                             </div>
@@ -365,13 +369,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="ETH"
+                          symbolSize="small"
                           value={"67.999999999977505798"}
+                          valueSize="small"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol small"
                             >
                               ETH
                             </div>
@@ -398,13 +404,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="GRG"
+                          symbolSize="small"
                           value={"0"}
+                          valueSize="small"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol small"
                             >
                               GRG
                             </div>
@@ -503,13 +511,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="ETH"
+                          symbolSize="small"
                           value={"87.99999999999941058"}
+                          valueSize="small"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol small"
                             >
                               ETH
                             </div>
@@ -536,13 +546,15 @@ exports[`AccountsPanel component renders correctly 1`] = `
                         <Amount
                           size="small"
                           symbol="GRG"
+                          symbolSize="small"
                           value={"0"}
+                          valueSize="small"
                         >
                           <div
-                            className="amount small"
+                            className="amount"
                           >
                             <div
-                              className="amount-symbol"
+                              className="amount-symbol small"
                             >
                               GRG
                             </div>
