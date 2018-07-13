@@ -13,9 +13,7 @@ const props = { vaultAddress: '0x86a1ba4d485ce346bded508e2426798f825558be' }
 storiesOf('Organisms/VaultTitle', module)
   .addDecorator(withKnobs)
   .addDecorator(story => (
-    <div style={{ width: '478px', background: 'white', padding: '16px' }}>
-      {story()}
-    </div>
+    <div style={{ width: '478px', background: 'white' }}>{story()}</div>
   ))
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
   .addDecorator(story => <Provider store={store}>{story()}</Provider>)

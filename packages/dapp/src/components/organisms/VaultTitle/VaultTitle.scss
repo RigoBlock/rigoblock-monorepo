@@ -1,6 +1,7 @@
 @import "../../_settings/variables.scss";
 
 .vault-title {
+  padding: $dist-s;
   .vault-title-header {
     display: flex;
     justify-content: space-between;
