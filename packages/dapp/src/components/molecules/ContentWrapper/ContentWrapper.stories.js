@@ -25,5 +25,9 @@ storiesOf('Molecules/ContentWrapper', module)
     <div style={{ minHeight: '400px', width: '400px' }}>{story()}</div>
   ))
   .add('default', () => (
-    <ContentWrapper header={header}>{content}</ContentWrapper>
+    <ContentWrapper header={header}>
+      {content}
+      <div>Hello</div>
+      <div>World</div>
+    </ContentWrapper>
   ))

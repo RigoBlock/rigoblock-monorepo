@@ -297,7 +297,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                     key="divider-1"
                   >
                     <div
-                      className="navbar-divider"
+                      className="left-navbar-divider"
                     />
                   </divider>
                   <AccountSummary
@@ -435,7 +435,7 @@ exports[`AccountsPanel component renders correctly 1`] = `
                     key="divider-2"
                   >
                     <div
-                      className="navbar-divider"
+                      className="left-navbar-divider"
                     />
                   </divider>
                   <AccountSummary
