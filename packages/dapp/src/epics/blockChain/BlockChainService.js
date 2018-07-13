@@ -143,22 +143,27 @@ class BlockChainService {
 
   _filterBlocksByAccounts(label, obs) {
     return obs
-      .filter(block =>
-        Object.keys(block.args)
+      .map(block => {
+        const account = Object.keys(block.args)
           .map(key => block.args[key])
           .reduce(
-            (isInAccounts, blockAcc) =>
-              isInAccounts || this.accounts.has(blockAcc),
-            false
+            (accountInvolved, blockAcc) =>
+              this.accounts.has(blockAcc) ? blockAcc : accountInvolved,
+            null
           )
-      )
+        return account && { ...block, account }
+      })
+      .filter(block => !!block)
       .mergeMap(block => {
         return fromPromise(
           this.api.web3.getBlockTimestampAsync(block.blockNumber),
           this.scheduler
         ).map(timestamp => ({ ...block, timestamp: timestamp * 1000 }))
       })
-      .map(block => blockChainActions.registerBlock(label, block))
+      .map(decoratedBlock => {
+        const { account, ...block } = decoratedBlock
+        return blockChainActions.registerBlock(account, label, block)
+      })
   }
 }
 
