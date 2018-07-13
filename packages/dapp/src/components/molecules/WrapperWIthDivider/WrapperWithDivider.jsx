@@ -1,19 +1,18 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import isArray from 'lodash/isArray'
 
 const WrapperWithDivider = ({ Divider, children }) => {
   let content = children
-  if (isArray(children)) {
+  if (Array.isArray(children)) {
     content = children.map(
       (Component, index) =>
         index !== children.length - 1 ? (
-          <div key={index}>
+          <div key={`wrap-div-${index}`}>
             {Component}
             <Divider />
           </div>
         ) : (
-          Component
+          <div key={`wrap-div-${index}`}>{Component}</div>
         )
     )
   }
@@ -23,7 +22,7 @@ const WrapperWithDivider = ({ Divider, children }) => {
 
 WrapperWithDivider.propTypes = {
   Divider: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]).isRequired
 }
 
 export default WrapperWithDivider

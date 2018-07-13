@@ -3,7 +3,7 @@
 exports[`WrapperWithDivider component renders correctly 1`] = `
 <div>
   <div
-    key="0"
+    key="wrap-div-0"
   >
     <div
       className="first-children"
@@ -12,26 +12,30 @@ exports[`WrapperWithDivider component renders correctly 1`] = `
     <Divider />
   </div>
   <div
-    key="1"
+    key="wrap-div-1"
   >
     <div
       className="second-children"
-      key="asd"
+      key="sad"
     />
     <Divider />
   </div>
   <div
-    key="2"
+    key="wrap-div-2"
   >
     <div
       className="third-children"
-      key="asd"
+      key="ads"
     />
     <Divider />
   </div>
   <div
-    className="fourth-children"
-    key="asd"
-  />
+    key="wrap-div-3"
+  >
+    <div
+      className="fourth-children"
+      key="das"
+    />
+  </div>
 </div>
 `;

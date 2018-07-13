@@ -5,9 +5,9 @@ import toJson from 'enzyme-to-json'
 
 const children = [
   <div className="first-children" key="asd" />,
-  <div className="second-children" key="asd" />,
-  <div className="third-children" key="asd" />,
-  <div className="fourth-children" key="asd" />
+  <div className="second-children" key="sad" />,
+  <div className="third-children" key="ads" />,
+  <div className="fourth-children" key="das" />
 ]
 
 const Divider = () => <div className="divider-div" />
