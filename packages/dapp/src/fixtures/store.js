@@ -12,7 +12,7 @@ export const defaultState = {
     accounts: {
       '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196': {
         provider: 'metamask',
-        balance: new BigNumber('57999999999960203063'),
+        balance: new BigNumber('64905172851266399404'),
         vaults: {
           '0x86a1ba4d485ce346bded508e2426798f825558be': {
             id: new BigNumber('0'),
@@ -20,7 +20,7 @@ export const defaultState = {
             symbol: 'asd',
             owner: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196',
             group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff',
-            totalSupply: new BigNumber('14000000000000000000')
+            totalSupply: new BigNumber('28640000000000000000')
           },
           '0x421e1cef6e85e78da2470e54af64a626f45afb85': {
             id: new BigNumber('1'),
@@ -28,7 +28,7 @@ export const defaultState = {
             symbol: 'das',
             owner: '0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d',
             group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff',
-            totalSupply: new BigNumber('2023498000000000000')
+            totalSupply: new BigNumber('21343170000000000000')
           }
         },
         vaultTransactions: {
@@ -37,8 +37,8 @@ export const defaultState = {
               date: 1531227188000,
               type: 'Deposit',
               symbol: 'ETH',
-              value: new BigNumber('10000000000000000000'),
-              units: new BigNumber('10000000'),
+              value: new BigNumber('23860000000000000000'),
+              units: new BigNumber('23860000'),
               account: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
             },
             '0xc8c775cec1666c7bd55eb60956dc2aad39beea0846396c051410838c74c6d37c': {
@@ -60,7 +60,8 @@ export const defaultState = {
         provider: 'metamask',
         balance: new BigNumber('87999999999999410580')
       }
-    }
+    },
+    totalBalance: new BigNumber('240888932851254804397')
   },
   routing: {
     location: {
