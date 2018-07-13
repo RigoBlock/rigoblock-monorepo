@@ -1,0 +1,593 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountsPanel component renders correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [MockFunction],
+      "getState": [Function],
+      "subscribe": [MockFunction],
+    }
+  }
+>
+  <Connect(AccountsPanel)>
+    <AccountsPanel
+      accounts={
+        Object {
+          "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196": Object {
+            "balance": "64905172851266399404",
+            "provider": "metamask",
+            "vaultTransactions": Object {
+              "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
+                "0x2c3cdebdba5271d54780f3368f90982582b734610175e620c8b964382de9f351": Object {
+                  "account": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+                  "date": 1531227188000,
+                  "symbol": "ETH",
+                  "type": "Deposit",
+                  "units": "23860000",
+                  "value": "23860000000000000000",
+                },
+                "0xc8c775cec1666c7bd55eb60956dc2aad39beea0846396c051410838c74c6d37c": Object {
+                  "account": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+                  "date": 1531227188000,
+                  "symbol": "ETH",
+                  "type": "Withdraw",
+                  "units": "1000000",
+                  "value": "1000000000000000000",
+                },
+              },
+            },
+            "vaults": Object {
+              "0x421e1cef6e85e78da2470e54af64a626f45afb85": Object {
+                "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
+                "id": "1",
+                "name": "Third Vault",
+                "owner": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
+                "symbol": "das",
+                "totalSupply": "21343170000000000000",
+              },
+              "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
+                "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
+                "id": "0",
+                "name": "First Vault",
+                "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+                "symbol": "asd",
+                "totalSupply": "28640000000000000000",
+              },
+            },
+          },
+          "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d": Object {
+            "balance": "67999999999977505798",
+            "provider": "metamask",
+          },
+          "0x8bb7481495d45ccd5cffae1c3a84155fea85a323": Object {
+            "balance": "87999999999999410580",
+            "provider": "metamask",
+          },
+        }
+      }
+      dispatch={[MockFunction]}
+    >
+      <div
+        className="accounts-panel"
+      >
+        <ContentWrapper
+          header={
+            <PanelHeader
+              title="Accounts"
+              tooltip="List of all accounts"
+            />
+          }
+        >
+          <div
+            className="content-wrapper"
+          >
+            <div
+              className="content-wrapper-header"
+            >
+              <PanelHeader
+                title="Accounts"
+                tooltip="List of all accounts"
+              >
+                <div
+                  className="panel-header"
+                >
+                  <h1>
+                    Accounts
+                  </h1>
+                  <Icon
+                    className=""
+                    onClick={[Function]}
+                    size="medium"
+                    tooltipText="List of all accounts"
+                    type="help"
+                  >
+                    <div
+                      className="material-icons icon medium"
+                      onClick={[Function]}
+                    >
+                      <span
+                        className="tooltip-hover"
+                      >
+                        help
+                      </span>
+                      <Tooltip
+                        tooltipText="List of all accounts"
+                      >
+                        <div
+                          className="tooltip-container"
+                        >
+                          <div
+                            className="tooltip-text"
+                          >
+                            List of all accounts
+                          </div>
+                          <div
+                            className="tooltip-tip"
+                          />
+                        </div>
+                      </Tooltip>
+                    </div>
+                  </Icon>
+                </div>
+              </PanelHeader>
+            </div>
+            <div
+              className="content-wrapper-content"
+            >
+              <List
+                Component={[Function]}
+                Divider={[Function]}
+                className={null}
+                data={
+                  Array [
+                    Object {
+                      "balance": "64905172851266399404",
+                      "number": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
+                      "provider": "metamask",
+                    },
+                    Object {
+                      "balance": "67999999999977505798",
+                      "number": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
+                      "provider": "metamask",
+                    },
+                    Object {
+                      "balance": "87999999999999410580",
+                      "number": "0x8bb7481495d45ccd5cffae1c3a84155fea85a323",
+                      "provider": "metamask",
+                    },
+                  ]
+                }
+              >
+                <div
+                  className={null}
+                >
+                  <AccountSummary
+                    balance={"64905172851266399404"}
+                    key="0"
+                    number="0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196"
+                    provider="metamask"
+                    tokenBalance={"0"}
+                  >
+                    <div
+                      className="account-summary"
+                    >
+                      <AccountItem
+                        appearance="full"
+                        number="0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196"
+                        provider="metamask"
+                      >
+                        <div
+                          className="account-item-full"
+                        >
+                          <div
+                            className="provider"
+                          >
+                            <div
+                              className="logo"
+                            >
+                              <Component>
+                                SVG image metamask-fox.svg
+                              </Component>
+                            </div>
+                            <div>
+                              <span
+                                className="name"
+                              >
+                                MetaMask
+                              </span>
+                              <span
+                                className="account-number"
+                              >
+                                <span>
+                                  0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196
+                                </span>
+                                <Icon
+                                  className=""
+                                  onClick={[Function]}
+                                  size="small"
+                                  tooltipText=""
+                                  type="filter_none"
+                                >
+                                  <div
+                                    className="material-icons icon small"
+                                    onClick={[Function]}
+                                  >
+                                    filter_none
+                                  </div>
+                                </Icon>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </AccountItem>
+                      <div
+                        className="balances"
+                      >
+                        <Amount
+                          size="small"
+                          symbol="ETH"
+                          symbolSize="small"
+                          value={"64.905172851266399404"}
+                          valueSize="small"
+                        >
+                          <div
+                            className="amount"
+                          >
+                            <div
+                              className="amount-symbol small"
+                            >
+                              ETH
+                            </div>
+                            <ItemValue
+                              currency="ETH"
+                              currencyGrowth={null}
+                              growth={null}
+                              itemValue={"64.905172851266399404"}
+                              precision={2}
+                              valueSize="small"
+                            >
+                              <div
+                                className="no-events"
+                              >
+                                <span
+                                  className="item-value small"
+                                >
+                                  64.90
+                                </span>
+                              </div>
+                            </ItemValue>
+                          </div>
+                        </Amount>
+                        <Amount
+                          size="small"
+                          symbol="GRG"
+                          symbolSize="small"
+                          value={"0"}
+                          valueSize="small"
+                        >
+                          <div
+                            className="amount"
+                          >
+                            <div
+                              className="amount-symbol small"
+                            >
+                              GRG
+                            </div>
+                            <ItemValue
+                              currency="ETH"
+                              currencyGrowth={null}
+                              growth={null}
+                              itemValue={"0"}
+                              precision={2}
+                              valueSize="small"
+                            >
+                              <div
+                                className="no-events"
+                              >
+                                <span
+                                  className="item-value small"
+                                >
+                                  0.00
+                                </span>
+                              </div>
+                            </ItemValue>
+                          </div>
+                        </Amount>
+                      </div>
+                    </div>
+                  </AccountSummary>
+                  <divider
+                    key="divider-1"
+                  >
+                    <div
+                      className="left-navbar-divider"
+                    />
+                  </divider>
+                  <AccountSummary
+                    balance={"67999999999977505798"}
+                    key="1"
+                    number="0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d"
+                    provider="metamask"
+                    tokenBalance={"0"}
+                  >
+                    <div
+                      className="account-summary"
+                    >
+                      <AccountItem
+                        appearance="full"
+                        number="0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d"
+                        provider="metamask"
+                      >
+                        <div
+                          className="account-item-full"
+                        >
+                          <div
+                            className="provider"
+                          >
+                            <div
+                              className="logo"
+                            >
+                              <Component>
+                                SVG image metamask-fox.svg
+                              </Component>
+                            </div>
+                            <div>
+                              <span
+                                className="name"
+                              >
+                                MetaMask
+                              </span>
+                              <span
+                                className="account-number"
+                              >
+                                <span>
+                                  0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d
+                                </span>
+                                <Icon
+                                  className=""
+                                  onClick={[Function]}
+                                  size="small"
+                                  tooltipText=""
+                                  type="filter_none"
+                                >
+                                  <div
+                                    className="material-icons icon small"
+                                    onClick={[Function]}
+                                  >
+                                    filter_none
+                                  </div>
+                                </Icon>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </AccountItem>
+                      <div
+                        className="balances"
+                      >
+                        <Amount
+                          size="small"
+                          symbol="ETH"
+                          symbolSize="small"
+                          value={"67.999999999977505798"}
+                          valueSize="small"
+                        >
+                          <div
+                            className="amount"
+                          >
+                            <div
+                              className="amount-symbol small"
+                            >
+                              ETH
+                            </div>
+                            <ItemValue
+                              currency="ETH"
+                              currencyGrowth={null}
+                              growth={null}
+                              itemValue={"67.999999999977505798"}
+                              precision={2}
+                              valueSize="small"
+                            >
+                              <div
+                                className="no-events"
+                              >
+                                <span
+                                  className="item-value small"
+                                >
+                                  67.99
+                                </span>
+                              </div>
+                            </ItemValue>
+                          </div>
+                        </Amount>
+                        <Amount
+                          size="small"
+                          symbol="GRG"
+                          symbolSize="small"
+                          value={"0"}
+                          valueSize="small"
+                        >
+                          <div
+                            className="amount"
+                          >
+                            <div
+                              className="amount-symbol small"
+                            >
+                              GRG
+                            </div>
+                            <ItemValue
+                              currency="ETH"
+                              currencyGrowth={null}
+                              growth={null}
+                              itemValue={"0"}
+                              precision={2}
+                              valueSize="small"
+                            >
+                              <div
+                                className="no-events"
+                              >
+                                <span
+                                  className="item-value small"
+                                >
+                                  0.00
+                                </span>
+                              </div>
+                            </ItemValue>
+                          </div>
+                        </Amount>
+                      </div>
+                    </div>
+                  </AccountSummary>
+                  <divider
+                    key="divider-2"
+                  >
+                    <div
+                      className="left-navbar-divider"
+                    />
+                  </divider>
+                  <AccountSummary
+                    balance={"87999999999999410580"}
+                    key="2"
+                    number="0x8bb7481495d45ccd5cffae1c3a84155fea85a323"
+                    provider="metamask"
+                    tokenBalance={"0"}
+                  >
+                    <div
+                      className="account-summary"
+                    >
+                      <AccountItem
+                        appearance="full"
+                        number="0x8bb7481495d45ccd5cffae1c3a84155fea85a323"
+                        provider="metamask"
+                      >
+                        <div
+                          className="account-item-full"
+                        >
+                          <div
+                            className="provider"
+                          >
+                            <div
+                              className="logo"
+                            >
+                              <Component>
+                                SVG image metamask-fox.svg
+                              </Component>
+                            </div>
+                            <div>
+                              <span
+                                className="name"
+                              >
+                                MetaMask
+                              </span>
+                              <span
+                                className="account-number"
+                              >
+                                <span>
+                                  0x8bb7481495d45ccd5cffae1c3a84155fea85a323
+                                </span>
+                                <Icon
+                                  className=""
+                                  onClick={[Function]}
+                                  size="small"
+                                  tooltipText=""
+                                  type="filter_none"
+                                >
+                                  <div
+                                    className="material-icons icon small"
+                                    onClick={[Function]}
+                                  >
+                                    filter_none
+                                  </div>
+                                </Icon>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </AccountItem>
+                      <div
+                        className="balances"
+                      >
+                        <Amount
+                          size="small"
+                          symbol="ETH"
+                          symbolSize="small"
+                          value={"87.99999999999941058"}
+                          valueSize="small"
+                        >
+                          <div
+                            className="amount"
+                          >
+                            <div
+                              className="amount-symbol small"
+                            >
+                              ETH
+                            </div>
+                            <ItemValue
+                              currency="ETH"
+                              currencyGrowth={null}
+                              growth={null}
+                              itemValue={"87.99999999999941058"}
+                              precision={2}
+                              valueSize="small"
+                            >
+                              <div
+                                className="no-events"
+                              >
+                                <span
+                                  className="item-value small"
+                                >
+                                  87.99
+                                </span>
+                              </div>
+                            </ItemValue>
+                          </div>
+                        </Amount>
+                        <Amount
+                          size="small"
+                          symbol="GRG"
+                          symbolSize="small"
+                          value={"0"}
+                          valueSize="small"
+                        >
+                          <div
+                            className="amount"
+                          >
+                            <div
+                              className="amount-symbol small"
+                            >
+                              GRG
+                            </div>
+                            <ItemValue
+                              currency="ETH"
+                              currencyGrowth={null}
+                              growth={null}
+                              itemValue={"0"}
+                              precision={2}
+                              valueSize="small"
+                            >
+                              <div
+                                className="no-events"
+                              >
+                                <span
+                                  className="item-value small"
+                                >
+                                  0.00
+                                </span>
+                              </div>
+                            </ItemValue>
+                          </div>
+                        </Amount>
+                      </div>
+                    </div>
+                  </AccountSummary>
+                </div>
+              </List>
+            </div>
+          </div>
+        </ContentWrapper>
+      </div>
+    </AccountsPanel>
+  </Connect(AccountsPanel)>
+</Provider>
+`;
