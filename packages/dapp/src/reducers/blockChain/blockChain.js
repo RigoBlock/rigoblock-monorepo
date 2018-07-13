@@ -43,16 +43,12 @@ const blockChainReducer = createReducer(
         state
       )
     },
-    [blockChainActions.updateAccountBalance]: (
-      state,
-      payload,
-      { currentAccount }
-    ) =>
+    [blockChainActions.updateAccountBalance]: (state, { account, balance }) =>
       u(
         {
           accounts: {
-            [currentAccount]: {
-              balance: payload
+            [account]: {
+              balance
             }
           }
         },

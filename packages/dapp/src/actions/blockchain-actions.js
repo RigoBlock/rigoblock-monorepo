@@ -8,11 +8,21 @@ export default {
     account
   })),
   blockChainLogout: createAction('user logout'),
-  registerBlock: createAction('event block registered', (label, block) => ({
-    label,
-    block
-  })),
+  registerBlock: createAction(
+    'event block registered',
+    (account, label, block) => ({
+      account,
+      label,
+      block
+    })
+  ),
   vaultFetchCompleted: createAction('vault fetch completed'),
-  updateAccountBalance: createAction('updating accounts balance'),
+  updateAccountBalance: createAction(
+    'updating accounts balance',
+    (account, balance) => ({
+      account,
+      balance
+    })
+  ),
   updateTotalAccountBalance: createAction('updating total accounts balance')
 }
