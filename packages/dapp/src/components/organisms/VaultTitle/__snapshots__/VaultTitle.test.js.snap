@@ -24,7 +24,7 @@ exports[`VaultTitle component renders correctly 1`] = `
             "name": "Third Vault",
             "owner": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
             "symbol": "das",
-            "totalSupply": "2023498000000000000",
+            "totalSupply": "21343170000000000000",
           },
           "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
             "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
@@ -32,7 +32,7 @@ exports[`VaultTitle component renders correctly 1`] = `
             "name": "First Vault",
             "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
             "symbol": "asd",
-            "totalSupply": "14000000000000000000",
+            "totalSupply": "28640000000000000000",
           },
         }
       }
@@ -260,7 +260,7 @@ exports[`VaultTitle component renders correctly 1`] = `
           <Amount
             symbol="ETH"
             symbolSize="small"
-            value={"14"}
+            value={"28.64"}
             valueSize="large"
           >
             <div
@@ -275,7 +275,7 @@ exports[`VaultTitle component renders correctly 1`] = `
                 currency="ETH"
                 currencyGrowth={null}
                 growth={null}
-                itemValue={"14"}
+                itemValue={"28.64"}
                 precision={2}
                 valueSize="large"
               >
@@ -285,7 +285,7 @@ exports[`VaultTitle component renders correctly 1`] = `
                   <span
                     className="item-value large"
                   >
-                    14.00
+                    28.64
                   </span>
                 </div>
               </ItemValue>
