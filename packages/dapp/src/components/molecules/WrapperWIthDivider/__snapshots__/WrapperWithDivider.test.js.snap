@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WrapperWithDivider component renders correctly 1`] = `
+<div>
+  <div
+    key="wrap-div-0"
+  >
+    <div
+      className="first-children"
+      key="asd"
+    />
+    <Divider />
+  </div>
+  <div
+    key="wrap-div-1"
+  >
+    <div
+      className="second-children"
+      key="sad"
+    />
+    <Divider />
+  </div>
+  <div
+    key="wrap-div-2"
+  >
+    <div
+      className="third-children"
+      key="ads"
+    />
+    <Divider />
+  </div>
+  <div
+    key="wrap-div-3"
+  >
+    <div
+      className="fourth-children"
+      key="das"
+    />
+  </div>
+</div>
+`;
