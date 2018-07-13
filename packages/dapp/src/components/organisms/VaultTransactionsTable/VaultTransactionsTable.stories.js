@@ -13,8 +13,8 @@ const transactionData = {
   date: 1531227188000,
   type: 'Deposit',
   symbol: 'ETH',
-  value: new BigNumber('10000000000000000000'),
-  units: new BigNumber('10000000'),
+  value: new BigNumber('23860000000000000000'),
+  units: new BigNumber('23860000'),
   account: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
 }
 

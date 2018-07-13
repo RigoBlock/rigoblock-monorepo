@@ -55,12 +55,12 @@ module.exports = async network => {
 
   await vaultInstance1.methods.buyVault().send({
     from: accounts[0],
-    value: Web3.utils.toWei('10')
+    value: Web3.utils.toWei('23.86')
   })
 
   await vaultInstance1.methods.buyVault().send({
     from: accounts[1],
-    value: Web3.utils.toWei('5')
+    value: Web3.utils.toWei('5.78')
   })
 
   await vaultInstance1.methods.sellVault(1 * ETH_IN_MICRO).send({
@@ -92,17 +92,17 @@ module.exports = async network => {
 
   await vaultInstance2.methods.buyVault().send({
     from: accounts[1],
-    value: Web3.utils.toWei('4')
+    value: Web3.utils.toWei('4.21354')
   })
 
   await vaultInstance2.methods.buyVault().send({
     from: accounts[2],
-    value: Web3.utils.toWei('5')
+    value: Web3.utils.toWei('5.5489')
   })
 
   await vaultInstance2.methods.buyVault().send({
     from: accounts[3],
-    value: Web3.utils.toWei('6')
+    value: Web3.utils.toWei('6.456089')
   })
 
   await vaultInstance2.methods.sellVault(1 * ETH_IN_MICRO).send({
@@ -142,17 +142,17 @@ module.exports = async network => {
 
   await vaultInstance3.methods.buyVault().send({
     from: accounts[0],
-    value: Web3.utils.toWei('15')
+    value: Web3.utils.toWei('15.2348273459')
   })
 
   await vaultInstance3.methods.buyVault().send({
     from: accounts[3],
-    value: Web3.utils.toWei('7')
+    value: Web3.utils.toWei('7.87624432')
   })
 
   await vaultInstance3.methods.buyVault().send({
     from: accounts[4],
-    value: Web3.utils.toWei('2')
+    value: Web3.utils.toWei('2.2321')
   })
 
   await vaultInstance3.methods.sellVault(3 * ETH_IN_MICRO).send({
@@ -188,17 +188,17 @@ module.exports = async network => {
 
   await vaultInstance4.methods.buyVault().send({
     from: accounts[1],
-    value: Web3.utils.toWei('8')
+    value: Web3.utils.toWei('8.2324')
   })
 
   await vaultInstance4.methods.buyVault().send({
     from: accounts[2],
-    value: Web3.utils.toWei('4')
+    value: Web3.utils.toWei('4.2414')
   })
 
   await vaultInstance4.methods.buyVault().send({
     from: accounts[4],
-    value: Web3.utils.toWei('18')
+    value: Web3.utils.toWei('18.35487')
   })
 
   const supply1 = await vaultInstance1.methods
