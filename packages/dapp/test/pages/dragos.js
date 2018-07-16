@@ -14,8 +14,8 @@ module.exports = {
   assertImOnPage() {
     I.waitInUrl('/dragos', 5)
     I.waitForText('Dragos', 'h1')
-    I.waitForVisible('div.account-view')
-    I.waitForVisible('div.navigation-view')
-    I.waitForVisible(`a[href='${dragosRoute}'].active`)
+    I.waitForVisible('div.account-view', 5)
+    I.waitForVisible('div.navigation-view', 5)
+    I.waitForVisible(`a[href='${dragosRoute}'].active`, 5)
   }
 }

@@ -1,4 +1,4 @@
-Feature('Vaults')
+Feature('Vaults').retry(3)
 
 Scenario('test correct vaults render', (vaults, navigation) => {
   navigation.navigateToVaults()

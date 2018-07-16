@@ -6,7 +6,7 @@ module.exports = function() {
     // Define custom steps here, use 'this' to access default methods of I.
     // It is recommended to place a general 'login' function here.
     cssClick: function(element) {
-      this.waitForVisible(element)
+      this.waitForVisible(element, 5)
       return this.executeScript(
         el => document.querySelector(el).click(),
         element

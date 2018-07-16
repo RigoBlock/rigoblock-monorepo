@@ -1,4 +1,4 @@
-Feature('Dashboard')
+Feature('Dashboard').retry(3)
 
 Scenario('test correct dashboard render', dashboard => {
   dashboard.assertImOnPage()

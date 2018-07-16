@@ -1,4 +1,4 @@
-Feature('Navigation')
+Feature('Navigation').retry(3)
 
 Scenario(
   'test correct navigation to preferences page',
