@@ -17,7 +17,7 @@ let VaultTitle = ({ vaultAddress, vaults }) => {
       <div className="vault-title-header">
         <Title size={TITLE_SIZES.LARGE}>{selectedVault.symbol}</Title>
         <CallToAction>
-          {/* TODO: implement logic to deposit or withdraw to/from vault */}
+          {/* TODO: add action to open modal */}
           <Button onClick={() => {}}>Deposit</Button>
           <Button onClick={() => {}}>Withdraw</Button>
         </CallToAction>

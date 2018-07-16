@@ -90,6 +90,7 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                 "owner": "0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d",
                 "symbol": "das",
                 "totalSupply": "21343170000000000000",
+                "transactionFee": "0",
               },
               "0x86a1ba4d485ce346bded508e2426798f825558be": Object {
                 "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
@@ -98,6 +99,7 @@ exports[`VaultTransactionsTable component renders correctly 1`] = `
                 "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
                 "symbol": "asd",
                 "totalSupply": "28640000000000000000",
+                "transactionFee": "0",
               },
             }
           }
