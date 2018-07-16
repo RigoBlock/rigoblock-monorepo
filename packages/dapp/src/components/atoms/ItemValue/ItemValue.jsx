@@ -13,8 +13,8 @@ export const ITEM_VALUE_SIZES = {
   XL: 'x-large'
 }
 
-export const roundProps = props => {
-  return Object.keys(props)
+export const roundProps = props =>
+  Object.keys(props)
     .filter(k =>
       // we are filtering for BigNumbers
       // TODO: remove once BigNumber.isBigNumber(x) starts working
@@ -25,7 +25,6 @@ export const roundProps = props => {
       [k]: props[k].toFormat(props.precision, BigNumber.ROUND_FLOOR)
     }))
     .reduce((acc, curr) => ({ ...acc, ...curr }), {})
-}
 
 const ItemValue = props => {
   const { valueSize, currencyGrowth, growth, currency } = props
