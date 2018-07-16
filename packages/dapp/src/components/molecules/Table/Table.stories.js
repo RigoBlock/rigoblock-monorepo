@@ -1,9 +1,9 @@
 import '../../_settings/_base.scss'
 import { BigNumber } from 'bignumber.js'
 import { storiesOf } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs/react'
+import { text, withKnobs } from '@storybook/addon-knobs/react'
 import React from 'react'
-import TransactionsTable from './TransactionsTable'
+import Table from './Table'
 import Web3 from 'web3'
 
 const transactionData = {
@@ -52,9 +52,13 @@ const tableColumns = [
   }
 ]
 
-storiesOf('Organisms/TransactionsTable', module)
+storiesOf('Organisms/Table', module)
   .addDecorator(withKnobs)
   .addDecorator(story => <div style={{ width: '446px' }}>{story()}</div>)
   .add('default', () => (
-    <TransactionsTable tableColumns={tableColumns} tableData={tableData} />
+    <Table
+      tableColumns={tableColumns}
+      tableData={tableData}
+      title={text('Title text', 'Transactions')}
+    />
   ))

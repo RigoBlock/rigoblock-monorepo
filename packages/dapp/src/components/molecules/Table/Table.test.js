@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import { shallow } from 'enzyme'
 import React from 'react'
-import TransactionsTable from './TransactionsTable.jsx'
+import Table from './Table.jsx'
 import toJson from 'enzyme-to-json'
 
 const tableColumns = [
@@ -36,10 +36,14 @@ const transaction = {
 }
 
 const wrapper = shallow(
-  <TransactionsTable tableData={[transaction]} tableColumns={tableColumns} />
+  <Table
+    tableData={[transaction]}
+    tableColumns={tableColumns}
+    title="Transactions"
+  />
 )
 
-describe('TransactionsTable component', () => {
+describe('Table component', () => {
   it('renders correctly', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })

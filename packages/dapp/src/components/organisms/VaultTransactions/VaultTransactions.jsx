@@ -1,12 +1,10 @@
-import './VaultTransactions.scss'
 import { ETH_TO_WEI } from '../../../constants/utils'
 import { connect } from 'react-redux'
 import Icon from '../../atoms/Icon'
 import Link from '../../atoms/Link'
 import PropTypes from 'prop-types'
 import React from 'react'
-import Title from '../../atoms/Title'
-import TransactionsTable from '../../molecules/TransactionsTable'
+import Table from '../../molecules/Table'
 import moment from 'moment'
 
 let VaultTransactions = ({ transactions, vaultAddress }) => {
@@ -70,13 +68,11 @@ let VaultTransactions = ({ transactions, vaultAddress }) => {
   ]
 
   return (
-    <div className="vault-transactions">
-      <Title>Transactions</Title>
-      <TransactionsTable
-        tableData={parsedTransactions}
-        tableColumns={tableColumns}
-      />
-    </div>
+    <Table
+      tableData={parsedTransactions}
+      tableColumns={tableColumns}
+      title="Transactions"
+    />
   )
 }
 
