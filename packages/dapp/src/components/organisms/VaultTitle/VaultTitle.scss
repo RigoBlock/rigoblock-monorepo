@@ -1,0 +1,18 @@
+@import "../../_settings/variables.scss";
+
+.vault-title {
+  padding: $dist-s;
+  .vault-title-header {
+    display: flex;
+    justify-content: space-between;
+    align-content: flex-start;
+    align-items: center;
+
+    .title {
+      text-transform: uppercase;
+    }
+  }
+  .amount-wrapper {
+    max-width: 2 * $dist-6xl;
+  }
+}

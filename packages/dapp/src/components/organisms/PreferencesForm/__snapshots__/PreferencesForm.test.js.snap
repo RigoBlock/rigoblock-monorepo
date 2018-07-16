@@ -237,12 +237,13 @@ exports[`PreferencesForm component renders correctly 1`] = `
             valid={true}
           >
             <form
+              className="preferences-form"
               onSubmit={[Function]}
             >
               <h3>
                 Time zone
               </h3>
-              <SelectFieldRedux
+              <SelectFieldForm
                 fieldName="timezone"
                 fieldProps={
                   Object {
@@ -1067,7 +1068,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                     </ConnectedField>
                   </Connect(ConnectedField)>
                 </Field>
-              </SelectFieldRedux>
+              </SelectFieldForm>
               <CallToAction>
                 <div
                   className="call-to-action"
