@@ -1,4 +1,4 @@
-Feature('Preferences')
+Feature('Preferences').retry(3)
 
 Scenario('test correct preferences render', (preferences, navigation) => {
   navigation.navigateToPreferences()

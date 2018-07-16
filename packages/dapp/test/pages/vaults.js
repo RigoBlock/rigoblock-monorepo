@@ -13,10 +13,10 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/vaults', 5)
-    I.waitForVisible('div.account-view')
-    I.waitForVisible('div.navigation-view')
-    I.waitForVisible(`a[href='${vaultsRoute}'].active`)
-    I.waitForVisible('div.vault-select', 5)
+    I.waitForVisible('div.account-view', 5)
+    I.waitForVisible('div.navigation-view', 5)
+    I.waitForVisible(`a[href='${vaultsRoute}'].active`, 5)
+    I.waitForVisible('div.vault-select', 5, 5)
     I.waitNumberOfVisibleElements('div.list-item', 2, 5)
   },
 
