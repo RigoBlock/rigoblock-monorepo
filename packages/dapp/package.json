@@ -60,6 +60,7 @@
     "keymirror": "^0.1.1",
     "localforage": "^1.6.0",
     "lodash-es": "^4.17.10",
+    "mini-css-extract-plugin": "^0.4.1",
     "moment-timezone": "^0.5.17",
     "node-sass": "^4.7.2",
     "object-assign": "4.1.1",
