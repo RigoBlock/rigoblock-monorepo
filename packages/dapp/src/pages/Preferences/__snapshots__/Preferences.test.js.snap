@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Preferences page renders correctly 1`] = `
-<BaseTemplate>
+<Connect(BaseTemplate)>
   <div
     className="preferences-content"
   >
@@ -10,5 +10,5 @@ exports[`Preferences page renders correctly 1`] = `
     </h1>
     <Connect(ReduxForm) />
   </div>
-</BaseTemplate>
+</Connect(BaseTemplate)>
 `;

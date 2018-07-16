@@ -25,6 +25,9 @@ $blue: #0000FF;
 $azure-radiance: #0076FF;
 $success-color: #7ED323;
 $error-color: #FD3947;
+$white: #FFFFFF;
+$white-semi-transparent: rgba(255, 255, 255, 0.7);
+
 $border-size: 2px;
 $quick-animation: 100ms;
 $medium-animation: 300ms;
@@ -45,6 +48,7 @@ $dist-6xl: 80px;
 
 // shadows
 $box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.15), 0 2px 5px -2px rgba(0, 0, 0, 0.12);
+$box-shadow2: 0 15px 22px -6px rgba(0, 0, 0, 0.21);
 
 // borders
 $small-border-radius: 2px;

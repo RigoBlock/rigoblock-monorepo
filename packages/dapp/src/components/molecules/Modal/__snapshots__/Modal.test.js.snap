@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal component renders correctly 1`] = `
+<div
+  className="modal-wrapper"
+  onClick={[Function]}
+>
+  <div
+    className="modal-content"
+  >
+    <dummyComp />
+  </div>
+</div>
+`;
