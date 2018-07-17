@@ -7,7 +7,9 @@ import React from 'react'
 import Title from '../../atoms/Title'
 
 const VaultFees = ({ vault, userType }) => {
-  const transactionFee = vault.transactionFee.toFormat(2, BigNumber.ROUND_FLOOR)
+  const transactionFee = vault.transactionFee
+    ? vault.transactionFee.toFormat(2, BigNumber.ROUND_FLOOR)
+    : '0.00'
   return userType === MANAGER ? (
     <div className="vault-fees">
       <Title>Fees</Title>

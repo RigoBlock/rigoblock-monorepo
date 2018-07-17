@@ -1,4 +1,5 @@
 import './VaultTitle.scss'
+import { BigNumber } from 'bignumber.js'
 import { ETH } from '../../../constants/blockchain'
 import { ETH_TO_WEI } from '../../../constants/utils'
 import { INVESTOR } from '../../../constants/user'
@@ -10,7 +11,9 @@ import React from 'react'
 import Title, { TITLE_SIZES } from '../../atoms/Title'
 
 const VaultTitle = ({ vault, userType }) => {
-  const vaultSupply = vault.totalSupply.div(ETH_TO_WEI)
+  const vaultSupply = vault.totalSupply
+    ? vault.totalSupply.div(ETH_TO_WEI)
+    : new BigNumber('0')
   return userType === INVESTOR ? (
     <div className="vault-title">
       <div className="vault-title-header">
