@@ -38,9 +38,10 @@ VaultFees.propTypes = {
 VaultFees = connect(state => {
   const { currentAccount } = state.preferences
   return {
-    vaults: currentAccount
-      ? state.blockChain.accounts[currentAccount].vaults
-      : {}
+    vaults:
+      currentAccount && state.blockChain.accounts[currentAccount]
+        ? state.blockChain.accounts[currentAccount].vaults
+        : {}
   }
 })(VaultFees)
 
