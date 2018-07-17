@@ -21,34 +21,4 @@ if (process.env.NODE_ENV === 'test') {
   require('raf').polyfill(global)
 }
 
-Object.values = Object.values
-  ? Object.values
-  : function(obj) {
-      const allowedTypes = [
-        '[object String]',
-        '[object Object]',
-        '[object Array]',
-        '[object Function]'
-      ]
-      const objType = Object.prototype.toString.call(obj)
-
-      if (obj === null || typeof obj === 'undefined') {
-        throw new TypeError('Cannot convert undefined or null to object')
-      } else if (!~allowedTypes.indexOf(objType)) {
-        return []
-      } else {
-        // if ES6 is supported
-        if (Object.keys) {
-          return Object.keys(obj).map(key => obj[key])
-        }
-
-        let result = []
-        for (let prop in obj) {
-          if (obj.hasOwnProperty(prop)) {
-            result.push(obj[prop])
-          }
-        }
-
-        return result
-      }
-    }
+Object.values = require('core-js/fn/object/values')

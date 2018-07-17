@@ -43,6 +43,7 @@
     "classnames": "^2.2.5",
     "codeceptjs": "^1.3.0",
     "codeceptjs-puppeteer": "^1.3.0",
+    "core-js": "3.0.0-beta.3",
     "css-loader": "0.28.11",
     "deep-freeze": "^0.0.1",
     "dotenv": "4.0.0",
@@ -145,5 +146,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "dependencies": {
+    "core-js": "3.0.0-beta.3"
   }
 }
