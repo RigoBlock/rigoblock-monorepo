@@ -16,13 +16,13 @@ const vault = {
 }
 
 describe('VaultTitle component', () => {
-  it('renders correctly as manager', () => {
+  it('renders correctly as investor', () => {
     expect(
       toJson(mount(<VaultTitle vault={vault} userType={INVESTOR} />))
     ).toMatchSnapshot()
   })
 
-  it('renders correctly as investor', () => {
+  it('renders correctly as manager', () => {
     expect(
       toJson(mount(<VaultTitle vault={vault} userType={MANAGER} />))
     ).toMatchSnapshot()

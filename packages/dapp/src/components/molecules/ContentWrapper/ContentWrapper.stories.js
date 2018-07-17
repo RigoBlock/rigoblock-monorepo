@@ -31,7 +31,7 @@ storiesOf('Molecules/ContentWrapper', module)
       <div>World</div>
     </ContentWrapper>
   ))
-  .add('second', () => (
+  .add('no header', () => (
     <ContentWrapper>
       {content}
       <div>Hello</div>

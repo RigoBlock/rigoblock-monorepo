@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-temp-{{ checksum "yarn.lock" }}
       - run:
           name: Install lerna and monorepo dependencies
           command: yarn install --frozen-lockfile
