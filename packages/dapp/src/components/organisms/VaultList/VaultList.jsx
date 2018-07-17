@@ -14,17 +14,13 @@ let vaultList = ({ vaults }) => {
       </div>
     )
   }
-  const vaultsList = Object.keys(vaults).map(vault => {
-    const { name, symbol, totalSupply } = vaults[vault]
-    const ethSupply = totalSupply
-      ? totalSupply.div(ETH_TO_WEI)
-      : new BigNumber('0')
-    return {
+  const vaultsList = Object.values(vaults).map(
+    ({ name, symbol, totalSupply }) => ({
       itemName: name,
       itemSymbol: symbol,
-      itemValue: ethSupply
-    }
-  })
+      itemValue: totalSupply ? totalSupply.div(ETH_TO_WEI) : new BigNumber('0')
+    })
+  )
   return (
     <div className="vault-list">
       <ListPanel title="Vaults" items={vaultsList} />

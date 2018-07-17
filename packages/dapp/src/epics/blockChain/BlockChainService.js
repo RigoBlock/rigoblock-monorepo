@@ -144,13 +144,11 @@ class BlockChainService {
   _filterBlocksByAccounts(label, obs) {
     return obs
       .map(block => {
-        const account = Object.keys(block.args)
-          .map(key => block.args[key])
-          .reduce(
-            (accountInvolved, blockAcc) =>
-              this.accounts.has(blockAcc) ? blockAcc : accountInvolved,
-            null
-          )
+        const account = Object.values(block.args).reduce(
+          (accountInvolved, blockAcc) =>
+            this.accounts.has(blockAcc) ? blockAcc : accountInvolved,
+          null
+        )
         return account && { ...block, account }
       })
       .filter(block => !!block)

@@ -20,3 +20,6 @@ Object.assign = require('object-assign')
 if (process.env.NODE_ENV === 'test') {
   require('raf').polyfill(global)
 }
+
+Object.values = require('core-js/fn/object/values')
+Object.entries = require('core-js/fn/object/entries')
