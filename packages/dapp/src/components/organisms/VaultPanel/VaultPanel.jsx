@@ -1,37 +1,55 @@
 import './VaultPanel.scss'
 import { connect } from 'react-redux'
-import AccountSummary from '../AccountSummary'
 import ContentWrapper from '../../molecules/ContentWrapper'
-import List from '../List'
-import PanelHeader from '../../molecules/PanelHeader'
 import PropTypes from 'prop-types'
 import React from 'react'
+import VaultFees from '../VaultFees'
+import VaultTitle from '../VaultTitle'
+import VaultTransactions from '../VaultTransactions'
+import WrapperWithDivider from '../../molecules/WrapperWithDivider'
 
-const tooltip = 'List of all accounts'
+let VaultPanel = ({ vaults, transactions, location }) => {
+  const vaultId = location.split('/vaults/').pop()
+  const [vaultAddress, vaultData] = Object.entries(vaults)
+    .filter(([, data]) => data.id.toString() === vaultId)
+    .pop()
+  const vaultTransactions = transactions[vaultAddress]
+  console.log(vaultTransactions)
 
-let VaultPanel = ({ accounts }) => {
-  const values = Object.entries(accounts).map(([accNum, data]) => ({
-    provider: data.provider,
-    number: accNum,
-    balance: data.balance
-  }))
-  const header = <PanelHeader title={'Accounts'} tooltip={tooltip} />
-  const divider = () => <div className="left-navbar-divider" />
+  const divider = () => <div className="vault-panel-divider" />
   return (
-    <div className="accounts-panel">
-      <ContentWrapper header={header}>
-        <List Component={AccountSummary} data={values} Divider={divider} />
+    <div className="vault-panel">
+      <ContentWrapper>
+        <WrapperWithDivider Divider={divider}>
+          <VaultTitle vault={vaultData} />
+          <VaultFees vault={vaultData} />
+          <VaultTransactions transactions={vaultTransactions} />
+        </WrapperWithDivider>
       </ContentWrapper>
     </div>
   )
 }
 
 VaultPanel.propTypes = {
-  accounts: PropTypes.object.isRequired
+  vaults: PropTypes.object.isRequired,
+  transactions: PropTypes.object.isRequired,
+  location: PropTypes.string.isRequired
 }
 
-VaultPanel = connect(state => ({
-  accounts: state.blockChain.accounts
-}))(VaultPanel)
+VaultPanel = connect(state => {
+  const { currentAccount } = state.preferences
+  return currentAccount && state.blockChain.accounts[currentAccount]
+    ? {
+        transactions:
+          state.blockChain.accounts[currentAccount].vaultTransactions,
+        vaults: state.blockChain.accounts[currentAccount].vaults,
+        location: state.routing.location.pathname
+      }
+    : {
+        transactions: {},
+        vaults: {},
+        location: state.routing.location.pathname
+      }
+})(VaultPanel)
 
 export default VaultPanel

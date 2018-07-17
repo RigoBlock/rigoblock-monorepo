@@ -1,7 +1,6 @@
 import './VaultTitle.scss'
 import { ETH } from '../../../constants/blockchain'
 import { ETH_TO_WEI } from '../../../constants/utils'
-import { connect } from 'react-redux'
 import Amount, { AMOUNT_SIZES } from '../../molecules/Amount'
 import Button from '../../atoms/Button'
 import CallToAction from '../../molecules/CallToAction'
@@ -9,13 +8,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Title, { TITLE_SIZES } from '../../atoms/Title'
 
-let VaultTitle = ({ vaultAddress, vaults }) => {
-  const selectedVault = vaults[vaultAddress]
-  const vaultSupply = selectedVault.totalSupply.div(ETH_TO_WEI)
+const VaultTitle = ({ vault }) => {
+  const vaultSupply = vault.totalSupply.div(ETH_TO_WEI)
   return (
     <div className="vault-title">
       <div className="vault-title-header">
-        <Title size={TITLE_SIZES.LARGE}>{selectedVault.symbol}</Title>
+        <Title size={TITLE_SIZES.LARGE}>{vault.symbol}</Title>
         <CallToAction>
           {/* TODO: add action to open modal */}
           <Button onClick={() => {}}>Deposit</Button>
@@ -35,17 +33,7 @@ let VaultTitle = ({ vaultAddress, vaults }) => {
 }
 
 VaultTitle.propTypes = {
-  vaultAddress: PropTypes.string.isRequired,
-  vaults: PropTypes.object.isRequired
+  vault: PropTypes.object.isRequired
 }
-
-VaultTitle = connect(state => {
-  const { currentAccount } = state.preferences
-  return {
-    vaults: currentAccount
-      ? state.blockChain.accounts[currentAccount].vaults
-      : {}
-  }
-})(VaultTitle)
 
 export default VaultTitle

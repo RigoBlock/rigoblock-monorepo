@@ -4,9 +4,10 @@ import React from 'react'
 import ReactTable from 'react-table'
 import TablePagination from '../../atoms/TablePagination'
 import Title from '../../atoms/Title'
+import classNames from 'classnames'
 
-const Table = ({ tableData, tableColumns, title }) => (
-  <div className="table">
+const Table = ({ tableData, tableColumns, title, className }) => (
+  <div className={classNames('table', className)}>
     <Title>{title}</Title>
     <ReactTable
       data={tableData}
@@ -21,11 +22,13 @@ const Table = ({ tableData, tableColumns, title }) => (
 Table.propTypes = {
   tableData: PropTypes.array,
   title: PropTypes.string.isRequired,
-  tableColumns: PropTypes.array.isRequired
+  tableColumns: PropTypes.array.isRequired,
+  className: PropTypes.string
 }
 
 Table.defaultProps = {
-  tableData: []
+  tableData: [],
+  className: ''
 }
 
 export default Table

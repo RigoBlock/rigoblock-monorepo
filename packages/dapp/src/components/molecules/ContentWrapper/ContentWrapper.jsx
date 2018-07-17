@@ -12,8 +12,12 @@ const ContentWrapper = ({ header, children }) => {
 }
 
 ContentWrapper.propTypes = {
-  header: PropTypes.node.isRequired,
+  header: PropTypes.node,
   children: PropTypes.node.isRequired
+}
+
+ContentWrapper.defaultProps = {
+  header: null
 }
 
 export default ContentWrapper

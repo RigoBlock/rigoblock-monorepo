@@ -1,14 +1,12 @@
 import './VaultFees.scss'
-import { connect } from 'react-redux'
 import BigNumber from 'bignumber.js'
 import Button from '../../atoms/Button'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Title from '../../atoms/Title'
 
-let VaultFees = ({ vaultAddress, vaults }) => {
-  let { transactionFee } = vaults[vaultAddress]
-  transactionFee = transactionFee.toFormat(2, BigNumber.ROUND_FLOOR)
+const VaultFees = ({ vault }) => {
+  const transactionFee = vault.transactionFee.toFormat(2, BigNumber.ROUND_FLOOR)
   return (
     <div className="vault-fees">
       <Title>Fees</Title>
@@ -31,18 +29,7 @@ let VaultFees = ({ vaultAddress, vaults }) => {
 }
 
 VaultFees.propTypes = {
-  vaultAddress: PropTypes.string.isRequired,
-  vaults: PropTypes.object.isRequired
+  vault: PropTypes.object.isRequired
 }
-
-VaultFees = connect(state => {
-  const { currentAccount } = state.preferences
-  return {
-    vaults:
-      currentAccount && state.blockChain.accounts[currentAccount]
-        ? state.blockChain.accounts[currentAccount].vaults
-        : {}
-  }
-})(VaultFees)
 
 export default VaultFees

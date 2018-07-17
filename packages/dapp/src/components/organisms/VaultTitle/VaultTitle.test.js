@@ -1,21 +1,21 @@
-import { Provider } from 'react-redux'
+import { BigNumber } from 'bignumber.js'
 import { mount } from 'enzyme'
 import React from 'react'
 import VaultTitle from './VaultTitle.jsx'
-import mockStore from '../../../fixtures/store'
 import toJson from 'enzyme-to-json'
 
-const store = mockStore({ mockFn: jest.fn })
-const props = { vaultAddress: '0x86a1ba4d485ce346bded508e2426798f825558be' }
-
-const wrapper = mount(
-  <Provider store={store}>
-    <VaultTitle {...props} />
-  </Provider>
-)
+const vault = {
+  id: new BigNumber('0'),
+  name: 'First Vault',
+  symbol: 'asd',
+  owner: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196',
+  group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff',
+  totalSupply: new BigNumber('28640000000000000000'),
+  transactionFee: new BigNumber('2.50')
+}
 
 describe('VaultTitle component', () => {
   it('renders correctly', () => {
-    expect(toJson(wrapper)).toMatchSnapshot()
+    expect(toJson(mount(<VaultTitle vault={vault} />))).toMatchSnapshot()
   })
 })
