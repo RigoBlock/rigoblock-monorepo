@@ -1,5 +1,6 @@
+import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import React from 'react'
 import VaultTransactions from './VaultTransactions.jsx'
 import mockStore from '../../../fixtures/store'
@@ -7,9 +8,11 @@ import toJson from 'enzyme-to-json'
 
 const store = mockStore({ mockFn: jest.fn })
 
-const wrapper = shallow(
+const wrapper = mount(
   <Provider store={store}>
-    <VaultTransactions />
+    <MemoryRouter initialEntries={[{ key: 'testKey' }]}>
+      <VaultTransactions vaultAddress="0x86a1ba4d485ce346bded508e2426798f825558be" />
+    </MemoryRouter>
   </Provider>
 )
 

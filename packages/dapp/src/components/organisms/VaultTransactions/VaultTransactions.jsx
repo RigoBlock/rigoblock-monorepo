@@ -18,7 +18,6 @@ let VaultTransactions = ({ transactions, vaultAddress }) => {
   const parsedTransactions = vaultTransactions
     ? Object.keys(vaultTransactions).map(hash => ({
         ...vaultTransactions[hash],
-        date: moment(vaultTransactions[hash].date).format('DD/MM/YY'),
         id: hash,
         transactionLink: linkComponent('#')
       }))
@@ -89,9 +88,10 @@ VaultTransactions.defaultProps = {
 VaultTransactions = connect(state => {
   const { currentAccount } = state.preferences
   return {
-    transactions: currentAccount
-      ? state.blockChain.accounts[currentAccount].vaultTransactions
-      : {},
+    transactions:
+      currentAccount && state.blockChain.accounts[currentAccount]
+        ? state.blockChain.accounts[currentAccount].vaultTransactions
+        : {},
     location: state.routing.location.pathname
   }
 })(VaultTransactions)

@@ -23,14 +23,7 @@ const createTransaction = () => {
   }
 }
 
-const tableData = [
-  { ...createTransaction() },
-  { ...createTransaction() },
-  { ...createTransaction() },
-  { ...createTransaction() },
-  { ...createTransaction() }
-]
-
+const tableData = Array.from(Array(5), createTransaction)
 const tableColumns = [
   {
     Header: 'ID',
