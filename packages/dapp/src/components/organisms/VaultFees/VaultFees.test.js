@@ -1,5 +1,6 @@
 import { BigNumber } from 'bignumber.js'
-import { shallow } from 'enzyme'
+import { INVESTOR, MANAGER } from '../../../constants/user'
+import { mount } from 'enzyme'
 import React from 'react'
 import VaultFees from './VaultFees.jsx'
 import toJson from 'enzyme-to-json'
@@ -15,7 +16,15 @@ const vault = {
 }
 
 describe('VaultFees component', () => {
-  it('renders correctly', () => {
-    expect(toJson(shallow(<VaultFees vault={vault} />))).toMatchSnapshot()
+  it('renders correctly as manager', () => {
+    expect(
+      toJson(mount(<VaultFees vault={vault} userType={INVESTOR} />))
+    ).toMatchSnapshot()
+  })
+
+  it('renders correctly as investor', () => {
+    expect(
+      toJson(mount(<VaultFees vault={vault} userType={MANAGER} />))
+    ).toMatchSnapshot()
   })
 })

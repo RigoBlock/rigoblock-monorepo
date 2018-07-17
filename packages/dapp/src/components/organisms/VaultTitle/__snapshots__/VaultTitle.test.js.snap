@@ -1,7 +1,82 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VaultTitle component renders correctly 1`] = `
+exports[`VaultTitle component renders correctly as investor 1`] = `
 <VaultTitle
+  userType="manager"
+  vault={
+    Object {
+      "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
+      "id": "0",
+      "name": "First Vault",
+      "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+      "symbol": "asd",
+      "totalSupply": "28640000000000000000",
+      "transactionFee": "2.5",
+    }
+  }
+>
+  <div
+    className="vault-title"
+  >
+    <div
+      className="vault-title-header"
+    >
+      <Title
+        className={null}
+        size="large"
+      >
+        <div
+          className="title large"
+        >
+          asd
+        </div>
+      </Title>
+    </div>
+    <div
+      className="amount-wrapper"
+    >
+      <Amount
+        symbol="ETH"
+        symbolSize="small"
+        value={"28.64"}
+        valueSize="large"
+      >
+        <div
+          className="amount"
+        >
+          <div
+            className="amount-symbol small"
+          >
+            ETH
+          </div>
+          <ItemValue
+            currency="ETH"
+            currencyGrowth={null}
+            growth={null}
+            itemValue={"28.64"}
+            precision={2}
+            valueSize="large"
+          >
+            <div
+              className="no-events"
+            >
+              <span
+                className="item-value large"
+              >
+                28.64
+              </span>
+            </div>
+          </ItemValue>
+        </div>
+      </Amount>
+    </div>
+  </div>
+</VaultTitle>
+`;
+
+exports[`VaultTitle component renders correctly as manager 1`] = `
+<VaultTitle
+  userType="investor"
   vault={
     Object {
       "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",

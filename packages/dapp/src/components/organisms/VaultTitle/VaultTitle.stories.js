@@ -1,10 +1,16 @@
 import '../../_settings/_base.scss'
 import { BigNumber } from 'bignumber.js'
+import { INVESTOR, MANAGER } from '../../../constants/user'
 import { MemoryRouter } from 'react-router-dom'
+import { selectV2, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs/react'
 import React from 'react'
 import VaultTitle from './VaultTitle'
+
+const userTypes = {
+  Manager: MANAGER,
+  Investor: INVESTOR
+}
 
 const vault = {
   id: new BigNumber('0'),
@@ -22,4 +28,9 @@ storiesOf('Organisms/VaultTitle', module)
     <div style={{ width: '478px', background: 'white' }}>{story()}</div>
   ))
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
-  .add('default', () => <VaultTitle vault={vault} />)
+  .add('default', () => (
+    <VaultTitle
+      vault={vault}
+      userType={selectV2('User type', userTypes, userTypes.Investor)}
+    />
+  ))

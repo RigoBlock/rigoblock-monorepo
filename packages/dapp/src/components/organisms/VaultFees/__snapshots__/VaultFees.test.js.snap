@@ -1,51 +1,222 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VaultFees component renders correctly 1`] = `
-<div
-  className="vault-fees"
+exports[`VaultFees component renders correctly as investor 1`] = `
+<VaultFees
+  userType="manager"
+  vault={
+    Object {
+      "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
+      "id": "0",
+      "name": "First Vault",
+      "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+      "symbol": "asd",
+      "totalSupply": "28640000000000000000",
+      "transactionFee": "2.5",
+    }
+  }
 >
-  <Title
-    className={null}
-    size="medium"
-  >
-    Fees
-  </Title>
   <div
-    className="fee-info"
+    className="vault-fees"
   >
-    <span>
-      Management
-    </span>
-    <span>
-      0.00%
-    </span>
+    <Title
+      className={null}
+      size="medium"
+    >
+      <div
+        className="title medium"
+      >
+        Fees
+      </div>
+    </Title>
+    <div
+      className="fee-info"
+    >
+      <span>
+        Management
+      </span>
+      <span>
+        0.00%
+      </span>
+    </div>
+    <div
+      className="fee-info"
+    >
+      <span>
+        Entry
+      </span>
+      <span>
+        2.50%
+      </span>
+    </div>
+    <div
+      className="fee-info"
+    >
+      <span>
+        Exit
+      </span>
+      <span>
+        2.50%
+      </span>
+    </div>
+    <Button
+      appearance="primary"
+      onClick={[Function]}
+      type="button"
+    >
+      <withInk(withTooltip(Button))
+        className="base-button"
+        flat={true}
+        inkTransitionEnterTimeout={450}
+        inkTransitionLeaveTimeout={300}
+        inkTransitionOverlap={150}
+        onClick={[Function]}
+        primary={true}
+        swapTheming={false}
+        type="button"
+      >
+        <withTooltip(Button)
+          className="base-button"
+          flat={true}
+          ink={
+            <InkContainer
+              className={undefined}
+              disabledInteractions={undefined}
+              inkClassName={undefined}
+              inkStyle={undefined}
+              pulse={undefined}
+              style={undefined}
+              transitionEnterTimeout={450}
+              transitionLeaveTimeout={300}
+              transitionOverlap={150}
+              waitForInkTransition={undefined}
+            />
+          }
+          onClick={[Function]}
+          primary={true}
+          swapTheming={false}
+          type="button"
+        >
+          <Button
+            className="base-button"
+            fixedPosition="br"
+            flat={true}
+            iconBefore={true}
+            ink={
+              <InkContainer
+                className={undefined}
+                disabledInteractions={undefined}
+                inkClassName={undefined}
+                inkStyle={undefined}
+                pulse={undefined}
+                style={undefined}
+                transitionEnterTimeout={450}
+                transitionLeaveTimeout={300}
+                transitionOverlap={150}
+                waitForInkTransition={undefined}
+              />
+            }
+            onClick={[Function]}
+            primary={true}
+            swapTheming={false}
+            type="button"
+          >
+            <button
+              className="md-btn md-btn--flat md-btn--text md-pointer--hover md-text--theme-primary md-ink--primary md-inline-block base-button"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+              type="button"
+            >
+              <InkContainer
+                key="ink-container"
+                transitionEnterTimeout={450}
+                transitionLeaveTimeout={300}
+                transitionOverlap={150}
+              >
+                <TransitionGroup
+                  childFactory={[Function]}
+                  className="md-ink-container"
+                  component="div"
+                >
+                  <div
+                    className="md-ink-container"
+                  />
+                </TransitionGroup>
+              </InkContainer>
+              Edit Fees
+            </button>
+          </Button>
+        </withTooltip(Button)>
+      </withInk(withTooltip(Button))>
+    </Button>
   </div>
+</VaultFees>
+`;
+
+exports[`VaultFees component renders correctly as manager 1`] = `
+<VaultFees
+  userType="investor"
+  vault={
+    Object {
+      "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
+      "id": "0",
+      "name": "First Vault",
+      "owner": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+      "symbol": "asd",
+      "totalSupply": "28640000000000000000",
+      "transactionFee": "2.5",
+    }
+  }
+>
   <div
-    className="fee-info"
+    className="vault-fees"
   >
-    <span>
-      Entry
-    </span>
-    <span>
-      2.50%
-    </span>
+    <Title
+      className={null}
+      size="medium"
+    >
+      <div
+        className="title medium"
+      >
+        Fees
+      </div>
+    </Title>
+    <div
+      className="fee-info"
+    >
+      <span>
+        Management
+      </span>
+      <span>
+        0.00%
+      </span>
+    </div>
+    <div
+      className="fee-info"
+    >
+      <span>
+        Entry
+      </span>
+      <span>
+        2.50%
+      </span>
+    </div>
+    <div
+      className="fee-info"
+    >
+      <span>
+        Exit
+      </span>
+      <span>
+        2.50%
+      </span>
+    </div>
   </div>
-  <div
-    className="fee-info"
-  >
-    <span>
-      Exit
-    </span>
-    <span>
-      2.50%
-    </span>
-  </div>
-  <Button
-    appearance="primary"
-    onClick={[Function]}
-    type="button"
-  >
-    Edit Fees
-  </Button>
-</div>
+</VaultFees>
 `;

@@ -77,6 +77,7 @@ exports[`VaultPanel component renders correctly 1`] = `
               },
             }
           }
+          userType="investor"
           vaults={
             Object {
               "0x421e1cef6e85e78da2470e54af64a626f45afb85": Object {
@@ -125,6 +126,7 @@ exports[`VaultPanel component renders correctly 1`] = `
                         key="wrap-div-0"
                       >
                         <VaultTitle
+                          userType="investor"
                           vault={
                             Object {
                               "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
@@ -404,6 +406,7 @@ exports[`VaultPanel component renders correctly 1`] = `
                         key="wrap-div-1"
                       >
                         <VaultFees
+                          userType="investor"
                           vault={
                             Object {
                               "group": "0x7ce6e371085cb611fb46d5065397223ef2f952ff",
@@ -459,103 +462,6 @@ exports[`VaultPanel component renders correctly 1`] = `
                                 2.50%
                               </span>
                             </div>
-                            <Button
-                              appearance="primary"
-                              onClick={[Function]}
-                              type="button"
-                            >
-                              <withInk(withTooltip(Button))
-                                className="base-button"
-                                flat={true}
-                                inkTransitionEnterTimeout={450}
-                                inkTransitionLeaveTimeout={300}
-                                inkTransitionOverlap={150}
-                                onClick={[Function]}
-                                primary={true}
-                                swapTheming={false}
-                                type="button"
-                              >
-                                <withTooltip(Button)
-                                  className="base-button"
-                                  flat={true}
-                                  ink={
-                                    <InkContainer
-                                      className={undefined}
-                                      disabledInteractions={undefined}
-                                      inkClassName={undefined}
-                                      inkStyle={undefined}
-                                      pulse={undefined}
-                                      style={undefined}
-                                      transitionEnterTimeout={450}
-                                      transitionLeaveTimeout={300}
-                                      transitionOverlap={150}
-                                      waitForInkTransition={undefined}
-                                    />
-                                  }
-                                  onClick={[Function]}
-                                  primary={true}
-                                  swapTheming={false}
-                                  type="button"
-                                >
-                                  <Button
-                                    className="base-button"
-                                    fixedPosition="br"
-                                    flat={true}
-                                    iconBefore={true}
-                                    ink={
-                                      <InkContainer
-                                        className={undefined}
-                                        disabledInteractions={undefined}
-                                        inkClassName={undefined}
-                                        inkStyle={undefined}
-                                        pulse={undefined}
-                                        style={undefined}
-                                        transitionEnterTimeout={450}
-                                        transitionLeaveTimeout={300}
-                                        transitionOverlap={150}
-                                        waitForInkTransition={undefined}
-                                      />
-                                    }
-                                    onClick={[Function]}
-                                    primary={true}
-                                    swapTheming={false}
-                                    type="button"
-                                  >
-                                    <button
-                                      className="md-btn md-btn--flat md-btn--text md-pointer--hover md-text--theme-primary md-ink--primary md-inline-block base-button"
-                                      onClick={[Function]}
-                                      onKeyDown={[Function]}
-                                      onKeyUp={[Function]}
-                                      onMouseDown={[Function]}
-                                      onMouseEnter={[Function]}
-                                      onMouseLeave={[Function]}
-                                      onMouseUp={[Function]}
-                                      onTouchEnd={[Function]}
-                                      onTouchStart={[Function]}
-                                      type="button"
-                                    >
-                                      <InkContainer
-                                        key="ink-container"
-                                        transitionEnterTimeout={450}
-                                        transitionLeaveTimeout={300}
-                                        transitionOverlap={150}
-                                      >
-                                        <TransitionGroup
-                                          childFactory={[Function]}
-                                          className="md-ink-container"
-                                          component="div"
-                                        >
-                                          <div
-                                            className="md-ink-container"
-                                          />
-                                        </TransitionGroup>
-                                      </InkContainer>
-                                      Edit Fees
-                                    </button>
-                                  </Button>
-                                </withTooltip(Button)>
-                              </withInk(withTooltip(Button))>
-                            </Button>
                           </div>
                         </VaultFees>
                         <divider>
@@ -592,6 +498,7 @@ exports[`VaultPanel component renders correctly 1`] = `
                         >
                           <Table
                             className="vault-transactions"
+                            noDataText="No transactions found."
                             tableColumns={
                               Array [
                                 Object {

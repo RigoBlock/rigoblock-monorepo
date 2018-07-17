@@ -67,6 +67,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
     >
       <Table
         className="vault-transactions"
+        noDataText="No transactions found."
         tableColumns={
           Array [
             Object {

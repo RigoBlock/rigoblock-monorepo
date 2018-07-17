@@ -1,4 +1,5 @@
 import { BigNumber } from 'bignumber.js'
+import { INVESTOR, MANAGER } from '../../../constants/user'
 import { mount } from 'enzyme'
 import React from 'react'
 import VaultTitle from './VaultTitle.jsx'
@@ -15,7 +16,15 @@ const vault = {
 }
 
 describe('VaultTitle component', () => {
-  it('renders correctly', () => {
-    expect(toJson(mount(<VaultTitle vault={vault} />))).toMatchSnapshot()
+  it('renders correctly as manager', () => {
+    expect(
+      toJson(mount(<VaultTitle vault={vault} userType={INVESTOR} />))
+    ).toMatchSnapshot()
+  })
+
+  it('renders correctly as investor', () => {
+    expect(
+      toJson(mount(<VaultTitle vault={vault} userType={MANAGER} />))
+    ).toMatchSnapshot()
   })
 })

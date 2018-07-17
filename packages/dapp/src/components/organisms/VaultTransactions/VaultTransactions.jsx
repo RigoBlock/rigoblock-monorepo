@@ -18,7 +18,7 @@ let VaultTransactions = ({ transactions }) => {
         id: hash,
         transactionLink: linkComponent('#')
       }))
-    : []
+    : null
   const tableColumns = [
     {
       Header: 'ID',
@@ -68,6 +68,7 @@ let VaultTransactions = ({ transactions }) => {
       tableData={parsedTransactions}
       tableColumns={tableColumns}
       title="Transactions"
+      noDataText="No transactions found."
     />
   )
 }
