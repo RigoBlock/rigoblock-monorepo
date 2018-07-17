@@ -1,0 +1,13 @@
+@import "../../_settings/variables.scss";
+
+.vault-fees {
+  .title {
+    padding-bottom: $dist-2xs;
+  }
+  .fee-info {
+    display: flex;
+    justify-content: space-between;
+    width: 160px;
+    padding-bottom: $dist-xs;
+  }
+}

@@ -24,6 +24,6 @@ storiesOf('Molecules/Amount', module)
       valueSize={selectV2('Value size', AMOUNT_SIZES, AMOUNT_SIZES.SMALL)}
       symbolSize={selectV2('Symbol size', AMOUNT_SIZES, AMOUNT_SIZES.SMALL)}
       symbol={text('Amount symbol', ETH)}
-      value={new BigNumber('8000.23')}
+      value={new BigNumber(text('Amount Value', '8000.23'))}
     />
   ))
