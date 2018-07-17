@@ -111,9 +111,6 @@ exports[`VaultPanel component renders correctly 1`] = `
                 className="content-wrapper"
               >
                 <div
-                  className="content-wrapper-header"
-                />
-                <div
                   className="content-wrapper-content"
                 >
                   <WrapperWithDivider
