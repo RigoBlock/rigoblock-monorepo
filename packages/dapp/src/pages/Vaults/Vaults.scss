@@ -1,0 +1,13 @@
+@import '../../components/_settings/variables.scss';
+
+.vaults {
+  display: flex;
+  margin-top: $dist-3xl;
+  > *:not(:first-child) {
+    margin-left: $dist-s;
+  }
+
+  .vault-select {
+    flex-grow: 1;
+  }
+}

@@ -18,14 +18,10 @@
       border-radius: $small-border-radius;
     }
     .rt-tr.-even {
-      background-color: $secondary-bg-color;
+      background-color: $porcelain;
     }
     .rt-tbody .rt-tr-group {
       border: none;
-    }
-    .rt-tr.-odd {
-      background-color: $porcelain;
-      border-radius: $small-border-radius;
     }
     .rt-thead.-header {
       font-weight: bold;
@@ -43,7 +39,8 @@
   }
 
   .ReactTable.-striped .rt-tr.-odd {
-    background: $porcelain;
+    background: $secondary-bg-color;
+    border-radius: $small-border-radius;
   }
 
   .ReactTable .rt-thead .rt-resizable-header-content {

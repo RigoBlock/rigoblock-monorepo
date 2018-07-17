@@ -1,4 +1,5 @@
 import './VaultPanel.scss'
+import * as ROUTES from '../../../constants/routes'
 import { INVESTOR } from '../../../constants/user'
 import { connect } from 'react-redux'
 import ContentWrapper from '../../molecules/ContentWrapper'
@@ -10,6 +11,9 @@ import VaultTransactions from '../VaultTransactions'
 import WrapperWithDivider from '../../molecules/WrapperWithDivider'
 
 let VaultPanel = ({ vaults, transactions, location, userType }) => {
+  if (location === ROUTES.VAULTS) {
+    return null
+  }
   const vaultId = location.split('/vaults/').pop()
   const [vaultAddress, vaultData] = Object.entries(vaults)
     .filter(([, data]) => data.id.toString() === vaultId)
