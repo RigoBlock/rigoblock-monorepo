@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VaultFees component renders correctly 1`] = `
+<Connect(VaultFees)
+  vaultAddress="0x86a1ba4d485ce346bded508e2426798f825558be"
+/>
+`;
