@@ -1,3 +1,4 @@
+import { BigNumber } from 'bignumber.js'
 import { ETH_TO_WEI } from '../../../constants/utils'
 import Icon from '../../atoms/Icon'
 import Link from '../../atoms/Link'
@@ -45,7 +46,11 @@ let VaultTransactions = ({ transactions }) => {
     {
       Header: 'Value',
       id: 'value',
-      accessor: d => d.value.div(ETH_TO_WEI).toString(),
+      accessor: d =>
+        d.value
+          .div(ETH_TO_WEI)
+          .toFormat(2, BigNumber.ROUND_FLOOR)
+          .toString(),
       maxWidth: 50
     },
     {

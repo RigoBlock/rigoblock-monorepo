@@ -1126,7 +1126,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                                     }
                                   }
                                 >
-                                  1
+                                  1.00
                                 </div>
                               </TdComponent>
                               <TdComponent
@@ -3657,7 +3657,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                         </Link>,
                         "type": "Withdraw",
                         "units": "1000000",
-                        "value": "1",
+                        "value": "1.00",
                       },
                     ]
                   }
@@ -3762,7 +3762,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                         </Link>,
                         "type": "Withdraw",
                         "units": "1000000",
-                        "value": "1",
+                        "value": "1.00",
                       },
                     ]
                   }
