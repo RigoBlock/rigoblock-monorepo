@@ -17,8 +17,8 @@ let vaultTransactionsTable = ({ vaultAddress, transactions, columnWidths }) => {
   )
   const vaultTransactions = transactions[vaultAddress]
   const parsedTransactions = vaultTransactions
-    ? Object.keys(vaultTransactions).map(hash => ({
-        ...vaultTransactions[hash],
+    ? Object.entries(vaultTransactions).map(([hash, data]) => ({
+        ...data,
         id: hash,
         transactionLink: linkComponent('#')
       }))

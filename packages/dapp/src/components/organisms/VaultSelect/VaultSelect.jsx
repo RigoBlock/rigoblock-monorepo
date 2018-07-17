@@ -29,19 +29,15 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
       : dispatch(routerActions.navigateToVault(target.id))
   }
 
-  let vaultsList = Object.keys(vaults).map(vault => {
-    const { name, symbol, totalSupply, id } = vaults[vault]
-    const ethSupply = totalSupply
-      ? totalSupply.div(ETH_TO_WEI)
-      : new BigNumber('0')
-    return {
+  let vaultsList = Object.values(vaults).map(
+    ({ name, symbol, totalSupply, id }) => ({
       itemName: name,
       itemSymbol: symbol,
-      itemValue: ethSupply,
+      itemValue: totalSupply ? totalSupply.div(ETH_TO_WEI) : new BigNumber('0'),
       id,
       onClick: handleClick
-    }
-  })
+    })
+  )
 
   vaultsList = vaultsList.map(vault => ({
     ...vault,

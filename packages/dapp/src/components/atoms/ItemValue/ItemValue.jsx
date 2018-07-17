@@ -14,15 +14,15 @@ export const ITEM_VALUE_SIZES = {
 }
 
 export const roundProps = props =>
-  Object.keys(props)
-    .filter(k =>
+  Object.entries(props)
+    .filter(([, value]) =>
       // we are filtering for BigNumbers
       // TODO: remove once BigNumber.isBigNumber(x) starts working
-      isBigNumber(props[k])
+      isBigNumber(value)
     )
-    .map(k => ({
+    .map(([key, value]) => ({
       // round to [props.precision] number of decimals, by defect
-      [k]: props[k].toFormat(props.precision, BigNumber.ROUND_FLOOR)
+      [key]: value.toFormat(props.precision, BigNumber.ROUND_FLOOR)
     }))
     .reduce((acc, curr) => ({ ...acc, ...curr }), {})
 

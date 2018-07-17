@@ -10,10 +10,10 @@ import React from 'react'
 const tooltip = 'List of all accounts'
 
 let AccountsPanel = ({ accounts }) => {
-  const values = Object.keys(accounts).map(accNum => ({
-    provider: accounts[accNum].provider,
+  const values = Object.entries(accounts).map(([accNum, data]) => ({
+    provider: data.provider,
     number: accNum,
-    balance: accounts[accNum].balance
+    balance: data.balance
   }))
   const header = <PanelHeader title={'Accounts'} tooltip={tooltip} />
   const divider = () => <div className="left-navbar-divider" />

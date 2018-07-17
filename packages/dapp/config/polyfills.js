@@ -22,3 +22,4 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 Object.values = require('core-js/fn/object/values')
+Object.entries = require('core-js/fn/object/entries')
