@@ -14,7 +14,6 @@ let VaultPanel = ({ vaults, transactions, location }) => {
     .filter(([, data]) => data.id.toString() === vaultId)
     .pop()
   const vaultTransactions = transactions[vaultAddress]
-  console.log(vaultTransactions)
 
   const divider = () => <div className="vault-panel-divider" />
   return (
