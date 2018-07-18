@@ -12,7 +12,7 @@ import WrapperWithDivider from '../../molecules/WrapperWithDivider'
 
 let VaultPanel = ({ vaults, transactions, location, userType }) => {
   const vaultId = location.split(`${ROUTES.VAULTS}/`).pop()
-  if (!vaults || !vaultId) {
+  if (!vaults || vaultId === location || !vaultId) {
     return null
   }
   const [vaultAddress, vaultData] = Object.entries(vaults)
