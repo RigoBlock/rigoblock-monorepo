@@ -12,19 +12,24 @@ import classNames from 'classnames'
 import routerActions from '../../../actions/router-actions'
 
 let vaultSelect = ({ vaults, dispatch, location }) => {
-  // TODO: remove this and implement a correct page
+  // redirect to first vault if there is one
+  if (location === ROUTES.VAULTS && Object.keys(vaults).length) {
+    const firstVaultAddress = Object.keys(vaults).shift()
+    const firstVaultId = vaults[firstVaultAddress].id
+    return <Redirect to={`${ROUTES.VAULTS}${firstVaultId}`} />
+  }
+  // redirect to to /vaults/ if no vaults are present and we try to access
+  // a vault's address
+  if (location !== ROUTES.VAULTS && !Object.keys(vaults).length) {
+    return <Redirect to={ROUTES.VAULTS} />
+  }
+  // TODO: implement a 404 page if no vaults are present
   if (!Object.keys(vaults).length) {
     return <div className="vault-select">Nothing here!</div>
   }
 
-  if (location === ROUTES.VAULTS) {
-    const firstVaultAddress = Object.keys(vaults).shift()
-    const firstVaultId = vaults[firstVaultAddress].id
-    return <Redirect to={`${ROUTES.VAULTS}/${firstVaultId}`} />
-  }
-
   const handleClick = ({ target }) => {
-    return location === `${ROUTES.VAULTS}/${target.id}`
+    return location === `${ROUTES.VAULTS}${target.id}`
       ? null
       : dispatch(routerActions.navigateToVault(target.id))
   }
@@ -42,7 +47,7 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   vaultsList = vaultsList.map(vault => ({
     ...vault,
     className: classNames({
-      active: location === `${ROUTES.VAULTS}/${vault.id.toString()}`
+      active: location === `${ROUTES.VAULTS}${vault.id.toString()}`
     })
   }))
 

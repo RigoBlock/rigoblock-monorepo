@@ -89,16 +89,16 @@ exports[`BaseTemplate component renders correctly 1`] = `
                     <Link
                       className={null}
                       size="medium"
-                      to="/preferences"
+                      to="/preferences/"
                     >
                       <Link
                         className="link medium"
                         replace={false}
-                        to="/preferences"
+                        to="/preferences/"
                       >
                         <a
                           className="link medium"
-                          href="/preferences"
+                          href="/preferences/"
                           onClick={[Function]}
                         >
                           Preferences
@@ -108,16 +108,16 @@ exports[`BaseTemplate component renders correctly 1`] = `
                     <Link
                       className={null}
                       size="medium"
-                      to="/help"
+                      to="/help/"
                     >
                       <Link
                         className="link medium"
                         replace={false}
-                        to="/help"
+                        to="/help/"
                       >
                         <a
                           className="link medium"
-                          href="/help"
+                          href="/help/"
                           onClick={[Function]}
                         >
                           Help
@@ -377,7 +377,7 @@ exports[`BaseTemplate component renders correctly 1`] = `
                                       "icon": "account_balance_wallet",
                                       "link": Object {
                                         "text": "Dragos",
-                                        "to": "/dragos",
+                                        "to": "/dragos/",
                                       },
                                     },
                                     Object {
@@ -385,7 +385,7 @@ exports[`BaseTemplate component renders correctly 1`] = `
                                       "icon": "lock",
                                       "link": Object {
                                         "text": "Vaults",
-                                        "to": "/vaults",
+                                        "to": "/vaults/",
                                       },
                                     },
                                   ]
@@ -448,23 +448,23 @@ exports[`BaseTemplate component renders correctly 1`] = `
                                     link={
                                       Object {
                                         "text": "Dragos",
-                                        "to": "/dragos",
+                                        "to": "/dragos/",
                                       }
                                     }
                                   >
                                     <Link
                                       className="view-link"
                                       size="small"
-                                      to="/dragos"
+                                      to="/dragos/"
                                     >
                                       <Link
                                         className="link small view-link"
                                         replace={false}
-                                        to="/dragos"
+                                        to="/dragos/"
                                       >
                                         <a
                                           className="link small view-link"
-                                          href="/dragos"
+                                          href="/dragos/"
                                           onClick={[Function]}
                                         >
                                           <Icon
@@ -495,23 +495,23 @@ exports[`BaseTemplate component renders correctly 1`] = `
                                     link={
                                       Object {
                                         "text": "Vaults",
-                                        "to": "/vaults",
+                                        "to": "/vaults/",
                                       }
                                     }
                                   >
                                     <Link
                                       className="view-link active"
                                       size="small"
-                                      to="/vaults"
+                                      to="/vaults/"
                                     >
                                       <Link
                                         className="link small view-link active"
                                         replace={false}
-                                        to="/vaults"
+                                        to="/vaults/"
                                       >
                                         <a
                                           className="link small view-link active"
-                                          href="/vaults"
+                                          href="/vaults/"
                                           onClick={[Function]}
                                         >
                                           <Icon
