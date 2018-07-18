@@ -1,5 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`VaultSelect component redirects if no vaults are present but we try to access a vault's address 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [MockFunction],
+      "getState": [Function],
+      "subscribe": [MockFunction],
+    }
+  }
+>
+  <MemoryRouter
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "REPLACE",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/vaults/",
+              "search": "",
+              "state": undefined,
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/vaults/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Connect(vaultSelect)>
+        <vaultSelect
+          dispatch={[MockFunction]}
+          location="/vaults/0"
+          vaults={Object {}}
+        >
+          <Redirect
+            push={false}
+            to="/vaults/"
+          />
+        </vaultSelect>
+      </Connect(vaultSelect)>
+    </Router>
+  </MemoryRouter>
+</Provider>
+`;
+
 exports[`VaultSelect component renders correctly 1`] = `
 <Provider
   store={
