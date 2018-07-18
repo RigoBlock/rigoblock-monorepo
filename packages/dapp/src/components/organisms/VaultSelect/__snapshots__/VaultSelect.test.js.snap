@@ -23,7 +23,7 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/vaults/",
+              "pathname": "/vaults",
               "search": "",
               "state": undefined,
             },
@@ -36,7 +36,7 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/vaults/",
+            "pathname": "/vaults",
             "search": "",
             "state": undefined,
           },
@@ -53,7 +53,7 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
         >
           <Redirect
             push={false}
-            to="/vaults/"
+            to="/vaults"
           />
         </vaultSelect>
       </Connect(vaultSelect)>
@@ -257,7 +257,7 @@ exports[`VaultSelect component renders correctly if there are no vaults on state
   <Connect(vaultSelect)>
     <vaultSelect
       dispatch={[MockFunction]}
-      location="/vaults/"
+      location="/vaults"
       vaults={Object {}}
     >
       <div

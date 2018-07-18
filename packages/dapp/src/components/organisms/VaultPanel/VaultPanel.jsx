@@ -11,14 +11,17 @@ import VaultTransactions from '../VaultTransactions'
 import WrapperWithDivider from '../../molecules/WrapperWithDivider'
 
 let VaultPanel = ({ vaults, transactions, location, userType }) => {
-  if (!Object.keys(vaults).length) {
+  const vaultId = location.split(`${ROUTES.VAULTS}/`).pop()
+  if (!vaults || !vaultId) {
     return null
   }
-  const vaultId = location.split(ROUTES.VAULTS).pop()
   const [vaultAddress, vaultData] = Object.entries(vaults)
     .filter(([, data]) => data.id.toString() === vaultId)
     .pop()
-  const vaultTransactions = transactions[vaultAddress]
+  const vaultTransactions =
+    transactions && transactions[vaultAddress]
+      ? transactions[vaultAddress]
+      : null
 
   const divider = () => <div className="vault-panel-divider" />
   return (
@@ -43,8 +46,8 @@ VaultPanel.propTypes = {
 
 VaultPanel.defaultProps = {
   userType: INVESTOR,
-  vaults: {},
-  transactions: {}
+  vaults: null,
+  transactions: null
 }
 
 VaultPanel = connect(state => {

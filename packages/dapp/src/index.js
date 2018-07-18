@@ -28,7 +28,7 @@ ReactDOM.render(
           <Route exact path={ROUTES.PREFERENCES} component={Preferences} />
           <Route exact path={ROUTES.HELP} component={Help} />
           <Route
-            path={ROUTES.VAULTS || `${ROUTES.VAULTS}:id`}
+            path={ROUTES.VAULTS || `${ROUTES.VAULTS}/:id`}
             component={Vaults}
           />
           <Route exact path={ROUTES.DRAGOS} component={Dragos} />

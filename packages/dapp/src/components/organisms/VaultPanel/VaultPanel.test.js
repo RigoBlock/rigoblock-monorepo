@@ -54,7 +54,7 @@ const noTransactionsStore = {
     },
     routing: {
       location: {
-        pathname: `${ROUTES.VAULTS}0`
+        pathname: `${ROUTES.VAULTS}/0`
       }
     }
   })

@@ -21,7 +21,7 @@ exports[`NavigationView component renders correctly 1`] = `
           "icon": "account_balance_wallet",
           "link": Object {
             "text": "Dragos",
-            "to": "/dragos/",
+            "to": "/dragos",
           },
         },
         Object {
@@ -29,7 +29,7 @@ exports[`NavigationView component renders correctly 1`] = `
           "icon": "lock",
           "link": Object {
             "text": "Vaults",
-            "to": "/vaults/",
+            "to": "/vaults",
           },
         },
       ]

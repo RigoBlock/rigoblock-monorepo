@@ -9,8 +9,8 @@ import VaultSelect from './VaultSelect'
 import mockStore, { defaultState } from '../../../fixtures/store'
 
 const locations = {
-  firstVault: `${ROUTES.VAULTS}0`,
-  secondVault: `${ROUTES.VAULTS}1`
+  firstVault: `${ROUTES.VAULTS}/0`,
+  secondVault: `${ROUTES.VAULTS}/1`
 }
 const getState = () => ({
   ...defaultState,

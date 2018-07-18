@@ -13,12 +13,16 @@ import routerActions from '../../../actions/router-actions'
 
 let vaultSelect = ({ vaults, dispatch, location }) => {
   // redirect to first vault if there is one
-  if (location === ROUTES.VAULTS && Object.keys(vaults).length) {
+  if (
+    (location === ROUTES.VAULTS || location === `${ROUTES.VAULTS}/`) &&
+    Object.keys(vaults).length
+  ) {
     const firstVaultAddress = Object.keys(vaults).shift()
     const firstVaultId = vaults[firstVaultAddress].id
-    return <Redirect to={`${ROUTES.VAULTS}${firstVaultId}`} />
+    return <Redirect to={`${ROUTES.VAULTS}/${firstVaultId}`} />
   }
-  // redirect to to /vaults/ if no vaults are present and we try to access
+
+  // redirect to to /vaults if no vaults are present and we try to access
   // a vault's address
   if (location !== ROUTES.VAULTS && !Object.keys(vaults).length) {
     return <Redirect to={ROUTES.VAULTS} />
@@ -29,7 +33,7 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   }
 
   const handleClick = ({ target }) => {
-    return location === `${ROUTES.VAULTS}${target.id}`
+    return location === `${ROUTES.VAULTS}/${target.id}`
       ? null
       : dispatch(routerActions.navigateToVault(target.id))
   }
@@ -47,7 +51,7 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   vaultsList = vaultsList.map(vault => ({
     ...vault,
     className: classNames({
-      active: location === `${ROUTES.VAULTS}${vault.id.toString()}`
+      active: location === `${ROUTES.VAULTS}/${vault.id.toString()}`
     })
   }))
 

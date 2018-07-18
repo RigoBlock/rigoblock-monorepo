@@ -4393,7 +4393,7 @@ exports[`VaultPanel component renders correctly if vaults are present but no tra
         <VaultPanel
           dispatch={[MockFunction]}
           location="/vaults/0"
-          transactions={Object {}}
+          transactions={null}
           userType="investor"
           vaults={
             Object {
@@ -4921,10 +4921,10 @@ exports[`VaultPanel component renders nothing if no vaults are present 1`] = `
       <Connect(VaultPanel)>
         <VaultPanel
           dispatch={[MockFunction]}
-          location="/vaults/"
-          transactions={Object {}}
+          location="/vaults"
+          transactions={null}
           userType="investor"
-          vaults={Object {}}
+          vaults={null}
         />
       </Connect(VaultPanel)>
     </Router>
