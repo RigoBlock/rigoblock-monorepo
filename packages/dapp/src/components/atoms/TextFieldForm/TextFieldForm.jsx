@@ -5,13 +5,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import TextField from '../TextField'
 
-const TextFieldForm = ({ fieldName, textFieldProps }) => (
-  <Field name={fieldName} component={TextField} {...textFieldProps} />
+const TextFieldForm = ({ fieldName, fieldProps }) => (
+  <Field name={fieldName} component={TextField} {...fieldProps} />
 )
 
 TextFieldForm.propTypes = {
   fieldName: PropTypes.string.isRequired,
-  textFieldProps: PropTypes.object.isRequired
+  fieldProps: PropTypes.object.isRequired
 }
 
 export default reduxForm({ form: 'testForm' })(TextFieldForm)

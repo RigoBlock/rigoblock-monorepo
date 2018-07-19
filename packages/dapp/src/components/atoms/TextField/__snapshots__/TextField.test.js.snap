@@ -18,6 +18,7 @@ exports[`TextField component renders correctly 1`] = `
       remove_red_eye
     </FontIcon>
   }
+  placeholder=""
   required={false}
   rightIconStateful={true}
   size={10}

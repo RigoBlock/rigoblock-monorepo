@@ -4,7 +4,7 @@ import toJson from 'enzyme-to-json'
 
 const props = {
   fieldName: 'testField',
-  textFieldProps: {
+  fieldProps: {
     id: 'testTextField',
     fullWidth: false,
     size: 10

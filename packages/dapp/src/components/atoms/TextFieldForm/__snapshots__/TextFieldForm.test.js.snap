@@ -5,6 +5,13 @@ exports[`TextFieldForm component renders correctly 1`] = `
   destroyOnUnmount={true}
   enableReinitialize={false}
   fieldName="testField"
+  fieldProps={
+    Object {
+      "fullWidth": false,
+      "id": "testTextField",
+      "size": 10,
+    }
+  }
   forceUnregisterOnUnmount={false}
   form="testForm"
   getFormState={[Function]}
@@ -15,13 +22,6 @@ exports[`TextFieldForm component renders correctly 1`] = `
   shouldError={[Function]}
   shouldValidate={[Function]}
   shouldWarn={[Function]}
-  textFieldProps={
-    Object {
-      "fullWidth": false,
-      "id": "testTextField",
-      "size": 10,
-    }
-  }
   touchOnBlur={true}
   touchOnChange={false}
   updateUnregisteredFields={false}

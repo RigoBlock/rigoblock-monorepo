@@ -9,6 +9,7 @@ const TextField = ({
   type,
   required,
   fullWidth,
+  placeholder,
   size,
   input: { value, onChange },
   meta: { error, touched }
@@ -21,6 +22,7 @@ const TextField = ({
       customSize="small"
       size={size}
       fullWidth={fullWidth}
+      placeholder={placeholder}
       value={value}
       onChange={onChange}
       error={touched && !!error}
@@ -38,7 +40,8 @@ TextField.propTypes = {
   fullWidth: PropTypes.bool,
   size: PropTypes.number,
   input: PropTypes.object.isRequired,
-  meta: PropTypes.object.isRequired
+  meta: PropTypes.object.isRequired,
+  placeholder: PropTypes.string
 }
 
 TextField.defaultProps = {
@@ -47,6 +50,7 @@ TextField.defaultProps = {
   fullWidth: true,
   size: 10,
   value: '',
+  placeholder: '',
   onChange: () => {}
 }
 

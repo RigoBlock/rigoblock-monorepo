@@ -18,7 +18,6 @@ const transactionData = {
   account: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
 }
 
-console.log(Web3.version)
 const createTransaction = () => {
   const id = Web3.utils.randomHex()
   return {
