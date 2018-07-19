@@ -1,0 +1,982 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectFieldWithTitle component renders correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [MockFunction],
+      "getState": [Function],
+      "subscribe": [MockFunction],
+    }
+  }
+>
+  <ReduxForm
+    fieldProps={
+      Object {
+        "id": 1,
+        "items": Array [
+          "MetaMask **** 1604",
+          "MetaMask **** 1605",
+          "MetaMask **** 1606",
+          "MetaMask **** 1607",
+        ],
+      }
+    }
+    title="Pay [mining] fees with"
+    tooltip="this is a test tooltip"
+  >
+    <Connect(Form(SelectFieldWithTitle))
+      destroyOnUnmount={true}
+      enableReinitialize={false}
+      fieldProps={
+        Object {
+          "id": 1,
+          "items": Array [
+            "MetaMask **** 1604",
+            "MetaMask **** 1605",
+            "MetaMask **** 1606",
+            "MetaMask **** 1607",
+          ],
+        }
+      }
+      forceUnregisterOnUnmount={false}
+      form="storyForm"
+      getFormState={[Function]}
+      keepDirtyOnReinitialize={false}
+      persistentSubmitErrors={false}
+      pure={true}
+      shouldAsyncValidate={[Function]}
+      shouldError={[Function]}
+      shouldValidate={[Function]}
+      shouldWarn={[Function]}
+      title="Pay [mining] fees with"
+      tooltip="this is a test tooltip"
+      touchOnBlur={true}
+      touchOnChange={false}
+      updateUnregisteredFields={false}
+    >
+      <Form(SelectFieldWithTitle)
+        anyTouched={false}
+        array={
+          Object {
+            "insert": [Function],
+            "move": [Function],
+            "pop": [Function],
+            "push": [Function],
+            "remove": [Function],
+            "removeAll": [Function],
+            "shift": [Function],
+            "splice": [Function],
+            "swap": [Function],
+            "unshift": [Function],
+          }
+        }
+        arrayInsert={[Function]}
+        arrayMove={[Function]}
+        arrayPop={[Function]}
+        arrayPush={[Function]}
+        arrayRemove={[Function]}
+        arrayRemoveAll={[Function]}
+        arrayShift={[Function]}
+        arraySplice={[Function]}
+        arraySwap={[Function]}
+        arrayUnshift={[Function]}
+        asyncValidating={false}
+        autofill={[Function]}
+        blur={[Function]}
+        change={[Function]}
+        clearAsyncError={[Function]}
+        clearFields={[Function]}
+        clearSubmit={[Function]}
+        clearSubmitErrors={[Function]}
+        destroy={[Function]}
+        destroyOnUnmount={true}
+        dirty={false}
+        dispatch={[MockFunction]}
+        enableReinitialize={false}
+        fieldProps={
+          Object {
+            "id": 1,
+            "items": Array [
+              "MetaMask **** 1604",
+              "MetaMask **** 1605",
+              "MetaMask **** 1606",
+              "MetaMask **** 1607",
+            ],
+          }
+        }
+        focus={[Function]}
+        forceUnregisterOnUnmount={false}
+        form="storyForm"
+        getFormState={[Function]}
+        initialize={[Function]}
+        initialized={false}
+        invalid={false}
+        keepDirtyOnReinitialize={false}
+        persistentSubmitErrors={false}
+        pristine={true}
+        pure={true}
+        registerField={[Function]}
+        reset={[Function]}
+        resetSection={[Function]}
+        setSubmitFailed={[Function]}
+        setSubmitSucceeded={[Function]}
+        shouldAsyncValidate={[Function]}
+        shouldError={[Function]}
+        shouldValidate={[Function]}
+        shouldWarn={[Function]}
+        startAsyncValidation={[Function]}
+        startSubmit={[Function]}
+        stopAsyncValidation={[Function]}
+        stopSubmit={[Function]}
+        submit={[Function]}
+        submitFailed={false}
+        submitSucceeded={false}
+        submitting={false}
+        syncErrors={Object {}}
+        syncWarnings={Object {}}
+        title="Pay [mining] fees with"
+        tooltip="this is a test tooltip"
+        touch={[Function]}
+        touchOnBlur={true}
+        touchOnChange={false}
+        unregisterField={[Function]}
+        untouch={[Function]}
+        updateSyncErrors={[Function]}
+        updateSyncWarnings={[Function]}
+        updateUnregisteredFields={false}
+        valid={true}
+        validExceptSubmit={true}
+        values={Object {}}
+      >
+        <SelectFieldWithTitle
+          anyTouched={false}
+          array={
+            Object {
+              "insert": [Function],
+              "move": [Function],
+              "pop": [Function],
+              "push": [Function],
+              "remove": [Function],
+              "removeAll": [Function],
+              "shift": [Function],
+              "splice": [Function],
+              "swap": [Function],
+              "unshift": [Function],
+            }
+          }
+          asyncValidate={[Function]}
+          asyncValidating={false}
+          autofill={[Function]}
+          blur={[Function]}
+          change={[Function]}
+          clearAsyncError={[Function]}
+          clearFields={[Function]}
+          clearSubmit={[Function]}
+          clearSubmitErrors={[Function]}
+          destroy={[Function]}
+          dirty={false}
+          dispatch={[MockFunction]}
+          fieldProps={
+            Object {
+              "id": 1,
+              "items": Array [
+                "MetaMask **** 1604",
+                "MetaMask **** 1605",
+                "MetaMask **** 1606",
+                "MetaMask **** 1607",
+              ],
+            }
+          }
+          form="storyForm"
+          handleSubmit={[Function]}
+          initialize={[Function]}
+          initialized={false}
+          invalid={false}
+          pristine={true}
+          pure={true}
+          reset={[Function]}
+          resetSection={[Function]}
+          submit={[Function]}
+          submitFailed={false}
+          submitSucceeded={false}
+          submitting={false}
+          title="Pay [mining] fees with"
+          tooltip="this is a test tooltip"
+          touch={[Function]}
+          untouch={[Function]}
+          valid={true}
+        >
+          <div
+            className="select-with-title"
+          >
+            <div
+              className="select-title"
+            >
+              <Title
+                className={null}
+                size="small"
+              >
+                <div
+                  className="title small"
+                >
+                  Pay [mining] fees with
+                </div>
+              </Title>
+              <Icon
+                className=""
+                onClick={[Function]}
+                size="medium"
+                tooltipText="this is a test tooltip"
+                type="help"
+              >
+                <div
+                  className="material-icons icon medium"
+                  onClick={[Function]}
+                >
+                  <span
+                    className="tooltip-hover"
+                  >
+                    help
+                  </span>
+                  <Tooltip
+                    tooltipText="this is a test tooltip"
+                  >
+                    <div
+                      className="tooltip-container"
+                    >
+                      <div
+                        className="tooltip-text"
+                      >
+                        this is a test tooltip
+                      </div>
+                      <div
+                        className="tooltip-tip"
+                      />
+                    </div>
+                  </Tooltip>
+                </div>
+              </Icon>
+            </div>
+            <SelectFieldForm
+              fieldName="accountList"
+              fieldProps={
+                Object {
+                  "id": 1,
+                  "items": Array [
+                    "MetaMask **** 1604",
+                    "MetaMask **** 1605",
+                    "MetaMask **** 1606",
+                    "MetaMask **** 1607",
+                  ],
+                }
+              }
+            >
+              <Field
+                component={[Function]}
+                name="accountList"
+              >
+                <Connect(ConnectedField)
+                  _reduxForm={
+                    Object {
+                      "anyTouched": false,
+                      "array": Object {
+                        "insert": [Function],
+                        "move": [Function],
+                        "pop": [Function],
+                        "push": [Function],
+                        "remove": [Function],
+                        "removeAll": [Function],
+                        "shift": [Function],
+                        "splice": [Function],
+                        "swap": [Function],
+                        "unshift": [Function],
+                      },
+                      "arrayInsert": [Function],
+                      "arrayMove": [Function],
+                      "arrayPop": [Function],
+                      "arrayPush": [Function],
+                      "arrayRemove": [Function],
+                      "arrayRemoveAll": [Function],
+                      "arrayShift": [Function],
+                      "arraySplice": [Function],
+                      "arraySwap": [Function],
+                      "arrayUnshift": [Function],
+                      "asyncErrors": undefined,
+                      "asyncValidate": [Function],
+                      "asyncValidating": false,
+                      "autofill": [Function],
+                      "blur": [Function],
+                      "change": [Function],
+                      "clearAsyncError": [Function],
+                      "clearFields": [Function],
+                      "clearSubmit": [Function],
+                      "clearSubmitErrors": [Function],
+                      "destroy": [Function],
+                      "destroyOnUnmount": true,
+                      "dirty": false,
+                      "dispatch": [MockFunction],
+                      "enableReinitialize": false,
+                      "error": undefined,
+                      "fieldProps": Object {
+                        "id": 1,
+                        "items": Array [
+                          "MetaMask **** 1604",
+                          "MetaMask **** 1605",
+                          "MetaMask **** 1606",
+                          "MetaMask **** 1607",
+                        ],
+                      },
+                      "focus": [Function],
+                      "forceUnregisterOnUnmount": false,
+                      "form": "storyForm",
+                      "getFormState": [Function],
+                      "getValues": [Function],
+                      "initialValues": undefined,
+                      "initialize": [Function],
+                      "initialized": false,
+                      "invalid": false,
+                      "keepDirtyOnReinitialize": false,
+                      "persistentSubmitErrors": false,
+                      "pristine": true,
+                      "pure": true,
+                      "register": [Function],
+                      "registerField": [Function],
+                      "registerInnerOnSubmit": [Function],
+                      "registeredFields": undefined,
+                      "reset": [Function],
+                      "resetSection": [Function],
+                      "sectionPrefix": undefined,
+                      "setSubmitFailed": [Function],
+                      "setSubmitSucceeded": [Function],
+                      "shouldAsyncValidate": [Function],
+                      "shouldError": [Function],
+                      "shouldValidate": [Function],
+                      "shouldWarn": [Function],
+                      "startAsyncValidation": [Function],
+                      "startSubmit": [Function],
+                      "stopAsyncValidation": [Function],
+                      "stopSubmit": [Function],
+                      "submit": [Function],
+                      "submitFailed": false,
+                      "submitSucceeded": false,
+                      "submitting": false,
+                      "syncErrors": Object {},
+                      "syncWarnings": Object {},
+                      "title": "Pay [mining] fees with",
+                      "tooltip": "this is a test tooltip",
+                      "touch": [Function],
+                      "touchOnBlur": true,
+                      "touchOnChange": false,
+                      "triggerSubmit": undefined,
+                      "unregister": [Function],
+                      "unregisterField": [Function],
+                      "untouch": [Function],
+                      "updateSyncErrors": [Function],
+                      "updateSyncWarnings": [Function],
+                      "updateUnregisteredFields": false,
+                      "valid": true,
+                      "validExceptSubmit": true,
+                      "values": Object {},
+                      "warning": undefined,
+                    }
+                  }
+                  component={[Function]}
+                  name="accountList"
+                  normalize={[Function]}
+                >
+                  <ConnectedField
+                    _reduxForm={
+                      Object {
+                        "anyTouched": false,
+                        "array": Object {
+                          "insert": [Function],
+                          "move": [Function],
+                          "pop": [Function],
+                          "push": [Function],
+                          "remove": [Function],
+                          "removeAll": [Function],
+                          "shift": [Function],
+                          "splice": [Function],
+                          "swap": [Function],
+                          "unshift": [Function],
+                        },
+                        "arrayInsert": [Function],
+                        "arrayMove": [Function],
+                        "arrayPop": [Function],
+                        "arrayPush": [Function],
+                        "arrayRemove": [Function],
+                        "arrayRemoveAll": [Function],
+                        "arrayShift": [Function],
+                        "arraySplice": [Function],
+                        "arraySwap": [Function],
+                        "arrayUnshift": [Function],
+                        "asyncErrors": undefined,
+                        "asyncValidate": [Function],
+                        "asyncValidating": false,
+                        "autofill": [Function],
+                        "blur": [Function],
+                        "change": [Function],
+                        "clearAsyncError": [Function],
+                        "clearFields": [Function],
+                        "clearSubmit": [Function],
+                        "clearSubmitErrors": [Function],
+                        "destroy": [Function],
+                        "destroyOnUnmount": true,
+                        "dirty": false,
+                        "dispatch": [MockFunction],
+                        "enableReinitialize": false,
+                        "error": undefined,
+                        "fieldProps": Object {
+                          "id": 1,
+                          "items": Array [
+                            "MetaMask **** 1604",
+                            "MetaMask **** 1605",
+                            "MetaMask **** 1606",
+                            "MetaMask **** 1607",
+                          ],
+                        },
+                        "focus": [Function],
+                        "forceUnregisterOnUnmount": false,
+                        "form": "storyForm",
+                        "getFormState": [Function],
+                        "getValues": [Function],
+                        "initialValues": undefined,
+                        "initialize": [Function],
+                        "initialized": false,
+                        "invalid": false,
+                        "keepDirtyOnReinitialize": false,
+                        "persistentSubmitErrors": false,
+                        "pristine": true,
+                        "pure": true,
+                        "register": [Function],
+                        "registerField": [Function],
+                        "registerInnerOnSubmit": [Function],
+                        "registeredFields": undefined,
+                        "reset": [Function],
+                        "resetSection": [Function],
+                        "sectionPrefix": undefined,
+                        "setSubmitFailed": [Function],
+                        "setSubmitSucceeded": [Function],
+                        "shouldAsyncValidate": [Function],
+                        "shouldError": [Function],
+                        "shouldValidate": [Function],
+                        "shouldWarn": [Function],
+                        "startAsyncValidation": [Function],
+                        "startSubmit": [Function],
+                        "stopAsyncValidation": [Function],
+                        "stopSubmit": [Function],
+                        "submit": [Function],
+                        "submitFailed": false,
+                        "submitSucceeded": false,
+                        "submitting": false,
+                        "syncErrors": Object {},
+                        "syncWarnings": Object {},
+                        "title": "Pay [mining] fees with",
+                        "tooltip": "this is a test tooltip",
+                        "touch": [Function],
+                        "touchOnBlur": true,
+                        "touchOnChange": false,
+                        "triggerSubmit": undefined,
+                        "unregister": [Function],
+                        "unregisterField": [Function],
+                        "untouch": [Function],
+                        "updateSyncErrors": [Function],
+                        "updateSyncWarnings": [Function],
+                        "updateUnregisteredFields": false,
+                        "valid": true,
+                        "validExceptSubmit": true,
+                        "values": Object {},
+                        "warning": undefined,
+                      }
+                    }
+                    asyncValidating={false}
+                    component={[Function]}
+                    dirty={false}
+                    dispatch={[MockFunction]}
+                    name="accountList"
+                    normalize={[Function]}
+                    pristine={true}
+                  >
+                    <renderSelectField
+                      input={
+                        Object {
+                          "name": "accountList",
+                          "onBlur": [Function],
+                          "onChange": [Function],
+                          "onDragStart": [Function],
+                          "onDrop": [Function],
+                          "onFocus": [Function],
+                          "value": "",
+                        }
+                      }
+                      meta={
+                        Object {
+                          "active": false,
+                          "asyncValidating": false,
+                          "autofilled": false,
+                          "dirty": false,
+                          "dispatch": [MockFunction],
+                          "error": undefined,
+                          "form": "storyForm",
+                          "initial": undefined,
+                          "invalid": false,
+                          "pristine": true,
+                          "submitFailed": false,
+                          "submitting": false,
+                          "touched": false,
+                          "valid": true,
+                          "visited": false,
+                          "warning": undefined,
+                        }
+                      }
+                    >
+                      <SelectField
+                        defaultValue=""
+                        error={false}
+                        id={1}
+                        items={
+                          Array [
+                            "MetaMask **** 1604",
+                            "MetaMask **** 1605",
+                            "MetaMask **** 1606",
+                            "MetaMask **** 1607",
+                          ]
+                        }
+                        onChange={[Function]}
+                        placeholder={null}
+                        value=""
+                      >
+                        <SelectField
+                          anchor={
+                            Object {
+                              "x": "inner left",
+                              "y": "overlap",
+                            }
+                          }
+                          className="select-field"
+                          defaultValue=""
+                          defaultVisible={false}
+                          dropdownIcon={
+                            <span
+                              className="material-icons"
+                            >
+                              keyboard_arrow_down
+                            </span>
+                          }
+                          fixedTo={[Window]}
+                          id="1"
+                          itemLabel="label"
+                          itemProps="getProps"
+                          itemValue="value"
+                          keyboardMatchingTimeout={1000}
+                          lineDirection="left"
+                          menuItems={
+                            Array [
+                              "MetaMask **** 1604",
+                              "MetaMask **** 1605",
+                              "MetaMask **** 1606",
+                              "MetaMask **** 1607",
+                            ]
+                          }
+                          onChange={[Function]}
+                          placeholder={null}
+                          position="below"
+                          repositionOnResize={false}
+                          repositionOnScroll={false}
+                          stripActiveItem={false}
+                          transitionName="md-drop"
+                          transitionTime={300}
+                          value=""
+                        >
+                          <Menu
+                            anchor={
+                              Object {
+                                "x": "inner left",
+                                "y": "overlap",
+                              }
+                            }
+                            cascadingAnchor={
+                              Object {
+                                "x": "right",
+                                "y": "overlap",
+                              }
+                            }
+                            cascadingZDepth={3}
+                            className="md-menu--select-field select-field"
+                            fixedTo={[Window]}
+                            id="1-menu"
+                            listHeightRestricted={true}
+                            listId="1-menu-options"
+                            listProps={
+                              Object {
+                                "aria-activedescendant": null,
+                                "ref": [Function],
+                                "role": "listbox",
+                              }
+                            }
+                            listZDepth={2}
+                            onClick={[Function]}
+                            onClose={[Function]}
+                            onKeyDown={[Function]}
+                            position="below"
+                            repositionOnResize={false}
+                            repositionOnScroll={false}
+                            sameWidth={true}
+                            simplified={true}
+                            toggle={
+                              <SelectFieldToggle
+                                active={false}
+                                activeLabel=""
+                                below={true}
+                                className={undefined}
+                                dropdownIcon={
+                                  <span
+                                    className="material-icons"
+                                  >
+                                    keyboard_arrow_down
+                                  </span>
+                                }
+                                error={false}
+                                id="1"
+                                lineDirection="left"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                placeholder={null}
+                                style={undefined}
+                                transitionName="md-drop"
+                                transitionTime={300}
+                                value=""
+                                visible={false}
+                              />
+                            }
+                            visible={false}
+                          >
+                            <Layover
+                              anchor={
+                                Object {
+                                  "x": "inner left",
+                                  "y": "overlap",
+                                }
+                              }
+                              animationPosition="below"
+                              aria-expanded={false}
+                              aria-haspopup={true}
+                              aria-owns="1-menu-options"
+                              belowAnchor={
+                                Object {
+                                  "x": "center",
+                                  "y": "bottom",
+                                }
+                              }
+                              className="md-menu-container md-menu-container--menu-below md-menu--select-field select-field"
+                              closeOnOutsideClick={true}
+                              component="div"
+                              fillViewportHeight={false}
+                              fillViewportWidth={false}
+                              fixedTo={[Window]}
+                              id="1-menu"
+                              minBottom={0}
+                              minLeft={0}
+                              minRight={0}
+                              onClick={[Function]}
+                              onClose={[Function]}
+                              onKeyDown={[Function]}
+                              preventContextMenu={true}
+                              repositionOnResize={false}
+                              repositionOnScroll={false}
+                              sameWidth={true}
+                              simplified={true}
+                              toggle={
+                                <SelectFieldToggle
+                                  active={false}
+                                  activeLabel=""
+                                  below={true}
+                                  className={undefined}
+                                  dropdownIcon={
+                                    <span
+                                      className="material-icons"
+                                    >
+                                      keyboard_arrow_down
+                                    </span>
+                                  }
+                                  error={false}
+                                  id="1"
+                                  lineDirection="left"
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  placeholder={null}
+                                  style={undefined}
+                                  transitionName="md-drop"
+                                  transitionTime={300}
+                                  value=""
+                                  visible={false}
+                                />
+                              }
+                              toggleQuery=".md-text-field-container,button,*[role=\\"button\\"],*[role=\\"listbox\\"]"
+                              transitionEnterTimeout={200}
+                              transitionLeaveTimeout={200}
+                              transitionName="md-layover"
+                              visible={false}
+                              xThreshold={0.38}
+                              yThreshold={0.38}
+                            >
+                              <CSSTransitionGroup
+                                aria-expanded={false}
+                                aria-haspopup={true}
+                                className="md-layover md-layover--simplified md-inline-block md-menu-container md-menu-container--menu-below md-menu--select-field select-field"
+                                component="div"
+                                id="1-menu"
+                                onClick={[Function]}
+                                onContextMenu={[Function]}
+                                onKeyDown={[Function]}
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionEnterTimeout={200}
+                                transitionLeave={true}
+                                transitionLeaveTimeout={200}
+                                transitionName="md-layover"
+                              >
+                                <TransitionGroup
+                                  aria-expanded={false}
+                                  aria-haspopup={true}
+                                  childFactory={[Function]}
+                                  className="md-layover md-layover--simplified md-inline-block md-menu-container md-menu-container--menu-below md-menu--select-field select-field"
+                                  component="div"
+                                  id="1-menu"
+                                  onClick={[Function]}
+                                  onContextMenu={[Function]}
+                                  onKeyDown={[Function]}
+                                  transitionAppear={false}
+                                  transitionEnter={true}
+                                  transitionEnterTimeout={200}
+                                  transitionLeave={true}
+                                  transitionLeaveTimeout={200}
+                                  transitionName="md-layover"
+                                >
+                                  <div
+                                    aria-expanded={false}
+                                    aria-haspopup={true}
+                                    className="md-layover md-layover--simplified md-inline-block md-menu-container md-menu-container--menu-below md-menu--select-field select-field"
+                                    id="1-menu"
+                                    onClick={[Function]}
+                                    onContextMenu={[Function]}
+                                    onKeyDown={[Function]}
+                                  >
+                                    <CSSTransitionGroupChild
+                                      appear={false}
+                                      enter={true}
+                                      enterTimeout={200}
+                                      key=".1"
+                                      leave={true}
+                                      leaveTimeout={200}
+                                      name="md-layover"
+                                    >
+                                      <SelectFieldToggle
+                                        active={false}
+                                        activeLabel=""
+                                        below={true}
+                                        dropdownIcon={
+                                          <span
+                                            className="material-icons"
+                                          >
+                                            keyboard_arrow_down
+                                          </span>
+                                        }
+                                        error={false}
+                                        id="1"
+                                        key=".1"
+                                        lineDirection="left"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        placeholder={null}
+                                        transitionName="md-drop"
+                                        transitionTime={300}
+                                        value=""
+                                        visible={false}
+                                      >
+                                        <div
+                                          className="md-select-field__toggle"
+                                        >
+                                          <FloatingLabel
+                                            active={false}
+                                            error={false}
+                                            floating={false}
+                                            htmlFor="1"
+                                          />
+                                          <SelectFieldInput
+                                            active={false}
+                                            activeLabel=""
+                                            below={true}
+                                            dropdownIcon={
+                                              <span
+                                                className="material-icons"
+                                              >
+                                                keyboard_arrow_down
+                                              </span>
+                                            }
+                                            error={false}
+                                            id="1"
+                                            lineDirection="left"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onClick={[Function]}
+                                            onFocus={[Function]}
+                                            placeholder={null}
+                                            transitionName="md-drop"
+                                            transitionTime={300}
+                                            value=""
+                                          >
+                                            <withInk(AccessibleFakeButton)
+                                              className="md-select-field"
+                                              component={[Function]}
+                                              id="1-toggle"
+                                              inkDisabled={false}
+                                              inkTransitionEnterTimeout={450}
+                                              inkTransitionLeaveTimeout={300}
+                                              inkTransitionOverlap={150}
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onClick={[Function]}
+                                              onFocus={[Function]}
+                                              role="listbox"
+                                              zDepth={0}
+                                            >
+                                              <AccessibleFakeButton
+                                                className="md-select-field"
+                                                component={[Function]}
+                                                id="1-toggle"
+                                                ink={
+                                                  <InkContainer
+                                                    className={undefined}
+                                                    disabledInteractions={undefined}
+                                                    inkClassName={undefined}
+                                                    inkStyle={undefined}
+                                                    pulse={undefined}
+                                                    style={undefined}
+                                                    transitionEnterTimeout={450}
+                                                    transitionLeaveTimeout={300}
+                                                    transitionOverlap={150}
+                                                    waitForInkTransition={undefined}
+                                                  />
+                                                }
+                                                listenToEnter={true}
+                                                listenToSpace={true}
+                                                noFocusOutline={true}
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onClick={[Function]}
+                                                onFocus={[Function]}
+                                                role="listbox"
+                                                tabIndex={0}
+                                                zDepth={0}
+                                              >
+                                                <Paper
+                                                  aria-pressed={false}
+                                                  className="md-fake-btn md-pointer--hover md-fake-btn--no-outline md-select-field"
+                                                  component="div"
+                                                  id="1-toggle"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onClick={[Function]}
+                                                  onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyUp={[Function]}
+                                                  role="listbox"
+                                                  tabIndex={0}
+                                                  zDepth={0}
+                                                >
+                                                  <div
+                                                    aria-pressed={false}
+                                                    className="md-paper md-paper--0 md-fake-btn md-pointer--hover md-fake-btn--no-outline md-select-field"
+                                                    id="1-toggle"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onClick={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    onKeyUp={[Function]}
+                                                    role="listbox"
+                                                    tabIndex={0}
+                                                  >
+                                                    <InkContainer
+                                                      key="ink-container"
+                                                      transitionEnterTimeout={450}
+                                                      transitionLeaveTimeout={300}
+                                                      transitionOverlap={150}
+                                                    >
+                                                      <TransitionGroup
+                                                        childFactory={[Function]}
+                                                        className="md-ink-container"
+                                                        component="div"
+                                                      >
+                                                        <div
+                                                          className="md-ink-container"
+                                                        />
+                                                      </TransitionGroup>
+                                                    </InkContainer>
+                                                    <IconSeparator
+                                                      className="md-text-field md-select-field--btn"
+                                                      component="div"
+                                                      key=".0"
+                                                      label=""
+                                                      labelClassName={null}
+                                                    >
+                                                      <div
+                                                        className="md-icon-separator md-text-field md-select-field--btn"
+                                                      >
+                                                        <span
+                                                          className="md-icon-text"
+                                                        />
+                                                        <span
+                                                          className="material-icons"
+                                                        >
+                                                          keyboard_arrow_down
+                                                        </span>
+                                                      </div>
+                                                    </IconSeparator>
+                                                    <input
+                                                      id="1"
+                                                      key=".$value"
+                                                      type="hidden"
+                                                      value=""
+                                                    />
+                                                  </div>
+                                                </Paper>
+                                              </AccessibleFakeButton>
+                                            </withInk(AccessibleFakeButton)>
+                                          </SelectFieldInput>
+                                          <TextFieldMessage
+                                            active={false}
+                                            error={false}
+                                            leftIcon={false}
+                                            rightIcon={false}
+                                          />
+                                        </div>
+                                      </SelectFieldToggle>
+                                    </CSSTransitionGroupChild>
+                                  </div>
+                                </TransitionGroup>
+                              </CSSTransitionGroup>
+                            </Layover>
+                          </Menu>
+                        </SelectField>
+                      </SelectField>
+                    </renderSelectField>
+                  </ConnectedField>
+                </Connect(ConnectedField)>
+              </Field>
+            </SelectFieldForm>
+          </div>
+        </SelectFieldWithTitle>
+      </Form(SelectFieldWithTitle)>
+    </Connect(Form(SelectFieldWithTitle))>
+  </ReduxForm>
+</Provider>
+`;

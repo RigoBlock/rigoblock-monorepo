@@ -2,18 +2,22 @@
 
 .select-field {
   height: $dist-l;
-  margin: $dist-xs 0;
   min-width: 11 * $dist-m;
   background: $secondary-bg-color;
   border-radius: $base-border-radius;
   box-shadow: $box-shadow;
   transition: border-radius $medium-animation;
 
+  .md-select-field--btn {
+    padding: $dist-s $dist-xs;
+  }
+
   .md-ink-container {
     border-radius: $base-border-radius;
     transition: border-radius $medium-animation;
   }
   .md-list-tile {
+    padding-left: $dist-xs;
     height: 32px;
     div.md-ink-container {
       border-radius: 0;
