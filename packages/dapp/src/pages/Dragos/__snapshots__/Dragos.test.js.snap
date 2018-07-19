@@ -5,15 +5,5 @@ exports[`Dragos page renders correctly 1`] = `
   <h1>
     Dragos
   </h1>
-  <TextFieldWithTitle
-    fieldName="vaultName"
-    fieldProps={
-      Object {
-        "id": "testTextField",
-      }
-    }
-    title="Vault name"
-    tooltip="Write here the vault's name"
-  />
 </Connect(BaseTemplate)>
 `;
