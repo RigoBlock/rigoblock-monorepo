@@ -1,8 +1,9 @@
 import './TextFieldWithTitle.scss'
+import { Field } from 'redux-form'
 import Icon from '../../atoms/Icon'
 import PropTypes from 'prop-types'
 import React from 'react'
-import TextFieldForm from '../../atoms/TextFieldForm'
+import TextField from '../../atoms/TextField'
 import Title, { TITLE_SIZES } from '../../atoms/Title'
 
 const TextFieldWithTitle = ({ tooltip, title, fieldName, fieldProps }) => {
@@ -16,7 +17,7 @@ const TextFieldWithTitle = ({ tooltip, title, fieldName, fieldProps }) => {
         <Title size={TITLE_SIZES.SMALL}>{title}</Title>
         {tooltipComponent}
       </div>
-      <TextFieldForm fieldName={fieldName} fieldProps={fieldProps} />
+      <Field name={fieldName} component={TextField} {...fieldProps} />
     </div>
   )
 }

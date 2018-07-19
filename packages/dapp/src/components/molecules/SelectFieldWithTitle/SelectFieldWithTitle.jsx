@@ -1,8 +1,9 @@
 import './SelectFieldWithTitle.scss'
+import { Field } from 'redux-form'
 import Icon from '../../atoms/Icon'
 import PropTypes from 'prop-types'
 import React from 'react'
-import SelectFieldForm from '../../atoms/SelectFieldForm'
+import SelectField from '../../atoms/SelectField'
 import Title, { TITLE_SIZES } from '../../atoms/Title'
 
 const SelectFieldWithTitle = ({ tooltip, title, fieldName, fieldProps }) => {
@@ -16,7 +17,7 @@ const SelectFieldWithTitle = ({ tooltip, title, fieldName, fieldProps }) => {
         <Title size={TITLE_SIZES.SMALL}>{title}</Title>
         {tooltipComponent}
       </div>
-      <SelectFieldForm fieldName={fieldName} fieldProps={fieldProps} />
+      <Field name={fieldName} component={SelectField} {...fieldProps} />
     </div>
   )
 }

@@ -246,45 +246,18 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                 </div>
               </Icon>
             </div>
-            <ReduxForm
-              fieldName="vaultName"
-              fieldProps={
-                Object {
-                  "fullWidth": false,
-                  "id": "testTextField",
-                  "size": 10,
-                }
-              }
+            <Field
+              component={[Function]}
+              fullWidth={false}
+              id="testTextField"
+              name="vaultName"
+              size={10}
             >
-              <Connect(Form(TextFieldForm))
-                destroyOnUnmount={true}
-                enableReinitialize={false}
-                fieldName="vaultName"
-                fieldProps={
+              <Connect(ConnectedField)
+                _reduxForm={
                   Object {
-                    "fullWidth": false,
-                    "id": "testTextField",
-                    "size": 10,
-                  }
-                }
-                forceUnregisterOnUnmount={false}
-                form="testForm"
-                getFormState={[Function]}
-                keepDirtyOnReinitialize={false}
-                persistentSubmitErrors={false}
-                pure={true}
-                shouldAsyncValidate={[Function]}
-                shouldError={[Function]}
-                shouldValidate={[Function]}
-                shouldWarn={[Function]}
-                touchOnBlur={true}
-                touchOnChange={false}
-                updateUnregisteredFields={false}
-              >
-                <Form(TextFieldForm)
-                  anyTouched={false}
-                  array={
-                    Object {
+                    "anyTouched": false,
+                    "array": Object {
                       "insert": [Function],
                       "move": [Function],
                       "pop": [Function],
@@ -295,85 +268,105 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                       "splice": [Function],
                       "swap": [Function],
                       "unshift": [Function],
-                    }
-                  }
-                  arrayInsert={[Function]}
-                  arrayMove={[Function]}
-                  arrayPop={[Function]}
-                  arrayPush={[Function]}
-                  arrayRemove={[Function]}
-                  arrayRemoveAll={[Function]}
-                  arrayShift={[Function]}
-                  arraySplice={[Function]}
-                  arraySwap={[Function]}
-                  arrayUnshift={[Function]}
-                  asyncValidating={false}
-                  autofill={[Function]}
-                  blur={[Function]}
-                  change={[Function]}
-                  clearAsyncError={[Function]}
-                  clearFields={[Function]}
-                  clearSubmit={[Function]}
-                  clearSubmitErrors={[Function]}
-                  destroy={[Function]}
-                  destroyOnUnmount={true}
-                  dirty={false}
-                  dispatch={[MockFunction]}
-                  enableReinitialize={false}
-                  fieldName="vaultName"
-                  fieldProps={
-                    Object {
+                    },
+                    "arrayInsert": [Function],
+                    "arrayMove": [Function],
+                    "arrayPop": [Function],
+                    "arrayPush": [Function],
+                    "arrayRemove": [Function],
+                    "arrayRemoveAll": [Function],
+                    "arrayShift": [Function],
+                    "arraySplice": [Function],
+                    "arraySwap": [Function],
+                    "arrayUnshift": [Function],
+                    "asyncErrors": undefined,
+                    "asyncValidate": [Function],
+                    "asyncValidating": false,
+                    "autofill": [Function],
+                    "blur": [Function],
+                    "change": [Function],
+                    "clearAsyncError": [Function],
+                    "clearFields": [Function],
+                    "clearSubmit": [Function],
+                    "clearSubmitErrors": [Function],
+                    "destroy": [Function],
+                    "destroyOnUnmount": true,
+                    "dirty": false,
+                    "dispatch": [MockFunction],
+                    "enableReinitialize": false,
+                    "error": undefined,
+                    "fieldName": "vaultName",
+                    "fieldProps": Object {
                       "fullWidth": false,
                       "id": "testTextField",
                       "size": 10,
-                    }
+                    },
+                    "focus": [Function],
+                    "forceUnregisterOnUnmount": false,
+                    "form": "storyForm",
+                    "getFormState": [Function],
+                    "getValues": [Function],
+                    "initialValues": undefined,
+                    "initialize": [Function],
+                    "initialized": false,
+                    "invalid": false,
+                    "keepDirtyOnReinitialize": false,
+                    "persistentSubmitErrors": false,
+                    "pristine": true,
+                    "pure": true,
+                    "register": [Function],
+                    "registerField": [Function],
+                    "registerInnerOnSubmit": [Function],
+                    "registeredFields": undefined,
+                    "reset": [Function],
+                    "resetSection": [Function],
+                    "sectionPrefix": undefined,
+                    "setSubmitFailed": [Function],
+                    "setSubmitSucceeded": [Function],
+                    "shouldAsyncValidate": [Function],
+                    "shouldError": [Function],
+                    "shouldValidate": [Function],
+                    "shouldWarn": [Function],
+                    "startAsyncValidation": [Function],
+                    "startSubmit": [Function],
+                    "stopAsyncValidation": [Function],
+                    "stopSubmit": [Function],
+                    "submit": [Function],
+                    "submitFailed": false,
+                    "submitSucceeded": false,
+                    "submitting": false,
+                    "syncErrors": Object {},
+                    "syncWarnings": Object {},
+                    "title": "Vault name",
+                    "tooltip": "Write here the vault's name",
+                    "touch": [Function],
+                    "touchOnBlur": true,
+                    "touchOnChange": false,
+                    "triggerSubmit": undefined,
+                    "unregister": [Function],
+                    "unregisterField": [Function],
+                    "untouch": [Function],
+                    "updateSyncErrors": [Function],
+                    "updateSyncWarnings": [Function],
+                    "updateUnregisteredFields": false,
+                    "valid": true,
+                    "validExceptSubmit": true,
+                    "values": Object {},
+                    "warning": undefined,
                   }
-                  focus={[Function]}
-                  forceUnregisterOnUnmount={false}
-                  form="testForm"
-                  getFormState={[Function]}
-                  initialize={[Function]}
-                  initialized={false}
-                  invalid={false}
-                  keepDirtyOnReinitialize={false}
-                  persistentSubmitErrors={false}
-                  pristine={true}
-                  pure={true}
-                  registerField={[Function]}
-                  reset={[Function]}
-                  resetSection={[Function]}
-                  setSubmitFailed={[Function]}
-                  setSubmitSucceeded={[Function]}
-                  shouldAsyncValidate={[Function]}
-                  shouldError={[Function]}
-                  shouldValidate={[Function]}
-                  shouldWarn={[Function]}
-                  startAsyncValidation={[Function]}
-                  startSubmit={[Function]}
-                  stopAsyncValidation={[Function]}
-                  stopSubmit={[Function]}
-                  submit={[Function]}
-                  submitFailed={false}
-                  submitSucceeded={false}
-                  submitting={false}
-                  syncErrors={Object {}}
-                  syncWarnings={Object {}}
-                  touch={[Function]}
-                  touchOnBlur={true}
-                  touchOnChange={false}
-                  unregisterField={[Function]}
-                  untouch={[Function]}
-                  updateSyncErrors={[Function]}
-                  updateSyncWarnings={[Function]}
-                  updateUnregisteredFields={false}
-                  valid={true}
-                  validExceptSubmit={true}
-                  values={Object {}}
-                >
-                  <TextFieldForm
-                    anyTouched={false}
-                    array={
-                      Object {
+                }
+                component={[Function]}
+                fullWidth={false}
+                id="testTextField"
+                name="vaultName"
+                normalize={[Function]}
+                size={10}
+              >
+                <ConnectedField
+                  _reduxForm={
+                    Object {
+                      "anyTouched": false,
+                      "array": Object {
                         "insert": [Function],
                         "move": [Function],
                         "pop": [Function],
@@ -384,406 +377,236 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                         "splice": [Function],
                         "swap": [Function],
                         "unshift": [Function],
-                      }
-                    }
-                    asyncValidate={[Function]}
-                    asyncValidating={false}
-                    autofill={[Function]}
-                    blur={[Function]}
-                    change={[Function]}
-                    clearAsyncError={[Function]}
-                    clearFields={[Function]}
-                    clearSubmit={[Function]}
-                    clearSubmitErrors={[Function]}
-                    destroy={[Function]}
-                    dirty={false}
-                    dispatch={[MockFunction]}
-                    fieldName="vaultName"
-                    fieldProps={
-                      Object {
+                      },
+                      "arrayInsert": [Function],
+                      "arrayMove": [Function],
+                      "arrayPop": [Function],
+                      "arrayPush": [Function],
+                      "arrayRemove": [Function],
+                      "arrayRemoveAll": [Function],
+                      "arrayShift": [Function],
+                      "arraySplice": [Function],
+                      "arraySwap": [Function],
+                      "arrayUnshift": [Function],
+                      "asyncErrors": undefined,
+                      "asyncValidate": [Function],
+                      "asyncValidating": false,
+                      "autofill": [Function],
+                      "blur": [Function],
+                      "change": [Function],
+                      "clearAsyncError": [Function],
+                      "clearFields": [Function],
+                      "clearSubmit": [Function],
+                      "clearSubmitErrors": [Function],
+                      "destroy": [Function],
+                      "destroyOnUnmount": true,
+                      "dirty": false,
+                      "dispatch": [MockFunction],
+                      "enableReinitialize": false,
+                      "error": undefined,
+                      "fieldName": "vaultName",
+                      "fieldProps": Object {
                         "fullWidth": false,
                         "id": "testTextField",
                         "size": 10,
+                      },
+                      "focus": [Function],
+                      "forceUnregisterOnUnmount": false,
+                      "form": "storyForm",
+                      "getFormState": [Function],
+                      "getValues": [Function],
+                      "initialValues": undefined,
+                      "initialize": [Function],
+                      "initialized": false,
+                      "invalid": false,
+                      "keepDirtyOnReinitialize": false,
+                      "persistentSubmitErrors": false,
+                      "pristine": true,
+                      "pure": true,
+                      "register": [Function],
+                      "registerField": [Function],
+                      "registerInnerOnSubmit": [Function],
+                      "registeredFields": undefined,
+                      "reset": [Function],
+                      "resetSection": [Function],
+                      "sectionPrefix": undefined,
+                      "setSubmitFailed": [Function],
+                      "setSubmitSucceeded": [Function],
+                      "shouldAsyncValidate": [Function],
+                      "shouldError": [Function],
+                      "shouldValidate": [Function],
+                      "shouldWarn": [Function],
+                      "startAsyncValidation": [Function],
+                      "startSubmit": [Function],
+                      "stopAsyncValidation": [Function],
+                      "stopSubmit": [Function],
+                      "submit": [Function],
+                      "submitFailed": false,
+                      "submitSucceeded": false,
+                      "submitting": false,
+                      "syncErrors": Object {},
+                      "syncWarnings": Object {},
+                      "title": "Vault name",
+                      "tooltip": "Write here the vault's name",
+                      "touch": [Function],
+                      "touchOnBlur": true,
+                      "touchOnChange": false,
+                      "triggerSubmit": undefined,
+                      "unregister": [Function],
+                      "unregisterField": [Function],
+                      "untouch": [Function],
+                      "updateSyncErrors": [Function],
+                      "updateSyncWarnings": [Function],
+                      "updateUnregisteredFields": false,
+                      "valid": true,
+                      "validExceptSubmit": true,
+                      "values": Object {},
+                      "warning": undefined,
+                    }
+                  }
+                  asyncValidating={false}
+                  component={[Function]}
+                  dirty={false}
+                  dispatch={[MockFunction]}
+                  fullWidth={false}
+                  id="testTextField"
+                  name="vaultName"
+                  normalize={[Function]}
+                  pristine={true}
+                  size={10}
+                >
+                  <TextField
+                    fullWidth={false}
+                    id="testTextField"
+                    input={
+                      Object {
+                        "name": "vaultName",
+                        "onBlur": [Function],
+                        "onChange": [Function],
+                        "onDragStart": [Function],
+                        "onDrop": [Function],
+                        "onFocus": [Function],
+                        "value": "",
                       }
                     }
-                    form="testForm"
-                    handleSubmit={[Function]}
-                    initialize={[Function]}
-                    initialized={false}
-                    invalid={false}
-                    pristine={true}
-                    pure={true}
-                    reset={[Function]}
-                    resetSection={[Function]}
-                    submit={[Function]}
-                    submitFailed={false}
-                    submitSucceeded={false}
-                    submitting={false}
-                    touch={[Function]}
-                    untouch={[Function]}
-                    valid={true}
+                    meta={
+                      Object {
+                        "active": false,
+                        "asyncValidating": false,
+                        "autofilled": false,
+                        "dirty": false,
+                        "dispatch": [MockFunction],
+                        "error": undefined,
+                        "form": "storyForm",
+                        "initial": undefined,
+                        "invalid": false,
+                        "pristine": true,
+                        "submitFailed": false,
+                        "submitting": false,
+                        "touched": false,
+                        "valid": true,
+                        "visited": false,
+                        "warning": undefined,
+                      }
+                    }
+                    onChange={[Function]}
+                    placeholder=""
+                    required={false}
+                    size={10}
+                    type="text"
+                    value=""
                   >
-                    <Field
-                      component={[Function]}
+                    <TextField
+                      className="text-field"
+                      customSize="small"
+                      error={false}
                       fullWidth={false}
                       id="testTextField"
-                      name="vaultName"
+                      leftIconStateful={true}
+                      lineDirection="left"
+                      onChange={[Function]}
+                      passwordIcon={
+                        <FontIcon
+                          iconClassName="material-icons"
+                        >
+                          remove_red_eye
+                        </FontIcon>
+                      }
+                      placeholder=""
+                      required={false}
+                      rightIconStateful={true}
                       size={10}
+                      type="text"
+                      value=""
                     >
-                      <Connect(ConnectedField)
-                        _reduxForm={
-                          Object {
-                            "anyTouched": false,
-                            "array": Object {
-                              "insert": [Function],
-                              "move": [Function],
-                              "pop": [Function],
-                              "push": [Function],
-                              "remove": [Function],
-                              "removeAll": [Function],
-                              "shift": [Function],
-                              "splice": [Function],
-                              "swap": [Function],
-                              "unshift": [Function],
-                            },
-                            "arrayInsert": [Function],
-                            "arrayMove": [Function],
-                            "arrayPop": [Function],
-                            "arrayPush": [Function],
-                            "arrayRemove": [Function],
-                            "arrayRemoveAll": [Function],
-                            "arrayShift": [Function],
-                            "arraySplice": [Function],
-                            "arraySwap": [Function],
-                            "arrayUnshift": [Function],
-                            "asyncErrors": undefined,
-                            "asyncValidate": [Function],
-                            "asyncValidating": false,
-                            "autofill": [Function],
-                            "blur": [Function],
-                            "change": [Function],
-                            "clearAsyncError": [Function],
-                            "clearFields": [Function],
-                            "clearSubmit": [Function],
-                            "clearSubmitErrors": [Function],
-                            "destroy": [Function],
-                            "destroyOnUnmount": true,
-                            "dirty": false,
-                            "dispatch": [MockFunction],
-                            "enableReinitialize": false,
-                            "error": undefined,
-                            "fieldName": "vaultName",
-                            "fieldProps": Object {
-                              "fullWidth": false,
-                              "id": "testTextField",
-                              "size": 10,
-                            },
-                            "focus": [Function],
-                            "forceUnregisterOnUnmount": false,
-                            "form": "testForm",
-                            "getFormState": [Function],
-                            "getValues": [Function],
-                            "initialValues": undefined,
-                            "initialize": [Function],
-                            "initialized": false,
-                            "invalid": false,
-                            "keepDirtyOnReinitialize": false,
-                            "persistentSubmitErrors": false,
-                            "pristine": true,
-                            "pure": true,
-                            "register": [Function],
-                            "registerField": [Function],
-                            "registerInnerOnSubmit": [Function],
-                            "registeredFields": undefined,
-                            "reset": [Function],
-                            "resetSection": [Function],
-                            "sectionPrefix": undefined,
-                            "setSubmitFailed": [Function],
-                            "setSubmitSucceeded": [Function],
-                            "shouldAsyncValidate": [Function],
-                            "shouldError": [Function],
-                            "shouldValidate": [Function],
-                            "shouldWarn": [Function],
-                            "startAsyncValidation": [Function],
-                            "startSubmit": [Function],
-                            "stopAsyncValidation": [Function],
-                            "stopSubmit": [Function],
-                            "submit": [Function],
-                            "submitFailed": false,
-                            "submitSucceeded": false,
-                            "submitting": false,
-                            "syncErrors": Object {},
-                            "syncWarnings": Object {},
-                            "touch": [Function],
-                            "touchOnBlur": true,
-                            "touchOnChange": false,
-                            "triggerSubmit": undefined,
-                            "unregister": [Function],
-                            "unregisterField": [Function],
-                            "untouch": [Function],
-                            "updateSyncErrors": [Function],
-                            "updateSyncWarnings": [Function],
-                            "updateUnregisteredFields": false,
-                            "valid": true,
-                            "validExceptSubmit": true,
-                            "values": Object {},
-                            "warning": undefined,
-                          }
-                        }
-                        component={[Function]}
-                        fullWidth={false}
-                        id="testTextField"
-                        name="vaultName"
-                        normalize={[Function]}
-                        size={10}
+                      <div
+                        className="md-text-field-container md-inline-block md-text-field-container--input text-field"
+                        onClick={[Function]}
                       >
-                        <ConnectedField
-                          _reduxForm={
-                            Object {
-                              "anyTouched": false,
-                              "array": Object {
-                                "insert": [Function],
-                                "move": [Function],
-                                "pop": [Function],
-                                "push": [Function],
-                                "remove": [Function],
-                                "removeAll": [Function],
-                                "shift": [Function],
-                                "splice": [Function],
-                                "swap": [Function],
-                                "unshift": [Function],
-                              },
-                              "arrayInsert": [Function],
-                              "arrayMove": [Function],
-                              "arrayPop": [Function],
-                              "arrayPush": [Function],
-                              "arrayRemove": [Function],
-                              "arrayRemoveAll": [Function],
-                              "arrayShift": [Function],
-                              "arraySplice": [Function],
-                              "arraySwap": [Function],
-                              "arrayUnshift": [Function],
-                              "asyncErrors": undefined,
-                              "asyncValidate": [Function],
-                              "asyncValidating": false,
-                              "autofill": [Function],
-                              "blur": [Function],
-                              "change": [Function],
-                              "clearAsyncError": [Function],
-                              "clearFields": [Function],
-                              "clearSubmit": [Function],
-                              "clearSubmitErrors": [Function],
-                              "destroy": [Function],
-                              "destroyOnUnmount": true,
-                              "dirty": false,
-                              "dispatch": [MockFunction],
-                              "enableReinitialize": false,
-                              "error": undefined,
-                              "fieldName": "vaultName",
-                              "fieldProps": Object {
-                                "fullWidth": false,
-                                "id": "testTextField",
-                                "size": 10,
-                              },
-                              "focus": [Function],
-                              "forceUnregisterOnUnmount": false,
-                              "form": "testForm",
-                              "getFormState": [Function],
-                              "getValues": [Function],
-                              "initialValues": undefined,
-                              "initialize": [Function],
-                              "initialized": false,
-                              "invalid": false,
-                              "keepDirtyOnReinitialize": false,
-                              "persistentSubmitErrors": false,
-                              "pristine": true,
-                              "pure": true,
-                              "register": [Function],
-                              "registerField": [Function],
-                              "registerInnerOnSubmit": [Function],
-                              "registeredFields": undefined,
-                              "reset": [Function],
-                              "resetSection": [Function],
-                              "sectionPrefix": undefined,
-                              "setSubmitFailed": [Function],
-                              "setSubmitSucceeded": [Function],
-                              "shouldAsyncValidate": [Function],
-                              "shouldError": [Function],
-                              "shouldValidate": [Function],
-                              "shouldWarn": [Function],
-                              "startAsyncValidation": [Function],
-                              "startSubmit": [Function],
-                              "stopAsyncValidation": [Function],
-                              "stopSubmit": [Function],
-                              "submit": [Function],
-                              "submitFailed": false,
-                              "submitSucceeded": false,
-                              "submitting": false,
-                              "syncErrors": Object {},
-                              "syncWarnings": Object {},
-                              "touch": [Function],
-                              "touchOnBlur": true,
-                              "touchOnChange": false,
-                              "triggerSubmit": undefined,
-                              "unregister": [Function],
-                              "unregisterField": [Function],
-                              "untouch": [Function],
-                              "updateSyncErrors": [Function],
-                              "updateSyncWarnings": [Function],
-                              "updateUnregisteredFields": false,
-                              "valid": true,
-                              "validExceptSubmit": true,
-                              "values": Object {},
-                              "warning": undefined,
-                            }
-                          }
-                          asyncValidating={false}
-                          component={[Function]}
-                          dirty={false}
-                          dispatch={[MockFunction]}
+                        <FloatingLabel
+                          active={false}
+                          customSize="small"
+                          error={false}
+                          floating={false}
+                          htmlFor="testTextField"
+                          iconOffset={false}
+                          key="label"
+                        />
+                        <InputField
+                          className=""
+                          customSize="small"
                           fullWidth={false}
                           id="testTextField"
-                          name="vaultName"
-                          normalize={[Function]}
-                          pristine={true}
+                          inlineIndicator={false}
+                          key="field"
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          placeholder=""
                           size={10}
+                          type="text"
+                          value=""
                         >
-                          <TextField
-                            fullWidth={false}
+                          <input
+                            className="md-text-field md-text-field--margin md-text-field--small md-text"
                             id="testTextField"
-                            input={
-                              Object {
-                                "name": "vaultName",
-                                "onBlur": [Function],
-                                "onChange": [Function],
-                                "onDragStart": [Function],
-                                "onDrop": [Function],
-                                "onFocus": [Function],
-                                "value": "",
-                              }
-                            }
-                            meta={
-                              Object {
-                                "active": false,
-                                "asyncValidating": false,
-                                "autofilled": false,
-                                "dirty": false,
-                                "dispatch": [MockFunction],
-                                "error": undefined,
-                                "form": "testForm",
-                                "initial": undefined,
-                                "invalid": false,
-                                "pristine": true,
-                                "submitFailed": false,
-                                "submitting": false,
-                                "touched": false,
-                                "valid": true,
-                                "visited": false,
-                                "warning": undefined,
-                              }
-                            }
+                            onBlur={[Function]}
                             onChange={[Function]}
+                            onFocus={[Function]}
                             placeholder=""
-                            required={false}
                             size={10}
                             type="text"
                             value=""
+                          />
+                        </InputField>
+                        <TextFieldDivider
+                          active={false}
+                          error={false}
+                          key="text-divider"
+                          lineDirection="left"
+                        >
+                          <Divider
+                            className="md-divider--text-field md-divider--expand-from-left"
                           >
-                            <TextField
-                              className="text-field"
-                              customSize="small"
-                              error={false}
-                              fullWidth={false}
-                              id="testTextField"
-                              leftIconStateful={true}
-                              lineDirection="left"
-                              onChange={[Function]}
-                              passwordIcon={
-                                <FontIcon
-                                  iconClassName="material-icons"
-                                >
-                                  remove_red_eye
-                                </FontIcon>
-                              }
-                              placeholder=""
-                              required={false}
-                              rightIconStateful={true}
-                              size={10}
-                              type="text"
-                              value=""
-                            >
-                              <div
-                                className="md-text-field-container md-inline-block md-text-field-container--input text-field"
-                                onClick={[Function]}
-                              >
-                                <FloatingLabel
-                                  active={false}
-                                  customSize="small"
-                                  error={false}
-                                  floating={false}
-                                  htmlFor="testTextField"
-                                  iconOffset={false}
-                                  key="label"
-                                />
-                                <InputField
-                                  className=""
-                                  customSize="small"
-                                  fullWidth={false}
-                                  id="testTextField"
-                                  inlineIndicator={false}
-                                  key="field"
-                                  onBlur={[Function]}
-                                  onChange={[Function]}
-                                  onFocus={[Function]}
-                                  placeholder=""
-                                  size={10}
-                                  type="text"
-                                  value=""
-                                >
-                                  <input
-                                    className="md-text-field md-text-field--margin md-text-field--small md-text"
-                                    id="testTextField"
-                                    onBlur={[Function]}
-                                    onChange={[Function]}
-                                    onFocus={[Function]}
-                                    placeholder=""
-                                    size={10}
-                                    type="text"
-                                    value=""
-                                  />
-                                </InputField>
-                                <TextFieldDivider
-                                  active={false}
-                                  error={false}
-                                  key="text-divider"
-                                  lineDirection="left"
-                                >
-                                  <Divider
-                                    className="md-divider--text-field md-divider--expand-from-left"
-                                  >
-                                    <hr
-                                      className="md-divider md-divider--text-field md-divider--expand-from-left"
-                                    />
-                                  </Divider>
-                                </TextFieldDivider>
-                                <TextFieldMessage
-                                  active={false}
-                                  currentLength={0}
-                                  error={false}
-                                  key="message"
-                                  leftIcon={false}
-                                  rightIcon={false}
-                                />
-                              </div>
-                            </TextField>
-                          </TextField>
-                        </ConnectedField>
-                      </Connect(ConnectedField)>
-                    </Field>
-                  </TextFieldForm>
-                </Form(TextFieldForm)>
-              </Connect(Form(TextFieldForm))>
-            </ReduxForm>
+                            <hr
+                              className="md-divider md-divider--text-field md-divider--expand-from-left"
+                            />
+                          </Divider>
+                        </TextFieldDivider>
+                        <TextFieldMessage
+                          active={false}
+                          currentLength={0}
+                          error={false}
+                          key="message"
+                          leftIcon={false}
+                          rightIcon={false}
+                        />
+                      </div>
+                    </TextField>
+                  </TextField>
+                </ConnectedField>
+              </Connect(ConnectedField)>
+            </Field>
           </div>
         </TextFieldWithTitle>
       </Form(TextFieldWithTitle)>
