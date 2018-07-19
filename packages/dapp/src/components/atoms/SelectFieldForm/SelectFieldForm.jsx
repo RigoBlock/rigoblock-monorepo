@@ -4,22 +4,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SelectField from '../SelectField'
 
-const SelectFieldForm = ({ fieldName, fieldProps }) => {
-  /* eslint-disable react/prop-types */
-  const renderSelectField = ({ input, meta: { touched, error } }) => {
-    return (
-      <SelectField
-        {...fieldProps}
-        value={input.value}
-        onChange={input.onChange}
-        error={touched && !!error}
-        errorText={error}
-      />
-    )
-  }
-
-  return <Field name={fieldName} component={renderSelectField} />
-}
+const SelectFieldForm = ({ fieldName, fieldProps }) => (
+  <Field name={fieldName} component={SelectField} {...fieldProps} />
+)
 
 SelectFieldForm.propTypes = {
   fieldName: PropTypes.string.isRequired,

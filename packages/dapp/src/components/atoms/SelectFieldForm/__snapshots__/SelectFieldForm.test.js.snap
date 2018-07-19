@@ -3,6 +3,18 @@
 exports[`SelectFieldForm component renders correctly 1`] = `
 <Field
   component={[Function]}
+  id={1}
+  items={
+    Array [
+      "item1",
+      2,
+      Object {
+        "label": "test",
+        "value": "1",
+      },
+    ]
+  }
   name="testField"
+  onChange={[MockFunction]}
 />
 `;

@@ -4,15 +4,20 @@ import { withKnobs } from '@storybook/addon-knobs/react'
 import React from 'react'
 import SelectField from './SelectField'
 
-const itemList = ['item1', 'item2', 'item3', 'item4', 'item5', 'item6']
+const props = {
+  items: ['item1', 'item2', 'item3', 'item4', 'item5', 'item6'],
+  placeholder: 'placeholder',
+  id: '0',
+  meta: {
+    touched: null,
+    error: null
+  },
+  input: {
+    value: "I don't work",
+    onChange: jest.fn()
+  }
+}
 
 storiesOf('Atoms/SelectField', module)
   .addDecorator(withKnobs)
-  .add('default', () => (
-    <SelectField
-      items={itemList}
-      placeholder={'placeholder'}
-      id={'0'}
-      onChange={() => 'changed!'}
-    />
-  ))
+  .add('default', () => <SelectField {...props} />)

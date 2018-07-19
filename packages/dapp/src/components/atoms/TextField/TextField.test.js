@@ -5,7 +5,15 @@ import toJson from 'enzyme-to-json'
 const props = {
   id: 'testTextField',
   fullWidth: false,
-  size: 10
+  size: 10,
+  meta: {
+    touched: null,
+    error: null
+  },
+  input: {
+    value: "I don't work",
+    onChange: jest.fn()
+  }
 }
 
 describe('TextField component', () => {
@@ -13,5 +21,10 @@ describe('TextField component', () => {
     expect(
       toJson(shallow(createComponentWithProps(TextField, props)))
     ).toMatchSnapshot()
+  })
+  it('calls onChange function when value is selected', () => {
+    const textField = shallow(createComponentWithProps(TextField, props))
+    textField.simulate('change')
+    expect(props.input.onChange).toHaveBeenCalledTimes(1)
   })
 })

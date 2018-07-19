@@ -2,13 +2,18 @@ import { shallow } from 'enzyme'
 import SelectField from './SelectField.jsx'
 import toJson from 'enzyme-to-json'
 
-const itemList = ['item1', 2, { label: 'test', value: '1' }]
-
 const props = {
+  items: ['item1', 2, { label: 'test', value: '1' }],
+  placeholder: 'placeholder',
   id: 1,
-  items: itemList,
-  onChange: jest.fn(),
-  defaultValue: 'item1'
+  meta: {
+    touched: null,
+    error: null
+  },
+  input: {
+    value: "I don't work",
+    onChange: jest.fn()
+  }
 }
 
 describe('SelectField component', () => {
@@ -21,6 +26,6 @@ describe('SelectField component', () => {
   it('calls onChange function when value is selected', () => {
     const selectField = shallow(createComponentWithProps(SelectField, props))
     selectField.simulate('change')
-    expect(props.onChange).toHaveBeenCalledTimes(1)
+    expect(props.input.onChange).toHaveBeenCalledTimes(1)
   })
 })

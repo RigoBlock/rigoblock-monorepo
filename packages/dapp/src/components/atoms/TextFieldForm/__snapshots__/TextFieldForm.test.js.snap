@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextFieldForm component renders correctly 1`] = `
+<Connect(Form(TextFieldForm))
+  destroyOnUnmount={true}
+  enableReinitialize={false}
+  fieldName="testField"
+  forceUnregisterOnUnmount={false}
+  form="testForm"
+  getFormState={[Function]}
+  keepDirtyOnReinitialize={false}
+  persistentSubmitErrors={false}
+  pure={true}
+  shouldAsyncValidate={[Function]}
+  shouldError={[Function]}
+  shouldValidate={[Function]}
+  shouldWarn={[Function]}
+  textFieldProps={
+    Object {
+      "fullWidth": false,
+      "id": "testTextField",
+      "size": 10,
+    }
+  }
+  touchOnBlur={true}
+  touchOnChange={false}
+  updateUnregisteredFields={false}
+/>
+`;

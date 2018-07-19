@@ -1,22 +1,20 @@
 import { shallow } from 'enzyme'
-import SelectFieldForm from './SelectFieldForm.jsx'
+import TextFieldForm from './TextFieldForm.jsx'
 import toJson from 'enzyme-to-json'
-
-const itemList = ['item1', 2, { label: 'test', value: '1' }]
 
 const props = {
   fieldName: 'testField',
   textFieldProps: {
-    id: 1,
-    items: itemList,
-    onChange: jest.fn()
+    id: 'testTextField',
+    fullWidth: false,
+    size: 10
   }
 }
 
-describe('SelectFieldForm component', () => {
+describe('TextFieldForm component', () => {
   it('renders correctly', () => {
     expect(
-      toJson(shallow(createComponentWithProps(SelectFieldForm, props)))
+      toJson(shallow(createComponentWithProps(TextFieldForm, props)))
     ).toMatchSnapshot()
   })
 })
