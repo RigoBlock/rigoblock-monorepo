@@ -89,7 +89,7 @@ jobs:
           command: npx lerna run --scope @rigoblock/dapp ganache --stream
           background: true
       - run:
-          name: Wait for HTTP server and ganache cli
+          name: Wait for ganache cli
           command: dockerize -wait tcp://localhost:8545 -timeout 1m
       - run:
           name: Building protocol
@@ -172,18 +172,8 @@ jobs:
           command: npx lerna run --scope @rigoblock/dapp start --stream
           background: true
       - run:
-          name: Starting ganache cli
-          command: npx lerna run --scope @rigoblock/dapp ganache --stream
-          background: true
-      - run:
-          name: Wait for HTTP server and ganache cli
-          command: dockerize -wait tcp://localhost:8545 -wait tcp://localhost:8080 -timeout 1m
-      - run:
-          name: Bootstrapping smart contracts to ganache cli
-          command: npx lerna run --scope @rigoblock/dapp ganache:bootstrap --stream
-      - run:
-          name: Seeding ganache cli
-          command: npx lerna run --scope @rigoblock/dapp ganache:seed --stream
+          name: Wait for HTTP server
+          command: dockerize -wait tcp://localhost:8080 -timeout 1m
       - run:
           name: JS feature tests
           command: npx lerna run --scope @rigoblock/dapp test:feature:debug --stream
@@ -314,4 +304,3 @@ workflows:
           filters:
             branches:
               only: master
-

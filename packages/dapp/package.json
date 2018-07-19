@@ -94,6 +94,7 @@
     "sw-precache-webpack-plugin": "0.11.5",
     "updeep": "^1.0.0",
     "url-loader": "0.6.2",
+    "web3": "^1.0.0-beta.34",
     "webpack": "4.16.1",
     "webpack-cli": "^2.0.12",
     "webpack-dev-server": "3.1.1",
@@ -148,6 +149,7 @@
     ]
   },
   "dependencies": {
+    "@rigoblock/protocol": "^0.2.7",
     "core-js": "3.0.0-beta.3"
   }
 }
