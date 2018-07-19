@@ -12,6 +12,7 @@ const store = mockStore()
 const props = {
   tooltip: 'this is a test tooltip',
   title: 'Pay [mining] fees with',
+  fieldName: 'accountList',
   fieldProps: {
     id: 1,
     items: [
@@ -38,3 +39,4 @@ storiesOf('Molecules/SelectFieldWithTitle', module)
     </div>
   ))
   .add('default', () => <Component {...props} />)
+  .add('no Tooltip', () => <Component {...{ ...props, tooltip: '' }} />)

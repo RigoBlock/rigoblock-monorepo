@@ -1,12 +1,12 @@
 @import "../../_settings/variables.scss";
 
 .preferences-form {
-  h3 {
+  .select-title {
     padding-bottom: $dist-2xs;
     padding-top: $dist-m
   }
   .call-to-action {
-    padding-top: $dist-l;
+    padding-top: $dist-m;
   }
 
   .select-field {

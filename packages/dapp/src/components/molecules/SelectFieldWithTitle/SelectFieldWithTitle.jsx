@@ -5,7 +5,7 @@ import React from 'react'
 import SelectFieldForm from '../../atoms/SelectFieldForm'
 import Title, { TITLE_SIZES } from '../../atoms/Title'
 
-const SelectFieldWithTitle = ({ tooltip, title, fieldProps }) => {
+const SelectFieldWithTitle = ({ tooltip, title, fieldName, fieldProps }) => {
   const tooltipComponent = tooltip && (
     <Icon type={'help'} tooltipText={tooltip} />
   )
@@ -16,7 +16,7 @@ const SelectFieldWithTitle = ({ tooltip, title, fieldProps }) => {
         <Title size={TITLE_SIZES.SMALL}>{title}</Title>
         {tooltipComponent}
       </div>
-      <SelectFieldForm fieldName={'accountList'} fieldProps={fieldProps} />
+      <SelectFieldForm fieldName={fieldName} fieldProps={fieldProps} />
     </div>
   )
 }
@@ -24,7 +24,8 @@ const SelectFieldWithTitle = ({ tooltip, title, fieldProps }) => {
 SelectFieldWithTitle.propTypes = {
   title: PropTypes.string.isRequired,
   tooltip: PropTypes.string,
-  fieldProps: PropTypes.object.isRequired
+  fieldProps: PropTypes.object.isRequired,
+  fieldName: PropTypes.string.isRequired
 }
 
 SelectFieldWithTitle.defaultProps = {

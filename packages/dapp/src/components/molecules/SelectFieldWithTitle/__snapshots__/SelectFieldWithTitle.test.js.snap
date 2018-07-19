@@ -11,6 +11,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
   }
 >
   <ReduxForm
+    fieldName="accountList"
     fieldProps={
       Object {
         "id": 1,
@@ -28,6 +29,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
     <Connect(Form(SelectFieldWithTitle))
       destroyOnUnmount={true}
       enableReinitialize={false}
+      fieldName="accountList"
       fieldProps={
         Object {
           "id": 1,
@@ -94,6 +96,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
         dirty={false}
         dispatch={[MockFunction]}
         enableReinitialize={false}
+        fieldName="accountList"
         fieldProps={
           Object {
             "id": 1,
@@ -177,6 +180,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
           destroy={[Function]}
           dirty={false}
           dispatch={[MockFunction]}
+          fieldName="accountList"
           fieldProps={
             Object {
               "id": 1,
@@ -318,6 +322,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                       "dispatch": [MockFunction],
                       "enableReinitialize": false,
                       "error": undefined,
+                      "fieldName": "accountList",
                       "fieldProps": Object {
                         "id": 1,
                         "items": Array [
@@ -427,6 +432,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                         "dispatch": [MockFunction],
                         "enableReinitialize": false,
                         "error": undefined,
+                        "fieldName": "accountList",
                         "fieldProps": Object {
                           "id": 1,
                           "items": Array [

@@ -6,7 +6,7 @@ import Button, { BUTTON_TYPES } from '../../atoms/Button'
 import CallToAction from '../../molecules/CallToAction'
 import PropTypes from 'prop-types'
 import React from 'react'
-import SelectFieldForm from '../../atoms/SelectFieldForm'
+import SelectFieldWithTitle from '../../molecules/SelectFieldWithTitle'
 import UserActions from '../../../actions/user-actions'
 import moment from 'moment-timezone'
 
@@ -33,8 +33,11 @@ let PreferencesForm = props => {
   }
   return (
     <form onSubmit={handleSubmit} className="preferences-form">
-      <h3>Time zone</h3>
-      <SelectFieldForm fieldName={'timezone'} fieldProps={timeZoneProps} />
+      <SelectFieldWithTitle
+        fieldName={'timezone'}
+        fieldProps={timeZoneProps}
+        title="Time zone"
+      />
       <CallToAction>
         <Button onClick={props.reset}>Cancel</Button>
         <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
