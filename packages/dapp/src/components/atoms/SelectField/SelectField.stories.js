@@ -14,7 +14,7 @@ const props = {
   },
   input: {
     value: "I don't work",
-    onChange: jest.fn()
+    onChange: () => null
   }
 }
 
