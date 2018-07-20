@@ -13,7 +13,7 @@ import routerActions from '../../../actions/router-actions'
 
 let vaultSelect = ({ vaults, dispatch, location }) => {
   // TODO: remove this and implement a correct page
-  if (!Object.keys(vaults).length) {
+  if (!vaults) {
     return <div className="vault-select">Nothing here!</div>
   }
 
@@ -60,7 +60,7 @@ vaultSelect = connect(state => {
   return {
     vaults:
       currentAccount &&
-      get(state, `blockChain.accounts[${currentAccount}].vaults`, {}),
+      get(state, `blockChain.accounts[${currentAccount}].vaults`, null),
     location: state.routing.location.pathname
   }
 })(vaultSelect)

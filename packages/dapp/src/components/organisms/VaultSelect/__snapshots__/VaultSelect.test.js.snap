@@ -196,7 +196,7 @@ exports[`VaultSelect component renders correctly if there are no vaults on state
     <vaultSelect
       dispatch={[MockFunction]}
       location="/vaults"
-      vaults={Object {}}
+      vaults={null}
     >
       <div
         className="vault-select"
