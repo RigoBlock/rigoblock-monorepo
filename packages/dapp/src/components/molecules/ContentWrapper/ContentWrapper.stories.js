@@ -31,3 +31,10 @@ storiesOf('Molecules/ContentWrapper', module)
       <div>World</div>
     </ContentWrapper>
   ))
+  .add('no header', () => (
+    <ContentWrapper>
+      {content}
+      <div>Hello</div>
+      <div>World</div>
+    </ContentWrapper>
+  ))

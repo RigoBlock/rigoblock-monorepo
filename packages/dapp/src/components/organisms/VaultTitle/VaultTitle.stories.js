@@ -1,14 +1,26 @@
 import '../../_settings/_base.scss'
+import { BigNumber } from 'bignumber.js'
+import { INVESTOR, MANAGER } from '../../../constants/user'
 import { MemoryRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
+import { selectV2, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs/react'
 import React from 'react'
 import VaultTitle from './VaultTitle'
-import mockStore from '../../../fixtures/store'
 
-const store = mockStore()
-const props = { vaultAddress: '0x86a1ba4d485ce346bded508e2426798f825558be' }
+const userTypes = {
+  Manager: MANAGER,
+  Investor: INVESTOR
+}
+
+const vault = {
+  id: new BigNumber('0'),
+  name: 'First Vault',
+  symbol: 'asd',
+  owner: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196',
+  group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff',
+  totalSupply: new BigNumber('28640000000000000000'),
+  transactionFee: new BigNumber('2.50')
+}
 
 storiesOf('Organisms/VaultTitle', module)
   .addDecorator(withKnobs)
@@ -16,5 +28,9 @@ storiesOf('Organisms/VaultTitle', module)
     <div style={{ width: '478px', background: 'white' }}>{story()}</div>
   ))
   .addDecorator(story => <MemoryRouter>{story()}</MemoryRouter>)
-  .addDecorator(story => <Provider store={store}>{story()}</Provider>)
-  .add('default', () => <VaultTitle {...props} />)
+  .add('default', () => (
+    <VaultTitle
+      vault={vault}
+      userType={selectV2('User type', userTypes, userTypes.Investor)}
+    />
+  ))

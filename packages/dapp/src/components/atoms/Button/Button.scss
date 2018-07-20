@@ -2,12 +2,14 @@
 
 .base-button {
   border: solid $border-size;
+  margin: 0;
   font-weight: $font-bold;
   padding: ($dist-xs - $border-size) ($dist-s - $border-size)
 }
 
 .inverted-button {
   border: none;
+  margin: 0;
   font-weight: $font-bold;
 }
 

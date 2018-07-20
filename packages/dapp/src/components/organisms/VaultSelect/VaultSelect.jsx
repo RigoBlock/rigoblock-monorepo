@@ -8,11 +8,12 @@ import ListItem from '../../molecules/ListItem'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
+import get from 'lodash/get'
 import routerActions from '../../../actions/router-actions'
 
 let vaultSelect = ({ vaults, dispatch, location }) => {
   // TODO: remove this and implement a correct page
-  if (!Object.keys(vaults).length) {
+  if (!vaults) {
     return <div className="vault-select">Nothing here!</div>
   }
 
@@ -57,9 +58,9 @@ vaultSelect.defaultProps = {
 vaultSelect = connect(state => {
   const { currentAccount } = state.preferences
   return {
-    vaults: currentAccount
-      ? state.blockChain.accounts[currentAccount].vaults
-      : {},
+    vaults:
+      currentAccount &&
+      get(state, `blockChain.accounts[${currentAccount}].vaults`, null),
     location: state.routing.location.pathname
   }
 })(vaultSelect)
