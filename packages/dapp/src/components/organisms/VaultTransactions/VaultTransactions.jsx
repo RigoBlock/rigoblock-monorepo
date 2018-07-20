@@ -1,5 +1,5 @@
+import { BigNumber } from 'bignumber.js'
 import { ETH_TO_WEI } from '../../../constants/utils'
-import { connect } from 'react-redux'
 import Icon from '../../atoms/Icon'
 import Link from '../../atoms/Link'
 import PropTypes from 'prop-types'
@@ -7,22 +7,19 @@ import React from 'react'
 import Table from '../../molecules/Table'
 import moment from 'moment'
 
-let VaultTransactions = ({ transactions, vaultAddress }) => {
+let VaultTransactions = ({ transactions }) => {
   const linkComponent = link => (
     <Link to={link}>
       <Icon type="error_outline" className="link-icon" />
     </Link>
   )
-
-  const vaultTransactions = transactions[vaultAddress]
-  const parsedTransactions = vaultTransactions
-    ? Object.keys(vaultTransactions).map(hash => ({
-        ...vaultTransactions[hash],
+  const parsedTransactions = transactions
+    ? Object.entries(transactions).map(([hash, data]) => ({
+        ...data,
         id: hash,
         transactionLink: linkComponent('#')
       }))
-    : []
-
+    : null
   const tableColumns = [
     {
       Header: 'ID',
@@ -49,7 +46,11 @@ let VaultTransactions = ({ transactions, vaultAddress }) => {
     {
       Header: 'Value',
       id: 'value',
-      accessor: d => d.value.div(ETH_TO_WEI).toString(),
+      accessor: d =>
+        d.value
+          .div(ETH_TO_WEI)
+          .toFormat(2, BigNumber.ROUND_FLOOR)
+          .toString(),
       maxWidth: 50
     },
     {
@@ -68,32 +69,22 @@ let VaultTransactions = ({ transactions, vaultAddress }) => {
 
   return (
     <Table
+      className="vault-transactions"
       tableData={parsedTransactions}
       tableColumns={tableColumns}
       title="Transactions"
+      noDataText="No transactions found."
     />
   )
 }
 
 VaultTransactions.propTypes = {
-  vaultAddress: PropTypes.string.isRequired,
   transactions: PropTypes.object
 }
 
 VaultTransactions.defaultProps = {
-  transactions: {},
-  columnWidths: []
+  columnWidths: [],
+  transactions: null
 }
-
-VaultTransactions = connect(state => {
-  const { currentAccount } = state.preferences
-  return {
-    transactions:
-      currentAccount && state.blockChain.accounts[currentAccount]
-        ? state.blockChain.accounts[currentAccount].vaultTransactions
-        : {},
-    location: state.routing.location.pathname
-  }
-})(VaultTransactions)
 
 export default VaultTransactions

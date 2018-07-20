@@ -67,14 +67,20 @@ describe('registerVaults epic', () => {
       a: blockChainActions.registerBlock(owner, VAULT, vaultEvent)
     }
     const expectedValues = {
-      b: vaultActions.registerVaultBlock(vaultEvent),
+      b: vaultActions.registerVaultBlock({
+        account: owner,
+        block: vaultEvent
+      }),
       c: vaultActions.registerVault({
-        ['0xc1Eba7b6F9f06E4491a499E653878464e40AB70e']: {
-          id: 0,
-          group: null,
-          name: 'Rocksolid Vault',
-          symbol: 'VLT',
-          owner
+        account: owner,
+        vaultData: {
+          ['0xc1Eba7b6F9f06E4491a499E653878464e40AB70e']: {
+            id: 0,
+            group: null,
+            name: 'Rocksolid Vault',
+            symbol: 'VLT',
+            owner
+          }
         }
       })
     }

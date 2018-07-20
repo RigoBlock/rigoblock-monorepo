@@ -27,15 +27,15 @@ const blockChainReducer = createReducer(
             },
             state
           ),
-    [vaultActions.registerVaultBlock]: (state, payload, { currentAccount }) => {
-      const blockNumber = payload.blockNumber
-      let lastBlock = state.accounts[currentAccount].lastBlock
+    [vaultActions.registerVaultBlock]: (state, { account, block }) => {
+      const blockNumber = block.blockNumber
+      let lastBlock = state.accounts[account].lastBlock
       lastBlock =
         !lastBlock || lastBlock < blockNumber ? blockNumber : lastBlock
       return u(
         {
           accounts: {
-            [currentAccount]: {
+            [account]: {
               lastBlock: lastBlock
             }
           }

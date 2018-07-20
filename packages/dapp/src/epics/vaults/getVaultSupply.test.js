@@ -50,12 +50,15 @@ describe('getVaultSupply epics', () => {
     fromPromiseSpy.mockReturnValueOnce(of(new VaultMock()))
     fromPromiseSpy.mockReturnValueOnce(of(supply))
     const inputValues = {
-      a: vaultActions.registerVault(vault)
+      a: vaultActions.registerVault({ account: owner, vaultData: vault })
     }
     const expectedValues = {
       b: vaultActions.updateVaultData({
-        address: vaultAddress,
-        data: { totalSupply: supply.times(MICRO_TO_WEI) }
+        account: owner,
+        vaultData: {
+          address: vaultAddress,
+          data: { totalSupply: supply.times(MICRO_TO_WEI) }
+        }
       })
     }
 

@@ -138,7 +138,9 @@ exports[`BaseTemplate component renders correctly 1`] = `
                   <WrapperWithDivider
                     Divider={[Function]}
                   >
-                    <div>
+                    <div
+                      className="dividing-wrapper"
+                    >
                       <div
                         key="wrap-div-0"
                       >

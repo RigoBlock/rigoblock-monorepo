@@ -1,7 +1,6 @@
 @import "../../_settings/variables.scss";
 
 .vault-select {
-  margin-top: $dist-3xl;
   max-width: 5 * $dist-6xl;
   .active {
     border: solid 2px $azure-radiance;

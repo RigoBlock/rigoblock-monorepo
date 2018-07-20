@@ -16,8 +16,12 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
       action.payload.label === VAULT
   )
   const action$1 = vaultBlock$.map(action =>
-    vaultActions.registerVaultBlock(action.payload.block)
+    vaultActions.registerVaultBlock({
+      account: action.payload.account,
+      block: action.payload.block
+    })
   )
+
   const action$2 = vaultBlock$
     .mergeMap(action => {
       const registry = api.contract.DragoRegistry
@@ -25,21 +29,26 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
         registry.createAndValidate(api.web3._web3, registry.address)
       ).mergeMap(registry => {
         const address = action.payload.block.args.vault
+        const account = action.payload.account
         return fromPromise(registry.fromAddress(address), ts).map(
-          vaultData => ({ address, vaultData })
+          vaultData => ({ account, address, vaultData })
         )
       })
     })
-    .map(({ address, vaultData: [id, name, symbol, , owner, group] }) =>
-      vaultActions.registerVault({
-        [address]: {
-          id: id.toNumber(),
-          name,
-          symbol,
-          owner,
-          group
-        }
-      })
+    .map(
+      ({ account, address, vaultData: [id, name, symbol, , owner, group] }) =>
+        vaultActions.registerVault({
+          account,
+          vaultData: {
+            [address]: {
+              id: id.toNumber(),
+              name,
+              symbol,
+              owner,
+              group
+            }
+          }
+        })
     )
   return merge(action$1, action$2)
 }
