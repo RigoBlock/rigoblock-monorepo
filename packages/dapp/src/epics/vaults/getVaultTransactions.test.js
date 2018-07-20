@@ -5,6 +5,7 @@ import getVaultTransactions from './getVaultTransactions'
 import vaultActions from '../../actions/vault-actions'
 
 describe('getVaultTransactions epic', () => {
+  const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const buyVaultEvent = {
     logIndex: 0,
     transactionIndex: 0,
@@ -69,10 +70,16 @@ describe('getVaultTransactions epic', () => {
 
   it('dispatches a registerVaultTransaction action when registerVaultBlock contains an BuyVault block', () => {
     const inputValues = {
-      a: vaultActions.registerVaultBlock(buyVaultEvent)
+      a: vaultActions.registerVaultBlock({
+        account: owner,
+        block: buyVaultEvent
+      })
     }
     const expectedValues = {
-      b: vaultActions.registerTransaction(parsedBuyVault)
+      b: vaultActions.registerTransaction({
+        account: owner,
+        transaction: parsedBuyVault
+      })
     }
 
     const inputMarble = 'a'
@@ -93,10 +100,16 @@ describe('getVaultTransactions epic', () => {
 
   it('dispatches a registerVaultTransaction action when registerVaultBlock contains an SellVault block', () => {
     const inputValues = {
-      a: vaultActions.registerVaultBlock(sellVaultEvent)
+      a: vaultActions.registerVaultBlock({
+        account: owner,
+        block: sellVaultEvent
+      })
     }
     const expectedValues = {
-      b: vaultActions.registerTransaction(parsedSellVault)
+      b: vaultActions.registerTransaction({
+        account: owner,
+        transaction: parsedSellVault
+      })
     }
 
     const inputMarble = 'a'

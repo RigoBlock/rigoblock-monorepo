@@ -55,7 +55,7 @@ describe('blockchain reducer', () => {
         },
         totalBalance: new BigNumber('0')
       },
-      accountMiddlewareMock(vaultActions.registerVaultBlock(eventBlock), owner),
+      vaultActions.registerVaultBlock({ account: owner, block: eventBlock }),
       {
         accounts: {
           [owner]: {
@@ -92,7 +92,7 @@ describe('blockchain reducer', () => {
     )
   })
 
-  it(`updates total accounts balance whe updateTotalAccountBalance is fired `, () => {
+  it(`updates total accounts balance when updateTotalAccountBalance is fired `, () => {
     blockChainTest(
       {
         accounts: {
@@ -116,7 +116,7 @@ describe('blockchain reducer', () => {
     )
   })
 
-  it(`updates total accounts balance whe updateAccountBalance is fired `, () => {
+  it(`updates total accounts balance when updateAccountBalance is fired `, () => {
     blockChainTest(
       {
         accounts: {
@@ -125,12 +125,9 @@ describe('blockchain reducer', () => {
           }
         }
       },
-      accountMiddlewareMock(
-        blockChainActions.updateAccountBalance(
-          owner,
-          new BigNumber('90.999999999952600881')
-        ),
-        owner
+      blockChainActions.updateAccountBalance(
+        owner,
+        new BigNumber('90.999999999952600881')
       ),
       {
         accounts: {
