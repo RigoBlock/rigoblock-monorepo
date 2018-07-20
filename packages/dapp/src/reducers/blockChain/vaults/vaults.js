@@ -4,37 +4,36 @@ import vaultActions from '../../../actions/vault-actions'
 
 // This is a sub-reducer of blockchain, so it shouldn't have initialState
 const vaultReducer = createReducer({
-  [vaultActions.registerVaultBlock]: (state, payload, { currentAccount }) =>
+  [vaultActions.registerVaultBlock]: (state, { account, block }) =>
     u(
       {
         accounts: {
-          [currentAccount]: {
+          [account]: {
             vaultBlocks: {
-              [payload.blockNumber]: payload
+              [block.blockNumber]: block
             }
           }
         }
       },
       state
     ),
-  [vaultActions.registerVault]: (state, payload, { currentAccount }) =>
+  [vaultActions.registerVault]: (state, { account, vaultData }) =>
     u(
       {
         accounts: {
-          [currentAccount]: { vaults: payload }
+          [account]: { vaults: vaultData }
         }
       },
       state
     ),
   [vaultActions.updateVaultData]: (
     state,
-    { address, data },
-    { currentAccount }
+    { account, vaultData: { address, data } }
   ) =>
     u(
       {
         accounts: {
-          [currentAccount]: {
+          [account]: {
             vaults: {
               [address]: data
             }
@@ -43,14 +42,14 @@ const vaultReducer = createReducer({
       },
       state
     ),
-  [vaultActions.registerTransaction]: (state, payload, { currentAccount }) =>
+  [vaultActions.registerTransaction]: (state, { account, transaction }) =>
     u(
       {
         accounts: {
-          [currentAccount]: {
+          [account]: {
             vaultTransactions: {
-              [payload.vault]: {
-                [payload.hash]: payload.data
+              [transaction.vault]: {
+                [transaction.hash]: transaction.data
               }
             }
           }

@@ -10,8 +10,8 @@ import vaultActions from '../../actions/vault-actions'
 const getVaultFees = (action$, store, ts = Scheduler.async) =>
   action$
     .filter(action => action.type === vaultActions.registerVault.getType())
-    .mergeMap(({ payload }) => {
-      const address = Object.keys(payload).pop()
+    .mergeMap(({ payload: { account, vaultData } }) => {
+      const address = Object.keys(vaultData).pop()
       return fromPromise(
         api.contract.Vault.createAndValidate(api.web3._web3, address),
         ts
@@ -20,8 +20,11 @@ const getVaultFees = (action$, store, ts = Scheduler.async) =>
         .map(vaultData => {
           const transactionFee = vaultData[4]
           return vaultActions.updateVaultData({
-            address,
-            data: { transactionFee }
+            account,
+            vaultData: {
+              address,
+              data: { transactionFee }
+            }
           })
         })
     })
