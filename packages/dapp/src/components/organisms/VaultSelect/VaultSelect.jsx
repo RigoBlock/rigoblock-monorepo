@@ -2,7 +2,6 @@ import './VaultSelect.scss'
 import * as ROUTES from '../../../constants/routes'
 import { BigNumber } from 'bignumber.js'
 import { ETH_TO_WEI } from '../../../constants/utils'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import List from '../../organisms/List'
 import ListItem from '../../molecules/ListItem'
@@ -12,22 +11,7 @@ import classNames from 'classnames'
 import routerActions from '../../../actions/router-actions'
 
 let vaultSelect = ({ vaults, dispatch, location }) => {
-  // redirect to first vault if there is one
-  if (
-    (location === ROUTES.VAULTS || location === `${ROUTES.VAULTS}/`) &&
-    Object.keys(vaults).length
-  ) {
-    const firstVaultAddress = Object.keys(vaults).shift()
-    const firstVaultId = vaults[firstVaultAddress].id
-    return <Redirect to={`${ROUTES.VAULTS}/${firstVaultId}`} />
-  }
-
-  // redirect to to /vaults if no vaults are present and we try to access
-  // a vault's address
-  if (location !== ROUTES.VAULTS && !Object.keys(vaults).length) {
-    return <Redirect to={ROUTES.VAULTS} />
-  }
-  // TODO: implement a 404 page if no vaults are present
+  // TODO: remove this and implement a correct page
   if (!Object.keys(vaults).length) {
     return <div className="vault-select">Nothing here!</div>
   }

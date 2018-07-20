@@ -51,12 +51,15 @@ describe('getVaultFees epics', () => {
     fromPromiseSpy.mockReturnValueOnce(of(vaultData))
 
     const inputValues = {
-      a: vaultActions.registerVault(vault)
+      a: vaultActions.registerVault({ account: owner, vaultData: vault })
     }
     const expectedValues = {
       b: vaultActions.updateVaultData({
-        address: vaultAddress,
-        data: { transactionFee }
+        account: owner,
+        vaultData: {
+          address: vaultAddress,
+          data: { transactionFee }
+        }
       })
     }
 
