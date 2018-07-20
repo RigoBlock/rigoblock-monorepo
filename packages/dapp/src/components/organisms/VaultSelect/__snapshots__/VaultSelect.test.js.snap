@@ -16,14 +16,14 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
     <Router
       history={
         Object {
-          "action": "REPLACE",
+          "action": "POP",
           "block": [Function],
           "canGo": [Function],
           "createHref": [Function],
           "entries": Array [
             Object {
               "hash": "",
-              "pathname": "/vaults",
+              "pathname": "/",
               "search": "",
               "state": undefined,
             },
@@ -36,7 +36,7 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/vaults",
+            "pathname": "/",
             "search": "",
             "state": undefined,
           },
@@ -51,10 +51,11 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
           location="/vaults/0"
           vaults={Object {}}
         >
-          <Redirect
-            push={false}
-            to="/vaults"
-          />
+          <div
+            className="vault-select"
+          >
+            Nothing here!
+          </div>
         </vaultSelect>
       </Connect(vaultSelect)>
     </Router>
