@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Vaults page renders correctly 1`] = `
-<Connect(BaseTemplate)>
+<Connect(BaseTemplate)
+  className="vaults"
+>
   <Connect(vaultSelect) />
+  <Connect(VaultPanel) />
 </Connect(BaseTemplate)>
 `;

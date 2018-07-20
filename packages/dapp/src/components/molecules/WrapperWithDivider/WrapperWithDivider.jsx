@@ -17,7 +17,7 @@ const WrapperWithDivider = ({ Divider, children }) => {
     )
   }
 
-  return <div>{content}</div>
+  return <div className="dividing-wrapper">{content}</div>
 }
 
 WrapperWithDivider.propTypes = {
