@@ -3,13 +3,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 const ContentWrapper = ({ header, children }) => {
-  return header ? (
+  return (
     <div className="content-wrapper">
-      <div className="content-wrapper-header">{header}</div>
-      <div className="content-wrapper-content">{children}</div>
-    </div>
-  ) : (
-    <div className="content-wrapper">
+      {header ? <div className="content-wrapper-header">{header}</div> : null}
       <div className="content-wrapper-content">{children}</div>
     </div>
   )

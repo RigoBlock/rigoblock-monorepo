@@ -6,10 +6,18 @@ import TablePagination from '../../atoms/TablePagination'
 import Title from '../../atoms/Title'
 import classNames from 'classnames'
 
-const Table = ({ tableData, tableColumns, title, className, noDataText }) =>
-  tableData ? (
-    <div className={classNames('table', className)}>
-      <Title>{title}</Title>
+const Table = ({ tableData, tableColumns, title, className, noDataText }) => (
+  <div
+    className={classNames(
+      {
+        table: !!tableData,
+        'no-data-table': !tableData
+      },
+      className
+    )}
+  >
+    <Title>{title}</Title>
+    {tableData ? (
       <ReactTable
         data={tableData}
         PaginationComponent={TablePagination}
@@ -17,13 +25,11 @@ const Table = ({ tableData, tableColumns, title, className, noDataText }) =>
         defaultPageSize={10}
         className="-striped"
       />
-    </div>
-  ) : (
-    <div className="no-data-table">
-      <Title>{title}</Title>
+    ) : (
       <div className="table-replacer">{noDataText}</div>
-    </div>
-  )
+    )}
+  </div>
+)
 
 Table.propTypes = {
   tableData: PropTypes.array,
