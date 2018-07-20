@@ -8,6 +8,7 @@ import ListItem from '../../molecules/ListItem'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
+import get from 'lodash/get'
 import routerActions from '../../../actions/router-actions'
 
 let vaultSelect = ({ vaults, dispatch, location }) => {
@@ -57,9 +58,9 @@ vaultSelect.defaultProps = {
 vaultSelect = connect(state => {
   const { currentAccount } = state.preferences
   return {
-    vaults: currentAccount
-      ? state.blockChain.accounts[currentAccount].vaults
-      : {},
+    vaults:
+      currentAccount &&
+      get(state, `blockChain.accounts[${currentAccount}].vaults`, {}),
     location: state.routing.location.pathname
   }
 })(vaultSelect)
