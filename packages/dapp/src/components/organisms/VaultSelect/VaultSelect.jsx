@@ -2,7 +2,6 @@ import './VaultSelect.scss'
 import * as ROUTES from '../../../constants/routes'
 import { BigNumber } from 'bignumber.js'
 import { ETH_TO_WEI } from '../../../constants/utils'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import List from '../../organisms/List'
 import ListItem from '../../molecules/ListItem'
@@ -15,12 +14,6 @@ let vaultSelect = ({ vaults, dispatch, location }) => {
   // TODO: remove this and implement a correct page
   if (!Object.keys(vaults).length) {
     return <div className="vault-select">Nothing here!</div>
-  }
-
-  if (location === ROUTES.VAULTS) {
-    const firstVaultAddress = Object.keys(vaults).shift()
-    const firstVaultId = vaults[firstVaultAddress].id
-    return <Redirect to={`${ROUTES.VAULTS}/${firstVaultId}`} />
   }
 
   const handleClick = ({ target }) => {

@@ -21,5 +21,5 @@ if (process.env.NODE_ENV === 'test') {
   require('raf').polyfill(global)
 }
 
-Object.values = require('core-js/fn/object/values')
-Object.entries = require('core-js/fn/object/entries')
+Object.values = require('core-js/es/object/values')
+Object.entries = require('core-js/es/object/entries')
