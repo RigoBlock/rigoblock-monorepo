@@ -31,13 +31,6 @@ module.exports = {
   },
 
   navigateToUrl: function(url) {
-    return I.executeScript(
-      url =>
-        store.dispatch({
-          type: '@@router/CALL_HISTORY_METHOD',
-          payload: { method: 'push', args: [url] }
-        }),
-      url
-    )
+    I.navigateToUrl(url)
   }
 }

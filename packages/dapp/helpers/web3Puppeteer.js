@@ -8,6 +8,7 @@ class Web3Puppeteer extends Helper {
   constructor() {
     super()
     this.ganache = null
+    this.store = null
   }
 
   async _before() {
@@ -53,8 +54,20 @@ class Web3Puppeteer extends Helper {
       window.web3 = new window.Web3(
         new window.Web3.providers.HttpProvider('http://localhost:8545/node')
       )
-      window.init()
+      this.store = window.init()
     }, web3Raw)
+  }
+
+  async navigateToUrl(url) {
+    const page = this.helpers['Puppeteer'].page
+    await page.evaluate(
+      url =>
+        this.store.dispatch({
+          type: '@@router/CALL_HISTORY_METHOD',
+          payload: { method: 'push', args: [url] }
+        }),
+      url
+    )
   }
 }
 
