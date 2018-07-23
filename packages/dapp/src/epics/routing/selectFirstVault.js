@@ -17,11 +17,10 @@ const selectFirstVaultEpic = (action$, store, ts = Scheduler.async) => {
     get(store.getState(), `routing.location.pathname`, '')
   return action$
     .filter(({ type, payload }) => {
-      // if we go to /vaults page proceed
+      // if we navigate to the /vaults page, proceed
       if (type === LOCATION_CHANGE && payload.pathname === ROUTES.VAULTS) {
         return true
       }
-
       // if we are on the /vaults page and vaults have been
       // registered to state, proceed
       if (
@@ -40,12 +39,7 @@ const selectFirstVaultEpic = (action$, store, ts = Scheduler.async) => {
     .mergeMap(() => {
       return fromPromise(api.web3.getAvailableAddressesAsync(), ts).map(
         ([account]) => {
-          const vaults = get(
-            store.getState(),
-            `blockChain.accounts[${account}].vaults`,
-            {}
-          )
-
+          const vaults = getVaultsInState(store, account)
           const firstVaultId = Object.values(vaults)
             .map(vault => vault.id)
             .shift()
