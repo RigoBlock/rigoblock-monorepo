@@ -4,9 +4,8 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import routerActions from '../../actions/router-actions'
-import vaultActions from '../../actions/vault-actions'
 
-describe('selectFirstVault Epic', () => {
+describe('vaultInvalid Epic', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const vaultId = 0
   const getStateMock = jest.fn()
@@ -20,7 +19,7 @@ describe('selectFirstVault Epic', () => {
     }
   }
   let fromPromiseSpy
-  let selectFirstVaultEpic
+  let vaultInvalidEpic
 
   beforeEach(() => {
     jest.resetModules()
@@ -30,10 +29,10 @@ describe('selectFirstVault Epic', () => {
       fromPromise: fromPromiseSpy
     }))
 
-    selectFirstVaultEpic = require('./selectFirstVault').default
+    vaultInvalidEpic = require('./vaultInvalid').default
   })
 
-  it('redirects to first vault overview if we navigate to /vaults and vaults are present in state', () => {
+  it("redirects to /vaults page if we try to access an invalid vault's url", () => {
     getStateMock.mockReturnValue({
       blockChain: {
         accounts: {
@@ -52,7 +51,7 @@ describe('selectFirstVault Epic', () => {
       a: {
         type: LOCATION_CHANGE,
         payload: {
-          pathname: ROUTES.VAULTS
+          pathname: `${ROUTES.VAULTS}/20`
         },
         meta: {
           currentAccount: owner
@@ -60,7 +59,7 @@ describe('selectFirstVault Epic', () => {
       }
     }
     const expectedValues = {
-      b: routerActions.navigateToVault(vaultId)
+      b: routerActions.navigateToVaults()
     }
 
     const inputMarble = 'a'
@@ -73,42 +72,42 @@ describe('selectFirstVault Epic', () => {
     const action$ = new ActionsObservable(
       ts.createHotObservable(inputMarble, inputValues)
     )
-    const outputAction = selectFirstVaultEpic(action$, mockStore)
+    const outputAction = vaultInvalidEpic(action$, mockStore)
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
     ts.flush()
   })
 
-  it(`redirects to the first vault's overview url if the route is ${
-    ROUTES.VAULTS
-  } and vaults are present in the state`, () => {
-    getStateMock
-      .mockReturnValueOnce({
-        routing: { location: { pathname: ROUTES.VAULTS } }
-      })
-      .mockReturnValue({
-        blockChain: {
-          accounts: {
-            [owner]: {
-              vaults: {
-                '0x123': {
-                  id: vaultId
-                }
+  it('returns nothing if the vault exists', () => {
+    getStateMock.mockReturnValue({
+      blockChain: {
+        accounts: {
+          [owner]: {
+            vaults: {
+              '0x123': {
+                id: vaultId
               }
             }
           }
         }
-      })
+      }
+    })
     fromPromiseSpy.mockReturnValueOnce(of([owner]))
     const inputValues = {
-      a: accountMiddlewareMock(vaultActions.registerVault(), owner)
+      a: {
+        type: LOCATION_CHANGE,
+        payload: {
+          pathname: `${ROUTES.VAULTS}/${vaultId}`
+        },
+        meta: {
+          currentAccount: owner
+        }
+      }
     }
-    const expectedValues = {
-      b: routerActions.navigateToVault(vaultId)
-    }
+    const expectedValues = {}
 
     const inputMarble = 'a'
-    const expectedMarble = 'b'
+    const expectedMarble = ''
 
     const ts = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)
@@ -117,7 +116,7 @@ describe('selectFirstVault Epic', () => {
     const action$ = new ActionsObservable(
       ts.createHotObservable(inputMarble, inputValues)
     )
-    const outputAction = selectFirstVaultEpic(action$, mockStore)
+    const outputAction = vaultInvalidEpic(action$, mockStore)
 
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
     ts.flush()

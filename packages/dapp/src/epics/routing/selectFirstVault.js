@@ -36,8 +36,8 @@ const selectFirstVaultEpic = (action$, store, ts = Scheduler.async) => {
       ({ meta: { currentAccount } }) =>
         Object.keys(getVaultsInState(store, currentAccount)).length
     )
-    .mergeMap(() => {
-      return fromPromise(api.web3.getAvailableAddressesAsync(), ts).map(
+    .mergeMap(() =>
+      fromPromise(api.web3.getAvailableAddressesAsync(), ts).map(
         ([account]) => {
           const vaults = getVaultsInState(store, account)
           const firstVaultId = Object.values(vaults)
@@ -46,7 +46,7 @@ const selectFirstVaultEpic = (action$, store, ts = Scheduler.async) => {
           return routerActions.navigateToVault(firstVaultId)
         }
       )
-    })
+    )
 }
 
 export default selectFirstVaultEpic

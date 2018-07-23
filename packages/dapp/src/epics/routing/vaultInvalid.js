@@ -10,14 +10,14 @@ import routerActions from '../../actions/router-actions'
 
 const re = /vaults\/(.+)/i
 
-const vaultInvalid = (action$, store, ts = Scheduler.async) => {
-  return action$
+const vaultInvalid = (action$, store, ts = Scheduler.async) =>
+  action$
     .filter(
       ({ payload, type }) =>
         type === LOCATION_CHANGE && re.test(payload.pathname)
     )
-    .mergeMap(({ payload }) => {
-      return fromPromise(api.web3.getAvailableAddressesAsync(), ts)
+    .mergeMap(({ payload }) =>
+      fromPromise(api.web3.getAvailableAddressesAsync(), ts)
         .map(([account]) => {
           const vaultId = payload.pathname.match(re).pop()
           const vaults = get(
@@ -28,13 +28,9 @@ const vaultInvalid = (action$, store, ts = Scheduler.async) => {
           const vaultExists = !!Object.values(vaults).some(
             vault => vault.id === parseInt(vaultId, 10)
           )
-          if (vaultExists) {
-            return
-          }
-          return routerActions.navigateToVaults()
+          return vaultExists ? null : routerActions.navigateToVaults()
         })
         .filter(v => !!v)
-    })
-}
+    )
 
 export default vaultInvalid
