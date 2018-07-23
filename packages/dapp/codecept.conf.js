@@ -8,7 +8,7 @@ const config = {
         headless: true
       },
       waitForNavigation: 'domcontentloaded',
-      waitForAction: 200
+      waitForAction: 300
     },
     Web3Puppeteer: {
       require: './helpers/web3Puppeteer.js'

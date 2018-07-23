@@ -19,6 +19,7 @@ Scenario(
   async (navigation, vaults) => {
     navigation.navigateToVaults()
     await vaults.depositToVault()
+    navigation.navigateToDashboard()
     vaults.assertAccountValue('32.64')
   }
 )
