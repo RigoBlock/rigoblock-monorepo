@@ -7,15 +7,7 @@ import TextField from './TextField'
 const props = {
   id: 'testTextField',
   fullWidth: false,
-  size: 10,
-  meta: {
-    touched: null,
-    error: null
-  },
-  input: {
-    value: "I don't work",
-    onChange: () => null
-  }
+  size: 10
 }
 
 storiesOf('Atoms/TextField', module)

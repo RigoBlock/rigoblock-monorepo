@@ -11,8 +11,8 @@ const TextField = ({
   fullWidth,
   placeholder,
   size,
-  input: { value, onChange },
-  meta: { error, touched }
+  input,
+  meta
 }) => {
   // TODO: figure out if we need to implement a label for future accessibility
   return (
@@ -23,10 +23,10 @@ const TextField = ({
       size={size}
       fullWidth={fullWidth}
       placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      error={touched && !!error}
-      errorText={error}
+      value={input ? input.value : null}
+      onChange={input ? input.onChange : null}
+      error={meta ? meta.touched && !!meta.error : null}
+      errorText={meta ? meta.error : null}
       type={type}
       className="text-field"
     />
@@ -39,8 +39,8 @@ TextField.propTypes = {
   required: PropTypes.bool,
   fullWidth: PropTypes.bool,
   size: PropTypes.number,
-  input: PropTypes.object.isRequired,
-  meta: PropTypes.object.isRequired,
+  input: PropTypes.object,
+  meta: PropTypes.object,
   placeholder: PropTypes.string
 }
 
@@ -51,7 +51,9 @@ TextField.defaultProps = {
   size: 10,
   value: '',
   placeholder: '',
-  onChange: () => {}
+  onChange: () => {},
+  input: null,
+  meta: null
 }
 
 export default TextField
