@@ -14927,7 +14927,7 @@ web3@0.20.6, web3@^0.20.0:
     xhr2 "*"
     xmlhttprequest "*"
 
-web3@^1.0.0-beta.30, web3@^1.0.0-beta.33:
+web3@^1.0.0-beta.30, web3@^1.0.0-beta.33, web3@^1.0.0-beta.34:
   version "1.0.0-beta.34"
   resolved "https://registry.yarnpkg.com/web3/-/web3-1.0.0-beta.34.tgz#347e561b784098cb5563315f490479a1d91f2ab1"
   dependencies:
