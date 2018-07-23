@@ -53,11 +53,10 @@
   padding: $dist-s;
   .title {
     padding-bottom: $dist-s;
-    padding-top: $dist-s;
   }
   .table-replacer {
     padding-top: $dist-s;
     height: 5 * $dist-6xl + 23px;
-    width: 7 * $dist-4xl;
+    width: 11 * $dist-xl + 5px;
   }
 }

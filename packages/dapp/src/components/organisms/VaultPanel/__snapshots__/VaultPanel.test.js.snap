@@ -4833,7 +4833,7 @@ exports[`VaultPanel component renders correctly if vaults are present but no tra
                             title="Transactions"
                           >
                             <div
-                              className="no-data-table"
+                              className="no-data-table vault-transactions"
                             >
                               <Title
                                 className={null}

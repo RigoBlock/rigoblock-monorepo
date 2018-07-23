@@ -10,8 +10,8 @@ import vaultActions from '../../actions/vault-actions'
 const getVaultSupplyEpic = (action$, store, ts = Scheduler.async) =>
   action$
     .filter(action => action.type === vaultActions.registerVault.getType())
-    .mergeMap(({ payload }) => {
-      const address = Object.keys(payload).pop()
+    .mergeMap(({ payload: { account, vaultData } }) => {
+      const address = Object.keys(vaultData).pop()
       return fromPromise(
         api.contract.Vault.createAndValidate(api.web3._web3, address),
         ts
@@ -19,8 +19,11 @@ const getVaultSupplyEpic = (action$, store, ts = Scheduler.async) =>
         .mergeMap(vault => fromPromise(vault.totalSupply, ts))
         .map(totalSupply =>
           vaultActions.updateVaultData({
-            address,
-            data: { totalSupply: totalSupply.times(MICRO_TO_WEI) }
+            account,
+            vaultData: {
+              address,
+              data: { totalSupply: totalSupply.times(MICRO_TO_WEI) }
+            }
           })
         )
     })

@@ -1,5 +1,4 @@
 import './VaultPanel.scss'
-import * as ROUTES from '../../../constants/routes'
 import { INVESTOR } from '../../../constants/user'
 import { connect } from 'react-redux'
 import ContentWrapper from '../../molecules/ContentWrapper'
@@ -9,10 +8,14 @@ import VaultFees from '../VaultFees'
 import VaultTitle from '../VaultTitle'
 import VaultTransactions from '../VaultTransactions'
 import WrapperWithDivider from '../../molecules/WrapperWithDivider'
+import get from 'lodash/get'
+
+const re = /vaults\/(.+)/i
 
 let VaultPanel = ({ vaults, transactions, location, userType }) => {
-  const vaultId = location.split(`${ROUTES.VAULTS}/`).pop()
-  if (!vaults || vaultId === location || !vaultId) {
+  const vaultId = (location.match(re) || []).pop()
+  // if there are no vaults OR if the Id is null, don't render
+  if (!vaults || !vaultId) {
     return null
   }
   const [vaultAddress, vaultData] = Object.entries(vaults)
@@ -54,13 +57,15 @@ VaultPanel = connect(state => {
   const { currentAccount } = state.preferences
   return {
     transactions:
-      currentAccount && state.blockChain.accounts[currentAccount]
-        ? state.blockChain.accounts[currentAccount].vaultTransactions
-        : {},
+      currentAccount &&
+      get(
+        state,
+        `blockChain.accounts[${currentAccount}].vaultTransactions`,
+        null
+      ),
     vaults:
-      currentAccount && state.blockChain.accounts[currentAccount]
-        ? state.blockChain.accounts[currentAccount].vaults
-        : {},
+      currentAccount &&
+      get(state, `blockChain.accounts[${currentAccount}].vaults`, null),
     location: state.routing.location.pathname,
     userType: state.preferences.type
   }

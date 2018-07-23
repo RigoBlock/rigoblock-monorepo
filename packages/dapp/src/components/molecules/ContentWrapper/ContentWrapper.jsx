@@ -5,7 +5,7 @@ import React from 'react'
 const ContentWrapper = ({ header, children }) => {
   return header ? (
     <div className="content-wrapper">
-      <div className="content-wrapper-header">{header}</div>
+      {header ? <div className="content-wrapper-header">{header}</div> : null}
       <div className="content-wrapper-content">{children}</div>
     </div>
   ) : (

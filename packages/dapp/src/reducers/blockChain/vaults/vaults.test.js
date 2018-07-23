@@ -116,7 +116,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       initialState,
-      accountMiddlewareMock(actions.registerVault(vault), owner),
+      actions.registerVault({ account: owner, vaultData: vault }),
       expectedState
     )
   })
@@ -138,7 +138,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      accountMiddlewareMock(actions.registerVault(secondVault), owner),
+      actions.registerVault({ account: owner, vaultData: secondVault }),
       expectedState
     )
   })
@@ -158,7 +158,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      accountMiddlewareMock(actions.registerVaultBlock(firstBlock), owner),
+      actions.registerVaultBlock({ account: owner, block: firstBlock }),
       expectedState
     )
   })
@@ -183,7 +183,7 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      accountMiddlewareMock(actions.registerVaultBlock(secondBlock), owner),
+      actions.registerVaultBlock({ account: owner, block: secondBlock }),
       expectedState
     )
   })
@@ -205,13 +205,13 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      accountMiddlewareMock(
-        actions.updateVaultData({
+      actions.updateVaultData({
+        account: owner,
+        vaultData: {
           address: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
           data: { totalSupply }
-        }),
-        owner
-      ),
+        }
+      }),
       expectedState
     )
   })
@@ -242,10 +242,10 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      accountMiddlewareMock(
-        actions.registerTransaction(vaultTransaction),
-        owner
-      ),
+      actions.registerTransaction({
+        account: owner,
+        transaction: vaultTransaction
+      }),
       expectedState
     )
   })
@@ -297,10 +297,10 @@ describe('vaults reducer', () => {
     }
     vaultTest(
       state,
-      accountMiddlewareMock(
-        actions.registerTransaction(secondVaultTransaction),
-        owner
-      ),
+      actions.registerTransaction({
+        account: owner,
+        transaction: secondVaultTransaction
+      }),
       expectedState
     )
   })
