@@ -34,7 +34,7 @@ class Web3Puppeteer extends Helper {
   }
 
   async _after() {
-    const closeGanachePromise = new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       this.ganache.close(
         err =>
           err
@@ -42,9 +42,7 @@ class Web3Puppeteer extends Helper {
             : resolve(console.log('Ganache stopping...'))
       )
     })
-    await closeGanachePromise
     this.ganache = null
-    return
   }
 
   async inject() {
