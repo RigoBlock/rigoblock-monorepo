@@ -28,5 +28,16 @@ module.exports = {
   navigateToDragos() {
     I.cssClick('a[href="/dragos"]')
     I.waitInUrl('/dragos', 5)
+  },
+
+  navigateToUrl: function(url) {
+    return I.executeScript(
+      url =>
+        store.dispatch({
+          type: '@@router/CALL_HISTORY_METHOD',
+          payload: { method: 'push', args: [url] }
+        }),
+      url
+    )
   }
 }
