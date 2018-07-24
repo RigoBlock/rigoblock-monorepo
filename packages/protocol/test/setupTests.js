@@ -51,7 +51,7 @@ global.describeContract = (name, f) => {
 expect.extend({
   toBeHash(received) {
     try {
-      if (received.substr(0, 2) === '0x' && received.length === 66) {
+      if (received.substring(0, 2) === '0x' && received.length === 66) {
         return {
           message: () => `expected ${received} to be a valid Hash`,
           pass: true

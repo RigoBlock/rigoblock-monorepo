@@ -24,7 +24,7 @@ let VaultTransactions = ({ transactions }) => {
     {
       Header: 'ID',
       id: 'id',
-      accessor: d => d.id.substr(d.id.length - 5, 5).toUpperCase(),
+      accessor: d => d.id.substring(d.id.length - 5).toUpperCase(),
       maxWidth: 60
     },
     {

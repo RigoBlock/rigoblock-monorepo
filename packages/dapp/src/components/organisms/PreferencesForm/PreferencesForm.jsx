@@ -24,7 +24,7 @@ const timeZoneValues = [...timeZones]
 
 let PreferencesForm = props => {
   const timeZoneProps = {
-    id: 1,
+    id: '1',
     items: timeZoneValues
   }
   const handleSubmit = e => {

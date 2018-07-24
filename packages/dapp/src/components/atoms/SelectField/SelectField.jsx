@@ -19,7 +19,7 @@ const SelectField = ({
   )
   return (
     <MaterialSelect
-      id={id.toString()}
+      id={id}
       placeholder={placeholder}
       defaultValue={defaultValue}
       value={value}
@@ -37,7 +37,7 @@ const SelectField = ({
 }
 
 SelectField.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
   input: PropTypes.object.isRequired,
@@ -56,9 +56,7 @@ SelectField.propTypes = {
 
 SelectField.defaultProps = {
   placeholder: null,
-  defaultValue: '',
-  value: '',
-  onChange: () => {}
+  defaultValue: ''
 }
 
 export default SelectField

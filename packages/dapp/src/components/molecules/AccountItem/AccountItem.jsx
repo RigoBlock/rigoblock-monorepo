@@ -11,7 +11,7 @@ export const ACCOUNT_ITEM_TYPES = {
 }
 
 const AccountItem = ({ provider, number, appearance }) => {
-  const hiddenAccount = `**** ${number.substr(number.length - 4, 4)}`
+  const hiddenAccount = `**** ${number.substring(number.length - 4)}`
   let displayedProvider = provider && provider.toLowerCase()
   let logoComponent = (
     <img src={`https://identicon-api.herokuapp.com/${number}/24?format=png`} />

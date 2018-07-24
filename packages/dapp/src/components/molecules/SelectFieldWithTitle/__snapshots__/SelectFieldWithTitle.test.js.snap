@@ -14,7 +14,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
     fieldName="accountList"
     fieldProps={
       Object {
-        "id": 1,
+        "id": "1",
         "items": Array [
           "MetaMask **** 1604",
           "MetaMask **** 1605",
@@ -32,7 +32,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
       fieldName="accountList"
       fieldProps={
         Object {
-          "id": 1,
+          "id": "1",
           "items": Array [
             "MetaMask **** 1604",
             "MetaMask **** 1605",
@@ -99,7 +99,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
         fieldName="accountList"
         fieldProps={
           Object {
-            "id": 1,
+            "id": "1",
             "items": Array [
               "MetaMask **** 1604",
               "MetaMask **** 1605",
@@ -183,7 +183,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
           fieldName="accountList"
           fieldProps={
             Object {
-              "id": 1,
+              "id": "1",
               "items": Array [
                 "MetaMask **** 1604",
                 "MetaMask **** 1605",
@@ -264,7 +264,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
             </div>
             <Field
               component={[Function]}
-              id={1}
+              id="1"
               items={
                 Array [
                   "MetaMask **** 1604",
@@ -319,7 +319,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                     "error": undefined,
                     "fieldName": "accountList",
                     "fieldProps": Object {
-                      "id": 1,
+                      "id": "1",
                       "items": Array [
                         "MetaMask **** 1604",
                         "MetaMask **** 1605",
@@ -382,7 +382,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                   }
                 }
                 component={[Function]}
-                id={1}
+                id="1"
                 items={
                   Array [
                     "MetaMask **** 1604",
@@ -438,7 +438,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                       "error": undefined,
                       "fieldName": "accountList",
                       "fieldProps": Object {
-                        "id": 1,
+                        "id": "1",
                         "items": Array [
                           "MetaMask **** 1604",
                           "MetaMask **** 1605",
@@ -504,7 +504,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                   component={[Function]}
                   dirty={false}
                   dispatch={[MockFunction]}
-                  id={1}
+                  id="1"
                   items={
                     Array [
                       "MetaMask **** 1604",
@@ -519,7 +519,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                 >
                   <SelectField
                     defaultValue=""
-                    id={1}
+                    id="1"
                     input={
                       Object {
                         "name": "accountList",
@@ -559,9 +559,7 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                         "warning": undefined,
                       }
                     }
-                    onChange={[Function]}
                     placeholder={null}
-                    value=""
                   >
                     <SelectField
                       anchor={

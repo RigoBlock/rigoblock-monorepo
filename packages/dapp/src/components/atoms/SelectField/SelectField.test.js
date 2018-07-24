@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json'
 const props = {
   items: ['item1', 2, { label: 'test', value: '1' }],
   placeholder: 'placeholder',
-  id: 1,
+  id: '0',
   meta: {
     touched: null,
     error: null
