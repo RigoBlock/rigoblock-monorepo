@@ -65,13 +65,19 @@ describe('watchVaultEvents', () => {
       }
     })
     watchVaultEventsSpy.mockReturnValueOnce(
-      of(blockChainActions.registerBlock(VAULT, block))
+      of(
+        blockChainActions.registerBlock({ account: owner, label: VAULT, block })
+      )
     )
     const inputValues = {
       a: blockChainActions.vaultFetchCompleted()
     }
     const expectedValues = {
-      b: blockChainActions.registerBlock(VAULT, block)
+      b: blockChainActions.registerBlock({
+        account: owner,
+        label: VAULT,
+        block
+      })
     }
 
     const inputMarble = 'a'
@@ -113,17 +119,42 @@ describe('watchVaultEvents', () => {
 
     watchVaultEventsSpy.mockReturnValueOnce(
       merge(
-        of(blockChainActions.registerBlock(VAULT, block)),
-        of(blockChainActions.registerBlock(VAULT, block)),
-        of(blockChainActions.registerBlock(VAULT, block)).delay(20, ts)
+        of(
+          blockChainActions.registerBlock({
+            account: owner,
+            label: VAULT,
+            block
+          })
+        ),
+        of(
+          blockChainActions.registerBlock({
+            account: owner,
+            label: VAULT,
+            block
+          })
+        ),
+        of(
+          blockChainActions.registerBlock({
+            account: owner,
+            label: VAULT,
+            block
+          })
+        ).delay(20, ts)
       )
     )
     const inputValues = {
       a: blockChainActions.vaultFetchCompleted(),
-      b: blockChainActions.blockChainLogIn('1234', 'my provider')
+      b: blockChainActions.blockChainLogIn({
+        provider: 'my provider',
+        account: '1234'
+      })
     }
     const expectedValues = {
-      b: blockChainActions.registerBlock(VAULT, block)
+      b: blockChainActions.registerBlock({
+        account: owner,
+        label: VAULT,
+        block
+      })
     }
 
     const inputMarble = 'a-b'

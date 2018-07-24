@@ -11,7 +11,7 @@ describe('global reducer', () => {
 
   it('adds new errors to the state', () => {
     const err = new Error('test error')
-    globalTest(undefined, blockChainActions.blockChainError(err), {
+    globalTest(undefined, blockChainActions.blockChainError(err.toString()), {
       error: err.toString(),
       modalComponent: null
     })

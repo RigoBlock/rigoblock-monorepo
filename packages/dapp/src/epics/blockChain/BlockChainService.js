@@ -30,7 +30,7 @@ class BlockChainService {
     return Observable.create(observer => {
       const onError = err => {
         if (err) {
-          observer.next(blockChainActions.blockChainError(err))
+          observer.next(blockChainActions.blockChainError(err.toString()))
         }
       }
       this.api.engine.on('error', onError)
@@ -65,7 +65,10 @@ class BlockChainService {
         if (accounts[0] != this.account) {
           this.account = accounts[0]
           this.accounts.add(this.account)
-          return blockChainActions.blockChainLogIn(nodeVersion, this.account)
+          return blockChainActions.blockChainLogIn({
+            provider: nodeVersion,
+            account: this.account
+          })
         }
       })
       .filter(action => !!action)
@@ -81,7 +84,9 @@ class BlockChainService {
   }
 
   wrapError(action$) {
-    return action$.catch(err => of(blockChainActions.blockChainError(err)))
+    return action$.catch(err =>
+      of(blockChainActions.blockChainError(err.toString()))
+    )
   }
 
   fetchVaultEvents(fromBlock, toBlock = 'latest') {
@@ -160,7 +165,7 @@ class BlockChainService {
       })
       .map(decoratedBlock => {
         const { account, ...block } = decoratedBlock
-        return blockChainActions.registerBlock(account, label, block)
+        return blockChainActions.registerBlock({ account, label, block })
       })
   }
 }

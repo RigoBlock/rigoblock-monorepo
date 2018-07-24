@@ -4,6 +4,7 @@ import { TestScheduler } from 'rxjs'
 import blockChainActions from '../../actions/blockchain-actions'
 
 describe('getTotalAccountsBalanceEpic', () => {
+  const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const firstBalance = '83999999999988700303'
   const secondBalance = '78999999999964195288'
   const thirdBalance = '256999999999952600881'
@@ -42,7 +43,10 @@ describe('getTotalAccountsBalanceEpic', () => {
 
   it('dispatches an updateTotalAccountBalance action whenever updateAccountBalance is fired', () => {
     const inputValues = {
-      a: blockChainActions.updateAccountBalance('83999999999988700303')
+      a: blockChainActions.updateAccountBalance({
+        account: owner,
+        balance: '83999999999988700303'
+      })
     }
     const expectedValues = {
       b: blockChainActions.updateTotalAccountBalance(totalBalance)
