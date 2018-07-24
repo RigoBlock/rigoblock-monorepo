@@ -1,29 +1,17 @@
 @import "../../_settings/variables.scss";
 
 .create-vault-form {
-  max-width: 9.25 * $dist-l;
-  background: $secondary-bg-color;
+  padding: $dist-s;
+  display: flex;
+  flex-direction: column;
+  padding-top: $dist-m;
 
-  .form-title {
-    padding: $dist-s;
-    padding-bottom: $dist-xs;
+  .select-with-title {
+    padding-bottom: $dist-l;
   }
 
-  .form-content {
-    padding: $dist-s;
-    display: flex;
-    flex-direction: column;
-    padding-top: $dist-m;
-
-    & > *:not(:last-child) {
-      padding-top: $dist-xs;
-      padding-bottom: $dist-m;
-    }
-  }
-
-  .form-divider {
-    background: $dark-grey;
-    height: 1px;
+  .text-with-title {
+    padding-bottom: $dist-m;
   }
 
   .call-to-action {

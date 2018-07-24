@@ -1,22 +1,24 @@
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
-import PreferencesForm from './PreferencesForm.jsx'
+import CreateVaultForm from './CreateVaultForm.jsx'
 import React from 'react'
 import mockStore from '../../../fixtures/store'
 import toJson from 'enzyme-to-json'
-import userActions from '../../../actions/user-actions'
+import vaultActions from '../../../actions/vault-actions'
+
+const vaultData = {
+  accountNumber: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
+  vaultName: 'New Vault',
+  vaultSymbol: 'VLT'
+}
 
 const store = mockStore({
   mockFn: jest.fn,
   optionalState: {
     form: {
-      preferences: {
-        values: {
-          timezone: '+02:00'
-        },
-        initial: {
-          timezone: '+02:00'
-        }
+      createVault: {
+        values: vaultData,
+        initial: vaultData
       }
     }
   }
@@ -24,11 +26,11 @@ const store = mockStore({
 
 const wrapper = mount(
   <Provider store={store}>
-    <PreferencesForm />
+    <CreateVaultForm />
   </Provider>
 )
 
-describe('PreferencesForm component', () => {
+describe('CreateVaultForm component', () => {
   it('renders correctly', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })
@@ -37,7 +39,7 @@ describe('PreferencesForm component', () => {
     const form = wrapper.find('form')
     form.simulate('submit')
     expect(store.dispatch).toHaveBeenCalledWith(
-      userActions.changePreferences({ timezone: '+02:00' })
+      vaultActions.createVault(vaultData)
     )
   })
 })

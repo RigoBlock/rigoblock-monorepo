@@ -71,16 +71,6 @@ export const defaultState = {
     location: {
       pathname: `${ROUTES.VAULTS}/0`
     }
-  },
-  form: {
-    preferences: {
-      values: {
-        timezone: '+02:00'
-      },
-      initial: {
-        timezone: '+02:00'
-      }
-    }
   }
 }
 
