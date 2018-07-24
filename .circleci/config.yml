@@ -324,9 +324,7 @@ workflows:
     #         - build-dapp
       - deploy-dapp-staging:
           requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
+            - setup
           filters:
             branches:
               only: rancher
