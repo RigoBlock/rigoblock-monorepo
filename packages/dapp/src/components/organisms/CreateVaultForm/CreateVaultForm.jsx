@@ -14,17 +14,17 @@ import get from 'lodash/get'
 import vaultActions from '../../../actions/vault-actions'
 
 const hideAccount = (accNumber, provider) => {
+  const accProvider = provider ? provider : 'RPC provider'
   let displayedProvider =
-    provider && provider.toLowerCase() === METAMASK.toLowerCase()
+    accProvider.toLowerCase() === METAMASK.toLowerCase()
       ? METAMASK
-      : provider.charAt(0).toUpperCase() + provider.slice(1)
-  const returnValue = {
+      : accProvider.charAt(0).toUpperCase() + accProvider.slice(1)
+  return {
     label: `${displayedProvider || null} **** ${accNumber
       .substring(accNumber.length - 4)
       .toUpperCase()}`,
     value: accNumber
   }
-  return returnValue
 }
 
 const validate = values => {
@@ -78,7 +78,7 @@ let CreateVaultForm = ({
       <SelectFieldWithTitle
         title="Pay [mining] fees with"
         fieldName="accountNumber"
-        tooltip="This account will be used to pay mining fees for the transaction"
+        tooltip="This account will be the vault's owner."
         fieldProps={{
           id: '0',
           items: hiddenAccounts
@@ -101,7 +101,6 @@ let CreateVaultForm = ({
       />
       <CallToAction>
         <Button onClick={reset}>Cancel</Button>
-        <Button onClick={asyncValidate}>Test</Button>
         <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
           Create
         </Button>

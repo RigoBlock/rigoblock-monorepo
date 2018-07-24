@@ -690,7 +690,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                   }
                 }
                 title="Pay [mining] fees with"
-                tooltip="This account will be used to pay mining fees for the transaction"
+                tooltip="This account will be the vault's owner."
               >
                 <div
                   className="select-with-title"
@@ -712,7 +712,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                       className=""
                       onClick={[Function]}
                       size="medium"
-                      tooltipText="This account will be used to pay mining fees for the transaction"
+                      tooltipText="This account will be the vault's owner."
                       type="help"
                     >
                       <div
@@ -725,7 +725,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                           help
                         </span>
                         <Tooltip
-                          tooltipText="This account will be used to pay mining fees for the transaction"
+                          tooltipText="This account will be the vault's owner."
                         >
                           <div
                             className="tooltip-container"
@@ -733,7 +733,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                             <div
                               className="tooltip-text"
                             >
-                              This account will be used to pay mining fees for the transaction
+                              This account will be the vault's owner.
                             </div>
                             <div
                               className="tooltip-tip"
@@ -2429,7 +2429,6 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                               "value": "New Vault",
                             }
                           }
-                          maxLength={null}
                           meta={
                             Object {
                               "active": false,
@@ -2517,7 +2516,6 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                             id="1"
                             leftIconStateful={true}
                             lineDirection="left"
-                            maxLength={null}
                             onChange={[Function]}
                             passwordIcon={
                               <FontIcon
@@ -2593,7 +2591,6 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                 error={false}
                                 key="message"
                                 leftIcon={false}
-                                maxLength={null}
                                 rightIcon={false}
                               />
                             </div>
@@ -3184,7 +3181,6 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                               "value": "VLT",
                             }
                           }
-                          maxLength={null}
                           meta={
                             Object {
                               "active": false,
@@ -3272,7 +3268,6 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                             id="2"
                             leftIconStateful={true}
                             lineDirection="left"
-                            maxLength={null}
                             onChange={[Function]}
                             passwordIcon={
                               <FontIcon
@@ -3348,7 +3343,6 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                 error={false}
                                 key="message"
                                 leftIcon={false}
-                                maxLength={null}
                                 rightIcon={false}
                               />
                             </div>
@@ -3455,103 +3449,6 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                               </TransitionGroup>
                             </InkContainer>
                             Cancel
-                          </button>
-                        </Button>
-                      </withTooltip(Button)>
-                    </withInk(withTooltip(Button))>
-                  </Button>
-                  <Button
-                    appearance="primary"
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    <withInk(withTooltip(Button))
-                      className="base-button"
-                      flat={true}
-                      inkTransitionEnterTimeout={450}
-                      inkTransitionLeaveTimeout={300}
-                      inkTransitionOverlap={150}
-                      onClick={[Function]}
-                      primary={true}
-                      swapTheming={false}
-                      type="button"
-                    >
-                      <withTooltip(Button)
-                        className="base-button"
-                        flat={true}
-                        ink={
-                          <InkContainer
-                            className={undefined}
-                            disabledInteractions={undefined}
-                            inkClassName={undefined}
-                            inkStyle={undefined}
-                            pulse={undefined}
-                            style={undefined}
-                            transitionEnterTimeout={450}
-                            transitionLeaveTimeout={300}
-                            transitionOverlap={150}
-                            waitForInkTransition={undefined}
-                          />
-                        }
-                        onClick={[Function]}
-                        primary={true}
-                        swapTheming={false}
-                        type="button"
-                      >
-                        <Button
-                          className="base-button"
-                          fixedPosition="br"
-                          flat={true}
-                          iconBefore={true}
-                          ink={
-                            <InkContainer
-                              className={undefined}
-                              disabledInteractions={undefined}
-                              inkClassName={undefined}
-                              inkStyle={undefined}
-                              pulse={undefined}
-                              style={undefined}
-                              transitionEnterTimeout={450}
-                              transitionLeaveTimeout={300}
-                              transitionOverlap={150}
-                              waitForInkTransition={undefined}
-                            />
-                          }
-                          onClick={[Function]}
-                          primary={true}
-                          swapTheming={false}
-                          type="button"
-                        >
-                          <button
-                            className="md-btn md-btn--flat md-btn--text md-pointer--hover md-text--theme-primary md-ink--primary md-inline-block base-button"
-                            onClick={[Function]}
-                            onKeyDown={[Function]}
-                            onKeyUp={[Function]}
-                            onMouseDown={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            onMouseUp={[Function]}
-                            onTouchEnd={[Function]}
-                            onTouchStart={[Function]}
-                            type="button"
-                          >
-                            <InkContainer
-                              key="ink-container"
-                              transitionEnterTimeout={450}
-                              transitionLeaveTimeout={300}
-                              transitionOverlap={150}
-                            >
-                              <TransitionGroup
-                                childFactory={[Function]}
-                                className="md-ink-container"
-                                component="div"
-                              >
-                                <div
-                                  className="md-ink-container"
-                                />
-                              </TransitionGroup>
-                            </InkContainer>
-                            Test
                           </button>
                         </Button>
                       </withTooltip(Button)>

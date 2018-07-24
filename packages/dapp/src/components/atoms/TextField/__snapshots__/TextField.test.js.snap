@@ -10,7 +10,6 @@ exports[`TextField component renders correctly 1`] = `
   id="testTextField"
   leftIconStateful={true}
   lineDirection="left"
-  maxLength={null}
   onChange={[MockFunction]}
   passwordIcon={
     <FontIcon

@@ -489,7 +489,6 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                         "value": "",
                       }
                     }
-                    maxLength={null}
                     meta={
                       Object {
                         "active": false,
@@ -525,7 +524,6 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                       id="testTextField"
                       leftIconStateful={true}
                       lineDirection="left"
-                      maxLength={null}
                       onChange={[Function]}
                       passwordIcon={
                         <FontIcon
@@ -601,7 +599,6 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                           error={false}
                           key="message"
                           leftIcon={false}
-                          maxLength={null}
                           rightIcon={false}
                         />
                       </div>
