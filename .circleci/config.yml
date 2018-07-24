@@ -303,7 +303,7 @@ workflows:
   version: 2
   rigoblock:
     jobs:
-    #   - setup
+      - setup
     #   - test-unit-dapp:
     #       requires:
     #         - setup
