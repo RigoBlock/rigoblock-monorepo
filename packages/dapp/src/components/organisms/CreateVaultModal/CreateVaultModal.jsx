@@ -1,11 +1,11 @@
 import CreateVaultForm from '../CreateVaultForm'
-import FormModal from '../../molecules/FormModal'
 import React from 'react'
+import Tab from '../../molecules/Tab'
 import Title from '../../atoms/Title'
 
 const header = () => <Title>Create Vault</Title>
-const form = () => <CreateVaultForm />
+const forms = [CreateVaultForm]
 
-const CreateVaultModal = () => <FormModal Header={header} Form={form} />
+const CreateVaultModal = () => <Tab Header={header} forms={forms} />
 
 export default CreateVaultModal
