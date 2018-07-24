@@ -1,10 +1,9 @@
 @import "../../_settings/variables.scss";
 
 .create-vault-form {
-  padding: $dist-s;
   display: flex;
   flex-direction: column;
-  padding-top: $dist-m;
+  padding-top: $dist-xs;
 
   .select-with-title {
     padding-bottom: $dist-l;
