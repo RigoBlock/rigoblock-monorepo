@@ -189,39 +189,39 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run:
-          name: Install Flynn CLI
-          command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
-      - run:
-          name: Add Flynn cluster
-          command: "~/flynn cluster add -p hSeBWhP7I5Q/C0nAXQ5L30fW1B956NurbxbQ/TQSXPI= staging dev-02.endpoint.network c6e549fcc2f7f2145db34a96c7baaab5"
-      - run:
-          name: Flynn ping
-          command: "~/flynn apps"
-      - run:
-          name: Download flynn cert
-          command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
-      - run:
-          name: Cert folder
-          command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
-      - run:
-          name: Move cert
-          command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
-      - run:
-          name: Restart docker
-          command: "sudo service docker restart"
-      - run:
-          name: Flynn set docker
-          command: "~/flynn docker set-push-url && ~/flynn docker login"
+    #   - run:
+    #       name: Install Flynn CLI
+    #       command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
+    #   - run:
+    #       name: Add Flynn cluster
+    #       command: "~/flynn cluster add -p hSeBWhP7I5Q/C0nAXQ5L30fW1B956NurbxbQ/TQSXPI= staging dev-02.endpoint.network c6e549fcc2f7f2145db34a96c7baaab5"
+    #   - run:
+    #       name: Flynn ping
+    #       command: "~/flynn apps"
+    #   - run:
+    #       name: Download flynn cert
+    #       command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
+    #   - run:
+    #       name: Cert folder
+    #       command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+    #   - run:
+    #       name: Move cert
+    #       command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+    #   - run:
+    #       name: Restart docker
+    #       command: "sudo service docker restart"
+    #   - run:
+    #       name: Flynn set docker
+    #       command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
           command: "docker build -t staging --build-arg NPM_KEY=$NPM_KEY -f ./packages/dapp/Dockerfile ."
-      - run:
-          name: Flynn push
-          command: "~/flynn -a dapp-staging docker push staging:latest"
-      - run:
-          name: Flynn scale
-          command: "~/flynn -a dapp-staging scale app=1"
+    #   - run:
+    #       name: Flynn push
+    #       command: "~/flynn -a dapp-staging docker push staging:latest"
+    #   - run:
+    #       name: Flynn scale
+    #       command: "~/flynn -a dapp-staging scale app=1"
       - run:
           name: Tag image with version
           command: |
@@ -303,25 +303,25 @@ workflows:
   version: 2
   rigoblock:
     jobs:
-      - setup
-      - test-unit-dapp:
-          requires:
-            - setup
-      - build-protocol:
-          requires:
-            - test-unit-dapp
-      - test-protocol:
-          requires:
-            - build-protocol
-      - build-api:
-          requires:
-            - build-protocol
-      - build-dapp:
-          requires:
-            - build-api
-      - test-feature-dapp:
-          requires:
-            - build-dapp
+    #   - setup
+    #   - test-unit-dapp:
+    #       requires:
+    #         - setup
+    #   - build-protocol:
+    #       requires:
+    #         - test-unit-dapp
+    #   - test-protocol:
+    #       requires:
+    #         - build-protocol
+    #   - build-api:
+    #       requires:
+    #         - build-protocol
+    #   - build-dapp:
+    #       requires:
+    #         - build-api
+    #   - test-feature-dapp:
+    #       requires:
+    #         - build-dapp
       - deploy-dapp-staging:
           requires:
             - test-unit-dapp
@@ -330,11 +330,11 @@ workflows:
           filters:
             branches:
               only: rancher
-      - deploy-storybook-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
+    #   - deploy-storybook-staging:
+    #       requires:
+    #         - test-unit-dapp
+    #         - build-dapp
+    #         - test-feature-dapp
+    #       filters:
+    #         branches:
+    #           only: master
