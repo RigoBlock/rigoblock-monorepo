@@ -41,8 +41,8 @@ RUN yarn build
 FROM nginx:stable-alpine
 
 # Set password
-# RUN apk add --update apache2-utils && \
-#     htpasswd -b -c /etc/nginx/.htpasswd rigoblock-dev rdev2018_
+RUN apk add --update apache2-utils && \
+    htpasswd -b -c /etc/nginx/.htpasswd rigoblock-dev rdev2018_
 
 COPY --from=builder /src/dist /usr/share/nginx/html
 COPY packages/dapp/nginx.conf /etc/nginx/nginx.conf
