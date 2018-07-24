@@ -5,6 +5,5 @@ exports[`Dragos page renders correctly 1`] = `
   <h1>
     Dragos
   </h1>
-  <Connect(ReduxForm) />
 </Connect(BaseTemplate)>
 `;
