@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SelectFieldWithTitle from '../../molecules/SelectFieldWithTitle'
 import TextFieldWithTitle from '../../molecules/TextFieldWithTitle'
+import api from '../../../api'
 import get from 'lodash/get'
 import vaultActions from '../../../actions/vault-actions'
 
@@ -26,62 +27,101 @@ const hideAccount = (accNumber, provider) => {
   return returnValue
 }
 
-let CreateVaultForm = ({ accounts, createVault, formObject, reset }) => {
-  const handleSubmit = e => {
-    e.preventDefault()
-    createVault(formObject.createVault.values)
+const validate = values => {
+  const errors = {}
+  if (!values.vaultSymbol) {
+    errors.vaultSymbol = 'Field is required.'
   }
+
+  if (!values.vaultName) {
+    errors.vaultName = 'Field is required.'
+  }
+
+  if (values.vaultSymbol && values.vaultSymbol.length !== 3) {
+    errors.vaultSymbol = 'Vault symbol must be 3 letters.'
+  }
+
+  return errors
+}
+
+const asyncValidate = async values => {
+  const vaultExistError = { vaultName: 'Vault already exists.' }
+  const registry = await api.contract.DragoRegistry.createAndValidate(
+    api.web3._web3,
+    api.contract.DragoRegistry.address
+  )
+  try {
+    const res = await registry.fromName(values.vaultName)
+    if (res) {
+      throw vaultExistError
+    }
+  } catch (e) {
+    return e === vaultExistError ? e : null
+  }
+}
+
+let CreateVaultForm = ({
+  accounts,
+  createVault,
+  formObject,
+  reset,
+  handleSubmit
+}) => {
   const hiddenAccounts = Object.entries(accounts).map(([accNumber, accData]) =>
     hideAccount(accNumber, accData.provider)
   )
   return (
-    <div className="thewrapper">
-      <form onSubmit={handleSubmit} className="create-vault-form">
-        <SelectFieldWithTitle
-          title="Pay [mining] fees with"
-          fieldName="accountNumber"
-          tooltip="This account will be used to pay mining fees for the transaction"
-          fieldProps={{
-            id: '0',
-            items: hiddenAccounts
-          }}
-        />
-        <TextFieldWithTitle
-          title="Vault name"
-          fieldName="vaultName"
-          fieldProps={{ id: '1' }}
-        />
-        <TextFieldWithTitle
-          title="Vault symbol"
-          fieldName="vaultSymbol"
-          fieldProps={{
-            id: '2',
-            fullWidth: false,
-            size: 8,
-            maxLength: 3,
-            placeholder: '3 Letters'
-          }}
-        />
-        <CallToAction>
-          <Button onClick={reset}>Cancel</Button>
-          <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
-            Create
-          </Button>
-        </CallToAction>
-      </form>
-    </div>
+    <form
+      onSubmit={handleSubmit(() => createVault(formObject.createVault.values))}
+      className="create-vault-form"
+    >
+      <SelectFieldWithTitle
+        title="Pay [mining] fees with"
+        fieldName="accountNumber"
+        tooltip="This account will be used to pay mining fees for the transaction"
+        fieldProps={{
+          id: '0',
+          items: hiddenAccounts
+        }}
+      />
+      <TextFieldWithTitle
+        title="Vault name"
+        fieldName="vaultName"
+        fieldProps={{ id: '1' }}
+      />
+      <TextFieldWithTitle
+        title="Vault symbol"
+        fieldName="vaultSymbol"
+        fieldProps={{
+          id: '2',
+          fullWidth: false,
+          size: 8,
+          placeholder: '3 Letters'
+        }}
+      />
+      <CallToAction>
+        <Button onClick={reset}>Cancel</Button>
+        <Button onClick={asyncValidate}>Test</Button>
+        <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
+          Create
+        </Button>
+      </CallToAction>
+    </form>
   )
 }
 
 CreateVaultForm.propTypes = {
   accounts: PropTypes.object.isRequired,
   createVault: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   formObject: PropTypes.object.isRequired
 }
 
 CreateVaultForm = reduxForm({
   form: 'createVault',
+  validate,
+  asyncValidate,
   enableReinitialize: true
 })(CreateVaultForm)
 

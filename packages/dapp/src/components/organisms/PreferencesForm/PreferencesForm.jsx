@@ -22,24 +22,30 @@ const timeZoneValues = [...timeZones]
   .sort((a, b) => timeToDecimal(a) - timeToDecimal(b))
   .map(timezone => `GMT ${timezone}`)
 
-let PreferencesForm = props => {
+let PreferencesForm = ({
+  changePreferences,
+  reset,
+  formObject,
+  handleSubmit
+}) => {
   const timeZoneProps = {
     id: '1',
     items: timeZoneValues
   }
-  const handleSubmit = e => {
-    e.preventDefault()
-    props.changePreferences(props.formObject.preferences.values)
-  }
   return (
-    <form onSubmit={handleSubmit} className="preferences-form">
+    <form
+      onSubmit={handleSubmit(() =>
+        changePreferences(formObject.preferences.values)
+      )}
+      className="preferences-form"
+    >
       <SelectFieldWithTitle
         fieldName={'timezone'}
         fieldProps={timeZoneProps}
         title="Time zone"
       />
       <CallToAction>
-        <Button onClick={props.reset}>Cancel</Button>
+        <Button onClick={reset}>Cancel</Button>
         <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
           Save
         </Button>
@@ -50,6 +56,7 @@ let PreferencesForm = props => {
 
 PreferencesForm.propTypes = {
   initialize: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   changePreferences: PropTypes.func.isRequired,
   formObject: PropTypes.shape({
