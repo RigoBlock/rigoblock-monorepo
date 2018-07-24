@@ -81,7 +81,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
       }
     >
       <div
-        className="form-modal"
+        className="tab"
       >
         <WrapperWithDivider
           Divider={[Function]}
@@ -93,7 +93,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
               key="wrap-div-0"
             >
               <div
-                className="form-header"
+                className="tab-header"
               >
                 <header>
                   <Title
@@ -110,7 +110,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
               </div>
               <divider>
                 <div
-                  className="modal-divider"
+                  className="tab-divider"
                 />
               </divider>
             </div>
@@ -118,7 +118,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
               key="wrap-div-1"
             >
               <div
-                className="form-content"
+                className="tab-content"
               >
                 <Connect(ReduxForm)>
                   <ReduxForm

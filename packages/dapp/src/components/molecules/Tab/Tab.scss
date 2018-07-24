@@ -1,14 +1,14 @@
 @import "../../_settings/variables.scss";
 
-.form-modal {
+.tab {
   max-width: 9.25 * $dist-l;
   background: $secondary-bg-color;
 
-  .form-header, .form-content {
+  .tab-header, .tab-content {
     padding: $dist-s;
   }
 
-  .modal-divider {
+  .tab-divider {
     background: $dark-grey;
     height: 1px;
   }
