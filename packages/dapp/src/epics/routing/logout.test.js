@@ -21,7 +21,7 @@ describe('logout Epic', () => {
   it('calls a redux router push action to login page in case of a blockchain error action', () => {
     getStateMock.mockReturnValue(loggedOutState)
     const inputValues = {
-      a: blockChainActions.blockChainError(testError)
+      a: blockChainActions.blockChainError(testError.toString())
     }
     const expectedValues = {
       b: routerActions.logout()

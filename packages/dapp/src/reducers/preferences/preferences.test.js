@@ -36,7 +36,7 @@ describe('user reducer', () => {
   it('saves the default account number to the state', () => {
     preferencesTest(
       undefined,
-      blockChainActions.blockChainLogIn(provider, account),
+      blockChainActions.blockChainLogIn({ provider, account }),
       {
         timezone: 'GMT +02:00',
         type: INVESTOR,

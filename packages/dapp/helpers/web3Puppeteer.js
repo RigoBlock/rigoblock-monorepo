@@ -1,13 +1,14 @@
-'use strict'
 const Helper = codecept_helper
 const fs = require('fs-extra')
 const ganache = require('ganache-cli')
 const mnemonic = require('../package.json').config.mnemonic
+const pushAction = require('react-router-redux').CALL_HISTORY_METHOD
 
 class Web3Puppeteer extends Helper {
   constructor() {
     super()
     this.ganache = null
+    this.store = null
   }
 
   async _before() {
@@ -53,8 +54,21 @@ class Web3Puppeteer extends Helper {
       window.web3 = new window.Web3(
         new window.Web3.providers.HttpProvider('http://localhost:8545/node')
       )
-      window.init()
+      this.store = window.init()
     }, web3Raw)
+  }
+
+  async navigateToUrl(url) {
+    const page = this.helpers['Puppeteer'].page
+    await page.evaluate(
+      (url, pushAction) =>
+        this.store.dispatch({
+          type: pushAction,
+          payload: { method: 'push', args: [url] }
+        }),
+      url,
+      pushAction
+    )
   }
 }
 

@@ -12,7 +12,7 @@ module.exports = {
   },
 
   assertImOnPage() {
-    I.waitInUrl('/vaults', 5)
+    I.waitInUrl('/vaults/0', 5)
     I.waitForVisible('div.account-view', 5)
     I.waitForVisible('div.navigation-view', 5)
     I.waitForVisible(`a[href='${vaultsRoute}'].active`, 5)
@@ -30,7 +30,6 @@ module.exports = {
   },
 
   async createNewVault(name, symbol) {
-    I.waitNumberOfVisibleElements('div.list-item', 2, 5)
     await I.createVault(name, symbol)
     I.waitNumberOfVisibleElements('div.list-item', 3, 10)
     I.cssClick("div.list-item[id='4']")
@@ -49,7 +48,6 @@ module.exports = {
   },
 
   assertAccountValue(val) {
-    I.cssClick('div.navigation-view a[href="/"]')
     I.waitForVisible('div.accounts-panel', 5)
     I.waitForText(val, 5)
   }

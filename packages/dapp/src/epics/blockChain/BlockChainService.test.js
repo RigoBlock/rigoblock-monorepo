@@ -103,8 +103,14 @@ describe('blockChain services function', () => {
 
         const expectedValues = {
           a: blockChainActions.blockChainInit(),
-          b: blockChainActions.blockChainLogIn('metamask', address1),
-          c: blockChainActions.blockChainLogIn('metamask', address2)
+          b: blockChainActions.blockChainLogIn({
+            provider: 'metamask',
+            account: address1
+          }),
+          c: blockChainActions.blockChainLogIn({
+            provider: 'metamask',
+            account: address2
+          })
         }
 
         const expectedMarble =
@@ -131,7 +137,7 @@ describe('blockChain services function', () => {
 
         const expectedValues = {
           a: blockChainActions.blockChainInit(),
-          b: blockChainActions.blockChainError(testError)
+          b: blockChainActions.blockChainError(testError.stack)
         }
 
         const expectedMarble = '(ab|)'
@@ -156,7 +162,10 @@ describe('blockChain services function', () => {
 
         const expectedValues = {
           a: blockChainActions.blockChainInit(),
-          b: blockChainActions.blockChainLogIn('metamask', address)
+          b: blockChainActions.blockChainLogIn({
+            provider: 'metamask',
+            account: address
+          })
         }
 
         const expectedMarble = '(ab)'
@@ -215,7 +224,7 @@ describe('blockChain services function', () => {
 
         const expectedValues = {
           a: blockChainActions.blockChainInit(),
-          b: blockChainActions.blockChainError(testError)
+          b: blockChainActions.blockChainError(testError.stack)
         }
 
         const expectedMarble = '(ab)'
@@ -246,7 +255,11 @@ describe('blockChain services function', () => {
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
         const expectedValues = {
-          a: blockChainActions.registerBlock(owner, VAULT, blockWithTimestamp),
+          a: blockChainActions.registerBlock({
+            account: owner,
+            label: VAULT,
+            block: blockWithTimestamp
+          }),
           b: blockChainActions.vaultFetchCompleted()
         }
 
@@ -279,7 +292,7 @@ describe('blockChain services function', () => {
         }
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         const expectedValues = {
-          a: blockChainActions.blockChainError(fetchError)
+          a: blockChainActions.blockChainError(fetchError.stack)
         }
 
         const expectedMarble = '(a|)'
@@ -314,7 +327,11 @@ describe('blockChain services function', () => {
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         fromPromiseSpy.mockReturnValueOnce(of('1528811195'))
         const expectedValues = {
-          a: blockChainActions.registerBlock(owner, VAULT, blockWithTimestamp)
+          a: blockChainActions.registerBlock({
+            account: owner,
+            label: VAULT,
+            block: blockWithTimestamp
+          })
         }
 
         const expectedMarble = 'a'
@@ -349,7 +366,7 @@ describe('blockChain services function', () => {
         }
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         const expectedValues = {
-          a: blockChainActions.blockChainError(fetchError)
+          a: blockChainActions.blockChainError(fetchError.stack)
         }
 
         const expectedMarble = '(a|)'
