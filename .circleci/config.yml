@@ -265,39 +265,73 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - run:
-          name: Install Flynn CLI
-          command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
-      - run:
-          name: Add Flynn cluster
-          command: "~/flynn cluster add -p hSeBWhP7I5Q/C0nAXQ5L30fW1B956NurbxbQ/TQSXPI= staging dev-02.endpoint.network c6e549fcc2f7f2145db34a96c7baaab5"
-      - run:
-          name: Flynn ping
-          command: "~/flynn apps"
-      - run:
-          name: Download flynn cert
-          command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
-      - run:
-          name: Cert folder
-          command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
-      - run:
-          name: Move cert
-          command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
-      - run:
-          name: Restart docker
-          command: "sudo service docker restart"
-      - run:
-          name: Flynn set docker
-          command: "~/flynn docker set-push-url && ~/flynn docker login"
+    #   - run:
+    #       name: Install Flynn CLI
+    #       command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
+    #   - run:
+    #       name: Add Flynn cluster
+    #       command: "~/flynn cluster add -p hSeBWhP7I5Q/C0nAXQ5L30fW1B956NurbxbQ/TQSXPI= staging dev-02.endpoint.network c6e549fcc2f7f2145db34a96c7baaab5"
+    #   - run:
+    #       name: Flynn ping
+    #       command: "~/flynn apps"
+    #   - run:
+    #       name: Download flynn cert
+    #       command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
+    #   - run:
+    #       name: Cert folder
+    #       command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+    #   - run:
+    #       name: Move cert
+    #       command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+    #   - run:
+    #       name: Restart docker
+    #       command: "sudo service docker restart"
+    #   - run:
+    #       name: Flynn set docker
+    #       command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
           command: "docker build -t storybook-staging --build-arg NPM_KEY=$NPM_KEY -f ./packages/dapp/Dockerfile.storybook ."
+    #   - run:
+    #       name: Flynn push
+    #       command: "~/flynn -a storybook-staging docker push storybook-staging:latest"
+    #   - run:
+    #       name: Flynn scale
+    #       command: "~/flynn -a storybook-staging scale app=1"
       - run:
-          name: Flynn push
-          command: "~/flynn -a storybook-staging docker push storybook-staging:latest"
+          name: Tag image with version
+          command: |
+            NUMBER=$(git log --pretty=oneline | wc -l)
+            DATE=$(date +%Y.%m.%d)
+            TAG=$(git tag --contains `git rev-list --tags --max-count=1` | grep dapp | cut -d '@' -f3)
+            HASH=$(git rev-parse --short HEAD)
+            BRANCH=${CIRCLE_BRANCH#*/}
+            VERSION=$TAG-$BRANCH-$DATE-commit-$HASH-$NUMBER
+            echo "export VERSION=$VERSION" >> $BASH_ENV
+            source $BASH_ENV
+            docker tag storybook-staging rb-registry.endpoint.network/webapp-v2-storybook:latest
+            docker tag storybook-staging rb-registry.endpoint.network/webapp-v2-storybook:$VERSION
       - run:
-          name: Flynn scale
-          command: "~/flynn -a storybook-staging scale app=1"
+          name: Login with private Docker registry
+          command: |
+            docker login https://rb-registry.endpoint.network/ -u wnz99 -p $JENKINS_PASSWORD
+      - run:
+          name: Push image to private registry
+          command: |
+            docker push rb-registry.endpoint.network/webapp-v2-storybook:$VERSION
+      - run:
+          name: Update Rancher deployment
+          command: |
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl 
+            chmod +x ./kubectl 
+            sudo mv ./kubectl /usr/local/bin/kubectl
+            wget https://github.com/rancher/cli/releases/download/v2.0.3-rc1/rancher-linux-amd64-v2.0.3-rc1.tar.gz -O rancher-linux-amd64-v2.0.3-rc1.tar.gz 
+            tar xzvf rancher-linux-amd64-v2.0.3-rc1.tar.gz 
+            cd rancher-v2.0.3-rc1/ 
+            chmod +x rancher 
+            sudo mv ./rancher /usr/local/bin/rancher 
+            echo "1" | rancher login https://rb-rancher.endpoint.network/v3 --token $RANCHER_TOKEN 
+            rancher kubectl set image deployment/webapp-v2-staging-storybook webapp-v2-staging-storybook=rb-registry.endpoint.network/webapp-v2-storybook:$VERSION
 
 workflows:
   version: 2
@@ -307,34 +341,35 @@ workflows:
       - test-unit-dapp:
           requires:
             - setup
-      - build-protocol:
+    #   - build-protocol:
+    #       requires:
+    #         - test-unit-dapp
+    #   - test-protocol:
+    #       requires:
+    #         - build-protocol
+    #   - build-api:
+    #       requires:
+    #         - build-protocol
+    #   - build-dapp:
+    #       requires:
+    #         - build-api
+    #   - test-feature-dapp:
+    #       requires:
+    #         - build-dapp
+    #   - deploy-dapp-staging:
+    #       requires:
+    #         - test-unit-dapp
+    #         - build-dapp
+    #         - test-feature-dapp
+    #       filters:
+    #         branches:
+    #           only: rancher
+      - deploy-storybook-staging:
           requires:
-            - test-unit-dapp
-      - test-protocol:
-          requires:
-            - build-protocol
-      - build-api:
-          requires:
-            - build-protocol
-      - build-dapp:
-          requires:
-            - build-api
-      - test-feature-dapp:
-          requires:
-            - build-dapp
-      - deploy-dapp-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
+            # - test-unit-dapp
+            # - build-dapp
+            # - test-feature-dapp
+            - setup
           filters:
             branches:
               only: rancher
-      - deploy-storybook-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
