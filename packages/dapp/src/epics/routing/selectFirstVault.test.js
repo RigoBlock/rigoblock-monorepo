@@ -81,7 +81,7 @@ describe('selectFirstVault Epic', () => {
 
   it(`redirects to the first vault's overview url if the route is ${
     ROUTES.VAULTS
-  } and vaults are present in the state`, () => {
+  } and a vault is registered`, () => {
     getStateMock
       .mockReturnValueOnce({
         routing: { location: { pathname: ROUTES.VAULTS } }

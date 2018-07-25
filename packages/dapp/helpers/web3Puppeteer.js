@@ -1,8 +1,8 @@
-'use strict'
 const Helper = codecept_helper
 const fs = require('fs-extra')
 const ganache = require('ganache-cli')
 const mnemonic = require('../package.json').config.mnemonic
+const pushAction = require('react-router-redux').CALL_HISTORY_METHOD
 
 class Web3Puppeteer extends Helper {
   constructor() {
@@ -61,12 +61,13 @@ class Web3Puppeteer extends Helper {
   async navigateToUrl(url) {
     const page = this.helpers['Puppeteer'].page
     await page.evaluate(
-      url =>
+      (url, pushAction) =>
         this.store.dispatch({
-          type: '@@router/CALL_HISTORY_METHOD',
+          type: pushAction,
           payload: { method: 'push', args: [url] }
         }),
-      url
+      url,
+      pushAction
     )
   }
 }

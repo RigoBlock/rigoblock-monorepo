@@ -8,18 +8,18 @@ import api from '../../api'
 import get from 'lodash/get'
 import routerActions from '../../actions/router-actions'
 
-const re = /vaults\/(.+)/i
+const VAULT_ID_REGEXP = /vaults\/(.+)/i
 
 const vaultInvalid = (action$, store, ts = Scheduler.async) =>
   action$
     .filter(
       ({ payload, type }) =>
-        type === LOCATION_CHANGE && re.test(payload.pathname)
+        type === LOCATION_CHANGE && VAULT_ID_REGEXP.test(payload.pathname)
     )
     .mergeMap(({ payload }) =>
       fromPromise(api.web3.getAvailableAddressesAsync(), ts)
         .map(([account]) => {
-          const vaultId = payload.pathname.match(re).pop()
+          const vaultId = payload.pathname.match(VAULT_ID_REGEXP).pop()
           const vaults = get(
             store.getState(),
             `blockChain.accounts[${account}].vaults`,
