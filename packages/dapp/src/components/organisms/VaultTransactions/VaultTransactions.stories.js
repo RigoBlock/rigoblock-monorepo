@@ -17,7 +17,7 @@ const transactionData = {
 }
 
 const createTransaction = () => {
-  const id = Web3.prototype.toHex(Math.random())
+  const id = Web3.utils.randomHex()
   return {
     [id]: transactionData
   }

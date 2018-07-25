@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`SelectFieldForm component renders correctly 1`] = `
-<Field
-  component={[Function]}
-  name="testField"
-/>
-`;

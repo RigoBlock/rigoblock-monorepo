@@ -1,0 +1,12 @@
+@import "../../_settings/variables.scss";
+
+.select-with-title {
+  display: inline-block;
+
+  .select-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+  }
+}

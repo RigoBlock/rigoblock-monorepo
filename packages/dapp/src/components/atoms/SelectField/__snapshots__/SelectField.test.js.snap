@@ -9,7 +9,7 @@ exports[`SelectField component renders correctly 1`] = `
     }
   }
   className="select-field"
-  defaultValue="item1"
+  defaultValue=""
   defaultVisible={false}
   dropdownIcon={
     <span
@@ -18,6 +18,8 @@ exports[`SelectField component renders correctly 1`] = `
       keyboard_arrow_down
     </span>
   }
+  error={null}
+  errorText={null}
   fixedTo={[Window]}
   id="1"
   itemLabel="label"
@@ -36,13 +38,13 @@ exports[`SelectField component renders correctly 1`] = `
     ]
   }
   onChange={[MockFunction]}
-  placeholder={null}
+  placeholder="placeholder"
   position="below"
   repositionOnResize={false}
   repositionOnScroll={false}
   stripActiveItem={false}
   transitionName="md-drop"
   transitionTime={300}
-  value=""
+  value="I don't work"
 />
 `;

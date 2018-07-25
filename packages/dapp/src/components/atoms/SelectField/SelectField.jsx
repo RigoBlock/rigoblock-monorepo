@@ -9,9 +9,9 @@ const SelectField = ({
   id,
   items,
   placeholder,
-  onChange,
-  value,
-  defaultValue
+  defaultValue,
+  input: { value, onChange },
+  meta: { error, touched }
 }) => {
   const classProps = classNames('select-field')
   const dropDownArrow = (
@@ -24,6 +24,8 @@ const SelectField = ({
       defaultValue={defaultValue}
       value={value}
       onChange={onChange}
+      error={touched && !!error}
+      errorText={error}
       stripActiveItem={false}
       repositionOnScroll={false}
       className={classProps}
@@ -38,8 +40,8 @@ SelectField.propTypes = {
   id: PropTypes.number.isRequired,
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
+  input: PropTypes.object.isRequired,
+  meta: PropTypes.object.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.string,

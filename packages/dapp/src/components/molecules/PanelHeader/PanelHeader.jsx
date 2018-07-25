@@ -1,11 +1,11 @@
 import './PanelHeader.scss'
+import Icon from '../../atoms/Icon'
 import PropTypes from 'prop-types'
 import React from 'react'
-import Tooltip from '../../atoms/Icon'
 
 const PanelHeader = ({ tooltip, title }) => {
   const tooltipComponent = tooltip && (
-    <Tooltip type={'help'} tooltipText={tooltip} />
+    <Icon type={'help'} tooltipText={tooltip} />
   )
 
   return (

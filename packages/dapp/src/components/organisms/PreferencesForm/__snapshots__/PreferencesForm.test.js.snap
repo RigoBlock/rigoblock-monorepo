@@ -240,10 +240,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
               className="preferences-form"
               onSubmit={[Function]}
             >
-              <h3>
-                Time zone
-              </h3>
-              <SelectFieldForm
+              <SelectFieldWithTitle
                 fieldName="timezone"
                 fieldProps={
                   Object {
@@ -289,126 +286,73 @@ exports[`PreferencesForm component renders correctly 1`] = `
                     ],
                   }
                 }
+                title="Time zone"
+                tooltip={null}
               >
-                <Field
-                  component={[Function]}
-                  name="timezone"
+                <div
+                  className="select-with-title"
                 >
-                  <Connect(ConnectedField)
-                    _reduxForm={
-                      Object {
-                        "anyTouched": false,
-                        "array": Object {
-                          "insert": [Function],
-                          "move": [Function],
-                          "pop": [Function],
-                          "push": [Function],
-                          "remove": [Function],
-                          "removeAll": [Function],
-                          "shift": [Function],
-                          "splice": [Function],
-                          "swap": [Function],
-                          "unshift": [Function],
-                        },
-                        "arrayInsert": [Function],
-                        "arrayMove": [Function],
-                        "arrayPop": [Function],
-                        "arrayPush": [Function],
-                        "arrayRemove": [Function],
-                        "arrayRemoveAll": [Function],
-                        "arrayShift": [Function],
-                        "arraySplice": [Function],
-                        "arraySwap": [Function],
-                        "arrayUnshift": [Function],
-                        "asyncErrors": undefined,
-                        "asyncValidate": [Function],
-                        "asyncValidating": false,
-                        "autofill": [Function],
-                        "blur": [Function],
-                        "change": [Function],
-                        "changePreferences": [Function],
-                        "clearAsyncError": [Function],
-                        "clearFields": [Function],
-                        "clearSubmit": [Function],
-                        "clearSubmitErrors": [Function],
-                        "destroy": [Function],
-                        "destroyOnUnmount": true,
-                        "dirty": false,
-                        "dispatch": [MockFunction],
-                        "enableReinitialize": true,
-                        "error": undefined,
-                        "focus": [Function],
-                        "forceUnregisterOnUnmount": false,
-                        "form": "preferences",
-                        "formObject": Object {
-                          "preferences": Object {
-                            "initial": Object {
-                              "timezone": "+02:00",
-                            },
-                            "values": Object {
-                              "timezone": "+02:00",
-                            },
-                          },
-                        },
-                        "getFormState": [Function],
-                        "getValues": [Function],
-                        "initialValues": Object {
-                          "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
-                          "timezone": "+02:00",
-                        },
-                        "initialize": [Function],
-                        "initialized": true,
-                        "invalid": false,
-                        "keepDirtyOnReinitialize": false,
-                        "persistentSubmitErrors": false,
-                        "pristine": true,
-                        "pure": true,
-                        "register": [Function],
-                        "registerField": [Function],
-                        "registerInnerOnSubmit": [Function],
-                        "registeredFields": undefined,
-                        "reset": [Function],
-                        "resetSection": [Function],
-                        "sectionPrefix": undefined,
-                        "setSubmitFailed": [Function],
-                        "setSubmitSucceeded": [Function],
-                        "shouldAsyncValidate": [Function],
-                        "shouldError": [Function],
-                        "shouldValidate": [Function],
-                        "shouldWarn": [Function],
-                        "startAsyncValidation": [Function],
-                        "startSubmit": [Function],
-                        "stopAsyncValidation": [Function],
-                        "stopSubmit": [Function],
-                        "submit": [Function],
-                        "submitFailed": false,
-                        "submitSucceeded": false,
-                        "submitting": false,
-                        "syncErrors": Object {},
-                        "syncWarnings": Object {},
-                        "touch": [Function],
-                        "touchOnBlur": true,
-                        "touchOnChange": false,
-                        "triggerSubmit": undefined,
-                        "unregister": [Function],
-                        "unregisterField": [Function],
-                        "untouch": [Function],
-                        "updateSyncErrors": [Function],
-                        "updateSyncWarnings": [Function],
-                        "updateUnregisteredFields": false,
-                        "valid": true,
-                        "validExceptSubmit": true,
-                        "values": Object {
-                          "timezone": "+02:00",
-                        },
-                        "warning": undefined,
-                      }
-                    }
-                    component={[Function]}
-                    name="timezone"
-                    normalize={[Function]}
+                  <div
+                    className="select-title"
                   >
-                    <ConnectedField
+                    <Title
+                      className={null}
+                      size="small"
+                    >
+                      <div
+                        className="title small"
+                      >
+                        Time zone
+                      </div>
+                    </Title>
+                  </div>
+                  <Field
+                    component={[Function]}
+                    id={1}
+                    items={
+                      Array [
+                        "GMT -12:00",
+                        "GMT -11:00",
+                        "GMT -10:00",
+                        "GMT -09:00",
+                        "GMT -09:30",
+                        "GMT -08:00",
+                        "GMT -07:00",
+                        "GMT -06:00",
+                        "GMT -05:00",
+                        "GMT -04:00",
+                        "GMT -03:00",
+                        "GMT -02:00",
+                        "GMT -02:30",
+                        "GMT -01:00",
+                        "GMT +00:00",
+                        "GMT +01:00",
+                        "GMT +02:00",
+                        "GMT +03:00",
+                        "GMT +04:00",
+                        "GMT +04:30",
+                        "GMT +05:00",
+                        "GMT +05:30",
+                        "GMT +05:45",
+                        "GMT +06:00",
+                        "GMT +06:30",
+                        "GMT +07:00",
+                        "GMT +08:00",
+                        "GMT +08:45",
+                        "GMT +09:00",
+                        "GMT +09:30",
+                        "GMT +10:00",
+                        "GMT +10:30",
+                        "GMT +11:00",
+                        "GMT +12:00",
+                        "GMT +12:45",
+                        "GMT +13:00",
+                        "GMT +14:00",
+                      ]
+                    }
+                    name="timezone"
+                  >
+                    <Connect(ConnectedField)
                       _reduxForm={
                         Object {
                           "anyTouched": false,
@@ -518,53 +462,228 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           "warning": undefined,
                         }
                       }
-                      asyncValidating={false}
                       component={[Function]}
-                      dirty={false}
-                      dispatch={[MockFunction]}
-                      initial="+02:00"
+                      id={1}
+                      items={
+                        Array [
+                          "GMT -12:00",
+                          "GMT -11:00",
+                          "GMT -10:00",
+                          "GMT -09:00",
+                          "GMT -09:30",
+                          "GMT -08:00",
+                          "GMT -07:00",
+                          "GMT -06:00",
+                          "GMT -05:00",
+                          "GMT -04:00",
+                          "GMT -03:00",
+                          "GMT -02:00",
+                          "GMT -02:30",
+                          "GMT -01:00",
+                          "GMT +00:00",
+                          "GMT +01:00",
+                          "GMT +02:00",
+                          "GMT +03:00",
+                          "GMT +04:00",
+                          "GMT +04:30",
+                          "GMT +05:00",
+                          "GMT +05:30",
+                          "GMT +05:45",
+                          "GMT +06:00",
+                          "GMT +06:30",
+                          "GMT +07:00",
+                          "GMT +08:00",
+                          "GMT +08:45",
+                          "GMT +09:00",
+                          "GMT +09:30",
+                          "GMT +10:00",
+                          "GMT +10:30",
+                          "GMT +11:00",
+                          "GMT +12:00",
+                          "GMT +12:45",
+                          "GMT +13:00",
+                          "GMT +14:00",
+                        ]
+                      }
                       name="timezone"
                       normalize={[Function]}
-                      pristine={true}
-                      value="+02:00"
                     >
-                      <renderSelectField
-                        input={
+                      <ConnectedField
+                        _reduxForm={
                           Object {
-                            "name": "timezone",
-                            "onBlur": [Function],
-                            "onChange": [Function],
-                            "onDragStart": [Function],
-                            "onDrop": [Function],
-                            "onFocus": [Function],
-                            "value": "+02:00",
-                          }
-                        }
-                        meta={
-                          Object {
-                            "active": false,
+                            "anyTouched": false,
+                            "array": Object {
+                              "insert": [Function],
+                              "move": [Function],
+                              "pop": [Function],
+                              "push": [Function],
+                              "remove": [Function],
+                              "removeAll": [Function],
+                              "shift": [Function],
+                              "splice": [Function],
+                              "swap": [Function],
+                              "unshift": [Function],
+                            },
+                            "arrayInsert": [Function],
+                            "arrayMove": [Function],
+                            "arrayPop": [Function],
+                            "arrayPush": [Function],
+                            "arrayRemove": [Function],
+                            "arrayRemoveAll": [Function],
+                            "arrayShift": [Function],
+                            "arraySplice": [Function],
+                            "arraySwap": [Function],
+                            "arrayUnshift": [Function],
+                            "asyncErrors": undefined,
+                            "asyncValidate": [Function],
                             "asyncValidating": false,
-                            "autofilled": false,
+                            "autofill": [Function],
+                            "blur": [Function],
+                            "change": [Function],
+                            "changePreferences": [Function],
+                            "clearAsyncError": [Function],
+                            "clearFields": [Function],
+                            "clearSubmit": [Function],
+                            "clearSubmitErrors": [Function],
+                            "destroy": [Function],
+                            "destroyOnUnmount": true,
                             "dirty": false,
                             "dispatch": [MockFunction],
+                            "enableReinitialize": true,
                             "error": undefined,
+                            "focus": [Function],
+                            "forceUnregisterOnUnmount": false,
                             "form": "preferences",
-                            "initial": "+02:00",
+                            "formObject": Object {
+                              "preferences": Object {
+                                "initial": Object {
+                                  "timezone": "+02:00",
+                                },
+                                "values": Object {
+                                  "timezone": "+02:00",
+                                },
+                              },
+                            },
+                            "getFormState": [Function],
+                            "getValues": [Function],
+                            "initialValues": Object {
+                              "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
+                              "timezone": "+02:00",
+                            },
+                            "initialize": [Function],
+                            "initialized": true,
                             "invalid": false,
+                            "keepDirtyOnReinitialize": false,
+                            "persistentSubmitErrors": false,
                             "pristine": true,
+                            "pure": true,
+                            "register": [Function],
+                            "registerField": [Function],
+                            "registerInnerOnSubmit": [Function],
+                            "registeredFields": undefined,
+                            "reset": [Function],
+                            "resetSection": [Function],
+                            "sectionPrefix": undefined,
+                            "setSubmitFailed": [Function],
+                            "setSubmitSucceeded": [Function],
+                            "shouldAsyncValidate": [Function],
+                            "shouldError": [Function],
+                            "shouldValidate": [Function],
+                            "shouldWarn": [Function],
+                            "startAsyncValidation": [Function],
+                            "startSubmit": [Function],
+                            "stopAsyncValidation": [Function],
+                            "stopSubmit": [Function],
+                            "submit": [Function],
                             "submitFailed": false,
+                            "submitSucceeded": false,
                             "submitting": false,
-                            "touched": false,
+                            "syncErrors": Object {},
+                            "syncWarnings": Object {},
+                            "touch": [Function],
+                            "touchOnBlur": true,
+                            "touchOnChange": false,
+                            "triggerSubmit": undefined,
+                            "unregister": [Function],
+                            "unregisterField": [Function],
+                            "untouch": [Function],
+                            "updateSyncErrors": [Function],
+                            "updateSyncWarnings": [Function],
+                            "updateUnregisteredFields": false,
                             "valid": true,
-                            "visited": false,
+                            "validExceptSubmit": true,
+                            "values": Object {
+                              "timezone": "+02:00",
+                            },
                             "warning": undefined,
                           }
                         }
+                        asyncValidating={false}
+                        component={[Function]}
+                        dirty={false}
+                        dispatch={[MockFunction]}
+                        id={1}
+                        initial="+02:00"
+                        items={
+                          Array [
+                            "GMT -12:00",
+                            "GMT -11:00",
+                            "GMT -10:00",
+                            "GMT -09:00",
+                            "GMT -09:30",
+                            "GMT -08:00",
+                            "GMT -07:00",
+                            "GMT -06:00",
+                            "GMT -05:00",
+                            "GMT -04:00",
+                            "GMT -03:00",
+                            "GMT -02:00",
+                            "GMT -02:30",
+                            "GMT -01:00",
+                            "GMT +00:00",
+                            "GMT +01:00",
+                            "GMT +02:00",
+                            "GMT +03:00",
+                            "GMT +04:00",
+                            "GMT +04:30",
+                            "GMT +05:00",
+                            "GMT +05:30",
+                            "GMT +05:45",
+                            "GMT +06:00",
+                            "GMT +06:30",
+                            "GMT +07:00",
+                            "GMT +08:00",
+                            "GMT +08:45",
+                            "GMT +09:00",
+                            "GMT +09:30",
+                            "GMT +10:00",
+                            "GMT +10:30",
+                            "GMT +11:00",
+                            "GMT +12:00",
+                            "GMT +12:45",
+                            "GMT +13:00",
+                            "GMT +14:00",
+                          ]
+                        }
+                        name="timezone"
+                        normalize={[Function]}
+                        pristine={true}
+                        value="+02:00"
                       >
                         <SelectField
                           defaultValue=""
-                          error={false}
                           id={1}
+                          input={
+                            Object {
+                              "name": "timezone",
+                              "onBlur": [Function],
+                              "onChange": [Function],
+                              "onDragStart": [Function],
+                              "onDrop": [Function],
+                              "onFocus": [Function],
+                              "value": "+02:00",
+                            }
+                          }
                           items={
                             Array [
                               "GMT -12:00",
@@ -606,9 +725,29 @@ exports[`PreferencesForm component renders correctly 1`] = `
                               "GMT +14:00",
                             ]
                           }
+                          meta={
+                            Object {
+                              "active": false,
+                              "asyncValidating": false,
+                              "autofilled": false,
+                              "dirty": false,
+                              "dispatch": [MockFunction],
+                              "error": undefined,
+                              "form": "preferences",
+                              "initial": "+02:00",
+                              "invalid": false,
+                              "pristine": true,
+                              "submitFailed": false,
+                              "submitting": false,
+                              "touched": false,
+                              "valid": true,
+                              "visited": false,
+                              "warning": undefined,
+                            }
+                          }
                           onChange={[Function]}
                           placeholder={null}
-                          value="+02:00"
+                          value=""
                         >
                           <SelectField
                             anchor={
@@ -627,6 +766,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                 keyboard_arrow_down
                               </span>
                             }
+                            error={false}
                             fixedTo={[Window]}
                             id="1"
                             itemLabel="label"
@@ -734,6 +874,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                     </span>
                                   }
                                   error={false}
+                                  errorText={undefined}
                                   id="1"
                                   lineDirection="left"
                                   onBlur={[Function]}
@@ -799,6 +940,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                       </span>
                                     }
                                     error={false}
+                                    errorText={undefined}
                                     id="1"
                                     lineDirection="left"
                                     onBlur={[Function]}
@@ -1064,11 +1206,11 @@ exports[`PreferencesForm component renders correctly 1`] = `
                             </Menu>
                           </SelectField>
                         </SelectField>
-                      </renderSelectField>
-                    </ConnectedField>
-                  </Connect(ConnectedField)>
-                </Field>
-              </SelectFieldForm>
+                      </ConnectedField>
+                    </Connect(ConnectedField)>
+                  </Field>
+                </div>
+              </SelectFieldWithTitle>
               <CallToAction>
                 <div
                   className="call-to-action"

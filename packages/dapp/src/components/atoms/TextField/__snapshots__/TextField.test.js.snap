@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextField component renders correctly 1`] = `
+<TextField
+  className="text-field"
+  customSize="small"
+  error={null}
+  errorText={null}
+  fullWidth={false}
+  id="testTextField"
+  leftIconStateful={true}
+  lineDirection="left"
+  onChange={[MockFunction]}
+  passwordIcon={
+    <FontIcon
+      iconClassName="material-icons"
+    >
+      remove_red_eye
+    </FontIcon>
+  }
+  placeholder=""
+  required={false}
+  rightIconStateful={true}
+  size={10}
+  type="text"
+  value="I don't work"
+/>
+`;
