@@ -189,39 +189,39 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-    #   - run:
-    #       name: Install Flynn CLI
-    #       command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
-    #   - run:
-    #       name: Add Flynn cluster
-    #       command: "~/flynn cluster add -p hSeBWhP7I5Q/C0nAXQ5L30fW1B956NurbxbQ/TQSXPI= staging dev-02.endpoint.network c6e549fcc2f7f2145db34a96c7baaab5"
-    #   - run:
-    #       name: Flynn ping
-    #       command: "~/flynn apps"
-    #   - run:
-    #       name: Download flynn cert
-    #       command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
-    #   - run:
-    #       name: Cert folder
-    #       command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
-    #   - run:
-    #       name: Move cert
-    #       command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
-    #   - run:
-    #       name: Restart docker
-    #       command: "sudo service docker restart"
-    #   - run:
-    #       name: Flynn set docker
-    #       command: "~/flynn docker set-push-url && ~/flynn docker login"
+      - run:
+          name: Install Flynn CLI
+          command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
+      - run:
+          name: Add Flynn cluster
+          command: "~/flynn cluster add -p hSeBWhP7I5Q/C0nAXQ5L30fW1B956NurbxbQ/TQSXPI= staging dev-02.endpoint.network c6e549fcc2f7f2145db34a96c7baaab5"
+      - run:
+          name: Flynn ping
+          command: "~/flynn apps"
+      - run:
+          name: Download flynn cert
+          command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
+      - run:
+          name: Cert folder
+          command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+      - run:
+          name: Move cert
+          command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+      - run:
+          name: Restart docker
+          command: "sudo service docker restart"
+      - run:
+          name: Flynn set docker
+          command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
           command: "docker build -t staging --build-arg NPM_KEY=$NPM_KEY -f ./packages/dapp/Dockerfile ."
-    #   - run:
-    #       name: Flynn push
-    #       command: "~/flynn -a dapp-staging docker push staging:latest"
-    #   - run:
-    #       name: Flynn scale
-    #       command: "~/flynn -a dapp-staging scale app=1"
+      - run:
+          name: Flynn push
+          command: "~/flynn -a dapp-staging docker push staging:latest"
+      - run:
+          name: Flynn scale
+          command: "~/flynn -a dapp-staging scale app=1"
       - run:
           name: Tag image with version
           command: |
@@ -265,39 +265,39 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-    #   - run:
-    #       name: Install Flynn CLI
-    #       command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
-    #   - run:
-    #       name: Add Flynn cluster
-    #       command: "~/flynn cluster add -p hSeBWhP7I5Q/C0nAXQ5L30fW1B956NurbxbQ/TQSXPI= staging dev-02.endpoint.network c6e549fcc2f7f2145db34a96c7baaab5"
-    #   - run:
-    #       name: Flynn ping
-    #       command: "~/flynn apps"
-    #   - run:
-    #       name: Download flynn cert
-    #       command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
-    #   - run:
-    #       name: Cert folder
-    #       command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
-    #   - run:
-    #       name: Move cert
-    #       command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
-    #   - run:
-    #       name: Restart docker
-    #       command: "sudo service docker restart"
-    #   - run:
-    #       name: Flynn set docker
-    #       command: "~/flynn docker set-push-url && ~/flynn docker login"
+      - run:
+          name: Install Flynn CLI
+          command: 'L=~/flynn && curl -sSL -A "`uname -sp`" https://dl.flynn.io/cli | zcat >$L && chmod +x $L'
+      - run:
+          name: Add Flynn cluster
+          command: "~/flynn cluster add -p hSeBWhP7I5Q/C0nAXQ5L30fW1B956NurbxbQ/TQSXPI= staging dev-02.endpoint.network c6e549fcc2f7f2145db34a96c7baaab5"
+      - run:
+          name: Flynn ping
+          command: "~/flynn apps"
+      - run:
+          name: Download flynn cert
+          command: "curl https://s3-eu-west-1.amazonaws.com/rigoblock/ca-cert.cer -o ca.crt"
+      - run:
+          name: Cert folder
+          command: "sudo mkdir -p /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+      - run:
+          name: Move cert
+          command: "sudo mv ca.crt /etc/docker/certs.d/docker.dev-02.endpoint.network/"
+      - run:
+          name: Restart docker
+          command: "sudo service docker restart"
+      - run:
+          name: Flynn set docker
+          command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
           command: "docker build -t storybook-staging --build-arg NPM_KEY=$NPM_KEY -f ./packages/dapp/Dockerfile.storybook ."
-    #   - run:
-    #       name: Flynn push
-    #       command: "~/flynn -a storybook-staging docker push storybook-staging:latest"
-    #   - run:
-    #       name: Flynn scale
-    #       command: "~/flynn -a storybook-staging scale app=1"
+      - run:
+          name: Flynn push
+          command: "~/flynn -a storybook-staging docker push storybook-staging:latest"
+      - run:
+          name: Flynn scale
+          command: "~/flynn -a storybook-staging scale app=1"
       - run:
           name: Tag image with version
           command: |
@@ -363,7 +363,7 @@ workflows:
             - test-feature-dapp
           filters:
             branches:
-              only: rancher
+              only: master
       - deploy-storybook-staging:
           requires:
             - test-unit-dapp
@@ -371,4 +371,4 @@ workflows:
             - test-feature-dapp
           filters:
             branches:
-              only: rancher
+              only: master
