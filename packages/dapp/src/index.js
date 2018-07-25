@@ -38,7 +38,10 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
-const init = () => store.dispatch(globalActions.init())
+const init = () => {
+  store.dispatch(globalActions.init())
+  return store
+}
 
 process.env.REACT_APP_TEST ? (window.init = init) : init()
 

@@ -4,6 +4,7 @@ import MaterialText from 'react-md/lib/TextFields'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+// TODO: figure out if we need to implement a label for future accessibility
 const TextField = ({
   id,
   type,
@@ -13,25 +14,22 @@ const TextField = ({
   size,
   input,
   meta
-}) => {
-  // TODO: figure out if we need to implement a label for future accessibility
-  return (
-    <MaterialText
-      id={id}
-      required={required}
-      customSize="small"
-      size={size}
-      fullWidth={fullWidth}
-      placeholder={placeholder}
-      value={input ? input.value : null}
-      onChange={input ? input.onChange : null}
-      error={meta ? meta.touched && !!meta.error : null}
-      errorText={meta ? meta.error : null}
-      type={type}
-      className="text-field"
-    />
-  )
-}
+}) => (
+  <MaterialText
+    id={id}
+    required={required}
+    customSize="small"
+    size={size}
+    fullWidth={fullWidth}
+    placeholder={placeholder}
+    value={input ? input.value : null}
+    onChange={input ? input.onChange : null}
+    error={meta ? meta.touched && !!meta.error : null}
+    errorText={meta ? meta.error : null}
+    type={type}
+    className="text-field"
+  />
+)
 
 TextField.propTypes = {
   id: PropTypes.string.isRequired,

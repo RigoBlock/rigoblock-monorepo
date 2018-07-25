@@ -27,7 +27,7 @@ storiesOf('Molecules/TextFieldWithTitle', module)
     <div
       style={{
         marginTop: '70px',
-        height: '100px',
+        height: '62px',
         background: 'white',
         width: '264px'
       }}
@@ -35,17 +35,33 @@ storiesOf('Molecules/TextFieldWithTitle', module)
       {story()}
     </div>
   ))
-  .add('default', () => <Component {...props} />)
-  .add('no Tooltip', () => <Component {...{ ...props, tooltip: '' }} />)
+  .add('default', () => (
+    <Component
+      {...props}
+      fieldProps={{
+        id: 'testTextField',
+        placeholder: text('text field placeholder', 'Click me')
+      }}
+    />
+  ))
+  .add('no Tooltip', () => (
+    <Component
+      {...props}
+      tooltip=""
+      fieldProps={{
+        id: 'testTextField',
+        placeholder: text('text field placeholder', 'Click me')
+      }}
+    />
+  ))
   .add('shorter textField', () => (
     <Component
-      {...{
-        ...props,
-        fieldProps: {
-          id: 'testTextField',
-          fullWidth: false,
-          size: text('text size', 15)
-        }
+      {...props}
+      fieldProps={{
+        id: 'testTextField',
+        fullWidth: false,
+        size: text('text size', 15),
+        placeholder: text('text field placeholder', 'Click me')
       }}
     />
   ))

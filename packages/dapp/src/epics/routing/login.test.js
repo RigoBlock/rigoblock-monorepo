@@ -18,9 +18,10 @@ describe('login Epic', () => {
       routing: { location: { pathname: ROUTES.LOGIN } }
     })
     const inputValues = {
-      a: blockChainActions.blockChainLogIn(
-        '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-      )
+      a: blockChainActions.blockChainLogIn({
+        provider: 'metamask',
+        account: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      })
     }
     const expectedValues = {
       b: routerActions.login()
@@ -47,9 +48,10 @@ describe('login Epic', () => {
       routing: { location: null }
     })
     const inputValues = {
-      a: blockChainActions.blockChainLogIn(
-        '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-      )
+      a: blockChainActions.blockChainLogIn({
+        provider: 'metamask',
+        account: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      })
     }
     const expectedValues = {
       b: routerActions.login()
@@ -75,9 +77,10 @@ describe('login Epic', () => {
       routing: { location: { pathname: ROUTES.DRAGOS } }
     })
     const inputValues = {
-      a: blockChainActions.blockChainLogIn(
-        '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-      )
+      a: blockChainActions.blockChainLogIn({
+        provider: 'metamask',
+        account: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      })
     }
     const expectedValues = {
       b: routerActions.login(ROUTES.DRAGOS)

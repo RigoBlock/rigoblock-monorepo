@@ -18,9 +18,15 @@ let VaultPanel = ({ vaults, transactions, location, userType }) => {
   if (!vaults || !vaultId) {
     return null
   }
-  const [vaultAddress, vaultData] = Object.entries(vaults)
+  const selectedVaultData = Object.entries(vaults)
     .filter(([, data]) => data.id.toString() === vaultId)
     .pop()
+
+  if (!selectedVaultData) {
+    return null
+  }
+
+  const [vaultAddress, vaultData] = selectedVaultData
   const vaultTransactions =
     transactions && transactions[vaultAddress]
       ? transactions[vaultAddress]
