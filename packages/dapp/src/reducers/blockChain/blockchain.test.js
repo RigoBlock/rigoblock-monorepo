@@ -33,7 +33,7 @@ describe('blockchain reducer', () => {
   it('adds an account to state on login action', () => {
     blockChainTest(
       undefined,
-      blockChainActions.blockChainLogIn(provider, owner),
+      blockChainActions.blockChainLogIn({ provider, account: owner }),
       {
         accounts: {
           [owner]: {
@@ -80,7 +80,10 @@ describe('blockchain reducer', () => {
         },
         totalBalance: new BigNumber('0')
       },
-      blockChainActions.blockChainLogIn('metamask', owner),
+      blockChainActions.blockChainLogIn({
+        provider,
+        account: owner
+      }),
       {
         accounts: {
           [owner]: {
@@ -125,10 +128,10 @@ describe('blockchain reducer', () => {
           }
         }
       },
-      blockChainActions.updateAccountBalance(
-        owner,
-        new BigNumber('90.999999999952600881')
-      ),
+      blockChainActions.updateAccountBalance({
+        account: owner,
+        balance: new BigNumber('90.999999999952600881')
+      }),
       {
         accounts: {
           [owner]: {

@@ -64,7 +64,11 @@ describe('registerVaults epic', () => {
       .mockReturnValueOnce(of(vaultData))
 
     const inputValues = {
-      a: blockChainActions.registerBlock(owner, VAULT, vaultEvent)
+      a: blockChainActions.registerBlock({
+        account: owner,
+        label: VAULT,
+        block: vaultEvent
+      })
     }
     const expectedValues = {
       b: vaultActions.registerVaultBlock({

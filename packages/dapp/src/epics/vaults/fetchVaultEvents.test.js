@@ -1,9 +1,11 @@
 import { ActionsObservable } from 'redux-observable'
 import { TestScheduler } from 'rxjs'
+import { VAULT } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
 import blockChainActions from '../../actions/blockchain-actions'
 
 describe('fetchVaultEventsEpic', () => {
+  const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const block = {
     address: '0x6dddcaede2071883c85c6e5781524985608d2460',
     args: {
@@ -49,27 +51,33 @@ describe('fetchVaultEventsEpic', () => {
     const lastBlock = 15
     getStateSpy.mockReturnValueOnce({
       preferences: {
-        currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+        currentAccount: owner
       },
       blockChain: {
         accounts: {
-          '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196': {
+          [owner]: {
             lastBlock
           }
         }
       }
     })
     fetchVaultEventsSpy.mockReturnValueOnce(
-      of(blockChainActions.registerBlock(block))
+      of(
+        blockChainActions.registerBlock({ account: owner, label: VAULT, block })
+      )
     )
     const inputValues = {
-      a: blockChainActions.blockChainLogIn(
-        'MetaMask/v4.6.1',
-        '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-      )
+      a: blockChainActions.blockChainLogIn({
+        provider: 'metamask',
+        account: owner
+      })
     }
     const expectedValues = {
-      b: blockChainActions.registerBlock(block)
+      b: blockChainActions.registerBlock({
+        account: owner,
+        label: VAULT,
+        block
+      })
     }
 
     const inputMarble = 'a'

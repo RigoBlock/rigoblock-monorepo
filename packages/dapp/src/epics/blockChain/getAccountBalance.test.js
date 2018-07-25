@@ -45,10 +45,16 @@ describe('getAccountBalanceEpic', () => {
   it('dispatches an updateAccountBalance action upon user login', () => {
     fromPromiseSpy.mockReturnValueOnce(of('25999999999952600000'))
     const inputValues = {
-      a: blockChainActions.blockChainLogIn('metamask', owner)
+      a: blockChainActions.blockChainLogIn({
+        provider: 'metamask',
+        account: owner
+      })
     }
     const expectedValues = {
-      b: blockChainActions.updateAccountBalance(owner, '25999999999952600000')
+      b: blockChainActions.updateAccountBalance({
+        account: owner,
+        balance: '25999999999952600000'
+      })
     }
 
     const inputMarble = 'a'
@@ -69,17 +75,20 @@ describe('getAccountBalanceEpic', () => {
 
   it('dispatches an updateAccountBalance action if we register a block which interests the current account', () => {
     fromPromiseSpy.mockReturnValueOnce(of('10000000000000000000'))
-    const inputAction = blockChainActions.registerBlock(
-      owner,
-      VAULT,
-      vaultEvent
-    )
+    const inputAction = blockChainActions.registerBlock({
+      account: owner,
+      label: VAULT,
+      block: vaultEvent
+    })
 
     const inputValues = {
       a: inputAction
     }
     const expectedValues = {
-      b: blockChainActions.updateAccountBalance(owner, '10000000000000000000')
+      b: blockChainActions.updateAccountBalance({
+        account: owner,
+        balance: '10000000000000000000'
+      })
     }
 
     const inputMarble = 'a'
@@ -106,17 +115,23 @@ describe('getAccountBalanceEpic', () => {
       .mockReturnValueOnce(of('10000000000000000000'))
       .mockReturnValueOnce(of('20000000000000000000'))
 
-    const inputAction = blockChainActions.registerBlock(
-      owner,
-      VAULT,
-      vaultEvent
-    )
+    const inputAction = blockChainActions.registerBlock({
+      account: owner,
+      label: VAULT,
+      block: vaultEvent
+    })
     const inputValues = {
       a: inputAction
     }
     const expectedValues = {
-      a: blockChainActions.updateAccountBalance(owner, '10000000000000000000'),
-      b: blockChainActions.updateAccountBalance(owner, '20000000000000000000')
+      a: blockChainActions.updateAccountBalance({
+        account: owner,
+        balance: '10000000000000000000'
+      }),
+      b: blockChainActions.updateAccountBalance({
+        account: owner,
+        balance: '20000000000000000000'
+      })
     }
 
     const inputMarble = 'a' + addTimeFrames(50) + 'aaaaa'
@@ -146,31 +161,37 @@ describe('getAccountBalanceEpic', () => {
       .mockReturnValueOnce(of('20000000000000000000'))
       .mockReturnValueOnce(of('25000000000000000000'))
 
-    const inputAction1 = blockChainActions.registerBlock(
-      owner,
-      VAULT,
-      vaultEvent
-    )
-    const inputAction2 = blockChainActions.registerBlock(
-      otherAccount,
-      VAULT,
-      vaultEvent
-    )
+    const inputAction1 = blockChainActions.registerBlock({
+      account: owner,
+      label: VAULT,
+      block: vaultEvent
+    })
+    const inputAction2 = blockChainActions.registerBlock({
+      account: otherAccount,
+      label: VAULT,
+      block: vaultEvent
+    })
     const inputValues = {
       a: inputAction1,
       b: inputAction2
     }
     const expectedValues = {
-      a: blockChainActions.updateAccountBalance(owner, '10000000000000000000'),
-      b: blockChainActions.updateAccountBalance(owner, '20000000000000000000'),
-      c: blockChainActions.updateAccountBalance(
-        otherAccount,
-        '15000000000000000000'
-      ),
-      d: blockChainActions.updateAccountBalance(
-        otherAccount,
-        '25000000000000000000'
-      )
+      a: blockChainActions.updateAccountBalance({
+        account: owner,
+        balance: '10000000000000000000'
+      }),
+      b: blockChainActions.updateAccountBalance({
+        account: owner,
+        balance: '20000000000000000000'
+      }),
+      c: blockChainActions.updateAccountBalance({
+        account: otherAccount,
+        balance: '15000000000000000000'
+      }),
+      d: blockChainActions.updateAccountBalance({
+        account: otherAccount,
+        balance: '25000000000000000000'
+      })
     }
 
     const inputMarble = '(ab)' + addTimeFrames(50) + 'aaaaabbbbb'
