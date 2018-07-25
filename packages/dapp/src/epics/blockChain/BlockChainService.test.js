@@ -137,7 +137,7 @@ describe('blockChain services function', () => {
 
         const expectedValues = {
           a: blockChainActions.blockChainInit(),
-          b: blockChainActions.blockChainError(testError.toString())
+          b: blockChainActions.blockChainError(testError.stack)
         }
 
         const expectedMarble = '(ab|)'
@@ -224,7 +224,7 @@ describe('blockChain services function', () => {
 
         const expectedValues = {
           a: blockChainActions.blockChainInit(),
-          b: blockChainActions.blockChainError(testError.toString())
+          b: blockChainActions.blockChainError(testError.stack)
         }
 
         const expectedMarble = '(ab)'
@@ -292,7 +292,7 @@ describe('blockChain services function', () => {
         }
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         const expectedValues = {
-          a: blockChainActions.blockChainError(fetchError.toString())
+          a: blockChainActions.blockChainError(fetchError.stack)
         }
 
         const expectedMarble = '(a|)'
@@ -366,7 +366,7 @@ describe('blockChain services function', () => {
         }
         fromPromiseSpy.mockReturnValueOnce(of(vaultEventful))
         const expectedValues = {
-          a: blockChainActions.blockChainError(fetchError.toString())
+          a: blockChainActions.blockChainError(fetchError.stack)
         }
 
         const expectedMarble = '(a|)'

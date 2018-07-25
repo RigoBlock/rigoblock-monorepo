@@ -30,7 +30,7 @@ class BlockChainService {
     return Observable.create(observer => {
       const onError = err => {
         if (err) {
-          observer.next(blockChainActions.blockChainError(err.toString()))
+          observer.next(blockChainActions.blockChainError(err.stack))
         }
       }
       this.api.engine.on('error', onError)
@@ -85,7 +85,7 @@ class BlockChainService {
 
   wrapError(action$) {
     return action$.catch(err =>
-      of(blockChainActions.blockChainError(err.toString()))
+      of(blockChainActions.blockChainError(err.stack))
     )
   }
 
