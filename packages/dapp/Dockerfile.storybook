@@ -2,8 +2,8 @@ FROM debian:stretch as builder
 
 WORKDIR /src
 
-RUN apt-get update
-RUN apt-get install wget sed build-essential git python -y
+RUN apt-get update \
+    && apt-get install wget sed build-essential git python -y
 
 ARG NPM_KEY
 ENV NVM_DIR /usr/local/nvm
@@ -39,6 +39,13 @@ RUN yarn storybook:build
 
 # setup nginx on alpine linux, copy dist-storybook folder onto nginx's folder
 FROM nginx:stable-alpine
+
+ARG NGINX_USERNAME
+ARG NGINX_PASSWORD
+
+# Set password
+RUN apk add --update apache2-utils && \
+    htpasswd -b -c /etc/nginx/.htpasswd $NGINX_USERNAME $NGINX_PASSWORD
 
 COPY --from=builder /src/dist-storybook /usr/share/nginx/html
 COPY packages/dapp/nginx.conf /etc/nginx/nginx.conf
