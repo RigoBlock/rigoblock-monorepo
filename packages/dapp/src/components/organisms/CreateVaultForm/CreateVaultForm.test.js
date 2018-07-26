@@ -1,6 +1,7 @@
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
 import React from 'react'
+import globalActions from '../../../actions/global-actions'
 import mockStore from '../../../fixtures/store'
 import toJson from 'enzyme-to-json'
 import vaultActions from '../../../actions/vault-actions'
@@ -53,7 +54,7 @@ describe('CreateVaultForm component', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })
 
-  it('fires the changePreferences action on submit', () => {
+  it('fires the createVault action on submit', () => {
     const wrapper = mount(
       <Provider store={store}>
         <CreateVaultForm />
@@ -64,5 +65,16 @@ describe('CreateVaultForm component', () => {
     expect(store.dispatch).toHaveBeenCalledWith(
       vaultActions.createVault(vaultData)
     )
+  })
+
+  fit('fires the closeModal action on cancel', () => {
+    const wrapper = mount(
+      <Provider store={store}>
+        <CreateVaultForm />
+      </Provider>
+    )
+    const button = wrapper.find('div.call-to-action button').at(0)
+    button.simulate('click')
+    expect(store.dispatch).toHaveBeenCalledWith(globalActions.closeModal())
   })
 })

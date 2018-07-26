@@ -1,6 +1,5 @@
 import './CreateVaultForm.scss'
 import { METAMASK } from '../../../constants/user'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import Button, { BUTTON_TYPES } from '../../atoms/Button'
@@ -11,6 +10,7 @@ import SelectFieldWithTitle from '../../molecules/SelectFieldWithTitle'
 import TextFieldWithTitle from '../../molecules/TextFieldWithTitle'
 import api from '../../../api'
 import get from 'lodash/get'
+import globalActions from '../../../actions/global-actions'
 import vaultActions from '../../../actions/vault-actions'
 
 const hideAccount = (accNumber, provider) => {
@@ -60,19 +60,15 @@ const asyncValidate = async values => {
   }
 }
 
-let CreateVaultForm = ({
-  accounts,
-  createVault,
-  formObject,
-  reset,
-  handleSubmit
-}) => {
+let CreateVaultForm = ({ accounts, formObject, dispatch, handleSubmit }) => {
   const hiddenAccounts = Object.entries(accounts).map(([accNumber, accData]) =>
     hideAccount(accNumber, accData.provider)
   )
   return (
     <form
-      onSubmit={handleSubmit(() => createVault(formObject.createVault.values))}
+      onSubmit={handleSubmit(() =>
+        dispatch(vaultActions.createVault(formObject.createVault.values))
+      )}
       className="create-vault-form"
     >
       <SelectFieldWithTitle
@@ -100,7 +96,9 @@ let CreateVaultForm = ({
         }}
       />
       <CallToAction>
-        <Button onClick={reset}>Cancel</Button>
+        <Button onClick={() => dispatch(globalActions.closeModal())}>
+          Cancel
+        </Button>
         <Button appearance={BUTTON_TYPES.INVERTED} type="submit">
           Create
         </Button>
@@ -111,9 +109,8 @@ let CreateVaultForm = ({
 
 CreateVaultForm.propTypes = {
   accounts: PropTypes.object.isRequired,
-  createVault: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   formObject: PropTypes.object.isRequired
 }
 
@@ -124,18 +121,15 @@ CreateVaultForm = reduxForm({
   enableReinitialize: true
 })(CreateVaultForm)
 
-CreateVaultForm = connect(
-  state => {
-    const currentAccount = get(state, 'preferences.currentAccount', null)
-    return {
-      formObject: state.form,
-      initialValues: {
-        accountNumber: currentAccount ? currentAccount : null
-      },
-      accounts: state.blockChain.accounts
-    }
-  },
-  dispatch => bindActionCreators(vaultActions, dispatch)
-)(CreateVaultForm)
+CreateVaultForm = connect(state => {
+  const currentAccount = get(state, 'preferences.currentAccount', null)
+  return {
+    formObject: state.form,
+    initialValues: {
+      accountNumber: currentAccount ? currentAccount : null
+    },
+    accounts: state.blockChain.accounts
+  }
+})(CreateVaultForm)
 
 export default CreateVaultForm

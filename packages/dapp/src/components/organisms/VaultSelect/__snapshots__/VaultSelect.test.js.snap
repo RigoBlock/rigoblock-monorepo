@@ -53,14 +53,8 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
     >
       <Connect(vaultSelect)>
         <vaultSelect
-          closeModal={[Function]}
-          init={[Function]}
+          dispatch={[MockFunction]}
           location="/vaults/0"
-          login={[Function]}
-          logout={[Function]}
-          navigateToVault={[Function]}
-          navigateToVaults={[Function]}
-          openModal={[Function]}
           userType="manager"
           vaults={null}
         >
@@ -186,14 +180,8 @@ exports[`VaultSelect component renders correctly 1`] = `
 >
   <Connect(vaultSelect)>
     <vaultSelect
-      closeModal={[Function]}
-      init={[Function]}
+      dispatch={[MockFunction]}
       location="/vaults/0"
-      login={[Function]}
-      logout={[Function]}
-      navigateToVault={[Function]}
-      navigateToVaults={[Function]}
-      openModal={[Function]}
       userType="manager"
       vaults={
         Object {
@@ -482,14 +470,8 @@ exports[`VaultSelect component renders correctly if there are no vaults on state
 >
   <Connect(vaultSelect)>
     <vaultSelect
-      closeModal={[Function]}
-      init={[Function]}
+      dispatch={[MockFunction]}
       location="/vaults"
-      login={[Function]}
-      logout={[Function]}
-      navigateToVault={[Function]}
-      navigateToVaults={[Function]}
-      openModal={[Function]}
       userType="manager"
       vaults={null}
     >

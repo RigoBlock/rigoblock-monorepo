@@ -3,7 +3,6 @@ import * as ROUTES from '../../../constants/routes'
 import { BigNumber } from 'bignumber.js'
 import { ETH_TO_WEI } from '../../../constants/utils'
 import { MANAGER } from '../../../constants/user'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Button, { BUTTON_TYPES } from '../../atoms/Button'
 import CreateVaultModal from '../CreateVaultModal'
@@ -16,21 +15,16 @@ import get from 'lodash/get'
 import globalActions from '../../../actions/global-actions'
 import routerActions from '../../../actions/router-actions'
 
-let vaultSelect = ({
-  vaults,
-  location,
-  userType,
-  openModal,
-  navigateToVault
-}) => {
+let vaultSelect = ({ vaults, location, userType, dispatch }) => {
   // TODO: remove this and implement a correct page
   const handleVaultClick = ({ target }) => {
     return location === `${ROUTES.VAULTS}/${target.id}`
       ? null
-      : navigateToVault(target.id)
+      : dispatch(routerActions.navigateToVault(target.id))
   }
 
-  const handleButtonClick = () => openModal(CreateVaultModal)
+  const handleButtonClick = () =>
+    dispatch(globalActions.openModal(CreateVaultModal))
 
   if (!vaults) {
     return userType === MANAGER ? (
@@ -75,8 +69,7 @@ let vaultSelect = ({
 
 vaultSelect.propTypes = {
   vaults: PropTypes.object,
-  openModal: PropTypes.func.isRequired,
-  navigateToVault: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   location: PropTypes.string.isRequired,
   userType: PropTypes.string.isRequired
 }
@@ -85,21 +78,15 @@ vaultSelect.defaultProps = {
   vaults: {}
 }
 
-vaultSelect = connect(
-  state => {
-    const { currentAccount } = state.preferences
-    return {
-      vaults:
-        currentAccount &&
-        get(state, `blockChain.accounts[${currentAccount}].vaults`, null),
-      location: state.routing.location.pathname,
-      userType: state.preferences.type
-    }
-  },
-  dispatch => ({
-    ...bindActionCreators(globalActions, dispatch),
-    ...bindActionCreators(routerActions, dispatch)
-  })
-)(vaultSelect)
+vaultSelect = connect(state => {
+  const { currentAccount } = state.preferences
+  return {
+    vaults:
+      currentAccount &&
+      get(state, `blockChain.accounts[${currentAccount}].vaults`, null),
+    location: state.routing.location.pathname,
+    userType: state.preferences.type
+  }
+})(vaultSelect)
 
 export default vaultSelect

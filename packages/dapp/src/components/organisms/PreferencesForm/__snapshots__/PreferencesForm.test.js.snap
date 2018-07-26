@@ -12,7 +12,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
 >
   <Connect(ReduxForm)>
     <ReduxForm
-      changePreferences={[Function]}
+      dispatch={[MockFunction]}
       formObject={
         Object {
           "preferences": Object {
@@ -35,8 +35,8 @@ exports[`PreferencesForm component renders correctly 1`] = `
       }
     >
       <Connect(Form(PreferencesForm))
-        changePreferences={[Function]}
         destroyOnUnmount={true}
+        dispatch={[MockFunction]}
         enableReinitialize={true}
         forceUnregisterOnUnmount={false}
         form="preferences"
@@ -102,7 +102,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
           autofill={[Function]}
           blur={[Function]}
           change={[Function]}
-          changePreferences={[Function]}
           clearAsyncError={[Function]}
           clearFields={[Function]}
           clearSubmit={[Function]}
@@ -199,7 +198,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
             autofill={[Function]}
             blur={[Function]}
             change={[Function]}
-            changePreferences={[Function]}
             clearAsyncError={[Function]}
             clearFields={[Function]}
             clearSubmit={[Function]}
@@ -392,7 +390,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           "autofill": [Function],
                           "blur": [Function],
                           "change": [Function],
-                          "changePreferences": [Function],
                           "clearAsyncError": [Function],
                           "clearFields": [Function],
                           "clearSubmit": [Function],
@@ -550,7 +547,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                             "autofill": [Function],
                             "blur": [Function],
                             "change": [Function],
-                            "changePreferences": [Function],
                             "clearAsyncError": [Function],
                             "clearFields": [Function],
                             "clearSubmit": [Function],
