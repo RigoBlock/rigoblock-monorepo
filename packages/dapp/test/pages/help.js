@@ -6,7 +6,7 @@ module.exports = {
   },
 
   navigateTo() {
-    I.amOnPage('/help')
+    I.navigateToUrl('/help')
   },
 
   assertImOnPage() {

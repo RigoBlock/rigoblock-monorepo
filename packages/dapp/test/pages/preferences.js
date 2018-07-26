@@ -6,7 +6,7 @@ module.exports = {
   },
 
   navigateTo() {
-    I.amOnPage('/preferences')
+    I.navigateToUrl('/preferences')
   },
 
   assertImOnPage() {
@@ -23,10 +23,7 @@ module.exports = {
     const timezoneOptions = 'ul[id="1-menu-options"]'
     I.cssClick('div[id="1-toggle"]')
     I.waitForVisible(timezoneOptions, 5)
-    I.executeScript(
-      el => (document.querySelector(el).style.overflow = 'visible'),
-      timezoneOptions
-    )
+    I.displayFullSelectField(timezoneOptions)
     I.cssClick(`div[data-value="${timezone}"]`)
   },
 

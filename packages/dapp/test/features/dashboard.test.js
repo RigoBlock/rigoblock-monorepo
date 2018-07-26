@@ -15,3 +15,11 @@ Scenario(
     dashboard.assertImOnPage()
   }
 )
+
+Scenario(
+  'account value is updated in real time when transactions are done',
+  async (dashboard, vaults) => {
+    await vaults.depositToVault('0', '32.18')
+    dashboard.assertAccountValue('32.64')
+  }
+)

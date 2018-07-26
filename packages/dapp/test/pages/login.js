@@ -5,6 +5,8 @@ module.exports = {
     I = require('../steps')()
   },
 
+  // login page doesn't use navigateToUrl, amOnPage will create
+  // a new page and remove the window.web3 inject
   navigateTo() {
     I.amOnPage('/login')
   },

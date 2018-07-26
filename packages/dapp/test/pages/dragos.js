@@ -8,7 +8,7 @@ module.exports = {
   },
 
   navigateTo() {
-    I.amOnPage('/dragos')
+    I.navigateToUrl('/dragos')
   },
 
   assertImOnPage() {

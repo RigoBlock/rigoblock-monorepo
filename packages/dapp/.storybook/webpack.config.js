@@ -1,6 +1,16 @@
+const path = require('path')
+
 module.exports = {
   module: {
     rules: [
+      {
+        test: /\.(js|jsx)$/,
+        include: path.resolve('../src'),
+        loader: require.resolve('babel-loader'),
+        options: {
+          cacheDirectory: true
+        }
+      },
       {
         test: /\.scss$|\.css/,
         use: [
