@@ -1,3 +1,4 @@
+import createVaultEpic from './createVault'
 import fetchVaultEvents from './fetchVaultEvents'
 import getVaultFees from './getVaultFees'
 import getVaultSupply from './getVaultSupply'
@@ -11,5 +12,6 @@ export default [
   getVaultSupply,
   getVaultTransactions,
   registerVaults,
-  watchVaultEvents
+  watchVaultEvents,
+  createVaultEpic
 ]

@@ -1,18 +1,18 @@
-import { INVESTOR } from '../../constants/user'
+import { MANAGER } from '../../constants/user'
 import blockChainActions from '../../actions/blockchain-actions'
 import preferencesReducer from './preferences'
 import userActions from '../../actions/user-actions'
 
 const initialState = {
   timezone: 'GMT +02:00',
-  type: INVESTOR,
+  type: MANAGER,
   currentAccount: null,
   provider: null
 }
 const account = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
 const provider = 'metamask'
 
-describe('user reducer', () => {
+describe('preferences reducer', () => {
   const preferencesTest = reducerTester(preferencesReducer)
 
   it('returns the initial state', () => {
@@ -27,7 +27,7 @@ describe('user reducer', () => {
       }),
       {
         timezone: 'GMT +05:45',
-        type: INVESTOR,
+        type: MANAGER,
         currentAccount: null,
         provider: null
       }
@@ -39,7 +39,7 @@ describe('user reducer', () => {
       blockChainActions.blockChainLogIn({ provider, account }),
       {
         timezone: 'GMT +02:00',
-        type: INVESTOR,
+        type: MANAGER,
         currentAccount: account,
         provider
       }
@@ -50,7 +50,7 @@ describe('user reducer', () => {
     preferencesTest(
       {
         timezone: 'GMT +02:00',
-        type: INVESTOR,
+        type: MANAGER,
         currentAccount: account,
         provider
       },

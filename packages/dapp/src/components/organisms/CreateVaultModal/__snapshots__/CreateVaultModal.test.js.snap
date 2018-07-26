@@ -204,6 +204,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                     registerVault={[Function]}
                     registerVaultBlock={[Function]}
                     updateVaultData={[Function]}
+                    vaultCreated={[Function]}
                   >
                     <Connect(Form(CreateVaultForm))
                       accounts={
@@ -305,6 +306,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                       updateUnregisteredFields={false}
                       updateVaultData={[Function]}
                       validate={[Function]}
+                      vaultCreated={[Function]}
                     >
                       <Form(CreateVaultForm)
                         accounts={
@@ -530,6 +532,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                             "vaultSymbol": "VLT",
                           }
                         }
+                        vaultCreated={[Function]}
                       >
                         <CreateVaultForm
                           accounts={
@@ -712,6 +715,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                           updateVaultData={[Function]}
                           valid={true}
                           validate={[Function]}
+                          vaultCreated={[Function]}
                         >
                           <form
                             className="create-vault-form"
@@ -1036,6 +1040,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "vaultName": "New Vault",
                                           "vaultSymbol": "VLT",
                                         },
+                                        "vaultCreated": [Function],
                                         "warning": undefined,
                                       }
                                     }
@@ -1283,6 +1288,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             "vaultName": "New Vault",
                                             "vaultSymbol": "VLT",
                                           },
+                                          "vaultCreated": [Function],
                                           "warning": undefined,
                                         }
                                       }
@@ -2165,6 +2171,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "vaultName": "New Vault",
                                           "vaultSymbol": "VLT",
                                         },
+                                        "vaultCreated": [Function],
                                         "warning": undefined,
                                       }
                                     }
@@ -2396,6 +2403,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             "vaultName": "New Vault",
                                             "vaultSymbol": "VLT",
                                           },
+                                          "vaultCreated": [Function],
                                           "warning": undefined,
                                         }
                                       }
@@ -2911,6 +2919,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "vaultName": "New Vault",
                                           "vaultSymbol": "VLT",
                                         },
+                                        "vaultCreated": [Function],
                                         "warning": undefined,
                                       }
                                     }
@@ -3145,6 +3154,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             "vaultName": "New Vault",
                                             "vaultSymbol": "VLT",
                                           },
+                                          "vaultCreated": [Function],
                                           "warning": undefined,
                                         }
                                       }

@@ -6,7 +6,13 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
     Object {
       "dispatch": [MockFunction],
       "getState": [Function],
-      "subscribe": [MockFunction],
+      "subscribe": [MockFunction] {
+        "calls": Array [
+          Array [
+            [Function],
+          ],
+        ],
+      },
     }
   }
 >
@@ -47,15 +53,114 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
     >
       <Connect(vaultSelect)>
         <vaultSelect
-          dispatch={[MockFunction]}
+          closeModal={[Function]}
+          init={[Function]}
           location="/vaults/0"
+          login={[Function]}
+          logout={[Function]}
+          navigateToVault={[Function]}
+          navigateToVaults={[Function]}
+          openModal={[Function]}
+          userType="manager"
           vaults={null}
         >
-          <div
-            className="vault-select"
+          <Button
+            appearance="inverted"
+            onClick={[Function]}
+            type="button"
           >
-            Nothing here!
-          </div>
+            <withInk(withTooltip(Button))
+              className="inverted-button"
+              flat={true}
+              inkTransitionEnterTimeout={450}
+              inkTransitionLeaveTimeout={300}
+              inkTransitionOverlap={150}
+              onClick={[Function]}
+              primary={true}
+              swapTheming={true}
+              type="button"
+            >
+              <withTooltip(Button)
+                className="inverted-button"
+                flat={true}
+                ink={
+                  <InkContainer
+                    className={undefined}
+                    disabledInteractions={undefined}
+                    inkClassName={undefined}
+                    inkStyle={undefined}
+                    pulse={undefined}
+                    style={undefined}
+                    transitionEnterTimeout={450}
+                    transitionLeaveTimeout={300}
+                    transitionOverlap={150}
+                    waitForInkTransition={undefined}
+                  />
+                }
+                onClick={[Function]}
+                primary={true}
+                swapTheming={true}
+                type="button"
+              >
+                <Button
+                  className="inverted-button"
+                  fixedPosition="br"
+                  flat={true}
+                  iconBefore={true}
+                  ink={
+                    <InkContainer
+                      className={undefined}
+                      disabledInteractions={undefined}
+                      inkClassName={undefined}
+                      inkStyle={undefined}
+                      pulse={undefined}
+                      style={undefined}
+                      transitionEnterTimeout={450}
+                      transitionLeaveTimeout={300}
+                      transitionOverlap={150}
+                      waitForInkTransition={undefined}
+                    />
+                  }
+                  onClick={[Function]}
+                  primary={true}
+                  swapTheming={true}
+                  type="button"
+                >
+                  <button
+                    className="md-btn md-btn--flat md-btn--text md-pointer--hover md-background--primary md-background--primary-hover md-inline-block inverted-button"
+                    onClick={[Function]}
+                    onKeyDown={[Function]}
+                    onKeyUp={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
+                    onMouseUp={[Function]}
+                    onTouchEnd={[Function]}
+                    onTouchStart={[Function]}
+                    type="button"
+                  >
+                    <InkContainer
+                      key="ink-container"
+                      transitionEnterTimeout={450}
+                      transitionLeaveTimeout={300}
+                      transitionOverlap={150}
+                    >
+                      <TransitionGroup
+                        childFactory={[Function]}
+                        className="md-ink-container"
+                        component="div"
+                      >
+                        <div
+                          className="md-ink-container"
+                        />
+                      </TransitionGroup>
+                    </InkContainer>
+                    New Vault
+                  </button>
+                </Button>
+              </withTooltip(Button)>
+            </withInk(withTooltip(Button))>
+          </Button>
         </vaultSelect>
       </Connect(vaultSelect)>
     </Router>
@@ -69,14 +174,27 @@ exports[`VaultSelect component renders correctly 1`] = `
     Object {
       "dispatch": [MockFunction],
       "getState": [Function],
-      "subscribe": [MockFunction],
+      "subscribe": [MockFunction] {
+        "calls": Array [
+          Array [
+            [Function],
+          ],
+        ],
+      },
     }
   }
 >
   <Connect(vaultSelect)>
     <vaultSelect
-      dispatch={[MockFunction]}
+      closeModal={[Function]}
+      init={[Function]}
       location="/vaults/0"
+      login={[Function]}
+      logout={[Function]}
+      navigateToVault={[Function]}
+      navigateToVaults={[Function]}
+      openModal={[Function]}
+      userType="manager"
       vaults={
         Object {
           "0x421e1cef6e85e78da2470e54af64a626f45afb85": Object {
@@ -100,146 +218,247 @@ exports[`VaultSelect component renders correctly 1`] = `
         }
       }
     >
-      <List
-        Component={[Function]}
-        Divider={null}
+      <div
         className="vault-select"
-        data={
-          Array [
-            Object {
-              "className": "active",
-              "id": "0",
-              "itemName": "First Vault",
-              "itemSymbol": "asd",
-              "itemValue": "28.64",
-              "onClick": [Function],
-            },
-            Object {
-              "className": "",
-              "id": "1",
-              "itemName": "Third Vault",
-              "itemSymbol": "das",
-              "itemValue": "21.34317",
-              "onClick": [Function],
-            },
-          ]
-        }
       >
-        <div
-          className="vault-select"
+        <Button
+          appearance="inverted"
+          onClick={[Function]}
+          type="button"
         >
-          <ListItem
-            className="active"
-            currencyGrowth={null}
-            growth={null}
-            id={"0"}
-            itemName="First Vault"
-            itemSymbol="asd"
-            itemValue={"28.64"}
-            key="0"
+          <withInk(withTooltip(Button))
+            className="inverted-button"
+            flat={true}
+            inkTransitionEnterTimeout={450}
+            inkTransitionLeaveTimeout={300}
+            inkTransitionOverlap={150}
             onClick={[Function]}
+            primary={true}
+            swapTheming={true}
+            type="button"
           >
-            <div
-              className="list-item active"
+            <withTooltip(Button)
+              className="inverted-button"
+              flat={true}
+              ink={
+                <InkContainer
+                  className={undefined}
+                  disabledInteractions={undefined}
+                  inkClassName={undefined}
+                  inkStyle={undefined}
+                  pulse={undefined}
+                  style={undefined}
+                  transitionEnterTimeout={450}
+                  transitionLeaveTimeout={300}
+                  transitionOverlap={150}
+                  waitForInkTransition={undefined}
+                />
+              }
+              onClick={[Function]}
+              primary={true}
+              swapTheming={true}
+              type="button"
+            >
+              <Button
+                className="inverted-button"
+                fixedPosition="br"
+                flat={true}
+                iconBefore={true}
+                ink={
+                  <InkContainer
+                    className={undefined}
+                    disabledInteractions={undefined}
+                    inkClassName={undefined}
+                    inkStyle={undefined}
+                    pulse={undefined}
+                    style={undefined}
+                    transitionEnterTimeout={450}
+                    transitionLeaveTimeout={300}
+                    transitionOverlap={150}
+                    waitForInkTransition={undefined}
+                  />
+                }
+                onClick={[Function]}
+                primary={true}
+                swapTheming={true}
+                type="button"
+              >
+                <button
+                  className="md-btn md-btn--flat md-btn--text md-pointer--hover md-background--primary md-background--primary-hover md-inline-block inverted-button"
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  onMouseUp={[Function]}
+                  onTouchEnd={[Function]}
+                  onTouchStart={[Function]}
+                  type="button"
+                >
+                  <InkContainer
+                    key="ink-container"
+                    transitionEnterTimeout={450}
+                    transitionLeaveTimeout={300}
+                    transitionOverlap={150}
+                  >
+                    <TransitionGroup
+                      childFactory={[Function]}
+                      className="md-ink-container"
+                      component="div"
+                    >
+                      <div
+                        className="md-ink-container"
+                      />
+                    </TransitionGroup>
+                  </InkContainer>
+                  New Vault
+                </button>
+              </Button>
+            </withTooltip(Button)>
+          </withInk(withTooltip(Button))>
+        </Button>
+        <List
+          Component={[Function]}
+          Divider={null}
+          className={null}
+          data={
+            Array [
+              Object {
+                "className": "active",
+                "id": "0",
+                "itemName": "First Vault",
+                "itemSymbol": "asd",
+                "itemValue": "28.64",
+                "onClick": [Function],
+              },
+              Object {
+                "className": "",
+                "id": "1",
+                "itemName": "Third Vault",
+                "itemSymbol": "das",
+                "itemValue": "21.34317",
+                "onClick": [Function],
+              },
+            ]
+          }
+        >
+          <div
+            className={null}
+          >
+            <ListItem
+              className="active"
+              currencyGrowth={null}
+              growth={null}
               id={"0"}
+              itemName="First Vault"
+              itemSymbol="asd"
+              itemValue={"28.64"}
+              key="0"
               onClick={[Function]}
             >
-              <ItemName
-                name="First Vault"
-                symbol="asd"
+              <div
+                className="list-item active"
+                id={"0"}
+                onClick={[Function]}
               >
-                <div
-                  className="no-events"
+                <ItemName
+                  name="First Vault"
+                  symbol="asd"
                 >
-                  <span
-                    className="item-symbol"
+                  <div
+                    className="no-events"
                   >
-                    asd
-                  </span>
-                  <span
-                    className="item-name"
-                  >
-                    First Vault
-                  </span>
-                </div>
-              </ItemName>
-              <ItemValue
-                currency="ETH"
-                currencyGrowth={null}
-                growth={null}
-                itemValue={"28.64"}
-                precision={2}
-                valueSize="large"
-              >
-                <div
-                  className="no-events"
+                    <span
+                      className="item-symbol"
+                    >
+                      asd
+                    </span>
+                    <span
+                      className="item-name"
+                    >
+                      First Vault
+                    </span>
+                  </div>
+                </ItemName>
+                <ItemValue
+                  currency="ETH"
+                  currencyGrowth={null}
+                  growth={null}
+                  itemValue={"28.64"}
+                  precision={2}
+                  valueSize="large"
                 >
-                  <span
-                    className="item-value large"
+                  <div
+                    className="no-events"
                   >
-                    28.64
-                  </span>
-                </div>
-              </ItemValue>
-            </div>
-          </ListItem>
-          <ListItem
-            className=""
-            currencyGrowth={null}
-            growth={null}
-            id={"1"}
-            itemName="Third Vault"
-            itemSymbol="das"
-            itemValue={"21.34317"}
-            key="1"
-            onClick={[Function]}
-          >
-            <div
-              className="list-item"
+                    <span
+                      className="item-value large"
+                    >
+                      28.64
+                    </span>
+                  </div>
+                </ItemValue>
+              </div>
+            </ListItem>
+            <ListItem
+              className=""
+              currencyGrowth={null}
+              growth={null}
               id={"1"}
+              itemName="Third Vault"
+              itemSymbol="das"
+              itemValue={"21.34317"}
+              key="1"
               onClick={[Function]}
             >
-              <ItemName
-                name="Third Vault"
-                symbol="das"
+              <div
+                className="list-item"
+                id={"1"}
+                onClick={[Function]}
               >
-                <div
-                  className="no-events"
+                <ItemName
+                  name="Third Vault"
+                  symbol="das"
                 >
-                  <span
-                    className="item-symbol"
+                  <div
+                    className="no-events"
                   >
-                    das
-                  </span>
-                  <span
-                    className="item-name"
-                  >
-                    Third Vault
-                  </span>
-                </div>
-              </ItemName>
-              <ItemValue
-                currency="ETH"
-                currencyGrowth={null}
-                growth={null}
-                itemValue={"21.34317"}
-                precision={2}
-                valueSize="large"
-              >
-                <div
-                  className="no-events"
+                    <span
+                      className="item-symbol"
+                    >
+                      das
+                    </span>
+                    <span
+                      className="item-name"
+                    >
+                      Third Vault
+                    </span>
+                  </div>
+                </ItemName>
+                <ItemValue
+                  currency="ETH"
+                  currencyGrowth={null}
+                  growth={null}
+                  itemValue={"21.34317"}
+                  precision={2}
+                  valueSize="large"
                 >
-                  <span
-                    className="item-value large"
+                  <div
+                    className="no-events"
                   >
-                    21.34
-                  </span>
-                </div>
-              </ItemValue>
-            </div>
-          </ListItem>
-        </div>
-      </List>
+                    <span
+                      className="item-value large"
+                    >
+                      21.34
+                    </span>
+                  </div>
+                </ItemValue>
+              </div>
+            </ListItem>
+          </div>
+        </List>
+      </div>
     </vaultSelect>
   </Connect(vaultSelect)>
 </Provider>
@@ -251,21 +470,126 @@ exports[`VaultSelect component renders correctly if there are no vaults on state
     Object {
       "dispatch": [MockFunction],
       "getState": [Function],
-      "subscribe": [MockFunction],
+      "subscribe": [MockFunction] {
+        "calls": Array [
+          Array [
+            [Function],
+          ],
+        ],
+      },
     }
   }
 >
   <Connect(vaultSelect)>
     <vaultSelect
-      dispatch={[MockFunction]}
+      closeModal={[Function]}
+      init={[Function]}
       location="/vaults"
+      login={[Function]}
+      logout={[Function]}
+      navigateToVault={[Function]}
+      navigateToVaults={[Function]}
+      openModal={[Function]}
+      userType="manager"
       vaults={null}
     >
-      <div
-        className="vault-select"
+      <Button
+        appearance="inverted"
+        onClick={[Function]}
+        type="button"
       >
-        Nothing here!
-      </div>
+        <withInk(withTooltip(Button))
+          className="inverted-button"
+          flat={true}
+          inkTransitionEnterTimeout={450}
+          inkTransitionLeaveTimeout={300}
+          inkTransitionOverlap={150}
+          onClick={[Function]}
+          primary={true}
+          swapTheming={true}
+          type="button"
+        >
+          <withTooltip(Button)
+            className="inverted-button"
+            flat={true}
+            ink={
+              <InkContainer
+                className={undefined}
+                disabledInteractions={undefined}
+                inkClassName={undefined}
+                inkStyle={undefined}
+                pulse={undefined}
+                style={undefined}
+                transitionEnterTimeout={450}
+                transitionLeaveTimeout={300}
+                transitionOverlap={150}
+                waitForInkTransition={undefined}
+              />
+            }
+            onClick={[Function]}
+            primary={true}
+            swapTheming={true}
+            type="button"
+          >
+            <Button
+              className="inverted-button"
+              fixedPosition="br"
+              flat={true}
+              iconBefore={true}
+              ink={
+                <InkContainer
+                  className={undefined}
+                  disabledInteractions={undefined}
+                  inkClassName={undefined}
+                  inkStyle={undefined}
+                  pulse={undefined}
+                  style={undefined}
+                  transitionEnterTimeout={450}
+                  transitionLeaveTimeout={300}
+                  transitionOverlap={150}
+                  waitForInkTransition={undefined}
+                />
+              }
+              onClick={[Function]}
+              primary={true}
+              swapTheming={true}
+              type="button"
+            >
+              <button
+                className="md-btn md-btn--flat md-btn--text md-pointer--hover md-background--primary md-background--primary-hover md-inline-block inverted-button"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
+                type="button"
+              >
+                <InkContainer
+                  key="ink-container"
+                  transitionEnterTimeout={450}
+                  transitionLeaveTimeout={300}
+                  transitionOverlap={150}
+                >
+                  <TransitionGroup
+                    childFactory={[Function]}
+                    className="md-ink-container"
+                    component="div"
+                  >
+                    <div
+                      className="md-ink-container"
+                    />
+                  </TransitionGroup>
+                </InkContainer>
+                New Vault
+              </button>
+            </Button>
+          </withTooltip(Button)>
+        </withInk(withTooltip(Button))>
+      </Button>
     </vaultSelect>
   </Connect(vaultSelect)>
 </Provider>

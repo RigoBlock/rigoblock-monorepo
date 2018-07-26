@@ -8,7 +8,9 @@ exports[`Modal component renders correctly 1`] = `
   <div
     className="modal-content"
   >
-    <dummyComp />
+    <div>
+       hello
+    </div>
   </div>
 </div>
 `;

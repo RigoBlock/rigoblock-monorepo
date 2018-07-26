@@ -1,6 +1,10 @@
 import { FORM, PERSIST } from '../constants/actions'
 
 export default ({ getState }) => next => action => {
+  if (typeof action === 'string') {
+    console.log('HREEEEEE', action)
+    return next(action)
+  }
   const regexp = new RegExp('^' + PERSIST + '|^' + FORM)
   if (regexp.test(action.type)) {
     return next(action)
