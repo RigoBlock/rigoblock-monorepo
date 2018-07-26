@@ -33,10 +33,12 @@ let vaultSelect = ({
   const handleButtonClick = () => openModal(CreateVaultModal)
 
   if (!vaults) {
-    return (
+    return userType === MANAGER ? (
       <Button appearance={BUTTON_TYPES.INVERTED} onClick={handleButtonClick}>
         New Vault
       </Button>
+    ) : (
+      <div>Nothing here!</div>
     )
   }
 
