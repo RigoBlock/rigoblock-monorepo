@@ -2,8 +2,9 @@ import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/mergeMap'
+import 'rxjs/add/operator/switchMap'
+import { CREATE_VAULT } from '../../constants/transaction-types'
 import { Scheduler } from 'rxjs/Scheduler'
-import { empty } from 'rxjs/observable/empty'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { merge } from 'rxjs/observable/merge'
 import { of } from 'rxjs/observable/of'
@@ -16,7 +17,7 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
     ({ type }) => type === vaultActions.createVault.getType()
   )
   const action$1 = source.mapTo(
-    blockChainActions.transactionInProgress('Create Vault')
+    blockChainActions.transactionInProgress(CREATE_VAULT)
   )
 
   const action$2 = source.mergeMap(
@@ -27,21 +28,18 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
           api.contract.VaultFactory.address
         ),
         ts
-      ).mergeMap(vaultFactory => {
-        return of(vaultFactory)
+      ).switchMap(vaultFactory =>
+        of(vaultFactory)
           .mergeMap(() =>
             fromPromise(
               vaultFactory
                 .createVaultTx(vaultName, vaultSymbol)
                 .send({ from: accountNumber, gasPrice: 1, gas: 6654755 }),
               ts
-            ).map(txHash => {
-              console.log('hereeee')
-              return blockChainActions.transactionCompleted(txHash)
-            })
+            ).map(txHash => blockChainActions.transactionCompleted(txHash))
           )
-          .catch(() => empty())
-      })
+          .catch(e => of(blockChainActions.transactionFailed(e.toString())))
+      )
   )
 
   return merge(action$1, action$2)
