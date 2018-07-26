@@ -36,7 +36,12 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
                 .createVaultTx(vaultName, vaultSymbol)
                 .send({ from: accountNumber, gasPrice: 1, gas: 6654755 }),
               ts
-            ).map(txHash => blockChainActions.transactionCompleted(txHash))
+            ).map(txHash =>
+              blockChainActions.transactionCompleted({
+                type: CREATE_VAULT,
+                txHash
+              })
+            )
           )
           .catch(e => of(blockChainActions.transactionFailed(e.toString())))
       )

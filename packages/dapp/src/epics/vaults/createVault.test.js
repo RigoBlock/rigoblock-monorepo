@@ -1,4 +1,5 @@
 import { ActionsObservable } from 'redux-observable'
+import { CREATE_VAULT } from '../../constants/transaction-types'
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable'
 import { TestScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
@@ -65,7 +66,7 @@ describe('createVault Epic', () => {
     }
     const expectedValues = {
       b: blockChainActions.transactionInProgress('Create Vault'),
-      c: blockchainActions.transactionCompleted(txHash)
+      c: blockchainActions.transactionCompleted({ type: CREATE_VAULT, txHash })
     }
 
     const inputMarble = 'a'
