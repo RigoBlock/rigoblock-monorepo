@@ -11,7 +11,7 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/preferences', 5)
-    I.waitForText('Preferences', 5, 'h1')
+    I.waitForText('Preferences', 5, 'div.page-main-content h1')
   },
 
   async grabTimezoneValue() {

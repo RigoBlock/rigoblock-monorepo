@@ -13,6 +13,6 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/login', 5)
-    I.waitForText('Hello there!', 5, 'h1')
+    I.waitForText('Hello there!', 5, 'div.page-main-content h1')
   }
 }
