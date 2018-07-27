@@ -24,7 +24,6 @@ const config = {
     vaults: './test/pages/vaults.js',
     dragos: './test/pages/dragos.js'
   },
-  // grep: 'Login',
   mocha: {},
   bootstrap: false,
   teardown: null,
