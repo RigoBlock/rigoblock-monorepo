@@ -67,7 +67,7 @@ describe('CreateVaultForm component', () => {
     )
   })
 
-  fit('fires the closeModal action on cancel', () => {
+  it('fires the closeModal action on cancel', () => {
     const wrapper = mount(
       <Provider store={store}>
         <CreateVaultForm />
