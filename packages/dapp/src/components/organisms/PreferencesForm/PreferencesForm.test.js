@@ -6,7 +6,21 @@ import mockStore from '../../../fixtures/store'
 import toJson from 'enzyme-to-json'
 import userActions from '../../../actions/user-actions'
 
-const store = mockStore({ mockFn: jest.fn })
+const store = mockStore({
+  mockFn: jest.fn,
+  optionalState: {
+    form: {
+      preferences: {
+        values: {
+          timezone: '+02:00'
+        },
+        initial: {
+          timezone: '+02:00'
+        }
+      }
+    }
+  }
+})
 
 const wrapper = mount(
   <Provider store={store}>

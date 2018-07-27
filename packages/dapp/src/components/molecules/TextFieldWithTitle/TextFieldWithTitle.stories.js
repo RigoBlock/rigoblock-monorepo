@@ -12,7 +12,10 @@ const store = mockStore()
 const props = {
   tooltip: 'Name must be long max 30 characters',
   title: 'Vault name',
-  fieldName: 'vaultName'
+  fieldName: 'vaultName',
+  fieldProps: {
+    id: 'testTextField'
+  }
 }
 
 const Component = reduxForm({ form: 'storyForm' })(TextFieldWithTitle)

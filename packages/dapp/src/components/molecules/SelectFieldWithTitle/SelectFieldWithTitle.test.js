@@ -13,7 +13,7 @@ const props = {
   title: 'Pay [mining] fees with',
   fieldName: 'accountList',
   fieldProps: {
-    id: 1,
+    id: '1',
     items: [
       'MetaMask **** 1604',
       'MetaMask **** 1605',
