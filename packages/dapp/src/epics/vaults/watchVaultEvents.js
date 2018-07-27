@@ -1,3 +1,4 @@
+import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/takeUntil'
@@ -22,7 +23,7 @@ const getFirstUnfetchedBlock = store => {
   const state = store.getState()
   const account = state.preferences.currentAccount
   return state.blockChain.accounts[account].lastBlock
-    ? state.blockChain.accounts[account].lastBlock + 1
+    ? state.blockChain.accounts[account].lastBlock
     : null
 }
 
