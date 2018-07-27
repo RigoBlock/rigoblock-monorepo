@@ -1,0 +1,16 @@
+@import "../../_settings/variables.scss";
+
+.tab {
+  max-width: 9.25 * $dist-l;
+  background: $secondary-bg-color;
+
+  .tab-header, .tab-content {
+    padding: $dist-s;
+  }
+
+  .tab-divider {
+    background: $dark-grey;
+    height: 1px;
+  }
+}
+
