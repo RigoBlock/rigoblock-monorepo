@@ -11,6 +11,6 @@ module.exports = {
 
   assertImOnPage() {
     I.waitInUrl('/help', 5)
-    I.waitForText('Help', 'h1')
+    I.waitForText('Help', 5, 'h1')
   }
 }
