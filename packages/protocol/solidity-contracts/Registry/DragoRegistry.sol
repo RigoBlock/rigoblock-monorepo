@@ -23,9 +23,13 @@ import { Owned } from "../utils/Owned/Owned.sol";
 import { DragoRegistryFace } from "../Registry/DragoRegistryFace.sol";
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 
+import { LibSanitize } from "../utils/LibSanitize/LibSanitize.sol";
+
 /// @title Drago Registry - Allows registration of pools.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract DragoRegistry is DragoRegistryFace, Owned {
+    
+    using LibSanitize for bool;
 
     address public AUTHORITY;
     uint256 public VERSION;
@@ -88,6 +92,16 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         require(mapFromName[_name] == 0);
         _;
     }
+    
+    modifier whenLowercase(string _name) {
+        require(LibSanitize.isLowercase(_name));
+        _;
+    }
+    
+    modifier whenSanitized(string _input) {
+        require(LibSanitize.isValidCheck(_input));
+        _;
+    }
 
     modifier whenHasName(string _name) {
         require(mapFromName[_name] != 0);
@@ -123,6 +137,9 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         onlyAuthority
         whenFeePaid
         whenAddressFree(_drago)
+        whenLowercase(_name)
+        whenSanitized(_name)
+        whenSanitized(_symbol)
         whenNameFree(_name)
         whenIsSymbol(_symbol)
         returns (bool)
