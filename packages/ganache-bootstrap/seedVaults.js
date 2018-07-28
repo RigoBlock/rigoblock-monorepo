@@ -5,7 +5,7 @@ const logger = require('./logger')
 module.exports = async network => {
   let receipt
   const defaultOptions = {
-    gas: 4700000 // TODO: estimate gas
+    gas: 5700000 // TODO: estimate gas
   }
   const web3 = new Web3(new Web3.providers.HttpProvider(network))
   const networkId = await web3.eth.net.getId()
