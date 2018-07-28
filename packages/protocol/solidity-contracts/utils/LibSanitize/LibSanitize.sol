@@ -45,12 +45,12 @@ library LibSanitize {
         pure
         returns (bool)
     {
-		uint length =  bytes(_str).length;
+        uint length =  bytes(_str).length;
         require(length >= 4 && length <= 50);
-		for (uint i = 0; i < length; i++) {
-		    bytes1 d = bytes(_str)[i];
-			require (d[i] <65 || d[i] > 90); // exclude uppercase characters
-		}
-		return true;
-	}
+        for (uint i = 0; i < length; i++) {
+            bytes1 d = bytes(_str)[i];
+            require (d[i] <65 || d[i] > 90); // exclude uppercase characters
+        }
+        return true;
+    }
 }
