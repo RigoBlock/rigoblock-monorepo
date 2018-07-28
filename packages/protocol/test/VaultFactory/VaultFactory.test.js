@@ -4,17 +4,38 @@ describeContract(contractName, () => {
   describe('createVault', () => {
     it('creates a vault when provided with proper parameters', async () => {
       const txHash = await baseContracts[contractName].createVault(
-        'test name',
+        'testname',
         'NAM'
       )
       expect(txHash).toBeHash()
     })
 
+    it('throws an error when provided with space parameters', async () => {
+      const txHash = await baseContracts[contractName].createVault(
+        'test name',
+        'NAM'
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
+
+    it('throws an error when provided name uppercase parameters', async () => {
+      const txHash = await baseContracts[contractName].createVault(
+        'testName',
+        'NAM'
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
+
+    it('throws an error when provided special ascii parameters', async () => {
+      const txHash = await baseContracts[contractName].createVault(
+        'test+name',
+        'NAM'
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
+
     it('throws an error when provided with the same name', async () => {
-      await baseContracts[contractName].createVault('same name', 'TE1')
+      await baseContracts[contractName].createVault('samename', 'TE1')
 
       await expect(
-        baseContracts[contractName].createVault('same name', 'TE2')
+        baseContracts[contractName].createVault('samename', 'TE2')
       ).rejects.toThrowErrorMatchingSnapshot()
     })
 
