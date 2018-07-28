@@ -23,34 +23,46 @@ pragma experimental "v0.5.0";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 library LibSanitize {
 
-    function isValidCheck(string _str)
+    function isValidCheck(string str)
         internal
         pure
         returns (bool)
     {
-        uint length =  bytes(_str).length;
-        require(length >= 4 && length <= 50);
-        for (uint i =0; i< length; i++) {
-            bytes1 c = bytes(_str)[i];
-            require ((c >= 48 &&  c <= 122 && (c <= 57 || c >= 65) && (c <= 90 || c >= 97 )) || (c == 95));
-            require(
-                keccak256(abi.encodePacked(c)) != keccak256(abi.encodePacked(""))
-            );
-        }
-        return true;
+        bytes memory bStr = bytes(str);
+        uint arrayLength = bStr.length;
+        for (uint i =0; i < arrayLength; i++) {
+            if (
+                (
+                    bStr[i] < 48 ||
+                    bStr[i] > 122 ||
+                    (bStr[i] > 57 && bStr[i] < 65) ||
+                    (bStr[i] > 90 && bStr[i] < 97 )
+                )
+            ) return false;
+        } return true;
     }
 
-    function isLowercase(string _str)
+    function isLowercase(string str)
         internal
         pure
         returns (bool)
     {
-        uint length =  bytes(_str).length;
-        require(length >= 4 && length <= 50);
-        for (uint i = 0; i < length; i++) {
-            bytes1 d = bytes(_str)[i];
-            require (d[i] <65 || d[i] > 90); // exclude uppercase characters
-        }
-        return true;
-    }
+        bytes memory bStr = bytes(str);
+		uint arrayLength = bStr.length;
+		for (uint i = 0; i < arrayLength; i++) {
+			if ((bStr[i] >= 65) && (bStr[i] <= 90)) return false;
+		} return true;
+	}
+
+	function isUppercase(string str)
+        internal
+        pure
+        returns (bool)
+    {
+        bytes memory bStr = bytes(str);
+		uint arrayLength = bStr.length;
+		for (uint i = 0; i < arrayLength; i++) {
+			if ((bStr[i] >= 97) && (bStr[i] <= 122)) return false;
+		} return true;
+	}
 }
