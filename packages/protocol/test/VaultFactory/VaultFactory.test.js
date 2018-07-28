@@ -17,14 +17,14 @@ describeContract(contractName, () => {
       ).rejects.toThrowErrorMatchingSnapshot()
     })
 
-    it('throws an error when provided name uppercase parameters', async () => {
+    it('throws an error when provided with uppercase parameters in name', async () => {
       const txHash = await baseContracts[contractName].createVault(
         'testName',
         'NAM'
       ).rejects.toThrowErrorMatchingSnapshot()
     })
 
-    it('throws an error when provided special ascii parameters', async () => {
+    it('throws an error when provided with special ascii parameters', async () => {
       const txHash = await baseContracts[contractName].createVault(
         'test+name',
         'NAM'
