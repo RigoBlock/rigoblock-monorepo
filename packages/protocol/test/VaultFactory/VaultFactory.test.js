@@ -41,11 +41,11 @@ describeContract(contractName, () => {
 
     it('does not throw an error when provided with the same symbol', async () => {
       const txHash1 = await baseContracts[contractName].createVault(
-        'some name',
+        'somename',
         'TTT'
       )
       const txHash2 = await baseContracts[contractName].createVault(
-        'other name',
+        'othername',
         'TTT'
       )
       expect(txHash1).toBeHash()
@@ -54,13 +54,13 @@ describeContract(contractName, () => {
 
     it('throws an exception when provided with a symbol longer than 3 characters', async () => {
       await expect(
-        baseContracts[contractName].createVault('long one', 'TOOLONG')
+        baseContracts[contractName].createVault('longone', 'TOOLONG')
       ).rejects.toThrowErrorMatchingSnapshot()
     })
 
     it('throws an exception when provided with a symbol longer smaller than 3 characters', async () => {
       await expect(
-        baseContracts[contractName].createVault('small one', 'SM')
+        baseContracts[contractName].createVault('smallone', 'SM')
       ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
