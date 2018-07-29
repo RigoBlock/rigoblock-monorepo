@@ -1,0 +1,28 @@
+{
+  "name": "@rigoblock/exchange-connector",
+  "description": "A JS utility to interacts with Exchanges API.",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=6.4"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "babel-preset-latest": "^6.24.1",
+    "jest": "^23.4.2"
+  },
+  "dependencies": {
+    "request-promise": "^4.2.2"
+  },
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  }
+}
