@@ -215,13 +215,47 @@ jobs:
           command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
-          command: "docker build -t staging --build-arg NPM_KEY=$NPM_KEY -f ./packages/dapp/Dockerfile ."
+          command: "docker build -t staging --build-arg NPM_KEY=$NPM_KEY --build-arg NGINX_USERNAME=$NGINX_USERNAME --build-arg NGINX_PASSWORD=$NGINX_PASSWORD -f ./packages/dapp/Dockerfile ."
       - run:
           name: Flynn push
           command: "~/flynn -a dapp-staging docker push staging:latest"
       - run:
           name: Flynn scale
           command: "~/flynn -a dapp-staging scale app=1"
+      - run:
+          name: Tag image with version
+          command: |
+            NUMBER=$(git log --pretty=oneline | wc -l)
+            DATE=$(date +%Y.%m.%d)
+            TAG=$(git tag --contains `git rev-list --tags --max-count=1` | grep dapp | cut -d '@' -f3)
+            HASH=$(git rev-parse --short HEAD)
+            BRANCH=${CIRCLE_BRANCH#*/}
+            VERSION=$TAG-$BRANCH-$DATE-commit-$HASH-$NUMBER
+            echo "export VERSION=$VERSION" >> $BASH_ENV
+            source $BASH_ENV
+            docker tag staging rb-registry.endpoint.network/webapp-v2:latest
+            docker tag staging rb-registry.endpoint.network/webapp-v2:$VERSION
+      - run:
+          name: Login with private Docker registry
+          command: |
+            docker login https://rb-registry.endpoint.network/ -u wnz99 -p $JENKINS_PASSWORD
+      - run:
+          name: Push image to private registry
+          command: |
+            docker push rb-registry.endpoint.network/webapp-v2:$VERSION
+      - run:
+          name: Update Rancher deployment
+          command: |
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl 
+            chmod +x ./kubectl 
+            sudo mv ./kubectl /usr/local/bin/kubectl
+            wget https://github.com/rancher/cli/releases/download/v2.0.3-rc1/rancher-linux-amd64-v2.0.3-rc1.tar.gz -O rancher-linux-amd64-v2.0.3-rc1.tar.gz 
+            tar xzvf rancher-linux-amd64-v2.0.3-rc1.tar.gz 
+            cd rancher-v2.0.3-rc1/ 
+            chmod +x rancher 
+            sudo mv ./rancher /usr/local/bin/rancher 
+            echo "1" | rancher login https://rb-rancher.endpoint.network/v3 --token $RANCHER_TOKEN 
+            rancher kubectl set image deployment/webapp-v2-staging webapp-v2-staging=rb-registry.endpoint.network/webapp-v2:$VERSION
 
   deploy-storybook-staging:
     working_directory: *workspace_root
@@ -257,13 +291,47 @@ jobs:
           command: "~/flynn docker set-push-url && ~/flynn docker login"
       - run:
           name: Building docker image
-          command: "docker build -t storybook-staging --build-arg NPM_KEY=$NPM_KEY -f ./packages/dapp/Dockerfile.storybook ."
+          command: "docker build -t storybook-staging --build-arg NPM_KEY=$NPM_KEY --build-arg NGINX_USERNAME=$NGINX_USERNAME --build-arg NGINX_PASSWORD=$NGINX_PASSWORD -f ./packages/dapp/Dockerfile.storybook ."
       - run:
           name: Flynn push
           command: "~/flynn -a storybook-staging docker push storybook-staging:latest"
       - run:
           name: Flynn scale
           command: "~/flynn -a storybook-staging scale app=1"
+      - run:
+          name: Tag image with version
+          command: |
+            NUMBER=$(git log --pretty=oneline | wc -l)
+            DATE=$(date +%Y.%m.%d)
+            TAG=$(git tag --contains `git rev-list --tags --max-count=1` | grep dapp | cut -d '@' -f3)
+            HASH=$(git rev-parse --short HEAD)
+            BRANCH=${CIRCLE_BRANCH#*/}
+            VERSION=$TAG-$BRANCH-$DATE-commit-$HASH-$NUMBER
+            echo "export VERSION=$VERSION" >> $BASH_ENV
+            source $BASH_ENV
+            docker tag storybook-staging rb-registry.endpoint.network/webapp-v2-storybook:latest
+            docker tag storybook-staging rb-registry.endpoint.network/webapp-v2-storybook:$VERSION
+      - run:
+          name: Login with private Docker registry
+          command: |
+            docker login https://rb-registry.endpoint.network/ -u wnz99 -p $JENKINS_PASSWORD
+      - run:
+          name: Push image to private registry
+          command: |
+            docker push rb-registry.endpoint.network/webapp-v2-storybook:$VERSION
+      - run:
+          name: Update Rancher deployment
+          command: |
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl 
+            chmod +x ./kubectl 
+            sudo mv ./kubectl /usr/local/bin/kubectl
+            wget https://github.com/rancher/cli/releases/download/v2.0.3-rc1/rancher-linux-amd64-v2.0.3-rc1.tar.gz -O rancher-linux-amd64-v2.0.3-rc1.tar.gz 
+            tar xzvf rancher-linux-amd64-v2.0.3-rc1.tar.gz 
+            cd rancher-v2.0.3-rc1/ 
+            chmod +x rancher 
+            sudo mv ./rancher /usr/local/bin/rancher 
+            echo "1" | rancher login https://rb-rancher.endpoint.network/v3 --token $RANCHER_TOKEN 
+            rancher kubectl set image deployment/webapp-v2-staging-storybook webapp-v2-staging-storybook=rb-registry.endpoint.network/webapp-v2-storybook:$VERSION
 
 workflows:
   version: 2

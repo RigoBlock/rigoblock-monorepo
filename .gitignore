@@ -5,6 +5,7 @@ lerna-debug.log*
 yarn-error.log*
 .vscode
 .idea
+monorepo.code-workspace
 
 # testing
 coverage
