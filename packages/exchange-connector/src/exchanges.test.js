@@ -70,19 +70,20 @@ describe("get aggregate orders from exchange REST API", () => {
         }
       )
     })
-    // it(`${Ethfinex} get tickers for ${network} success`, () => {
-    //   const symbols = SupportedExchanges.Ethfinex.tickersTokenPairs.toString()
-    //   const networkId = key.toString()
-    //   const result = getTickers[Ethfinex](networkId)
-    //   expect(result)
-    //   .toEqual(
-    //     {
-    //       method: 'GET',
-    //       url: `${SupportedExchanges.Ethfinex.http}/tickers?symbols=${symbols}`,
-    //       qs: {},
-    //       json: true 
-    //     }
-    //   )
-    // })
+    it(`${Ethfinex} get aggregate orders for ${network} success`, () => {
+      const networkId = key.toString()
+      const baseToken = "ZRX"
+      const quoteToken = "ETH"
+      const result = getAggregatedOrders[Ethfinex](networkId, baseToken, quoteToken)
+      expect(result)
+      .toEqual(
+        {
+          method: 'GET',
+          url: `${SupportedExchanges.Ethfinex.http}/book/t${baseToken}${quoteToken}/P0`,
+          qs: {},
+          json: true
+        }
+      )
+    })
   })
 })

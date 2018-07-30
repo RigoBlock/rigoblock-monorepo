@@ -8,6 +8,7 @@ import {
 import { SupportedExchanges } from './const'
 import * as FORMAT from './format'
 import rp from 'request-promise'
+import { ERCdEX, Ethfinex } from '../../const';
 
 class Exchange {
   constructor(exchange, network = '1') {
@@ -36,15 +37,22 @@ class Exchange {
       })
   }
 
-  getAggregatedOrders = (baseTokenAddress, quoteTokenAddress) => {
+  getAggregatedOrders = (baseToken, quoteToken) => {
     console.log(`Fetching aggregated orders from ${this._exchange}`)
-    if (!baseTokenAddress) {
-      throw new Error('baseTokenAddress needs to be set')
+    if (!baseToken) {
+      throw new Error('baseToken needs to be set')
     }
-    if (!quoteTokenAddress) {
-      throw new Error('quoteTokenAddress needs to be set')
+    if (!quoteToken) {
+      throw new Error('quoteToken needs to be set')
     }
-    return this.returnResults(getAggregatedOrders[this._exchange](this._network, baseTokenAddress, quoteTokenAddress), FORMAT.aggregatedOrders[this._exchange])
+    switch (this._exchange) {
+      case ERCdEX:
+        return this.returnResults(getAggregatedOrders[this._exchange](this._network, baseToken.address, quoteToken.address), FORMAT.aggregatedOrders[this._exchange])
+      case Ethfinex:
+        return this.returnResults(getAggregatedOrders[this._exchange](this._network, baseToken.symbol, 'ETH'), FORMAT.aggregatedOrders[this._exchange])
+      default:
+        throw new Error('Relay unknown')
+    }
   }
 
   getTickers = () => {
