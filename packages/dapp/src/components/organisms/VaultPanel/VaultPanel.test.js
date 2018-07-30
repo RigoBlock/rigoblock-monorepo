@@ -1,5 +1,6 @@
 import * as ROUTES from '../../../constants/routes'
 import { BigNumber } from 'bignumber.js'
+import { MANAGER } from '../../../constants/user'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
@@ -14,7 +15,8 @@ const noVaultsStore = {
   ...store,
   getState: () => ({
     preferences: {
-      currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
+      type: MANAGER
     },
     blockChain: {
       accounts: {
@@ -33,7 +35,8 @@ const noTransactionsStore = {
   ...store,
   getState: () => ({
     preferences: {
-      currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
+      currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
+      type: MANAGER
     },
     blockChain: {
       accounts: {

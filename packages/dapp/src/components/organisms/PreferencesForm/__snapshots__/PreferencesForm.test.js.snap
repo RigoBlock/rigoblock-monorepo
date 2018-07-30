@@ -12,7 +12,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
 >
   <Connect(ReduxForm)>
     <ReduxForm
-      changePreferences={[Function]}
+      dispatch={[MockFunction]}
       formObject={
         Object {
           "preferences": Object {
@@ -30,12 +30,13 @@ exports[`PreferencesForm component renders correctly 1`] = `
           "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
           "provider": "metamask",
           "timezone": "+02:00",
+          "type": "manager",
         }
       }
     >
       <Connect(Form(PreferencesForm))
-        changePreferences={[Function]}
         destroyOnUnmount={true}
+        dispatch={[MockFunction]}
         enableReinitialize={true}
         forceUnregisterOnUnmount={false}
         form="preferences"
@@ -57,6 +58,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
             "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
             "provider": "metamask",
             "timezone": "+02:00",
+            "type": "manager",
           }
         }
         keepDirtyOnReinitialize={false}
@@ -100,7 +102,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
           autofill={[Function]}
           blur={[Function]}
           change={[Function]}
-          changePreferences={[Function]}
           clearAsyncError={[Function]}
           clearFields={[Function]}
           clearSubmit={[Function]}
@@ -131,6 +132,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
               "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
               "provider": "metamask",
               "timezone": "+02:00",
+              "type": "manager",
             }
           }
           initialize={[Function]}
@@ -196,7 +198,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
             autofill={[Function]}
             blur={[Function]}
             change={[Function]}
-            changePreferences={[Function]}
             clearAsyncError={[Function]}
             clearFields={[Function]}
             clearSubmit={[Function]}
@@ -223,6 +224,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                 "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
                 "provider": "metamask",
                 "timezone": "+02:00",
+                "type": "manager",
               }
             }
             initialize={[Function]}
@@ -388,7 +390,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           "autofill": [Function],
                           "blur": [Function],
                           "change": [Function],
-                          "changePreferences": [Function],
                           "clearAsyncError": [Function],
                           "clearFields": [Function],
                           "clearSubmit": [Function],
@@ -418,6 +419,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                             "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
                             "provider": "metamask",
                             "timezone": "+02:00",
+                            "type": "manager",
                           },
                           "initialize": [Function],
                           "initialized": true,
@@ -545,7 +547,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                             "autofill": [Function],
                             "blur": [Function],
                             "change": [Function],
-                            "changePreferences": [Function],
                             "clearAsyncError": [Function],
                             "clearFields": [Function],
                             "clearSubmit": [Function],
@@ -575,6 +576,7 @@ exports[`PreferencesForm component renders correctly 1`] = `
                               "currentAccount": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
                               "provider": "metamask",
                               "timezone": "+02:00",
+                              "type": "manager",
                             },
                             "initialize": [Function],
                             "initialized": true,

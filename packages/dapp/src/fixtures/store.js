@@ -1,5 +1,6 @@
 import * as ROUTES from '../constants/routes'
 import { BigNumber } from 'bignumber.js'
+import { MANAGER } from '../constants/user'
 
 const emptyFunc = () => () => {}
 
@@ -8,7 +9,8 @@ export const defaultState = {
   preferences: {
     currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
     provider: 'metamask',
-    timezone: '+02:00'
+    timezone: '+02:00',
+    type: MANAGER
   },
   blockChain: {
     accounts: {

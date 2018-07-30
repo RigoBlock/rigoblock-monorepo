@@ -18,7 +18,7 @@ class Modal extends PureComponent {
           className="modal-content"
           ref={modalContent => (this.modalContent = modalContent)}
         >
-          <Component />
+          {Component}
         </div>
       </div>
     ) : null
