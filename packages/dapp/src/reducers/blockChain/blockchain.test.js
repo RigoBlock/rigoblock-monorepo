@@ -1,7 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import blockChainActions from '../../actions/blockchain-actions'
 import blockChainReducer from './blockChain'
-import vaultActions from '../../actions/vault-actions'
 
 describe('blockchain reducer', () => {
   const blockChainTest = reducerTester(blockChainReducer)
@@ -45,7 +44,7 @@ describe('blockchain reducer', () => {
     )
   })
 
-  it('updates lastBlock on REGISTER_VAULT_BLOCK action', () => {
+  it('updates lastBlock and latestFetchedBlock on registerBlock action', () => {
     blockChainTest(
       {
         accounts: {
@@ -55,16 +54,14 @@ describe('blockchain reducer', () => {
         },
         totalBalance: new BigNumber('0')
       },
-      vaultActions.registerVaultBlock({ account: owner, block: eventBlock }),
+      blockChainActions.registerBlock({ account: owner, block: eventBlock }),
       {
         accounts: {
           [owner]: {
-            lastBlock: eventBlock.blockNumber,
-            vaultBlocks: {
-              [eventBlock.blockNumber]: eventBlock
-            }
+            lastBlock: eventBlock.blockNumber
           }
         },
+        latestFetchedBlock: eventBlock.blockNumber,
         totalBalance: new BigNumber('0')
       }
     )

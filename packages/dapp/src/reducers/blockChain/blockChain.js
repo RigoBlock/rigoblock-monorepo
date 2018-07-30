@@ -27,7 +27,7 @@ const blockChainReducer = createReducer(
             state
           ),
     [blockChainActions.registerBlock]: (state, { account, block }) => {
-      const latestFetchedBlock = Object.values(state.accounts).reduce(
+      let latestFetchedBlock = Object.values(state.accounts).reduce(
         (acc, curr) => (acc > curr.lastBlock ? acc : curr.lastBlock),
         0
       )
@@ -35,6 +35,8 @@ const blockChainReducer = createReducer(
       let lastBlock = state.accounts[account].lastBlock
       lastBlock =
         !lastBlock || lastBlock < blockNumber ? blockNumber : lastBlock
+      latestFetchedBlock =
+        lastBlock > latestFetchedBlock ? lastBlock : latestFetchedBlock
       return u(
         {
           accounts: {

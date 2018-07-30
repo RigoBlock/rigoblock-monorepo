@@ -96,22 +96,37 @@ describe('watchVaultEvents', () => {
     ts.flush()
   })
 
-  it('stops watching after a LOGGED_IN action is fired', () => {
+  it('stops watching after a "vault fetch completed" action is fired', () => {
     const lastBlock = 15
-    getStateSpy.mockReturnValueOnce({
-      preferences: {
-        currentAccount: owner
-      },
-      blockChain: {
-        accounts: {
-          [owner]: {
-            lastBlock,
-            vaults: [],
-            vaultBlocks: []
+    getStateSpy
+      .mockReturnValueOnce({
+        preferences: {
+          currentAccount: owner
+        },
+        blockChain: {
+          accounts: {
+            [owner]: {
+              lastBlock,
+              vaults: [],
+              vaultBlocks: []
+            }
           }
         }
-      }
-    })
+      })
+      .mockReturnValueOnce({
+        preferences: {
+          currentAccount: owner
+        },
+        blockChain: {
+          accounts: {
+            [owner]: {
+              lastBlock,
+              vaults: [],
+              vaultBlocks: []
+            }
+          }
+        }
+      })
 
     const ts = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected)
@@ -144,10 +159,7 @@ describe('watchVaultEvents', () => {
     )
     const inputValues = {
       a: blockChainActions.vaultFetchCompleted(),
-      b: blockChainActions.blockChainLogIn({
-        provider: 'my provider',
-        account: '1234'
-      })
+      b: blockChainActions.vaultFetchCompleted()
     }
     const expectedValues = {
       b: blockChainActions.registerBlock({
