@@ -10,7 +10,7 @@ Scenario('test correct vaults render', vaults => {
 
 Scenario(
   'user gets redirected to /vaults if he tries to access an invalid vault url',
-  async (navigation, vaults) => {
+  (navigation, vaults) => {
     vaults.navigateTo()
     navigation.navigateToUrl('/vaults/20')
     vaults.assertImOnPage()
@@ -27,7 +27,7 @@ Scenario(
   }
 )
 
-Scenario('user creates a new vault', async (navigation, vaults) => {
+Scenario('user creates a new vault', (navigation, vaults) => {
   const vaultName = 'New Vault'
   const vaultSymbol = 'VLT'
   vaults.navigateTo()
@@ -37,7 +37,7 @@ Scenario('user creates a new vault', async (navigation, vaults) => {
 
 Scenario(
   'user cannot create a vault that already exists',
-  async (navigation, vaults) => {
+  (navigation, vaults) => {
     const vaultName = 'First Vault'
     const vaultSymbol = 'ASD'
     vaults.navigateTo()
@@ -49,7 +49,7 @@ Scenario(
 
 Scenario(
   "user cannot create a vault with a symbol that isn't 3 characters long",
-  async (navigation, vaults) => {
+  (navigation, vaults) => {
     const vaultName = 'First Vault'
     const vaultSymbol = 'AS'
     vaults.navigateTo()

@@ -29,8 +29,8 @@ module.exports = {
     I.see('ASD', 'div.title.large')
   },
 
-  async depositToVault(id, amount) {
-    return await I.buyVault(id, amount)
+  depositToVault(id, amount) {
+    return I.buyVault(id, amount)
   },
 
   createNewVault(name, symbol, accountNumber) {
