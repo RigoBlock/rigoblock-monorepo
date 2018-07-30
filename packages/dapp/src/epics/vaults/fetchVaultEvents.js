@@ -9,10 +9,9 @@ const fetchVaultEventsEpic = (action$, store) => {
     .filter(
       action => action.type === blockChainActions.blockChainLogIn.getType()
     )
-    .mergeMap(() => {
-      const firstUnfetchedBlock = getFirstUnfetchedBlock(store)
-      return blockchainService.fetchVaultEvents(firstUnfetchedBlock)
-    })
+    .mergeMap(({ payload: { account } }) =>
+      blockchainService.fetchVaultEvents(account, getFirstUnfetchedBlock(store))
+    )
 }
 
 const getFirstUnfetchedBlock = store => {

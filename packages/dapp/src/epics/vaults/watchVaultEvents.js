@@ -11,20 +11,14 @@ const watchVaultEventsEpic = (action$, store) => {
     .filter(
       action => action.type === blockChainActions.vaultFetchCompleted.getType()
     )
-    .mergeMap(() => {
-      const firstUnfetchedBlock = getFirstUnfetchedBlock(store)
-      return blockchainService
-        .watchVaultEvents(firstUnfetchedBlock)
+    .mergeMap(() =>
+      blockchainService
+        .watchVaultEvents(getFirstUnfetchedBlock(store))
         .takeUntil(action$.ofType(blockChainActions.blockChainLogIn.getType()))
-    })
+    )
 }
 
-const getFirstUnfetchedBlock = store => {
-  const state = store.getState()
-  const account = state.preferences.currentAccount
-  return state.blockChain.accounts[account].lastBlock
-    ? state.blockChain.accounts[account].lastBlock
-    : null
-}
+const getFirstUnfetchedBlock = store =>
+  store.getState().blockChain.latestFetchedBlock + 1
 
 export default watchVaultEventsEpic

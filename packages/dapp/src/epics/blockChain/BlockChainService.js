@@ -89,7 +89,7 @@ class BlockChainService {
     )
   }
 
-  fetchVaultEvents(fromBlock, toBlock = 'latest') {
+  fetchVaultEvents(account, fromBlock, toBlock = 'latest') {
     fromBlock = fromBlock || 0
     const VaultEventful = this.api.contract.VaultEventful
     const allVaultEvents = fromPromise(
@@ -117,7 +117,11 @@ class BlockChainService {
         })
       )
       .mergeMap(events => from(events))
-    const filteredBlocks = this._filterBlocksByAccounts(VAULT, allVaultEvents)
+    const filteredBlocks = this._filterBlocksByAccount(
+      account,
+      VAULT,
+      allVaultEvents
+    )
     return this.wrapError(
       filteredBlocks.concat(of(blockChainActions.vaultFetchCompleted()))
     )
@@ -143,10 +147,24 @@ class BlockChainService {
         return () => events.stopWatching(() => {})
       })
     })
-    return this.wrapError(this._filterBlocksByAccounts(VAULT, allVaultEvents))
+    return this.wrapError(
+      this._filterBlocksByAllAccounts(VAULT, allVaultEvents)
+    )
   }
 
-  _filterBlocksByAccounts(label, obs) {
+  _filterBlocksByAccount(account, label, obs) {
+    return obs
+      .filter(block => Object.values(block.args).includes(account))
+      .mergeMap(block => {
+        return fromPromise(
+          this.api.web3.getBlockTimestampAsync(block.blockNumber),
+          this.scheduler
+        ).map(timestamp => ({ ...block, timestamp: timestamp * 1000 }))
+      })
+      .map(block => blockChainActions.registerBlock({ account, label, block }))
+  }
+
+  _filterBlocksByAllAccounts(label, obs) {
     return obs
       .map(block => {
         const account = Object.values(block.args).reduce(
