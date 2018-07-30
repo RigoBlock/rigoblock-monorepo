@@ -14,7 +14,9 @@ const watchVaultEventsEpic = (action$, store) => {
     .mergeMap(() =>
       blockchainService
         .watchVaultEvents(getFirstUnfetchedBlock(store))
-        .takeUntil(action$.ofType(blockChainActions.blockChainLogIn.getType()))
+        .takeUntil(
+          action$.ofType(blockChainActions.vaultFetchCompleted.getType())
+        )
     )
 }
 
