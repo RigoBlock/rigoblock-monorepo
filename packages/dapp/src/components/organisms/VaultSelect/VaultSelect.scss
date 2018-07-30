@@ -2,6 +2,11 @@
 
 .vault-select {
   max-width: 5 * $dist-6xl;
+
+  .inverted-button {
+    margin-bottom: $dist-s;
+  }
+
   .active {
     border: solid 2px $azure-radiance;
     padding: ($dist-s - 2px);

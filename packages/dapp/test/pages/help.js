@@ -6,11 +6,11 @@ module.exports = {
   },
 
   navigateTo() {
-    I.amOnPage('/help')
+    I.navigateToUrl('/help')
   },
 
   assertImOnPage() {
     I.waitInUrl('/help', 5)
-    I.waitForText('Help', 'h1')
+    I.waitForText('Help', 5, 'div.page-main-content h1')
   }
 }

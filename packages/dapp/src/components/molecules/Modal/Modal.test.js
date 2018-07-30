@@ -3,7 +3,7 @@ import Modal from './Modal.jsx'
 import React from 'react'
 import toJson from 'enzyme-to-json'
 
-const dummyComp = () => <div> hello</div>
+const dummyComp = <div> hello</div>
 const props = { Component: dummyComp, onClickOutside: jest.fn() }
 
 describe('Modal component', () => {

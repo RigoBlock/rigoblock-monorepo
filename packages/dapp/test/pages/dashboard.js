@@ -8,7 +8,12 @@ module.exports = {
   },
 
   navigateTo() {
-    I.amOnPage('/')
+    I.navigateToUrl('/')
+  },
+
+  assertAccountValue(val) {
+    I.waitForVisible('div.accounts-panel', 5)
+    I.waitForText(val, 5)
   },
 
   assertImOnPage() {

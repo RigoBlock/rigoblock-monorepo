@@ -16,7 +16,7 @@ import ReactDOM from 'react-dom'
 import Vaults from './pages/Vaults'
 import globalActions from './actions/global-actions'
 import history from './store/history'
-import registerServiceWorker from './registerServiceWorker'
+import registerServiceWorker, { unregister } from './registerServiceWorker'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -45,7 +45,7 @@ const init = () => {
 
 process.env.REACT_APP_TEST ? (window.init = init) : init()
 
-registerServiceWorker()
+process.env.NODE_ENV === 'production' ? registerServiceWorker() : unregister()
 
 if (module.hot) {
   module.hot.accept()

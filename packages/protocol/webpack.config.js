@@ -13,5 +13,18 @@ module.exports = {
   target: 'node',
   resolve: {
     extensions: ['.js']
+  },
+  module: {
+    strictExportPresence: true,
+    rules: [
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        loader: require.resolve('babel-loader'),
+        options: {
+          compact: true
+        }
+      }
+    ]
   }
 }
