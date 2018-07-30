@@ -48,21 +48,21 @@ library LibSanitize {
         returns (bool)
     {
         bytes memory bStr = bytes(str);
-		uint arrayLength = bStr.length;
+        uint arrayLength = bStr.length;
 		for (uint i = 0; i < arrayLength; i++) {
 			if ((bStr[i] >= 65) && (bStr[i] <= 90)) return false;
 		} return true;
-	}
+    }
 
-	function isUppercase(string str)
+    function isUppercase(string str)
         internal
         pure
         returns (bool)
     {
         bytes memory bStr = bytes(str);
-		uint arrayLength = bStr.length;
-		for (uint i = 0; i < arrayLength; i++) {
-			if ((bStr[i] >= 97) && (bStr[i] <= 122)) return false;
-		} return true;
-	}
+        uint arrayLength = bStr.length;
+        for (uint i = 0; i < arrayLength; i++) {
+            if ((bStr[i] >= 97) && (bStr[i] <= 122)) return false;
+        } return true;
+    }
 }

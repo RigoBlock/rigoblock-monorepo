@@ -11,23 +11,20 @@ describeContract(contractName, () => {
     })
 
     it('throws an error when provided with space parameters', async () => {
-      const txHash = await baseContracts[contractName].createVault(
-        'test name',
-        'NAM'
+      await expect(
+        baseContracts[contractName].createVault('test name', 'NAM')
       ).rejects.toThrowErrorMatchingSnapshot()
     })
 
     it('throws an error when provided with uppercase parameters in name', async () => {
-      const txHash = await baseContracts[contractName].createVault(
-        'testName',
-        'NAM'
+      await expect(
+        baseContracts[contractName].createVault('testName', 'NAM')
       ).rejects.toThrowErrorMatchingSnapshot()
     })
 
     it('throws an error when provided with special ascii parameters', async () => {
-      const txHash = await baseContracts[contractName].createVault(
-        'test+name',
-        'NAM'
+      await expect(
+        baseContracts[contractName].createVault('test+name', 'NAM')
       ).rejects.toThrowErrorMatchingSnapshot()
     })
 
