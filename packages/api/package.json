@@ -1,7 +1,7 @@
 {
   "name": "@rigoblock/api",
   "description": "A JS wrapper around RigoBlock Smart Contracts to simplify their consumption.",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -27,7 +27,7 @@
     "@0xproject/subproviders": "^0.10.4",
     "@0xproject/typescript-typings": "^0.4.1",
     "@0xproject/web3-wrapper": "^0.7.1",
-    "@rigoblock/protocol": "^0.2.7",
+    "@rigoblock/protocol": "^0.2.8",
     "@types/node": "^9.6.6",
     "bignumber.js": "^5.0.0",
     "typechain": "^0.2.2",
