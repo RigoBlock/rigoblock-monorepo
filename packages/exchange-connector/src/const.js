@@ -1,6 +1,9 @@
 // Copyright 2017 Rigo Investment Sagl.
 // This file is part of RigoBlock.
 
+export const ERCdEX = 'ERCdEX'
+export const Ethfinex = 'Ethfinex'
+
 export const SupportedExchanges = {
   ERCdEX: {
     supportedNetworks: ['1', '42'],

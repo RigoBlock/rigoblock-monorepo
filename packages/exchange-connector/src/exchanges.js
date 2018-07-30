@@ -9,7 +9,7 @@ export const getTickers = {
       method: 'GET',
       url: `${SupportedExchanges.ERCdEX.http}/reports/ticker?networkId=${network}`,
       qs: {},
-      json: true 
+      json: true
     }
     return options
   },
@@ -19,8 +19,34 @@ export const getTickers = {
       method: 'GET',
       url: `${SupportedExchanges.Ethfinex.http}/tickers?symbols=${symbols}`,
       qs: {},
-      json: true 
+      json: true
     }
     return options
   }
+}
+
+export const getAggregatedOrders = {
+  ERCdEX: (networkId, baseTokenAddress, quoteTokenAddress) => {
+    const options = {
+      method: 'GET',
+      uri: `${SupportedExchanges.ERCdEX.http}/aggregated_orders`,
+      qs: {
+        networkId: networkId,
+        baseTokenAddress: baseTokenAddress,
+        quoteTokenAddress: quoteTokenAddress
+      },
+      json: true 
+    };
+    return options
+  },
+  // Ethfinex: () => {
+  //   const symbols = SupportedExchanges.Ethfinex.tickersTokenPairs.toString()
+  //   const options = {
+  //     method: 'GET',
+  //     url: `${SupportedExchanges.Ethfinex.http}/tickers?symbols=${symbols}`,
+  //     qs: {},
+  //     json: true
+  //   }
+  //   return options
+  // }
 }

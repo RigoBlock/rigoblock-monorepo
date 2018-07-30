@@ -1,7 +1,11 @@
 // Copyright 2017 Rigo Investment Sagl.
 // This file is part of RigoBlock.
 
-import { formatTickers } from './format'
+import * as FORMAT from './format'
+import {
+  ERCdEX,
+  Ethfinex
+} from './const' 
 
 describe("format exchange tickers output", () => {
   const outputERCdEX = [
@@ -29,7 +33,7 @@ describe("format exchange tickers output", () => {
       weeklyPercentageChange: "-2.18",
     }
   ]
-  const $resultsERCdEX = formatTickers.ERCDeX(outputERCdEX)
+  const $resultsERCdEX = FORMAT.tickers[ERCdEX](outputERCdEX)
   it(`ERCdEX format ticket success`, () => {
     expect($resultsERCdEX)
     .toEqual(
@@ -75,8 +79,8 @@ describe("format exchange tickers output", () => {
       0
     ]
   ]
-  const $resultsEthfinex = formatTickers.Ethfinex(outputEthfinex)
-  it(`ERCdEX format ticket success`, () => {
+  const $resultsEthfinex = FORMAT.tickers[Ethfinex](outputEthfinex)
+  it(`Ethfinex format ticket success`, () => {
     expect($resultsEthfinex)
     .toEqual(
       [
@@ -98,4 +102,121 @@ describe("format exchange tickers output", () => {
       ]
     )
   })
+})
+
+describe("format aggregate orders output", () => {
+
+  const outputERCdEX = {
+    sells: {
+      priceLevels: [
+        {
+          price: "0.0045",
+          volume: "35000000000000000000",
+          volumeRatio: 0.4117647058823529
+        },
+        {
+          price: "0.004",
+          volume: "85000000000000000000",
+          volumeRatio: 1
+        }
+      ]
+    },
+    buys: {
+      "priceLevels": [
+        {
+          price: "0.0035",
+          volume: "35000000000000000000",
+          volumeRatio: 0.4117647058823529
+        },
+        {
+          price: "0.003",
+          volume: "35000000000000000000",
+          volumeRatio: 0.4117647058823529
+        }
+      ]
+    }
+  }
+
+  const $resultsERCdEX = FORMAT.aggregatedOrders[ERCdEX](outputERCdEX)
+  it(`ERCdEX format ticket success`, () => {
+    expect($resultsERCdEX)
+    .toEqual(
+      {
+        bids: [
+          {
+            orderAmount: "35.00000",
+            orderPrice: "0.0035000"
+          },
+          {
+            orderAmount: "35.00000",
+            orderPrice: "0.0030000"
+          }
+        ],
+        "asks": [
+          {
+            orderAmount: "35.00000",
+            orderPrice: "0.0045000"
+          },
+          {
+            orderAmount: "85.00000",
+            orderPrice: "0.0040000"
+          }
+        ],
+        spread: "0.00050",
+        aggregated: true
+      }
+    )
+  })
+
+  // const outputEthfinex = [
+  //   [
+  //     "tZRXETH",
+  //     0.002581,
+  //     65432.52993716,
+  //     0.0026068,
+  //     191086.94028059,
+  //     -0.0000594,
+  //     -0.0224,
+  //     0.0025906,
+  //     72054.20088213,
+  //     0.0026642,
+  //     0.0025906
+  //   ],
+  //   [
+  //     "tMKRETH",
+  //     1.257,
+  //     51.7239878,
+  //     1.4053,
+  //     42.12054831,
+  //     0.0001,
+  //     0.0001,
+  //     1.2571,
+  //     0.48,
+  //     0,
+  //     0
+  //   ]
+  // ]
+  // const $resultsEthfinex = FORMAT.formatTickers.Ethfinex(outputEthfinex)
+  // it(`ERCdEX format ticket success`, () => {
+  //   expect($resultsEthfinex)
+  //   .toEqual(
+  //     [
+  //       {
+  //         priceEth: '0.0025906',
+  //         priceUsd: '',
+  //         symbol: 'ZRX',
+  //       },
+  //       {
+  //         priceEth: '1.2571',
+  //         priceUsd: '',
+  //         symbol: 'MKR',
+  //       },
+  //       {
+  //         priceEth: '1',
+  //         priceUsd: '',
+  //         symbol: 'WETH'
+  //       }
+  //     ]
+  //   )
+  // })
 })

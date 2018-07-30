@@ -1,9 +1,12 @@
 // Copyright 2017 Rigo Investment Sagl.
 // This file is part of RigoBlock.
 
-import { getTickers } from './exchanges'
+import {
+  getTickers,
+  getAggregatedOrders
+} from './exchanges'
 import { SupportedExchanges } from './const'
-import { formatTickers } from './format'
+import * as FORMAT from './format'
 import rp from 'request-promise'
 
 class Exchange {
@@ -20,22 +23,33 @@ class Exchange {
     this._exchangeProperties = SupportedExchanges[exchange]
   }
 
-  returnResults = (query, formatFunction = (input) => { return input}) => {
+  returnResults = (query, formatFunction = (input) => { return input }) => {
     return rp(query)
-    .then(results => {
-      // console.log(results)
-      // console.log(formatFunction(results))
-      return formatFunction(results)
-    })
-    .catch(err => {
-      return err
-    })
+      .then(results => {
+        console.log(results)
+        console.log(formatFunction)
+        console.log(formatFunction(results))
+        return formatFunction(results)
+      })
+      .catch(err => {
+        return err
+      })
+  }
+
+  getAggregatedOrders = (baseTokenAddress, quoteTokenAddress) => {
+    console.log(`Fetching aggregated orders from ${this._exchange}`)
+    if (!baseTokenAddress) {
+      throw new Error('baseTokenAddress needs to be set')
+    }
+    if (!quoteTokenAddress) {
+      throw new Error('quoteTokenAddress needs to be set')
+    }
+    return this.returnResults(getAggregatedOrders[this._exchange](this._network, baseTokenAddress, quoteTokenAddress), FORMAT.aggregatedOrders[this._exchange])
   }
 
   getTickers = () => {
-    // console.log(`Fetching tokens prices from ${this._exchange}`)
-    // console.log(SupportedExchanges.Ethfinex.tickersTokenPairs.toString())
-    return this.returnResults(getTickers[this._exchange](this._network, this._exchangeProperties.tickersTokenPairs), formatTickers[this._exchange])
+    console.log(`Fetching tokens prices from ${this._exchange}`)
+    return this.returnResults(getTickers[this._exchange](this._network, this._exchangeProperties.tickersTokenPairs), FORMAT.tickers[this._exchange])
   }
 }
 
