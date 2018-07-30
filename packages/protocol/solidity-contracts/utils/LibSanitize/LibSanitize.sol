@@ -30,6 +30,8 @@ library LibSanitize {
     {
         bytes memory bStr = bytes(str);
         uint arrayLength = bStr.length;
+        require(bStr[0] != 32);
+        require(bStr[arrayLength - 1] != 32);
         for (uint i =0; i < arrayLength; i++) {
             if (
                 (
@@ -37,7 +39,7 @@ library LibSanitize {
                     bStr[i] > 122 ||
                     (bStr[i] > 57 && bStr[i] < 65) ||
                     (bStr[i] > 90 && bStr[i] < 97 )
-                )
+                ) && (bStr[i] != 32)
             ) return false;
         } return true;
     }
