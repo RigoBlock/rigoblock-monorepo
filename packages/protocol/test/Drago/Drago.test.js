@@ -7,6 +7,7 @@ const contractName = 'Drago'
 describeContract(contractName, () => {
   let dragoId
   let dragoAddress
+  let dragoInstance
   let dragoSupply
   let transactionDefault
 
@@ -16,7 +17,7 @@ describeContract(contractName, () => {
     const [id, address] = dragoData
     dragoId = id
     dragoAddress = address
-    const dragoInstance = new web3.eth.Contract(
+    dragoInstance = new web3.eth.Contract(
       dragoArtifact.networks[GANACHE_NETWORK_ID].abi,
       dragoAddress
     )
