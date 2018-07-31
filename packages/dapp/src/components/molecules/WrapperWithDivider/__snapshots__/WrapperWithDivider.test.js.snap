@@ -4,7 +4,7 @@ exports[`WrapperWithDivider component renders correctly 1`] = `
 <div
   className="dividing-wrapper"
 >
-  <div
+  <React.Fragment
     key="wrap-div-0"
   >
     <div
@@ -12,8 +12,8 @@ exports[`WrapperWithDivider component renders correctly 1`] = `
       key="asd"
     />
     <Divider />
-  </div>
-  <div
+  </React.Fragment>
+  <React.Fragment
     key="wrap-div-1"
   >
     <div
@@ -21,8 +21,8 @@ exports[`WrapperWithDivider component renders correctly 1`] = `
       key="sad"
     />
     <Divider />
-  </div>
-  <div
+  </React.Fragment>
+  <React.Fragment
     key="wrap-div-2"
   >
     <div
@@ -30,14 +30,14 @@ exports[`WrapperWithDivider component renders correctly 1`] = `
       key="ads"
     />
     <Divider />
-  </div>
-  <div
+  </React.Fragment>
+  <React.Fragment
     key="wrap-div-3"
   >
     <div
       className="fourth-children"
       key="das"
     />
-  </div>
+  </React.Fragment>
 </div>
 `;
