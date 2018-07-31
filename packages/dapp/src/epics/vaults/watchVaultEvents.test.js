@@ -26,6 +26,7 @@ describe('watchVaultEvents', () => {
     transactionIndex: 0,
     type: 'mined'
   }
+  const block2 = { ...block, blockNumber: 28 }
   const getStateSpy = jest.fn()
   const watchVaultEventsSpy = jest.fn()
 
@@ -97,34 +98,15 @@ describe('watchVaultEvents', () => {
   })
 
   it('stops watching after a "vault fetch completed" action is fired', () => {
-    const lastBlock = 15
     getStateSpy
       .mockReturnValueOnce({
-        preferences: {
-          currentAccount: owner
-        },
         blockChain: {
-          accounts: {
-            [owner]: {
-              lastBlock,
-              vaults: [],
-              vaultBlocks: []
-            }
-          }
+          latestFetchedBlock: 15
         }
       })
       .mockReturnValueOnce({
-        preferences: {
-          currentAccount: owner
-        },
         blockChain: {
-          accounts: {
-            [owner]: {
-              lastBlock,
-              vaults: [],
-              vaultBlocks: []
-            }
-          }
+          latestFetchedBlock: 26
         }
       })
 
@@ -132,31 +114,44 @@ describe('watchVaultEvents', () => {
       expect(actual).toEqual(expected)
     })
 
-    watchVaultEventsSpy.mockReturnValueOnce(
-      merge(
-        of(
-          blockChainActions.registerBlock({
-            account: owner,
-            label: VAULT,
-            block
-          })
-        ),
-        of(
-          blockChainActions.registerBlock({
-            account: owner,
-            label: VAULT,
-            block
-          })
-        ),
-        of(
-          blockChainActions.registerBlock({
-            account: owner,
-            label: VAULT,
-            block
-          })
-        ).delay(20, ts)
+    watchVaultEventsSpy
+      .mockReturnValueOnce(
+        merge(
+          of(
+            blockChainActions.registerBlock({
+              account: owner,
+              label: VAULT,
+              block
+            })
+          ),
+          of(
+            blockChainActions.registerBlock({
+              account: owner,
+              label: VAULT,
+              block
+            })
+          ),
+          of(
+            blockChainActions.registerBlock({
+              account: owner,
+              label: VAULT,
+              block
+            })
+          ).delay(20, ts)
+        )
       )
-    )
+      .mockReturnValueOnce(
+        merge(
+          of(
+            blockChainActions.registerBlock({
+              account: owner,
+              label: VAULT,
+              block2
+            })
+          ).delay(40, ts)
+        )
+      )
+
     const inputValues = {
       a: blockChainActions.vaultFetchCompleted(),
       b: blockChainActions.vaultFetchCompleted()
@@ -166,11 +161,16 @@ describe('watchVaultEvents', () => {
         account: owner,
         label: VAULT,
         block
+      }),
+      c: blockChainActions.registerBlock({
+        account: owner,
+        label: VAULT,
+        block2
       })
     }
 
     const inputMarble = 'a-b'
-    const expectedMarble = '(bb)'
+    const expectedMarble = '(bb)--c'
 
     const action$ = new ActionsObservable(
       ts.createHotObservable(inputMarble, inputValues)
