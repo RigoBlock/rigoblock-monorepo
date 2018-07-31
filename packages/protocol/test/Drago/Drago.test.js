@@ -1,5 +1,5 @@
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
-import vaultArtifact from '../../artifacts/Vault.json'
+import dragoArtifact from '../../artifacts/Drago.json'
 import web3 from '../web3'
 
 const contractName = 'Drago'
