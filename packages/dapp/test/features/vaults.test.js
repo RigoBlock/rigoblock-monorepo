@@ -28,7 +28,7 @@ Scenario(
 )
 
 Scenario('user creates a new vault', (navigation, vaults) => {
-  const vaultName = 'New Vault'
+  const vaultName = 'New vault'
   const vaultSymbol = 'VLT'
   vaults.navigateTo()
   vaults.createNewVault(vaultName, vaultSymbol, account)
@@ -38,7 +38,7 @@ Scenario('user creates a new vault', (navigation, vaults) => {
 Scenario(
   'user cannot create a vault that already exists',
   (navigation, vaults) => {
-    const vaultName = 'First Vault'
+    const vaultName = 'First vault'
     const vaultSymbol = 'ASD'
     vaults.navigateTo()
     vaults.assertVaultExists(vaultName, vaultSymbol, 0)
@@ -50,7 +50,7 @@ Scenario(
 Scenario(
   "user cannot create a vault with a symbol that isn't 3 characters long",
   (navigation, vaults) => {
-    const vaultName = 'First Vault'
+    const vaultName = 'First vault'
     const vaultSymbol = 'AS'
     vaults.navigateTo()
     vaults.createNewVault(vaultName, vaultSymbol, account)

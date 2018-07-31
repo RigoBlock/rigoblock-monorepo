@@ -54,7 +54,7 @@ const asyncValidate = async values => {
     api.contract.DragoRegistry.address
   )
   try {
-    const res = await registry.fromName(parsedValues.vaultName)
+    const res = await registry.fromName(parsedValues.vaultName.toLowerCase())
     if (res) {
       throw vaultExistError
     }
