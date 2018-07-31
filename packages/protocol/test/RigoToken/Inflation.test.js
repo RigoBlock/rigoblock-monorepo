@@ -19,7 +19,7 @@ describeContract(contractName, async () => {
   beforeAll(async () => {
     group = baseContracts['VaultFactory'].address
     await baseContracts['VaultFactory'].createVault('testvault', 'VLT')
-    const vaultData = await baseContracts['DragoRegistry'].fromSymbol('VLT')
+    const vaultData = await baseContracts['DragoRegistry'].fromName('testvault')
     const [id, address] = vaultData
     vaultId = id
     vaultAddress = address

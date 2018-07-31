@@ -92,7 +92,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         require(mapFromName[_name] == 0);
         _;
     }
-    
+
      modifier whenSymbolUppercase(string _name) {
         require(LibSanitize.isUppercase(_name));
         _;
@@ -309,6 +309,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         );
     }
 
+/*
     /// @dev Provides a pool's struct data
     /// @param _symbol Symbol of the pool
     /// @return Pool struct data
@@ -334,6 +335,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
             group = pool.group
         );
     }
+*/
 
     /// @dev Provides a pool's struct data
     /// @param _name Name of the pool
