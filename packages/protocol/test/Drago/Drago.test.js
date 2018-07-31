@@ -23,6 +23,7 @@ describeContract(contractName, () => {
     )
   })
 
+/*
   describe('buyDrago', () => {
     it('increases total supply as consequece of purchase', async () => {
       dragoSupply = web3.utils.toWei('1')
@@ -35,6 +36,14 @@ describeContract(contractName, () => {
         ...transactionDefault,
         value: dragoSupply
       })
+      expect(txHash).toBeHash()
+    })
+  })
+*/
+
+  describe('changeMinPeriod', () => {
+    it('increases time needed to execute sell', async () => {
+      const txHash = await dragoInstance.methods.changeMinPeriod('2')
       expect(txHash).toBeHash()
     })
   })
