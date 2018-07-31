@@ -40,7 +40,7 @@ describeContract(contractName, () => {
     })
   })
 */
-
+/*
   describe('changeMinPeriod', () => {
     it('can only be called by the factory DAO', async () => {
       await expect(
@@ -48,10 +48,10 @@ describeContract(contractName, () => {
       ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
-
+*/
   describe('setTransactionFee', () => {
     it('sets a transaction fee for purchases', async () => {
-      const txHash = await dragoInstance.methods.setTransactionFee('2', '2')
+      const txHash = await dragoInstance.methods.setTransactionFee('2')
       expect(txHash).toBeHash()
     })
   })
