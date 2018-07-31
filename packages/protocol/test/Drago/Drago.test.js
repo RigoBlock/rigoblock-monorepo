@@ -5,6 +5,10 @@ import web3 from '../web3'
 const contractName = 'Drago'
 
 describeContract(contractName, () => {
+  let dragoId
+  let dragoAddress
+  let dragoSupply
+  let transactionDefault
 
   beforeAll(async () => {
     await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
