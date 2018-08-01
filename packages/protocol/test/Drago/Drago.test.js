@@ -52,6 +52,7 @@ describeContract(contractName, () => {
   describe('setTransactionFee', () => {
     it('sets a transaction fee for purchases', async () => {
       const txHash = await dragoInstance.methods.setTransactionFee('2')
+      console.log(txHash)
       expect(txHash).toBeHash()
     })
   })
