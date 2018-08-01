@@ -4,10 +4,9 @@ import Web3 from 'web3'
 
 const formatOrdersFromAggregateERCdEX = orders => {
   let orderPrice, orderAmount
-  let web3 = new Web3(Web3.currentProvider)
   let formattedOrders = orders.map(order => {
     orderPrice = new BigNumber(order.price).toFixed(7)
-    orderAmount = new BigNumber(web3.utils.fromWei(order.volume)).toFixed(5)
+    orderAmount = new BigNumber(Web3.utils.fromWei(order.volume)).toFixed(5)
     let orderObject = {
       orderAmount,
       orderPrice

@@ -6,7 +6,8 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "test": "jest",
+    "test:unit": "jest",
+    "test:unit:watch": "jest --watch",
     "lint": "eslint src --ext js,ts --ignore-path .gitignore --fix"
   },
   "files": [
@@ -14,7 +15,8 @@
   ],
   "devDependencies": {
     "babel-preset-latest": "^6.24.1",
-    "jest": "^23.4.2"
+    "jest": "^23.4.2",
+    "web3": "^1.0.0-beta.35"
   },
   "dependencies": {
     "request-promise": "^4.2.2"
