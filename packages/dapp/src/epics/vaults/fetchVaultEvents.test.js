@@ -95,6 +95,6 @@ describe('fetchVaultEventsEpic', () => {
     ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
     ts.flush()
 
-    expect(fetchVaultEventsSpy).toHaveBeenCalledWith(lastBlock + 1)
+    expect(fetchVaultEventsSpy).toHaveBeenCalledWith(owner, lastBlock + 1)
   })
 })

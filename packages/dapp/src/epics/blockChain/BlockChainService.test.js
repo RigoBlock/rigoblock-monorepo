@@ -274,10 +274,12 @@ describe('blockChain services function', () => {
         blockChainService.account = owner
         blockChainService.accounts.add(owner)
 
-        const outputAction = blockChainService.fetchVaultEvents()
+        const outputAction = blockChainService.fetchVaultEvents(owner)
 
         ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
+
         ts.flush()
+
         expect(stopWatchingMock).toHaveBeenCalled()
       })
       it('emits blockChainError if there is an error during fetch', () => {

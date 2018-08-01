@@ -4,7 +4,6 @@ import { createReducer } from 'redux-act'
 import blockChainActions from '../../actions/blockchain-actions'
 import persistentDecorator from '../../store/persistentDecorator'
 import u from 'updeep'
-import vaultActions from '../../actions/vault-actions'
 import vaultsReducer from './vaults'
 
 const initialState = {
@@ -27,18 +26,25 @@ const blockChainReducer = createReducer(
             },
             state
           ),
-    [vaultActions.registerVaultBlock]: (state, { account, block }) => {
+    [blockChainActions.registerBlock]: (state, { account, block }) => {
+      let latestFetchedBlock = Object.values(state.accounts).reduce(
+        (acc, curr) => (acc > curr.lastBlock ? acc : curr.lastBlock),
+        0
+      )
       const blockNumber = block.blockNumber
       let lastBlock = state.accounts[account].lastBlock
       lastBlock =
         !lastBlock || lastBlock < blockNumber ? blockNumber : lastBlock
+      latestFetchedBlock =
+        lastBlock > latestFetchedBlock ? lastBlock : latestFetchedBlock
       return u(
         {
           accounts: {
             [account]: {
               lastBlock: lastBlock
             }
-          }
+          },
+          latestFetchedBlock
         },
         state
       )
