@@ -178,7 +178,61 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                         },
                       }
                     }
-                    createVault={[Function]}
+                    dispatch={
+                      [MockFunction] {
+                        "calls": Array [
+                          Array [
+                            Object {
+                              "meta": Object {
+                                "form": "createVault",
+                                "keepDirty": false,
+                                "updateUnregisteredFields": false,
+                              },
+                              "payload": Object {
+                                "accountNumber": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
+                              },
+                              "type": "@@redux-form/INITIALIZE",
+                            },
+                          ],
+                          Array [
+                            Object {
+                              "meta": Object {
+                                "form": "createVault",
+                              },
+                              "payload": Object {
+                                "name": "accountNumber",
+                                "type": "Field",
+                              },
+                              "type": "@@redux-form/REGISTER_FIELD",
+                            },
+                          ],
+                          Array [
+                            Object {
+                              "meta": Object {
+                                "form": "createVault",
+                              },
+                              "payload": Object {
+                                "name": "vaultName",
+                                "type": "Field",
+                              },
+                              "type": "@@redux-form/REGISTER_FIELD",
+                            },
+                          ],
+                          Array [
+                            Object {
+                              "meta": Object {
+                                "form": "createVault",
+                              },
+                              "payload": Object {
+                                "name": "vaultSymbol",
+                                "type": "Field",
+                              },
+                              "type": "@@redux-form/REGISTER_FIELD",
+                            },
+                          ],
+                        ],
+                      }
+                    }
                     formObject={
                       Object {
                         "createVault": Object {
@@ -200,10 +254,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                         "accountNumber": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
                       }
                     }
-                    registerTransaction={[Function]}
-                    registerVault={[Function]}
-                    registerVaultBlock={[Function]}
-                    updateVaultData={[Function]}
                   >
                     <Connect(Form(CreateVaultForm))
                       accounts={
@@ -263,8 +313,62 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                         }
                       }
                       asyncValidate={[Function]}
-                      createVault={[Function]}
                       destroyOnUnmount={true}
+                      dispatch={
+                        [MockFunction] {
+                          "calls": Array [
+                            Array [
+                              Object {
+                                "meta": Object {
+                                  "form": "createVault",
+                                  "keepDirty": false,
+                                  "updateUnregisteredFields": false,
+                                },
+                                "payload": Object {
+                                  "accountNumber": "0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196",
+                                },
+                                "type": "@@redux-form/INITIALIZE",
+                              },
+                            ],
+                            Array [
+                              Object {
+                                "meta": Object {
+                                  "form": "createVault",
+                                },
+                                "payload": Object {
+                                  "name": "accountNumber",
+                                  "type": "Field",
+                                },
+                                "type": "@@redux-form/REGISTER_FIELD",
+                              },
+                            ],
+                            Array [
+                              Object {
+                                "meta": Object {
+                                  "form": "createVault",
+                                },
+                                "payload": Object {
+                                  "name": "vaultName",
+                                  "type": "Field",
+                                },
+                                "type": "@@redux-form/REGISTER_FIELD",
+                              },
+                            ],
+                            Array [
+                              Object {
+                                "meta": Object {
+                                  "form": "createVault",
+                                },
+                                "payload": Object {
+                                  "name": "vaultSymbol",
+                                  "type": "Field",
+                                },
+                                "type": "@@redux-form/REGISTER_FIELD",
+                              },
+                            ],
+                          ],
+                        }
+                      }
                       enableReinitialize={true}
                       forceUnregisterOnUnmount={false}
                       form="createVault"
@@ -293,9 +397,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                       keepDirtyOnReinitialize={false}
                       persistentSubmitErrors={false}
                       pure={true}
-                      registerTransaction={[Function]}
-                      registerVault={[Function]}
-                      registerVaultBlock={[Function]}
                       shouldAsyncValidate={[Function]}
                       shouldError={[Function]}
                       shouldValidate={[Function]}
@@ -303,7 +404,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                       touchOnBlur={true}
                       touchOnChange={false}
                       updateUnregisteredFields={false}
-                      updateVaultData={[Function]}
                       validate={[Function]}
                     >
                       <Form(CreateVaultForm)
@@ -397,7 +497,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                         clearFields={[Function]}
                         clearSubmit={[Function]}
                         clearSubmitErrors={[Function]}
-                        createVault={[Function]}
                         destroy={[Function]}
                         destroyOnUnmount={true}
                         dirty={false}
@@ -490,9 +589,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                         pristine={true}
                         pure={true}
                         registerField={[Function]}
-                        registerTransaction={[Function]}
-                        registerVault={[Function]}
-                        registerVaultBlock={[Function]}
                         reset={[Function]}
                         resetSection={[Function]}
                         setSubmitFailed={[Function]}
@@ -519,7 +615,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                         updateSyncErrors={[Function]}
                         updateSyncWarnings={[Function]}
                         updateUnregisteredFields={false}
-                        updateVaultData={[Function]}
                         valid={true}
                         validExceptSubmit={true}
                         validate={[Function]}
@@ -612,7 +707,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                           clearFields={[Function]}
                           clearSubmit={[Function]}
                           clearSubmitErrors={[Function]}
-                          createVault={[Function]}
                           destroy={[Function]}
                           dirty={false}
                           dispatch={
@@ -698,9 +792,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                           invalid={false}
                           pristine={true}
                           pure={true}
-                          registerTransaction={[Function]}
-                          registerVault={[Function]}
-                          registerVaultBlock={[Function]}
                           reset={[Function]}
                           resetSection={[Function]}
                           submit={[Function]}
@@ -709,7 +800,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                           submitting={false}
                           touch={[Function]}
                           untouch={[Function]}
-                          updateVaultData={[Function]}
                           valid={true}
                           validate={[Function]}
                         >
@@ -903,7 +993,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         "clearFields": [Function],
                                         "clearSubmit": [Function],
                                         "clearSubmitErrors": [Function],
-                                        "createVault": [Function],
                                         "destroy": [Function],
                                         "destroyOnUnmount": true,
                                         "dirty": false,
@@ -994,9 +1083,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         "register": [Function],
                                         "registerField": [Function],
                                         "registerInnerOnSubmit": [Function],
-                                        "registerTransaction": [Function],
-                                        "registerVault": [Function],
-                                        "registerVaultBlock": [Function],
                                         "registeredFields": undefined,
                                         "reset": [Function],
                                         "resetSection": [Function],
@@ -1027,7 +1113,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         "updateSyncErrors": [Function],
                                         "updateSyncWarnings": [Function],
                                         "updateUnregisteredFields": false,
-                                        "updateVaultData": [Function],
                                         "valid": true,
                                         "validExceptSubmit": true,
                                         "validate": [Function],
@@ -1150,7 +1235,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "clearFields": [Function],
                                           "clearSubmit": [Function],
                                           "clearSubmitErrors": [Function],
-                                          "createVault": [Function],
                                           "destroy": [Function],
                                           "destroyOnUnmount": true,
                                           "dirty": false,
@@ -1241,9 +1325,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "register": [Function],
                                           "registerField": [Function],
                                           "registerInnerOnSubmit": [Function],
-                                          "registerTransaction": [Function],
-                                          "registerVault": [Function],
-                                          "registerVaultBlock": [Function],
                                           "registeredFields": undefined,
                                           "reset": [Function],
                                           "resetSection": [Function],
@@ -1274,7 +1355,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "updateSyncErrors": [Function],
                                           "updateSyncWarnings": [Function],
                                           "updateUnregisteredFields": false,
-                                          "updateVaultData": [Function],
                                           "valid": true,
                                           "validExceptSubmit": true,
                                           "validate": [Function],
@@ -2032,7 +2112,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         "clearFields": [Function],
                                         "clearSubmit": [Function],
                                         "clearSubmitErrors": [Function],
-                                        "createVault": [Function],
                                         "destroy": [Function],
                                         "destroyOnUnmount": true,
                                         "dirty": false,
@@ -2123,9 +2202,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         "register": [Function],
                                         "registerField": [Function],
                                         "registerInnerOnSubmit": [Function],
-                                        "registerTransaction": [Function],
-                                        "registerVault": [Function],
-                                        "registerVaultBlock": [Function],
                                         "registeredFields": undefined,
                                         "reset": [Function],
                                         "resetSection": [Function],
@@ -2156,7 +2232,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         "updateSyncErrors": [Function],
                                         "updateSyncWarnings": [Function],
                                         "updateUnregisteredFields": false,
-                                        "updateVaultData": [Function],
                                         "valid": true,
                                         "validExceptSubmit": true,
                                         "validate": [Function],
@@ -2263,7 +2338,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "clearFields": [Function],
                                           "clearSubmit": [Function],
                                           "clearSubmitErrors": [Function],
-                                          "createVault": [Function],
                                           "destroy": [Function],
                                           "destroyOnUnmount": true,
                                           "dirty": false,
@@ -2354,9 +2428,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "register": [Function],
                                           "registerField": [Function],
                                           "registerInnerOnSubmit": [Function],
-                                          "registerTransaction": [Function],
-                                          "registerVault": [Function],
-                                          "registerVaultBlock": [Function],
                                           "registeredFields": undefined,
                                           "reset": [Function],
                                           "resetSection": [Function],
@@ -2387,7 +2458,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "updateSyncErrors": [Function],
                                           "updateSyncWarnings": [Function],
                                           "updateUnregisteredFields": false,
-                                          "updateVaultData": [Function],
                                           "valid": true,
                                           "validExceptSubmit": true,
                                           "validate": [Function],
@@ -2778,7 +2848,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         "clearFields": [Function],
                                         "clearSubmit": [Function],
                                         "clearSubmitErrors": [Function],
-                                        "createVault": [Function],
                                         "destroy": [Function],
                                         "destroyOnUnmount": true,
                                         "dirty": false,
@@ -2869,9 +2938,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         "register": [Function],
                                         "registerField": [Function],
                                         "registerInnerOnSubmit": [Function],
-                                        "registerTransaction": [Function],
-                                        "registerVault": [Function],
-                                        "registerVaultBlock": [Function],
                                         "registeredFields": undefined,
                                         "reset": [Function],
                                         "resetSection": [Function],
@@ -2902,7 +2968,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         "updateSyncErrors": [Function],
                                         "updateSyncWarnings": [Function],
                                         "updateUnregisteredFields": false,
-                                        "updateVaultData": [Function],
                                         "valid": true,
                                         "validExceptSubmit": true,
                                         "validate": [Function],
@@ -3012,7 +3077,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "clearFields": [Function],
                                           "clearSubmit": [Function],
                                           "clearSubmitErrors": [Function],
-                                          "createVault": [Function],
                                           "destroy": [Function],
                                           "destroyOnUnmount": true,
                                           "dirty": false,
@@ -3103,9 +3167,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "register": [Function],
                                           "registerField": [Function],
                                           "registerInnerOnSubmit": [Function],
-                                          "registerTransaction": [Function],
-                                          "registerVault": [Function],
-                                          "registerVaultBlock": [Function],
                                           "registeredFields": undefined,
                                           "reset": [Function],
                                           "resetSection": [Function],
@@ -3136,7 +3197,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                           "updateSyncErrors": [Function],
                                           "updateSyncWarnings": [Function],
                                           "updateUnregisteredFields": false,
-                                          "updateVaultData": [Function],
                                           "valid": true,
                                           "validExceptSubmit": true,
                                           "validate": [Function],

@@ -10,7 +10,7 @@ import routerActions from '../../actions/router-actions'
 
 const VAULT_ID_REGEXP = /vaults\/(.+)/i
 
-const vaultInvalid = (action$, store, ts = Scheduler.async) =>
+const vaultInvalidEpic = (action$, store, ts = Scheduler.async) =>
   action$
     .filter(
       ({ payload, type }) =>
@@ -33,4 +33,4 @@ const vaultInvalid = (action$, store, ts = Scheduler.async) =>
         .filter(v => !!v)
     )
 
-export default vaultInvalid
+export default vaultInvalidEpic

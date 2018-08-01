@@ -1,17 +1,16 @@
 import './BaseTemplate.scss'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import GlobalActions from '../../../actions/global-actions'
 import LeftNavbar from '../../organisms/LeftNavbar'
 import Modal from '../../molecules/Modal'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import TopNavbar from '../../organisms/TopNavbar'
 import classNames from 'classnames'
+import globalActions from '../../../actions/global-actions'
 
 class BaseTemplate extends PureComponent {
   render() {
-    const { children, className, modalComponent, closeModal } = this.props
+    const { children, className, modalComponent, dispatch } = this.props
     const contentClass = classNames('page-main-content', className)
     return (
       <div>
@@ -20,7 +19,10 @@ class BaseTemplate extends PureComponent {
           <LeftNavbar />
           <div className={contentClass}>{children}</div>
         </div>
-        <Modal Component={modalComponent} onClickOutside={closeModal} />
+        <Modal
+          Component={modalComponent}
+          onClickOutside={() => dispatch(globalActions.closeModal())}
+        />
       </div>
     )
   }
@@ -28,7 +30,7 @@ class BaseTemplate extends PureComponent {
 
 BaseTemplate.propTypes = {
   children: PropTypes.node.isRequired,
-  closeModal: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   className: PropTypes.string,
   modalComponent: PropTypes.element
 }
@@ -38,12 +40,9 @@ BaseTemplate.defaultProps = {
   modalComponent: null
 }
 
-BaseTemplate = connect(
-  state => {
-    const { modalComponent } = state.globalReducer
-    return { modalComponent }
-  },
-  dispatch => bindActionCreators(GlobalActions, dispatch)
-)(BaseTemplate)
+BaseTemplate = connect(state => {
+  const { modalComponent } = state.globalReducer
+  return { modalComponent }
+})(BaseTemplate)
 
 export default BaseTemplate

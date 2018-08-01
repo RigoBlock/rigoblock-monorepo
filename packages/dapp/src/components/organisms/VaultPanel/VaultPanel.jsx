@@ -1,5 +1,4 @@
 import './VaultPanel.scss'
-import { INVESTOR } from '../../../constants/user'
 import { connect } from 'react-redux'
 import ContentWrapper from '../../molecules/ContentWrapper'
 import PropTypes from 'prop-types'
@@ -50,11 +49,10 @@ VaultPanel.propTypes = {
   vaults: PropTypes.object,
   transactions: PropTypes.object,
   location: PropTypes.string.isRequired,
-  userType: PropTypes.string
+  userType: PropTypes.string.isRequired
 }
 
 VaultPanel.defaultProps = {
-  userType: INVESTOR,
   vaults: null,
   transactions: null
 }

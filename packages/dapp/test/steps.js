@@ -24,16 +24,11 @@ module.exports = function() {
         element
       )
     },
-    createVault: async (name, symbol) => {
-      const [accounts, contracts] = await getContractsAndAccounts(web3)
-      const vaultFactory = new web3.eth.Contract(
-        contracts['VaultFactory'].abi,
-        contracts['VaultFactory'].address,
-        defaultOptions
+    displayFullSelectField: function(element) {
+      this.executeScript(
+        el => (document.querySelector(el).style.overflow = 'visible'),
+        element
       )
-      await vaultFactory.methods
-        .createVault(name, symbol)
-        .send({ from: accounts[0] })
     },
     buyVault: async (id, amount) => {
       const web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_URL))
@@ -50,10 +45,11 @@ module.exports = function() {
         vaultAddress,
         defaultOptions
       )
-      await vault.methods.buyVault().send({
+      const tx = await vault.methods.buyVault().send({
         from: accounts[0],
         value: Web3.utils.toWei(amount)
       })
+      return tx.transactionHash
     }
   })
 }

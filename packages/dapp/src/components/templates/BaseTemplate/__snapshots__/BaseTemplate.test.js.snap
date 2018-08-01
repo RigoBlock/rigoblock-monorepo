@@ -53,10 +53,8 @@ exports[`BaseTemplate component renders correctly 1`] = `
     >
       <Connect(BaseTemplate)>
         <BaseTemplate
-          closeModal={[Function]}
-          init={[Function]}
+          dispatch={[MockFunction]}
           modalComponent={null}
-          openModal={[Function]}
         >
           <div>
             <TopNavbar>

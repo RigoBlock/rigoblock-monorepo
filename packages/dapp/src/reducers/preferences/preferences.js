@@ -1,4 +1,4 @@
-import { INVESTOR } from '../../constants/user'
+import { MANAGER } from '../../constants/user'
 import { createReducer } from 'redux-act'
 import blockChainActions from '../../actions/blockchain-actions'
 import moment from 'moment-timezone'
@@ -8,7 +8,7 @@ import userActions from '../../actions/user-actions'
 
 const initialState = {
   timezone: `GMT ${moment.tz(moment.tz.guess()).format('Z')}`,
-  type: INVESTOR,
+  type: MANAGER,
   currentAccount: null,
   provider: null
 }

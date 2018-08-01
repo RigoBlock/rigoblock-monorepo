@@ -87,6 +87,16 @@ Jest will look for test files with this naming:
 
 The `.test.js` file must be located in the same folder of the relative component.
 
+### Using the DApp with Ganache
+
+To correctly use the DApp with Ganache, you must use Ganache-CLI via the command `yarn ganache` and bootstrap the contracts via `yarn ganache:bootstrap`. After bootstrapping the contract and before starting to make operations, you must go into your MetaMask extension, click on the menu in the top right corner, click settings, and at the bottom select **'Reset Account'**.
+
+This procedure is necessary because we always start Ganache with the same network Id, and doing so confuses MetaMask since it remembers the nonce of the transactions. By clicking 'Reset Account' we are effectively syncing the two again.
+
+> **Note**:
+>
+> The DApp will not work correctly when using Ganache UI, as Reset Account will not correctly sync MetaMask and the Ganache blockchain.
+
 ### Writing Unit Tests
 
 To create tests, add `it()` (or `test()`) blocks with the name of the test and its code. You may optionally wrap them in `describe()` blocks for logical grouping but this is neither required nor recommended.

@@ -1,4 +1,5 @@
 const { CONTRACT_NAMES } = require('../constants')
+require('@babel/polyfill')
 
 module.exports.default = async networkId => {
   const artifacts = CONTRACT_NAMES.map(contractName => `${contractName}.json`)

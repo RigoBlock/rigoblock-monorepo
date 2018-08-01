@@ -8,7 +8,7 @@ module.exports = {
   },
 
   navigateTo() {
-    I.amOnPage('/vaults')
+    I.navigateToUrl('/vaults')
   },
 
   assertImOnPage() {
@@ -29,26 +29,37 @@ module.exports = {
     I.see('ASD', 'div.title.large')
   },
 
-  async createNewVault(name, symbol) {
-    await I.createVault(name, symbol)
-    I.waitNumberOfVisibleElements('div.list-item', 3, 10)
-    I.cssClick("div.list-item[id='4']")
-    I.waitUrlEquals('/vaults/4')
-    I.see(symbol, 'div.title.large')
-    I.see('No transactions found.', 'div.table-replacer')
+  depositToVault(id, amount) {
+    return I.buyVault(id, amount)
   },
 
-  async depositToVault() {
-    const vaultId = 2
-    const amount = '32.18'
-    I.cssClick(`div.list-item[id='${vaultId}']`)
-    await I.buyVault(vaultId, amount)
-    I.waitForText('53.52', 5)
-    I.waitForText(amount, 5)
+  createNewVault(name, symbol, accountNumber) {
+    const selectField = 'ul[id="0-menu-options"]'
+    I.cssClick('div.vault-select > button')
+    I.waitForText('Create Vault')
+    I.cssClick('div[id="0-toggle"]')
+    I.waitForElement(selectField)
+    I.displayFullSelectField(selectField)
+    I.cssClick(`div[data-value="${accountNumber}"]`)
+    I.fillField("input[id='1']", name)
+    I.fillField("input[id='2']", symbol)
+    I.cssClick("button[type='submit']")
   },
 
-  assertAccountValue(val) {
-    I.waitForVisible('div.accounts-panel', 5)
-    I.waitForText(val, 5)
+  seeErrorVaultAlreadyExists() {
+    I.see('Vault already exists.', 'div.md-text-field-message')
+  },
+
+  seeErrorVaultSymbolIncorrect() {
+    I.see('Vault symbol must be 3 letters.', 'div.md-text-field-message')
+  },
+
+  assertVaultExists(name, symbol, id) {
+    I.waitForText(symbol, 5, `div.list-item[id="${id}"]  span.item-symbol`)
+    I.waitForText(name, 5, `div.list-item[id="${id}"]  span.item-name`)
+  },
+
+  assertTransactionExists(hash) {
+    I.waitForText(hash, 5)
   }
 }

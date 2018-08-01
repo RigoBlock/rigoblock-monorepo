@@ -1,5 +1,4 @@
 import './PreferencesForm.scss'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import Button, { BUTTON_TYPES } from '../../atoms/Button'
@@ -7,8 +6,8 @@ import CallToAction from '../../molecules/CallToAction'
 import PropTypes from 'prop-types'
 import React from 'react'
 import SelectFieldWithTitle from '../../molecules/SelectFieldWithTitle'
-import UserActions from '../../../actions/user-actions'
 import moment from 'moment-timezone'
+import userActions from '../../../actions/user-actions'
 
 const timeToDecimal = t => {
   t = t.split(':')
@@ -22,12 +21,7 @@ const timeZoneValues = [...timeZones]
   .sort((a, b) => timeToDecimal(a) - timeToDecimal(b))
   .map(timezone => `GMT ${timezone}`)
 
-let PreferencesForm = ({
-  changePreferences,
-  reset,
-  formObject,
-  handleSubmit
-}) => {
+let PreferencesForm = ({ dispatch, reset, formObject, handleSubmit }) => {
   const timeZoneProps = {
     id: '1',
     items: timeZoneValues
@@ -35,7 +29,7 @@ let PreferencesForm = ({
   return (
     <form
       onSubmit={handleSubmit(() =>
-        changePreferences(formObject.preferences.values)
+        dispatch(userActions.changePreferences(formObject.preferences.values))
       )}
       className="preferences-form"
     >
@@ -58,7 +52,7 @@ PreferencesForm.propTypes = {
   initialize: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
-  changePreferences: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   formObject: PropTypes.shape({
     preferences: PropTypes.shape({
       values: PropTypes.object
@@ -71,12 +65,9 @@ PreferencesForm = reduxForm({
   enableReinitialize: true
 })(PreferencesForm)
 
-PreferencesForm = connect(
-  state => ({
-    formObject: state.form,
-    initialValues: state.preferences
-  }),
-  dispatch => bindActionCreators(UserActions, dispatch)
-)(PreferencesForm)
+PreferencesForm = connect(state => ({
+  formObject: state.form,
+  initialValues: state.preferences
+}))(PreferencesForm)
 
 export default PreferencesForm
