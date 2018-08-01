@@ -61,10 +61,10 @@ import Api from '@rigoblock/api'
     api.web3._web3,
     api.contract.VaultFactory.address
   )
-  vaultFactory.createVaultTx('Rocksolid Vault', 'VLT').send({
+  vaultFactory.createVaultTx('rocksolidvault', 'VLT').send({
     value: 0,
     from: '0x...196',
-    gas: 4700000,
+    gas: 5700000,
     gasPrice: 100000000000
   })
 }

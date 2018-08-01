@@ -21,7 +21,7 @@ describeContract(contractName, () => {
     // setting inflation factor to later gather the data with getPoolData
     await baseContracts['Inflation'].setInflationFactor(group, inflationFactor)
     // creating vault to test functions
-    await baseContracts['VaultFactory'].createVault('test vault', 'VLT')
+    await baseContracts['VaultFactory'].createVault('testvault', 'VLT')
     const vaultData = await baseContracts['DragoRegistry'].fromSymbol('VLT')
     const [id, address] = vaultData
     vaultId = id

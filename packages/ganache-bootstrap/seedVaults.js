@@ -5,7 +5,7 @@ const logger = require('./logger')
 module.exports = async network => {
   let receipt
   const defaultOptions = {
-    gas: 4700000 // TODO: estimate gas
+    gas: 5700000 // TODO: estimate gas
   }
   const web3 = new Web3(new Web3.providers.HttpProvider(network))
   const networkId = await web3.eth.net.getId()
@@ -18,10 +18,10 @@ module.exports = async network => {
   )
   const ETH_IN_MICRO = 10 ** 6
 
-  const vault1options = ['First Vault', 'asd']
-  const vault2options = ['Second Vault', 'sad']
-  const vault3options = ['Third Vault', 'das']
-  const vault4options = ['Fourth Vault', 'ads']
+  const vault1options = ['first vault', 'ASD']
+  const vault2options = ['second vault', 'SAD']
+  const vault3options = ['third vault', 'DAS']
+  const vault4options = ['fourth vault', 'ADS']
 
   logger.info('options', vault1options)
 

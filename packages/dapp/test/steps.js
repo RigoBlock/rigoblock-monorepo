@@ -12,7 +12,7 @@ const getContractsAndAccounts = async () => {
   return [accounts, contracts]
 }
 const defaultOptions = {
-  gas: 4700000
+  gas: 5700000
 }
 
 module.exports = function() {
