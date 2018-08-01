@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[` Drago changeMinPeriod can only be called by the factory DAO 1`] = `"VM Exception while processing transaction: revert"`;

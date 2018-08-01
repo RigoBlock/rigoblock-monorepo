@@ -33,6 +33,8 @@ import { ExchangeAdapterFace as ExchangeAdapter } from '../ExchangeAdapters/Exch
 /// @title Drago - A set of rules for a drago.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract Drago is Owned, SafeMath, DragoFace {
+    // TODO: implement separate authority for exchanges, as it needs to be upgraded
+    // TODO: if effective, create 3 arrays of approved addresses: wrappers, exchanges and tokentransferproxies
 
     using DragoExchangeExtension for *;
     DragoExchangeExtension.Admin libraryAdmin;
@@ -87,7 +89,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         require(auth.isAuthority(msg.sender) || msg.sender == owner);
         _;
     }
-    
+
     modifier returnUnapprovedExchange {
         Authority auth = Authority(admin.authority);
         if (!auth.isWhitelistedExchange(msg.sender)) return;
@@ -293,7 +295,8 @@ contract Drago is Owned, SafeMath, DragoFace {
         data.minPeriod = _minPeriod;
     }
 
-    /// @dev allows a manager to deposit eth from an approved exchange/wrap eth
+/*
+    /// @dev allows a manager to deposit eth to an approved exchange/wrap eth
     /// @param _exchange Address of the target exchange
     /// @param _amount Value of the Eth in wei
     function depositToExchange(address _exchange, uint256 _amount)
@@ -304,6 +307,37 @@ contract Drago is Owned, SafeMath, DragoFace {
         ExchangeAdapter(getExchangeAdapter(_exchange))
         .deposit
         .value(_amount)();
+    }
+*/
+
+    /// @notice this function is aimed at working with the efx wrappers
+    /// @notice we have to decide whether to abstract or not
+    function wrapToEfx(
+        address _token,
+        address _wrapper,
+        address _tokenTransferProxy,
+        uint256 _amount,
+        uint256 _duration)
+        external
+        onlyOwner
+        whenApprovedExchange(_wrapper)
+        whenApprovedExchange(_tokenTransferProxy)
+    {
+        //TODO: get automatically token address by wrapper address
+        if (_token == address(0)) {
+            // TODO: Token(_wrapper) / TokenWrapper(_token)
+            require(
+                ExchangeAdapter(_wrapper)
+                .deposit
+                .value(_amount)(_amount, _duration)
+            );
+        } else {
+            require(setInfiniteAllowanceInternal(_tokenTransferProxy, _token));
+            require(
+                ExchangeAdapter(_wrapper)
+                .deposit(_amount, _duration)
+            );
+        }
     }
 
     /// @dev allows a manager to withdraw ETH from an approved exchange/unwrap eth
@@ -376,6 +410,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @dev With data of signed/unsigned transaction
     /// @param _exchange Address of the exchange
     /// @notice check whether we have to enforce prevent selfdestruct method
+    /// @notice this function allows to send money to the exchange through the proxy
     function operateOnExchangeThroughAdapter(
         address _exchange,
         bytes _assembledTransaction)
@@ -394,7 +429,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         }
         require(!failed);
     }
-    
+
     function enforceKyc(
         bool _enforced,
         address _kycProvider)
@@ -446,7 +481,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         sellPrice = data.sellPrice;
         buyPrice = data.buyPrice;
     }
-    
+
     /// @dev Returns the price of a pool
     /// @return Value of the share price in wei
     function calcSharePrice()
@@ -482,7 +517,7 @@ contract Drago is Owned, SafeMath, DragoFace {
             data.minPeriod
         );
     }
-    
+
     function getKycProvider()
         external view
         returns (address)
@@ -589,7 +624,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         DragoEventful events = DragoEventful(auth.getDragoEventful());
         require(events.sellDrago(msg.sender, this, _amount, _netRevenue, name, symbol));
     }
-    
+
     /// @dev Allows owner to set an infinite allowance to an approved exchange
     /// @param _tokenTransferProxy Address of the tokentargetproxy to be approved
     /// @param _token Address of the token to receive allowance for
