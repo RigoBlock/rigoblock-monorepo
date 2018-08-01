@@ -7,7 +7,9 @@ export const getTickers = {
   ERCdEX: (network = 1) => {
     const options = {
       method: 'GET',
-      url: `${SupportedExchanges.ERCdEX.http}/reports/ticker?networkId=${network}`,
+      url: `${
+        SupportedExchanges.ERCdEX.http
+      }/reports/ticker?networkId=${network}`,
       qs: {},
       json: true
     }
@@ -35,11 +37,12 @@ export const getAggregatedOrders = {
         baseTokenAddress: baseTokenAddress,
         quoteTokenAddress: quoteTokenAddress
       },
-      json: true 
-    };
+      json: true
+    }
     return options
   },
   Ethfinex: (networkId = 1, baseToken, quoteToken) => {
+    console.log(networkId)
     if (baseToken.length > 4) {
       throw new Error('baseToken has to be a shorter than 4 characters')
     }
@@ -48,7 +51,9 @@ export const getAggregatedOrders = {
     }
     const options = {
       method: 'GET',
-      url: `${SupportedExchanges.Ethfinex.http}/book/t${baseToken}${quoteToken}/P0`,
+      url: `${
+        SupportedExchanges.Ethfinex.http
+      }/book/t${baseToken}${quoteToken}/P0`,
       qs: {},
       json: true
     }

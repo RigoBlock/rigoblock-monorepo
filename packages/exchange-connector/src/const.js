@@ -14,5 +14,5 @@ export const SupportedExchanges = {
     supportedNetworks: ['1', '42'],
     tickersTokenPairs: ['tZRXETH', 'tMKRETH', 'tGNTETH'],
     http: 'https://api.bitfinex.com/v2'
-  },
+  }
 }

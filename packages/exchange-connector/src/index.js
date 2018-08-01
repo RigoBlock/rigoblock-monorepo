@@ -1,11 +1,11 @@
 // Copyright 2017 Rigo Investment Sagl.
 // This file is part of RigoBlock.
 
-import * as http from './exchanges'
-import { SupportedExchanges } from './const'
 import * as FORMAT from './format'
+import * as http from './exchanges'
+import { ERCdEX, Ethfinex } from '../../const'
+import { SupportedExchanges } from './const'
 import rp from 'request-promise'
-import { ERCdEX, Ethfinex } from '../../const';
 
 class Exchange {
   constructor(exchange, network = '1', transport = 'http') {
@@ -25,7 +25,12 @@ class Exchange {
     }
   }
 
-  returnResults = (query, formatFunction = (input) => { return input }) => {
+  returnResults = (
+    query,
+    formatFunction = input => {
+      return input
+    }
+  ) => {
     return rp(query())
       .then(results => {
         console.log(results)
@@ -49,20 +54,26 @@ class Exchange {
     return this.returnResults(() => {
       switch (this._exchange) {
         case ERCdEX:
-          return this._call[this._transport].getAggregatedOrders[this._exchange](this._network, baseToken.address, quoteToken.address)
+          return this._call[this._transport].getAggregatedOrders[
+            this._exchange
+          ](this._network, baseToken.address, quoteToken.address)
         case Ethfinex:
-          return this._call[this._transport].getAggregatedOrders[this._exchange](this._network, baseToken.symbol, 'ETH')
+          return this._call[this._transport].getAggregatedOrders[
+            this._exchange
+          ](this._network, baseToken.symbol, 'ETH')
         default:
           throw new Error('Relay unknown')
       }
-    }, FORMAT.aggregatedOrders[this._exchange]
-    )
+    }, FORMAT.aggregatedOrders[this._exchange])
   }
 
   getTickers = () => {
     console.log(`Fetching tokens prices from ${this._exchange}`)
     return this.returnResults(() => {
-      return this._call[this._transport].getTickers[this._exchange](this._network, this._exchangeProperties.tickersTokenPairs)
+      return this._call[this._transport].getTickers[this._exchange](
+        this._network,
+        this._exchangeProperties.tickersTokenPairs
+      )
     }, FORMAT.tickers[this._exchange])
   }
 }

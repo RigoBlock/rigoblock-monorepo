@@ -1,7 +1,5 @@
-import {
-  tickersSchema
-} from './tickers_schema';
+import { tickersSchema } from './tickers_schema'
 
 export const schemas = {
-    tickersSchema,
-};
+  tickersSchema
+}

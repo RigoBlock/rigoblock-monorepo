@@ -6,7 +6,8 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src --ext js,ts --ignore-path .gitignore --fix"
   },
   "files": [
     "dist"

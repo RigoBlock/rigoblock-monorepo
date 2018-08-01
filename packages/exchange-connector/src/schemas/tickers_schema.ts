@@ -3,14 +3,14 @@ export const tickerSchema = {
   properties: {
     baseTokenSymbol: { type: 'string' },
     quoteTokenSymbol: { type: 'string' },
-    last: { type: 'number' },
-},
-required: ['baseTokenSymbol', 'quoteTokenSymbol', 'last'],
-type: 'object',
-};
+    last: { type: 'number' }
+  },
+  required: ['baseTokenSymbol', 'quoteTokenSymbol', 'last'],
+  type: 'object'
+}
 
 export const tickersSchema = {
   id: '/tickersSchema',
   type: 'array',
-  items: { $ref: '/Tick' },
-};
+  items: { $ref: '/Tick' }
+}
