@@ -656,7 +656,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         grossAmount = safeDiv(msg.value * BASE, data.buyPrice);
         uint256 fee = safeMul(grossAmount, data.transactionFee) / 10000; //fee is in basis points
         return (
-            grossAmount = safeDiv(msg.value * BASE, data.buyPrice),
+            grossAmount,
             feeDrago = safeMul(fee , admin.ratio) / 100,
             feeDragoDao = safeSub(fee, feeDrago),
             amount = safeSub(grossAmount, fee)
