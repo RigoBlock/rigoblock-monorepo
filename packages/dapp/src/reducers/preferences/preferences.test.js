@@ -21,7 +21,7 @@ describe('preferences reducer', () => {
 
   it("updates user's timezone", () => {
     preferencesTest(
-      undefined,
+      initialState,
       userActions.changePreferences({
         timezone: 'GMT +05:45'
       }),
@@ -35,7 +35,7 @@ describe('preferences reducer', () => {
   })
   it('saves the default account number to the state', () => {
     preferencesTest(
-      undefined,
+      initialState,
       blockChainActions.blockChainLogIn({ provider, account }),
       {
         timezone: 'GMT +02:00',
