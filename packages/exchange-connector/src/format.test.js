@@ -2,7 +2,7 @@
 // This file is part of RigoBlock.
 
 import * as FORMAT from './format'
-import { ERCdEX, Ethfinex } from './const'
+import { ERCdEX, Ethfinex } from './constants'
 
 describe('format exchange tickers output', () => {
   const outputERCdEX = [

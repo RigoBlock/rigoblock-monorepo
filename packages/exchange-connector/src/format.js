@@ -1,5 +1,5 @@
 import { BigNumber } from '@0xproject/utils'
-import { ERCdEX, Ethfinex } from './const'
+import { ERCdEX, Ethfinex } from './constants'
 import Web3 from 'web3'
 
 const formatOrdersFromAggregateERCdEX = orders => {
@@ -94,9 +94,7 @@ export const aggregatedOrders = {
       order[2] > 0 ? bids.push(order) : asks.push(order)
     })
     const bidsOrders = formatOrdersFromAggregateEthfinex(bids, 'bids')
-    console.log(bidsOrders)
     const asksOrders = formatOrdersFromAggregateEthfinex(asks.reverse(), 'asks')
-    console.log(asksOrders)
     const spread = calculateSpread(asksOrders, bidsOrders)
     return {
       bids: bidsOrders,

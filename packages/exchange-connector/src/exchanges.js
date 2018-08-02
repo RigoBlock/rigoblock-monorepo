@@ -1,7 +1,7 @@
 // Copyright 2017 Rigo Investment Sagl.
 // This file is part of RigoBlock.
 
-import { SupportedExchanges } from './const'
+import { SupportedExchanges } from './constants'
 
 export const getTickers = {
   ERCdEX: (network = 1) => {
@@ -41,8 +41,7 @@ export const getAggregatedOrders = {
     }
     return options
   },
-  Ethfinex: (networkId = 1, baseToken, quoteToken) => {
-    console.log(networkId)
+  Ethfinex: (baseToken, quoteToken) => {
     if (baseToken.length > 4) {
       throw new Error('baseToken has to be a shorter than 4 characters')
     }

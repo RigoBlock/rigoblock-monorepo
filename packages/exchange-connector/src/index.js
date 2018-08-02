@@ -3,7 +3,7 @@
 
 import * as FORMAT from './format'
 import * as http from './exchanges'
-import { ERCdEX, Ethfinex, SupportedExchanges } from './const'
+import { ERCdEX, Ethfinex, SupportedExchanges } from './constants'
 import rp from 'request-promise'
 
 class Exchange {
@@ -25,17 +25,13 @@ class Exchange {
   }
   // accepts a query and a formatFunction. promisify query with request-promise
   // then return formatted result
-  returnResults = (query, formatFunction = input => input) => {
-    return rp(query())
-      .then(results => {
-        console.log(results)
-        console.log(formatFunction)
-        console.log(formatFunction(results))
-        return formatFunction(results)
-      })
-      .catch(err => {
-        return err
-      })
+  returnResults = async (query, formatFunction = input => input) => {
+    try {
+      const result = await rp(query())
+      return formatFunction(result)
+    } catch (err) {
+      return err
+    }
   }
 
   getAggregatedOrders = (baseToken, quoteToken) => {

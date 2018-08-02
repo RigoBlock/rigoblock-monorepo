@@ -1,8 +1,8 @@
 // Copyright 2017 Rigo Investment Sagl.
 // This file is part of RigoBlock.
 
-import { ERCdEX, Ethfinex } from './const'
-import { SupportedExchanges } from './const'
+import { ERCdEX, Ethfinex } from './constants'
+import { SupportedExchanges } from './constants'
 import { getAggregatedOrders, getTickers } from './exchanges'
 
 describe('get tickers from exchange REST API', () => {
