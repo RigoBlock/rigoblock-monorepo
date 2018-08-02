@@ -8,10 +8,13 @@ describeContract(contractName, () => {
   let dragoId
   let dragoAddress
   let dragoInstance
+  let transactionDefault
 
   beforeAll(async () => {
     await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
-    const dragoData = await baseContracts['DragoRegistry'].fromName('my new drago')
+    const dragoData = await baseContracts['DragoRegistry'].fromName(
+      'my new drago'
+    )
     const [id, address] = dragoData
     const dragoId = id
     const dragoAddress = address
@@ -19,11 +22,19 @@ describeContract(contractName, () => {
       dragoArtifact.networks[GANACHE_NETWORK_ID].abi,
       dragoAddress
     )
+    transactionDefault = {
+      from: accounts[0],
+      gas: GAS_ESTIMATE,
+      gasPrice: 1
+    }
   })
 
   describe('setTransactionFee', () => {
     it('sets the transaction fee', async () => {
-      await dragoInstance.methods.setTransactionFee('2')
+      const test = await dragoInstance.methods
+        .setTransactionFee('2')
+        .send({ ...transactionDefault })
+      console.log(test)
     })
   })
 })
