@@ -110,7 +110,7 @@ describeContract(contractName, () => {
       const balance = await web3.eth.getBalance(test.toString())
       console.log(balance)*/
       const tokenAddress = null //Ether has address 0x0
-      const tokenWrapper = await baseContracts['WrapperLockEth'].address
+      /*const tokenWrapper = await baseContracts['WrapperLockEth'].address
       const tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
       const depositAmount = 1e16 // 10 finney
       const duration = 1 // 1 hour lockup (the minimum)
@@ -128,7 +128,7 @@ describeContract(contractName, () => {
       await dragoInstance.methods
         .wrapToEfx(parameters)
         .send({ ...transactionDefault })
-    })
+    })*/
 /*
     // must have a positive balance of token to wrap a token
     // a random token can be sent to a drago, won't be rejected. We may create a random token and transfer some tokens to the drago

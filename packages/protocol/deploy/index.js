@@ -99,7 +99,7 @@ module.exports = async (baseAccount, network) => {
   printAddress('Setting minting address...', inflation.address)
 
 /*
-  // gives an error. Do we have to update index.ts in @api as well?
+  // gives an error "deploying undefined".
   const tokenTransferProxy = await deploy(
     baseAccount,
     network,
