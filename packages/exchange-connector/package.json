@@ -2,6 +2,9 @@
   "name": "@rigoblock/exchange-connector",
   "description": "A JS utility to interacts with Exchanges API.",
   "version": "0.0.1",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
   "engines": {
     "node": ">=6.4"
   },
@@ -14,16 +17,27 @@
     "dist"
   ],
   "devDependencies": {
-    "babel-preset-latest": "^6.24.1",
+    "@babel/core": "^7.0.0-beta.55",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.55",
+    "@babel/preset-env": "^7.0.0-beta.55",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
     "jest": "^23.4.2",
     "web3": "^1.0.0-beta.35"
   },
   "dependencies": {
     "request-promise": "^4.2.2"
   },
-  "main": "index.js",
-  "author": "",
-  "license": "ISC",
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env"
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  },
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/"
