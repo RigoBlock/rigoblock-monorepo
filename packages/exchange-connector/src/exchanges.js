@@ -1,23 +1,27 @@
 // Copyright 2017 Rigo Investment Sagl.
 // This file is part of RigoBlock.
 
-import { SupportedExchanges } from './const'
+import { NETWORKS_ID, SupportedExchanges } from './const'
 
 export const getTickers = {
-  ERCdEX: (network = 1) => {
+  ERCdEX: (networkId = 1) => {
     const options = {
       method: 'GET',
-      url: `${SupportedExchanges.ERCdEX.http}/reports/ticker?networkId=${network}`,
+      url: `${
+        SupportedExchanges.ERCdEX.http[NETWORKS_ID[networkId]]
+      }/reports/ticker?networkId=${networkId}`,
       qs: {},
       json: true
     }
     return options
   },
-  Ethfinex: () => {
+  Ethfinex: (networkId = 1) => {
     const symbols = SupportedExchanges.Ethfinex.tickersTokenPairs.toString()
     const options = {
       method: 'GET',
-      url: `${SupportedExchanges.Ethfinex.http}/tickers?symbols=${symbols}`,
+      url: `${
+        SupportedExchanges.Ethfinex.http[NETWORKS_ID[networkId]]
+      }/tickers?symbols=${symbols}`,
       qs: {},
       json: true
     }
@@ -29,14 +33,16 @@ export const getAggregatedOrders = {
   ERCdEX: (networkId = 1, baseTokenAddress, quoteTokenAddress) => {
     const options = {
       method: 'GET',
-      uri: `${SupportedExchanges.ERCdEX.http}/aggregated_orders`,
+      uri: `${
+        SupportedExchanges.ERCdEX.http[NETWORKS_ID[networkId]]
+      }/aggregated_orders`,
       qs: {
         networkId: networkId,
         baseTokenAddress: baseTokenAddress,
         quoteTokenAddress: quoteTokenAddress
       },
-      json: true 
-    };
+      json: true
+    }
     return options
   },
   Ethfinex: (networkId = 1, baseToken, quoteToken) => {
@@ -48,7 +54,9 @@ export const getAggregatedOrders = {
     }
     const options = {
       method: 'GET',
-      url: `${SupportedExchanges.Ethfinex.http}/book/t${baseToken}${quoteToken}/P0`,
+      url: `${
+        SupportedExchanges.Ethfinex.http[NETWORKS_ID[networkId]]
+      }/book/t${baseToken}${quoteToken}/P0`,
       qs: {},
       json: true
     }

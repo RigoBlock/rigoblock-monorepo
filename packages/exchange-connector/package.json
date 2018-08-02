@@ -16,6 +16,7 @@
     "jest": "^23.4.2"
   },
   "dependencies": {
+    "reconnecting-websocket": "^4.0.0-rc5",
     "request-promise": "^4.2.2"
   },
   "main": "index.js",
