@@ -128,7 +128,8 @@ describeContract(contractName, () => {
       await dragoInstance.methods
         .wrapToEfx(parameters)
         .send({ ...transactionDefault })
-    })*/
+      */
+    })
 /*
     // must have a positive balance of token to wrap a token
     // a random token can be sent to a drago, won't be rejected. We may create a random token and transfer some tokens to the drago
