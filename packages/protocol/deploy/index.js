@@ -98,6 +98,24 @@ module.exports = async (baseAccount, network) => {
   await rigoToken.changeMintingAddress(inflation.address)
   printAddress('Setting minting address...', inflation.address)
 
+/*
+  // gives an error. Do we have to update index.ts in @api as well?
+  const tokenTransferProxy = await deploy(
+    baseAccount,
+    network,
+    'TokenTransferProxy'
+  )
+  printAddress('TokenTransferProxy', tokenTransferProxy.address)
+
+  const wrapperLockEth = await deploy(
+    baseAccount,
+    network,
+    'WrapperLockEth'
+    ['ETHWrapper', 'ETHW', 18, tokenTransferProxy.address]
+  )
+  printAddress('WrapperLockEth', wrapperLockEth.address)
+*/
+
   return {
     Authority: authority,
     DragoRegistry: dragoRegistry,
@@ -107,6 +125,9 @@ module.exports = async (baseAccount, network) => {
     DragoFactory: dragoFactory,
     RigoToken: rigoToken,
     ProofOfPerformance: proofOfPerformance,
-    Inflation: inflation
+    Inflation: inflation/*,
+    TokenTransferProxy: tokenTransferProxy,
+    WrapperLockEth: wrapperLockEth
+    */
   }
 }

@@ -11,7 +11,7 @@ describeContract(contractName, () => {
   let dragoInstance
   let transactionDefault
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
     const dragoData = await baseContracts['DragoRegistry'].fromName(
       'my new drago'
@@ -40,7 +40,6 @@ describeContract(contractName, () => {
       const newFee = adminData[4]
       expect(newFee).toEqual('2')
     })
-    /*
     it('fails when non-owner tries to set the fee', async () => {
       const transactionParams = {
         from: accounts[1],
@@ -60,7 +59,6 @@ describeContract(contractName, () => {
         .send({ ...transactionDefault })
       ).rejects.toThrowErrorMatchingSnapshot()
     })
-    */
   })
 
   describe('buyDrago', () => {
@@ -96,5 +94,46 @@ describeContract(contractName, () => {
         .call()
       expect(userBalance).toEqual(netTokensAmount)
     })
+  })
+
+  describe('wrapToEfx', () => {
+    it('wraps eth to the efx wrapper', async () => {
+      // execute a purchase first
+      // seems the address of the contract is undefined
+      /*const purchaseAmount = web3.utils.toWei('1.1')
+      const test = await dragoInstance.methods
+        .buyDrago()
+        .send({
+          ...transactionDefault,
+          value: purchaseAmount
+        })
+      const balance = await web3.eth.getBalance(test.toString())
+      console.log(balance)*/
+      const tokenAddress = null //Ether has address 0x0
+      const tokenWrapper = await baseContracts['WrapperLockEth'].address
+      const tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
+      const depositAmount = 1e16 // 10 finney
+      const duration = 1 // 1 hour lockup (the minimum)
+      const parameters = [
+        tokenAddress,
+        tokenWrapper,
+        tokenTransferProxy,
+        depositAmount,
+        duration
+      ]
+      // only whitelisters can whitelist exchanges
+      await baseContracts['Authority'].setWhitelister(accounts[0], true)
+      await baseContracts['Authority'].whitelistExchange(tokenWrapper, true)
+      await baseContracts['Authority'].whitelistExchange(tokenTransferProxy, true)
+      await dragoInstance.methods
+        .wrapToEfx(parameters)
+        .send({ ...transactionDefault })
+    })
+/*
+    // must have a positive balance of token to wrap a token
+    // a random token can be sent to a drago, won't be rejected. We may create a random token and transfer some tokens to the drago
+    it('wraps a token to its efx wrapper', async () => {
+    })
+*/
   })
 })

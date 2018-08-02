@@ -25,9 +25,11 @@ module.exports = {
     'OwnedUninitialized',
     'ProofOfPerformance',
     'RigoToken',
+    'TokenTransferProxy',
     'UnlimitedAllowanceToken',
     'Vault',
     'VaultEventful',
-    'VaultFactory'
+    'VaultFactory',
+    'WrapperLockEth'
   ]
 }
