@@ -57,3 +57,17 @@ Scenario(
     vaults.seeErrorVaultSymbolIncorrect()
   }
 )
+
+Scenario(
+  'user cannot input non alphanumeric characters',
+  (navigation, vaults) => {
+    const vaultName = 'First vault'
+    const vaultSymbol = 'ASD'
+    vaults.navigateTo()
+    vaults.fillCreateVaultForm(
+      `${vaultName}\"{}:\"|>?<_+)(&&£^%$@!&*(£@!`,
+      `${vaultSymbol}\"!@£$%^&*()_…æ«“‘`
+    )
+    vaults.assertInputValues(vaultName, vaultSymbol)
+  }
+)

@@ -46,6 +46,18 @@ module.exports = {
     I.cssClick("button[type='submit']")
   },
 
+  fillCreateVaultForm(name, symbol) {
+    I.cssClick('div.vault-select > button')
+    I.waitForText('Create Vault')
+    I.fillField("input[id='1']", name)
+    I.fillField("input[id='2']", symbol)
+  },
+
+  assertInputValues(name, symbol) {
+    I.waitForValue("input[id='1']", name)
+    I.waitForValue("input[id='2']", symbol)
+  },
+
   seeErrorVaultAlreadyExists() {
     I.see('Vault already exists.', 'div.md-text-field-message')
   },
