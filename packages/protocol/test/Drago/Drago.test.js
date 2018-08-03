@@ -18,7 +18,7 @@ describeContract(contractName, () => {
     )
     const [id, address] = dragoData
     const dragoId = id
-    const dragoAddress = address
+    dragoAddress = address
     dragoInstance = new web3.eth.Contract(
       dragoArtifact.networks[GANACHE_NETWORK_ID].abi,
       dragoAddress
@@ -71,7 +71,6 @@ describeContract(contractName, () => {
           value: purchaseAmount
         })
       const gasUsed = purchase.gasUsed
-      console.log(gasUsed)
       const netPurchaseAmount = (purchaseAmount - gasUsed)
       const dragoData = await dragoInstance.methods
         .getData()
@@ -98,37 +97,36 @@ describeContract(contractName, () => {
 
   describe('wrapToEfx', () => {
     it('wraps eth to the efx wrapper', async () => {
-      // execute a purchase first
-      // seems the address of the contract is undefined
-      /*const purchaseAmount = web3.utils.toWei('1.1')
+      // adds additional ether to the pool to be able to deposit
+      const purchaseAmount = web3.utils.toWei('1.1')
       const test = await dragoInstance.methods
         .buyDrago()
         .send({
           ...transactionDefault,
           value: purchaseAmount
         })
-      const balance = await web3.eth.getBalance(test.toString())
-      console.log(balance)*/
+      const balance = await web3.eth.getBalance(dragoAddress)
+      console.log(balance)
       const tokenAddress = null //Ether has address 0x0
-      /*const tokenWrapper = await baseContracts['WrapperLockEth'].address
+      const tokenWrapper = await baseContracts['WrapperLockEth'].address
       const tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
       const depositAmount = 1e16 // 10 finney
       const duration = 1 // 1 hour lockup (the minimum)
-      const parameters = [
-        tokenAddress,
-        tokenWrapper,
-        tokenTransferProxy,
-        depositAmount,
-        duration
-      ]
       // only whitelisters can whitelist exchanges
       await baseContracts['Authority'].setWhitelister(accounts[0], true)
       await baseContracts['Authority'].whitelistExchange(tokenWrapper, true)
       await baseContracts['Authority'].whitelistExchange(tokenTransferProxy, true)
       await dragoInstance.methods
-        .wrapToEfx(parameters)
-        .send({ ...transactionDefault })
-      */
+        .wrapToEfx(
+          tokenAddress,
+          tokenWrapper,
+          tokenTransferProxy,
+          depositAmount,
+          duration
+        ).send({ ...transactionDefault })
+      const wethBalance = await baseContracts['WrapperLockEth'].balanceOf(dragoAddress)
+      // if a deposit is repeated, weth balance will be equal to the sum of depositAmouns
+      expect(wethBalance.toString()).toEqual(depositAmount.toString())
     })
 /*
     // must have a positive balance of token to wrap a token
