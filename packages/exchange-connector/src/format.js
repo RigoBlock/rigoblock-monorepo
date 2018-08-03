@@ -71,6 +71,7 @@ export const tickers = {
 
 export const aggregatedOrders = {
   [ERCdEX]: orders => {
+    console.log(orders)
     const bidsOrders = formatOrdersFromAggregateERCdEX(
       orders.buys.priceLevels,
       'bids'
@@ -88,6 +89,7 @@ export const aggregatedOrders = {
     }
   },
   [Ethfinex]: orders => {
+    console.log(orders)
     let bids = new Array()
     let asks = new Array()
     orders.map(order => {

@@ -102,7 +102,7 @@ describe('Exchange Connector', () => {
     })
   })
 
-  fdescribe('get aggregated orders', () => {
+  describe('get aggregated orders', () => {
     it(`gets aggregated orders from ${ERCdEX} and formats them`, async () => {
       requestPromiseSpy.mockReturnValueOnce(Promise.resolve(ercdexAggOrders))
       const exchange = new Exchange(ERCdEX)
@@ -121,7 +121,6 @@ describe('Exchange Connector', () => {
         baseToken,
         ethfinexQuoteToken
       )
-
       console.log('Ethfinex', orders)
       console.log('Ethfinex', orders)
       console.log('Ethfinex', orders)
