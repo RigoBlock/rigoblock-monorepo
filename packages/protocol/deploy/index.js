@@ -98,8 +98,6 @@ module.exports = async (baseAccount, network) => {
   await rigoToken.changeMintingAddress(inflation.address)
   printAddress('Setting minting address...', inflation.address)
 
-/*
-  // gives an error "deploying undefined".
   const tokenTransferProxy = await deploy(
     baseAccount,
     network,
@@ -110,11 +108,10 @@ module.exports = async (baseAccount, network) => {
   const wrapperLockEth = await deploy(
     baseAccount,
     network,
-    'WrapperLockEth'
+    'WrapperLockEth',
     ['ETHWrapper', 'ETHW', 18, tokenTransferProxy.address]
   )
   printAddress('WrapperLockEth', wrapperLockEth.address)
-*/
 
   return {
     Authority: authority,
@@ -125,9 +122,8 @@ module.exports = async (baseAccount, network) => {
     DragoFactory: dragoFactory,
     RigoToken: rigoToken,
     ProofOfPerformance: proofOfPerformance,
-    Inflation: inflation/*,
+    Inflation: inflation,
     TokenTransferProxy: tokenTransferProxy,
     WrapperLockEth: wrapperLockEth
-    */
   }
 }
