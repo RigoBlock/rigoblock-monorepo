@@ -1,24 +1,27 @@
-import * as rp from 'request-promise'
+import * as Exchange from './exchange'
 import { getRequestOptions } from '../utils'
-import Exchange from './exchange'
+import fetch from 'node-fetch'
 
-const HTTP_API_URL = 'https://api.ercdex.com/api'
+export class ERCdEX implements Exchange.Interface<ERCdEX> {
+  private HTTP_API_URL = 'https://api.ercdex.com/api'
 
-export class ERCdEX implements Exchange {
-  constructor(public network, public transport) {
-  }
-  public getAggregatedOrders = (baseToken, quoteToken) => {
-    const ordersUrl = `${HTTP_API_URL}/aggregated_orders`
+  constructor(public networkId, public transport) {}
+
+  public async getOrders(
+    baseSymbol: string,
+    quoteSymbol: string
+  ): Promise<Exchange.OrdersList> {
+    const ordersUrl = `${this.HTTP_API_URL}/aggregated_orders`
     const qs = {
-      baseTokenAddress: baseToken.address,
-      quoteTokenAddress: quoteToken.address,
+      baseTokenAddress: baseSymbol,
+      quoteTokenAddress: quoteSymbol,
       networkId: this.network
     }
-    return rp(getRequestOptions(ordersUrl, qs))
+    return fetch(getRequestOptions(ordersUrl, qs)).then(r => r.json())
   }
 
-  public getTickers = () => {}
-
-  private formatAggregatedOrders = () => {}
+  public network(id: number): ERCdEX {
+    this.networkId = id
+    return this
+  }
 }
-

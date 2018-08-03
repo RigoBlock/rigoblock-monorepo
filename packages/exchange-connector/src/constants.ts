@@ -1,8 +1,8 @@
-// Copyright 2017 Rigo Investment Sagl.
-// This file is part of RigoBlock.
-
 export const ERCdEX = 'ERCdEX'
 export const Ethfinex = 'Ethfinex'
+
+export const TOKENS_DATA_ENDPOINT =
+  'https://cdn.rawgit.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json'
 
 export const SupportedExchanges = {
   ERCdEX: {

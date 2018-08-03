@@ -11,6 +11,8 @@
   "scripts": {
     "test:unit": "jest",
     "test:unit:watch": "jest --watch",
+    "tsc": "rm -rf dist/* && tsc --outDir './dist'",
+    "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "lint": "eslint src --ext js,ts --ignore-path .gitignore --fix"
   },
   "files": [
@@ -20,17 +22,19 @@
     "@babel/core": "^7.0.0-beta.55",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.55",
     "@babel/preset-env": "^7.0.0-beta.55",
-    "@types/request-promise": "^4.1.42",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.2",
-    "jest": "^23.4.2",
     "eslint-plugin-typescript": "^0.12.0",
+    "jest": "^23.4.2",
     "typescript": "^3.0.1",
     "typescript-eslint-parser": "^17.0.1",
     "web3": "^1.0.0-beta.35"
   },
   "dependencies": {
-    "request-promise": "^4.2.2"
+    "@types/promise": "^7.1.30",
+    "node-fetch": "^2.2.0",
+    "promise": "^8.0.1",
+    "whatwg-fetch": "^2.0.4"
   },
   "babel": {
     "presets": [
