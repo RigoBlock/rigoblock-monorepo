@@ -11,7 +11,7 @@ import Dragos from './pages/Dragos'
 import Help from './pages/Help'
 import Login from './pages/Login'
 import Preferences from './pages/Preferences'
-import React from 'react'
+import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import Vaults from './pages/Vaults'
 import globalActions from './actions/global-actions'
@@ -22,7 +22,7 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ConnectedRouter history={history}>
-        <div>
+        <Fragment>
           <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
           <Route exact path={ROUTES.LOGIN} component={Login} />
           <Route exact path={ROUTES.PREFERENCES} component={Preferences} />
@@ -32,7 +32,7 @@ ReactDOM.render(
             component={Vaults}
           />
           <Route exact path={ROUTES.DRAGOS} component={Dragos} />
-        </div>
+        </Fragment>
       </ConnectedRouter>
     </PersistGate>
   </Provider>,

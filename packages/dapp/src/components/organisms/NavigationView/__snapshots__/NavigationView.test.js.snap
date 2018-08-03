@@ -1,39 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavigationView component renders correctly 1`] = `
-<div>
-  <List
-    Component={[Function]}
-    Divider={null}
-    className="navigation-view"
-    data={
-      Array [
-        Object {
-          "className": "",
-          "icon": "dashboard",
-          "link": Object {
-            "text": "Dashboard",
-            "to": "/",
-          },
+<List
+  Component={[Function]}
+  Divider={null}
+  className="navigation-view"
+  data={
+    Array [
+      Object {
+        "className": "",
+        "icon": "dashboard",
+        "link": Object {
+          "text": "Dashboard",
+          "to": "/",
         },
-        Object {
-          "className": "",
-          "icon": "account_balance_wallet",
-          "link": Object {
-            "text": "Dragos",
-            "to": "/dragos",
-          },
+      },
+      Object {
+        "className": "",
+        "icon": "account_balance_wallet",
+        "link": Object {
+          "text": "Dragos",
+          "to": "/dragos",
         },
-        Object {
-          "className": "active",
-          "icon": "lock",
-          "link": Object {
-            "text": "Vaults",
-            "to": "/vaults",
-          },
+      },
+      Object {
+        "className": "active",
+        "icon": "lock",
+        "link": Object {
+          "text": "Vaults",
+          "to": "/vaults",
         },
-      ]
-    }
-  />
-</div>
+      },
+    ]
+  }
+/>
 `;
