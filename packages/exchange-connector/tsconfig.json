@@ -2,6 +2,5 @@
   "extends": "../../tsconfig",
   "include": [
     "src/**/*.ts"
-  ],
-  "moduleResolution": "node"
+  ]
 }
