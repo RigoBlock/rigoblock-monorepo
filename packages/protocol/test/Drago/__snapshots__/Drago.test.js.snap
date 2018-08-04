@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[` Drago setInfiniteAllowance fails if non-owner tries to set allowance 1`] = `"Returned error: VM Exception while processing transaction: revert"`;
+
 exports[` Drago setTransactionFee fails when fee higher than one percent 1`] = `"Returned error: VM Exception while processing transaction: revert"`;
 
 exports[` Drago setTransactionFee fails when non-owner tries to set the fee 1`] = `"Returned error: VM Exception while processing transaction: revert"`;

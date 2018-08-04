@@ -30,6 +30,7 @@ module.exports = {
     'Vault',
     'VaultEventful',
     'VaultFactory',
+    'WrapperLock',
     'WrapperLockEth'
   ]
 }

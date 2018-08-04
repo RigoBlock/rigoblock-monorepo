@@ -113,6 +113,14 @@ module.exports = async (baseAccount, network) => {
   )
   printAddress('WrapperLockEth', wrapperLockEth.address)
 
+  const wrapperLock = await deploy(
+    baseAccount,
+    network,
+    'WrapperLock',
+    [rigoToken.address, 'Rigo Token', 'GRG', 18, tokenTransferProxy.address, false]
+  )
+  printAddress('WrapperLock', wrapperLock.address)
+
   return {
     Authority: authority,
     DragoRegistry: dragoRegistry,
@@ -124,6 +132,7 @@ module.exports = async (baseAccount, network) => {
     ProofOfPerformance: proofOfPerformance,
     Inflation: inflation,
     TokenTransferProxy: tokenTransferProxy,
-    WrapperLockEth: wrapperLockEth
+    WrapperLockEth: wrapperLockEth,
+    WrapperLock: wrapperLock
   }
 }

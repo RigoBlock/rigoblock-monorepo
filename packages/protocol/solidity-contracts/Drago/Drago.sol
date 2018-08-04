@@ -340,6 +340,8 @@ contract Drago is Owned, SafeMath, DragoFace {
         }
     }
 
+    // TODO: implement two more functions: removeAllowance and renewLuckup
+
     /// @dev allows a manager to withdraw ETH from an approved exchange/unwrap eth
     /// @param _exchange Address of the target exchange
     /// @param _amount Value of the Eth in wei
@@ -395,7 +397,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         whenApprovedExchange(_exchange)
     {
         bytes memory _data = _assembledTransaction;
-        address _target = getExchangeAdapter(_exchange);
+        address _target = getExchangeAdapter(_exchange); // this could be removed
         bytes memory response;
         bool failed;
         assembly {
