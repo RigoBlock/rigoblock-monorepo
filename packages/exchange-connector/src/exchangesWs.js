@@ -11,24 +11,36 @@ export const getTicker = {
     )
     websocket.addEventListener('open', () => {
       console.log('WebSocket open.')
-      websocket.send(
-        `sub:pair-order-change/${baseTokenAddress}/${quoteTokenAddress}`
-      )
-      websocket.send(
-        `sub:pair-order-change/${quoteTokenAddress}/${baseTokenAddress}`
-      )
+      try {
+        websocket.send(`sub:ticker`)
+        websocket.send(
+          `sub:pair-order-change/${baseTokenAddress}/${quoteTokenAddress}`
+        )
+        websocket.send(
+          `sub:pair-order-change/${quoteTokenAddress}/${baseTokenAddress}`
+        )
+      } catch (err) {
+        throw new Error(
+          `Error connectiong to ${
+            SupportedExchanges.ERCdEX.ws[NETWORKS_ID[networkId]]
+          }`
+        )
+      }
     })
-    console.log(websocket)
+    return websocket
+  },
+  Ethfinex: (networkId = 1 /* baseTokenSymbol , */ /* quoteTokenSymbol */) => {
+    const websocket = new ReconnectingWebSocket(
+      SupportedExchanges.Ethfinex.ws[NETWORKS_ID[networkId]]
+    )
+    websocket.addEventListener('open', () => {
+      let msg = JSON.stringify({
+        event: `subscribe`,
+        channel: `ticker`,
+        symbol: `tETHUSD`
+      })
+      websocket.send(msg)
+    })
     return websocket
   }
-  // Ethfinex: (networkId = 1) => {
-  //   const symbols = SupportedExchanges.Ethfinex.tickersTokenPairs.toString()
-  //   const options = {
-  //     method: 'GET',
-  //     url: `${SupportedExchanges.Ethfinex.http[NETWORKS_ID[networkId]]}/tickers?symbols=${symbols}`,
-  //     qs: {},
-  //     json: true
-  //   }
-  //   return options
-  // }
 }
