@@ -36,13 +36,7 @@ let NavigationView = ({ currentUrl }) => {
   })
 
   return (
-    <div>
-      <List
-        Component={ViewLink}
-        data={navLinks}
-        className={'navigation-view'}
-      />
-    </div>
+    <List Component={ViewLink} data={navLinks} className={'navigation-view'} />
   )
 }
 

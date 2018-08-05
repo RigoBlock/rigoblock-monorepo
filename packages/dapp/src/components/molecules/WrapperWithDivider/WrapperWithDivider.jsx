@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Fragment } from 'react'
 
 const WrapperWithDivider = ({ Divider, children }) => {
   let content = children
@@ -7,12 +7,12 @@ const WrapperWithDivider = ({ Divider, children }) => {
     content = children.map(
       (Component, index) =>
         index !== children.length - 1 ? (
-          <div key={`wrap-div-${index}`}>
+          <Fragment key={`wrap-div-${index}`}>
             {Component}
             <Divider />
-          </div>
+          </Fragment>
         ) : (
-          <div key={`wrap-div-${index}`}>{Component}</div>
+          <Fragment key={`wrap-div-${index}`}>{Component}</Fragment>
         )
     )
   }
