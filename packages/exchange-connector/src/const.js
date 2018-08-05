@@ -37,9 +37,9 @@ export const SupportedExchanges = {
       kovan: 'https://test.ethfinex.com/v2'
     },
     ws: {
-      mainnet: 'wss://api.ethfinex.com/v2',
-      ropsten: 'wss://test.ethfinex.com/v2',
-      kovan: 'wss://test.ethfinex.com/v2'
+      mainnet: 'wss://api.ethfinex.com/ws/2',
+      ropsten: 'wss://test.ethfinex.com/ws/2',
+      kovan: 'wss://test.ethfinex.com/ws/2'
     }
   }
 }

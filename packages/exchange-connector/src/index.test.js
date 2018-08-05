@@ -3,9 +3,8 @@
 
 import Exchange from './index'
 
-
-describe("get tickers from exchange", () => {
-  var networks = new Array()
+describe('get tickers from exchange', () => {
+  let networks = new Array()
   networks[1] = 'Mainnet'
   networks[42] = 'Kovan'
   networks.map((network, key) => {
@@ -13,16 +12,14 @@ describe("get tickers from exchange", () => {
       const networkId = key
       const exchange = new Exchange('ERCdEX', networkId.toString())
       exchange.getTickers().then(results => {
-        expect(results)
-          .toBeArray()
+        expect(results).toBeArray()
       })
     })
     it(`Ethfinex get tickers for ${network} success`, () => {
       const networkId = key
       const exchange = new Exchange('Ethfinex', networkId.toString())
       exchange.getTickers().then(results => {
-        expect(results)
-          .toBeArray()
+        expect(results).toBeArray()
       })
     })
   })
