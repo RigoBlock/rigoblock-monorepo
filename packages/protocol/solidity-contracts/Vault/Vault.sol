@@ -20,6 +20,7 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
+import { ExchangesAuthorityFace as DexAuth } from "../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
 import { CasperFace as Casper } from "../Casper/CasperFace.sol";
 
@@ -80,7 +81,9 @@ contract Vault is Owned, SafeMath, VaultFace {
 
     modifier casperContractOnly {
         Authority auth = Authority(admin.authority);
-        if (msg.sender != auth.getCasper()) return;
+        address casperAddress = DexAuth(auth.getExchangesAuthority())
+            .getCasper();
+        if (msg.sender != casperAddress) return;
         _;
     }
 
@@ -195,11 +198,12 @@ contract Vault is Owned, SafeMath, VaultFace {
     {
         require(_withdrawal == address(this));
         Authority auth = Authority(admin.authority);
-        Casper casper = Casper(auth.getCasper());
+        address casperAddress = DexAuth(auth.getExchangesAuthority()).getCasper();
+        Casper casper = Casper(casperAddress);
         data.validatorIndex = casper.nextValidatorIndex();
         casper.deposit.value(_amount)(_validation, _withdrawal);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.depositToCasper(msg.sender, this, auth.getCasper(), _validation, _withdrawal, _amount));
+        require(events.depositToCasper(msg.sender, this, casperAddress, _validation, _withdrawal, _amount));
         return true;
     }
 
@@ -209,10 +213,11 @@ contract Vault is Owned, SafeMath, VaultFace {
         onlyOwner
     {
         Authority auth = Authority(admin.authority);
-        Casper casper = Casper(auth.getCasper());
+        address casperAddress = DexAuth(auth.getExchangesAuthority()).getCasper();
+        Casper casper = Casper(casperAddress);
         casper.withdraw(data.validatorIndex);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.withdrawFromCasper(msg.sender, this, auth.getCasper(), data.validatorIndex));
+        require(events.withdrawFromCasper(msg.sender, this, casperAddress, data.validatorIndex));
     }
 
     /// @dev Allows vault dao/factory to change fee split ratio
@@ -257,6 +262,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     function changeVaultDao(address _vaultDao)
         external
         onlyVaultDao
+
     {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
@@ -371,7 +377,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Returns the version of the type of vault
     /// @return String of the version
     function getVersion()
-        external view
+        external pure
         returns (string)
     {
         return VERSION;
@@ -531,7 +537,9 @@ contract Vault is Owned, SafeMath, VaultFace {
     {
         Authority auth = Authority(admin.authority);
         if (casperInitialized()) {
-            return auth.getCasper();
+            address casperAddress = DexAuth(auth.getExchangesAuthority())
+                .getCasper();
+            return casperAddress;
         }
     }
 
@@ -542,7 +550,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         returns (bool)
     {
         Authority auth = Authority(admin.authority);
-        return auth.isCasperInitialized();
+        return DexAuth(auth.getExchangesAuthority()).isCasperInitialized();
     }
 
     /// @dev Finds the value of the deposit of this vault at the casper contract

@@ -18,6 +18,7 @@
 
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
+//pragma experimental ABIEncoderV2;
 
 /// @title Drago Interface - Allows interaction with the Drago contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -35,14 +36,10 @@ interface DragoFace {
     function setTransactionFee(uint256 _transactionFee) external;
     function changeFeeCollector(address _feeCollector) external;
     function changeDragoDao(address _dragoDao) external;
-    //function depositToExchange(address _exchange, uint256 _amount) external;
-    function wrapToEfx(address _token, address _wrapper, address _tokenTransferProxy, uint256 _amount, uint256 _duration) external;
-    function withdrawFromExchange(address _exchange, uint256 _amount) external;
-    function setInfiniteAllowance(address _tokenTransferProxy, address _token) external;
-    function SetMultipleAllowances(address _tokenTransferProxy, address[] _token) external;
+    function setAllowance(address _tokenTransferProxy, address _token, uint256 _amount) external;
+    function SetMultipleAllowances(address _tokenTransferProxy, address[] _tokens, uint256[] _amounts) external;
     function operateOnExchange(address _exchange, bytes _assembledTransaction) external;
-    function operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction) external;
-    function operateOnExchangeThroughAdapter(address _exchange, bytes _assembledTransaction) external;
+    //function batchOperateOnExchange(address _exchange, bytes[] _assembledTransactions) external;
     function enforceKyc(bool _enforced, address _kycProvider) external;
 
     // PUBLIC CONSTANT FUNCTIONS
@@ -52,7 +49,8 @@ interface DragoFace {
     function getData() external view returns (string name, string symbol, uint256 sellPrice, uint256 buyPrice);
     function calcSharePrice() external view returns (uint256);
     function getAdminData() external view returns (address, address feeCollector, address dragoDao, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
-    function totalSupply() external view returns (uint256);
     function getKycProvider() external view returns (address);
-    function getVersion() external view returns (string);
+    function isValidSignature(bytes32 hash, bytes signature) external view returns (bool isValid);
+    function getVersion() external pure returns (string);
+    function totalSupply() external view returns (uint256);
 }

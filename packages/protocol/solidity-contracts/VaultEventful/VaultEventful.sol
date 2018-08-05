@@ -20,6 +20,7 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
+import { ExchangesAuthorityFace as DexAuth } from "../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { VaultEventfulFace } from "./VaultEventfulFace.sol";
 
 /// @title Vault Eventful - Logs events for all vaults.
@@ -116,7 +117,9 @@ contract VaultEventful is VaultEventfulFace {
 
     modifier isCasper(address _casper) {
         Authority auth = Authority(AUTHORITY);
-        require(auth.getCasper() == _casper);
+        require(
+            DexAuth(auth.getExchangesAuthority())
+                .getCasper() == _casper);
         _;
     }
 

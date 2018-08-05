@@ -46,6 +46,6 @@ interface VaultFace {
     function calcSharePrice() external view returns (uint256);
     function getAdminData() external view returns (address, address feeCollector, address vaultDao, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
     function totalSupply() external view returns (uint256);
-    function getVersion() external view returns (string);
+    function getVersion() external pure returns (string);
     function getCasperDeposit() external view returns (uint256);
 }
