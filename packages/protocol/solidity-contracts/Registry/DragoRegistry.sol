@@ -92,24 +92,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         require(mapFromName[_name] == 0);
         _;
     }
-    
-     modifier whenSymbolUppercase(string _name) {
-        require(LibSanitize.isUppercase(_name));
-        _;
-    }
-
-    modifier whenNameSanitized(string _input) {
-        require(bytes(_input).length >= 4 && bytes(_input).length <= 50);
-        require(LibSanitize.isValidCheck(_input));
-        require(LibSanitize.isLowercase(_input));
-        _;
-    }
-
-    modifier whenSymbolSanitized(string _input) {
-        require(LibSanitize.isValidCheck(_input));
-        require(LibSanitize.isUppercase(_input));
-        _;
-    }
 
     modifier whenNameSanitized(string _input) {
         require(bytes(_input).length >= 4 && bytes(_input).length <= 50);
