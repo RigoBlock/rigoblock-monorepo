@@ -1,6 +1,5 @@
 import { BigNumber } from '@0xproject/utils'
 import { ERCdEX, Ethfinex } from './const'
-import { ZeroEx } from '0x.js'
 import Web3 from 'web3'
 
 const formatOrdersFromAggregateERCdEX = orders => {
@@ -12,45 +11,6 @@ const formatOrdersFromAggregateERCdEX = orders => {
     let orderObject = {
       orderAmount,
       orderPrice
-    }
-    return orderObject
-  })
-  return formattedOrders
-}
-
-export const formatOrdersFromERCdEX = (orders, orderType) => {
-  let orderPrice, orderAmount
-  let web3 = new Web3(Web3.currentProvider)
-  let formattedOrders = orders.map(order => {
-    switch (orderType) {
-      case 'asks':
-        orderPrice = new BigNumber(order.takerTokenAmount)
-          .div(new BigNumber(order.makerTokenAmount))
-          .toFixed(7)
-        orderAmount = new BigNumber(
-          web3.utils.fromWei(order.makerTokenAmount, 'ether')
-        ).toFixed(5)
-        break
-      case 'bids':
-        orderPrice = new BigNumber(1)
-          .div(
-            new BigNumber(order.takerTokenAmount).div(
-              new BigNumber(order.makerTokenAmount)
-            )
-          )
-          .toFixed(7)
-        orderAmount = new BigNumber(
-          web3.utils.fromWei(order.takerTokenAmount, 'ether')
-        ).toFixed(5)
-        break
-    }
-    let orderHash = ZeroEx.getOrderHashHex(order)
-    let orderObject = {
-      order,
-      orderAmount,
-      orderType,
-      orderPrice,
-      orderHash
     }
     return orderObject
   })
@@ -130,8 +90,8 @@ export const aggregatedOrders = {
     return {
       bids: bidsOrders,
       asks: asksOrders,
-      spread
-      // aggregated: true
+      spread,
+      aggregated: true
     }
   },
   [Ethfinex]: orders => {
@@ -148,69 +108,8 @@ export const aggregatedOrders = {
     return {
       bids: bidsOrders,
       asks: asksOrders,
-      spread
-      // aggregated: true
+      spread,
+      aggregated: true
     }
   }
-}
-
-export const orders = {
-  [ERCdEX]: orders => {
-    const bidsOrders = formatOrdersFromERCdEX(orders.bids, 'bids')
-    const asksOrders = formatOrdersFromERCdEX(orders.asks, 'asks')
-    const spread = calculateSpread(asksOrders, bidsOrders)
-    return {
-      bids: bidsOrders,
-      asks: asksOrders,
-      spread
-      // aggregated: false
-    }
-  }
-  // [Ethfinex]: (orders) => {
-  //   var bids = new Array()
-  //   var asks = new Array()
-  //   orders.map(order => {
-  //     (order[2] > 0) ? bids.push(order) : asks.push(order)
-  //   })
-  //   const bidsOrders = formatOrdersFromAggregateEthfinex(bids, 'bids')
-  //   const asksOrders = formatOrdersFromAggregateEthfinex(asks.reverse(), 'asks')
-  //   // console.log(bidsOrders)
-  //   // console.log(asksOrders)
-  //   const spread = calculateSpread(asksOrders, bidsOrders)
-  //   return {
-  //     bids: bidsOrders,
-  //     asks: asksOrders,
-  //     spread,
-  //     aggregated: true
-  //   }
-  // },
-}
-
-export const historicalPricesData = {
-  [ERCdEX]: historical => {
-    // return historical
-    return historical.map(entry => {
-      const date = new Date(entry.date)
-      entry.date = date
-      return entry
-    })
-  }
-  // [Ethfinex]: (orders) => {
-  //   var bids = new Array()
-  //   var asks = new Array()
-  //   orders.map(order => {
-  //     (order[2] > 0) ? bids.push(order) : asks.push(order)
-  //   })
-  //   const bidsOrders = formatOrdersFromAggregateEthfinex(bids, 'bids')
-  //   const asksOrders = formatOrdersFromAggregateEthfinex(asks.reverse(), 'asks')
-  //   // console.log(bidsOrders)
-  //   // console.log(asksOrders)
-  //   const spread = calculateSpread(asksOrders, bidsOrders)
-  //   return {
-  //     bids: bidsOrders,
-  //     asks: asksOrders,
-  //     spread,
-  //     aggregated: true
-  //   }
-  // },
 }

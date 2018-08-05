@@ -24,12 +24,6 @@
   "license": "ISC",
   "jest": {
     "verbose": true,
-    "testURL": "http://localhost/",
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/vendor/**"
-    ]
+    "testURL": "http://localhost/"
   }
 }

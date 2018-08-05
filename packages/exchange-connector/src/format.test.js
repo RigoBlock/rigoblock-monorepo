@@ -156,7 +156,8 @@ describe('format aggregate orders output', () => {
           orderPrice: '0.0040000'
         }
       ],
-      spread: '0.000500'
+      spread: '0.000500',
+      aggregated: true
     })
   })
 
@@ -190,121 +191,8 @@ describe('format aggregate orders output', () => {
           orderPrice: '0.0024842'
         }
       ],
-      spread: '0.000015'
+      spread: '0.000015',
+      aggregated: true
     })
   })
-})
-
-describe('format historical data output', () => {
-  const outputERCdEX = [
-    {
-      open: 0.0025562262367624,
-      close: 0.002585649644473174,
-      high: 0.002572126720109744,
-      low: 0.002566369772908624,
-      volume: 4105.52,
-      date: '2018-07-29T13:00:00.000Z'
-    },
-    {
-      open: 0.002585649644473174,
-      close: 0.0025520051469011366,
-      high: 0.0025716306281207807,
-      low: 0.002564378838487232,
-      volume: 19192.86,
-      date: '2018-07-29T14:00:00.000Z'
-    },
-    {
-      open: 0.0025520051469011366,
-      close: 0.0025693180601648645,
-      high: 0.0025907290439995717,
-      low: 0.002532080168233123,
-      volume: 19433.62,
-      date: '2018-07-29T15:00:00.000Z'
-    },
-    {
-      open: 0.0025693180601648645,
-      close: 0.0025644893649117515,
-      high: 0.00256871307474955,
-      low: 0.0025645446316969094,
-      volume: 29.25,
-      date: '2018-07-29T16:00:00.000Z'
-    }
-  ]
-
-  const $resultsERCdEX = FORMAT.historicalPricesData[ERCdEX](outputERCdEX)
-  it(`${ERCdEX} format historical data success`, () => {
-    expect($resultsERCdEX).toEqual([
-      {
-        open: 0.0025562262367624,
-        close: 0.002585649644473174,
-        high: 0.002572126720109744,
-        low: 0.002566369772908624,
-        volume: 4105.52,
-        date: new Date('2018-07-29T13:00:00.000Z')
-      },
-      {
-        open: 0.002585649644473174,
-        close: 0.0025520051469011366,
-        high: 0.0025716306281207807,
-        low: 0.002564378838487232,
-        volume: 19192.86,
-        date: new Date('2018-07-29T14:00:00.000Z')
-      },
-      {
-        open: 0.0025520051469011366,
-        close: 0.0025693180601648645,
-        high: 0.0025907290439995717,
-        low: 0.002532080168233123,
-        volume: 19433.62,
-        date: new Date('2018-07-29T15:00:00.000Z')
-      },
-      {
-        open: 0.0025693180601648645,
-        close: 0.0025644893649117515,
-        high: 0.00256871307474955,
-        low: 0.0025645446316969094,
-        volume: 29.25,
-        date: new Date('2018-07-29T16:00:00.000Z')
-      }
-    ])
-  })
-
-  // const outputEthfinex =
-  //   [
-  //     [0.0024692, 1, 53.84960487],
-  //     [0.0024641, 1, 1000],
-  //     [0.0024842, 1, -0.78238236],
-  //     [0.0024929, 1, -3921]
-  //   ]
-
-  // const $resultsEthfinex = FORMAT.aggregatedOrders[Ethfinex](outputEthfinex)
-  // it(`${Ethfinex} format aggregated orders success`, () => {
-  //   expect($resultsEthfinex)
-  //     .toEqual(
-  //       {
-  //         bids: [
-  //           {
-  //             orderAmount: "53.84960",
-  //             orderPrice: "0.0024692"
-  //           },
-  //           {
-  //             orderAmount: "1000.00000",
-  //             orderPrice: "0.0024641"
-  //           }
-  //         ],
-  //         asks: [
-  //           {
-  //             orderAmount: "3921.00000",
-  //             orderPrice: "0.0024929"
-  //           },
-  //           {
-  //             orderAmount: "0.78238",
-  //             orderPrice: "0.0024842"
-  //           }
-  //         ],
-  //         spread: "0.000015",
-  //         aggregated: true
-  //       }
-  //     )
-  // })
 })
