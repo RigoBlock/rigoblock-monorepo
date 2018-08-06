@@ -44,10 +44,8 @@ contract Authority is Owned, AuthorityFace {
 
     struct Group {
         bool whitelister;
-        //bool exchange;
         bool drago;
         bool vault;
-        //bool asset;
         bool user;
         bool registry;
         bool factory;
