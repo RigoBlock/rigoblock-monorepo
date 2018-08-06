@@ -31,6 +31,7 @@ import { DragoFace } from "./DragoFace.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
 import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
 import { DragoExchangeExtension as Extension } from "./DragoExchangeExtension/DragoExchangeExtension.sol";
+import { NavVerifierFace as NavVerifier } from "./NavVerifier/NavVerifierFace.sol";
 
 /// @title Drago - A set of rules for a drago.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -228,17 +229,21 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @dev Allows drago owner or authority to set the price for a drago
     /// @param _newSellPrice Price in wei
     /// @param _newBuyPrice Price in wei
-    function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice)
+    function setPrices(
+        uint256 _newSellPrice,
+        uint256 _newBuyPrice,
+        bytes32 _hash,
+        bytes _signedData)
         external
         onlyOwnerOrAuthority
         buyPriceHigherOrEqual(_newSellPrice, _newBuyPrice)
         notPriceError(_newSellPrice, _newBuyPrice)
     {
+        require(isValidNav(_hash, _signedData));
         DragoEventful events = DragoEventful(getDragoEventful());
         require(events.setDragoPrice(msg.sender, this, _newSellPrice, _newBuyPrice));
         data.sellPrice = _newSellPrice;
         data.buyPrice = _newBuyPrice;
-        // TODO: implement upgradable external module
     }
 
     /// @dev Allows drago dao/factory to change fee split ratio
@@ -342,6 +347,7 @@ contract Drago is Owned, SafeMath, DragoFace {
             _assembledTransaction)
         );
     }
+
 /*
     /// @dev Allows owner or approved exchange to send a transaction to exchange
     /// @dev With data of signed/unsigned transaction
@@ -359,6 +365,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         }
     }
 */
+
     function enforceKyc(
         bool _enforced,
         address _kycProvider)
@@ -657,6 +664,32 @@ contract Drago is Owned, SafeMath, DragoFace {
             Authority(admin.authority)
             .getExchangesAuthority())
             .getSigVerifier();
+    }
+
+    /// @dev Returns the address of the price verifier.
+    /// @return Address of the verifier contract.
+    function getNavVerifier()
+        internal view
+        returns (address)
+    {
+        return Authority(admin.authority)
+            .getNavVerifier();
+    }
+
+    /// @dev Verifies that a signature is valid.
+    /// @param hash Message hash that is signed.
+    /// @param signedData Proof of nav validity.
+    /// @return Validity of signed nav update.
+    function isValidNav(
+        bytes32 hash,
+        bytes signedData
+    )
+        internal view
+        returns (bool isValid)
+    {
+        isValid = NavVerifier(getNavVerifier())
+            .isValidNav(hash, signedData);
+        return isValid;
     }
 
     /// @dev Finds the exchanges authority.

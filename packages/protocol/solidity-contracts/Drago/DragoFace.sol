@@ -30,7 +30,7 @@ interface DragoFace {
     function buyDrago() external payable returns (bool success);
     function buyDragoOnBehalf(address _hodler) external payable returns (bool success);
     function sellDrago(uint256 _amount) external returns (bool success);
-    function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice)  external;
+    function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice, bytes32 _hash, bytes _signedData)  external;
     function changeMinPeriod(uint32 _minPeriod) external;
     function changeRatio(uint256 _ratio) external;
     function setTransactionFee(uint256 _transactionFee) external;

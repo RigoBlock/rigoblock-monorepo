@@ -170,7 +170,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         types.list.push(List(_tokenTransferProxy));
         emit WhitelistedProxy(_tokenTransferProxy, _isWhitelisted);
     }
-    
+
     /// @dev Allows a whitelister to enable trading on a particular exchange
     /// @param _asset Address of the token
     /// @param _exchange Address of the exchange
@@ -195,7 +195,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     }
 
     /// @dev Allows the owner to set the signature verifier
-    /// @param _sigVerifier Address of the logs contract
+    /// @param _sigVerifier Address of the verifier contract
     function setSignatureVerifier(address _sigVerifier)
         external
         onlyOwner
@@ -305,7 +305,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     {
         return blocks.sigVerifier;
     }
-    
+
     /// @dev Checkes whether a token is allowed on an exchange
     /// @return Bool the token is whitelisted on the exchange
     function canTradeTokenOnExchange(address _token, address _exchange)

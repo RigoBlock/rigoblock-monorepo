@@ -61,8 +61,8 @@ contract Authority is Owned, AuthorityFace {
     struct BuildingBlocks {
         address dragoEventful;
         address vaultEventful;
+        address navVerifier;
         address exchangesAuthority;
-        //address exchangeEventful;
         address casper;
         mapping (address => bool) initialized;
     }
@@ -78,6 +78,7 @@ contract Authority is Owned, AuthorityFace {
     event WhitelistedDrago(address indexed drago, bool isWhitelisted);
     event NewDragoEventful(address indexed dragoEventful);
     event NewVaultEventful(address indexed vaultEventful);
+    event NewNavVerifier(address indexed navVerifier);
     event NewExchangesAuthority(address indexed exchangesAuthority);
 
     // MODIFIERS
@@ -205,6 +206,16 @@ contract Authority is Owned, AuthorityFace {
         emit NewVaultEventful(blocks.vaultEventful);
     }
 
+    /// @dev Allows the owner to set the nav verifier
+    /// @param _navVerifier Address of the verifier
+    function setNavVerifier(address _navVerifier)
+        external
+        onlyOwner
+    {
+        blocks.navVerifier = _navVerifier;
+        //emit NewNavVerifier(blocks.navVerifier);
+    }
+
     /// @dev Allows the owner to set the exchanges authority
     /// @param _exchangesAuthority Address of the exchanges authority
     function setExchangesAuthority(address _exchangesAuthority)
@@ -293,6 +304,15 @@ contract Authority is Owned, AuthorityFace {
         returns (address)
     {
         return blocks.vaultEventful;
+    }
+
+    /// @dev Provides the address of the nav verifier
+    /// @return Address of the verifier
+    function getNavVerifier()
+        external view
+        returns (address)
+    {
+        return blocks.navVerifier;
     }
 
     /// @dev Provides the address of the exchangee authority

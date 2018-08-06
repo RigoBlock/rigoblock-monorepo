@@ -47,6 +47,7 @@ interface AuthorityFace {
     function whitelistFactory(address _factory, bool _isWhitelisted) external;
     function setDragoEventful(address _dragoEventful) external;
     function setVaultEventful(address _vaultEventful) external;
+    function setNavVerifier(address _navVerifier) external;
     function setExchangesAuthority(address _exchangesAuthority) external;
 
     function isWhitelistedUser(address _target) external view returns (bool);
@@ -57,6 +58,7 @@ interface AuthorityFace {
     function isWhitelistedFactory(address _factory) external view returns (bool);
     function getDragoEventful() external view returns (address);
     function getVaultEventful() external view returns (address);
+    function getNavVerifier() external view returns (address);
     function getExchangesAuthority() external view returns (address);
     function getListsByGroups(string _group) external view returns (address[]);
 }
