@@ -19,7 +19,6 @@
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 //pragma experimental ABIEncoderV2;
-//cannot deploy with ABIEncoderV2
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { ExchangesAuthorityFace as ExchangesAuthority } from "../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
@@ -92,28 +91,25 @@ contract Drago is Owned, SafeMath, DragoFace {
     }
 
     modifier returnUnapprovedExchangeOrWrapper {
-        Authority auth = Authority(admin.authority);
-        bool approvedExchange = ExchangesAuthority(auth.getExchangesAuthority())
+        bool approvedExchange = ExchangesAuthority(getExchangesAuthority())
             .isWhitelistedExchange(msg.sender);
-        bool approvedWrapper = ExchangesAuthority(auth.getExchangesAuthority())
+        bool approvedWrapper = ExchangesAuthority(getExchangesAuthority())
             .isWhitelistedWrapper(msg.sender);
         if (!approvedWrapper || !approvedExchange) return;
         _;
     }
 
     modifier whenApprovedExchangeOrWrapper(address _target) {
-        Authority auth = Authority(admin.authority);
-        bool approvedExchange = ExchangesAuthority(auth.getExchangesAuthority())
+        bool approvedExchange = ExchangesAuthority(getExchangesAuthority())
             .isWhitelistedExchange(_target);
-        bool approvedWrapper = ExchangesAuthority(auth.getExchangesAuthority())
+        bool approvedWrapper = ExchangesAuthority(getExchangesAuthority())
             .isWhitelistedWrapper(_target);
         require(approvedWrapper || approvedExchange);
         _;
     }
 
     modifier whenApprovedProxy(address _proxy) {
-        Authority auth = Authority(admin.authority);
-        bool approved = ExchangesAuthority(auth.getExchangesAuthority())
+        bool approved = ExchangesAuthority(getExchangesAuthority())
             .isWhitelistedProxy(_proxy);
         require(approved);
         _;
@@ -291,7 +287,7 @@ contract Drago is Owned, SafeMath, DragoFace {
     }
 
     /// @dev Allows drago dao/factory to change the minimum holding period
-    /// @param _minPeriod Number of blocks
+    /// @param _minPeriod Time in seconds
     function changeMinPeriod(uint32 _minPeriod)
         external
         onlyDragoDao
@@ -651,7 +647,6 @@ contract Drago is Owned, SafeMath, DragoFace {
         return auth.getDragoEventful();
     }
 
-    // TODO: double che use
     /// @dev Returns the address of the signature verifier.
     /// @return Address of the verifier contract.
     function getSigVerifier()
@@ -664,7 +659,6 @@ contract Drago is Owned, SafeMath, DragoFace {
             .getSigVerifier();
     }
 
-    // TODO: verify whether useful for optimization and if used
     /// @dev Finds the exchanges authority.
     /// @return Validity of order signature.
     function getExchangesAuthority()

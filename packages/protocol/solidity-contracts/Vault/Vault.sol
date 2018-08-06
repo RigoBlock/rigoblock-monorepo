@@ -23,6 +23,7 @@ import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { ExchangesAuthorityFace as DexAuth } from "../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
 import { CasperFace as Casper } from "../Casper/CasperFace.sol";
+import { ERC20Face as Token } from "../utils/tokens/ERC20/ERC20Face.sol";
 
 import { VaultFace } from "./VaultFace.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
@@ -40,6 +41,10 @@ contract Vault is Owned, SafeMath, VaultFace {
     Admin admin;
 
     mapping (address => Account) accounts;
+
+    mapping (address => uint256) totalTokens;
+    mapping (address => mapping (address => uint256)) public depositLock;
+    mapping (address => mapping (address => uint256)) public tokenBalances;
 
     struct Receipt {
         uint32 activation;
@@ -280,7 +285,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     }
 
     /// @dev Allows vault dao/factory to change the minimum holding period
-    /// @param _minPeriod Number of blocks
+    /// @param _minPeriod Lockup time in seconds
     function changeMinPeriod(uint32 _minPeriod)
         external
         onlyVaultDao
@@ -288,7 +293,46 @@ contract Vault is Owned, SafeMath, VaultFace {
         data.minPeriod = _minPeriod;
     }
 
-    // CONSTANT FUNCTIONS
+    /// @dev Allows anyone to deposit tokens to a vault
+    /// @param _token Address of the token
+    /// @param _value Amount to deposit
+    /// @param _forTime Lockup time in seconds
+    /// @notice lockup time can be zero
+    function depositToken(
+        address _token,
+        uint256 _value,
+        uint8 _forTime)
+        external
+        returns (bool success)
+    {
+        require(now + _forTime * 1 hours >= depositLock[_token][msg.sender]);
+        require(Token(_token).transferFrom(msg.sender, address(this), _value));
+        tokenBalances[_token][msg.sender] = safeAdd(tokenBalances[_token][msg.sender], _value);
+        totalTokens[_token] = safeAdd(totalTokens[_token], _value); // define total tokens, if good idea
+        depositLock[_token][msg.sender] = safeAdd(uint(now), _forTime);
+        return true;
+    }
+
+    /// @dev Allows anyone to withdraw tokens from a vault
+    /// @param _token Address of the token
+    /// @param _value Amount to withdraw
+    /// @return Bool the transaction was successful
+    function withdrawToken(
+        address _token,
+        uint256 _value)
+        external
+        returns
+        (bool success)
+    {
+        require(tokenBalances[_token][msg.sender] >= _value);
+        require(uint32(now) > depositLock[_token][msg.sender]);
+        tokenBalances[_token][msg.sender] = safeSub(tokenBalances[_token][msg.sender], _value);
+        totalTokens[_token] = safeSub(totalTokens[_token], _value);
+        require(Token(_token).transfer(msg.sender, _value));
+        return true;
+    }
+
+    // CONSTANT PUBLIC FUNCTIONS
 
     /// @dev Calculates how many shares a user holds
     /// @param _from Address of the target account
@@ -298,6 +342,38 @@ contract Vault is Owned, SafeMath, VaultFace {
         returns (uint256)
     {
         return accounts[_from].balance;
+    }
+
+    /// @dev Returns a user balance of a certain deposited token
+    /// @param _token Address of the token
+    /// @param _owner Address of the user
+    /// @return Number of tokens
+    function tokenBalanceOf(address _token, address _owner)
+        external view
+        returns (uint256)
+    {
+        return tokenBalances[_token][_owner];
+    }
+
+    /// @dev Returns the time needed to withdraw
+    /// @param _token Address of the token
+    /// @param _user Address of the user
+    /// @return Time in seconds
+    function timeToUnlock(address _token, address _user)
+        external view
+        returns (uint256)
+    {
+        return depositLock[_token][_user];
+    }
+
+    /// @dev Returns the amount of tokens of a certain token in vault
+    /// @param _token Address of the token
+    /// @return _value in custody
+    function tokensInVault(address _token)
+        external view
+        returns (uint256)
+    {
+        return totalTokens[_token];
     }
 
     /// @dev Gets the address of the logger contract
