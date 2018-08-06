@@ -38,6 +38,7 @@ interface VaultFace {
     function updatePrice() external;
     function changeMinPeriod(uint32 _minPeriod) external;
     function depositToken(address _token, uint256 _value, uint8 _forTime) external returns (bool success);
+    function depositTokenOnBehalf(address _token, address _hodler, uint256 _value, uint8 _forTime) external returns (bool success);
     function withdrawToken(address _token, uint256 _value) external returns (bool success);
 
     // CONSTANT PUBLIC FUNCTIONS

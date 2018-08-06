@@ -305,11 +305,24 @@ contract Vault is Owned, SafeMath, VaultFace {
         external
         returns (bool success)
     {
-        require(now + _forTime * 1 hours >= depositLock[_token][msg.sender]);
-        require(Token(_token).transferFrom(msg.sender, address(this), _value));
-        tokenBalances[_token][msg.sender] = safeAdd(tokenBalances[_token][msg.sender], _value);
-        totalTokens[_token] = safeAdd(totalTokens[_token], _value); // define total tokens, if good idea
-        depositLock[_token][msg.sender] = safeAdd(uint(now), _forTime);
+        require(depositTokenInternal(_token, msg.sender, _value, _forTime));
+        return true;
+    }
+
+    /// @dev Allows anyone to deposit tokens to a vault on behalf of someone
+    /// @param _token Address of the token
+    /// @param _value Amount to deposit
+    /// @param _forTime Lockup time in seconds
+    /// @notice lockup time can be zero
+    function depositTokenOnBehalf(
+        address _token,
+        address _hodler,
+        uint256 _value,
+        uint8 _forTime)
+        external
+        returns (bool success)
+    {
+        require(depositTokenInternal(_token, _hodler, _value, _forTime));
         return true;
     }
 
@@ -652,5 +665,21 @@ contract Vault is Owned, SafeMath, VaultFace {
         uint256 casperDeposit = (casperInitialized() ? getCasperDepositInternal() : 0);
         uint256 aum = safeAdd(address(this).balance, casperDeposit) - msg.value;
         return (data.totalSupply == 0 ? data.price : safeDiv(aum * BASE, data.totalSupply));
+    }
+
+    function depositTokenInternal(
+        address _token,
+        address _hodler,
+        uint256 _value,
+        uint8 _forTime)
+        internal
+        returns (bool success)
+    {
+        require(now + _forTime * 1 hours >= depositLock[_token][_hodler]);
+        require(Token(_token).transferFrom(msg.sender, address(this), _value));
+        tokenBalances[_token][_hodler] = safeAdd(tokenBalances[_token][_hodler], _value);
+        totalTokens[_token] = safeAdd(totalTokens[_token], _value);
+        depositLock[_token][_hodler] = safeAdd(uint(now), _forTime);
+        return true;
     }
 }
