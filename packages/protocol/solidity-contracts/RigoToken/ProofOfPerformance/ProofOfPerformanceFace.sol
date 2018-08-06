@@ -48,6 +48,4 @@ interface ProofOfPerformanceFace {
         );
 
     function getHwm(uint256 _ofPool) external view returns (uint256);
-    function getPoolPrices() external view returns (address[] pools, uint256[] poolPrices, uint256[] totalTokens);
-    function calcNetworkValue() external view returns (uint256 networkValue, uint256 numberOfFunds);
 }

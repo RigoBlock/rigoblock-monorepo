@@ -19,7 +19,7 @@
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
-import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
+import { PoolFace as Pool } from "../../utils/Pool/PoolFace.sol";
 import { RigoToken } from "../RigoToken/RigoToken.sol";
 import { DragoRegistryFace as DragoRegistry } from "../../Registry/DragoRegistry.sol";
 import { InflationFace as Inflation } from "../Inflation/InflationFace.sol";
@@ -168,57 +168,6 @@ contract ProofOfPerformance is SafeMath, ProofOfPerformanceFace {
         returns (uint256)
     {
         return poolPrice[_ofPool].highwatermark;
-    }
-
-    /// @dev Returns two arrays of prices and total supply
-    /// @return Array of addressed of the active pools
-    /// @return Array of the prices of the active pools
-    /// @return Array of the number of tokens of each pool
-    function getPoolPrices()
-        external view
-        returns (
-            address[] pools,
-            uint256[] poolPrices,
-            uint256[] totalTokens
-        )
-    {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        uint256 length = registry.dragoCount();
-        for (uint256 i = 0; i < length; ++i) {
-            bool active = isActive(i);
-            if (!active) {
-                continue;
-            }
-            (address fund, ) = addressFromId(i);
-            pools[i] = fund;
-            Pool pool = Pool(fund);
-            uint256 thePoolPrice = pool.calcSharePrice();
-            poolPrices[i] = thePoolPrice;
-            totalTokens[i] = pool.totalSupply();
-        }
-    }
-
-    /// @dev Returns the value of the assets in the rigoblock network
-    /// @return Value of the rigoblock network in wei
-    /// @return Number of active funds
-    function calcNetworkValue()
-        external view
-        returns (
-            uint256 networkValue,
-            uint256 numberOfFunds
-        )
-    {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        uint256 length = registry.dragoCount();
-        for (uint256 i = 0; i < length; ++i) {
-            bool active = isActive(i);
-            if (!active) {
-                continue;
-            }
-            (uint256 poolValue, ) = calcPoolValue(i);
-            networkValue += poolValue;
-        }
-        return (networkValue, length);
     }
 
     // INTERNAL FUNCTIONS
