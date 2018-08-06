@@ -74,8 +74,6 @@ contract Authority is Owned, AuthorityFace {
     event SetAuthority (address indexed authority);
     event SetWhitelister (address indexed whitelister);
     event WhitelistedUser(address indexed target, bool approved);
-    //event WhitelistedAsset(address indexed asset, bool approved);
-    //event WhitelistedExchange(address indexed exchange, bool approved);
     event WhitelistedRegistry(address indexed registry, bool approved);
     event WhitelistedFactory(address indexed factory, bool approved);
     event WhitelistedVault(address indexed vault, bool approved);
@@ -83,7 +81,6 @@ contract Authority is Owned, AuthorityFace {
     event NewDragoEventful(address indexed dragoEventful);
     event NewVaultEventful(address indexed vaultEventful);
     event NewExchangesAuthority(address indexed exchangesAuthority);
-    //event NewCasper(address indexed casper);
 
     // MODIFIERS
 

@@ -77,9 +77,7 @@ contract AEthfinex {
         whenApprovedWrapper(_wrapper)
         whenApprovedTokenOnWrapper(_token, _wrapper)
     {
-        //TODO: get automatically token address by wrapper address
         if (_token == address(0)) {
-            // TODO: Token(_wrapper) / TokenWrapper(_token)
             require(
                 EthWrapper(_wrapper)
                 .deposit

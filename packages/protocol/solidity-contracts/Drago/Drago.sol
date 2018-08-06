@@ -31,10 +31,14 @@ import { KycFace as Kyc } from "../Kyc/KycFace.sol";
 import { DragoFace } from "./DragoFace.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
 import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
+import { DragoExchangeExtension as Extension } from "./DragoExchangeExtension/DragoExchangeExtension.sol";
 
 /// @title Drago - A set of rules for a drago.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract Drago is Owned, SafeMath, DragoFace {
+
+    using Extension for *;
+    Extension.Admin libraryAdmin;
 
     string constant VERSION = 'HF 0.4.2';
     uint256 constant BASE = 1000000; // tokens are divisible by 1 million
@@ -335,7 +339,12 @@ contract Drago is Owned, SafeMath, DragoFace {
         onlyOwner()
         whenApprovedExchangeOrWrapper(_exchange)
     {
-        require(operateOnExchangeInternal(_exchange, _assembledTransaction));
+        //require(operateOnExchangeInternal(_exchange, _assembledTransaction));
+        require(Extension.operateOnExchangeInternal(
+            libraryAdmin,
+            _exchange,
+            _assembledTransaction)
+        );
     }
 /*
     /// @dev Allows owner or approved exchange to send a transaction to exchange
@@ -585,29 +594,6 @@ contract Drago is Owned, SafeMath, DragoFace {
         return true;
     }
 
-    /// @dev Sends a transaction to the adapter of an exchange
-    /// @param _exchange Address of the exchange
-    /// @param _assembledTransaction ABI encoded transaction
-    /// @return Bool the transaction was successful
-    function operateOnExchangeInternal(
-        address _exchange,
-        bytes _assembledTransaction)
-        internal
-        returns (bool success)
-    {
-        bytes memory _data = _assembledTransaction;
-        address _target = getExchangeAdapter(_exchange);
-        bytes memory response;
-        bool failed;
-        assembly {
-            let succeeded := delegatecall(sub(gas, 10000), _target, add(_data, 0x20), mload(_data), 0, 32)
-            response := mload(0)      // load delegatecall output
-            failed := iszero(succeeded)
-        }
-        require(!failed);
-        return (success == true);
-    }
-
     /// @dev Calculates the correct purchase amounts
     /// @return Number of new shares
     /// @return Value of fee in shares
@@ -663,19 +649,6 @@ contract Drago is Owned, SafeMath, DragoFace {
     {
         Authority auth = Authority(admin.authority);
         return auth.getDragoEventful();
-    }
-
-    /// @dev Returns the address of the exchange adapter
-    /// @param _exchange Address of the target exchange
-    /// @return Address of the exchange adapter
-    function getExchangeAdapter(address _exchange)
-        internal view
-        returns (address)
-    {
-        return ExchangesAuthority(
-            Authority(admin.authority)
-            .getExchangesAuthority())
-            .getExchangeAdapter(_exchange);
     }
 
     // TODO: double che use
