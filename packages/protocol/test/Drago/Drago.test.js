@@ -102,7 +102,7 @@ describeContract(contractName, () => {
     })
   })
 
-  describe('wrapToEfx', () => {
+  describe.skip('wrapToEfx', () => {
     it('wraps eth to the efx wrapper', async () => {
       // adds additional ether to the pool to be able to deposit
       const purchaseAmount = web3.utils.toWei('1.1')
@@ -170,7 +170,7 @@ describeContract(contractName, () => {
   //rather than implementing in drago.sol, we use operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction)
   //const assembledTransaction = await baseContracts['RigoToken'].approve(tokenTransferProxy, 0).encodeABI()
   // TODO: must implement separate set allowance (0) function in drago.sol, it's twisted to have token approved as exchange
-  describe('operateOnExchangeDirectly', () => {
+  describe.skip('operateOnExchangeDirectly', () => {
     /*afterAll(async () => {
       // reset allowance to 0 // need allowance to debugging
       const tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
@@ -324,7 +324,7 @@ describeContract(contractName, () => {
 
 
   // test works, afterEach does not reset. Commented for testing other functions
-  describe('setInfiniteAllowance', () => {
+  describe.skip('setInfiniteAllowance', () => {
     afterEach(async () => {
       // reset allowance to 0 // need allowance to debugging
       await baseContracts['Authority'].whitelistExchange(GRGtokenAddress, true)

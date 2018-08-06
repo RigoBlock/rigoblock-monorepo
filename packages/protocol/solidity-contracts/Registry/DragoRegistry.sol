@@ -323,6 +323,18 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         );
     }
 
+    /// @dev Provides a pool's name from its address
+    /// @param _pool Address of the pool
+    /// @return Name of the pool
+    function getNameFromAddress(address _pool)
+        external view
+        returns (string)
+    {
+        uint256 id = mapFromAddress[_pool] - 1;
+        Drago memory pool = dragos[id];
+        return pool.name;
+    }
+
     /// @dev Provides a pool's symbol from its address
     /// @param _pool Address of the pool
     /// @return Symbol of the pool
