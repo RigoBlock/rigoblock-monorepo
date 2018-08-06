@@ -24,11 +24,15 @@ pragma experimental "v0.5.0";
 contract NavVerifier {
 
     /// @dev Verifies that a signature is valid.
+    /// @param sellPrice Price in wei
+    /// @param buyPrice Price in wei
     /// @param hash Message hash that is signed.
-    /// @param signature Proof of signing.
+    /// @param signedData Proof of signing.
     /// @return Validity of order signature.
     /// @notice mock function which returns true
     function isValidNav(
+        uint256 sellPrice,
+        uint256 buyPrice,
         bytes32 hash,
         bytes signedData)
         external

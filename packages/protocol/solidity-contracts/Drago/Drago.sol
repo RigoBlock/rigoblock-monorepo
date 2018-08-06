@@ -239,7 +239,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         buyPriceHigherOrEqual(_newSellPrice, _newBuyPrice)
         notPriceError(_newSellPrice, _newBuyPrice)
     {
-        require(isValidNav(_hash, _signedData));
+        require(isValidNav(_newSellPrice, _newBuyPrice, _hash, _signedData));
         DragoEventful events = DragoEventful(getDragoEventful());
         require(events.setDragoPrice(msg.sender, this, _newSellPrice, _newBuyPrice));
         data.sellPrice = _newSellPrice;
@@ -677,10 +677,14 @@ contract Drago is Owned, SafeMath, DragoFace {
     }
 
     /// @dev Verifies that a signature is valid.
+    /// @param sellPrice Price in wei
+    /// @param buyPrice Price in wei
     /// @param hash Message hash that is signed.
     /// @param signedData Proof of nav validity.
     /// @return Validity of signed nav update.
     function isValidNav(
+        uint256 sellPrice,
+        uint256 buyPrice,
         bytes32 hash,
         bytes signedData
     )
@@ -688,7 +692,7 @@ contract Drago is Owned, SafeMath, DragoFace {
         returns (bool isValid)
     {
         isValid = NavVerifier(getNavVerifier())
-            .isValidNav(hash, signedData);
+            .isValidNav(sellPrice, buyPrice, hash, signedData);
         return isValid;
     }
 
