@@ -43,7 +43,7 @@ const calculateSpread = (asksOrders, bidsOrders) => {
 }
 
 export const tickers = {
-  [ERCdEX]: tickers => {
+  ['ERCdEX']: tickers => {
     return tickers.map(ticker => {
       return {
         priceEth: ticker.priceEth,
@@ -52,7 +52,7 @@ export const tickers = {
       }
     })
   },
-  [Ethfinex]: tickers => {
+  ['Ethfinex']: tickers => {
     let tickersList = tickers.map(ticker => {
       return {
         priceEth: ticker[7].toString(),
@@ -70,7 +70,7 @@ export const tickers = {
 }
 
 export const aggregatedOrders = {
-  [ERCdEX]: orders => {
+  ['ERCdEX']: orders => {
     console.log(orders)
     const bidsOrders = formatOrdersFromAggregateERCdEX(
       orders.buys.priceLevels,
@@ -88,8 +88,7 @@ export const aggregatedOrders = {
       aggregated: true
     }
   },
-  [Ethfinex]: orders => {
-    console.log(orders)
+  ['Ethfinex']: orders => {
     let bids = new Array()
     let asks = new Array()
     orders.map(order => {

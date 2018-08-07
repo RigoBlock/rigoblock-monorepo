@@ -4,30 +4,59 @@ namespace Exchange {
     SELL
   }
 
+  export type Token = {
+    address: string
+    symbol: string
+    decimal: number
+    type: 'default'
+  }
+
   export type OrdersList = Order[]
+
+  export type TickersList = Ticker[]
 
   export type Order = {
     type: OrderType
-    price: number
-    amount: number
+    price: string
+    amount: string
 
     // Number of orders at this price in case the order is an aggregation
     ordersCount?: number
   }
 
-  export interface Interface<T, RawOrder = {}> {
-    networkId: number
+  export type Ticker = {
+    priceEth: string
+    priceUsd: string
+    symbol: string
+  }
+
+  export interface Interface<T, RawOrder = {}, RawTicker = {}> {
+    networkId: string
     HTTP_API_URL: string
 
-    getOrders(baseSymbol: string, quoteSymbol: string): Promise<OrdersList>
+    raw: {
+      getOrders(
+        baseToken: string,
+        quoteToken: string,
+        precision?: string
+      ): Promise<RawOrder[]>
 
-    getRawOrders(baseSymbol: string, quoteSymbol: string): Promise<RawOrder[]>
+      getTickers(options: {
+        networkId?: string
+        granularity?: string
+        tokenPairs?: string[]
+      }): Promise<RawTicker[]>
+    }
 
-    formatOrders(orders: Array<number[] | object>): OrdersList
+    getOrders(baseToken: string, quoteToken: string): Promise<OrdersList>
 
-    getTickers(options: { networkId?: string; tokenPairs?: string[] }): string
+    getTickers(options: {
+      networkId?: string
+      granularity?: string
+      tokenPairs?: string[]
+    }): Promise<TickersList>
 
-    network(id: number): T
+    network(id: string): T
   }
 }
 

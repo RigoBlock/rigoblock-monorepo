@@ -2,7 +2,6 @@
 // This file is part of RigoBlock.
 
 import * as FORMAT from './format'
-import { ERCdEX, Ethfinex } from './constants'
 
 describe('format exchange tickers output', () => {
   const outputERCdEX = [
@@ -31,8 +30,8 @@ describe('format exchange tickers output', () => {
       weeklyPercentageChange: '-2.18'
     }
   ]
-  const $resultsERCdEX = FORMAT.tickers[ERCdEX](outputERCdEX)
-  it(`${ERCdEX} format ticket success`, () => {
+  const $resultsERCdEX = FORMAT.tickers['ERCdEX'](outputERCdEX)
+  it(`ercdex format ticket success`, () => {
     expect($resultsERCdEX).toEqual([
       {
         priceEth: '1',
@@ -74,8 +73,8 @@ describe('format exchange tickers output', () => {
       0
     ]
   ]
-  const $resultsEthfinex = FORMAT.tickers[Ethfinex](outputEthfinex)
-  it(`${Ethfinex} format ticket success`, () => {
+  const $resultsEthfinex = FORMAT.tickers['Ethfinex'](outputEthfinex)
+  fit(` format ticket success`, () => {
     expect($resultsEthfinex).toEqual([
       {
         priceEth: '0.0025906',
@@ -128,8 +127,8 @@ describe('format aggregate orders output', () => {
     }
   }
 
-  const $resultsERCdEX = FORMAT.aggregatedOrders[ERCdEX](outputERCdEX)
-  it(`${ERCdEX} format aggregated orders success`, () => {
+  const $resultsERCdEX = FORMAT.aggregatedOrders['ERCdEX'](outputERCdEX)
+  it(`ercdex format aggregated orders success`, () => {
     expect($resultsERCdEX).toEqual({
       bids: [
         {
@@ -163,8 +162,8 @@ describe('format aggregate orders output', () => {
     [0.0024929, 1, -3921]
   ]
 
-  const $resultsEthfinex = FORMAT.aggregatedOrders[Ethfinex](outputEthfinex)
-  it(`${Ethfinex} format aggregated orders success`, () => {
+  const $resultsEthfinex = FORMAT.aggregatedOrders['Ethfinex'](outputEthfinex)
+  it(`ethfinex format aggregated orders success`, () => {
     expect($resultsEthfinex).toEqual({
       bids: [
         {
