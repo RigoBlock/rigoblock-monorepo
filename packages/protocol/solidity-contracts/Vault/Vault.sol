@@ -20,9 +20,8 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
-import { ExchangesAuthorityFace as DexAuth } from "../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
+//import { ExchangesAuthorityFace as DexAuth } from "../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
-import { CasperFace as Casper } from "../Casper/CasperFace.sol";
 import { ERC20Face as Token } from "../utils/tokens/ERC20/ERC20Face.sol";
 
 import { VaultFace } from "./VaultFace.sol";
@@ -84,14 +83,6 @@ contract Vault is Owned, SafeMath, VaultFace {
         _;
     }
 
-    modifier casperContractOnly {
-        Authority auth = Authority(admin.authority);
-        address casperAddress = DexAuth(auth.getExchangesAuthority())
-            .getCasper();
-        if (msg.sender != casperAddress) return;
-        _;
-    }
-
     modifier minimumStake(uint256 _amount) {
         require(_amount >= admin.minOrder);
         _;
@@ -133,13 +124,6 @@ contract Vault is Owned, SafeMath, VaultFace {
     }
 
     // CORE FUNCTIONS
-
-    /// @dev Allows a casper contract to send Ether back
-    function()
-        external
-        payable
-        casperContractOnly
-    {}
 
     /// @dev Allows a user to buy into a vault
     /// @return Bool the function executed correctly
@@ -187,42 +171,6 @@ contract Vault is Owned, SafeMath, VaultFace {
         data.totalSupply = safeSub(data.totalSupply, netAmount);
         msg.sender.transfer(netRevenue);
         return true;
-    }
-
-    /// @dev Allows to deposit from vault to casper contract for pooled PoS mining
-    /// @dev _withdrawal address must be == this
-    /// @param _validation Address of the casper miner
-    /// @param _withdrawal Address where to withdraw
-    /// @param _amount Value of deposit in wei
-    /// @return Bool the function executed correctly
-    function depositCasper(address _validation, address _withdrawal, uint256 _amount)
-        external
-        onlyOwner
-        minimumStake(_amount)
-        returns (bool success)
-    {
-        require(_withdrawal == address(this));
-        Authority auth = Authority(admin.authority);
-        address casperAddress = DexAuth(auth.getExchangesAuthority()).getCasper();
-        Casper casper = Casper(casperAddress);
-        data.validatorIndex = casper.nextValidatorIndex();
-        casper.deposit.value(_amount)(_validation, _withdrawal);
-        VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.depositToCasper(msg.sender, this, casperAddress, _validation, _withdrawal, _amount));
-        return true;
-    }
-
-    /// @dev Allows vault owner to withdraw from casper to vault contract
-    function withdrawCasper()
-        external
-        onlyOwner
-    {
-        Authority auth = Authority(admin.authority);
-        address casperAddress = DexAuth(auth.getExchangesAuthority()).getCasper();
-        Casper casper = Casper(casperAddress);
-        casper.withdraw(data.validatorIndex);
-        VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.withdrawFromCasper(msg.sender, this, casperAddress, data.validatorIndex));
     }
 
     /// @dev Allows vault dao/factory to change fee split ratio
@@ -457,12 +405,6 @@ contract Vault is Owned, SafeMath, VaultFace {
         );
     }
 
-    /// @dev Finds the value of the deposit of this vault at the casper contract
-    /// @return Value of the deposit at casper in wei
-    function getCasperDeposit() external view returns (uint256) {
-        return getCasperDepositInternal();
-    }
-
     /// @dev Returns the version of the type of vault
     /// @return String of the version
     function getVersion()
@@ -618,52 +560,13 @@ contract Vault is Owned, SafeMath, VaultFace {
         );
     }
 
-    /// @dev Queries the addres of the inizialized casper
-    /// @return Address of the casper address
-    function getCasper()
-        internal view
-        returns (address)
-    {
-        Authority auth = Authority(admin.authority);
-        if (casperInitialized()) {
-            address casperAddress = DexAuth(auth.getExchangesAuthority())
-                .getCasper();
-            return casperAddress;
-        }
-    }
-
-    /// @dev Checkes whether casper has been inizialized by the Authority
-    /// @return Bool the casper contract has been initialized
-    function casperInitialized()
-        internal view
-        returns (bool)
-    {
-        Authority auth = Authority(admin.authority);
-        return DexAuth(auth.getExchangesAuthority()).isCasperInitialized();
-    }
-
-    /// @dev Finds the value of the deposit of this vault at the casper contract
-    /// @return Value of the deposit at casper in wei
-    function getCasperDepositInternal()
-        internal view
-        returns (uint256)
-    {
-        if (casperInitialized()) {
-            Casper casper = Casper(getCasper());
-            return uint256(casper.deposit_size(data.validatorIndex));
-        } else {
-            return 0;
-        }
-    }
-
     /// @dev Calculates the value of the shares
     /// @return Value of the shares in wei
     function getNav()
         internal view
         returns (uint256)
     {
-        uint256 casperDeposit = (casperInitialized() ? getCasperDepositInternal() : 0);
-        uint256 aum = safeAdd(address(this).balance, casperDeposit) - msg.value;
+        uint256 aum = address(this).balance - msg.value;
         return (data.totalSupply == 0 ? data.price : safeDiv(aum * BASE, data.totalSupply));
     }
 

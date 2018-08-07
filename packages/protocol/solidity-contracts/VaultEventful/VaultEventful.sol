@@ -20,7 +20,6 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
-import { ExchangesAuthorityFace as DexAuth } from "../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { VaultEventfulFace } from "./VaultEventfulFace.sol";
 
 /// @title Vault Eventful - Logs events for all vaults.
@@ -79,21 +78,6 @@ contract VaultEventful is VaultEventfulFace {
         address vaultDao
     );
 
-    event DepositCasper(
-        address indexed vault,
-        address indexed validator,
-        address indexed casper,
-        address withdrawal,
-        uint256 amount
-    );
-
-    event WithdrawCasper(
-        address indexed vault,
-        address indexed validator,
-        address indexed casper,
-        uint256 validatorIndex
-    );
-
     event VaultCreated(
         address indexed vault,
         address indexed group,
@@ -112,14 +96,6 @@ contract VaultEventful is VaultEventfulFace {
     modifier approvedVaultOnly(address _vault) {
         Authority auth = Authority(AUTHORITY);
         require(auth.isWhitelistedVault(_vault));
-        _;
-    }
-
-    modifier isCasper(address _casper) {
-        Authority auth = Authority(AUTHORITY);
-        require(
-            DexAuth(auth.getExchangesAuthority())
-                .getCasper() == _casper);
         _;
     }
 
@@ -250,49 +226,6 @@ contract VaultEventful is VaultEventfulFace {
         returns(bool success)
     {
         emit VaultDao(_targetVault, msg.sender, _who, _vaultDao);
-        return true;
-    }
-
-    /// @dev Logs a vault deposit to the casper contract
-    /// @param _who Address of the caller
-    /// @param _targetVault Address of the vault
-    /// @param _casper Address of the casper contract
-    /// @param _validation Address of the PoS miner
-    /// @param _withdrawal Address of casper withdrawal, must be the vault
-    /// @return Bool the transaction executed successfully
-    function depositToCasper(
-        address _who,
-        address _targetVault,
-        address _casper,
-        address _validation,
-        address _withdrawal,
-        uint256 _amount)
-        external
-        approvedVaultOnly(msg.sender)
-        approvedUserOnly(_who)
-        returns(bool success)
-    {
-        emit DepositCasper(_targetVault, _validation, _casper, _withdrawal, _amount);
-        return true;
-    }
-
-    /// @dev Logs a vault withdrawal from the casper contract
-    /// @param _who Address of the caller
-    /// @param _targetVault Address of the vault
-    /// @param _casper Address of the casper contract
-    /// @param _validatorIndex Number of the validator in the casper contract
-    /// @return Bool the transaction executed successfully
-    function withdrawFromCasper(
-        address _who,
-        address _targetVault,
-        address _casper,
-        uint256 _validatorIndex)
-        external
-        approvedVaultOnly(msg.sender)
-        approvedUserOnly(_who)
-        returns(bool success)
-    {
-        emit WithdrawCasper(_targetVault, _who, _casper, _validatorIndex);
         return true;
     }
 

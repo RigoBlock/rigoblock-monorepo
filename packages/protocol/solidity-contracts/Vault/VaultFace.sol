@@ -25,12 +25,9 @@ interface VaultFace {
 
     // CORE FUNCTIONS
 
-    function() external payable;
     function buyVault() external payable returns (bool success);
     function buyVaultOnBehalf(address _hodler) external payable returns (bool success);
     function sellVault(uint256 amount) external returns (bool success);
-    function depositCasper(address _validation, address _withdrawal, uint256 _amount) external returns (bool success);
-    function withdrawCasper() external;
     function changeRatio(uint256 _ratio) external;
     function setTransactionFee(uint256 _transactionFee) external;
     function changeFeeCollector(address _feeCollector) external;
@@ -53,5 +50,4 @@ interface VaultFace {
     function getAdminData() external view returns (address, address feeCollector, address vaultDao, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
     function totalSupply() external view returns (uint256);
     function getVersion() external pure returns (string);
-    function getCasperDeposit() external view returns (uint256);
 }
