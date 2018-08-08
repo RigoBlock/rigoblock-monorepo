@@ -1,20 +1,31 @@
 import * as Exchange from './exchange'
 import {
   AMOUNT_PRECISION,
-  ETHFINEX,
+  ExchangesMap,
   NETWORKS,
-  PRICE_PRECISION
+  PRICE_PRECISION,
+  SupportedExchanges
 } from '../constants'
 import { getRequestOptions } from '../utils'
 import BigNumber from 'bignumber.js'
 import fetch from 'node-fetch'
 
-export class Ethfinex
-  implements Exchange.Interface<Ethfinex, RawOrder, RawTicker> {
-  // Why doesn't public static exchangeName work?
-  static exchangeName: string = ETHFINEX
-  public exchangeName: string = ETHFINEX
-  HTTP_API_URL: string = 'https://api.bitfinex.com/v2/'
+export namespace Ethfinex {
+  export type SupportedNetworks = {
+    0: NETWORKS.MAINNET
+    1: NETWORKS.KOVAN
+  }
+  // add tickersTokenPairs
+  // export
+}
+
+export default class Ethfinex
+  implements Exchange.IExchange<RawOrder, RawTicker> {
+  static supportedNetworks: Ethfinex.SupportedNetworks = [
+    NETWORKS.MAINNET,
+    NETWORKS.KOVAN
+  ]
+  public HTTP_API_URL: string = 'https://api.bitfinex.com/v2/'
   private tickersTokenPairs: string[] = ['tZRXETH', 'tMKRETH', 'tGNTETH']
 
   constructor(public networkId, public transport) {}

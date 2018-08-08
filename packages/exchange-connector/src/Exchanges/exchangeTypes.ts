@@ -1,4 +1,4 @@
-namespace Exchange {
+namespace ExchangeTypes {
   export enum OrderType {
     BUY,
     SELL
@@ -30,7 +30,11 @@ namespace Exchange {
     symbol: string
   }
 
-  export interface IExchange<RawOrder = {}, RawTicker = {}> {
+  export interface IExchange<
+    RawOrder = {},
+    RawTicker = {},
+    TickersTokenPairs = {}
+  > {
     networkId: string
     HTTP_API_URL: string
 
@@ -44,7 +48,7 @@ namespace Exchange {
       getTickers(options: {
         networkId?: string
         granularity?: string
-        tokenPairs?: string[]
+        tokenPairs?: TickersTokenPairs
       }): Promise<RawTicker[]>
     }
 
@@ -53,11 +57,11 @@ namespace Exchange {
     getTickers(options: {
       networkId?: string
       granularity?: string
-      tokenPairs?: string[]
+      tokenPairs?: TickersTokenPairs
     }): Promise<TickersList>
 
     network(id: string): IExchange
   }
 }
 
-export = Exchange
+export = ExchangeTypes

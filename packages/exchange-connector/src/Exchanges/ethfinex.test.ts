@@ -1,5 +1,5 @@
 import 'jest'
-import { Ethfinex } from './ethfinex'
+import Ethfinex from './ethfinex'
 
 const rawTickers = []
 
