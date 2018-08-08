@@ -16,6 +16,11 @@ export enum NETWORKS {
   ROPSTEN = '3'
 }
 
+export const NetworksMap = {
+  [NETWORKS.MAINNET]: '1',
+  [NETWORKS.KOVAN]: '42'
+}
+
 export enum SupportedExchanges {
   ETHFINEX
 }

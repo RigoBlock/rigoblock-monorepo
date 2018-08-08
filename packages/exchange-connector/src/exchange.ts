@@ -1,8 +1,8 @@
-import * as Exchange from './Exchanges/exchange'
+import * as ExchangeTypes from './Exchanges/exchangeTypes'
 import { Ethfinex } from './Exchanges'
 import { ExchangesMap, NETWORKS, SupportedExchanges } from './constants'
 
-export default class ExchangeFactory {
+export default class Exchange {
   public selectedExchange: typeof Ethfinex
   public networkId: string
   public transport: string
@@ -11,7 +11,7 @@ export default class ExchangeFactory {
     exchangeName: SupportedExchanges,
     networkId: NETWORKS = NETWORKS.MAINNET,
     transport: string = 'http'
-  ): Exchange.IExchange {
+  ): ExchangeTypes.IExchange {
     this.selectedExchange = ExchangesMap[exchangeName]
     if (!this.selectedExchange) {
       throw new Error(`Exchange ${exchangeName} is not supported.`)
@@ -22,7 +22,7 @@ export default class ExchangeFactory {
     return new this.selectedExchange(networkId, transport)
   }
 
-  public network(networkId: string): Exchange.IExchange {
+  public network(networkId: string): ExchangeTypes.IExchange {
     if (!(networkId in this.selectedExchange.supportedNetworks)) {
       throw new Error(`Network not supported on this exchange: ${networkId}`)
     }
@@ -33,7 +33,7 @@ export default class ExchangeFactory {
     exchangeName,
     networkId = this.networkId,
     transport = this.transport
-  ): Exchange.IExchange {
+  ): ExchangeTypes.IExchange {
     if (!ExchangesMap[exchangeName]) {
       throw new Error(`Exchange ${exchangeName} is not supported.`)
     }

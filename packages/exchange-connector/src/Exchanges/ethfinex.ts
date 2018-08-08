@@ -1,34 +1,66 @@
-import * as Exchange from './exchange'
-import {
-  AMOUNT_PRECISION,
-  ExchangesMap,
-  NETWORKS,
-  PRICE_PRECISION,
-  SupportedExchanges
-} from '../constants'
+import * as ExchangeTypes from './exchangeTypes'
+import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
 import { getRequestOptions } from '../utils'
 import BigNumber from 'bignumber.js'
 import fetch from 'node-fetch'
+
+export enum TokenPairs {
+  ZRXETH = 'tZRXETH',
+  MKRETH = 'tMKRETH',
+  GNTETH = 'tGNTETH'
+}
 
 export namespace Ethfinex {
   export type SupportedNetworks = {
     0: NETWORKS.MAINNET
     1: NETWORKS.KOVAN
   }
-  // add tickersTokenPairs
-  // export
+  export type TickersTokenPairs = {
+    0: TokenPairs.ZRXETH
+    1: TokenPairs.MKRETH
+    2: TokenPairs.GNTETH
+  }
+
+  export type RawTicker = [
+    string, // SYMBOL
+    number, // BID,
+    number, // BID_SIZE,
+    number, // ASK,
+    number, // ASK_SIZE,
+    number, // DAILY_CHANGE,
+    number, // DAILY_CHANGE_PERC,
+    number, // LAST_PRICE,
+    number, // VOLUME,
+    number, // HIGH,
+    number // LOW
+  ]
+
+  export type RawOrder = [
+    number, // PRICE,
+    number, // COUNT,
+    number // AMOUNT
+  ]
 }
 
 export default class Ethfinex
-  implements Exchange.IExchange<RawOrder, RawTicker> {
+  implements
+    ExchangeTypes.IExchange<
+      Ethfinex.RawOrder,
+      Ethfinex.RawTicker,
+      Ethfinex.TickersTokenPairs
+    > {
   static supportedNetworks: Ethfinex.SupportedNetworks = [
     NETWORKS.MAINNET,
     NETWORKS.KOVAN
   ]
   public HTTP_API_URL: string = 'https://api.bitfinex.com/v2/'
-  private tickersTokenPairs: string[] = ['tZRXETH', 'tMKRETH', 'tGNTETH']
+  private tickersTokenPairs: Ethfinex.TickersTokenPairs = [
+    TokenPairs.ZRXETH,
+    TokenPairs.MKRETH,
+    TokenPairs.GNTETH
+  ]
 
-  constructor(public networkId, public transport) {}
+  constructor(public networkId, public transport = 'http') {}
 
   public network(id: string = NETWORKS.MAINNET): Ethfinex {
     this.networkId = id
@@ -38,7 +70,7 @@ export default class Ethfinex
   public async getOrders(
     baseSymbol: string,
     quoteSymbol: string
-  ): Promise<Exchange.OrdersList> {
+  ): Promise<ExchangeTypes.OrdersList> {
     return this.raw
       .getOrders(baseSymbol, quoteSymbol)
       .then(result => this.formatOrders(result))
@@ -48,7 +80,7 @@ export default class Ethfinex
     options = {
       tokenPairs: this.tickersTokenPairs
     }
-  ): Promise<Exchange.TickersList> {
+  ): Promise<ExchangeTypes.TickersList> {
     return this.raw
       .getTickers(options)
       .then(result => this.formatTickers(result))
@@ -59,7 +91,7 @@ export default class Ethfinex
       options = {
         tokenPairs: this.tickersTokenPairs
       }
-    ): Promise<RawTicker[]> => {
+    ): Promise<Ethfinex.RawTicker[]> => {
       const url = `${this.HTTP_API_URL}/tickers`
       const qs = {
         symbols: options.tokenPairs.toString()
@@ -70,7 +102,7 @@ export default class Ethfinex
       baseTokenAddress: string,
       quoteTokenAddress: string,
       precision: string = 'P0'
-    ): Promise<RawOrder[]> => {
+    ): Promise<Ethfinex.RawOrder[]> => {
       const ordersUrl = `${
         this.HTTP_API_URL
       }/book/t${baseTokenAddress}${quoteTokenAddress}/${precision}`
@@ -78,12 +110,12 @@ export default class Ethfinex
     }
   }
 
-  private formatOrders(orders: RawOrder[]): Exchange.OrdersList {
+  private formatOrders(orders: Ethfinex.RawOrder[]): ExchangeTypes.OrdersList {
     return orders.map((order: number[]) => {
       const type =
         order.slice(order.length - 1).pop() > 0
-          ? Exchange.OrderType.BUY
-          : Exchange.OrderType.SELL
+          ? ExchangeTypes.OrderType.BUY
+          : ExchangeTypes.OrderType.SELL
 
       const price = new BigNumber(order.shift()).toFormat(
         PRICE_PRECISION,
@@ -104,7 +136,7 @@ export default class Ethfinex
     })
   }
 
-  private formatTickers(tickers: RawTicker[]) {
+  private formatTickers(tickers: Ethfinex.RawTicker[]) {
     const tickersList = tickers.map(ticker => ({
       symbol: ticker[0].substring(1, 4),
       priceEth: ticker[7].toString(),
@@ -123,23 +155,3 @@ export default class Ethfinex
     return tickersList
   }
 }
-
-type RawTicker = [
-  string, // SYMBOL
-  number, // BID,
-  number, // BID_SIZE,
-  number, // ASK,
-  number, // ASK_SIZE,
-  number, // DAILY_CHANGE,
-  number, // DAILY_CHANGE_PERC,
-  number, // LAST_PRICE,
-  number, // VOLUME,
-  number, // HIGH,
-  number // LOW
-]
-
-type RawOrder = [
-  number, // PRICE,
-  number, // COUNT,
-  number // AMOUNT
-]
