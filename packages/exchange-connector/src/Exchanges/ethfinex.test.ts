@@ -87,7 +87,8 @@ describe('Ethfinex exchange', () => {
         })
         expect(tickers).toEqual(rawTickers)
       })
-      it('returns an empty array if the tockenPair is invalid', async () => {
+
+      it('returns an empty array if the tokenPair is invalid', async () => {
         fetchSpy.mockReturnValueOnce(
           Promise.resolve({
             json: () => []
@@ -95,7 +96,7 @@ describe('Ethfinex exchange', () => {
         )
         const ethfinex = new Ethfinex('1')
         const tickers = await ethfinex.raw.getTickers({
-          tokenPairs: ['tZRXETH']
+          tokenPairs: ['tZRXWETH']
         })
         expect(tickers).toEqual([])
       })
@@ -121,7 +122,7 @@ describe('Ethfinex exchange', () => {
           })
         )
         const ethfinex = new Ethfinex('1')
-        const orders = await ethfinex.raw.getOrders(baseToken, quoteToken)
+        const orders = await ethfinex.raw.getOrders(baseToken, 'WETH')
         expect(orders).toEqual(responseError)
       })
     })
@@ -147,7 +148,7 @@ describe('Ethfinex exchange', () => {
       )
       const ethfinex = new Ethfinex('1')
       await expect(
-        ethfinex.getTickers({ tokenPairs: ['tZRXETH'] })
+        ethfinex.getTickers({ tokenPairs: ['tZRXWETH'] })
       ).rejects.toThrowError('Tokens Pair not recognised by exchange')
     })
   })
@@ -164,16 +165,28 @@ describe('Ethfinex exchange', () => {
       expect(orders).toEqual(formattedOrders)
     })
 
-    fit('returns an error if the parameters are incorrect', async () => {
+    it('returns an error if the parameters are incorrect', async () => {
       fetchSpy.mockReturnValueOnce(
         Promise.resolve({
           json: () => ['error', 10020, 'symbol: invalid']
         })
       )
       const ethfinex = new Ethfinex('1')
+      await expect(ethfinex.getOrders(baseToken, 'WETH')).rejects.toThrowError(
+        'symbol: invalid'
+      )
+    })
+
+    it('returns an error if the "precision" parameter is incorrect', async () => {
+      fetchSpy.mockReturnValueOnce(
+        Promise.resolve({
+          json: () => ['error', 10020, 'prec: invalid']
+        })
+      )
+      const ethfinex = new Ethfinex('1')
       await expect(
-        ethfinex.getOrders({ tokenPairs: ['tZRXETH'] })
-      ).rejects.toThrowError('symbol: invalid')
+        ethfinex.getOrders(baseToken, 'WETH', 'P9')
+      ).rejects.toThrowError('prec: invalid')
     })
   })
 })
