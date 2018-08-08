@@ -99,34 +99,32 @@ export default class Ethfinex
       return fetch(getRequestOptions(url, qs)).then(r => r.json())
     },
     getOrders: async (
-      baseTokenAddress: string,
-      quoteTokenAddress: string,
+      baseToken: string,
+      quoteToken: string,
       precision: string = 'P0'
     ): Promise<Ethfinex.RawOrder[]> => {
       const ordersUrl = `${
         this.HTTP_API_URL
-      }/book/t${baseTokenAddress}${quoteTokenAddress}/${precision}`
+      }/book/t${baseToken}${quoteToken}/${precision}`
       return fetch(getRequestOptions(ordersUrl)).then(r => r.json())
     }
   }
 
   private formatOrders(orders: Ethfinex.RawOrder[]): ExchangeTypes.OrdersList {
+    if (orders.shift() === ('error' as any)) {
+      throw new Error(orders.pop())
+    }
     return orders.map((order: number[]) => {
       const type =
         order.slice(order.length - 1).pop() > 0
           ? ExchangeTypes.OrderType.BUY
           : ExchangeTypes.OrderType.SELL
 
-      const price = new BigNumber(order.shift()).toFormat(
-        PRICE_PRECISION,
-        BigNumber.ROUND_FLOOR
-      )
-
+      const price = new BigNumber(order.shift()).toFixed(PRICE_PRECISION)
       const ordersCount: number = order.shift()
-
       const amount = new BigNumber(order.pop())
         .absoluteValue()
-        .toFormat(AMOUNT_PRECISION, BigNumber.ROUND_FLOOR)
+        .toFixed(AMOUNT_PRECISION)
       return {
         type,
         price,
@@ -137,6 +135,9 @@ export default class Ethfinex
   }
 
   private formatTickers(tickers: Ethfinex.RawTicker[]) {
+    if (!tickers.length) {
+      throw new Error('Tokens Pair not recognised by exchange')
+    }
     const tickersList = tickers.map(ticker => ({
       symbol: ticker[0].substring(1, 4),
       priceEth: ticker[7].toString(),
