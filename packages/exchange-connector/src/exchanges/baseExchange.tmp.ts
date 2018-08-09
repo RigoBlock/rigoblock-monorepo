@@ -1,14 +1,14 @@
-import { IExchange } from './types'
+import * as ExchangeTypes from './types'
 import { NETWORKS, SupportedExchanges } from '../constants'
-import ExchangesMap from './index'
 
-export default abstract class BaseExchange {
+export default abstract class BaseExchange<T> {
   public switch(
     exchangeName: SupportedExchanges,
     networkId: NETWORKS = NETWORKS.MAINNET,
-    transport: string = 'http'
-  ): IExchange {
-    const selectedExchange = ExchangesMap[exchangeName]
+    transport: string = 'http',
+    exchangesMap: ExchangeTypes.ExchangesMap<T>
+  ): T {
+    const selectedExchange = exchangesMap[exchangeName]
     if (!selectedExchange) {
       throw new Error(`Exchange ${exchangeName} is not supported.`)
     }

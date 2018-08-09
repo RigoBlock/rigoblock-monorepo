@@ -1,5 +1,3 @@
-import Ethfinex from './Exchanges/ethfinex'
-
 export const MAINNET: string = 'mainnet'
 export const ROPSTEN: string = 'ropsten'
 export const KOVAN: string = 'kovan'

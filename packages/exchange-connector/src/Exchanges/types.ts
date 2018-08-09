@@ -1,5 +1,3 @@
-import { NETWORKS, SupportedExchanges } from '../constants'
-
 export enum OrderType {
   BUY,
   SELL
@@ -20,7 +18,6 @@ export type Order = {
   type: OrderType
   price: string
   amount: string
-
   // Number of orders at this price in case the order is an aggregation
   ordersCount?: number
 }
@@ -29,6 +26,10 @@ export type Ticker = {
   priceEth: string
   priceUsd: string
   symbol: string
+}
+
+export type ExchangesMap<T> = {
+  [key: string]: T
 }
 
 export interface IExchange<
@@ -62,10 +63,4 @@ export interface IExchange<
   }): Promise<TickersList>
 
   network(id: string): IExchange
-
-  // switch(
-  //   exchangeName: SupportedExchanges,
-  //   networkId?: NETWORKS,
-  //   transport?: string
-  // ): IExchange
 }
