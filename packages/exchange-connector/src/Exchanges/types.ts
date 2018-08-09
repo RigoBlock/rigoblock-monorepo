@@ -1,3 +1,5 @@
+import { NETWORKS, SupportedExchanges } from '../constants'
+
 export enum OrderType {
   BUY,
   SELL
@@ -60,4 +62,10 @@ export interface IExchange<
   }): Promise<TickersList>
 
   network(id: string): IExchange
+
+  // switch(
+  //   exchangeName: SupportedExchanges,
+  //   networkId?: NETWORKS,
+  //   transport?: string
+  // ): IExchange
 }

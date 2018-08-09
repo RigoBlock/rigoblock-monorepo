@@ -1,10 +1,13 @@
 import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
 import { IExchange, OrderType, OrdersList, TickersList } from './types'
+import BaseExchange from './baseExchange'
 import BigNumber from 'bignumber.js'
 import fetch from 'node-fetch'
 
 export class Ethfinex
-  implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
+  implements
+    // extends BaseExchange
+    IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
   static supportedNetworks: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
   public HTTP_API_URL: string = 'https://api.bitfinex.com/v2'
   private tickersTokenPairs: Ethfinex.TokenPairs[] = [
@@ -13,10 +16,8 @@ export class Ethfinex
     Ethfinex.TokenPairs.GNTETH
   ]
 
-  constructor(public networkId, public transport = 'http') {}
-
-  public network(id: string = NETWORKS.MAINNET): Ethfinex {
-    return new Ethfinex(id, this.transport)
+  constructor(public networkId, public transport = 'http') {
+    // super()
   }
 
   public async getOrders(
@@ -107,6 +108,10 @@ export class Ethfinex
       symbol: 'ETH'
     })
     return tickersList
+  }
+
+  public network(id: string = NETWORKS.MAINNET): Ethfinex {
+    return new Ethfinex(id, this.transport)
   }
 
   private checkForError(array: any[]) {
