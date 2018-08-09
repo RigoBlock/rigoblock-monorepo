@@ -7,7 +7,7 @@ export class Ethfinex
   implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
   static supportedNetworks: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
   public HTTP_API_URL: string = 'https://api.bitfinex.com/v2'
-  private tickersTokenPairs: Ethfinex.TokenPairs[] = [
+  private tickersTokenPairs: string[] = [
     Ethfinex.TokenPairs.ZRXETH,
     Ethfinex.TokenPairs.MKRETH,
     Ethfinex.TokenPairs.GNTETH

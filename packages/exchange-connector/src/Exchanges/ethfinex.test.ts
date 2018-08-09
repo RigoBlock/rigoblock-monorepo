@@ -44,12 +44,12 @@ describe('Ethfinex exchange', () => {
       priceUsd: ''
     },
     {
-      priceEth: '1',
+      priceEth: NETWORKS.MAINNET,
       priceUsd: '',
       symbol: 'WETH'
     },
     {
-      priceEth: '1',
+      priceEth: NETWORKS.MAINNET,
       priceUsd: '',
       symbol: 'ETH'
     }
@@ -83,7 +83,7 @@ describe('Ethfinex exchange', () => {
       expect(ethfinex.network(NETWORKS.KOVAN).networkId).toEqual(NETWORKS.KOVAN)
     })
   })
-  fdescribe('raw functions', () => {
+  describe('raw functions', () => {
     describe('getTickers', () => {
       it('returns the raw tickers data from the exchange', async () => {
         fetchSpy.mockReturnValueOnce(
@@ -91,7 +91,7 @@ describe('Ethfinex exchange', () => {
             json: () => rawTickers
           })
         )
-        const ethfinex = new Ethfinex('1')
+        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
         const tickers = await ethfinex.raw.getTickers({
           tokenPairs: ['tZRXETH']
         })
@@ -104,7 +104,7 @@ describe('Ethfinex exchange', () => {
             json: () => []
           })
         )
-        const ethfinex = new Ethfinex('1')
+        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
         const tickers = await ethfinex.raw.getTickers({
           tokenPairs: ['tZRXWETH']
         })
@@ -119,7 +119,7 @@ describe('Ethfinex exchange', () => {
             json: () => rawOrders
           })
         )
-        const ethfinex = new Ethfinex('1')
+        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
         const orders = await ethfinex.raw.getOrders(baseToken, quoteToken)
         expect(orders).toEqual(rawOrders)
       })
@@ -131,13 +131,13 @@ describe('Ethfinex exchange', () => {
             json: () => responseError
           })
         )
-        const ethfinex = new Ethfinex('1')
+        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
         const orders = await ethfinex.raw.getOrders(baseToken, 'WETH')
         expect(orders).toEqual(responseError)
       })
     })
 
-    fdescribe('getCandles', () => {
+    describe('getCandles', () => {
       it('returns the raw candles data from the exchange', async () => {
         fetchSpy.mockReturnValueOnce(
           Promise.resolve({
@@ -163,7 +163,7 @@ describe('Ethfinex exchange', () => {
           json: () => rawTickers
         })
       )
-      const ethfinex = new Ethfinex('1')
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       const tickers = await ethfinex.getTickers({ tokenPairs: ['tZRXETH'] })
       expect(tickers).toEqual(formattedTickers)
     })
@@ -174,7 +174,7 @@ describe('Ethfinex exchange', () => {
           json: () => []
         })
       )
-      const ethfinex = new Ethfinex('1')
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       await expect(
         ethfinex.getTickers({ tokenPairs: ['tZRXWETH'] })
       ).rejects.toThrowError('Tokens Pair not recognised by exchange')
@@ -188,7 +188,7 @@ describe('Ethfinex exchange', () => {
           json: () => rawOrders
         })
       )
-      const ethfinex = new Ethfinex('1')
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       const orders = await ethfinex.getOrders(baseToken, quoteToken)
       expect(orders).toEqual(formattedOrders)
     })
@@ -199,7 +199,7 @@ describe('Ethfinex exchange', () => {
           json: () => ['error', 10020, 'symbol: invalid']
         })
       )
-      const ethfinex = new Ethfinex('1')
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       await expect(ethfinex.getOrders(baseToken, 'WETH')).rejects.toThrowError(
         'symbol: invalid'
       )
@@ -211,9 +211,9 @@ describe('Ethfinex exchange', () => {
           json: () => ['error', 10020, 'prec: invalid']
         })
       )
-      const ethfinex = new Ethfinex('1')
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       await expect(
-        ethfinex.getOrders(baseToken, 'WETH', 'P9')
+        ethfinex.getOrders(baseToken, 'WETH', 'P9' as any)
       ).rejects.toThrowError('prec: invalid')
     })
   })
