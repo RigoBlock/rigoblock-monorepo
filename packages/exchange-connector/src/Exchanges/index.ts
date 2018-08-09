@@ -1,8 +1,6 @@
 import { Ethfinex } from './ethfinex'
 import { SupportedExchanges } from '../constants'
 
-const exchangesMap = {
+export default {
   [SupportedExchanges.ETHFINEX]: Ethfinex
 }
-
-export default exchangesMap
