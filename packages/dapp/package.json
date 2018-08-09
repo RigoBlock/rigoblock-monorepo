@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "serve -s dist -p 8080",
-    "ganache": "ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
+    "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "ganache:bootstrap": "ganache-bootstrap",
     "ganache:seed": "ganache-seed",
     "build": "rm -rf dist/* && node scripts/build.js",
