@@ -1,6 +1,4 @@
-import 'jest'
-import * as ExchangeTypes from './exchangeTypes'
-import { NetworksMap } from '../constants'
+import * as ExchangeTypes from './types'
 
 describe('Ethfinex exchange', () => {
   let fetchSpy
@@ -69,8 +67,7 @@ describe('Ethfinex exchange', () => {
     it('sets the network Id and returns the instance with the network set', () => {
       const ethfinex = new Ethfinex('1')
       expect(ethfinex.networkId).toEqual('1')
-      ethfinex.network('42')
-      expect(ethfinex.networkId).toEqual('42')
+      expect(ethfinex.network('42').networkId).toEqual('42')
     })
   })
   describe('raw functions', () => {
