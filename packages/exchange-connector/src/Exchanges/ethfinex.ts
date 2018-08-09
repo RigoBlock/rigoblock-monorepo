@@ -55,6 +55,20 @@ export class Ethfinex
         this.HTTP_API_URL
       }/book/t${baseToken}${quoteToken}/${precision}`
       return fetch(url).then(r => r.json())
+    },
+    getCandles: async (
+      timeFrame: Ethfinex.CandlesTimeFrame,
+      tokenPair: string,
+      section: Ethfinex.CandlesSection,
+      limit?: string, // max number of candles we want to receive
+      sort?: Ethfinex.CandlesSort,
+      start?: string, // filter start (ms)
+      end?: string // filter end (ms)
+    ): Promise<Ethfinex.RawCandle[]> => {
+      const url = `${
+        this.HTTP_API_URL
+      }/candles/trade:${timeFrame}:${tokenPair}/${section}?limit=${limit}&sort=${sort}&start=${start}&end=${end}`
+      return fetch(url).then(r => r.json())
     }
   }
 
@@ -143,6 +157,15 @@ export namespace Ethfinex {
     number // AMOUNT
   ]
 
+  export type RawCandle = [
+    number, //MTS,
+    number, //OPEN,
+    number, //CLOSE,
+    number, //HIGH,
+    number, //LOW,
+    number //VOLUME
+  ]
+
   export enum OrderPrecisions {
     P0 = 'P0',
     P1 = 'P1',
@@ -150,6 +173,31 @@ export namespace Ethfinex {
     P3 = 'P3',
     P4 = 'P4',
     R0 = 'R0'
+  }
+
+  export enum CandlesTimeFrame {
+    ONE_MIN = '1m',
+    FIVE_MINS = '5m',
+    FIFTEEN_MINS = '15m',
+    THIRTY_MINS = '30m',
+    ONE_HOUR = '1h',
+    THREE_HRS = '3h',
+    SIX_HRS = '6h',
+    TWELVE_HRS = '12h',
+    ONE_DAY = '1D',
+    SEVEN_DAYS = '7D',
+    TWO_WEEKS = '14D',
+    ONE_MONTH = '1M'
+  }
+
+  export enum CandlesSection {
+    HIST = 'hist',
+    LAST = 'last'
+  }
+
+  export enum CandlesSort {
+    NEW_FIRST = '-1',
+    OLD_FIRST = '1'
   }
 }
 
