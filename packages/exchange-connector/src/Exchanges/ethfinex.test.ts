@@ -25,6 +25,18 @@ describe('Ethfinex exchange', () => {
 
   const rawOrders = [[0.0023421, 1, 1000], [0.0023692, 4, -1184]]
 
+  const rawCandles = [
+    [
+      1533081600000,
+      0.0016661,
+      0.0025585,
+      0.0026716,
+      0.0016296,
+      1842676.23491335
+    ],
+    [1530403200000, 0.0022332, 0.0016628, 0.0022478, 0.0013885, 772607.43012305]
+  ]
+
   const formattedTickers = [
     {
       symbol: 'ZRX',
@@ -65,13 +77,12 @@ describe('Ethfinex exchange', () => {
     Ethfinex = require('./ethfinex').default
   })
   describe('network()', () => {
-    it('sets the network Id and returns the instance with the network set', () => {
+    it('sets the network Id and returns a new instance with the network set', () => {
       const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       expect(ethfinex.networkId).toEqual(NETWORKS.MAINNET)
       expect(ethfinex.network(NETWORKS.KOVAN).networkId).toEqual(NETWORKS.KOVAN)
     })
   })
-
   describe('raw functions', () => {
     describe('getTickers', () => {
       it('returns the raw tickers data from the exchange', async () => {
@@ -113,7 +124,7 @@ describe('Ethfinex exchange', () => {
         expect(orders).toEqual(rawOrders)
       })
 
-      it('returns an error if the parameters are invalid', async () => {
+      it('returns the error response from the Exchange if the parameters are invalid', async () => {
         const responseError = ['error', 10020, 'symbol: invalid']
         fetchSpy.mockReturnValueOnce(
           Promise.resolve({
@@ -123,6 +134,24 @@ describe('Ethfinex exchange', () => {
         const ethfinex = new Ethfinex(NETWORKS.MAINNET)
         const orders = await ethfinex.raw.getOrders(baseToken, 'WETH')
         expect(orders).toEqual(responseError)
+      })
+    })
+
+    describe('getCandles', () => {
+      it('returns the raw candles data from the exchange', async () => {
+        fetchSpy.mockReturnValueOnce(
+          Promise.resolve({
+            json: () => rawCandles
+          })
+        )
+        const ethfinex = new Ethfinex('1')
+        const candles = await ethfinex.raw.getCandles(
+          Ethfinex.CandlesTimeFrame.ONE_MONTH,
+          'tZRXETH',
+          Ethfinex.CandlesSection.HIST,
+          '2'
+        )
+        expect(candles).toEqual(rawCandles)
       })
     })
   })
