@@ -16,7 +16,7 @@ const TextField = ({
   input,
   meta
 }) => {
-  let outputValue =
+  const outputValue =
     input && input.value ? input.value.replace(INPUT_SANITIZE_REGEXP, '') : ''
 
   return (
