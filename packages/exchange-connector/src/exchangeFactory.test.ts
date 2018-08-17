@@ -1,4 +1,4 @@
-import { Ethfinex } from './Exchanges/ethfinex'
+import { Ethfinex } from './exchanges/ethfinex'
 import { NETWORKS, SupportedExchanges } from './constants'
 import exchangeFactory from './exchangeFactory'
 
