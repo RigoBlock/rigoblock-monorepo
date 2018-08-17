@@ -1,9 +1,9 @@
 import { IExchange } from './exchanges/types'
-import { NETWORKS, SupportedExchanges } from './constants'
+import { NETWORKS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
 
 export default function ExchangeFactory(
-  exchangeName: SupportedExchanges,
+  exchangeName: supportedExchanges,
   networkId: NETWORKS = NETWORKS.MAINNET,
   transport: string = 'http'
 ): IExchange {

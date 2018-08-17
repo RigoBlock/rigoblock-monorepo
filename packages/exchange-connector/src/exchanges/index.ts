@@ -1,6 +1,6 @@
 import { Ethfinex } from './ethfinex'
-import { SupportedExchanges } from '../constants'
+import { supportedExchanges } from '../constants'
 
 export default {
-  [SupportedExchanges.ETHFINEX]: Ethfinex
+  [supportedExchanges.ETHFINEX]: Ethfinex
 }

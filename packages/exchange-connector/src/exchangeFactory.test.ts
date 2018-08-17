@@ -1,10 +1,10 @@
 import { Ethfinex } from './exchanges/ethfinex'
-import { NETWORKS, SupportedExchanges } from './constants'
+import { NETWORKS, supportedExchanges } from './constants'
 import exchangeFactory from './exchangeFactory'
 
 describe('Exchange factory class', () => {
   it('returns a new instance of the selected Exchange class', () => {
-    const exchange = exchangeFactory(SupportedExchanges.ETHFINEX)
+    const exchange = exchangeFactory(supportedExchanges.ETHFINEX)
     expect(exchange).toBeInstanceOf(Ethfinex)
   })
 
@@ -16,7 +16,7 @@ describe('Exchange factory class', () => {
 
   it('throws an error if we try to instance an exchange with an unsupported network', () => {
     expect(() =>
-      exchangeFactory(SupportedExchanges.ETHFINEX, NETWORKS.ROPSTEN)
+      exchangeFactory(supportedExchanges.ETHFINEX, NETWORKS.ROPSTEN)
     ).toThrowErrorMatchingSnapshot()
   })
 })
