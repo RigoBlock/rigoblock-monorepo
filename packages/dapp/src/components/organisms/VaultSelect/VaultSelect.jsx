@@ -38,7 +38,7 @@ let vaultSelect = ({ vaults, location, userType, dispatch }) => {
 
   let vaultsList = Object.values(vaults).map(
     ({ name, symbol, totalSupply, id }) => ({
-      itemName: name,
+      itemName: name.charAt(0).toUpperCase() + name.substring(1),
       itemSymbol: symbol,
       itemValue: totalSupply ? totalSupply.div(ETH_TO_WEI) : new BigNumber('0'),
       id,

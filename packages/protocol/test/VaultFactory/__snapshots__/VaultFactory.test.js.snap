@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[` VaultFactory createVault throws an error when provided with space parameters at the beginning 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` VaultFactory createVault throws an error when provided with space parameters at the end 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` VaultFactory createVault throws an error when provided with uppercase parameters in name 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` VaultFactory createVault throws an error when provided with special ascii parameters 1`] = `"VM Exception while processing transaction: revert"`;
+
 exports[` VaultFactory createVault throws an error when provided with the same name 1`] = `"VM Exception while processing transaction: revert"`;
 
 exports[` VaultFactory createVault throws an exception when provided with a symbol longer smaller than 3 characters 1`] = `"VM Exception while processing transaction: revert"`;
