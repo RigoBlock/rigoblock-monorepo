@@ -1,6 +1,6 @@
-import { IExchange } from './Exchanges/types'
+import { IExchange } from './exchanges/types'
 import { NETWORKS, SupportedExchanges } from './constants'
-import ExchangesMap from './Exchanges'
+import ExchangesMap from './exchanges'
 
 export default function ExchangeFactory(
   exchangeName: SupportedExchanges,

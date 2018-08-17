@@ -13,7 +13,7 @@ export class Ethfinex
     Ethfinex.TokenPairs.GNTETH
   ]
 
-  constructor(public networkId, public transport = 'http') {}
+  constructor(public networkId: string, public transport = 'http') {}
 
   public async getOrders(
     baseToken: string,
