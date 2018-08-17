@@ -1,7 +1,6 @@
 import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
 import { IExchange, OrderType, OrdersList, TickersList } from './types'
 import BigNumber from 'bignumber.js'
-import fetch from 'node-fetch'
 
 export class Ethfinex
   implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
