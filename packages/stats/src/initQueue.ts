@@ -20,10 +20,6 @@ export default (
 
   const queue = new Queue(name, config)
 
-  console.log('calling')
-  tasks[handlerName].call(null)
-  console.log('called')
-
   queue.process(tasks[handlerName])
 
   queue.add(initialData, { repeat: { cron: cronExpression } })
