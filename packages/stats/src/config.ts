@@ -10,6 +10,12 @@ export type Config = {
 }
 
 const conf: Config = {
+  'fetch-vaults-list': {
+    handlerName: 'fetchVaults',
+    description: 'Fetches a list of all vaults',
+    cronExpression: '0 */5 * * * *', // Every ten minutes
+    initialData: {}
+  },
   'calculate-balance-grg': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',

@@ -3,7 +3,7 @@ import { resolve } from 'dns'
 import logger from '../logger'
 import statsD from '../statsd'
 
-const task = (job: Job<any>) => {
+const task = () => {
   logger.info('inside the job')
   return new Promise((resolve, reject) => {
     statsD.gauge(
