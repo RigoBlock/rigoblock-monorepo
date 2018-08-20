@@ -1,0 +1,44 @@
+influxdb:
+  image: influxdb:latest
+  container_name: influxdb
+  ports:
+    - "8083:8083"
+    - "8086:8086"
+    - "8090:8090"
+  env_file:
+    - 'env.influxdb'
+  volumes:
+    - ./influxdb-data:/var/lib/influxdb
+
+telegraf:
+  image: telegraf:latest
+  container_name: telegraf
+  ports:
+    - "8125:8125/udp"
+  links:
+    - influxdb
+  volumes:
+    - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
+chronograf:
+  image: chronograf:latest
+  container_name: chronograf
+  ports:
+    - "8888:8888"
+  links:
+    - influxdb
+  command: ['chronograf', '--influxdb-url=http://influxdb:8086']
+
+redis:
+  image: redis:latest
+  container_name: redis
+  ports:
+    - "6379:6379"
+
+arena:
+  image: mixmaxhq/arena:latest
+  container_name: arena
+  ports:
+    - "4567:4567"
+  volumes:
+    - ./arena.conf:/opt/arena/src/server/config/index.json:ro
