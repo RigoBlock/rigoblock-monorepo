@@ -3,8 +3,8 @@ import { NETWORKS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
 
 export default function ExchangeFactory(
-  exchangeName: supportedExchanges,
-  networkId: NETWORKS = NETWORKS.MAINNET,
+  exchangeName: supportedExchanges | string,
+  networkId: NETWORKS | string = NETWORKS.MAINNET,
   transport: string = 'http'
 ): IExchange {
   const selectedExchange = ExchangesMap[exchangeName]
