@@ -133,6 +133,40 @@ jobs:
           paths:
             - packages/api/dist
 
+  build-exchange-connector:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - *attach_workspace
+      - run:
+          name: Building dist
+          command: yarn build:exchange-connector
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - packages/exchange-connector/dist
+
+  test-exchange-connector:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - *attach_workspace
+      - run:
+          name: Running unit tests
+          command: npx lerna run --scope @rigoblock/exchange-connector test:unit --stream
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - packages/exchange-connector/dist
+
   build-dapp:
     working_directory: *workspace_root
     environment:
@@ -246,15 +280,15 @@ jobs:
       - run:
           name: Update Rancher deployment
           command: |
-            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl 
-            chmod +x ./kubectl 
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
             sudo mv ./kubectl /usr/local/bin/kubectl
-            wget https://github.com/rancher/cli/releases/download/v2.0.3-rc1/rancher-linux-amd64-v2.0.3-rc1.tar.gz -O rancher-linux-amd64-v2.0.3-rc1.tar.gz 
-            tar xzvf rancher-linux-amd64-v2.0.3-rc1.tar.gz 
-            cd rancher-v2.0.3-rc1/ 
-            chmod +x rancher 
-            sudo mv ./rancher /usr/local/bin/rancher 
-            echo "1" | rancher login https://rb-rancher.endpoint.network/v3 --token $RANCHER_TOKEN 
+            wget https://github.com/rancher/cli/releases/download/v2.0.3-rc1/rancher-linux-amd64-v2.0.3-rc1.tar.gz -O rancher-linux-amd64-v2.0.3-rc1.tar.gz
+            tar xzvf rancher-linux-amd64-v2.0.3-rc1.tar.gz
+            cd rancher-v2.0.3-rc1/
+            chmod +x rancher
+            sudo mv ./rancher /usr/local/bin/rancher
+            echo "1" | rancher login https://rb-rancher.endpoint.network/v3 --token $RANCHER_TOKEN
             rancher kubectl set image deployment/webapp-v2-staging webapp-v2-staging=rb-registry.endpoint.network/webapp-v2:$VERSION
 
   deploy-storybook-staging:
@@ -322,15 +356,15 @@ jobs:
       - run:
           name: Update Rancher deployment
           command: |
-            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl 
-            chmod +x ./kubectl 
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
             sudo mv ./kubectl /usr/local/bin/kubectl
-            wget https://github.com/rancher/cli/releases/download/v2.0.3-rc1/rancher-linux-amd64-v2.0.3-rc1.tar.gz -O rancher-linux-amd64-v2.0.3-rc1.tar.gz 
-            tar xzvf rancher-linux-amd64-v2.0.3-rc1.tar.gz 
-            cd rancher-v2.0.3-rc1/ 
-            chmod +x rancher 
-            sudo mv ./rancher /usr/local/bin/rancher 
-            echo "1" | rancher login https://rb-rancher.endpoint.network/v3 --token $RANCHER_TOKEN 
+            wget https://github.com/rancher/cli/releases/download/v2.0.3-rc1/rancher-linux-amd64-v2.0.3-rc1.tar.gz -O rancher-linux-amd64-v2.0.3-rc1.tar.gz
+            tar xzvf rancher-linux-amd64-v2.0.3-rc1.tar.gz
+            cd rancher-v2.0.3-rc1/
+            chmod +x rancher
+            sudo mv ./rancher /usr/local/bin/rancher
+            echo "1" | rancher login https://rb-rancher.endpoint.network/v3 --token $RANCHER_TOKEN
             rancher kubectl set image deployment/webapp-v2-staging-storybook webapp-v2-staging-storybook=rb-registry.endpoint.network/webapp-v2-storybook:$VERSION
 
 workflows:
@@ -338,6 +372,12 @@ workflows:
   rigoblock:
     jobs:
       - setup
+      - build-exchange-connector:
+          requires:
+            - setup
+      - test-exchange-connector:
+          requires:
+            - build-exchange-connector
       - test-unit-dapp:
           requires:
             - setup
