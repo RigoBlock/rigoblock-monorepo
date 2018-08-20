@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-asd-{{ checksum "yarn.lock" }}
       - run:
           name: Install lerna and monorepo dependencies
           command: yarn install --frozen-lockfile
@@ -32,7 +32,7 @@ jobs:
           name: Installing all dependencies
           command: yarn bootstrap
       - save_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-asd-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - packages/dapp/node_modules
@@ -40,6 +40,7 @@ jobs:
             - packages/api/node_modules
             - packages/protocol/node_modules
             - packages/deployer/node_modules
+            - packages/exchange-connector/node_modules
             - .cache/yarn
       - persist_to_workspace:
           root: *workspace_root
@@ -50,6 +51,7 @@ jobs:
             - packages/api/node_modules
             - packages/protocol/node_modules
             - packages/deployer/node_modules
+            - packages/exchange-connector/node_modules
             - .cache/yarn
   test-unit-dapp:
     working_directory: *workspace_root
