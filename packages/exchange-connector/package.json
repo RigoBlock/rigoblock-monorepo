@@ -2,7 +2,7 @@
   "name": "@rigoblock/exchange-connector",
   "description": "A JS utility to interacts with Exchanges API.",
   "version": "0.0.1",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "author": "",
   "license": "ISC",
   "engines": {
