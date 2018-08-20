@@ -19,22 +19,27 @@ import { VaultFactory } from './models/VaultFactory'
 // Custom extension
 import { ContractExtension } from './contract-extension'
 
+// Contract interface to retain static methods of contracts
+import { IContract } from './contractInterface'
+
 export abstract class ContractModels {
-  Authority: Authority & ContractExtension
-  ERC20: ERC20 & ContractExtension
-  RigoToken: RigoToken & ContractExtension
-  Distribution: Distribution & ContractExtension
-  Inflation: Inflation & ContractExtension
-  UnlimitedAllowanceToken: UnlimitedAllowanceToken & ContractExtension
-  Drago: Drago & ContractExtension
-  Migrations: Migrations & ContractExtension
-  Vault: Vault & ContractExtension
-  DragoEventful: DragoEventful & ContractExtension
-  Owned: Owned & ContractExtension
-  VaultEventful: VaultEventful & ContractExtension
-  DragoFactory: DragoFactory & ContractExtension
-  OwnedUninitialized: OwnedUninitialized & ContractExtension
-  VaultFactory: VaultFactory & ContractExtension
-  DragoRegistry: DragoRegistry & ContractExtension
-  ProofOfPerformance: ProofOfPerformance & ContractExtension
+  Authority: Authority & ContractExtension & IContract
+  ERC20: ERC20 & ContractExtension & IContract
+  RigoToken: RigoToken & ContractExtension & IContract
+  Distribution: Distribution & ContractExtension & IContract
+  Inflation: Inflation & ContractExtension & IContract
+  UnlimitedAllowanceToken: UnlimitedAllowanceToken &
+    ContractExtension &
+    IContract
+  Drago: Drago & ContractExtension & IContract
+  Migrations: Migrations & ContractExtension & IContract
+  Vault: Vault & ContractExtension & IContract
+  DragoEventful: DragoEventful & ContractExtension & IContract
+  Owned: Owned & ContractExtension & IContract
+  VaultEventful: VaultEventful & ContractExtension & IContract
+  DragoFactory: DragoFactory & ContractExtension & IContract
+  OwnedUninitialized: OwnedUninitialized & ContractExtension & IContract
+  VaultFactory: VaultFactory & ContractExtension & IContract
+  DragoRegistry: DragoRegistry & ContractExtension & IContract
+  ProofOfPerformance: ProofOfPerformance & ContractExtension & IContract
 }
