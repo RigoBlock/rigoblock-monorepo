@@ -13,7 +13,7 @@ const task = async () => {
     .VaultCreatedEvent({})
     .get({ fromBlock: '0', toBlock: 'latest' })
 
-  const vaults = vaultCreatedEvents.map((vaultEvent, index) =>
+  const vaults = vaultCreatedEvents.map(vaultEvent =>
     redis.sadd(
       `vaults`,
       JSON.stringify({
