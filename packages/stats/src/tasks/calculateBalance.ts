@@ -1,5 +1,3 @@
-import { Job } from 'bull'
-import { resolve } from 'dns'
 import logger from '../logger'
 import statsD from '../statsd'
 
