@@ -8,8 +8,8 @@ export const AMOUNT_PRECISION: number = 5
 export const TOKENS_DATA_ENDPOINT =
   'https://cdn.rawgit.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json'
 
-export enum SupportedExchanges {
-  ETHFINEX
+export enum supportedExchanges {
+  ETHFINEX = 'Ethfinex'
 }
 
 export enum NETWORKS {

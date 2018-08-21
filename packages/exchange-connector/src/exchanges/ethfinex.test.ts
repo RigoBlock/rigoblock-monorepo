@@ -6,6 +6,7 @@ describe('Ethfinex exchange', () => {
   let Ethfinex
   const baseToken = 'ZRX'
   const quoteToken = 'ETH'
+  const globalAny: any = global
 
   const rawTickers = [
     [
@@ -73,7 +74,7 @@ describe('Ethfinex exchange', () => {
   beforeEach(() => {
     jest.resetModules()
     fetchSpy = jest.fn()
-    jest.doMock('node-fetch', () => ({ default: fetchSpy }))
+    globalAny.fetch = fetchSpy
     Ethfinex = require('./ethfinex').default
   })
   describe('network()', () => {
