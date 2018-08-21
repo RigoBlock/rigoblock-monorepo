@@ -12,8 +12,6 @@
     "build": "rm -rf dist/* && webpack",
     "test:unit": "jest",
     "test:unit:watch": "jest --watch",
-    "tsc": "rm -rf dist/* && tsc --outDir './dist'",
-    "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "lint": "eslint src --ext js,ts --ignore-path .gitignore --fix"
   },
   "files": [
