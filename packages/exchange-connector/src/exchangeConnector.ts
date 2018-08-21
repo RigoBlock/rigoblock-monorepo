@@ -2,7 +2,7 @@ import { IExchange } from './exchanges/types'
 import { NETWORKS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
 
-export default function ExchangeFactory(
+export default function exchangeConnector(
   exchangeName: supportedExchanges | string,
   networkId: NETWORKS | string = NETWORKS.MAINNET,
   transport: string = 'http'

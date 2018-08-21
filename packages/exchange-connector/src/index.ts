@@ -1,8 +1,8 @@
 import 'promise/polyfill'
 import 'whatwg-fetch'
-import exchangeFactory from './exchangeFactory'
+import exchangeConnector from './exchangeConnector'
 
 export { default as exchangeMap } from './exchanges'
 export { supportedExchanges, NETWORKS } from './constants'
 
-export default exchangeFactory
+export default exchangeConnector

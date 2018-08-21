@@ -26,7 +26,7 @@ import exchangeConnector, { supportedExchanges, NETWORKS } from '@rigoblock/exch
 
 const exchange = exchangeConnector(supportedExchanges.ETHFINEX, NETWORKS.KOVAN, 'http')
 
-// or const exchange = exchangeFactory('Ethfinex', '42', 'http')
+// or const exchange = exchangeConnector('Ethfinex', '42', 'http')
 
 const zrxOrders = await exchange.getOrders('ZRX', 'ETH')
 
