@@ -1,6 +1,4 @@
-import logger from '../logger'
 import redis from '../redis'
-import statsD from '../statsd'
 
 const task = async () => {
   const vaults = await redis.smembers('vaults')

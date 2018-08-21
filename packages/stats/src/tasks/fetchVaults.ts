@@ -13,9 +13,9 @@ const task = async () => {
     .VaultCreatedEvent({})
     .get({ fromBlock: '0', toBlock: 'latest' })
 
-  const vaults = vaultCreatedEvents.map(vaultEvent =>
+  const vaults = vaultCreatedEvents.map((vaultEvent, index) =>
     redis.sadd(
-      `vaults:${vaultEvent.args.vault}`,
+      `vaults`,
       JSON.stringify({
         address: vaultEvent.args.vault,
         name: vaultEvent.args.name,
@@ -23,9 +23,7 @@ const task = async () => {
       })
     )
   )
-  await Promise.all(vaults)
-  console.log(redis.smembers('vaults'))
-  return true
+  return Promise.all(vaults)
 }
 
 export default task
