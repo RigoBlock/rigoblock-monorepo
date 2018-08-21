@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 
 export class Ethfinex
   implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
-  static supportedNetworks: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
+  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
   public static HTTP_API_URLS = {
     [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
     [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
@@ -141,8 +141,6 @@ export namespace Ethfinex {
     GNTETH = 'tGNTETH'
   }
 
-  export type SupportedNetworks = [NETWORKS.MAINNET, NETWORKS.KOVAN]
-
   export type RawTicker = [
     string, // SYMBOL
     number, // BID,
@@ -156,7 +154,6 @@ export namespace Ethfinex {
     number, // HIGH,
     number // LOW
   ]
-
   export type RawOrder = [
     number, // PRICE,
     number, // COUNT,
