@@ -13,13 +13,13 @@ const conf: Config = {
   'fetch-vaults-list': {
     handlerName: 'fetchVaults',
     description: 'Fetches a list of all vaults',
-    cronExpression: '0 */5 * * * *', // Every ten minutes
+    cronExpression: '* * * * * *', // Every five minutes
     initialData: {}
   },
   'calculate-balance-grg': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',
-    cronExpression: '* * * * * *', // Every second
+    cronExpression: '*/5 * * * * *', // Every second
     initialData: {}
   }
 }

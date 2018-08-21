@@ -1,17 +1,10 @@
-import { Job } from 'bull'
-import { resolve } from 'dns'
 import logger from '../logger'
+import redis from '../redis'
 import statsD from '../statsd'
 
-const task = () => {
-  logger.info('inside the job')
-  return new Promise((resolve, reject) => {
-    statsD.gauge(
-      `vault.0.balance`,
-      5000,
-      (error, bytes) => (error ? reject(error) : resolve(bytes))
-    )
-  })
+const task = async () => {
+  const vaults = await redis.smembers('vaults')
+  return console.log(vaults)
 }
 
 export default task
