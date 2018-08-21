@@ -5,7 +5,7 @@ An API to simplify interaction with token Exchanges.
 ## Importing the package
 
 ```javascript
-import { exchangeFactory, supportedExchanges, NETWORKS, exchangesMap } from '@rigoblock/exchange-connector'
+import exchangeConnector, { supportedExchanges, NETWORKS, exchangesMap } from '@rigoblock/exchange-connector'
 ```
 
 or
@@ -13,39 +13,32 @@ or
 ```javascript
 const exchangeConnector = require('@rigoblock/exchange-connector')
 
-const exchangeFactory = require('@rigoblock/exchange-connector').exchangeFactory
+const exchangeConnector = require('@rigoblock/exchange-connector').default
 
 ```
 
 ## How to use it
 
-You can instantiate a new exchange using the `exchangeFactory` function, passing the exchange name, network id and transport as strings.
+You can instantiate a new exchange using the `exchangeConnector` function, passing the exchange name, network id and transport as strings.
 
 ```javascript
+import exchangeConnector, { supportedExchanges, NETWORKS } from '@rigoblock/exchange-connector'
 
-import { exchangeFactory, supportedExchanges, NETWORKS } from '@rigoblock/exchange-connector'
-
-const exchange = exchangeFactory(supportedExchanges.ETHFINEX, NETWORKS.KOVAN, 'http')
+const exchange = exchangeConnector(supportedExchanges.ETHFINEX, NETWORKS.KOVAN, 'http')
 
 // or const exchange = exchangeFactory('Ethfinex', '42', 'http')
 
-exchange.getOrders('ZRX', 'ETH')
+const zrxOrders = await exchange.getOrders('ZRX', 'ETH')
 
+await exchangeConnector(
+  supportedExchanges.ETHFINEX,
+  NETWORKS.MAINNET
+).getTickers({
+  tokenPairs: ['tZRXETH']
+})
 ```
 
 >When instantiating an exchange, 'transport' defaults to **http** if left unspecified.
-
-The package also exports a `exchangeMap` object which contains the supported exchanges classes, if one wishes to instantiate the exchange without using the factory function.
-
-```javascript
-
-import { exchangeMap, NETWORKS } from '@rigoblock/exchange-connector'
-
-const ethfinex = new exchangeMap.Ethfinex(NETWORKS.MAINNET, 'http')
-
-ethfinex.getTickers({ tokenPairs: ['tZRXETH'] })
-
-```
 
 
 ## Available Scripts
