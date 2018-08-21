@@ -5,16 +5,13 @@ An API to simplify interaction with token Exchanges.
 ## Importing the package
 
 ```javascript
-import exchangeConnector, { supportedExchanges, NETWORKS, exchangesMap } from '@rigoblock/exchange-connector'
+import exchangeConnector, { supportedExchanges, NETWORKS } from '@rigoblock/exchange-connector'
 ```
 
 or
 
 ```javascript
-const exchangeConnector = require('@rigoblock/exchange-connector')
-
 const exchangeConnector = require('@rigoblock/exchange-connector').default
-
 ```
 
 ## How to use it
