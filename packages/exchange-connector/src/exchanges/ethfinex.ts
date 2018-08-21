@@ -5,14 +5,21 @@ import BigNumber from 'bignumber.js'
 export class Ethfinex
   implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
   static supportedNetworks: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
-  public HTTP_API_URL: string = 'https://api.bitfinex.com/v2'
+  public HTTP_API_URL: string
   private tickersTokenPairs: string[] = [
     Ethfinex.TokenPairs.ZRXETH,
     Ethfinex.TokenPairs.MKRETH,
     Ethfinex.TokenPairs.GNTETH
   ]
 
-  constructor(public networkId: string, public transport = 'http') {}
+  constructor(public networkId, public transport = 'http') {
+    if (networkId === NETWORKS.MAINNET) {
+      this.HTTP_API_URL = 'https://api.ethfinex.com/v2'
+    } else {
+      this.HTTP_API_URL = 'https://test.ethfinex.com/v2'
+    }
+    return this
+  }
 
   public async getOrders(
     baseToken: string,
