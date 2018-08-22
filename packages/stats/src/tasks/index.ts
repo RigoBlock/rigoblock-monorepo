@@ -1,7 +1,7 @@
 import calculateBalance from './calculateBalance'
-import fetchVaults from './fetchVaults'
+import fetchDragos from './fetchDragos'
 
 export default {
   calculateBalance,
-  fetchVaults
+  fetchDragos
 }

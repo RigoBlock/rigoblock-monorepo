@@ -1,3 +1,5 @@
+import { GRG, NETWORKS, WETH } from './constants'
+
 export type ConfigEntry = {
   handlerName: string
   description: string
@@ -10,17 +12,35 @@ export type Config = {
 }
 
 const conf: Config = {
-  'fetch-vaults-list': {
-    handlerName: 'fetchVaults',
-    description: 'Fetches a list of all vaults',
+  'fetch-dragos-list': {
+    handlerName: 'fetchDragos',
+    description: 'Fetches a list of all dragos',
     cronExpression: '*/5 * * * *', // Every five minutes
-    initialData: {}
+    initialData: {
+      network: NETWORKS.KOVAN
+    }
   },
-  'calculate-balance-grg': {
+  'calculate-balance-WETH': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates WETH balance',
+    cronExpression: '* * * * * *', // Every second
+    initialData: {
+      key: 'dragos',
+      symbol: 'WETH',
+      address: WETH[NETWORKS.KOVAN],
+      network: NETWORKS.KOVAN
+    }
+  },
+  'calculate-balance-GRG': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',
-    cronExpression: '* * * * * *', // Every second
-    initialData: {}
+    cronExpression: '* * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'GRG',
+      address: GRG[NETWORKS.KOVAN],
+      network: NETWORKS.KOVAN
+    }
   }
 }
 
