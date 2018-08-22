@@ -1,7 +1,6 @@
 import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
 import { IExchange, OrderType, OrdersList, TickersList } from './types'
 import BigNumber from 'bignumber.js'
-import fetch from 'node-fetch'
 
 export class Ethfinex
   implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
@@ -13,7 +12,7 @@ export class Ethfinex
     Ethfinex.TokenPairs.GNTETH
   ]
 
-  constructor(public networkId, public transport = 'http') {}
+  constructor(public networkId: string, public transport = 'http') {}
 
   public async getOrders(
     baseToken: string,
