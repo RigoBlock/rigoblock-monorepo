@@ -1,4 +1,4 @@
-import { GRG, NETWORKS, WETH } from './constants'
+import { NETWORKS } from './constants'
 
 export type ConfigEntry = {
   handlerName: string
