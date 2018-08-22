@@ -1,5 +1,9 @@
 import * as Web3 from 'web3'
 
-export default new Web3(
-  new Web3.providers.HttpProvider('http://localhost:8545')
+const anyWeb3: any = Web3
+
+export default new anyWeb3(
+  new anyWeb3.providers.WebsocketProvider(
+    'wss://kovan.infura.io/ws/d48872aa1c00471c825e9d856c3c3138'
+  )
 )

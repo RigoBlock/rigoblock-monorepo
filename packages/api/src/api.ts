@@ -11,6 +11,17 @@ interface Web3Window extends Window {
   web3: Web3
 }
 
+// type Net = {
+//   getId(): Promise<number>
+// }
+
+// interface Eth extends Web3.EthApi {
+//   net: Net
+// }
+// interface extendedWeb3 extends Web3 {
+//   eth: Eth
+// }
+
 declare let window: Web3Window
 
 // Fix until 0x types are in sync with provider engine
@@ -28,22 +39,24 @@ class Api {
     })
   }
 
-  async init(web3: Web3 = window.web3) {
+  async init(web3: any = window.web3, rpcUrl = 'http://localhost:8545') {
     this.engine = new ProviderEngine()
-    this.engine.addProvider(new InjectedWeb3Subprovider(web3.currentProvider))
+    // this.engine.addProvider(new InjectedWeb3Subprovider(web3.currentProvider))
     this.engine.addProvider(
       new RpcSubprovider({
-        rpcUrl: 'http://localhost:8545'
+        rpcUrl
       })
     )
 
     this.web3 = new Web3Wrapper(this.engine)
 
-    const networkId = await new Promise((resolve, reject) =>
-      web3.version.getNetwork(
-        (err, networkId) => (err ? reject(err) : resolve(networkId))
-      )
-    )
+    const networkId = await (web3.version.getNetwork
+      ? new Promise((resolve, reject) =>
+          web3.version.getNetwork(
+            (err, networkId) => (err ? reject(err) : resolve(networkId))
+          )
+        )
+      : web3.eth.net.getId())
 
     const contractsMap: Contract.ContractsMap = await protocol(networkId)
     const contracts = new Contract()
