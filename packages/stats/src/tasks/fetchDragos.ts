@@ -1,9 +1,10 @@
+import * as Web3 from 'web3'
+import { CONTRACT_ADDRESSES, NETWORKS } from '../constants'
 import { Job } from 'bull'
 import protocol from '@rigoblock/protocol'
 import redis from '../redis'
-import web3 from '../web3'
 
-const dragoEventfulAddress = '0x35d3ab6b7917d03050423f7e43d4d9cff155a685'
+const anyWeb3: any = Web3
 
 type Event = {
   returnValues: {
@@ -13,24 +14,27 @@ type Event = {
 }
 
 const task = async (job: Job) => {
-  const { network } = job.data
-  const contractsMap = await protocol(network)
+  const { network, web3Provider } = job.data
+  const web3 = new anyWeb3(
+    new anyWeb3.providers.WebsocketProvider(web3Provider)
+  )
+
+  const contractsMap = await protocol(NETWORKS.KOVAN)
   const dragoEventfulAbi = contractsMap.DragoEventful.abi
   const dragoEventful = new web3.eth.Contract(
     dragoEventfulAbi,
-    dragoEventfulAddress
+    CONTRACT_ADDRESSES[network].DragoEventful
   )
-  const dragoEventsPromise = await new Promise<Event[]>((resolve, reject) =>
+  const dragoEvents = await new Promise<Event[]>((resolve, reject) =>
     dragoEventful.getPastEvents(
       'DragoCreated',
       { fromBlock: 0, toBlock: 'latest' },
       (errors, events) => (errors ? reject(errors) : resolve(events))
     )
   )
-
-  const dragos = dragoEventsPromise.map(dragoEvent => {
+  const dragos = dragoEvents.map(dragoEvent => {
     const { drago, dragoId } = dragoEvent.returnValues
-    return redis.hset('dragos', drago, dragoId)
+    return redis.hset(`dragos:${network}`, drago, dragoId)
   })
 
   return Promise.all(dragos)
