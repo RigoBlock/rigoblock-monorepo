@@ -1,4 +1,3 @@
-import * as Web3 from 'web3'
 import { Job } from 'bull'
 import { NETWORKS } from '../constants'
 import protocol from '@rigoblock/protocol'
