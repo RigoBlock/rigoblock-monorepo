@@ -304,34 +304,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         );
     }
 
-/*
-    /// @dev Provides a pool's struct data
-    /// @param _symbol Symbol of the pool
-    /// @return Pool struct data
-    function fromSymbol(string _symbol)
-        external view
-        returns (
-            uint256 id,
-            address drago,
-            string name,
-            uint256 dragoId,
-            address owner,
-            address group
-        )
-    {
-        id = mapFromSymbol[_symbol] - 1;
-        Drago memory pool = dragos[id];
-        return (
-            id,
-            drago = pool.drago,
-            name = pool.name,
-            dragoId = pool.dragoId,
-            owner = getPoolOwner(drago),
-            group = pool.group
-        );
-    }
-*/
-
     /// @dev Provides a pool's struct data
     /// @param _name Name of the pool
     /// @return Pool struct data

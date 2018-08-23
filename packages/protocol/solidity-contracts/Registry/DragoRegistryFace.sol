@@ -45,7 +45,6 @@ interface DragoRegistryFace {
     function dragoCount() external view returns (uint256);
     function fromId(uint256 _id) external view returns (address drago, string name, string symbol, uint256 dragoId, address owner, address group);
     function fromAddress(address _drago) external view returns (uint256 id, string name, string symbol, uint256 dragoId, address owner, address group);
-    //function fromSymbol(string _symbol) external view returns (uint256 id, address drago, string name, uint256 dragoId, address owner, address group);
     function fromName(string _name) external view returns (uint256 id, address drago, string symbol, uint256 dragoId, address owner, address group);
     function fromNameSymbol(string _name, string _symbol) external view returns (address);
     function getNameFromAddress(address _pool) external view returns (string);
