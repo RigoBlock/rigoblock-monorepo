@@ -15,25 +15,26 @@ const task = async (job: Job) => {
     return true
   }
 
-  const balancePromises = Object.keys(pools).map(async address => {
-    const balance = await contract.methods.balanceOf(address).call()
-    return {
-      address,
-      balance
-    }
-  })
-
-  const balances = await Promise.all(balancePromises)
-
-  const gaugePromises = balances.map(pool => {
-    return new Promise((resolve, reject) => {
-      statsD.gauge(
-        `drago.${pool.address}.balance.${symbol}`,
-        pool.balance,
-        (error, bytes) => (error ? reject(error) : resolve(bytes))
-      )
+  const balances = await Promise.all(
+    Object.keys(pools).map(async address => {
+      const balance = await contract.methods.balanceOf(address).call()
+      return {
+        address,
+        balance
+      }
     })
-  })
+  )
+
+  const gaugePromises = balances.map(
+    pool =>
+      new Promise((resolve, reject) => {
+        statsD.gauge(
+          `drago.${pool.address}.balance.${symbol}`,
+          pool.balance,
+          (error, bytes) => (error ? reject(error) : resolve(bytes))
+        )
+      })
+  )
   return Promise.all(gaugePromises)
 }
 

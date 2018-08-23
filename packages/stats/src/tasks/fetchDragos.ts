@@ -20,7 +20,7 @@ const task = async (job: Job) => {
     dragoEventfulAbi,
     dragoEventfulAddress
   )
-  const dragoEventsPromise = await new Promise<Event[]>((resolve, reject) =>
+  const dragoEvents = await new Promise<Event[]>((resolve, reject) =>
     dragoEventful.getPastEvents(
       'DragoCreated',
       { fromBlock: 0, toBlock: 'latest' },
@@ -28,7 +28,7 @@ const task = async (job: Job) => {
     )
   )
 
-  const dragos = dragoEventsPromise.map(dragoEvent => {
+  const dragos = dragoEvents.map(dragoEvent => {
     const { drago, dragoId } = dragoEvent.returnValues
     return redis.hset('dragos', drago, dragoId)
   })
