@@ -31,15 +31,17 @@ const task = async (job: Job) => {
     })
   )
 
-  const gaugePromises = balances.map(pool => {
-    return new Promise((resolve, reject) => {
-      statsD.gauge(
-        `drago.${pool.address}.balance.${symbol}.${network}`,
-        pool.balance,
-        (error, bytes) => (error ? reject(error) : resolve(bytes))
-      )
-    })
-  })
+  const gaugePromises = balances.map(
+    pool =>
+      new Promise((resolve, reject) => {
+        statsD.gauge(
+          `drago.${pool.address}.balance.${symbol}.${network}`,
+          pool.balance,
+          (error, bytes) => (error ? reject(error) : resolve(bytes))
+        )
+      })
+  )
+
   return Promise.all(gaugePromises)
 }
 
