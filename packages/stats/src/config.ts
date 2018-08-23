@@ -21,10 +21,21 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
     }
   },
+  'kovan-calculate-balance-ETH': {
+    handlerName: 'calculateEthBalance',
+    description: 'Calculates ETH balance',
+    cronExpression: '*/5 * * * * *', // Every second
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+    }
+  },
   'kovan-calculate-balance-WETH': {
     handlerName: 'calculateBalance',
     description: 'Calculates WETH balance',
-    cronExpression: '* * * * * *', // Every second
+    cronExpression: '*/5 * * * * *', // Every second
     initialData: {
       key: 'dragos',
       symbol: 'WETH',
@@ -37,7 +48,7 @@ const conf: Config = {
   'kovan-calculate-balance-GRG': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',
-    cronExpression: '* * * * * *',
+    cronExpression: '*/5 * * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GRG',
@@ -50,7 +61,7 @@ const conf: Config = {
   'kovan-calculate-dragos-totalsupply': {
     handlerName: 'getTotalSupply',
     description: 'Gets the total supply',
-    cronExpression: '* * * * * *',
+    cronExpression: '*/5 * * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -61,7 +72,7 @@ const conf: Config = {
   'kovan-calculate-dragos-shareprice': {
     handlerName: 'getSharePrice',
     description: 'Gets the share price',
-    cronExpression: '* * * * * *',
+    cronExpression: '*/5 * * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -78,10 +89,21 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
     }
   },
+  'ropsten-calculate-balance-ETH': {
+    handlerName: 'calculateEthBalance',
+    description: 'Calculates ETH balance',
+    cronExpression: '*/5 * * * * *', // Every second
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
+  },
   'ropsten-calculate-balance-WETH': {
     handlerName: 'calculateBalance',
     description: 'Calculates WETH balance',
-    cronExpression: '* * * * * *', // Every second
+    cronExpression: '*/5 * * * * *', // Every second
     initialData: {
       key: 'dragos',
       symbol: 'WETH',
@@ -94,7 +116,7 @@ const conf: Config = {
   'ropsten-calculate-balance-GRG': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',
-    cronExpression: '* * * * * *',
+    cronExpression: '*/5 * * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GRG',
@@ -107,7 +129,7 @@ const conf: Config = {
   'ropsten-calculate-dragos-totalsupply': {
     handlerName: 'getTotalSupply',
     description: 'Gets the total supply',
-    cronExpression: '* * * * * *',
+    cronExpression: '*/5 * * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -118,7 +140,7 @@ const conf: Config = {
   'ropsten-calculate-dragos-shareprice': {
     handlerName: 'getSharePrice',
     description: 'Gets the share price',
-    cronExpression: '* * * * * *',
+    cronExpression: '*/5 * * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
