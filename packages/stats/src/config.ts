@@ -15,7 +15,7 @@ const conf: Config = {
   'kovan-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '*/5 * * * * * ', // Every five minutes
+    cronExpression: '*/5 * * * * ', // Every five minutes
     initialData: {
       network: NETWORKS.KOVAN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
@@ -72,7 +72,7 @@ const conf: Config = {
   'ropsten-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '*/5 * * * * *', // Every five minutes
+    cronExpression: '*/5 * * * *', // Every five minutes
     initialData: {
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
