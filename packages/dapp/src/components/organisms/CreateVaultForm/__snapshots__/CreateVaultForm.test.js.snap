@@ -3621,3 +3621,21 @@ exports[`CreateVaultForm component renders correctly 1`] = `
   </Connect(ReduxForm)>
 </Provider>
 `;
+
+exports[`CreateVaultForm component with a real store prevents you to submit an empty vault name 1`] = `
+<div
+  aria-hidden={false}
+  className="md-text-field-message md-text-field-message--active"
+>
+  Field is required.
+</div>
+`;
+
+exports[`CreateVaultForm component with a real store prevents you to submit an invalid vault symbol 1`] = `
+<div
+  aria-hidden={false}
+  className="md-text-field-message md-text-field-message--active"
+>
+  Vault symbol must be 3 letters.
+</div>
+`;
