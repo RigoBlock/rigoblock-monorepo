@@ -114,6 +114,17 @@ const conf: Config = {
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
     }
+  },
+  'ropsten-calculate-dragos-shareprice': {
+    handlerName: 'getSharePrice',
+    description: 'Gets the share price',
+    cronExpression: '* * * * * *',
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
+    }
   }
 }
 

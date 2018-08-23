@@ -33,7 +33,7 @@ const task = async (job: Job) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `${poolType}.${pool.address}.price.buyprice.${network}`,
+          `${poolType}.${pool.address}.${network}.price.buyprice`,
           pool.buyPrice,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )
@@ -44,7 +44,7 @@ const task = async (job: Job) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `${poolType}.${pool.address}.price.sellprice.${network}`,
+          `${poolType}.${pool.address}.${network}.price.sellprice`,
           pool.sellPrice,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )
