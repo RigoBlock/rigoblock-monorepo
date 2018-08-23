@@ -8,7 +8,7 @@ import statsD from '../statsd'
 const anyWeb3: any = Web3
 
 const task = async (job: Job) => {
-  const { symbol, address, key, network, web3Provider } = job.data
+  const { symbol, address, key, network, web3Provider, poolType } = job.data
   const web3 = new anyWeb3(
     new anyWeb3.providers.WebsocketProvider(web3Provider)
   )
@@ -35,7 +35,7 @@ const task = async (job: Job) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `drago.${pool.address}.balance.${symbol}.${network}`,
+          `${poolType}.${pool.address}.balance.${symbol}.${network}`,
           pool.balance,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )

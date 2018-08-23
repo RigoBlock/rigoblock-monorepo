@@ -28,6 +28,7 @@ const conf: Config = {
     initialData: {
       key: 'dragos',
       symbol: 'WETH',
+      poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].WETH,
       network: NETWORKS.KOVAN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
@@ -40,6 +41,7 @@ const conf: Config = {
     initialData: {
       key: 'dragos',
       symbol: 'GRG',
+      poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].GRG,
       network: NETWORKS.KOVAN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
@@ -61,6 +63,7 @@ const conf: Config = {
     initialData: {
       key: 'dragos',
       symbol: 'WETH',
+      poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].WETH,
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
@@ -73,6 +76,7 @@ const conf: Config = {
     initialData: {
       key: 'dragos',
       symbol: 'GRG',
+      poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].GRG,
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK

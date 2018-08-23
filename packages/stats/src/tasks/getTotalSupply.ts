@@ -31,7 +31,7 @@ const task = async (job: Job) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `drago.${pool.address}.totalsupply.${network}`,
+          `${poolType}.${pool.address}.totalsupply.${network}`,
           pool.totalSupply,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )
