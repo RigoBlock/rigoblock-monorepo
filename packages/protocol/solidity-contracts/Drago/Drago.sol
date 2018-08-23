@@ -36,8 +36,6 @@ import { NavVerifierFace as NavVerifier } from "./NavVerifier/NavVerifierFace.so
 /// @title Drago - A set of rules for a drago.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract Drago is Owned, SafeMath, DragoFace {
-    // TODO: implement separate authority for exchanges, as it needs to be upgraded
-    // TODO: if effective, create 3 arrays of approved addresses: wrappers, exchanges and tokentransferproxies
 
     using Extension for *;
     Extension.Admin libraryAdmin;
@@ -302,33 +300,8 @@ contract Drago is Owned, SafeMath, DragoFace {
         data.minPeriod = _minPeriod;
     }
 
-    /// @dev allows a manager to deposit eth from an approved exchange/wrap eth
-    /// @param _exchange Address of the target exchange
-    /// @param _amount Value of the Eth in wei
-    function depositToExchange(address _exchange, uint256 _amount)
-        external
-        onlyOwner
-        whenApprovedExchange(_exchange)
-    {
-        ExchangeAdapter(getExchangeAdapter(_exchange))
-        .deposit
-        .value(_amount)();
-    }
-
-    /// @dev allows a manager to withdraw ETH from an approved exchange/unwrap eth
-    /// @param _exchange Address of the target exchange
-    /// @param _amount Value of the Eth in wei
-    function withdrawFromExchange(address _exchange, uint256 _amount)
-        external
-        onlyOwner
-        whenApprovedExchange(_exchange)
-    {
-        ExchangeAdapter(getExchangeAdapter(_exchange))
-        .withdraw(_amount);
-    }
-
-    /// @dev Allows owner to set an infinite allowance to an approved exchange
-    /// @param _tokenTransferProxy Address of the tokentargetproxy to be approved
+    /// @dev Allows owner to set an allowance to an approved token transfer proxy
+    /// @param _tokenTransferProxy Address of the proxy to be approved
     /// @param _token Address of the token to receive allowance for
     /// @param _amount Number of tokens approved for spending
     function setAllowance(
@@ -375,30 +348,12 @@ contract Drago is Owned, SafeMath, DragoFace {
         );
     }
 
-    /// this function is used for debugging, direct operations on excange is for
-    /// approved exchanges only
-    function operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction)
-        external
-        ownerOrApprovedExchange()
-        whenApprovedExchange(_exchange)
-    {
-        bytes memory _data = _assembledTransaction;
-        address _target = getExchangeAdapter(_exchange);
-        bytes memory response;
-        bool failed;
-        assembly {
-            let succeeded := call(sub(gas, 10000), _target, 0, add(_data, 0x20), mload(_data), 0, 32)
-            response := mload(0)      // load delegatecall output
-            failed := iszero(succeeded)
-        }
-        require(!failed);
-    }
-
+/*
     /// @dev Allows owner or approved exchange to send a transaction to exchange
     /// @dev With data of signed/unsigned transaction
     /// @param _exchange Address of the exchange
-    /// @notice check whether we have to enforce prevent selfdestruct method
-    function operateOnExchangeThroughAdapter(
+    /// @param _assembledTransactions Array of ABI encoded transactions
+    function batchOperateOnExchange(
         address _exchange,
         bytes[] _assembledTransactions)
         external
@@ -409,7 +364,8 @@ contract Drago is Owned, SafeMath, DragoFace {
             if (!operateOnExchangeInternal(_exchange, _assembledTransactions[i])) continue;
         }
     }
-    
+*/
+
     function enforceKyc(
         bool _enforced,
         address _kycProvider)
@@ -497,7 +453,7 @@ contract Drago is Owned, SafeMath, DragoFace {
             data.minPeriod
         );
     }
-    
+
     function getKycProvider()
         external view
         returns (address)
