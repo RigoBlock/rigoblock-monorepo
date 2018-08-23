@@ -32,15 +32,15 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
     }
   },
-  'kovan-calculate-balance-WETH': {
+  'kovan-calculate-balance-GNT': {
     handlerName: 'calculateBalance',
-    description: 'Calculates WETH balance',
-    cronExpression: '*/5 * * * * *', // Every second
+    description: 'Calculates GNT balance',
+    cronExpression: '*/5 * * * * *',
     initialData: {
       key: 'dragos',
-      symbol: 'WETH',
+      symbol: 'GNT',
       poolType: 'Drago',
-      address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].WETH,
+      address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].GNT,
       network: NETWORKS.KOVAN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
     }
@@ -54,6 +54,58 @@ const conf: Config = {
       symbol: 'GRG',
       poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].GRG,
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+    }
+  },
+  'kovan-calculate-balance-MKR': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates MKR balance',
+    cronExpression: '*/5 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'MKR',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].MKR,
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+    }
+  },
+  'kovan-calculate-balance-WETH': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates WETH balance',
+    cronExpression: '*/5 * * * * *', // Every second
+    initialData: {
+      key: 'dragos',
+      symbol: 'WETH',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].WETH,
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+    }
+  },
+  'kovan-calculate-balance-USDT': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates USDT balance',
+    cronExpression: '*/5 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'USDT',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].USDT,
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+    }
+  },
+  'kovan-calculate-balance-ZRX': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates ZRX balance',
+    cronExpression: '*/5 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'ZRX',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].ZRX,
       network: NETWORKS.KOVAN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
     }
@@ -100,15 +152,15 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
     }
   },
-  'ropsten-calculate-balance-WETH': {
+  'ropsten-calculate-balance-GNT': {
     handlerName: 'calculateBalance',
-    description: 'Calculates WETH balance',
-    cronExpression: '*/5 * * * * *', // Every second
+    description: 'Calculates GNT balance',
+    cronExpression: '*/5 * * * * *',
     initialData: {
       key: 'dragos',
-      symbol: 'WETH',
+      symbol: 'GNT',
       poolType: 'Drago',
-      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].WETH,
+      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].GNT,
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
     }
@@ -122,6 +174,58 @@ const conf: Config = {
       symbol: 'GRG',
       poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].GRG,
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
+  },
+  'ropsten-calculate-balance-MKR': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates MKR balance',
+    cronExpression: '*/5 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'MKR',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].MKR,
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
+  },
+  'ropsten-calculate-balance-USDT': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates USDT balance',
+    cronExpression: '*/5 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'USDT',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].USDT,
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
+  },
+  'ropsten-calculate-balance-WETH': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates WETH balance',
+    cronExpression: '*/5 * * * * *', // Every second
+    initialData: {
+      key: 'dragos',
+      symbol: 'WETH',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].WETH,
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
+  },
+  'ropsten-calculate-balance-ZRX': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates ZRX balance',
+    cronExpression: '*/5 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'ZRX',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].ZRX,
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
     }
