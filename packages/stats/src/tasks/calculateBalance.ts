@@ -4,14 +4,11 @@ import { NETWORKS } from '../constants'
 import protocol from '@rigoblock/protocol'
 import redis from '../redis'
 import statsD from '../statsd'
+import web3ErrorWrapper from './web3ErrorWrapper'
 
-const anyWeb3: any = Web3
+const task = async (job: Job, web3) => {
+  const { symbol, address, key, network, poolType } = job.data
 
-const task = async (job: Job) => {
-  const { symbol, address, key, network, web3Provider, poolType } = job.data
-  const web3 = new anyWeb3(
-    new anyWeb3.providers.WebsocketProvider(web3Provider)
-  )
   const contractsMap = await protocol(NETWORKS.KOVAN)
   const erc20Abi = contractsMap.ERC20.abi
   const contract = new web3.eth.Contract(erc20Abi, address)
@@ -45,4 +42,4 @@ const task = async (job: Job) => {
   return Promise.all(gaugePromises)
 }
 
-export default task
+export default web3ErrorWrapper(task)
