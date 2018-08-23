@@ -88,6 +88,17 @@ const conf: Config = {
       network: NETWORKS.KOVAN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
     }
+  },
+  'ropsten-calculate-dragos-totalsupply': {
+    handlerName: 'getTotalSupply',
+    description: 'Gets the total supply',
+    cronExpression: '*/5 * * * * *',
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
   }
 }
 
