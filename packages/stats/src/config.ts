@@ -15,7 +15,7 @@ const conf: Config = {
   'kovan-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '*/5 * * * * *', // Every five minutes
+    cronExpression: '*/5 * * * * ', // Every five minutes
     initialData: {
       network: NETWORKS.KOVAN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
@@ -24,7 +24,7 @@ const conf: Config = {
   'kovan-calculate-balance-WETH': {
     handlerName: 'calculateBalance',
     description: 'Calculates WETH balance',
-    cronExpression: '*/5 * * * * *', // Every second
+    cronExpression: '* * * * * *', // Every second
     initialData: {
       key: 'dragos',
       symbol: 'WETH',
@@ -36,7 +36,7 @@ const conf: Config = {
   'kovan-calculate-balance-GRG': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',
-    cronExpression: '*/5 * * * * *',
+    cronExpression: '* * * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GRG',
@@ -48,7 +48,7 @@ const conf: Config = {
   'ropsten-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '*/5 * * * * *', // Every five minutes
+    cronExpression: '* * * * * *', // Every five minutes
     initialData: {
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
@@ -57,7 +57,7 @@ const conf: Config = {
   'ropsten-calculate-balance-WETH': {
     handlerName: 'calculateBalance',
     description: 'Calculates WETH balance',
-    cronExpression: '*/5 * * * * *', // Every second
+    cronExpression: '* * * * * *', // Every second
     initialData: {
       key: 'dragos',
       symbol: 'WETH',
@@ -69,7 +69,7 @@ const conf: Config = {
   'ropsten-calculate-balance-GRG': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',
-    cronExpression: '*/5 * * * * *',
+    cronExpression: '* * * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GRG',
@@ -81,7 +81,7 @@ const conf: Config = {
   'kovan-calculate-dragos-totalsupply': {
     handlerName: 'getTotalSupply',
     description: 'Gets the total supply',
-    cronExpression: '*/5 * * * * *',
+    cronExpression: '* * * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -92,7 +92,7 @@ const conf: Config = {
   'ropsten-calculate-dragos-totalsupply': {
     handlerName: 'getTotalSupply',
     description: 'Gets the total supply',
-    cronExpression: '*/5 * * * * *',
+    cronExpression: '* * * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
