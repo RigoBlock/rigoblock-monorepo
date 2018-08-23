@@ -98,6 +98,29 @@ module.exports = async (baseAccount, network) => {
   await rigoToken.changeMintingAddress(inflation.address)
   printAddress('Setting minting address...', inflation.address)
 
+  const tokenTransferProxy = await deploy(
+    baseAccount,
+    network,
+    'TokenTransferProxy'
+  )
+  printAddress('TokenTransferProxy', tokenTransferProxy.address)
+
+  const wrapperLockEth = await deploy(
+    baseAccount,
+    network,
+    'WrapperLockEth',
+    ['ETHWrapper', 'ETHW', 18, tokenTransferProxy.address]
+  )
+  printAddress('WrapperLockEth', wrapperLockEth.address)
+
+  const wrapperLock = await deploy(
+    baseAccount,
+    network,
+    'WrapperLock',
+    [rigoToken.address, 'Rigo Token', 'GRG', 18, tokenTransferProxy.address, false]
+  )
+  printAddress('WrapperLock', wrapperLock.address)
+
   return {
     Authority: authority,
     DragoRegistry: dragoRegistry,
@@ -107,6 +130,9 @@ module.exports = async (baseAccount, network) => {
     DragoFactory: dragoFactory,
     RigoToken: rigoToken,
     ProofOfPerformance: proofOfPerformance,
-    Inflation: inflation
+    Inflation: inflation,
+    TokenTransferProxy: tokenTransferProxy,
+    WrapperLockEth: wrapperLockEth,
+    WrapperLock: wrapperLock
   }
 }

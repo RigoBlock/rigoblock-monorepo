@@ -26,10 +26,17 @@ import { ERC20Face as ERC20 } from "../utils/tokens/ERC20/ERC20Face.sol";
 interface ExchangeAdapterFace {
 
     // CORE FUNCTIONS
-    
+
     function() external payable;
-    function deposit() external payable;
+    //function deposit() external payable;
     function withdraw(uint256 wad) external;
+
+    function deposit(
+        uint256 amount,
+        uint256 duration)
+        external
+        payable
+        returns (bool success);
 
     function depositToken(
         address _exchange,
