@@ -15,10 +15,10 @@ const conf: Config = {
   'kovan-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '*/5 * * * * ', // Every five minutes
+    cronExpression: '*/5 * * * * * ', // Every five minutes
     initialData: {
       network: NETWORKS.KOVAN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
     }
   },
   'kovan-calculate-balance-WETH': {
@@ -31,7 +31,7 @@ const conf: Config = {
       poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].WETH,
       network: NETWORKS.KOVAN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
     }
   },
   'kovan-calculate-balance-GRG': {
@@ -44,16 +44,38 @@ const conf: Config = {
       poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.KOVAN].GRG,
       network: NETWORKS.KOVAN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
+    }
+  },
+  'kovan-calculate-dragos-totalsupply': {
+    handlerName: 'getTotalSupply',
+    description: 'Gets the total supply',
+    cronExpression: '* * * * * *',
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
+    }
+  },
+  'kovan-calculate-dragos-shareprice': {
+    handlerName: 'getSharePrice',
+    description: 'Gets the share price',
+    cronExpression: '* * * * * *',
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
     }
   },
   'ropsten-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '* * * * * *', // Every five minutes
+    cronExpression: '*/5 * * * * *', // Every five minutes
     initialData: {
       network: NETWORKS.ROPSTEN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
     }
   },
   'ropsten-calculate-balance-WETH': {
@@ -66,7 +88,7 @@ const conf: Config = {
       poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].WETH,
       network: NETWORKS.ROPSTEN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
     }
   },
   'ropsten-calculate-balance-GRG': {
@@ -79,18 +101,7 @@ const conf: Config = {
       poolType: 'Drago',
       address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].GRG,
       network: NETWORKS.ROPSTEN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
-    }
-  },
-  'kovan-calculate-dragos-totalsupply': {
-    handlerName: 'getTotalSupply',
-    description: 'Gets the total supply',
-    cronExpression: '* * * * * *',
-    initialData: {
-      key: 'dragos',
-      poolType: 'Drago',
-      network: NETWORKS.KOVAN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
     }
   },
   'ropsten-calculate-dragos-totalsupply': {
@@ -101,7 +112,7 @@ const conf: Config = {
       key: 'dragos',
       poolType: 'Drago',
       network: NETWORKS.ROPSTEN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
     }
   }
 }
