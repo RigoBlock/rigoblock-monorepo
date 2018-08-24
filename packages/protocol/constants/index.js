@@ -2,7 +2,11 @@ const path = require('path')
 
 const NETWORKS = process.env.NETWORKS
   ? process.env.NETWORKS.split(',')
-  : ['http://localhost:8545']
+  : [
+      'http://localhost:8545',
+      'https://kovan.dev.endpoint.network/rpc',
+      'https://ropsten.dev.endpoint.network/rpc'
+    ]
 
 module.exports = {
   ARTIFACTS_DIR: path.resolve(__dirname, '../artifacts'),

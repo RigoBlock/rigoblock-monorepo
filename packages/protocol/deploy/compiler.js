@@ -28,11 +28,12 @@ const compile = async (contracts, networkUrl) => {
   return compiler.compileAsync()
 }
 
-const compilePromises = NETWORKS.map(network => {
-  return compile(CONTRACT_NAMES, network)
-})
+const compilePromise = NETWORKS.reduce(
+  (acc, network) => acc.then(() => compile(CONTRACT_NAMES, network)),
+  Promise.resolve()
+)
 
-Promise.all(compilePromises).catch(e => {
+compilePromise.catch(e => {
   logger.error(c.red(`Error during compilation: ${e.stack}`))
   process.exit(1)
 })
