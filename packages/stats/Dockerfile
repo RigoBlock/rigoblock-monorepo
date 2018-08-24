@@ -11,9 +11,9 @@ COPY packages/stats ./packages/stats
 COPY yarn.lock .
 COPY tsconfig.json .
 
-COPY --from=builder /src/packages/stats/dist .
-COPY --from=builder /src/packages/stats/node_modules .
-COPY --from=builder /src/packages/stats/package.json .
+COPY /src/packages/stats/dist .
+COPY /src/packages/stats/node_modules .
+COPY /src/packages/stats/package.json .
 
 WORKDIR /root/packages/stats
 
