@@ -12,29 +12,42 @@ const task = async (job: Job, web3: Web3) => {
   const pools = await redis.hgetall(`${key}:${network}`)
   const poolAbi = contractsMap[poolType].abi
 
-  const supplyTotals = await Promise.all(
+  const sharePrices = await Promise.all(
     Object.keys(pools).map(async address => {
       const contract = new web3.eth.Contract(poolAbi, address)
-      const totalSupply = await contract.methods.totalSupply().call()
+      const poolData = await contract.methods.getData().call()
+      const { buyPrice, sellPrice } = poolData
       return {
         address,
-        totalSupply
+        buyPrice,
+        sellPrice
       }
     })
   )
 
-  const gaugePromises = supplyTotals.map(
+  const buyPricePromises = sharePrices.map(
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `${poolType}.${pool.address}.${network}.totalsupply`,
-          pool.totalSupply,
+          `${poolType}.${pool.address}.${network}.price.buyprice`,
+          pool.buyPrice,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )
       })
   )
 
-  return Promise.all(gaugePromises)
+  const sellPricePromises = sharePrices.map(
+    pool =>
+      new Promise((resolve, reject) => {
+        statsD.gauge(
+          `${poolType}.${pool.address}.${network}.price.sellprice`,
+          pool.sellPrice,
+          (error, bytes) => (error ? reject(error) : resolve(bytes))
+        )
+      })
+  )
+
+  return Promise.all(buyPricePromises.concat(sellPricePromises))
 }
 
 export default web3ErrorWrapper(task)

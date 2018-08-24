@@ -1,17 +1,12 @@
 import { Job } from 'bull'
-import { NETWORKS } from '../constants'
-import protocol from '@rigoblock/protocol'
 import Web3 from 'web3'
-import redis from '../redis'
-import statsD from '../statsd'
-import web3ErrorWrapper from './web3ErrorWrapper'
+import redis from '@rigoblock/stats/src/redis'
+import statsD from '@rigoblock/stats/src/statsd'
+import web3ErrorWrapper from '@rigoblock/stats/src/tasks/web3ErrorWrapper'
 
 const task = async (job: Job, web3: Web3) => {
-  const { symbol, address, key, network, poolType } = job.data
+  const { key, network, poolType } = job.data
 
-  const contractsMap = await protocol(NETWORKS.KOVAN)
-  const erc20Abi = contractsMap.ERC20.abi
-  const contract = new web3.eth.Contract(erc20Abi, address)
   const pools = await redis.hgetall(`${key}:${network}`)
 
   if (!Object.keys(pools).length) {
@@ -20,7 +15,7 @@ const task = async (job: Job, web3: Web3) => {
 
   const balances = await Promise.all(
     Object.keys(pools).map(async address => {
-      const balance = await contract.methods.balanceOf(address).call()
+      const balance = await web3.eth.getBalance(address)
       return {
         address,
         balance
@@ -32,7 +27,7 @@ const task = async (job: Job, web3: Web3) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `${poolType}.${pool.address}.${network}.balance.${symbol}`,
+          `${poolType}.${pool.address}.${network}.balance.ETH`,
           pool.balance,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )
