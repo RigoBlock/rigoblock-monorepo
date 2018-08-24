@@ -72,11 +72,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         _;
     }
 
-    modifier whenIsSymbol(string _symbol) {
-        require(bytes(_symbol).length == 3);
-        _;
-    }
-
     modifier onlyDragoOwner(uint256 _id) {
         require(dragos[_id].owner == msg.sender);
         _;
@@ -95,6 +90,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     }
 
     modifier whenSymbolSanitized(string _input) {
+        require(bytes(_input).length >= 3 && bytes(_input).length <= 5);
         require(LibSanitize.isValidCheck(_input));
         require(LibSanitize.isUppercase(_input));
         _;
@@ -137,7 +133,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         whenNameSanitized(_name)
         whenSymbolSanitized(_symbol)
         whenNameFree(_name)
-        whenIsSymbol(_symbol)
         returns (bool)
     {
         return registerAs(_drago, _name, _symbol, _dragoId, _owner, msg.sender);
