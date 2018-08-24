@@ -1,6 +1,5 @@
 import * as Web3 from 'web3'
 
-// this is needed since Web3 typings refer to 0.20 version
 const anyWeb3: any = Web3
 
 export default new anyWeb3(
