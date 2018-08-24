@@ -1,11 +1,11 @@
-import { Job } from 'bull'
-import { NETWORKS } from '../constants'
 import protocol from '@rigoblock/protocol'
 import redis from '../redis'
 import statsD from '../statsd'
+import Web3 from 'web3'
+import { NETWORKS } from '../constants'
 import web3ErrorWrapper from './web3ErrorWrapper'
 
-const task = async (job: Job, web3) => {
+const task = async (job, web3: Web3) => {
   const { key, network, poolType } = job.data
   const contractsMap = await protocol(NETWORKS.KOVAN)
   const pools = await redis.hgetall(`${key}:${network}`)
