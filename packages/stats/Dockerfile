@@ -11,12 +11,6 @@ COPY packages/stats ./packages/stats
 COPY yarn.lock .
 COPY tsconfig.json .
 
-COPY /src/packages/stats/dist .
-COPY /src/packages/stats/node_modules .
-COPY /src/packages/stats/package.json .
-
-WORKDIR /root/packages/stats
-
 RUN nvm install && nvm use
 RUN npm i -g yarn
 RUN yarn --pure-lockfile
