@@ -61,8 +61,7 @@
     "nohoist": [
       "**/*jest*",
       "**/jsdom",
-      "**/@0xproject/*",
-      "**/@types/*"
+      "**/@0xproject/*"
     ]
   }
 }

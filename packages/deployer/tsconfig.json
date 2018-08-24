@@ -4,6 +4,6 @@
     "src/**/*.ts"
   ],
   "compilerOptions": {
-    "typeRoots": ["node_modules/@0xproject/typescript-typings/types", "node_modules/@types", "packages/api/contracts"]
+    "typeRoots": ["node_modules/@0xproject/typescript-typings/types"]
   }
 }
