@@ -15,10 +15,13 @@ RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.7/install.s
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-COPY packages/stats /src
+RUN mkdir -p /src/packages/stats
+COPY packages/stats ./packages/stats
 COPY yarn.lock .
+COPY tsconfig.json .
 # TODO: use .nvmrc
 # COPY .nvmrc /src/.nvmrc
+WORKDIR /src/packages/stats
 
 # install node and npm
 RUN source $NVM_DIR/nvm.sh \
