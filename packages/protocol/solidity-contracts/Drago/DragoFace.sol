@@ -35,7 +35,8 @@ interface DragoFace {
     function setTransactionFee(uint256 _transactionFee) external;
     function changeFeeCollector(address _feeCollector) external;
     function changeDragoDao(address _dragoDao) external;
-    function depositToExchange(address _exchange, uint256 _amount) external;
+    //function depositToExchange(address _exchange, uint256 _amount) external;
+    function wrapToEfx(address _token, address _wrapper, address _tokenTransferProxy, uint256 _amount, uint256 _duration) external;
     function withdrawFromExchange(address _exchange, uint256 _amount) external;
     function setInfiniteAllowance(address _tokenTransferProxy, address _token) external;
     function SetMultipleAllowances(address _tokenTransferProxy, address[] _token) external;

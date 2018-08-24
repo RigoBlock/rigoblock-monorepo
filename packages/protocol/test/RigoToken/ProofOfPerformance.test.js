@@ -22,7 +22,7 @@ describeContract(contractName, () => {
     await baseContracts['Inflation'].setInflationFactor(group, inflationFactor)
     // creating vault to test functions
     await baseContracts['VaultFactory'].createVault('testvault', 'VLT')
-    const vaultData = await baseContracts['DragoRegistry'].fromSymbol('VLT')
+    const vaultData = await baseContracts['DragoRegistry'].fromName('testvault')
     const [id, address] = vaultData
     vaultId = id
     vaultAddress = address

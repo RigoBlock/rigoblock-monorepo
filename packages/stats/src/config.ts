@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { GRG, NETWORKS, WETH } from './constants'
+=======
+import { NETWORKS } from './constants'
+>>>>>>> master
 
 export type ConfigEntry = {
   handlerName: string
