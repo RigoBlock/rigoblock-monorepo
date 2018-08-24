@@ -55,6 +55,7 @@ export class Compiler {
   private _contractsDir: string
   private _networkId: number
   private _optimizerEnabled: boolean
+  private _optimizerRuns: number
   private _artifactsDir: string
   private _specifiedContracts: Set<string> = new Set()
   /**
@@ -66,6 +67,7 @@ export class Compiler {
     this._contractsDir = opts.contractsDir
     this._networkId = opts.networkId
     this._optimizerEnabled = opts.optimizerEnabled
+    this._optimizerRuns = opts.optimizerRuns
     this._artifactsDir = opts.artifactsDir
     this._specifiedContracts = opts.specifiedContracts
     this._nameResolver = new NameResolver(path.resolve(this._contractsDir))
@@ -168,7 +170,8 @@ export class Compiler {
       },
       settings: {
         optimizer: {
-          enabled: this._optimizerEnabled
+          enabled: this._optimizerEnabled,
+          runs: this._optimizerRuns
         },
         outputSelection: {
           '*': {

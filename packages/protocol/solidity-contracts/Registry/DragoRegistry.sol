@@ -92,11 +92,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         require(mapFromName[_name] == 0);
         _;
     }
-    
-     modifier whenSymbolUppercase(string _name) {
-        require(LibSanitize.isUppercase(_name));
-        _;
-    }
 
     modifier whenNameSanitized(string _input) {
         require(bytes(_input).length >= 4 && bytes(_input).length <= 50);
@@ -305,32 +300,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
             symbol = pool.symbol,
             dragoId = pool.dragoId,
             owner = getPoolOwner(_drago),
-            group = pool.group
-        );
-    }
-
-    /// @dev Provides a pool's struct data
-    /// @param _symbol Symbol of the pool
-    /// @return Pool struct data
-    function fromSymbol(string _symbol)
-        external view
-        returns (
-            uint256 id,
-            address drago,
-            string name,
-            uint256 dragoId,
-            address owner,
-            address group
-        )
-    {
-        id = mapFromSymbol[_symbol] - 1;
-        Drago memory pool = dragos[id];
-        return (
-            id,
-            drago = pool.drago,
-            name = pool.name,
-            dragoId = pool.dragoId,
-            owner = getPoolOwner(drago),
             group = pool.group
         );
     }

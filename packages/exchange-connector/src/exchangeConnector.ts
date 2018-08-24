@@ -11,7 +11,7 @@ export default function exchangeConnector(
   if (!selectedExchange) {
     throw new Error(`Exchange ${exchangeName} is not supported.`)
   }
-  if (!selectedExchange.supportedNetworks.includes(networkId)) {
+  if (!selectedExchange.SUPPORTED_NETWORKS.includes(networkId)) {
     throw new Error(`Network not supported on this exchange: ${networkId}`)
   }
 

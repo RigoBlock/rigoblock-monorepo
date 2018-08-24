@@ -13,7 +13,7 @@ import { commands } from './commands'
 import { consoleReporter } from './utils/error_reporter'
 import { constants } from './utils/constants'
 
-const DEFAULT_OPTIMIZER_ENABLED = false
+const DEFAULT_OPTIMIZER_ENABLED = true
 const DEFAULT_CONTRACTS_DIR = path.resolve('src/contracts')
 const DEFAULT_ARTIFACTS_DIR = path.resolve('src/artifacts')
 const DEFAULT_NETWORK_ID = 50
@@ -30,6 +30,7 @@ async function onCompileCommandAsync(argv: CliOptions): Promise<void> {
     contractsDir: argv.contractsDir,
     networkId: argv.networkId,
     optimizerEnabled: argv.shouldOptimize,
+    optimizerRuns: argv.optimizerRuns,
     artifactsDir: argv.artifactsDir,
     specifiedContracts: getContractsSetFromList(argv.contracts)
   }
@@ -48,6 +49,7 @@ async function onDeployCommandAsync(argv: CliOptions): Promise<void> {
     contractsDir: argv.contractsDir,
     networkId,
     optimizerEnabled: argv.shouldOptimize,
+    optimizerRuns: argv.optimizerRuns,
     artifactsDir: argv.artifactsDir,
     specifiedContracts: getContractsSetFromList(argv.contracts)
   }
