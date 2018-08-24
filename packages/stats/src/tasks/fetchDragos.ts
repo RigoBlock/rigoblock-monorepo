@@ -1,7 +1,7 @@
-import { CONTRACT_ADDRESSES, NETWORKS } from '../constants'
-import { Job } from 'bull'
 import protocol from '@rigoblock/protocol'
+import { NETWORKS, CONTRACT_ADDRESSES } from '../constants'
 import redis from '../redis'
+import Web3 from 'web3'
 import web3ErrorWrapper from './web3ErrorWrapper'
 
 type Event = {
@@ -11,7 +11,7 @@ type Event = {
   }
 }
 
-const task = async (job: Job, web3) => {
+const task = async (job, web3: Web3) => {
   const { network } = job.data
   const contractsMap = await protocol(NETWORKS.KOVAN)
   const dragoEventfulAbi = contractsMap.DragoEventful.abi

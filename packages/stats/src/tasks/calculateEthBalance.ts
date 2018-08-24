@@ -1,9 +1,9 @@
-import { Job } from 'bull'
-import redis from '@rigoblock/stats/src/redis'
-import statsD from '@rigoblock/stats/src/statsd'
-import web3ErrorWrapper from '@rigoblock/stats/src/tasks/web3ErrorWrapper'
+import redis from '../redis'
+import Web3 from 'web3'
+import statsD from '../statsd'
+import web3ErrorWrapper from './web3ErrorWrapper'
 
-const task = async (job: Job, web3) => {
+const task = async (job, web3: Web3) => {
   const { key, network, poolType } = job.data
 
   const pools = await redis.hgetall(`${key}:${network}`)
