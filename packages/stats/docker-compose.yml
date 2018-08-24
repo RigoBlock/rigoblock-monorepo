@@ -36,7 +36,7 @@ redis:
     - "6379:6379"
 
 arena:
-  image: mixmaxhq/arena:latest
+  image: vshjxyz/arena:latest
   container_name: arena
   ports:
     - "4567:4567"

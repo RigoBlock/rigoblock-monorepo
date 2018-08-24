@@ -1,3 +1,5 @@
+import { NETWORKS } from './constants'
+
 export type ConfigEntry = {
   handlerName: string
   description: string
@@ -10,11 +12,13 @@ export type Config = {
 }
 
 const conf: Config = {
-  'calculate-balance-grg': {
-    handlerName: 'calculateBalance',
-    description: 'Calculates GRG balance',
-    cronExpression: '* * * * * *', // Every second
-    initialData: {}
+  'fetch-dragos-list': {
+    handlerName: 'fetchDragos',
+    description: 'Fetches a list of all dragos',
+    cronExpression: '*/5 * * * * *', // Every five minutes
+    initialData: {
+      network: NETWORKS.KOVAN
+    }
   }
 }
 
