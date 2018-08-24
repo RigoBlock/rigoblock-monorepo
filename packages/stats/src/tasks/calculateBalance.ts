@@ -4,6 +4,7 @@ import { NETWORKS } from '../constants'
 import protocol from '@rigoblock/protocol'
 import redis from '../redis'
 import statsD from '../statsd'
+import web3 from '../web3'
 
 const anyWeb3: any = Web3
 

@@ -4,15 +4,22 @@ import BigNumber from 'bignumber.js'
 
 export class Ethfinex
   implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
-  static supportedNetworks: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
-  public HTTP_API_URL: string = 'https://api.bitfinex.com/v2'
-  private tickersTokenPairs: string[] = [
+  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
+  public static HTTP_API_URLS = {
+    [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
+    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
+    [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
+  }
+  public HTTP_API_URL: string
+  private TICKERS_TOKEN_PAIRS: string[] = [
     Ethfinex.TokenPairs.ZRXETH,
     Ethfinex.TokenPairs.MKRETH,
     Ethfinex.TokenPairs.GNTETH
   ]
 
-  constructor(public networkId: string, public transport = 'http') {}
+  constructor(public networkId, public transport = 'http') {
+    this.HTTP_API_URL = Ethfinex.HTTP_API_URLS[networkId]
+  }
 
   public async getOrders(
     baseToken: string,
@@ -26,7 +33,7 @@ export class Ethfinex
 
   public async getTickers(
     options = {
-      tokenPairs: this.tickersTokenPairs
+      tokenPairs: this.TICKERS_TOKEN_PAIRS
     }
   ): Promise<TickersList> {
     return this.raw
@@ -37,7 +44,7 @@ export class Ethfinex
   public raw = {
     getTickers: async (
       options = {
-        tokenPairs: this.tickersTokenPairs
+        tokenPairs: this.TICKERS_TOKEN_PAIRS
       }
     ): Promise<Ethfinex.RawTicker[]> => {
       const url = `${
@@ -134,8 +141,6 @@ export namespace Ethfinex {
     GNTETH = 'tGNTETH'
   }
 
-  export type SupportedNetworks = [NETWORKS.MAINNET, NETWORKS.KOVAN]
-
   export type RawTicker = [
     string, // SYMBOL
     number, // BID,
@@ -149,7 +154,6 @@ export namespace Ethfinex {
     number, // HIGH,
     number // LOW
   ]
-
   export type RawOrder = [
     number, // PRICE,
     number, // COUNT,

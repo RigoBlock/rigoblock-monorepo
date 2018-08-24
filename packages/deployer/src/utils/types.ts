@@ -53,6 +53,7 @@ export interface CompilerOptions {
   contractsDir: string
   networkId: number
   optimizerEnabled: boolean
+  optimizerRuns: number
   artifactsDir: string
   specifiedContracts: Set<string>
 }
