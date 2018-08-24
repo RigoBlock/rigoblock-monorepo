@@ -15,7 +15,7 @@ const conf: Config = {
   'kovan-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '*/5 * * * * ', // Every five minutes
+    cronExpression: '*/15 * * * * * ', // Every five minutes
     initialData: {
       network: NETWORKS.KOVAN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
@@ -47,10 +47,32 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
     }
   },
+  'kovan-calculate-dragos-totalsupply': {
+    handlerName: 'getTotalSupply',
+    description: 'Gets the total supply',
+    cronExpression: '* * * * * *',
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+    }
+  },
+  'kovan-calculate-dragos-shareprice': {
+    handlerName: 'getSharePrice',
+    description: 'Gets the share price',
+    cronExpression: '* * * * * *',
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+    }
+  },
   'ropsten-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '* * * * * *', // Every five minutes
+    cronExpression: '*/15 * * * * *', // Every five minutes
     initialData: {
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
@@ -82,20 +104,20 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
     }
   },
-  'kovan-calculate-dragos-totalsupply': {
+  'ropsten-calculate-dragos-totalsupply': {
     handlerName: 'getTotalSupply',
     description: 'Gets the total supply',
     cronExpression: '* * * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
-      network: NETWORKS.KOVAN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].RIGOBLOCK
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
     }
   },
-  'ropsten-calculate-dragos-totalsupply': {
-    handlerName: 'getTotalSupply',
-    description: 'Gets the total supply',
+  'ropsten-calculate-dragos-shareprice': {
+    handlerName: 'getSharePrice',
+    description: 'Gets the share price',
     cronExpression: '* * * * * *',
     initialData: {
       key: 'dragos',
