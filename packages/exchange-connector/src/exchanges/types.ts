@@ -35,7 +35,7 @@ export type ExchangesMap<T> = {
 export interface IExchange<
   RawOrder = {},
   RawTicker = {},
-  TickersTokenPairs = {}
+  TICKERS_TOKEN_PAIRS = {}
 > {
   networkId: string
   HTTP_API_URL: string
@@ -50,7 +50,7 @@ export interface IExchange<
     getTickers(options: {
       networkId?: string
       granularity?: string
-      tokenPairs?: TickersTokenPairs
+      tokenPairs?: TICKERS_TOKEN_PAIRS
     }): Promise<RawTicker[]>
   }
 
@@ -59,7 +59,7 @@ export interface IExchange<
   getTickers(options: {
     networkId?: string
     granularity?: string
-    tokenPairs?: TickersTokenPairs
+    tokenPairs?: TICKERS_TOKEN_PAIRS
   }): Promise<TickersList>
 
   network(id: string): IExchange
