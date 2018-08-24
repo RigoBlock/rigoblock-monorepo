@@ -2,10 +2,5 @@
   "extends": "../../tsconfig",
   "include": [
     "src/**/*.ts"
-  ],
-  "compilerOptions": {
-    "typeRoots":[
-      "node_modules/web3"
-    ]
-  }
+  ]
 }
