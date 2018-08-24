@@ -2,5 +2,11 @@
   "extends": "../../tsconfig",
   "include": [
     "src/**/*.ts"
-  ]
+  ],
+  "exclude": [
+    "./node_modules/*"
+  ],
+  "compilerOptions": {
+    "typeRoots": ["node_modules/@0xproject/typescript-typings/types", "node_modules/@types", "packages/api/contracts"]
+}
 }
