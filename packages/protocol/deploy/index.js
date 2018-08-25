@@ -98,9 +98,24 @@ module.exports = async (baseAccount, network) => {
   await rigoToken.changeMintingAddress(inflation.address)
   printAddress('Setting minting address...', inflation.address)
 
-  const exchangeEfx = await deploy(baseAccount, network, 'ExchangeEfx')
+  const exchangesAuthority = await deploy(
+    baseAccount,
+    network,
+    'ExchangesAuthority'
+  )
+  printAddress('ExchangesAuthority', exchangesAuthority.address)
+
+  await authority.setExchangesAuthority(exchangesAuthority.address)
+  await exchangesAuthority.setWhitelister(baseAccount, true)
+
+  const exchangeEfx = await deploy(
+    baseAccount,
+    network,
+    'ExchangeEfx'
+  )
   printAddress('ExchangeEfx', exchangeEfx.address)
 
+  await exchangesAuthority.whitelistExchange(exchangeEfx.address, true)
   const tokenTransferProxyEfx = await exchangeEfx.TOKEN_TRANSFER_PROXY_CONTRACT()
 
   const wrapperLockEth = await deploy(
@@ -126,6 +141,31 @@ module.exports = async (baseAccount, network) => {
   )
   printAddress('TokenTransferProxy', tokenTransferProxy.address)
 
+  await exchangesAuthority.whitelistTokenTransferProxy(
+    tokenTransferProxy.address,
+    true
+  )
+
+  const wETH9 = await deploy(
+    baseAccount,
+    network,
+    'WETH9'
+  )
+  printAddress('WETH9', wETH9.address)
+
+  await exchangesAuthority.whitelistWrapper(wETH9.address, true)
+  await exchangesAuthority.whitelistExchange(wETH9.address, true)
+
+  const aWeth = await deploy(
+    baseAccount,
+    network,
+    'AWeth',
+    [authority.address]
+  )
+  printAddress('AWeth', aWeth.address)
+
+  await exchangesAuthority.setExchangeAdapter(wETH9.address, aWeth.address)
+
   const exchangeV1Fork = await deploy(
     baseAccount,
     network,
@@ -135,8 +175,42 @@ module.exports = async (baseAccount, network) => {
   printAddress('ExchangeV1Fork', exchangeV1Fork.address)
 
   await tokenTransferProxy.addAuthorizedAddress(exchangeV1Fork.address)
+  await exchangesAuthority.whitelistExchange(exchangeV1Fork.address, true)
+
+  const navVerifier = await deploy(
+    baseAccount,
+    network,
+    'NavVerifier'
+  )
+  printAddress('NavVerifier', navVerifier.address)
+
+  await authority.setNavVerifier(navVerifier.address)
+
+  const sigVerifier = await deploy(
+    baseAccount,
+    network,
+    'SigVerifier'
+  )
+  printAddress('SigVerifier', sigVerifier.address)
+
+  await exchangesAuthority.setSignatureVerifier(sigVerifier.address)
+
+  const aEthfinex = await deploy(
+    baseAccount,
+    network,
+    'AEthfinex',
+    [authority.address]
+  )
+  printAddress('AEthfinex', aEthfinex.address)
+
+  await exchangesAuthority.setExchangeAdapter(
+    exchangeEfx.address,
+    aEthfinex.address
+  )
 
   return {
+    AEthfinex: aEthfinex,
+    AWeth: aWeth,
     Authority: authority,
     DragoRegistry: dragoRegistry,
     VaultEventful: vaultEventful,
@@ -145,10 +219,14 @@ module.exports = async (baseAccount, network) => {
     DragoFactory: dragoFactory,
     ExchangeEfx: exchangeEfx,
     ExchangeV1Fork: exchangeV1Fork,
+    ExchangesAuthority: exchangesAuthority,
+    NavVerifier: navVerifier,
     RigoToken: rigoToken,
     ProofOfPerformance: proofOfPerformance,
     Inflation: inflation,
+    SigVerifier: sigVerifier,
     TokenTransferProxy: tokenTransferProxy,
+    WETH9: wETH9,
     WrapperLockEth: wrapperLockEth,
     WrapperLock: wrapperLock
   }

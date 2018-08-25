@@ -74,16 +74,16 @@ interface ExchangesAuthorityFace {
     function whitelistTokenTransferProxy(
         address _tokenTransferProxy, bool _isWhitelisted)
         external;
-    
+
     /// @dev Allows a whitelister to enable trading on a particular exchange
     /// @param _asset Address of the token
     /// @param _exchange Address of the exchange
-    /// @param _isWhitelisted Bool whitelisted 
+    /// @param _isWhitelisted Bool whitelisted
     function whitelistAssetOnExchange(
         address _asset,
         address _exchange,
         bool _isWhitelisted)
-        external;    
+        external;
 
     /// @dev Allows an admin to whitelist a factory
     /// @param _method Hex of the function ABI

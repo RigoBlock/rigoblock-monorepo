@@ -89,6 +89,7 @@ contract AEthfinex {
                 TokenWrapper(_wrapper)
                 .deposit(_amount, _duration)
             );
+            //require(setAllowances(_wrapper, _token, 0)); // once a token is transferred to the wrapper, the allowance of the original token is not necessary
         }
     }
 

@@ -21,5 +21,5 @@ pragma experimental "v0.5.0";
 
 /// @title ZeroEx V1 Fork adapter - A helper contract for the 0x-manager exchange.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract AExchangeV2Fork {
+contract AZeroExV1Fork {
 }

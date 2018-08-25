@@ -21,5 +21,5 @@ pragma experimental "v0.5.0";
 
 /// @title ERCdec adapter - A helper contract for the ERCdec exchange.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract AERCdec {
+contract AERCdex {
 }

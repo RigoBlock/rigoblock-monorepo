@@ -21,7 +21,7 @@ pragma experimental "v0.5.0";
 
 /// @title ZeroEx adapter - A helper contract for the ZeroEx exchange.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract AZeroEx {
+contract AZeroExV2 {
 
 /*
     //relevant functions:

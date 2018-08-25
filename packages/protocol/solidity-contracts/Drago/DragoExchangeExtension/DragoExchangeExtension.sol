@@ -45,8 +45,8 @@ library DragoExchangeExtension {
         bytes memory _data = _assembledTransaction;
         address _target = getExchangeAdapter(admin, _exchange);
         bytes4 method;
-        
-        // find the bytes4(keccak256('functionABI')) of trhe function
+
+        // find the bytes4(keccak256('functionABI')) of the function
         assembly {
             method := mload(0x00)
         }
