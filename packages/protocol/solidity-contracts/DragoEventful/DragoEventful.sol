@@ -20,7 +20,7 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
-import { ExchangesAuthorityFace as DexAuth } from "../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
+import { ExchangesAuthorityFace as DexAuth } from "../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { DragoEventfulFace } from "./DragoEventfulFace.sol";
 
 /// @title Drago Eventful contract.

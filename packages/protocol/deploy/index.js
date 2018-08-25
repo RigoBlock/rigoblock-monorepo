@@ -98,18 +98,16 @@ module.exports = async (baseAccount, network) => {
   await rigoToken.changeMintingAddress(inflation.address)
   printAddress('Setting minting address...', inflation.address)
 
-  const tokenTransferProxy = await deploy(
-    baseAccount,
-    network,
-    'TokenTransferProxy'
-  )
-  printAddress('TokenTransferProxy', tokenTransferProxy.address)
+  const exchangeEfx = await deploy(baseAccount, network, 'ExchangeEfx')
+  printAddress('ExchangeEfx', exchangeEfx.address)
+
+  const tokenTransferProxyEfx = await exchangeEfx.TOKEN_TRANSFER_PROXY_CONTRACT()
 
   const wrapperLockEth = await deploy(
     baseAccount,
     network,
     'WrapperLockEth',
-    ['ETHWrapper', 'ETHW', 18, tokenTransferProxy.address]
+    ['ETHWrapper', 'ETHW', 18, tokenTransferProxyEfx]
   )
   printAddress('WrapperLockEth', wrapperLockEth.address)
 
@@ -117,9 +115,26 @@ module.exports = async (baseAccount, network) => {
     baseAccount,
     network,
     'WrapperLock',
-    [rigoToken.address, 'Rigo Token', 'GRG', 18, tokenTransferProxy.address, false]
+    [rigoToken.address, 'Rigo Token', 'GRG', 18, tokenTransferProxyEfx, false]
   )
   printAddress('WrapperLock', wrapperLock.address)
+
+  const tokenTransferProxy = await deploy(
+    baseAccount,
+    network,
+    'TokenTransferProxy'
+  )
+  printAddress('TokenTransferProxy', tokenTransferProxy.address)
+
+  const exchangeV1Fork = await deploy(
+    baseAccount,
+    network,
+    'ExchangeV1Fork',
+    [rigoToken.address, tokenTransferProxy.address]
+  )
+  printAddress('ExchangeV1Fork', exchangeV1Fork.address)
+
+  await tokenTransferProxy.addAuthorizedAddress(exchangeV1Fork.address)
 
   return {
     Authority: authority,
@@ -128,6 +143,8 @@ module.exports = async (baseAccount, network) => {
     VaultFactory: vaultFactory,
     DragoEventful: dragoEventful,
     DragoFactory: dragoFactory,
+    ExchangeEfx: exchangeEfx,
+    ExchangeV1Fork: exchangeV1Fork,
     RigoToken: rigoToken,
     ProofOfPerformance: proofOfPerformance,
     Inflation: inflation,

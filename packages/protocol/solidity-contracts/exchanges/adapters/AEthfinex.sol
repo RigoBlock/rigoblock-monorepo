@@ -20,7 +20,7 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
-import { ExchangesAuthorityFace as ExchangesAuthority } from "../../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
+import { ExchangesAuthorityFace as ExchangesAuthority } from "../../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { WrapperLock as TokenWrapper } from "../../utils/tokens/WrapperLock/WrapperLock.sol";
 import { WrapperLockEth as EthWrapper } from "../../utils/tokens/WrapperLockEth/WrapperLockEth.sol";
 import { ERC20Face as Token } from "../../utils/tokens/ERC20/ERC20Face.sol";
@@ -28,7 +28,7 @@ import { ERC20Face as Token } from "../../utils/tokens/ERC20/ERC20Face.sol";
 /// @title Ethfinex adapter - A helper contract for the Ethfinex exchange.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract AEthfinex {
-    
+
     string public constant NAME = 'ETHFINEX_ADAPTER';
 
     Admin admin;
@@ -44,7 +44,7 @@ contract AEthfinex {
         require(approved);
         _;
     }
-    
+
     modifier whenApprovedTokenOnWrapper(address _token, address _wrapper) {
         if (address(_token) != address(0)) {
             require(ExchangesAuthority(
@@ -91,7 +91,7 @@ contract AEthfinex {
             );
         }
     }
-    
+
     /// @dev unwraps eth or tokens from the ethfinex wrappers
     /// @param _token Address of the base token
     /// @param _wrapper Address of the token wrapper

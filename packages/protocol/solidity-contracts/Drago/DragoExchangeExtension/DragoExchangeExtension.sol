@@ -20,7 +20,7 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { Authority } from "../../Authority/Authority.sol";
-import { ExchangesAuthorityFace as ExchangesAuthority } from "../../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
+import { ExchangesAuthorityFace as ExchangesAuthority } from "../../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 
 /// @title Drago Exchange Extention - library to extend drago to exchange adapters.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

@@ -21,8 +21,8 @@ pragma experimental "v0.5.0";
 //pragma experimental ABIEncoderV2;
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
-import { ExchangesAuthorityFace as ExchangesAuthority } from "../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
-import { SigVerifierFace as SigVerifier } from "../Exchanges/SigVerifier/SigVerifierFace.sol";
+import { ExchangesAuthorityFace as ExchangesAuthority } from "../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
+import { SigVerifierFace as SigVerifier } from "../exchanges/SigVerifier/SigVerifierFace.sol";
 import { DragoEventfulFace as DragoEventful } from "../DragoEventful/DragoEventfulFace.sol";
 import { ERC20Face as Token } from "../utils/tokens/ERC20/ERC20Face.sol";
 import { KycFace as Kyc } from "../Kyc/KycFace.sol";

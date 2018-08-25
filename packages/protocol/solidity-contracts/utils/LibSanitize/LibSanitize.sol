@@ -51,9 +51,9 @@ library LibSanitize {
     {
         bytes memory bStr = bytes(str);
         uint arrayLength = bStr.length;
-		for (uint i = 0; i < arrayLength; i++) {
-			if ((bStr[i] >= 65) && (bStr[i] <= 90)) return false;
-		} return true;
+		    for (uint i = 0; i < arrayLength; i++) {
+			     if ((bStr[i] >= 65) && (bStr[i] <= 90)) return false;
+		    } return true;
     }
 
     function isUppercase(string str)

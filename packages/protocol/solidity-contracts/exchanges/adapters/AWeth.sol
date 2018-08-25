@@ -20,13 +20,13 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
-import { ExchangesAuthorityFace as ExchangesAuthority } from "../../Exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
+import { ExchangesAuthorityFace as ExchangesAuthority } from "../../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { WETH9 } from "../../utils/tokens/WETH9/WETH9.sol";
 
 /// @title Weth adapter - A helper to wrap eth to the 0x wrapper token.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract AWeth {
-    
+
     string public constant NAME = 'WETH_ADAPTER';
 
     Admin admin;

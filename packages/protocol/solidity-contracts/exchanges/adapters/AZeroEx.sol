@@ -76,7 +76,7 @@ function fillOrderNoThrow(
         uint256 takerAssetFillAmount,
         bytes memory signature
     )
-    
+
 function marketBuyWithWeth(
         LibOrder.Order[] memory orders,
         uint256 makerAssetFillAmount,
