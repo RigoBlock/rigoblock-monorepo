@@ -221,6 +221,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         external
         onlyOwner
     {
+        require(_exchange != _adapter);
         blocks.adapter[_exchange] = _adapter;
     }
 

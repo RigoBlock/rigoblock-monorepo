@@ -67,13 +67,13 @@ contract AEthfinex {
     /// @param _wrapper Address of the token wrapper
     /// @param _token TransferProxy Address of the transfer proxy
     /// @param _amount Number of tokens
-    /// @param _duration Number of hours for lockup
+    /// @param _forTime Number of hours for lockup
     function wrapToEfx(
         address _token,
         address _wrapper,
         uint256 _amount,
-        uint256 _duration)
-        internal
+        uint256 _forTime)
+        public //internal
         whenApprovedWrapper(_wrapper)
         whenApprovedTokenOnWrapper(_token, _wrapper)
     {
@@ -81,15 +81,15 @@ contract AEthfinex {
             require(
                 EthWrapper(_wrapper)
                 .deposit
-                .value(_amount)(_amount, _duration)
+                .value(_amount)(_amount, _forTime)
             );
         } else {
             require(setAllowances(_wrapper, _token, 2**256 -1));
             require(
                 TokenWrapper(_wrapper)
-                .deposit(_amount, _duration)
+                .deposit(_amount, _forTime)
             );
-            //require(setAllowances(_wrapper, _token, 0)); // once a token is transferred to the wrapper, the allowance of the original token is not necessary
+            require(setAllowances(_wrapper, _token, 0));
         }
     }
 

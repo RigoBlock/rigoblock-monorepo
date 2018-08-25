@@ -38,71 +38,7 @@ describeContract(contractName, () => {
     whitelister = await baseContracts['Authority'].setWhitelister(accounts[0], true)
   })
 
-  describe('setTransactionFee', () => {
-    it('sets the transaction fee', async () => {
-      await dragoInstance.methods
-        .setTransactionFee('2')
-        .send({ ...transactionDefault })
-      const adminData = await dragoInstance.methods
-        .getAdminData().call()
-      const newFee = adminData[4]
-      expect(newFee).toEqual('2')
-    })
-    it('fails when non-owner tries to set the fee', async () => {
-      const transactionParams = {
-        from: accounts[1],
-        gas: GAS_ESTIMATE,
-        gasPrice: 1
-      }
-      await expect (
-        dragoInstance.methods
-        .setTransactionFee('2')
-        .send({ ...transactionParams })
-      ).rejects.toThrowErrorMatchingSnapshot()
-    })
-    it('fails when fee higher than one percent', async () => {
-      await expect (
-        dragoInstance.methods
-        .setTransactionFee('101')
-        .send({ ...transactionDefault })
-      ).rejects.toThrowErrorMatchingSnapshot()
-    })
-  })
-
-  describe('buyDrago', () => {
-    it('creates new tokens', async () => {
-      const purchaseAmount = web3.utils.toWei('0.1')
-      const purchase = await dragoInstance.methods
-        .buyDrago()
-        .send({
-          ...transactionDefault,
-          value: purchaseAmount
-        })
-      const gasUsed = purchase.gasUsed
-      const netPurchaseAmount = (purchaseAmount - gasUsed)
-      const dragoData = await dragoInstance.methods
-        .getData()
-        .call()
-      const buyPrice = dragoData[3]
-      const decimals = 1e6
-      const tokensAmount = await (netPurchaseAmount / buyPrice * decimals)
-      const adminData = await dragoInstance.methods
-        .getAdminData().call()
-      const transactionFee = adminData[4]
-      const ratio = adminData[3] //fee split ratio
-      // the purchase fee is applied on the tokens
-      const purchaseFee = tokensAmount * (transactionFee / 10000)
-      // if the purchaser is also the wizard, 80% of the fee gets paid back
-      const commission = purchaseFee * ratio / 100
-      const netTokensAmount = (tokensAmount - purchaseFee + commission).toFixed(0)//.toString()
-      const userBalance = await dragoInstance.methods
-        .balanceOf(accounts[0]) //amend this if trying to buy from another account
-        .call()
-      expect(userBalance).toEqual(netTokensAmount)
-    })
-  })
-
-  describe.skip('wrapToEfx', () => {
+  describe('operateOnExchange', () => {
     it('wraps eth to the efx wrapper', async () => {
       // adds additional ether to the pool to be able to deposit
       const purchaseAmount = web3.utils.toWei('1.1')
@@ -116,25 +52,53 @@ describeContract(contractName, () => {
       const tokenAddress = null //Ether has address 0x0
       const tokenWrapper = await baseContracts['WrapperLockEth'].address
       const tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
-      const depositAmount = 1e16 // 10 finney
-      const duration = 1 // 1 hour lockup (the minimum)
+      const toBeWrapped = 1e16 // 10 finney
+      const time = 1 // 1 hour lockup (the minimum)
       // only whitelisters can whitelist exchanges
-      await baseContracts['Authority'].setWhitelister(accounts[0], true)
-      await baseContracts['Authority'].whitelistExchange(tokenWrapper, true)
-      await baseContracts['Authority'].whitelistExchange(tokenTransferProxy, true)
+      await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
+      await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
+      await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
+        tokenAddress,
+        tokenWrapper,
+        true
+      )
+      const methodInterface = {
+        name: 'wrapToEfx',
+        type: 'function',
+        inputs: [{
+          type: 'address',
+          name: '_token'
+        },{
+          type: 'address',
+          name: '_wrapper'
+        },{
+          type: 'uint256',
+          name: '_value'
+        },{
+          type: 'uint256',
+          name: '_forTime'
+        }]
+      }
+      const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
+        methodInterface,
+        [tokenAddress, tokenWrapper, toBeWrapped, time]
+      )
+      const methodSignature = await web3.eth.abi.encodeFunctionSignature(methodInterface)
+      const ethfinexAddress = await baseContracts['AEthfinex'].address
+      await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature, ethfinexAddress, true) // byte4(keccak256(method))
+      const isWhite = await baseContracts['ExchangesAuthority'].isMethodAllowed(methodSignature, ethfinexAddress)
+      console.log(isWhite)
       await dragoInstance.methods
-        .wrapToEfx(
-          tokenAddress,
-          tokenWrapper,
-          tokenTransferProxy,
-          depositAmount,
-          duration
-        ).send({ ...transactionDefault })
+        .operateOnExchange(
+          ethfinexAddress,
+          assembledTransaction
+        )
+        .send({ ...transactionDefault })
       const wethBalance = await baseContracts['WrapperLockEth'].balanceOf(dragoAddress)
       // if a deposit is repeated, weth balance will be equal to the sum of depositAmouns
       expect(wethBalance.toString()).toEqual(depositAmount.toString())
     })
-    it('wraps some GRG tokens to its efx token wrapper', async () => {
+    it.skip('wraps some GRG tokens to its efx token wrapper', async () => {
       // self-mint the base token first and transfer some of it to drago (drago cannot reject, tokens cannot be claimed back (only eth redemptions))
       const GRGtokensAmount = web3.utils.toWei('101')
       await baseContracts['RigoToken'].transfer(dragoAddress, GRGtokensAmount)
@@ -153,7 +117,7 @@ describeContract(contractName, () => {
       const duration = 1 // minimum duration 1 hour. // TODO for testing purposes, amend the parameter to seconds in the wrapper contract
       await baseContracts['Authority'].setExchangeAdapter(GRGwrapperAddress, GRGwrapperAddress)
       await baseContracts['Authority'].whitelistExchange(tokenTransferProxy, true)
-      // TODO amend the smart contract: remove allowance straight after deposit
+      //whitelist method
       await dragoInstance.methods
         .wrapToEfx(
           GRGtokenAddress,
@@ -164,11 +128,42 @@ describeContract(contractName, () => {
         ).send({ ...transactionDefault })
       //const c = await baseContracts['WrapperLock'].balanceOf(dragoAddress)
       //console.log(c.toString())
+
+      const toBeWrapped = 200000
+      const time = 1 // 1 hour
+      const assembledTransaction2 = await web3.eth.abi.encodeFunctionCall(
+        {
+          name: 'wrapToEfx',
+          type: 'function',
+          inputs: [{
+            type: 'address',
+            name: '_token'
+          },{
+            type: 'address',
+            name: '_wrapper'
+          },{
+            type: 'uint256',
+            name: '_value'
+          },{
+            type: 'uint256',
+            name: '_forTime'
+          }]
+        }, [toBeWrapped, time]
+      )
+      const ethfinexAddress = await baseContracts['AEthfinex'].address
+      await dragoInstance.methods
+        .operateOnExchange(
+          ethfinexAddress,
+          assembledTransaction2
+        ).send({ ...transactionDefault }) // commented to sending from depositToEfx
+      const wrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(dragoAddress)
+      //expect(wrappedTokensAmount.toString()).toEqual(toBeWrapped.toString()) // this test is not true if run together with previous wrap call
     })
   })
 
   //rather than implementing in drago.sol, we use operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction)
   //const assembledTransaction = await baseContracts['RigoToken'].approve(tokenTransferProxy, 0).encodeABI()
+  // TODO: must implement separate set allowance (0) function in drago.sol, it's twisted to have token approved as exchange
   describe.skip('operateOnExchangeDirectly', () => {
     /*afterAll(async () => {
       // reset allowance to 0 // need allowance to debugging
@@ -318,77 +313,6 @@ describeContract(contractName, () => {
         ).send({ ...transactionDefault }) // commented to sending from depositToEfx
       const wrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(dragoAddress)
       //expect(wrappedTokensAmount.toString()).toEqual(toBeWrapped.toString()) // this test is not true if run together with previous wrap call
-    })
-  })
-
-  describe('setAllowance', () => {
-    afterEach(async () => {
-      // reset allowance to 0
-      await baseContracts['ExchangesAuthority'].whitelistTokenTransferProxy(tokenTransferProxy, true)
-      await dragoInstance.methods
-        .setAllowance(
-          tokenTransferProxy,
-          GRGtokenAddress,
-          0
-        )
-        .send({ ...transactionDefault })
-    })
-
-    it('sets an infinite allowance to the tokentransferproxy', async () => {
-      const infiniteAllowance = new BigNumber(2).pow(256).minus(1)
-      await dragoInstance.methods
-        .setAllowance(
-          tokenTransferProxy,
-          GRGtokenAddress,
-          infiniteAllowance
-        )
-        .send({ ...transactionDefault })
-      const allowance = await baseContracts['RigoToken'].allowance(dragoAddress, tokenTransferProxy)
-      expect(allowance.toString()).toEqual(infiniteAllowance.toString())
-    })
-    it('sets an discretionary allowance to the tokentransferproxy', async () => {
-      const discretionaryAllowance = 1000
-      await dragoInstance.methods
-        .setAllowance(
-          tokenTransferProxy,
-          GRGtokenAddress,
-          discretionaryAllowance
-        )
-        .send({ ...transactionDefault })
-      const allowance = await baseContracts['RigoToken'].allowance(dragoAddress, tokenTransferProxy)
-      expect(allowance.toString()).toEqual(discretionaryAllowance.toString())
-    })
-    it('fails if non-owner tries to set allowance', async () => {
-      const infiniteAllowance = new BigNumber(2).pow(256).minus(1)
-      const transactionParams = {
-        from: accounts[1],
-        gas: GAS_ESTIMATE,
-        gasPrice: 1
-      }
-      await expect (
-        dragoInstance.methods
-          .setAllowance(
-            tokenTransferProxy,
-            GRGtokenAddress,
-            infiniteAllowance
-          )
-          .send({ ...transactionParams })
-      ).rejects.toThrowErrorMatchingSnapshot()
-    })
-    it.skip('does not set allowance if proxy not whitelisted', async () => {
-      //cannot blacklist proxy
-      await baseContracts['ExchangesAuthority'].whitelistTokenTransferProxy(tokenTransferProxy, false)
-      const infiniteAllowance = new BigNumber(2).pow(256).minus(1)
-      await dragoInstance.methods
-          .setAllowance(
-            tokenTransferProxy,
-            GRGtokenAddress,
-            infiniteAllowance
-          )
-          .send({ ...transactionDefault })
-      const allowance = await baseContracts['RigoToken'].allowance(dragoAddress, tokenTransferProxy)
-      const zeroAllowance = 0
-      expect(allowance.toString()).toEqual(zeroAllowance.toString())
     })
   })
 })
