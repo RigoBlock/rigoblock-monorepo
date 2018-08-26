@@ -44,7 +44,7 @@ library DragoExchangeExtension {
     {
         bytes memory _data = _assembledTransaction;
         address _target = getExchangeAdapter(admin, _exchange);
-        bytes4 method;
+        /*bytes4 method;
 
         // find the bytes4(keccak256('functionABI')) of the function
         assembly {
@@ -57,7 +57,7 @@ library DragoExchangeExtension {
                 method,
                 _target
             )
-        );
+        );*/
         bytes memory response;
         bool failed;
 

@@ -74,6 +74,7 @@ contract AEthfinex {
         uint256 _amount,
         uint256 _forTime)
         public //internal
+        payable
         whenApprovedWrapper(_wrapper)
         whenApprovedTokenOnWrapper(_token, _wrapper)
     {
