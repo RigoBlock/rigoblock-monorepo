@@ -1,4 +1,3 @@
 bull:
-  build:
-    context: .
+  build: .
   container_name: bull
