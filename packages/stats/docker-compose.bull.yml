@@ -1,3 +1,0 @@
-bull:
-  build: .
-  container_name: bull
