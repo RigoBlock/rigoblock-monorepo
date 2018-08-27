@@ -1,5 +1,9 @@
 export class StandardRelayer {
-  constructor(public API_URL, public transport = 'http') {}
+  constructor(public STANDARD_API_URL, public transport = 'http') {
+    if (!STANDARD_API_URL) {
+      throw new Error('API url must be specified.')
+    }
+  }
 
   /**
    * Accepts one or two optional token addresses.
@@ -8,9 +12,9 @@ export class StandardRelayer {
   public async getTokenPairs(
     tokenA?: string,
     tokenB?: string
-  ): Promise<StandardRelayer.rawTokenPairs> {
+  ): Promise<StandardRelayer.TokenPair[]> {
     const url = `${
-      this.API_URL
+      this.STANDARD_API_URL
     }/v0/token_pairs?tokenA=${tokenA}&tokenB=${tokenB}`
     return fetch(url).then(r => r.json())
   }
@@ -24,34 +28,34 @@ export class StandardRelayer {
     taker?: string, // returns orders where taker is taker address,
     trader?: string, // returns orders where maker or taker is trader address,
     feeRecipient?: string // returns orders where feeRecipient is feeRecipient address
-  ): Promise<StandardRelayer.rawOrder[]> {
+  ): Promise<StandardRelayer.RawOrder[]> {
     const url =
       `${
-        this.API_URL
+        this.STANDARD_API_URL
       }/v0/orders?exchangeContractAddress=${exchangeContractAddress}&tokenAddress=${tokenAddress}` +
       `&makerTokenAddress=${makerTokenAddress}&takerTokenAddress=${takerTokenAddress}&maker=${maker}` +
       `&taker=${taker}&trader=${trader}&feeRecipient=${feeRecipient}`
     return fetch(url).then(r => r.json())
   }
 
-  public async getOrder(orderHash: string): Promise<StandardRelayer.rawOrder> {
-    const url = `${this.API_URL}/v0/order/${orderHash}`
+  public async getOrder(orderHash: string): Promise<StandardRelayer.RawOrder> {
+    const url = `${this.STANDARD_API_URL}/v0/order/${orderHash}`
     return fetch(url).then(r => r.json())
   }
 
   public async getOrderbook(
     baseTokenAddress: string, // address of token designated as the baseToken in the currency pair calculation of price
     quoteTokenAddress: string // address of token designated as the quoteToken in the currency pair calculation of price
-  ): Promise<StandardRelayer.orderBook> {
+  ): Promise<StandardRelayer.OrderBook> {
     const url = `${
-      this.API_URL
+      this.STANDARD_API_URL
     }/v0/orderbook?baseTokenAddress=${baseTokenAddress}&quoteTokenAddress=${quoteTokenAddress}`
     return fetch(url).then(r => r.json())
   }
 }
 
 export namespace StandardRelayer {
-  export type tokenPair = {
+  export type TokenPair = {
     tokenA: {
       address: string
       minAmount: string
@@ -66,7 +70,7 @@ export namespace StandardRelayer {
     }
   }
 
-  export type rawOrder = {
+  export type RawOrder = {
     exchangeContractAddress: string
     maker: string
     taker: string
@@ -90,11 +94,9 @@ export namespace StandardRelayer {
     price: string
   }
 
-  export type rawTokenPairs = tokenPair[]
-
-  export type orderBook = {
-    bids: rawOrder[]
-    asks: rawOrder[]
+  export type OrderBook = {
+    bids: RawOrder[]
+    asks: RawOrder[]
   }
 }
 

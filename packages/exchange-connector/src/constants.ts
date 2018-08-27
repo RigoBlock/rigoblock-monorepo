@@ -9,7 +9,8 @@ export const TOKENS_DATA_ENDPOINT =
   'https://cdn.rawgit.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json'
 
 export enum supportedExchanges {
-  ETHFINEX = 'Ethfinex'
+  ETHFINEX = 'Ethfinex',
+  ERCDEX = 'ERCdEX'
 }
 
 export enum NETWORKS {
