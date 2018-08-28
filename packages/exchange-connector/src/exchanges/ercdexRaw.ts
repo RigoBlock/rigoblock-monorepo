@@ -1,7 +1,7 @@
 import { NETWORKS } from '../constants'
 import { StandardRelayerRaw } from './0xStandardRelayerRaw'
 
-class ERCdEXRaw extends StandardRelayerRaw {
+export class ERCdEXRaw extends StandardRelayerRaw {
   public static API_URLS = {
     http: {
       [NETWORKS.MAINNET]: 'https://api.ercdex.com/api'
@@ -180,4 +180,4 @@ export namespace ERCdEXRaw {
   }
 }
 
-const asd = new ERCdEXRaw('1')
+export default ERCdEXRaw
