@@ -1,4 +1,9 @@
-import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
+import {
+  AMOUNT_PRECISION,
+  NETWORKS,
+  PRICE_PRECISION,
+  TO_WEI
+} from '../constants'
 import { ERCdEXRaw } from './ercdexRaw'
 import { OrdersList, TickersList } from './types'
 import { StandardRelayer } from './0xStandardRelayerRaw'
@@ -56,7 +61,7 @@ export class ERCdEX {
     return orders.map(order => {
       const orderPrice = new BigNumber(order.price).toFixed(PRICE_PRECISION)
       const orderAmount = new BigNumber(order.volume)
-        .div(1e18)
+        .div(TO_WEI)
         .toFixed(AMOUNT_PRECISION)
 
       return {
@@ -81,7 +86,7 @@ export class ERCdEX {
         .toFixed(PRICE_PRECISION)
 
       const orderAmount = new BigNumber(order.makerTokenAmount)
-        .div(1e18)
+        .div(TO_WEI)
         .toFixed(AMOUNT_PRECISION)
 
       return {
@@ -99,7 +104,7 @@ export class ERCdEX {
         .toFixed(PRICE_PRECISION)
 
       const orderAmount = new BigNumber(order.takerTokenAmount)
-        .div(1e18)
+        .div(TO_WEI)
         .toFixed(AMOUNT_PRECISION)
 
       return {
@@ -165,12 +170,3 @@ export namespace ERCdEX {
 }
 
 export default ERCdEX
-
-// const asd = new ERCdEX('1')
-
-// asd.raw.getOrders(
-//   '0xe41d2489571d322189246dafa5ebde1f4699f498',
-//   '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-// )
-
-// // asd.
