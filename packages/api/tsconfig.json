@@ -4,6 +4,7 @@
     "src/**/*.ts"
   ],
   "compilerOptions": {
+    "target": "es5",
     "typeRoots": ["node_modules/@0xproject/typescript-typings/types"]
   }
 }
