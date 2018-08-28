@@ -1,4 +1,4 @@
-export class StandardRelayerRaw<T = StandardRelayer.RawOrder[]> {
+export class StandardRelayerRaw<T = StandardRelayerRaw.RawOrder[]> {
   constructor(public STANDARD_API_URL, public transport = 'http') {
     if (!STANDARD_API_URL) {
       throw new Error('API url must be specified.')
@@ -12,7 +12,7 @@ export class StandardRelayerRaw<T = StandardRelayer.RawOrder[]> {
   public async getTokenPairs(
     tokenA?: string,
     tokenB?: string
-  ): Promise<StandardRelayer.TokenPair[]> {
+  ): Promise<StandardRelayerRaw.TokenPair[]> {
     const url = `${
       this.STANDARD_API_URL
     }/v0/token_pairs?tokenA=${tokenA}&tokenB=${tokenB}`
@@ -28,7 +28,7 @@ export class StandardRelayerRaw<T = StandardRelayer.RawOrder[]> {
     taker?: string, // returns orders where taker is taker address,
     trader?: string, // returns orders where maker or taker is trader address,
     feeRecipient?: string // returns orders where feeRecipient is feeRecipient address
-  ): Promise<StandardRelayer.RawOrder[]> {
+  ): Promise<StandardRelayerRaw.RawOrder[]> {
     const url = `${
       this.STANDARD_API_URL
     }/v0/orders?exchangeContractAddress=${exchangeContractAddress}&tokenAddress=${tokenAddress}
@@ -37,7 +37,9 @@ export class StandardRelayerRaw<T = StandardRelayer.RawOrder[]> {
     return fetch(url).then(r => r.json())
   }
 
-  public async getOrder(orderHash: string): Promise<StandardRelayer.RawOrder> {
+  public async getOrder(
+    orderHash: string
+  ): Promise<StandardRelayerRaw.RawOrder> {
     const url = `${this.STANDARD_API_URL}/v0/order/${orderHash}`
     return fetch(url).then(r => r.json())
   }
@@ -45,7 +47,7 @@ export class StandardRelayerRaw<T = StandardRelayer.RawOrder[]> {
   public async getOrderbook(
     baseTokenAddress: string, // address of token designated as the baseToken in the currency pair calculation of price
     quoteTokenAddress: string // address of token designated as the quoteToken in the currency pair calculation of price
-  ): Promise<StandardRelayer.OrderBook> {
+  ): Promise<StandardRelayerRaw.OrderBook> {
     const url = `${
       this.STANDARD_API_URL
     }/v0/orderbook?baseTokenAddress=${baseTokenAddress}&quoteTokenAddress=${quoteTokenAddress}`
@@ -53,7 +55,7 @@ export class StandardRelayerRaw<T = StandardRelayer.RawOrder[]> {
   }
 }
 
-export namespace StandardRelayer {
+export namespace StandardRelayerRaw {
   export type TokenPair = {
     tokenA: {
       address: string
@@ -99,4 +101,4 @@ export namespace StandardRelayer {
   }
 }
 
-export default StandardRelayer
+export default StandardRelayerRaw
