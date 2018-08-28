@@ -45,7 +45,7 @@ export interface IExchange<
       baseToken: string,
       quoteToken: string,
       precision?: string
-    ): Promise<RawOrder[]>
+    ): Promise<RawOrder[] | RawOrder>
 
     getTickers(options: {
       networkId?: string

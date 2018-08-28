@@ -1,6 +1,5 @@
-import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
-import { IExchange, OrderType, OrdersList, TickersList } from './types'
-import BigNumber from 'bignumber.js'
+import { IExchange, OrdersList } from './types'
+import { NETWORKS } from '../constants'
 import StandardRelayer from './0xStandardRelayer'
 
 export class ERCdEX extends StandardRelayer
@@ -19,25 +18,19 @@ export class ERCdEX extends StandardRelayer
     this.STANDARD_API_URL = `${this.API_URL}/standard/${networkId}`
   }
 
-  // public async getOrders(
-  //   baseToken: string,
-  //   quoteToken: string
-  // ): Promise<OrdersList> {
-  //   super.getOrders
-  //   return this.raw
-  //     .getOrders(baseToken, quoteToken)
-  //     .then(result => this.formatOrders(result))
-  // }
+  public async getOrders(
+    baseToken: string,
+    quoteToken: string
+  ): Promise<OrdersList> {
+    super.standard.getOrders
+    return this.raw
+      .getOrders(baseToken, quoteToken)
+      .then(result => this.formatOrders(result))
+  }
 
-  // public async getTickers(
-  //   options = {
-  //     tokenPairs: this.TICKERS_TOKEN_PAIRS
-  //   }
-  // ): Promise<TickersList> {
-  //   return this.raw
-  //     .getTickers(options)
-  //     .then(result => this.formatTickers(result))
-  // }
+  public async getTickers(): Promise<any> {
+    return this.raw.getTickers().then(result => result)
+  }
 
   public raw = {
     getTickers: async (): Promise<ERCdEX.RawTicker[]> => {
@@ -48,59 +41,44 @@ export class ERCdEX extends StandardRelayer
       baseTokenAddress: string,
       quoteTokenAddress: string
     ): Promise<StandardRelayer.RawOrder[]> => {
-      return super.getOrders(baseTokenAddress, quoteTokenAddress)
+      return super.standard.getOrders(baseTokenAddress, quoteTokenAddress)
+    },
+    getOrderbook: async (
+      baseTokenAddress: string,
+      quoteTokenAddress: string
+    ): Promise<StandardRelayer.OrderBook> => {
+      return super.standard.getOrderbook(baseTokenAddress, quoteTokenAddress)
+    },
+    getAggregatedOrders: async (baseTokenAddress, quoteTokenAddress) => {
+      const url = `${this.API_URL}/aggregated_orders?networkId=${
+        this.networkId
+      }&baseTokenAddress=${baseTokenAddress}&quoteTokenAddress=${quoteTokenAddress}`
+      return fetch(url).then(r => r.json())
+    },
+    /**
+     * gets the orders representing the best market price
+     */
+    getBestOrders: async (
+      makerTokenAddress: string, // Address of maker token
+      takerTokenAddress: string, // Address of taker token
+      baseTokenAddress: string, // Address of base token
+      quantity: string, // Quantity of pair requested
+      takerAddress: string // Address of order taker
+    ) => {
+      const url = `${
+        this.API_URL
+      }/orders/best?makerTokenAddress=${makerTokenAddress}&takerTokenAddress=${takerTokenAddress}
+      &baseTokenAddress=${baseTokenAddress}&quantity=${quantity}&takerAddress=${takerAddress}`
+      return fetch(url).then(r => r.json())
     }
   }
-
-  private formatOrders(orders: ERCdEX.RawOrder[]): OrdersList {
-    if (this.checkForError(orders as any)) {
-      throw new Error(orders.pop() as any)
-    }
-    return orders.map((order: number[]) => {
-      const type =
-        order.slice(order.length - 1).pop() > 0 ? OrderType.BUY : OrderType.SELL
-
-      const price = new BigNumber(order.shift()).toFixed(PRICE_PRECISION)
-      const ordersCount: number = order.shift()
-      const amount = new BigNumber(order.pop())
-        .absoluteValue()
-        .toFixed(AMOUNT_PRECISION)
-      return {
-        type,
-        price,
-        amount,
-        ordersCount
-      }
-    })
-  }
-
-  // private formatTickers(tickers: ERCdEX.RawTicker[]) {
-  //   if (this.checkForError(tickers as any)) {
-  //     throw new Error(tickers.pop() as any)
-  //   }
-  //   if (!tickers.length) {
-  //     throw new Error('Tokens Pair not recognised by exchange')
-  //   }
-  //   const tickersList = tickers.map(ticker => ({
-  //     symbol: ticker[0].substring(1, 4),
-  //     priceEth: ticker[7].toString(),
-  //     priceUsd: ''
-  //   }))
-  //   tickersList.push({
-  //     priceEth: '1',
-  //     priceUsd: '',
-  //     symbol: 'WETH'
-  //   })
-  //   tickersList.push({
-  //     priceEth: '1',
-  //     priceUsd: '',
-  //     symbol: 'ETH'
-  //   })
-  //   return tickersList
-  // }
 
   public network(id: string = NETWORKS.MAINNET): ERCdEX {
     return new ERCdEX(id, this.transport)
+  }
+
+  private formatOrders(orders): OrdersList {
+    return orders.toString()
   }
 }
 
@@ -112,12 +90,6 @@ export namespace ERCdEX {
     dailyVolume: string
     dailyPercentageChange: string
   }
-
-  export type RawOrder = [
-    number, // PRICE,
-    number, // COUNT,
-    number // AMOUNT
-  ]
 }
 
 export default ERCdEX
