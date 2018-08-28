@@ -1,0 +1,53 @@
+[
+    {
+        "scope": "https://api.ercdex.com:443",
+        "method": "GET",
+        "path": "/api/standard/1/v0/orderbook?baseTokenAddress=0xe41d2489571d322189246dafa5ebde1f4699f498&quoteTokenAddress=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b0800000000000003e497cb6e58b71186dfe5ac8562ee17ed8a0245d78dbb2ab220874347702519925c1830fceec591e3346ae4a8419da045b9243943f2e77cc3e187635eadfbe3f2af1f8eae6fae5edf8c8777777d5c7e38fe7e5c925f1c77c7e501efd7d011bcc9d43b38016138800e0d9a2a3bc050d9397dc1d0c245b96a84a9663948c77171dc3f3a729b493d1a574eac92815371f59a855d2b17c4a8b5dacbbd2d260fc2d5332262aeeea6e3e3c5d1efebbb71f3baff707bf37037eae1f76bddf5fd27ff48a259a988e40dc52e7b2782ae3520dd8c069043f271ba797b75371eae6e6ffe7273f5fed5d575df3f8cebb7df741d978720908804c07171ecee3f775dbdbdea9b874fab380f12f3ea6adcaed43304ad997dc186a9516379ea71715c8f37fd4943debe8369ccc9b32944a8a025a61351034d262a8fcd9f8dfed87d5c1e6896462460c6f9b89bc7c157b76ffae6c7072fa03106e724e2ddb160406bc926efb11282cbd5aae8a983ebdb778f471278d2ceeb1a7f3b07dc281c5302d9d99c99532344311052110054dc595548203858229c89ce1b50624026b3307020b1e3e278f8410ef837db67a34f72c8cfccf889262db84822d57131114692d81a7b68cfd5b8c532b7643c75f05913fae27eeefa7a5cdd5cddbc7ef5532bccb39d57f5af56b777abeffe34eebf7bdcdb2841b01e35",
+            "197958c536f221cc73e4489f0c124d5a483ab7ee8ae6dce2732bf10c3ab5bcbf7d7757a7287d57abdf1f17c7dbbbabc70ef8ddf7cb9ebc3c4b767c26bbe750962e641743eee48232968a8c691a6b71858acc996c304bbc86cb629caba3a7fe4036140870262e1b12bb1d166bb98bc6580b3d6bfa8ca1d13ec64c645f5e891d6ab3427e33b25159c5c5e9eb91ddceb49d627267762edb4e53606b6ee791413368ed994fc9feb558e66763f67b9ecdf94c6b160e88e0ecc80cc4e918e1622a008ca2a79e9049a8c24c09c0414888e26088a10ee0185f81e75f0b5e04a70c5043b4086649e497d9fd92d15374a3630d602a57a83d8b589b1169a385f6149a4dbb204dc808bbca305651a2cf904c7a115df2d4d417d105d6969e4588818e055e0c3380ce6c3c2d9dc573d084169e60ba728707acb631997f842e5b28eb84c8496bac155d67aa9716cc29c373a9602296b1962c941ed00273794cd9037e637453e2ff115d0776051775370b5780b404cc387956c200d1c80c2574f060812430167431e6b3164b0b310b8d80ff6a742d552505d8f87c50d012e44574bf60f4145ddade3e989337ba2ab8569cd4486d5b45c6a858ab6c544b864f2d94e1389608ce35f265740324418f8fdf5e1ce3fecdcb95f5341ca13e7831ae1665621511054fc9c9d5b3670dc05e43b4c99dbd543bb0b1a6cdfe27c431d79a089db0666285acc744566a54b279f5425b639093ec413d2966f5b635b32682fd0f57d65337cf51a6069ecda3d3334ca11a2017d438ff223df029c404fc4c805fffa7117dfd5c25c9f07364939bf0594b73068b303f46720a1a859d5da9214a806267d1c8e909840049ccc0e2e70fe20c7b2380fc0a64a77950869347981ab17e99f55f90f09e613d5de497d5d7cf5b3ca53c53974d9abddc3d8983817334d1822ca1d6bd620f0c1a94a3aadad3c481069db8e0cb0fb4c4f1f1db8fff000000ffff0300abac30eb3c0f0000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Tue, 28 Aug 2018 16:45:20 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=d8abbfc67d9adf5cda9f72a65e94b22f91535474719; expires=Wed, 28-Aug-19 16:45:19 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "X-DNS-Prefetch-Control",
+            "off",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Strict-Transport-Security",
+            "max-age=15552000; includeSubDomains",
+            "X-Download-Options",
+            "noopen",
+            "X-Content-Type-Options",
+            "nosniff",
+            "X-XSS-Protection",
+            "1; mode=block",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY-ID",
+            "Via",
+            "1.1 google",
+            "Alt-Svc",
+            "clear",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "45183f64b907431c-MXP",
+            "Content-Encoding",
+            "gzip"
+        ]
+    }
+]
