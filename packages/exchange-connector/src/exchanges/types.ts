@@ -38,14 +38,14 @@ export interface IExchange<
   TICKERS_TOKEN_PAIRS = {}
 > {
   networkId: string
-  HTTP_API_URL: string
+  API_URL: string
 
   raw: {
     getOrders(
       baseToken: string,
       quoteToken: string,
       precision?: string
-    ): Promise<RawOrder[]>
+    ): Promise<RawOrder[] | RawOrder>
 
     getTickers(options: {
       networkId?: string

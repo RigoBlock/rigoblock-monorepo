@@ -1,19 +1,47 @@
-import { IExchange } from './exchanges/types'
-import { NETWORKS, supportedExchanges } from './constants'
+import { Ethfinex } from './exchanges/ethfinex'
+import { NETWORKS, TRANSPORTS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
+import ZeroExStandardRelayerRaw from './exchanges/zeroExStandardRelayerRaw'
 
-export default function exchangeConnector(
-  exchangeName: supportedExchanges | string,
-  networkId: NETWORKS | string = NETWORKS.MAINNET,
-  transport: string = 'http'
-): IExchange {
-  const selectedExchange = ExchangesMap[exchangeName]
-  if (!selectedExchange) {
-    throw new Error(`Exchange ${exchangeName} is not supported.`)
+function exchangeConnector(
+  exchangeName: supportedExchanges.ZEROEXRELAYER,
+  options: ExchangeOptions
+): ZeroExStandardRelayerRaw
+function exchangeConnector(
+  exchangeName: supportedExchanges.ETHFINEX,
+  options?: ExchangeOptions
+): Ethfinex
+function exchangeConnector(
+  exchangeName: supportedExchanges,
+  options = {
+    networkId: NETWORKS.MAINNET,
+    transport: TRANSPORTS.HTTP,
+    apiUrl: ''
   }
-  if (!selectedExchange.SUPPORTED_NETWORKS.includes(networkId)) {
-    throw new Error(`Network not supported on this exchange: ${networkId}`)
+): any {
+  if (exchangeName === supportedExchanges.ZEROEXRELAYER) {
+    if (!options.apiUrl) {
+      throw new Error('API url must be specified for 0x standard relayers')
+    }
+    return new ZeroExStandardRelayerRaw(options.apiUrl, options.transport)
+  }
+  if (ExchangesMap[exchangeName]) {
+    const selectedExchange = ExchangesMap[exchangeName]
+    if (!selectedExchange.SUPPORTED_NETWORKS.includes(options.networkId)) {
+      throw new Error(
+        `Network not supported on this exchange: ${options.networkId}`
+      )
+    }
+    return new selectedExchange(options.networkId, options.transport)
   }
 
-  return new selectedExchange(networkId, transport)
+  throw new Error(`Exchange not supported: ${exchangeName}`)
+}
+
+export default exchangeConnector
+
+interface ExchangeOptions {
+  networkId?: NETWORKS
+  transport?: TRANSPORTS
+  apiUrl?: string
 }

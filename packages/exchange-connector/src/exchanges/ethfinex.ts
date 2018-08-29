@@ -10,7 +10,7 @@ export class Ethfinex
     [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
     [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
   }
-  public HTTP_API_URL: string
+  public API_URL: string
   private TICKERS_TOKEN_PAIRS: string[] = [
     Ethfinex.TokenPairs.ZRXETH,
     Ethfinex.TokenPairs.MKRETH,
@@ -18,7 +18,7 @@ export class Ethfinex
   ]
 
   constructor(public networkId, public transport = 'http') {
-    this.HTTP_API_URL = Ethfinex.HTTP_API_URLS[networkId]
+    this.API_URL = Ethfinex.HTTP_API_URLS[networkId]
   }
 
   public async getOrders(
@@ -48,7 +48,7 @@ export class Ethfinex
       }
     ): Promise<Ethfinex.RawTicker[]> => {
       const url = `${
-        this.HTTP_API_URL
+        this.API_URL
       }/tickers?symbols=${options.tokenPairs.toString()}`
       return fetch(url).then(r => r.json())
     },
@@ -57,9 +57,7 @@ export class Ethfinex
       quoteToken: string,
       precision: Ethfinex.OrderPrecisions = Ethfinex.OrderPrecisions.P0
     ): Promise<Ethfinex.RawOrder[]> => {
-      const url = `${
-        this.HTTP_API_URL
-      }/book/t${baseToken}${quoteToken}/${precision}`
+      const url = `${this.API_URL}/book/t${baseToken}${quoteToken}/${precision}`
       return fetch(url).then(r => r.json())
     },
     getCandles: async (
@@ -72,7 +70,7 @@ export class Ethfinex
       end?: string // filter end (ms)
     ): Promise<Ethfinex.RawCandle[]> => {
       const url = `${
-        this.HTTP_API_URL
+        this.API_URL
       }/candles/trade:${timeFrame}:${tokenPair}/${section}?limit=${limit}&sort=${sort}&start=${start}&end=${end}`
       return fetch(url).then(r => r.json())
     }

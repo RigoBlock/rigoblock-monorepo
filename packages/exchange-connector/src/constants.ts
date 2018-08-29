@@ -4,17 +4,21 @@ export const KOVAN: string = 'kovan'
 
 export const PRICE_PRECISION: number = 7
 export const AMOUNT_PRECISION: number = 5
-
-export const TOKENS_DATA_ENDPOINT =
-  'https://cdn.rawgit.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json'
+export const TO_WEI: number = 1e18
 
 export enum supportedExchanges {
   ETHFINEX = 'Ethfinex',
-  ERCDEX = 'ERCdEX'
+  ERCDEX = 'ERCdEX',
+  ZEROEXRELAYER = '0xStandardRelayer'
 }
 
 export enum NETWORKS {
   MAINNET = '1',
   KOVAN = '42',
   ROPSTEN = '3'
+}
+
+export enum TRANSPORTS {
+  HTTP = 'http',
+  WS = 'ws'
 }
