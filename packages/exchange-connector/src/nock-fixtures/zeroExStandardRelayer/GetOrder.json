@@ -11,7 +11,7 @@
         ],
         "rawHeaders": [
             "Date",
-            "Wed, 29 Aug 2018 14:38:27 GMT",
+            "Wed, 29 Aug 2018 17:41:00 GMT",
             "Content-Type",
             "application/json; charset=utf-8",
             "Transfer-Encoding",
@@ -19,7 +19,7 @@
             "Connection",
             "close",
             "Set-Cookie",
-            "__cfduid=d49f4f244fd99c3ee1a3bc50fabb2ca9d1535553505; expires=Thu, 29-Aug-19 14:38:25 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "__cfduid=d102e75813014f35b17bd371b6f487ba81535564456; expires=Thu, 29-Aug-19 17:40:56 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
             "X-DNS-Prefetch-Control",
             "off",
             "X-Frame-Options",
@@ -45,7 +45,7 @@
             "Server",
             "cloudflare",
             "CF-RAY",
-            "451fc2e409cbbe43-MXP",
+            "4520ce3efb4cbe66-MXP",
             "Content-Encoding",
             "gzip"
         ]
