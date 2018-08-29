@@ -75,6 +75,9 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       )
       expect(result).toMatchSnapshot()
     })
+    it("throws an error if we don't specify the order hash", () => {
+      expect(exchange.getOrder()).rejects.toThrowErrorMatchingSnapshot()
+    })
   })
   describe('getOrderbook', () => {
     const baseTokenAddress = '0xe41d2489571d322189246dafa5ebde1f4699f498'
@@ -85,6 +88,13 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         () => exchange.getOrderbook(baseTokenAddress, quoteTokenAddress)
       )
       expect(result).toMatchSnapshot()
+    })
+    it("throws an error if we don't specify both the token addresses", async () => {
+      const baseTokenAddress = '0xe41d2489571d322189246dafa5ebde1f4699f498'
+      expect(
+        exchange.getOrderbook(baseTokenAddress)
+      ).rejects.toThrowErrorMatchingSnapshot()
+      expect(exchange.getOrderbook()).rejects.toThrowErrorMatchingSnapshot()
     })
   })
 })

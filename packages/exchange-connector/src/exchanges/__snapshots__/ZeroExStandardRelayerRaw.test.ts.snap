@@ -26,6 +26,8 @@ Object {
 }
 `;
 
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrder throws an error if we don't specify the order hash 1`] = `"Order hash must be specified."`;
+
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrderbook retrieves the orderbook for a given token pair. 1`] = `
 Object {
   "asks": Array [
@@ -103,6 +105,10 @@ Object {
   ],
 }
 `;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrderbook throws an error if we don't specify both the token addresses 1`] = `"Both baseTokenAddress and quoteTokenAddress must be specified."`;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrderbook throws an error if we don't specify both the token addresses 2`] = `"Both baseTokenAddress and quoteTokenAddress must be specified."`;
 
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrders Retrieves a list of orders given query parameters. 1`] = `
 Array [

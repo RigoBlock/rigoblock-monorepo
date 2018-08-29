@@ -46,6 +46,9 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   public async getOrder(
     orderHash: string
   ): Promise<ZeroExStandardRelayerRaw.RawOrder> {
+    if (!orderHash) {
+      throw new Error('Order hash must be specified.')
+    }
     const url = `${this.STANDARD_API_URL}/v0/order/${orderHash}`
     return fetch(url).then(r => r.json())
   }
@@ -54,6 +57,11 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
     baseTokenAddress: string, // address of token designated as the baseToken in the currency pair calculation of price
     quoteTokenAddress: string // address of token designated as the quoteToken in the currency pair calculation of price
   ): Promise<ZeroExStandardRelayerRaw.OrderBook> {
+    if (!baseTokenAddress || !quoteTokenAddress) {
+      throw new Error(
+        'Both baseTokenAddress and quoteTokenAddress must be specified.'
+      )
+    }
     const url = `${
       this.STANDARD_API_URL
     }/v0/orderbook?baseTokenAddress=${baseTokenAddress}&quoteTokenAddress=${quoteTokenAddress}`
