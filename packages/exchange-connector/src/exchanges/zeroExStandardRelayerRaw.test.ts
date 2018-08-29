@@ -17,14 +17,14 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
   describe('getTokenPairs', () => {
     it('Retrieves a list of available token pairs and the information required to trade them.', async () => {
       const result: any = await nockBackPromise(
-        'zeroExStandardRelayerGetTokenPairs.json',
+        'zeroExStandardRelayer/GetTokenPairs.json',
         () => exchange.getTokenPairs()
       )
       expect(result).toMatchSnapshot()
     })
     it('Accepts one token as a filter', async () => {
       const result: any = await nockBackPromise(
-        'zeroExStandardRelayerGetTokenPairsWithTokenA.json',
+        'zeroExStandardRelayer/GetTokenPairsWithTokenA.json',
         () =>
           exchange.getTokenPairs({
             tokenA: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
@@ -34,7 +34,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     })
     it('Accepts two tokens as a filter', async () => {
       const result: any = await nockBackPromise(
-        'zeroExStandardRelayerGetTokenPairsWithBothTokens.json',
+        'zeroExStandardRelayer/GetTokenPairsWithBothTokens.json',
         () =>
           exchange.getTokenPairs({
             tokenA: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
@@ -47,14 +47,14 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
   describe('getOrders', () => {
     it('Works without parameters', async () => {
       const result: any = await nockBackPromise(
-        'zeroExStandardRelayerGetOrders.json',
+        'zeroExStandardRelayer/GetOrders.json',
         () => exchange.getOrders()
       )
       expect(result).toMatchSnapshot()
     })
     it('Retrieves a list of orders given query parameters.', async () => {
       const result: any = await nockBackPromise(
-        'zeroExStandardRelayerGetOrdersWithParameters.json',
+        'zeroExStandardRelayer/GetOrdersWithParameters.json',
         () =>
           exchange.getOrders({
             maker: '0x2f0d03fb9a8a6cc4b04128c29b9861adbb818015',
@@ -70,7 +70,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const orderHash =
         '0x7109947a8f4c595f2604445cc4cfc0927fcef5b84b9b33a34528ada629dbd846'
       const result: any = await nockBackPromise(
-        'zeroExStandardRelayerGetOrder.json',
+        'zeroExStandardRelayer/GetOrder.json',
         () => exchange.getOrder(orderHash)
       )
       expect(result).toMatchSnapshot()
@@ -84,7 +84,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     const quoteTokenAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
     it('retrieves the orderbook for a given token pair.', async () => {
       const result: any = await nockBackPromise(
-        'zeroExStandardRelayerGetOrderbook.json',
+        'zeroExStandardRelayer/GetOrderbook.json',
         () => exchange.getOrderbook(baseTokenAddress, quoteTokenAddress)
       )
       expect(result).toMatchSnapshot()

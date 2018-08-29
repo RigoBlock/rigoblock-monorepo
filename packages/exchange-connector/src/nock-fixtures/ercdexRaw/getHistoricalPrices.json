@@ -1,0 +1,59 @@
+[
+    {
+        "scope": "https://api.ercdex.com:443",
+        "method": "POST",
+        "path": "/api/reports/historical",
+        "body": {
+            "networkId": "1",
+            "baseTokenAddress": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+            "quoteTokenAddress": "0xc02aa39b223fe8d0a0e5c4f27ead9083c756cc2",
+            "startDate": "2018-08-28T10:06:02Z"
+        },
+        "status": 500,
+        "response": {
+            "message": "Invalid token pair.",
+            "name": "Error",
+            "status": 500
+        },
+        "rawHeaders": [
+            "Date",
+            "Wed, 29 Aug 2018 17:52:15 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Content-Length",
+            "61",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=dac3cf7c20ff248a4875075efb0a61d0a1535565135; expires=Thu, 29-Aug-19 17:52:15 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "X-DNS-Prefetch-Control",
+            "off",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Strict-Transport-Security",
+            "max-age=15552000; includeSubDomains",
+            "X-Download-Options",
+            "noopen",
+            "X-Content-Type-Options",
+            "nosniff",
+            "X-XSS-Protection",
+            "1; mode=block",
+            "Vary",
+            "X-HTTP-Method-Override",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY-ID",
+            "Via",
+            "1.1 google",
+            "Alt-Svc",
+            "clear",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "4520ded18d1842f8-MXP"
+        ]
+    }
+]
