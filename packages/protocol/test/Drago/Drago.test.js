@@ -69,6 +69,29 @@ describeContract(contractName, () => {
     })
   })
 
+  describe('setPrices', () => {
+    it('sets the prices', async () => {
+      const sellPrice = web3.utils.toWei('1.1')
+      const buyPrice = web3.utils.toWei('1.11')
+      const block = 1
+      const hash = web3.utils.fromAscii("random")
+      const data = web3.utils.fromAscii("random")
+      await dragoInstance.methods
+        .setPrices(
+          sellPrice,
+          buyPrice,
+          block,
+          hash,
+          data
+        )
+        .send({ ...transactionDefault })
+      const dragoData = await dragoInstance.methods
+        .getData().call()
+      const newSell = dragoData[2]
+      expect(newSell).toEqual(sellPrice)
+    })
+  })
+
   describe('buyDrago', () => {
     it('creates new tokens', async () => {
       const purchaseAmount = web3.utils.toWei('0.1')

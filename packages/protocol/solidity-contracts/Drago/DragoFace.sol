@@ -18,7 +18,6 @@
 
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
-//pragma experimental ABIEncoderV2;
 
 /// @title Drago Interface - Allows interaction with the Drago contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -31,16 +30,19 @@ interface DragoFace {
     function buyDragoOnBehalf(address _hodler) external payable returns (bool success);
     function sellDrago(uint256 _amount) external returns (bool success);
     function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice, bytes32 _hash, bytes _signedData)  external;
+    function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice, uint256 _signaturevaliduntilBlock, bytes32 _hash, bytes _signedData) external;
     function changeMinPeriod(uint32 _minPeriod) external;
     function changeRatio(uint256 _ratio) external;
     function setTransactionFee(uint256 _transactionFee) external;
     function changeFeeCollector(address _feeCollector) external;
     function changeDragoDao(address _dragoDao) external;
+    function enforceKyc(bool _enforced, address _kycProvider) external;
     function setAllowance(address _tokenTransferProxy, address _token, uint256 _amount) external;
     function SetMultipleAllowances(address _tokenTransferProxy, address[] _tokens, uint256[] _amounts) external;
-    function operateOnExchange(address _exchange, bytes _assembledTransaction) external;
-    //function batchOperateOnExchange(address _exchange, bytes[] _assembledTransactions) external;
-    function enforceKyc(bool _enforced, address _kycProvider) external;
+
+    // the below functions are implemented as pragma experimental ABIEncoderV2;
+    //function operateOnExchange(address _exchange, Transaction memory transaction) public;
+    //function batchOperateOnExchange(address _exchange, memory transactions) public;
 
     // PUBLIC CONSTANT FUNCTIONS
 

@@ -30,15 +30,14 @@ import { KycFace as Kyc } from "../Kyc/KycFace.sol";
 import { DragoFace } from "./DragoFace.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
 import { SafeMathLight as SafeMath } from "../utils/SafeMath/SafeMathLight.sol";
-import { DragoExchangeExtension as Extension } from "./DragoExchangeExtension/DragoExchangeExtension.sol";
+import { LibFindMethod } from "../utils/LibFindMethod/LibFindMethod.sol";
 import { NavVerifierFace as NavVerifier } from "./NavVerifier/NavVerifierFace.sol";
 
 /// @title Drago - A set of rules for a drago.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract Drago is Owned, SafeMath, DragoFace {
+contract Drago is Owned, SafeMath {
 
-    using Extension for *;
-    Extension.Admin libraryAdmin;
+    using LibFindMethod for *;
 
     string constant VERSION = 'HF 0.4.2';
     uint256 constant BASE = 1000000; // tokens are divisible by 1 million
@@ -57,6 +56,10 @@ contract Drago is Owned, SafeMath, DragoFace {
         uint256 balance;
         Receipt receipt;
         mapping(address => address[]) approvedAccount;
+    }
+
+    struct Transaction {
+        bytes assembledData;
     }
 
     struct DragoData {
@@ -229,9 +232,13 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @dev Allows drago owner or authority to set the price for a drago
     /// @param _newSellPrice Price in wei
     /// @param _newBuyPrice Price in wei
+    /// @param _signaturevaliduntilBlock Number of blocks till expiry of new data
+    /// @param _hash Bytes32 of the transaction hash
+    /// @param _signedData Bytes of extradata and signature
     function setPrices(
         uint256 _newSellPrice,
         uint256 _newBuyPrice,
+        uint256 _signaturevaliduntilBlock,
         bytes32 _hash,
         bytes _signedData)
         external
@@ -239,7 +246,15 @@ contract Drago is Owned, SafeMath, DragoFace {
         buyPriceHigherOrEqual(_newSellPrice, _newBuyPrice)
         notPriceError(_newSellPrice, _newBuyPrice)
     {
-        require(isValidNav(_newSellPrice, _newBuyPrice, _hash, _signedData));
+        require(
+            isValidNav(
+                _newSellPrice,
+                _newBuyPrice,
+                _signaturevaliduntilBlock,
+                _hash,
+                _signedData
+            )
+        );
         DragoEventful events = DragoEventful(getDragoEventful());
         require(events.setDragoPrice(msg.sender, this, _newSellPrice, _newBuyPrice));
         data.sellPrice = _newSellPrice;
@@ -299,6 +314,16 @@ contract Drago is Owned, SafeMath, DragoFace {
     {
         data.minPeriod = _minPeriod;
     }
+    
+    function enforceKyc(
+        bool _enforced,
+        address _kycProvider)
+        external
+        onlyOwner
+    {
+        admin.kycEnforced = _enforced;
+        admin.kycProvider = _kycProvider;
+    }
 
     /// @dev Allows owner to set an allowance to an approved token transfer proxy
     /// @param _tokenTransferProxy Address of the proxy to be approved
@@ -330,51 +355,117 @@ contract Drago is Owned, SafeMath, DragoFace {
         }
     }
 
-    /// @dev Allows owner or approved exchange to send a transaction to exchange
-    /// @param _exchange Address of the exchange
-    /// @param _assembledTransaction ABI encoded transaction
     function operateOnExchange(
         address _exchange,
         bytes _assembledTransaction)
         external
         onlyOwner()
         whenApprovedExchangeOrWrapper(_exchange)
+        returns (bool success)
     {
-        //require(operateOnExchangeInternal(_exchange, _assembledTransaction));
-        require(Extension.operateOnExchangeInternal(
-            libraryAdmin,
-            _exchange,
-            _assembledTransaction)
+        address adapter = getExchangeAdapter(_exchange);
+         bytes memory transactionData = _assembledTransaction;
+        // commented for debugging
+        require(
+            methodAllowedOnExchange(
+                findMethod(_assembledTransaction),
+                adapter
+            )
         );
+
+        bytes memory response;
+        bool failed = true;
+
+        assembly {
+
+            let succeeded := delegatecall(
+                sub(gas, 5000),
+                adapter,
+                add(transactionData, 0x20),
+                mload(transactionData),
+                0,
+                32) // 0x0
+            
+            // load delegatecall output
+            response := mload(0)
+            failed := iszero(succeeded)
+
+            switch failed
+            case 1 {
+                // throw if delegatecall failed
+                revert(0, 0)
+            }
+        }
+
+        return (success = true);
     }
 
 /*
     /// @dev Allows owner or approved exchange to send a transaction to exchange
+    /// @param _exchange Address of the exchange
+    /// @param transaction ABI encoded transaction
+    function operateOnExchange2(
+        address _exchange,
+        Transaction memory transaction)
+        public
+        onlyOwner()
+        whenApprovedExchangeOrWrapper(_exchange)
+        returns (bool success)
+    {
+        address adapter = getExchangeAdapter(_exchange);
+        // commented for debugging
+        require(
+            methodAllowedOnExchange(
+                findMethod(transaction.assembledData),
+                adapter
+            )
+        );
+        
+        bytes memory response;
+        bool failed = true;
+        bytes memory transactionData = transaction.assembledData;
+
+        assembly {
+
+            let succeeded := delegatecall(
+                sub(gas, 5000),
+                adapter,
+                add(transactionData, 0x20),
+                mload(transactionData),
+                0,
+                32)
+            
+            // load delegatecall output
+            response := mload(0)
+            failed := iszero(succeeded)
+
+            switch failed
+            case 1 {
+                // throw if delegatecall failed
+                revert(0, 0)
+            }
+        }
+        
+        require(!failed); // this is already verified in assembly
+        return (success = true);
+    }
+
+    /// @dev Allows owner or approved exchange to send a transaction to exchange
     /// @dev With data of signed/unsigned transaction
     /// @param _exchange Address of the exchange
-    /// @param _assembledTransactions Array of ABI encoded transactions
+    /// @param transactions Array of ABI encoded transactions
     function batchOperateOnExchange(
         address _exchange,
-        bytes[] _assembledTransactions)
-        external
+        Transaction[] memory transactions)
+        public
         onlyOwner()
         whenApprovedExchangeOrWrapper(_exchange)
     {
-        for (uint256 i = 0; i < _assembledTransactions.length; i++) {
-            if (!operateOnExchangeInternal(_exchange, _assembledTransactions[i])) continue;
+        for (uint256 i = 0; i < transactions.length; i++) {
+            if (!operateOnExchange2(_exchange, transactions[i])) continue;
         }
     }
 */
-
-    function enforceKyc(
-        bool _enforced,
-        address _kycProvider)
-        external
-        onlyOwner
-    {
-        admin.kycEnforced = _enforced;
-        admin.kycProvider = _kycProvider;
-    }
 
     // PUBLIC CONSTANT FUNCTIONS
 
@@ -477,6 +568,16 @@ contract Drago is Owned, SafeMath, DragoFace {
         isValid = SigVerifier(getSigVerifier())
             .isValidSignature(hash, signature);
         return isValid;
+    }
+
+    /// @dev Finds the exchanges authority.
+    /// @return Address of the exchanges authority.
+    function getExchangesAuth()
+        external
+        view
+        returns (address)
+    {
+        return getExchangesAuthority();
     }
 
     /// @dev Returns the version of the type of vault
@@ -677,29 +778,78 @@ contract Drago is Owned, SafeMath, DragoFace {
     /// @dev Verifies that a signature is valid.
     /// @param sellPrice Price in wei
     /// @param buyPrice Price in wei
+    /// @param signaturevaliduntilBlock Number of blocks till price expiry
     /// @param hash Message hash that is signed.
     /// @param signedData Proof of nav validity.
-    /// @return Validity of signed nav update.
+    /// @return Bool validity of signed price update.
     function isValidNav(
         uint256 sellPrice,
         uint256 buyPrice,
+        uint256 signaturevaliduntilBlock,
         bytes32 hash,
-        bytes signedData
-    )
-        internal view
+        bytes signedData)
+        internal
+        view
         returns (bool isValid)
     {
-        isValid = NavVerifier(getNavVerifier())
-            .isValidNav(sellPrice, buyPrice, hash, signedData);
+        isValid = NavVerifier(getNavVerifier()).isValidNav(
+            sellPrice,
+            buyPrice,
+            signaturevaliduntilBlock,
+            hash,
+            signedData
+        );
         return isValid;
     }
 
     /// @dev Finds the exchanges authority.
-    /// @return Validity of order signature.
+    /// @return Address of the exchanges authority.
     function getExchangesAuthority()
-        internal view
+        internal
+        view
         returns (address)
     {
         return Authority(admin.authority).getExchangesAuthority();
+    }
+
+    /// @dev Returns the address of the exchange adapter
+    /// @param _exchange Address of the target exchange
+    /// @return Address of the exchange adapter
+    function getExchangeAdapter(address _exchange)
+        public //internal //only for debugging
+        view
+        returns (address)
+    {
+        return ExchangesAuthority(
+            Authority(admin.authority)
+            .getExchangesAuthority())
+            .getExchangeAdapter(_exchange);
+    }
+
+    /// @dev Returns the method of a call
+    /// @param assembledData Bytes of the encoded transaction
+    /// @return Bytes4 function signature
+    function findMethod(bytes assembledData)
+        public //internal
+        pure
+        returns (bytes4 method)
+    {
+        return method = LibFindMethod.findMethod(assembledData);
+    }
+
+    /// @dev Finds if a method is allowed on an exchange
+    /// @param _exchange Address of the target exchange
+    /// @return Bool the method is allowed
+    function methodAllowedOnExchange(
+        bytes4 _method,
+        address _exchange)
+        internal
+        view
+        returns (bool)
+    {
+        return ExchangesAuthority(
+            Authority(admin.authority)
+            .getExchangesAuthority())
+            .isMethodAllowed(_method, _exchange);
     }
 }

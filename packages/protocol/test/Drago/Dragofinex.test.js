@@ -12,9 +12,8 @@ describeContract(contractName, () => {
   let dragoAddress
   let dragoInstance
   let transactionDefault
-  let tokenTransferProxy
-  let GRGtokenAddress
-  let whitelister
+  let ethfinexAddress
+  let ethfinexAdapterAddress
 
   beforeAll(async () => {
     await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
@@ -33,9 +32,9 @@ describeContract(contractName, () => {
       gas: GAS_ESTIMATE,
       gasPrice: 1
     }
-    tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
-    GRGtokenAddress = await baseContracts['RigoToken'].address
-    whitelister = await baseContracts['Authority'].setWhitelister(accounts[0], true)
+    ethfinexAddress = await baseContracts['ExchangeEfx'].address
+    ethfinexAdapterAddress = await baseContracts['ExchangesAuthority'].getExchangeAdapter(ethfinexAddress)
+    await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
   })
 
   describe('operateOnExchange', () => {
@@ -49,19 +48,19 @@ describeContract(contractName, () => {
           value: purchaseAmount
         })
       const balance = await web3.eth.getBalance(dragoAddress)
+
       const tokenAddress = null //Ether has address 0x0
       const tokenWrapper = await baseContracts['WrapperLockEth'].address
-      const tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
       const toBeWrapped = 1e16 // 10 finney
       const time = 1 // 1 hour lockup (the minimum)
-      // only whitelisters can whitelist exchanges
-      await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
+
       await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
       await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
         tokenAddress,
         tokenWrapper,
         true
       )
+      //const isTrue = await baseContracts['AEthfinex'].isApprovedWrapper(tokenWrapper)
       const methodInterface = {
         name: 'wrapToEfx',
         type: 'function',
@@ -84,12 +83,11 @@ describeContract(contractName, () => {
         [tokenAddress, tokenWrapper, toBeWrapped, time]
       )
       const methodSignature = await web3.eth.abi.encodeFunctionSignature(methodInterface)
-      const ethfinexAddress = await baseContracts['ExchangeEfx'].address
-      await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature, ethfinexAddress, true) // byte4(keccak256(method))
-      //const isWhite = await baseContracts['ExchangesAuthority'].isMethodAllowed(methodSignature, ethfinexAddress)
-      //await baseContracts['ExchangesAuthority'].setExchangeAdapter(ethfinexAddress, ) // set the adapter
-      const ethfinexAdapterAddress = await baseContracts['ExchangesAuthority'].getExchangeAdapter(ethfinexAddress)
-      /*await dragoInstance.methods
+      const sigFromData = await dragoInstance.methods.findMethod(assembledTransaction).call()
+      await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature, ethfinexAdapterAddress, true) // byte4(keccak256(method))
+      //const isApprovedMethod = await baseContracts['ExchangesAuthority'].isMethodAllowed(methodSignature, ethfinexAdapterAddress)
+
+      await dragoInstance.methods
         .operateOnExchange(
           ethfinexAddress,
           assembledTransaction
@@ -97,20 +95,28 @@ describeContract(contractName, () => {
         .send({ ...transactionDefault })
       const wethBalance = await baseContracts['WrapperLockEth'].balanceOf(dragoAddress)
       // if a deposit is repeated, weth balance will be equal to the sum of depositAmouns
-      expect(wethBalance.toString()).toEqual(depositAmount.toString())
-      */
+      expect(wethBalance.toString()).toEqual(toBeWrapped.toString())
     })
     it('wraps some GRG tokens to its efx token wrapper', async () => {
       // self-mint the base token first and transfer some of it to drago (drago cannot reject, tokens cannot be claimed back (only eth redemptions))
       const GRGtokensAmount = web3.utils.toWei('101')
       await baseContracts['RigoToken'].transfer(dragoAddress, GRGtokensAmount)
+
       const tokensInDrago = await baseContracts['RigoToken'].balanceOf(dragoAddress)
       expect(GRGtokensAmount).toEqual(tokensInDrago.toString())
+
+      const tokenAddress = await baseContracts['RigoToken'].address
+      const tokenWrapper = await baseContracts['WrapperLock'].address
       const toBeWrapped = web3.utils.toWei('10') // alt 200000
       const time = 1 // minimum duration 1 hour.
-      const GRGwrapperAddress = await baseContracts['WrapperLock'].address
-      await baseContracts['ExchangesAuthority'].whitelistWrapper(GRGwrapperAddress, true)
-      await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(GRGtokenAddress, GRGwrapperAddress, true)
+
+      await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
+      await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
+        tokenAddress,
+        tokenWrapper,
+        true
+      )
+
       const methodInterface = {
         name: 'wrapToEfx',
         type: 'function',
@@ -130,57 +136,30 @@ describeContract(contractName, () => {
       }
       const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
         methodInterface,
-        [GRGtokenAddress, GRGwrapperAddress, toBeWrapped, time]
+        [tokenAddress, tokenWrapper, toBeWrapped, time]
       )
       const methodSignature = await web3.eth.abi.encodeFunctionSignature(methodInterface)
-      const ethfinexAddress = await baseContracts['ExchangeEfx'].address
-      await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature, ethfinexAddress, true) // byte4(keccak256(method))
-      /*await dragoInstance.methods
+      await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature, ethfinexAdapterAddress, true) // byte4(keccak256(method))
+      await dragoInstance.methods
         .operateOnExchange(
           ethfinexAddress,
           assembledTransaction
         ).send({ ...transactionDefault })
-      const wrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(dragoAddress)
-      expect(wrappedTokensAmount.toString()).toEqual(toBeWrapped.toString()) // this test is not true if run together with previous wrap call
-      */
+      const wrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(dragoAddress) //(dragoAddress)
+      expect(wrappedTokensAmount.toString()).toEqual(toBeWrapped.toString())
     })
   })
 
   //rather than implementing in drago.sol, we use operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction)
   //const assembledTransaction = await baseContracts['RigoToken'].approve(tokenTransferProxy, 0).encodeABI()
-  // TODO: must implement separate set allowance (0) function in drago.sol, it's twisted to have token approved as exchange
-  describe.skip('operateOnExchangeDirectly', () => {
-    /*afterAll(async () => {
-      // reset allowance to 0 // need allowance to debugging
-      const tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
-      const GRGtokenAddress = await baseContracts['RigoToken'].address
-      const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
-        {
-          name: 'approve',
-          type: 'function',
-          inputs: [{
-            type: 'address',
-            name: '_spender'
-          },{
-            type: 'uint256',
-            name: '_value'
-          }]
-        }, [tokenTransferProxy, 0]
-      )
-      await dragoInstance.methods
-        .operateOnExchangeDirectly(
-          GRGtokenAddress,
-          assembledTransaction
-        ).send({ ...transactionDefault })
-    })*/
-
+  describe.skip('operateOnExchange2', () => {
     it('does not execute when withdraws the wrapped eth before expiry', async () => {
       // it is expected to fail unless locuup time (1 hour minimum default) is passed
       // make sure some eth was wrapped before
       const wrappedTokensAmount = await baseContracts['WrapperLockEth'].balanceOf(dragoAddress)
       //console.log(wrappedTokensAmount.toString())
       const wrapperAddress = await baseContracts['WrapperLockEth'].address
-      await baseContracts['Authority'].whitelistExchange(wrapperAddress, true)
+      await baseContracts['ExchangesAuthority'].whitelistExchange(wrapperAddress, true)
       const a = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock bytes
       const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
         {

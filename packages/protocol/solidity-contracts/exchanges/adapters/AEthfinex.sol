@@ -19,114 +19,132 @@
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
-import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
-import { ExchangesAuthorityFace as ExchangesAuthority } from "../../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { WrapperLock as TokenWrapper } from "../../utils/tokens/WrapperLock/WrapperLock.sol";
 import { WrapperLockEth as EthWrapper } from "../../utils/tokens/WrapperLockEth/WrapperLockEth.sol";
 import { ERC20Face as Token } from "../../utils/tokens/ERC20/ERC20Face.sol";
+
+import { Drago } from "../../Drago/Drago.sol";
+import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
+import { ExchangesAuthorityFace as ExchangesAuthority } from "../../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 
 /// @title Ethfinex adapter - A helper contract for the Ethfinex exchange.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract AEthfinex {
 
-    string public constant NAME = 'ETHFINEX_ADAPTER';
-
-    Admin admin;
-
-    struct Admin {
-        address authority;
-    }
-
-    modifier whenApprovedWrapper(address _wrapper) {
-        Authority auth = Authority(admin.authority);
-        bool approved = ExchangesAuthority(auth.getExchangesAuthority())
-            .isWhitelistedWrapper(_wrapper);
-        require(approved);
-        _;
-    }
-
-    modifier whenApprovedTokenOnWrapper(address _token, address _wrapper) {
-        if (address(_token) != address(0)) {
-            require(ExchangesAuthority(
-                Authority(admin.authority)
-                .getExchangesAuthority())
-                .canTradeTokenOnExchange(_token, _wrapper));
-        }
-        _;
-    }
-
-    constructor(
-        address _authority)
-        public
-    {
-        admin.authority = _authority;
-    }
-
     /// @dev wraps eth or tokens to the ethfinex wrappers
-    /// @param _token Address of the base token
-    /// @param _wrapper Address of the token wrapper
-    /// @param _token TransferProxy Address of the transfer proxy
-    /// @param _amount Number of tokens
-    /// @param _forTime Number of hours for lockup
+    /// @param token Address of the base token
+    /// @param wrapper Address of the token wrapper
+    /// @param amount Number of tokens
+    /// @param forTime Number of hours for lockup
     function wrapToEfx(
-        address _token,
-        address _wrapper,
-        uint256 _amount,
-        uint256 _forTime)
-        public //internal
-        payable
-        whenApprovedWrapper(_wrapper)
-        whenApprovedTokenOnWrapper(_token, _wrapper)
+        address token,
+        address wrapper,
+        uint256 amount,
+        uint256 forTime)
+        external
     {
-        if (_token == address(0)) {
+        require(
+            Drago(
+                address(this)
+            )
+            .owner() == msg.sender
+        );
+        require(
+            ExchangesAuthority(
+                Drago(
+                    address(this)
+                )
+                .getExchangesAuth()
+            )
+            .isWhitelistedWrapper(wrapper)
+        );
+        require(
+            ExchangesAuthority(
+                Drago(
+                    address(this)
+                )
+                .getExchangesAuth()
+            )
+            .canTradeTokenOnExchange(token, wrapper)
+        );
+
+        if (token == address(0)) {
             require(
-                EthWrapper(_wrapper)
+                EthWrapper(wrapper)
                 .deposit
-                .value(_amount)(_amount, _forTime)
+                .value(amount)(amount, forTime)
             );
         } else {
-            require(setAllowances(_wrapper, _token, 2**256 -1));
+            require(setAllowances(wrapper, token, 2**256 -1));
             require(
-                TokenWrapper(_wrapper)
-                .deposit(_amount, _forTime)
+                TokenWrapper(wrapper)
+                .deposit(amount, forTime)
             );
-            require(setAllowances(_wrapper, _token, 0));
+            require(setAllowances(wrapper, token, 0));
         }
     }
 
     /// @dev unwraps eth or tokens from the ethfinex wrappers
-    /// @param _token Address of the base token
-    /// @param _wrapper Address of the token wrapper
-    /// @param _value Number of tokens to withdraw
-    /// @param _signatureValidUntilBlock Signature for withdrawing before lockup
+    /// @param token Address of the base token
+    /// @param wrapper Address of the token wrapper
+    /// @param value Number of tokens to withdraw
+    /// @param signatureValidUntilBlock Signature for withdrawing before lockup
     function unwrap(
-        address _token,
-        address _wrapper,
-        uint8 _v,
-        bytes32 _r,
-        bytes32 _s,
-        uint _value,
-        uint _signatureValidUntilBlock)
-        internal
-        whenApprovedWrapper(_wrapper)
-        whenApprovedTokenOnWrapper(_token, _wrapper)
+        address token,
+        address wrapper,
+        uint8 v,
+        bytes32 r,
+        bytes32 s,
+        uint value,
+        uint signatureValidUntilBlock)
+        external
     {
-        require(TokenWrapper(_wrapper)
-            .withdraw(_v, _r, _s, _value, _signatureValidUntilBlock));
+        require(
+            Drago(
+                address(this)
+            )
+            .owner() == msg.sender
+        );
+        require(
+            ExchangesAuthority(
+                Drago(
+                    address(this)
+                )
+                .getExchangesAuth()
+            )
+            .isWhitelistedWrapper(wrapper)
+        );
+        require(
+            ExchangesAuthority(
+                Drago(
+                    address(this)
+                )
+                .getExchangesAuth()
+            )
+            .canTradeTokenOnExchange(token, wrapper)
+        );
+
+        require(
+            TokenWrapper(wrapper)
+            .withdraw(v, r, s, value, signatureValidUntilBlock)
+        );
     }
 
+    // INTERNAL FUNCTIONS
+
     /// @dev Allows owner to set an infinite allowance to an approved exchange
-    /// @param _wrapper Address of the proxy to be approved
-    /// @param _token Address of the token to receive allowance for
+    /// @param wrapper Address of the proxy to be approved
+    /// @param token Address of the token to receive allowance for
     function setAllowances(
-        address _wrapper,
-        address _token,
-        uint256 _amount)
+        address wrapper,
+        address token,
+        uint256 amount)
         internal
         returns (bool)
     {
-        require(Token(_token)
-            .approve(_wrapper, _amount));
-        return true;
+        require(
+            Token(token)
+            .approve(wrapper, amount)
+        ); return true;
     }
 }

@@ -26,13 +26,14 @@ contract NavVerifier {
     /// @dev Verifies that a signature is valid.
     /// @param sellPrice Price in wei
     /// @param buyPrice Price in wei
+    /// @param signaturevaliduntilBlock Number of blocks till price expiry
     /// @param hash Message hash that is signed.
-    /// @param signedData Proof of signing.
-    /// @return Validity of order signature.
+    /// @param signedData Proof of nav validity.
     /// @notice mock function which returns true
     function isValidNav(
         uint256 sellPrice,
         uint256 buyPrice,
+        uint256 signaturevaliduntilBlock,
         bytes32 hash,
         bytes signedData)
         external

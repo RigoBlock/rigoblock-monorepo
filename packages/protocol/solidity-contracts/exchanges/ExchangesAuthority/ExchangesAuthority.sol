@@ -308,6 +308,8 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     }
 
     /// @dev Checkes whether a token is allowed on an exchange
+    /// @param _token Address of the token
+    /// @param _exchange Address of the exchange
     /// @return Bool the token is whitelisted on the exchange
     function canTradeTokenOnExchange(address _token, address _exchange)
         external view
@@ -317,6 +319,8 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     }
 
     /// @dev Checkes whether a method is allowed on an exchange
+    /// @param _method Bytes of the function signature
+    /// @param _exchange Address of the exchange
     /// @return Bool the method is allowed
     function isMethodAllowed(bytes4 _method, address _exchange)
         external view

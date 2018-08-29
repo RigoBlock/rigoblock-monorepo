@@ -198,8 +198,7 @@ module.exports = async (baseAccount, network) => {
   const aEthfinex = await deploy(
     baseAccount,
     network,
-    'AEthfinex',
-    [authority.address]
+    'AEthfinex'
   )
   printAddress('AEthfinex', aEthfinex.address)
 
