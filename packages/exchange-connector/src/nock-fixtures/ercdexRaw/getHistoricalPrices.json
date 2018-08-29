@@ -6,26 +6,27 @@
         "body": {
             "networkId": "1",
             "baseTokenAddress": "0xe41d2489571d322189246dafa5ebde1f4699f498",
-            "quoteTokenAddress": "0xc02aa39b223fe8d0a0e5c4f27ead9083c756cc2",
+            "quoteTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
             "startDate": "2018-08-28T10:06:02Z"
         },
-        "status": 500,
-        "response": {
-            "message": "Invalid token pair.",
-            "name": "Error",
-            "status": 500
-        },
+        "status": 200,
+        "response": [
+            "1f8b08000000000000037cd7cb8e1b551006e077f1da69fd55f5d76d9e232b58211811a4814122c022cabba33311e373ba3bed85372d5b9febee1fbfdc5eff7cfee3f6840dd092aa8cf008f1a6dbfdf6f3cbeb5fcfff3ff5b0ae0a9186b4df6f9f7efbf5d3fb33947b8b4ba22cfc7e7b79fdf7fd5b3582e6eaa586badffe797df9fbf7e7db9366e96672bffdf2d3e7e7dbd34d21f501f541eba3c813f084f179fc70fb7a5f997bc8a22c8269ed91a05baecc92244dcd0455c285994237c0acdc53ece1ac0c6e1aa74ebd721e2833b451295ea60d732f5ba08d1637f3b4f4565ba16d057443a2c0ce0754a0699bf8a9d42ea447cb2215b156c211a62d3ba841bc2b454b2c6c86366822306527cb738e68f5a63c75f2cab997ac9997b7a000a988dc31d303d15164615196673624912d2aa374dfebb382ba414f997e99f89d6466665ba2c68f30baaed1ac8c44fa807898cecc6c32d16480dd53758abbe4e6e7498f0b65b685089422aeaebb6022292529e95aba2211ea068d81cca534334493de2edea6732833c84dce439957a1441622a3c2e8c85db327a5b5dbd1e361af3d54d2c9762b94baf60a55b37642e19d220fa84534be07adab681e280bb4a2c66c8c906232166866a14b72144584aed0c3d73e422a9a5bf4a9b4af",
+            "a407cb220dd2bbbc5523dfd2bba41e912e7096ebae3ed3543bcca3ada4e6a9c40a6e639b1ca18a2be881b24093a3028da3e22c76218d86aa7487a6ec067d866b515dccd5426b9e9f864dea147ab5908e94b5489904c77e4ca7eca08e31c7bdcac7cf5d9c3ebf6262aa81dbe9f454bd2cd13d64616a8a541b0ad189b597525bc2471a440cbd300dea5de260b4c45ca1456e63ec9f38afb6d151b238814a5361b08cbe16e84884720ccbcaac11b4092a00dd91d0b76e7b4019898d2779ef8fb82cd00365858a5ab510559458a15109f6d862292dbb298a6a8ad3460c003ea038255e96e6013113a3cba9dda35152d69599f01c1df26def2cbd1ed56d655de6a9355f202122df8be455691e20ab1216e96a54c4ba300f9f9b904d946637339873fb7471d373a35d1a21a5d5a201db5f7339766969124a8aec9a479d6e062134d6e3383a7bec4a8a59784fb9569c67fbea3e3a28d63954de0518d0fb724c57798bf1b7775b1b3c08b86a04109cb6ba48d916e791f4cb41b4932c4c67c5383f46c0e0bb714996e428ca2e8c03701e97e3cc2e3689ce98da1b5b4be6a9f2f23e3a4056a6772449d49857be9feaa1ea18ff2388f2dd588f314a05c1d29eb70fc24f9579a9dc3bd66d2e60a859fc070000ffff",
+            "7c98490edc5008446f643114d33db2cdfdaf11d18bc8e0afbf754b56b581e215650d6e6b49323756855529308b0e8a2a49130cea88723d66a1fa43573cfa08991f534a584c1b37637f4b71b0399989d77474091435c935d7eb6bc68d951fc551e6958db6903940bfe759166e586e192d2f203de596b3e0ad5b5a4222e94dc5c647897c5d3a5bc594d88990899209bca14859455dd55d69d19b80185d1d0e7bef70455a3e2e4799d7c5f351320b5ed1f9078ac41e1e546471872743e9c26171758ae60d1d344c67bbbc06f48f8a91808022b2762acd469e37076b4723ce62159b861efeb34b37865bd4704bd57ae85cf1dbe26925e5650ce929d8414d097d59292827ad7b0798d141aeff83aedccb9d3852cbba31bac2ff67dc92e4391ae6359d7fa58c927399c31441cce095d54854d1eda2bf43c17b411adca91bb6f16dd065d5a34795d7e5f3d1b19c88ca428c3cbd7235a6a53b4b03002031e1b2737d5647392e19b0cef5e4d1d8eff17c2b993253bd7e189ff4cd3ead33cd202e3ee71c51c2ee9ee8d67e915bc7f6278ec6cef7fdb3944c9901b6be6611adc3d1fee9ed97eb8d57fa5da1fcef3f000000ffff",
+            "0300db67a533d2140000"
+        ],
         "rawHeaders": [
             "Date",
-            "Wed, 29 Aug 2018 17:52:15 GMT",
+            "Wed, 29 Aug 2018 18:11:14 GMT",
             "Content-Type",
             "application/json; charset=utf-8",
-            "Content-Length",
-            "61",
+            "Transfer-Encoding",
+            "chunked",
             "Connection",
             "close",
             "Set-Cookie",
-            "__cfduid=dac3cf7c20ff248a4875075efb0a61d0a1535565135; expires=Thu, 29-Aug-19 17:52:15 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "__cfduid=d36ebd19acc4fc5a99c11a45520059c601535566274; expires=Thu, 29-Aug-19 18:11:14 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
             "X-DNS-Prefetch-Control",
             "off",
             "X-Frame-Options",
@@ -53,7 +54,9 @@
             "Server",
             "cloudflare",
             "CF-RAY",
-            "4520ded18d1842f8-MXP"
+            "4520faa029b93d89-MXP",
+            "Content-Encoding",
+            "gzip"
         ]
     }
 ]

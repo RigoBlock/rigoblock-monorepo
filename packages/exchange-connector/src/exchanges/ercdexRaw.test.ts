@@ -59,11 +59,16 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         () =>
           exchange.getHistoricalPrices({
             baseTokenAddress: '0xe41d2489571d322189246dafa5ebde1f4699f498',
-            quoteTokenAddress: '0xc02aa39b223fe8d0a0e5c4f27ead9083c756cc2',
+            quoteTokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
             startDate: '2018-08-28T10:06:02Z'
           })
       )
       expect(result).toMatchSnapshot()
+    })
+    it('Returns an error response if the correct parameters are not passed to the call.', async () => {
+      expect(
+        exchange.getHistoricalPrices()
+      ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
   describe('getAggregatedOrders', () => {
@@ -77,6 +82,11 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
           })
       )
       expect(result).toMatchSnapshot()
+    })
+    it('Returns an error response if the correct parameters are not passed to the call.', async () => {
+      expect(
+        exchange.getAggregatedOrders()
+      ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
   describe('Standard Relayer calls', () => {
