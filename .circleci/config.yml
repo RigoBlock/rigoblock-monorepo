@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-asd-{{ checksum "yarn.lock" }}
       - run:
           name: Install lerna and monorepo dependencies
           command: yarn install --frozen-lockfile
@@ -32,7 +32,7 @@ jobs:
           name: Installing all dependencies
           command: yarn bootstrap
       - save_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-asd-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - packages/dapp/node_modules
@@ -380,37 +380,37 @@ workflows:
       - test-exchange-connector:
           requires:
             - build-exchange-connector
-      - test-unit-dapp:
-          requires:
-            - setup
-      - build-protocol:
-          requires:
-            - test-unit-dapp
-      - test-protocol:
-          requires:
-            - build-protocol
-      - build-api:
-          requires:
-            - build-protocol
-      - build-dapp:
-          requires:
-            - build-api
-      - test-feature-dapp:
-          requires:
-            - build-dapp
-      - deploy-dapp-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
-      - deploy-storybook-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
+      # - test-unit-dapp:
+      #     requires:
+      #       - setup
+      # - build-protocol:
+      #     requires:
+      #       - test-unit-dapp
+      # - test-protocol:
+      #     requires:
+      #       - build-protocol
+      # - build-api:
+      #     requires:
+      #       - build-protocol
+      # - build-dapp:
+      #     requires:
+      #       - build-api
+      # - test-feature-dapp:
+      #     requires:
+      #       - build-dapp
+      # - deploy-dapp-staging:
+      #     requires:
+      #       - test-unit-dapp
+      #       - build-dapp
+      #       - test-feature-dapp
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy-storybook-staging:
+      #     requires:
+      #       - test-unit-dapp
+      #       - build-dapp
+      #       - test-feature-dapp
+      #     filters:
+      #       branches:
+      #         only: master

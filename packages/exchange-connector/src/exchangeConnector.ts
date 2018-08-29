@@ -1,8 +1,7 @@
 import { Ethfinex } from './exchanges/ethfinex'
-import { IExchange } from './exchanges/types'
 import { NETWORKS, TRANSPORTS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
-import ZeroExStandardRelayerRaw from './exchanges/ZeroExStandardRelayerRaw'
+import ZeroExStandardRelayerRaw from './exchanges/zeroExStandardRelayerRaw'
 
 function exchangeConnector(
   exchangeName: supportedExchanges.ZEROEXRELAYER,

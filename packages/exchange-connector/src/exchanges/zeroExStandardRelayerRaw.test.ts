@@ -22,7 +22,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       )
       expect(result).toMatchSnapshot()
     })
-    it('Retrieves a list of available token pairs and the information required to trade them.', async () => {
+    it('Accepts one token as a filter', async () => {
       const result: any = await nockBackPromise(
         'zeroExStandardRelayerGetTokenPairsWithTokenA.json',
         () =>
@@ -32,7 +32,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       )
       expect(result).toMatchSnapshot()
     })
-    it('Retrieves a list of available token pairs and the information required to trade them.', async () => {
+    it('Accepts two tokens as a filter', async () => {
       const result: any = await nockBackPromise(
         'zeroExStandardRelayerGetTokenPairsWithBothTokens.json',
         () =>
