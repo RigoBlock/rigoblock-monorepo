@@ -8,6 +8,9 @@
     "src/**/*.test.ts"
   ],
   "compilerOptions": {
+    "types": [
+      "jest"
+    ],
     "declarationDir": "./",
     "strictFunctionTypes": false,
     "resolveJsonModule": true,

@@ -1,5 +1,7 @@
+import 'jest'
 import { Ethfinex } from './exchanges/ethfinex'
 import { NETWORKS, supportedExchanges } from './constants'
+import { ZeroExStandardRelayerRaw } from './exchanges/zeroExStandardRelayerRaw'
 import exchangeConnector from './exchangeConnector'
 
 describe('Exchange factory class', () => {
@@ -16,7 +18,24 @@ describe('Exchange factory class', () => {
 
   it('throws an error if we try to instance an exchange with an unsupported network', () => {
     expect(() =>
-      exchangeConnector(supportedExchanges.ETHFINEX, NETWORKS.ROPSTEN)
+      exchangeConnector(supportedExchanges.ETHFINEX, {
+        networkId: NETWORKS.ROPSTEN
+      })
+    ).toThrowErrorMatchingSnapshot()
+  })
+
+  it('instantiates the ZeroExStandardRelayerRaw if we pass "0xStandardRelayer" as exchangeName and an api url', () => {
+    const exchange = exchangeConnector(supportedExchanges.ZEROEXRELAYER, {
+      apiUrl: 'https://api.radarrelay.com/0x'
+    })
+    expect(JSON.stringify(exchange.constructor)).toEqual(
+      JSON.stringify(ZeroExStandardRelayerRaw)
+    )
+  })
+
+  it('throws an error if we try to instantiate a 0x relayer without passing the API url', () => {
+    expect(() =>
+      exchangeConnector(supportedExchanges.ZEROEXRELAYER as any)
     ).toThrowErrorMatchingSnapshot()
   })
 })

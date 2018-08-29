@@ -1,10 +1,5 @@
-class StandardRelayerRaw<T = RawOrder[]> {
-  constructor(public STANDARD_API_URL, public transport = 'http') {
-    if (!STANDARD_API_URL) {
-      throw new Error('API url must be specified.')
-    }
-  }
-
+export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
+  constructor(public STANDARD_API_URL, public transport = 'http') {}
   /**
    * Accepts one or two optional token addresses.
    * Setting only tokenA or tokenB returns pairs filtered by that token only
@@ -12,7 +7,7 @@ class StandardRelayerRaw<T = RawOrder[]> {
   public async getTokenPairs(
     tokenA?: string,
     tokenB?: string
-  ): Promise<TokenPair[]> {
+  ): Promise<ZeroExStandardRelayerRaw.TokenPair[]> {
     const url = `${
       this.STANDARD_API_URL
     }/v0/token_pairs?tokenA=${tokenA}&tokenB=${tokenB}`
@@ -29,13 +24,15 @@ class StandardRelayerRaw<T = RawOrder[]> {
     taker?: string, // returns orders where taker is taker address,
     trader?: string, // returns orders where maker or taker is trader address,
     feeRecipient?: string // returns orders where feeRecipient is feeRecipient address
-  ): Promise<RawOrder[]> {
+  ): Promise<ZeroExStandardRelayerRaw.RawOrder[]> {
     const url = `${this.STANDARD_API_URL}/v0/orders`
     console.log(url)
     return fetch(url).then(r => r.json())
   }
 
-  public async getOrder(orderHash: string): Promise<RawOrder> {
+  public async getOrder(
+    orderHash: string
+  ): Promise<ZeroExStandardRelayerRaw.RawOrder> {
     const url = `${this.STANDARD_API_URL}/v0/order/${orderHash}`
     return fetch(url).then(r => r.json())
   }
@@ -43,7 +40,7 @@ class StandardRelayerRaw<T = RawOrder[]> {
   public async getOrderbook(
     baseTokenAddress: string, // address of token designated as the baseToken in the currency pair calculation of price
     quoteTokenAddress: string // address of token designated as the quoteToken in the currency pair calculation of price
-  ): Promise<OrderBook> {
+  ): Promise<ZeroExStandardRelayerRaw.OrderBook> {
     const url = `${
       this.STANDARD_API_URL
     }/v0/orderbook?baseTokenAddress=${baseTokenAddress}&quoteTokenAddress=${quoteTokenAddress}`
@@ -51,48 +48,50 @@ class StandardRelayerRaw<T = RawOrder[]> {
   }
 }
 
-export type TokenPair = {
-  tokenA: {
-    address: string
-    minAmount: string
-    maxAmount: string
-    precision: number
+export namespace ZeroExStandardRelayerRaw {
+  export type TokenPair = {
+    tokenA: {
+      address: string
+      minAmount: string
+      maxAmount: string
+      precision: number
+    }
+    tokenB: {
+      address: string
+      minAmount: string
+      maxAmount: string
+      precision: number
+    }
   }
-  tokenB: {
-    address: string
-    minAmount: string
-    maxAmount: string
-    precision: number
+
+  export type RawOrder = {
+    exchangeContractAddress: string
+    maker: string
+    taker: string
+    makerTokenAddress: string
+    takerTokenAddress: string
+    feeRecipient: string
+    makerTokenAmount: string
+    takerTokenAmount: string
+    makerFee: string
+    takerFee: string
+    expirationUnixTimestampSec: string
+    salt: string
+    ecSignature: {
+      v: number
+      r: string
+      s: string
+    }
+    remainingTakerTokenAmount: string
+    orderHash: string
+    source: string
+    price: string
+  }
+
+  export type OrderBook = {
+    bids: RawOrder[]
+    asks: RawOrder[]
   }
 }
 
-export type RawOrder = {
-  exchangeContractAddress: string
-  maker: string
-  taker: string
-  makerTokenAddress: string
-  takerTokenAddress: string
-  feeRecipient: string
-  makerTokenAmount: string
-  takerTokenAmount: string
-  makerFee: string
-  takerFee: string
-  expirationUnixTimestampSec: string
-  salt: string
-  ecSignature: {
-    v: number
-    r: string
-    s: string
-  }
-  remainingTakerTokenAmount: string
-  orderHash: string
-  source: string
-  price: string
-}
-
-export type OrderBook = {
-  bids: RawOrder[]
-  asks: RawOrder[]
-}
-
-export default StandardRelayerRaw
+export default ZeroExStandardRelayerRaw
