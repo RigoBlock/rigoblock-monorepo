@@ -41,8 +41,8 @@ function exchangeConnector(
 
 export default exchangeConnector
 
-export interface ExchangeOptions {
-  networkId?: string
+interface ExchangeOptions {
+  networkId?: NETWORKS
   transport?: TRANSPORTS
   apiUrl?: string
 }

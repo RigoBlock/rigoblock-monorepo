@@ -10,7 +10,6 @@ export enum supportedExchanges {
   ETHFINEX = 'Ethfinex',
   ERCDEX = 'ERCdEX',
   ZEROEXRELAYER = '0xStandardRelayer'
-
 }
 
 export enum NETWORKS {

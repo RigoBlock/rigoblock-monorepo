@@ -1,3 +1,5 @@
+import { getQueryParameters } from '../utils'
+
 export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   constructor(public STANDARD_API_URL, public transport = 'http') {}
   /**
@@ -5,28 +7,39 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
    * Setting only tokenA or tokenB returns pairs filtered by that token only
    */
   public async getTokenPairs(
-    tokenA?: string,
-    tokenB?: string
+    options: {
+      tokenA?: string
+      tokenB?: string
+    } = {}
   ): Promise<ZeroExStandardRelayerRaw.TokenPair[]> {
-    const url = `${
-      this.STANDARD_API_URL
-    }/v0/token_pairs?tokenA=${tokenA}&tokenB=${tokenB}`
+    if (!Object.keys(options).length) {
+      const url = `${this.STANDARD_API_URL}/v0/token_pairs`
+      return fetch(url).then(r => r.json())
+    }
+    const queryParameters = getQueryParameters(options)
+    const url = `${this.STANDARD_API_URL}/v0/token_pairs${queryParameters}`
     return fetch(url).then(r => r.json())
   }
 
   // !! TODO: Add parameters to query
   public async getOrders(
-    exchangeContractAddress?: string, // returns orders created for this exchange address
-    tokenAddress?: string, // returns orders where makerTokenAddress or takerTokenAddress is token address,
-    makerTokenAddress?: string, // returns orders with specified makerTokenAddress,
-    takerTokenAddress?: string, // returns orders with specified makerTokenAddress,
-    maker?: string, // returns orders where maker is maker address,
-    taker?: string, // returns orders where taker is taker address,
-    trader?: string, // returns orders where maker or taker is trader address,
-    feeRecipient?: string // returns orders where feeRecipient is feeRecipient address
+    options: {
+      exchangeContractAddress?: string // returns orders created for this exchange address
+      tokenAddress?: string // returns orders where makerTokenAddress or takerTokenAddress is token address,
+      makerTokenAddress?: string // returns orders with specified makerTokenAddress,
+      takerTokenAddress?: string // returns orders with specified makerTokenAddress,
+      maker?: string // returns orders where maker is maker address,
+      taker?: string // returns orders where taker is taker address,
+      trader?: string // returns orders where maker or taker is trader address,
+      feeRecipient?: string // returns orders where feeRecipient is feeRecipient address
+    } = {}
   ): Promise<ZeroExStandardRelayerRaw.RawOrder[]> {
-    const url = `${this.STANDARD_API_URL}/v0/orders`
-    console.log(url)
+    if (!Object.keys(options).length) {
+      const url = `${this.STANDARD_API_URL}/v0/orders`
+      return fetch(url).then(r => r.json())
+    }
+    const queryParameters = getQueryParameters(options)
+    const url = `${this.STANDARD_API_URL}/v0/orders${queryParameters}`
     return fetch(url).then(r => r.json())
   }
 
