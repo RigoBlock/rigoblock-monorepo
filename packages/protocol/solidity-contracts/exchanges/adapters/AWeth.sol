@@ -19,6 +19,7 @@
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
+import { Drago } from "../../Drago/Drago.sol";
 import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
 import { ExchangesAuthorityFace as ExchangesAuthority } from "../../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { WETH9 } from "../../utils/tokens/WETH9/WETH9.sol";
@@ -27,46 +28,75 @@ import { WETH9 } from "../../utils/tokens/WETH9/WETH9.sol";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract AWeth {
 
-    string public constant NAME = 'WETH_ADAPTER';
-
-    Admin admin;
-
-    struct Admin {
-        address authority;
-    }
-
-    modifier whenApprovedWrapper(address _wrapper) {
-        Authority auth = Authority(admin.authority);
-        bool approved = ExchangesAuthority(auth.getExchangesAuthority())
-            .isWhitelistedWrapper(_wrapper);
-        require(approved);
-        _;
-    }
-
-    constructor(
-        address _authority)
-        public
-    {
-        admin.authority = _authority;
-    }
-
     /// @dev allows a manager to deposit eth to an approved exchange/wrap eth
-    /// @param _wrapper Address of the target exchange
-    /// @param _amount Value of the Eth in wei
-    function wrapEth(address _wrapper, uint256 _amount)
-        internal
-        whenApprovedWrapper(_wrapper)
+    /// @param wrapper Address of the target exchange
+    /// @param amount Value of the Eth in wei
+    function wrapEth(
+        address wrapper,
+        uint256 amount)
+        external
     {
-        WETH9(_wrapper).deposit.value(_amount);
+        require(
+            Drago(
+                address(this)
+            )
+            .owner() == msg.sender
+        );
+        require(
+            ExchangesAuthority(
+                Drago(
+                    address(this)
+                )
+                .getExchangesAuth()
+            )
+            .isWhitelistedWrapper(wrapper)
+        );
+        require(
+            ExchangesAuthority(
+                Drago(
+                    address(this)
+                )
+                .getExchangesAuth()
+            )
+            .canWrapTokenOnWrapper(address(0), wrapper)
+        );
+
+        WETH9(wrapper).deposit.value(amount)();
     }
 
-    /// @dev allows a manager to withdraw ETH from an approved exchange/unwrap eth
-    /// @param _wrapper Address of the target exchange
-    /// @param _amount Value of the Eth in wei
-    function unwrapEth(address _wrapper, uint256 _amount)
-        internal
-        whenApprovedWrapper(_wrapper)
+    /// @dev allows a manager to withdraw ETH from WETH9
+    /// @param wrapper Address of the weth9 contract
+    /// @param amount Value of the Eth in wei
+    function unwrapEth(
+        address wrapper,
+        uint256 amount)
+        external
     {
-        WETH9(_wrapper).withdraw(_amount);
+        require(
+            Drago(
+                address(this)
+            )
+            .owner() == msg.sender
+        );
+        require(
+            ExchangesAuthority(
+                Drago(
+                    address(this)
+                )
+                .getExchangesAuth()
+            )
+            .isWhitelistedWrapper(wrapper)
+        );
+        require(
+            ExchangesAuthority(
+                Drago(
+                    address(this)
+                )
+                .getExchangesAuth()
+            )
+            .canWrapTokenOnWrapper(address(0), wrapper)
+        );
+
+        WETH9(wrapper).withdraw(amount);
     }
 }

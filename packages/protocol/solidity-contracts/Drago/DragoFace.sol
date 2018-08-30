@@ -29,7 +29,6 @@ interface DragoFace {
     function buyDrago() external payable returns (bool success);
     function buyDragoOnBehalf(address _hodler) external payable returns (bool success);
     function sellDrago(uint256 _amount) external returns (bool success);
-    function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice, bytes32 _hash, bytes _signedData)  external;
     function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice, uint256 _signaturevaliduntilBlock, bytes32 _hash, bytes _signedData) external;
     function changeMinPeriod(uint32 _minPeriod) external;
     function changeRatio(uint256 _ratio) external;
@@ -39,10 +38,7 @@ interface DragoFace {
     function enforceKyc(bool _enforced, address _kycProvider) external;
     function setAllowance(address _tokenTransferProxy, address _token, uint256 _amount) external;
     function SetMultipleAllowances(address _tokenTransferProxy, address[] _tokens, uint256[] _amounts) external;
-
-    // the below functions are implemented as pragma experimental ABIEncoderV2;
-    //function operateOnExchange(address _exchange, Transaction memory transaction) public;
-    //function batchOperateOnExchange(address _exchange, memory transactions) public;
+    function operateOnExchange(address _exchange, bytes _assembledTransaction) external;
 
     // PUBLIC CONSTANT FUNCTIONS
 

@@ -68,7 +68,7 @@ contract AEthfinex {
                 )
                 .getExchangesAuth()
             )
-            .canTradeTokenOnExchange(token, wrapper)
+            .canWrapTokenOnWrapper(token, wrapper)
         );
 
         if (token == address(0)) {
@@ -127,7 +127,7 @@ contract AEthfinex {
                 )
                 .getExchangesAuth()
             )
-            .canTradeTokenOnExchange(token, wrapper)
+            .canWrapTokenOnWrapper(token, wrapper)
         );
 
         require(

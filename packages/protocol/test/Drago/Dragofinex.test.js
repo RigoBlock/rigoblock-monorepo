@@ -56,7 +56,7 @@ describeContract(contractName, () => {
       const isOld = 0 // is a standard ERC20
 
       await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
-      await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
+      await baseContracts['ExchangesAuthority'].whitelistTokenOnWrapper(
         tokenAddress,
         tokenWrapper,
         true
@@ -116,7 +116,7 @@ describeContract(contractName, () => {
       const isOld = 0 // is a standard ERC20 token
 
       await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
-      await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
+      await baseContracts['ExchangesAuthority'].whitelistTokenOnWrapper(
         tokenAddress,
         tokenWrapper,
         true
@@ -170,7 +170,7 @@ describeContract(contractName, () => {
     const isOld = 0 // is a standard ERC20 token
 
     await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
-    await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
+    await baseContracts['ExchangesAuthority'].whitelistTokenOnWrapper(
       tokenAddress,
       tokenWrapper,
       true
@@ -210,7 +210,7 @@ describeContract(contractName, () => {
 
     // double check the drago has a positive balance of wrapped tokens
     const wrappedTokens = await baseContracts['WrapperLock'].balanceOf(dragoAddress)
-    console.log(wrappedTokens.toString())
+    //console.log(wrappedTokens.toString())
 
     // we now may unwrap
     const amountToWithdraw = 123
@@ -254,6 +254,188 @@ describeContract(contractName, () => {
     await dragoInstance.methods
       .operateOnExchange(
         ethfinexAddress,
+        assembledTransaction2
+      ).send({ ...transactionDefault })
+  })
+  it('withdraws some ETH from its ethfinex wrapper', async () => {
+
+    // adds additional ether to the pool to be able to deposit
+    const purchaseAmount = web3.utils.toWei('1.1')
+    const test = await dragoInstance.methods
+      .buyDrago()
+      .send({
+        ...transactionDefault,
+        value: purchaseAmount
+      })
+    const balance = await web3.eth.getBalance(dragoAddress)
+
+    const tokenAddress = null
+    const tokenWrapper = await baseContracts['WrapperLockEth'].address
+    const toBeWrapped = web3.utils.toWei('0.1') // alt 200000
+    const time = 1 // minimum duration 1 hour.
+    const isOld = 0 // is a standard ERC20 token
+
+    await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
+    await baseContracts['ExchangesAuthority'].whitelistTokenOnWrapper(
+      tokenAddress,
+      tokenWrapper,
+      true
+    )
+
+    const methodInterface = {
+      name: 'wrapToEfx',
+      type: 'function',
+      inputs: [{
+        type: 'address',
+        name: 'token'
+      },{
+        type: 'address',
+        name: 'wrapper'
+      },{
+        type: 'uint256',
+        name: 'value'
+      },{
+        type: 'uint256',
+        name: 'forTime'
+      },{
+        type: 'bool',
+        name: 'erc20Old'
+      }]
+    }
+    const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
+      methodInterface,
+      [tokenAddress, tokenWrapper, toBeWrapped, time, isOld]
+    )
+
+    const methodSignature = await web3.eth.abi.encodeFunctionSignature(methodInterface)
+    await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature, ethfinexAdapterAddress, true) // byte4(keccak256(method))
+    await dragoInstance.methods
+      .operateOnExchange(
+        ethfinexAddress,
+        assembledTransaction
+      ).send({ ...transactionDefault })
+
+    // double check the drago has a positive balance of wrapped ether
+    const wrappedTokens = await baseContracts['WrapperLockEth'].balanceOf(dragoAddress)
+
+    // we now may unwrap
+    const amountToWithdraw = web3.utils.toWei('0.05')
+    const v = 1
+    const r = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock bytes32
+    const s = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock bytes32
+    const validUntil = 1
+
+    const methodInterface2 = {
+      name: 'unwrap',
+      type: 'function',
+      inputs: [{
+        type: 'address',
+        name: 'token'
+      },{
+        type: 'address',
+        name: 'wrapper'
+      },{
+        type: 'uint256',
+        name: 'value'
+      },{
+        type: 'uint8',
+        name: 'v'
+      },{
+        type: 'bytes32',
+        name: 'r'
+      },{
+        type: 'bytes32',
+        name: 's'
+      },{
+        type: 'uint256',
+        name: 'signatureValidUntilBlock'
+      }]
+    }
+    const assembledTransaction2 = await web3.eth.abi.encodeFunctionCall(
+      methodInterface2,
+      [tokenAddress, tokenWrapper, amountToWithdraw, v, r, s, validUntil]
+    )
+    const methodSignature2 = await web3.eth.abi.encodeFunctionSignature(methodInterface2)
+    await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature2, ethfinexAdapterAddress, true) // byte4(keccak256(method))
+    await dragoInstance.methods
+      .operateOnExchange(
+        ethfinexAddress,
+        assembledTransaction2
+      ).send({ ...transactionDefault })
+  })
+  it('withdraws some ETH from its token wrapper', async () => {
+    // we might bring this function into new Dragoweth9.test.js
+    // adds additional ether to the pool to be able to deposit
+    const purchaseAmount = web3.utils.toWei('1.1')
+    const test = await dragoInstance.methods
+      .buyDrago()
+      .send({
+        ...transactionDefault,
+        value: purchaseAmount
+      })
+    const balance = await web3.eth.getBalance(dragoAddress)
+
+    const tokenAddress = null
+    const tokenWrapper = await baseContracts['WETH9'].address
+    const toBeWrapped = web3.utils.toWei('0.1') // alt 200000
+
+    await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
+    await baseContracts['ExchangesAuthority'].whitelistTokenOnWrapper(
+      tokenAddress,
+      tokenWrapper,
+      true
+    )
+
+    const methodInterface = {
+      name: 'wrapEth',
+      type: 'function',
+      inputs: [{
+        type: 'address',
+        name: 'wrapper'
+      },{
+        type: 'uint256',
+        name: 'amount'
+      }]
+    }
+    const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
+      methodInterface,
+      [tokenWrapper, toBeWrapped]
+    )
+    const methodSignature = await web3.eth.abi.encodeFunctionSignature(methodInterface)
+    const weth9AdapterAddress = await baseContracts['AWeth'].address
+    await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature, weth9AdapterAddress, true) // byte4(keccak256(method))
+    await dragoInstance.methods
+      .operateOnExchange(
+        tokenWrapper,
+        assembledTransaction
+      ).send({ ...transactionDefault })
+
+    // double check the drago has a positive balance of wrapped ether
+    const wrappedTokens = await baseContracts['WETH9'].balanceOf(dragoAddress)
+
+    // we now may unwrap
+    const amountToWithdraw = web3.utils.toWei('0.05')
+
+    const methodInterface2 = {
+      name: 'unwrapEth',
+      type: 'function',
+      inputs: [{
+        type: 'address',
+        name: 'wrapper'
+      },{
+        type: 'uint256',
+        name: 'amount'
+      }]
+    }
+    const assembledTransaction2 = await web3.eth.abi.encodeFunctionCall(
+      methodInterface2,
+      [tokenWrapper, amountToWithdraw]
+    )
+    const methodSignature2 = await web3.eth.abi.encodeFunctionSignature(methodInterface2)
+    await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature2, weth9AdapterAddress, true) // byte4(keccak256(method))
+    await dragoInstance.methods
+      .operateOnExchange(
+        tokenWrapper,
         assembledTransaction2
       ).send({ ...transactionDefault })
   })

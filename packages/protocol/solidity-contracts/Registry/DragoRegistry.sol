@@ -85,7 +85,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     modifier whenNameSanitized(string _input) {
         require(bytes(_input).length >= 4 && bytes(_input).length <= 50);
         require(LibSanitize.isValidCheck(_input));
-        require(LibSanitize.isLowercase(_input));
         _;
     }
 
