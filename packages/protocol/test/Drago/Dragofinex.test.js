@@ -158,51 +158,108 @@ describeContract(contractName, () => {
     })
   })
 
-  //rather than implementing in drago.sol, we use operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction)
-  //const assembledTransaction = await baseContracts['RigoToken'].approve(tokenTransferProxy, 0).encodeABI()
-  describe.skip('operateOnExchange2', () => {
-    it('does not execute when withdraws the wrapped eth before expiry', async () => {
-      // it is expected to fail unless locuup time (1 hour minimum default) is passed
-      // make sure some eth was wrapped before
-      const wrappedTokensAmount = await baseContracts['WrapperLockEth'].balanceOf(dragoAddress)
-      //console.log(wrappedTokensAmount.toString())
-      const wrapperAddress = await baseContracts['WrapperLockEth'].address
-      await baseContracts['ExchangesAuthority'].whitelistExchange(wrapperAddress, true)
-      const a = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock bytes
-      const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
-        {
-          name: 'withdraw',
-          type: 'function',
-          inputs: [{
-            type: 'uint8',
-            name: 'v'
-          },{
-            type: 'bytes32',
-            name: 'r'
-          },{
-            type: 'bytes32',
-            name: 's'
-          },{
-            type: 'uint256',
-            name: '_value'
-          },{
-            type: 'uint256',
-            name: 'signatureValidUntilBlock'
-          }]
-        }, [0, a, a, 1000, 0]
-      )
-      await dragoInstance.methods
-        .operateOnExchangeDirectly(
-          wrapperAddress,
-          assembledTransaction
-        ).send({ ...transactionDefault })
-      //const unwrappedTokens = await baseContracts['WrapperLockEth'].balanceOf(dragoAddress)
-      //console.log(unwrappedTokens.toString())
-      // the function does not return an error, but fails
-    })
-    it('executes a failing deposit and verifies that allowance is 0 if deposit fails', async () => {
-      // TODO // make sure that if by any change deposit(params) fails, allowance is 0
-      // we have to use the encodeABI api, as the remove allowance function is not implemented in the drago
-    })
+  it('withdraws some GRGs from its token wrapper', async () => {
+    // wrap some tokens first
+    const GRGtokensAmount = web3.utils.toWei('101')
+    await baseContracts['RigoToken'].transfer(dragoAddress, GRGtokensAmount)
+
+    const tokenAddress = await baseContracts['RigoToken'].address
+    const tokenWrapper = await baseContracts['WrapperLock'].address
+    const toBeWrapped = web3.utils.toWei('10') // alt 200000
+    const time = 1 // minimum duration 1 hour.
+    const isOld = 0 // is a standard ERC20 token
+
+    await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
+    await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
+      tokenAddress,
+      tokenWrapper,
+      true
+    )
+
+    const methodInterface = {
+      name: 'wrapToEfx',
+      type: 'function',
+      inputs: [{
+        type: 'address',
+        name: '_token'
+      },{
+        type: 'address',
+        name: '_wrapper'
+      },{
+        type: 'uint256',
+        name: '_value'
+      },{
+        type: 'uint256',
+        name: '_forTime'
+      },{
+        type: 'bool',
+        name: 'erc20Old'
+      }]
+    }
+    const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
+      methodInterface,
+      [tokenAddress, tokenWrapper, toBeWrapped, time, isOld]
+    )
+    const methodSignature = await web3.eth.abi.encodeFunctionSignature(methodInterface)
+    await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature, ethfinexAdapterAddress, true) // byte4(keccak256(method))
+    await dragoInstance.methods
+      .operateOnExchange(
+        ethfinexAddress,
+        assembledTransaction
+      ).send({ ...transactionDefault })
+
+    // double check the drago has a positive balance of wrapped tokens
+    const wrappedTokens = await baseContracts['WrapperLock'].balanceOf(dragoAddress)
+    console.log(wrappedTokens.toString())
+
+    // we now may unwrap
+    const amountToWithdraw = 123
+    const v = 1
+    const r = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock bytes32
+    const s = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock bytes32
+    const validUntil = 1
+
+    const methodInterface2 = {
+      name: 'unwrap',
+      type: 'function',
+      inputs: [{
+        type: 'address',
+        name: 'token'
+      },{
+        type: 'address',
+        name: 'wrapper'
+      },{
+        type: 'uint256',
+        name: 'value'
+      },{
+        type: 'uint8',
+        name: 'v'
+      },{
+        type: 'bytes32',
+        name: 'r'
+      },{
+        type: 'bytes32',
+        name: 's'
+      },{
+        type: 'uint256',
+        name: 'signatureValidUntilBlock'
+      }]
+    }
+    const assembledTransaction2 = await web3.eth.abi.encodeFunctionCall(
+      methodInterface2,
+      [tokenAddress, tokenWrapper, amountToWithdraw, v, r, s, validUntil]
+    )
+    const methodSignature2 = await web3.eth.abi.encodeFunctionSignature(methodInterface2)
+    await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature2, ethfinexAdapterAddress, true) // byte4(keccak256(method))
+    await dragoInstance.methods
+      .operateOnExchange(
+        ethfinexAddress,
+        assembledTransaction2
+      ).send({ ...transactionDefault })
+  })
+  it.skip('does not execute when withdraws the wrapped eth before expiry', async () => {
+  })
+  it.skip('executes a failing deposit and verifies that allowance is 0 if deposit fails', async () => {
+    // TODO // make sure that if by any change deposit(params) fails, allowance is 0
   })
 })

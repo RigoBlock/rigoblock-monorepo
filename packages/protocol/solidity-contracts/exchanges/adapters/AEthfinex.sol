@@ -32,11 +32,12 @@ import { ExchangesAuthorityFace as ExchangesAuthority } from "../../exchanges/Ex
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract AEthfinex {
 
-    /// @dev wraps eth or tokens to the ethfinex wrappers
-    /// @param token Address of the base token
-    /// @param wrapper Address of the token wrapper
-    /// @param amount Number of tokens
-    /// @param forTime Number of hours for lockup
+    /// @dev wraps eth or tokens to the ethfinex wrappers.
+    /// @param token Address of the base token.
+    /// @param wrapper Address of the token wrapper.
+    /// @param amount Number of tokens.
+    /// @param forTime Number of hours for lockup.
+    /// @param erc20Old Bool is an old ERC20.
     function wrapToEfx(
         address token,
         address wrapper,
@@ -86,19 +87,22 @@ contract AEthfinex {
         }
     }
 
-    /// @dev unwraps eth or tokens from the ethfinex wrappers
-    /// @param token Address of the base token
-    /// @param wrapper Address of the token wrapper
-    /// @param value Number of tokens to withdraw
-    /// @param signatureValidUntilBlock Signature for withdrawing before lockup
+    /// @dev unwraps eth or tokens from the ethfinex wrappers.
+    /// @param token Address of the base token.
+    /// @param wrapper Address of the token wrapper.
+    /// @param value Number of tokens to withdraw.
+    /// @param v ECDSA signature parameter v.
+    /// @param r ECDSA signature parameters r.
+    /// @param s ECDSA signature parameters s.
+    /// @param signatureValidUntilBlock Signature for withdrawing before lockup.
     function unwrap(
         address token,
         address wrapper,
+        uint256 value,
         uint8 v,
         bytes32 r,
         bytes32 s,
-        uint value,
-        uint signatureValidUntilBlock)
+        uint256 signatureValidUntilBlock)
         external
     {
         require(
@@ -125,19 +129,18 @@ contract AEthfinex {
             )
             .canTradeTokenOnExchange(token, wrapper)
         );
-       
-       
+
         require(
             TokenWrapper(wrapper)
-            .withdraw(v, r, s, value, signatureValidUntilBlock)
+            .withdraw(value, v, r, s, signatureValidUntilBlock)
         );
     }
 
     // INTERNAL FUNCTIONS
 
-    /// @dev Allows owner to set an infinite allowance to an approved exchange
-    /// @param wrapper Address of the proxy to be approved
-    /// @param token Address of the token to receive allowance for
+    /// @dev Allows owner to set an infinite allowance to an approved exchange.
+    /// @param wrapper Address of the proxy to be approved.
+    /// @param token Address of the token to receive allowance for.
     function setAllowances(
         address wrapper,
         address token,

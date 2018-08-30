@@ -130,7 +130,7 @@ module.exports = async (baseAccount, network) => {
     baseAccount,
     network,
     'WrapperLock',
-    [rigoToken.address, 'Rigo Token', 'GRG', 18, tokenTransferProxyEfx, false]
+    [rigoToken.address, 'Rigo Token Wrapper', 'GRG', 18, tokenTransferProxyEfx, 0]
   )
   printAddress('WrapperLock', wrapperLock.address)
 
