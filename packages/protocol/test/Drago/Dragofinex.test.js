@@ -53,6 +53,7 @@ describeContract(contractName, () => {
       const tokenWrapper = await baseContracts['WrapperLockEth'].address
       const toBeWrapped = 1e16 // 10 finney
       const time = 1 // 1 hour lockup (the minimum)
+      const isOld = 0 // is a standard ERC20
 
       await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
       await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
@@ -66,21 +67,24 @@ describeContract(contractName, () => {
         type: 'function',
         inputs: [{
           type: 'address',
-          name: '_token'
+          name: 'token'
         },{
           type: 'address',
-          name: '_wrapper'
+          name: 'wrapper'
         },{
           type: 'uint256',
-          name: '_value'
+          name: 'value'
         },{
           type: 'uint256',
-          name: '_forTime'
+          name: 'forTime'
+        },{
+          type: 'bool',
+          name: 'erc20Old'
         }]
       }
       const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
         methodInterface,
-        [tokenAddress, tokenWrapper, toBeWrapped, time]
+        [tokenAddress, tokenWrapper, toBeWrapped, time, isOld]
       )
       const methodSignature = await web3.eth.abi.encodeFunctionSignature(methodInterface)
       const sigFromData = await dragoInstance.methods.findMethod(assembledTransaction).call()
@@ -109,6 +113,7 @@ describeContract(contractName, () => {
       const tokenWrapper = await baseContracts['WrapperLock'].address
       const toBeWrapped = web3.utils.toWei('10') // alt 200000
       const time = 1 // minimum duration 1 hour.
+      const isOld = 0 // is a standard ERC20 token
 
       await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
       await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
@@ -132,11 +137,14 @@ describeContract(contractName, () => {
         },{
           type: 'uint256',
           name: '_forTime'
+        },{
+          type: 'bool',
+          name: 'erc20Old'
         }]
       }
       const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
         methodInterface,
-        [tokenAddress, tokenWrapper, toBeWrapped, time]
+        [tokenAddress, tokenWrapper, toBeWrapped, time, isOld]
       )
       const methodSignature = await web3.eth.abi.encodeFunctionSignature(methodInterface)
       await baseContracts['ExchangesAuthority'].whitelistMethod(methodSignature, ethfinexAdapterAddress, true) // byte4(keccak256(method))

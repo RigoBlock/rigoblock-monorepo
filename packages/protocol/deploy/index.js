@@ -154,7 +154,7 @@ module.exports = async (baseAccount, network) => {
   printAddress('WETH9', wETH9.address)
 
   await exchangesAuthority.whitelistWrapper(wETH9.address, true)
-  await exchangesAuthority.whitelistExchange(wETH9.address, true)
+  await exchangesAuthority.whitelistExchange(wETH9.address, true) // this might be removed now
 
   const aWeth = await deploy(
     baseAccount,

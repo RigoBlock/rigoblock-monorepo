@@ -22,6 +22,7 @@ pragma experimental "v0.5.0";
 import { WrapperLock as TokenWrapper } from "../../utils/tokens/WrapperLock/WrapperLock.sol";
 import { WrapperLockEth as EthWrapper } from "../../utils/tokens/WrapperLockEth/WrapperLockEth.sol";
 import { ERC20Face as Token } from "../../utils/tokens/ERC20/ERC20Face.sol";
+import { ERC20Old as TokenOld } from "../../utils/ERC20Old/ERC20Old.sol";
 
 import { Drago } from "../../Drago/Drago.sol";
 import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
@@ -40,7 +41,8 @@ contract AEthfinex {
         address token,
         address wrapper,
         uint256 amount,
-        uint256 forTime)
+        uint256 forTime,
+        bool erc20Old)
         external
     {
         require(
@@ -75,12 +77,12 @@ contract AEthfinex {
                 .value(amount)(amount, forTime)
             );
         } else {
-            require(setAllowances(wrapper, token, 2**256 -1));
+            require(setAllowances(wrapper, token, 2**256 -1, erc20Old));
             require(
                 TokenWrapper(wrapper)
                 .deposit(amount, forTime)
             );
-            require(setAllowances(wrapper, token, 0));
+            require(setAllowances(wrapper, token, 0, erc20Old));
         }
     }
 
@@ -123,7 +125,8 @@ contract AEthfinex {
             )
             .canTradeTokenOnExchange(token, wrapper)
         );
-
+       
+       
         require(
             TokenWrapper(wrapper)
             .withdraw(v, r, s, value, signatureValidUntilBlock)
@@ -138,13 +141,24 @@ contract AEthfinex {
     function setAllowances(
         address wrapper,
         address token,
-        uint256 amount)
+        uint256 amount,
+        bool erc20Old)
         internal
-        returns (bool)
+        returns (bool success)
     {
-        require(
-            Token(token)
-            .approve(wrapper, amount)
-        ); return true;
+        success = false;
+        
+        if (erc20Old) {
+            TokenOld(token)
+            .approve(wrapper, amount);
+
+        } else {
+            require(
+                Token(token)
+                .approve(wrapper, amount)
+            );
+        }
+
+        return (success = true);
     }
 }

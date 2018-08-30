@@ -838,11 +838,11 @@ contract Drago is Owned, SafeMath {
     }
 
     /// @dev Finds if a method is allowed on an exchange
-    /// @param _exchange Address of the target exchange
+    /// @param _adapter Address of the target exchange
     /// @return Bool the method is allowed
     function methodAllowedOnExchange(
         bytes4 _method,
-        address _exchange)
+        address _adapter)
         internal
         view
         returns (bool)
@@ -850,6 +850,6 @@ contract Drago is Owned, SafeMath {
         return ExchangesAuthority(
             Authority(admin.authority)
             .getExchangesAuthority())
-            .isMethodAllowed(_method, _exchange);
+            .isMethodAllowed(_method, _adapter);
     }
 }
