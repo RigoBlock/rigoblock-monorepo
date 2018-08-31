@@ -195,7 +195,7 @@ export class Compiler {
         }
       )
     )
-
+    process.removeAllListeners('uncaughtException')
     if (!_.isUndefined(compiled.errors)) {
       const SOLIDITY_WARNING = 'warning'
       const errors = _.filter(
