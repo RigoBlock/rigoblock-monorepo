@@ -29,21 +29,20 @@ interface DragoFace {
     function buyDrago() external payable returns (bool success);
     function buyDragoOnBehalf(address _hodler) external payable returns (bool success);
     function sellDrago(uint256 _amount) external returns (bool success);
-    function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice)  external;
+    function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice, bytes32 _hash, bytes _signedData)  external;
+    function setPrices(uint256 _newSellPrice, uint256 _newBuyPrice, uint256 _signaturevaliduntilBlock, bytes32 _hash, bytes _signedData) external;
     function changeMinPeriod(uint32 _minPeriod) external;
     function changeRatio(uint256 _ratio) external;
     function setTransactionFee(uint256 _transactionFee) external;
     function changeFeeCollector(address _feeCollector) external;
     function changeDragoDao(address _dragoDao) external;
-    //function depositToExchange(address _exchange, uint256 _amount) external;
-    function wrapToEfx(address _token, address _wrapper, address _tokenTransferProxy, uint256 _amount, uint256 _duration) external;
-    function withdrawFromExchange(address _exchange, uint256 _amount) external;
-    function setInfiniteAllowance(address _tokenTransferProxy, address _token) external;
-    function SetMultipleAllowances(address _tokenTransferProxy, address[] _token) external;
-    function operateOnExchange(address _exchange, bytes _assembledTransaction) external;
-    function operateOnExchangeDirectly(address _exchange, bytes _assembledTransaction) external;
-    function operateOnExchangeThroughAdapter(address _exchange, bytes _assembledTransaction) external;
     function enforceKyc(bool _enforced, address _kycProvider) external;
+    function setAllowance(address _tokenTransferProxy, address _token, uint256 _amount) external;
+    function SetMultipleAllowances(address _tokenTransferProxy, address[] _tokens, uint256[] _amounts) external;
+
+    // the below functions are implemented as pragma experimental ABIEncoderV2;
+    //function operateOnExchange(address _exchange, Transaction memory transaction) public;
+    //function batchOperateOnExchange(address _exchange, memory transactions) public;
 
     // PUBLIC CONSTANT FUNCTIONS
 
@@ -52,7 +51,8 @@ interface DragoFace {
     function getData() external view returns (string name, string symbol, uint256 sellPrice, uint256 buyPrice);
     function calcSharePrice() external view returns (uint256);
     function getAdminData() external view returns (address, address feeCollector, address dragoDao, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
-    function totalSupply() external view returns (uint256);
     function getKycProvider() external view returns (address);
-    function getVersion() external view returns (string);
+    function isValidSignature(bytes32 hash, bytes signature) external view returns (bool isValid);
+    function getVersion() external pure returns (string);
+    function totalSupply() external view returns (uint256);
 }

@@ -30,7 +30,7 @@ contract Authority is Owned, AuthorityFace {
     Type types;
 
     mapping (address => Account) accounts;
-    mapping (address => address) adapter;
+    //mapping (address => address) adapter;
 
     struct List {
         address target;
@@ -44,10 +44,8 @@ contract Authority is Owned, AuthorityFace {
 
     struct Group {
         bool whitelister;
-        bool exchange;
         bool drago;
         bool vault;
-        bool asset;
         bool user;
         bool registry;
         bool factory;
@@ -63,7 +61,8 @@ contract Authority is Owned, AuthorityFace {
     struct BuildingBlocks {
         address dragoEventful;
         address vaultEventful;
-        address exchangeEventful;
+        address navVerifier;
+        address exchangesAuthority;
         address casper;
         mapping (address => bool) initialized;
     }
@@ -73,16 +72,14 @@ contract Authority is Owned, AuthorityFace {
     event SetAuthority (address indexed authority);
     event SetWhitelister (address indexed whitelister);
     event WhitelistedUser(address indexed target, bool approved);
-    event WhitelistedAsset(address indexed asset, bool approved);
-    event WhitelistedExchange(address indexed exchange, bool approved);
     event WhitelistedRegistry(address indexed registry, bool approved);
     event WhitelistedFactory(address indexed factory, bool approved);
     event WhitelistedVault(address indexed vault, bool approved);
     event WhitelistedDrago(address indexed drago, bool isWhitelisted);
     event NewDragoEventful(address indexed dragoEventful);
     event NewVaultEventful(address indexed vaultEventful);
-    event NewExchangeEventful(address indexed exchangeEventful);
-    event NewCasper(address indexed casper);
+    event NewNavVerifier(address indexed navVerifier);
+    event NewExchangesAuthority(address indexed exchangesAuthority);
 
     // MODIFIERS
 
@@ -130,34 +127,6 @@ contract Authority is Owned, AuthorityFace {
         accounts[_target].groups[_isWhitelisted].user = _isWhitelisted;
         types.list.push(List(_target));
         emit WhitelistedUser(_target, _isWhitelisted);
-    }
-
-    /// @dev Allows a whitelister to whitelist an asset
-    /// @param _asset Address of the token
-    /// @param _isWhitelisted Bool whitelisted
-    function whitelistAsset(address _asset, bool _isWhitelisted)
-        external
-        onlyWhitelister
-    {
-        accounts[_asset].account = _asset;
-        accounts[_asset].authorized = _isWhitelisted;
-        accounts[_asset].groups[_isWhitelisted].asset = _isWhitelisted;
-        types.list.push(List(_asset));
-        emit WhitelistedAsset(_asset, _isWhitelisted);
-    }
-
-    /// @dev Allows a whitelister to whitelist an exchange
-    /// @param _exchange Address of the target exchange
-    /// @param _isWhitelisted Bool whitelisted
-    function whitelistExchange(address _exchange, bool _isWhitelisted)
-        external
-        onlyWhitelister
-    {
-        accounts[_exchange].account = _exchange;
-        accounts[_exchange].authorized = _isWhitelisted;
-        accounts[_exchange].groups[_isWhitelisted].exchange = _isWhitelisted;
-        types.list.push(List(_exchange));
-        emit WhitelistedExchange(_exchange, _isWhitelisted);
     }
 
     /// @dev Allows an admin to whitelist a drago
@@ -237,35 +206,24 @@ contract Authority is Owned, AuthorityFace {
         emit NewVaultEventful(blocks.vaultEventful);
     }
 
-    /// @dev Allows the owner to set the exchange eventful
-    /// @param _exchangeEventful Address of the exchange logs contract
-    function setExchangeEventful(address _exchangeEventful)
+    /// @dev Allows the owner to set the nav verifier
+    /// @param _navVerifier Address of the verifier
+    function setNavVerifier(address _navVerifier)
         external
         onlyOwner
     {
-        blocks.exchangeEventful = _exchangeEventful;
-        emit NewExchangeEventful(blocks.exchangeEventful);
+        blocks.navVerifier = _navVerifier;
+        //emit NewNavVerifier(blocks.navVerifier);
     }
 
-    /// @dev Allows the owner to associate an exchange to its adapter
-    /// @param _exchange Address of the exchange
-    /// @param _adapter Address of the adapter
-    function setExchangeAdapter(address _exchange, address _adapter)
+    /// @dev Allows the owner to set the exchanges authority
+    /// @param _exchangesAuthority Address of the exchanges authority
+    function setExchangesAuthority(address _exchangesAuthority)
         external
         onlyOwner
     {
-        adapter[_exchange] = _adapter;
-    }
-
-    /// @dev Allows the owner to set the casper contract
-    /// @param _casper Address of the casper contract
-    function setCasper(address _casper)
-        external
-        onlyOwner
-    {
-        blocks.casper = _casper;
-        blocks.initialized[_casper] = true;
-        emit NewCasper(blocks.casper);
+        blocks.exchangesAuthority = _exchangesAuthority;
+        emit NewExchangesAuthority(blocks.exchangesAuthority);
     }
 
     // CONSTANT PUBLIC FUNCTIONS
@@ -288,26 +246,6 @@ contract Authority is Owned, AuthorityFace {
         returns (bool)
     {
         return accounts[_authority].groups[true].authority;
-    }
-
-    /// @dev Provides whether an asset is whitelisted
-    /// @param _asset Address of the target asset
-    /// @return Bool is whitelisted
-    function isWhitelistedAsset(address _asset)
-        external view
-        returns (bool)
-    {
-        return accounts[_asset].groups[true].asset;
-    }
-
-    /// @dev Provides whether an exchange is whitelisted
-    /// @param _exchange Address of the target exchange
-    /// @return Bool is whitelisted
-    function isWhitelistedExchange(address _exchange)
-        external view
-        returns (bool)
-    {
-        return accounts[_exchange].groups[true].exchange;
     }
 
     /// @dev Provides whether a drago is whitelisted
@@ -368,42 +306,22 @@ contract Authority is Owned, AuthorityFace {
         return blocks.vaultEventful;
     }
 
-    /// @dev Provides the address of the exchange logs contract
-    /// @return Address of the exchange logs contract
-    function getExchangeEventful()
+    /// @dev Provides the address of the nav verifier
+    /// @return Address of the verifier
+    function getNavVerifier()
         external view
         returns (address)
     {
-        return blocks.exchangeEventful;
+        return blocks.navVerifier;
     }
 
-    /// @dev Provides the address of the exchange adapter
-    /// @param _exchange Address of the exchange
+    /// @dev Provides the address of the exchangee authority
     /// @return Address of the adapter
-    function getExchangeAdapter(address _exchange)
+    function getExchangesAuthority()
         external view
         returns (address)
     {
-        return adapter[_exchange];
-    }
-
-    /// @dev Checkes whether casper has been inizialized
-    /// @return Bool the casper contract has been initialized
-    function isCasperInitialized()
-        external view
-        returns (bool)
-    {
-        address casper = blocks.casper;
-        return blocks.initialized[casper];
-    }
-
-    /// @dev Provides the address of the casper contract
-    /// @return Address of the casper contract
-    function getCasper()
-        external view
-        returns (address)
-    {
-        return blocks.casper;
+        return blocks.exchangesAuthority;
     }
 
     /// @dev Provides an array of addresses for a group

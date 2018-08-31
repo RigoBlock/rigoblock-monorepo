@@ -20,6 +20,7 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
+import { ExchangesAuthorityFace as DexAuth } from "../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { DragoEventfulFace } from "./DragoEventfulFace.sol";
 
 /// @title Drago Eventful contract.
@@ -170,7 +171,9 @@ contract DragoEventful is DragoEventfulFace {
 
     modifier approvedExchangeOnly(address _exchange) {
         Authority auth = Authority(AUTHORITY);
-        require(auth.isWhitelistedExchange(_exchange));
+        require(
+            DexAuth(auth.getExchangesAuthority())
+                .isWhitelistedExchange(_exchange));
         _;
     }
 
@@ -182,7 +185,9 @@ contract DragoEventful is DragoEventfulFace {
 
     modifier approvedAsset(address _asset) {
         Authority auth = Authority(AUTHORITY);
-        require(auth.isWhitelistedAsset(_asset));
+        require(
+            DexAuth(auth.getExchangesAuthority())
+                .isWhitelistedAsset(_asset));
         _;
     }
 
