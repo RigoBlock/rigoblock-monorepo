@@ -29,7 +29,12 @@ const compile = async (contracts, networkUrl) => {
 }
 
 const compilePromise = NETWORKS.reduce(
-  (acc, network) => acc.then(() => compile(CONTRACT_NAMES, network)),
+  (acc, network) =>
+    acc
+      .then(() => compile(CONTRACT_NAMES, network))
+      // removing all listeners until solc json fix is released.
+      // memory leak is causing circleCI to crash.
+      .then(() => process.removeAllListeners('uncaughtException')),
   Promise.resolve()
 )
 

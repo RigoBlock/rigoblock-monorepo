@@ -374,43 +374,46 @@ workflows:
   rigoblock:
     jobs:
       - setup
-      - build-exchange-connector:
-          requires:
-            - setup
-      - test-exchange-connector:
-          requires:
-            - build-exchange-connector
-      - test-unit-dapp:
-          requires:
-            - setup
+      # - build-exchange-connector:
+      #     requires:
+      #       - setup
+      # - test-exchange-connector:
+      #     requires:
+      #       - build-exchange-connector
+      # - test-unit-dapp:
+      #     requires:
+      #       - setup
+      # - build-protocol:
+      #     requires:
+      #       - test-unit-dapp
       - build-protocol:
           requires:
-            - test-unit-dapp
+            - setup
       - test-protocol:
           requires:
             - build-protocol
-      - build-api:
-          requires:
-            - build-protocol
-      - build-dapp:
-          requires:
-            - build-api
-      - test-feature-dapp:
-          requires:
-            - build-dapp
-      - deploy-dapp-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
-      - deploy-storybook-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
+      # - build-api:
+      #     requires:
+      #       - build-protocol
+      # - build-dapp:
+      #     requires:
+      #       - build-api
+      # - test-feature-dapp:
+      #     requires:
+      #       - build-dapp
+      # - deploy-dapp-staging:
+      #     requires:
+      #       - test-unit-dapp
+      #       - build-dapp
+      #       - test-feature-dapp
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy-storybook-staging:
+      #     requires:
+      #       - test-unit-dapp
+      #       - build-dapp
+      #       - test-feature-dapp
+      #     filters:
+      #       branches:
+      #         only: master
