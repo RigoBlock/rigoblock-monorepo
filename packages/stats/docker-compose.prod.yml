@@ -45,7 +45,7 @@ services:
     links:
       - redis
     volumes:
-      - ./arena.prod.conf:/opt/arena/src/server/config/index.json:ro
+      - ./arena.prod.conf.json:/opt/arena/src/server/config/index.json:ro
 
   bull:
     container_name: bull
