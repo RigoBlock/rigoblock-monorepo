@@ -394,7 +394,6 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
 
         return (success = true);
     }
-*/
 
     // PUBLIC CONSTANT FUNCTIONS
 

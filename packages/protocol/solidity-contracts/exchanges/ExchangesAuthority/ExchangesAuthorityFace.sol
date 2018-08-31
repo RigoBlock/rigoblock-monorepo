@@ -176,29 +176,21 @@ interface ExchangesAuthorityFace {
         returns (address);
 
     /// @dev Checkes whether a token is allowed on an exchange
-<<<<<<< HEAD
     /// @param _token Address of the token
     /// @param _exchange Address of the exchange
-=======
->>>>>>> master
     /// @return Bool the token is whitelisted on the exchange
     function canTradeTokenOnExchange(address _token, address _exchange)
         external view
         returns (bool);
 
-<<<<<<< HEAD
     /// @dev Checkes whether a token is allowed on a wrapper
     /// @param _token Address of the token
-    /// @param _wrapper Address of the token wrapper
     /// @return Bool the token is whitelisted on the exchange
     function canWrapTokenOnWrapper(address _token, address _wrapper)
         external view
         returns (bool);
 
-=======
->>>>>>> master
     /// @dev Checkes whether a method is allowed on an exchange
-    /// @return Bool the method is allowed
     function isMethodAllowed(bytes4 _method, address _exchange)
         external view
         returns (bool);

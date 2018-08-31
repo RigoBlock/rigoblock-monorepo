@@ -183,11 +183,7 @@ contract WrapperLockEth is BasicToken, Ownable {
     using SafeMath for uint256;
 
     address public TRANSFER_PROXY;
-<<<<<<< HEAD
     mapping (address => bool) public isSigner;
-=======
-    mapping (address => bool) private isSigner;
->>>>>>> master
 
     string public name;
     string public symbol;
