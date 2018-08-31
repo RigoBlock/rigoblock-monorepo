@@ -49,4 +49,4 @@ bull:
   build: .
   container_name: bull
   environment:
-    REDIS_HOST: dev-04.endpoint.networ
+    REDIS_HOST: dev-04.endpoint.network
