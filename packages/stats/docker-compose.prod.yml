@@ -20,7 +20,7 @@ services:
     links:
       - influxdb
     volumes:
-      - ./packages/stats/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   chronograf:
     image: chronograf:latest
@@ -45,7 +45,7 @@ services:
     links:
       - redis
     volumes:
-      - ./packages/stats/arena.prod.conf:/opt/arena/src/server/config/index.json:ro
+      - ./arena.prod.conf:/opt/arena/src/server/config/index.json:ro
 
   bull:
     container_name: bull

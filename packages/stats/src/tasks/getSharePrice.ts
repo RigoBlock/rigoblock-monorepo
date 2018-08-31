@@ -1,7 +1,7 @@
+import Web3 = require('web3')
+import { NETWORKS } from '../constants'
 import protocol from '@rigoblock/protocol'
 import redis from '../redis'
-import { NETWORKS } from '../constants'
-import Web3 from 'web3'
 import statsD from '../statsd'
 import web3ErrorWrapper from './web3ErrorWrapper'
 

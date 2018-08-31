@@ -1,5 +1,5 @@
+import Web3 = require('web3')
 import redis from '../redis'
-import Web3 from 'web3'
 import statsD from '../statsd'
 import web3ErrorWrapper from './web3ErrorWrapper'
 

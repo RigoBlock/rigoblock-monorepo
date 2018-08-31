@@ -1,8 +1,8 @@
+import Web3 = require('web3')
+import { NETWORKS } from '../constants'
 import protocol from '@rigoblock/protocol'
 import redis from '../redis'
 import statsD from '../statsd'
-import Web3 from 'web3'
-import { NETWORKS } from '../constants'
 import web3ErrorWrapper from './web3ErrorWrapper'
 
 const task = async (job, web3: Web3) => {
