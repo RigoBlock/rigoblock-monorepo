@@ -25,6 +25,12 @@ services:
   chronograf:
     image: chronograf:latest
     container_name: chronograf
+    environment:
+      AUTH_DURATION: ${AUTH_DURATION}
+      TOKEN_SECRET: ${TOKEN_SECRET}
+      GH_CLIENT_ID: ${GH_CLIENT_ID}
+      GH_CLIENT_SECRET: ${GH_CLIENT_SECRET}
+      GH_ORGS: ${GH_ORGS}
     ports:
       - "8888:8888"
     links:
