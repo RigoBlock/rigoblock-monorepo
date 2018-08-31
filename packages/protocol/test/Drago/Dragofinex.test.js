@@ -48,10 +48,8 @@ describeContract(contractName, () => {
       const tokenAddress = null //Ether has address 0x0
       const tokenWrapper = await baseContracts['WrapperLockEth'].address
       const toBeWrapped = 1e16 // 10 finney
-
-      // unused vars
-      // const time = 1 // 1 hour lockup (the minimum)
-      // const isOld = 0 // is a standard ERC20
+      const time = 1 // 1 hour lockup (the minimum)
+      const isOld = 0 // is a standard ERC20
 
       await baseContracts['ExchangesAuthority'].whitelistWrapper(
         tokenWrapper,
@@ -76,6 +74,7 @@ describeContract(contractName, () => {
             name: 'wrapper'
           },
           {
+            type: 'uint256',
             name: 'value'
           },
           {
@@ -88,6 +87,10 @@ describeContract(contractName, () => {
           }
         ]
       }
+      const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
+        methodInterface,
+        [tokenAddress, tokenWrapper, toBeWrapped, time, isOld]
+      )
       const methodSignature = await web3.eth.abi.encodeFunctionSignature(
         methodInterface
       )
