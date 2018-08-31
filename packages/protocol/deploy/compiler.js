@@ -24,15 +24,16 @@ const compile = async (contracts, networkUrl) => {
 
   const compiler = new Compiler(compilerOpts)
 
-  logger.info(c.bold(`Compiling ${JSON.stringify(contracts)}...`))
   return compiler.compileAsync()
 }
 
-const compilePromises = NETWORKS.map(network => {
-  return compile(CONTRACT_NAMES, network)
-})
+logger.info(c.bold(`Compiling ${JSON.stringify(CONTRACT_NAMES)}...`))
+const compilePromise = NETWORKS.reduce(
+  (acc, network) => acc.then(() => compile(CONTRACT_NAMES, network)),
+  Promise.resolve()
+)
 
-Promise.all(compilePromises).catch(e => {
+compilePromise.catch(e => {
   logger.error(c.red(`Error during compilation: ${e.stack}`))
   process.exit(1)
 })

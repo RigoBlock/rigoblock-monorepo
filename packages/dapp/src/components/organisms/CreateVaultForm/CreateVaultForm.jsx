@@ -1,6 +1,7 @@
 import './CreateVaultForm.scss'
 import { METAMASK } from '../../../constants/user'
 import { connect } from 'react-redux'
+import { parseFormValues } from '../../../constants/utils'
 import { reduxForm } from 'redux-form'
 import Button, { BUTTON_TYPES } from '../../atoms/Button'
 import CallToAction from '../../molecules/CallToAction'
@@ -28,16 +29,17 @@ const hideAccount = (accNumber, provider) => {
 }
 
 const validate = values => {
+  const parsedValues = parseFormValues(values)
   const errors = {}
-  if (!values.vaultSymbol) {
+  if (!parsedValues.vaultSymbol) {
     errors.vaultSymbol = 'Field is required.'
   }
 
-  if (!values.vaultName) {
+  if (!parsedValues.vaultName) {
     errors.vaultName = 'Field is required.'
   }
 
-  if (values.vaultSymbol && values.vaultSymbol.length !== 3) {
+  if (parsedValues.vaultSymbol && parsedValues.vaultSymbol.length !== 3) {
     errors.vaultSymbol = 'Vault symbol must be 3 letters.'
   }
 
@@ -45,13 +47,14 @@ const validate = values => {
 }
 
 const asyncValidate = async values => {
+  const parsedValues = parseFormValues(values)
   const vaultExistError = { vaultName: 'Vault already exists.' }
   const registry = await api.contract.DragoRegistry.createAndValidate(
     api.web3._web3,
     api.contract.DragoRegistry.address
   )
   try {
-    const res = await registry.fromName(values.vaultName)
+    const res = await registry.fromName(parsedValues.vaultName.toLowerCase())
     if (res) {
       throw vaultExistError
     }

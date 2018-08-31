@@ -113,10 +113,10 @@ export class Compiler {
     ).toString('hex')}`
 
     let shouldCompile = false
-    if (_.isUndefined(currentArtifactIfExists)) {
+    const currentArtifact = currentArtifactIfExists as ContractArtifact
+    if (_.isUndefined(currentArtifactIfExists) || !currentArtifact.networks[this._networkId]) {
       shouldCompile = true
     } else {
-      const currentArtifact = currentArtifactIfExists as ContractArtifact
       shouldCompile =
         currentArtifact.networks[this._networkId].optimizer_enabled !==
           this._optimizerEnabled ||
@@ -195,7 +195,7 @@ export class Compiler {
         }
       )
     )
-
+    process.removeAllListeners('uncaughtException')
     if (!_.isUndefined(compiled.errors)) {
       const SOLIDITY_WARNING = 'warning'
       const errors = _.filter(

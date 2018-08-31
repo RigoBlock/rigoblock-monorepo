@@ -108,30 +108,28 @@ module.exports = async (baseAccount, network) => {
   await authority.setExchangesAuthority(exchangesAuthority.address)
   await exchangesAuthority.setWhitelister(baseAccount, true)
 
-  const exchangeEfx = await deploy(
-    baseAccount,
-    network,
-    'ExchangeEfx'
-  )
+  const exchangeEfx = await deploy(baseAccount, network, 'ExchangeEfx')
   printAddress('ExchangeEfx', exchangeEfx.address)
 
   await exchangesAuthority.whitelistExchange(exchangeEfx.address, true)
   const tokenTransferProxyEfx = await exchangeEfx.TOKEN_TRANSFER_PROXY_CONTRACT()
 
-  const wrapperLockEth = await deploy(
-    baseAccount,
-    network,
-    'WrapperLockEth',
-    ['ETHWrapper', 'ETHW', 18, tokenTransferProxyEfx]
-  )
+  const wrapperLockEth = await deploy(baseAccount, network, 'WrapperLockEth', [
+    'ETHWrapper',
+    'ETHW',
+    18,
+    tokenTransferProxyEfx
+  ])
   printAddress('WrapperLockEth', wrapperLockEth.address)
 
-  const wrapperLock = await deploy(
-    baseAccount,
-    network,
-    'WrapperLock',
-    [rigoToken.address, 'Rigo Token Wrapper', 'GRG', 18, tokenTransferProxyEfx, 0]
-  )
+  const wrapperLock = await deploy(baseAccount, network, 'WrapperLock', [
+    rigoToken.address,
+    'Rigo Token Wrapper',
+    'GRG',
+    18,
+    tokenTransferProxyEfx,
+    0
+  ])
   printAddress('WrapperLock', wrapperLock.address)
 
   const tokenTransferProxy = await deploy(
@@ -146,58 +144,36 @@ module.exports = async (baseAccount, network) => {
     true
   )
 
-  const wETH9 = await deploy(
-    baseAccount,
-    network,
-    'WETH9'
-  )
+  const wETH9 = await deploy(baseAccount, network, 'WETH9')
   printAddress('WETH9', wETH9.address)
 
   await exchangesAuthority.whitelistWrapper(wETH9.address, true)
 
-  const aWeth = await deploy(
-    baseAccount,
-    network,
-    'AWeth'
-  )
+  const aWeth = await deploy(baseAccount, network, 'AWeth')
   printAddress('AWeth', aWeth.address)
 
   await exchangesAuthority.setExchangeAdapter(wETH9.address, aWeth.address)
 
-  const exchangeV1Fork = await deploy(
-    baseAccount,
-    network,
-    'ExchangeV1Fork',
-    [rigoToken.address, tokenTransferProxy.address]
-  )
+  const exchangeV1Fork = await deploy(baseAccount, network, 'ExchangeV1Fork', [
+    rigoToken.address,
+    tokenTransferProxy.address
+  ])
   printAddress('ExchangeV1Fork', exchangeV1Fork.address)
 
   await tokenTransferProxy.addAuthorizedAddress(exchangeV1Fork.address)
   await exchangesAuthority.whitelistExchange(exchangeV1Fork.address, true)
 
-  const navVerifier = await deploy(
-    baseAccount,
-    network,
-    'NavVerifier'
-  )
+  const navVerifier = await deploy(baseAccount, network, 'NavVerifier')
   printAddress('NavVerifier', navVerifier.address)
 
   await authority.setNavVerifier(navVerifier.address)
 
-  const sigVerifier = await deploy(
-    baseAccount,
-    network,
-    'SigVerifier'
-  )
+  const sigVerifier = await deploy(baseAccount, network, 'SigVerifier')
   printAddress('SigVerifier', sigVerifier.address)
 
   await exchangesAuthority.setSignatureVerifier(sigVerifier.address)
 
-  const aEthfinex = await deploy(
-    baseAccount,
-    network,
-    'AEthfinex'
-  )
+  const aEthfinex = await deploy(baseAccount, network, 'AEthfinex')
   printAddress('AEthfinex', aEthfinex.address)
 
   await exchangesAuthority.setExchangeAdapter(

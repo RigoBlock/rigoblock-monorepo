@@ -26,21 +26,23 @@ describe('CreateVaultForm component', () => {
     vaultSymbol: 'VLT'
   }
 
-  const store = mockStore({
-    mockFn: jest.fn,
-    optionalState: {
-      form: {
-        createVault: {
-          values: vaultData,
-          initial: vaultData
-        }
-      }
-    }
-  })
+  let store
 
   beforeEach(() => {
     jest.resetModules()
     jest.doMock('../../../api', () => apiMock)
+
+    store = mockStore({
+      mockFn: jest.fn,
+      optionalState: {
+        form: {
+          createVault: {
+            values: vaultData,
+            initial: vaultData
+          }
+        }
+      }
+    })
 
     CreateVaultForm = require('./CreateVaultForm').default
   })
@@ -76,5 +78,73 @@ describe('CreateVaultForm component', () => {
     const button = wrapper.find('div.call-to-action button').at(0)
     button.simulate('click')
     expect(store.dispatch).toHaveBeenCalledWith(globalActions.closeModal())
+  })
+
+  describe('with a real store', () => {
+    const createStore = require('redux').createStore
+    const defaultState = require('../../../fixtures/store').defaultState
+    const rootReducer = require('../../../reducers').default
+    let wrapper
+
+    beforeEach(() => {
+      store = createStore(rootReducer, defaultState)
+      wrapper = mount(
+        <Provider store={store}>
+          <CreateVaultForm />
+        </Provider>
+      )
+    })
+
+    it('allows you to modify vault name', () => {
+      const input = wrapper.find('input[id="1"]')
+      input.simulate('change', { target: { value: 'Changed' } })
+      expect(input.instance().value).toEqual('Changed')
+    })
+
+    it('allows you to modify vault symbol', () => {
+      const input = wrapper.find('input[id="2"]')
+      input.simulate('change', { target: { value: 'Changed' } })
+      expect(input.instance().value).toEqual('Changed')
+    })
+
+    it('prevents you to add non-alphanumeric characters to vault name', () => {
+      const input = wrapper.find('input[id="1"]')
+      input.simulate('change', { target: { value: 'valid name' } })
+      expect(input.instance().value).toEqual('valid name')
+      input.simulate('change', { target: { value: 'valid name!@£$%' } })
+      expect(input.instance().value).toEqual('valid name')
+    })
+
+    it('prevents you to add non-alphanumeric characters to vault symbol', () => {
+      const input = wrapper.find('input[id="2"]')
+      input.simulate('change', { target: { value: 'SYM' } })
+      expect(input.instance().value).toEqual('SYM')
+      input.simulate('change', { target: { value: 'SYM!@£$%' } })
+      expect(input.instance().value).toEqual('SYM')
+    })
+
+    it('prevents you to submit an empty vault name', () => {
+      const input = wrapper.find('input[id="1"]')
+      input.simulate('change', { target: { value: '' } })
+      expect(input.instance().value).toEqual('')
+
+      const form = wrapper.find('form')
+      form.simulate('submit')
+
+      const errorMessage = wrapper.find('.md-text-field-message').at(0)
+      expect(errorMessage).toMatchSnapshot()
+    })
+
+    it('prevents you to submit an invalid vault symbol', () => {
+      const input = wrapper.find('input[id="2"]')
+      input.simulate('change', { target: { value: 'Changed' } })
+      expect(input.instance().value).toEqual('Changed')
+
+      const form = wrapper.find('form')
+      form.simulate('submit')
+
+      const errorMessage = wrapper.find('.md-text-field-message').at(1)
+      expect(errorMessage).toMatchSnapshot()
+    })
   })
 })

@@ -150,7 +150,7 @@ contract AEthfinex {
         returns (bool success)
     {
         success = false;
-        
+
         if (erc20Old) {
             TokenOld(token)
             .approve(wrapper, amount);

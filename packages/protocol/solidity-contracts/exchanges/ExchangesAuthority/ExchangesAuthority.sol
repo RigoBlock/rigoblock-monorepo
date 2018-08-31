@@ -177,7 +177,8 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     /// @param _asset Address of the token
     /// @param _exchange Address of the exchange
     /// @param _isWhitelisted Bool whitelisted
-    function whitelistAssetOnExchange(address _asset,
+    function whitelistAssetOnExchange(
+        address _asset,
         address _exchange,
         bool _isWhitelisted)
         external
@@ -186,7 +187,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         blocks.allowedTokens[_exchange][_asset] = _isWhitelisted;
         emit WhitelistedAsset(_asset, _isWhitelisted);
     }
-    
+
     /// @dev Allows a whitelister to enable assiciate wrappers to a token
     /// @param _token Address of the token
     /// @param _wrapper Address of the exchange
