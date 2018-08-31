@@ -314,7 +314,7 @@ contract Drago is Owned, SafeMath {
     {
         data.minPeriod = _minPeriod;
     }
-    
+
     function enforceKyc(
         bool _enforced,
         address _kycProvider)
@@ -364,7 +364,7 @@ contract Drago is Owned, SafeMath {
         returns (bool success)
     {
         address adapter = getExchangeAdapter(_exchange);
-         bytes memory transactionData = _assembledTransaction;
+        bytes memory transactionData = _assembledTransaction;
         // commented for debugging
         require(
             methodAllowedOnExchange(
@@ -385,7 +385,7 @@ contract Drago is Owned, SafeMath {
                 mload(transactionData),
                 0,
                 32) // 0x0
-            
+
             // load delegatecall output
             response := mload(0)
             failed := iszero(succeeded)
@@ -420,7 +420,7 @@ contract Drago is Owned, SafeMath {
                 adapter
             )
         );
-        
+
         bytes memory response;
         bool failed = true;
         bytes memory transactionData = transaction.assembledData;
@@ -434,7 +434,7 @@ contract Drago is Owned, SafeMath {
                 mload(transactionData),
                 0,
                 32)
-            
+
             // load delegatecall output
             response := mload(0)
             failed := iszero(succeeded)
@@ -445,7 +445,7 @@ contract Drago is Owned, SafeMath {
                 revert(0, 0)
             }
         }
-        
+
         require(!failed); // this is already verified in assembly
         return (success = true);
     }

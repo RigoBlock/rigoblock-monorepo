@@ -23,6 +23,6 @@ exports[`TextField component renders correctly 1`] = `
   rightIconStateful={true}
   size={10}
   type="text"
-  value="I don't work"
+  value="I dont work"
 />
 `;
