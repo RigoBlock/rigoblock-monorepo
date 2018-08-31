@@ -222,19 +222,18 @@ contract WrapperLockEth is BasicToken, Ownable {
         (bool)
     {
         require(balanceOf(msg.sender) >= _value);
-        //if (now > depositLock[msg.sender]) {
+        if (now > depositLock[msg.sender]) {
             balances[msg.sender] = balances[msg.sender].sub(_value);
             totalSupply_ = totalSupply_.sub(msg.value);
             msg.sender.transfer(_value);
-        // commented for debugging
-        /*} else {
+        } else {
             require(block.number < signatureValidUntilBlock);
             require(isValidSignature(keccak256(msg.sender, address(this), signatureValidUntilBlock), v, r, s));
             balances[msg.sender] = balances[msg.sender].sub(_value);
             totalSupply_ = totalSupply_.sub(msg.value);
             depositLock[msg.sender] = 0;
             msg.sender.transfer(_value);
-        }*/
+        }
         return true;
     }
 

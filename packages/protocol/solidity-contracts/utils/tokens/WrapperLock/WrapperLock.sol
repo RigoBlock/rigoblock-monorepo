@@ -236,11 +236,10 @@ contract WrapperLock is BasicToken, Ownable {
         (bool success)
     {
         require(balanceOf(msg.sender) >= _value);
-        // commented for debugging
-        /*if (now <= depositLock[msg.sender]) {
+        if (now <= depositLock[msg.sender]) {
             require(block.number < signatureValidUntilBlock);
             require(isValidSignature(keccak256(msg.sender, address(this), signatureValidUntilBlock), v, r, s));
-        }*/
+        }
         balances[msg.sender] = balances[msg.sender].sub(_value);
         totalSupply_ = totalSupply_.sub(_value);
         depositLock[msg.sender] = 0;
