@@ -27,9 +27,9 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 RUN mkdir -p /root/packages/stats
 
-COPY packages/stats ./packages/stats
-COPY yarn.lock .
-COPY tsconfig.json .
+COPY . ./packages/stats
+COPY ../../yarn.lock .
+COPY ../../tsconfig.json .
 
 WORKDIR /root/packages/stats
 
