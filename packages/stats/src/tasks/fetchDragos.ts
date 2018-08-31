@@ -1,5 +1,4 @@
 import Web3 = require('web3')
-import { CONTRACT_ADDRESSES, NETWORKS } from '../constants'
 import protocol from '@rigoblock/protocol'
 import redis from '../redis'
 import web3ErrorWrapper from './web3ErrorWrapper'
@@ -13,12 +12,9 @@ type Event = {
 
 const task = async (job, web3: Web3) => {
   const { network } = job.data
-  const contractsMap = await protocol(NETWORKS.KOVAN)
-  const dragoEventfulAbi = contractsMap.DragoEventful.abi
-  const dragoEventful = new web3.eth.Contract(
-    dragoEventfulAbi,
-    CONTRACT_ADDRESSES[network].DragoEventful
-  )
+  const contractsMap = await protocol(network)
+  const { abi, address } = contractsMap.DragoEventful.abi
+  const dragoEventful = new web3.eth.Contract(abi, address)
   const dragoEvents = await new Promise<Event[]>((resolve, reject) =>
     dragoEventful.getPastEvents(
       'DragoCreated',
