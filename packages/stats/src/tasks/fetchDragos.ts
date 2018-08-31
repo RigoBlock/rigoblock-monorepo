@@ -13,7 +13,7 @@ type Event = {
 const task = async (job, web3: Web3) => {
   const { network } = job.data
   const contractsMap = await protocol(network)
-  const { abi, address } = contractsMap.DragoEventful.abi
+  const { abi, address } = contractsMap.DragoEventful
   const dragoEventful = new web3.eth.Contract(abi, address)
   const dragoEvents = await new Promise<Event[]>((resolve, reject) =>
     dragoEventful.getPastEvents(
