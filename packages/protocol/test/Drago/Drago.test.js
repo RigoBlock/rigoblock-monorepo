@@ -12,6 +12,7 @@ describeContract(contractName, () => {
   let transactionDefault
   let tokenTransferProxy
   let GRGtokenAddress
+  // let whitelister
 
   beforeAll(async () => {
     await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
@@ -31,10 +32,10 @@ describeContract(contractName, () => {
     }
     tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
     GRGtokenAddress = await baseContracts['RigoToken'].address
-    whitelister = await baseContracts['Authority'].setWhitelister(
-      accounts[0],
-      true
-    )
+    // whitelister = await baseContracts['Authority'].setWhitelister(
+    //   accounts[0],
+    //   true
+    // )
   })
 
   describe('setTransactionFee', () => {
