@@ -51,6 +51,7 @@ services:
     container_name: bull
     environment:
       REDIS_HOST: dev-04.endpoint.network
+      TELEGRAF_HOST: dev-04.endpoint.network
     build:
       context: ../../
       dockerfile: ./packages/stats/Dockerfile
