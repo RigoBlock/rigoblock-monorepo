@@ -85,10 +85,23 @@ interface ExchangesAuthorityFace {
         bool _isWhitelisted)
         external;
 
+    /// @dev Allows a whitelister to enable assiciate wrappers to a token
+    /// @param _token Address of the token
+    /// @param _wrapper Address of the exchange
+    /// @param _isWhitelisted Bool whitelisted
+    function whitelistTokenOnWrapper(
+        address _token,
+        address _wrapper,
+        bool _isWhitelisted)
+        external;
+
     /// @dev Allows an admin to whitelist a factory
     /// @param _method Hex of the function ABI
     /// @param _isWhitelisted Bool whitelisted
-    function whitelistMethod(bytes4 _method, address _exchange, bool _isWhitelisted)
+    function whitelistMethod(
+        bytes4 _method,
+        address _adapter,
+        bool _isWhitelisted)
         external;
 
     /// @dev Allows the owner to set the signature verifier
@@ -163,13 +176,21 @@ interface ExchangesAuthorityFace {
         returns (address);
 
     /// @dev Checkes whether a token is allowed on an exchange
+    /// @param _token Address of the token
+    /// @param _exchange Address of the exchange
     /// @return Bool the token is whitelisted on the exchange
     function canTradeTokenOnExchange(address _token, address _exchange)
         external view
         returns (bool);
 
+    /// @dev Checkes whether a token is allowed on a wrapper
+    /// @param _token Address of the token
+    /// @return Bool the token is whitelisted on the exchange
+    function canWrapTokenOnWrapper(address _token, address _wrapper)
+        external view
+        returns (bool);
+
     /// @dev Checkes whether a method is allowed on an exchange
-    /// @return Bool the method is allowed
     function isMethodAllowed(bytes4 _method, address _exchange)
         external view
         returns (bool);

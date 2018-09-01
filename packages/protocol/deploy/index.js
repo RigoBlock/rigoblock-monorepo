@@ -124,11 +124,11 @@ module.exports = async (baseAccount, network) => {
 
   const wrapperLock = await deploy(baseAccount, network, 'WrapperLock', [
     rigoToken.address,
-    'Rigo Token',
+    'Rigo Token Wrapper',
     'GRG',
     18,
     tokenTransferProxyEfx,
-    false
+    0
   ])
   printAddress('WrapperLock', wrapperLock.address)
 
@@ -148,9 +148,8 @@ module.exports = async (baseAccount, network) => {
   printAddress('WETH9', wETH9.address)
 
   await exchangesAuthority.whitelistWrapper(wETH9.address, true)
-  await exchangesAuthority.whitelistExchange(wETH9.address, true)
 
-  const aWeth = await deploy(baseAccount, network, 'AWeth', [authority.address])
+  const aWeth = await deploy(baseAccount, network, 'AWeth')
   printAddress('AWeth', aWeth.address)
 
   await exchangesAuthority.setExchangeAdapter(wETH9.address, aWeth.address)

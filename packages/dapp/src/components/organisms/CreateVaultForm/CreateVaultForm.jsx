@@ -59,7 +59,10 @@ const asyncValidate = async values => {
       throw vaultExistError
     }
   } catch (e) {
-    return e === vaultExistError ? e : null
+    if (e === vaultExistError) {
+      throw e
+    }
+    return null
   }
 }
 

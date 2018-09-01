@@ -22,6 +22,7 @@ pragma experimental "v0.5.0";
 import { WrapperLock as TokenWrapper } from "../../utils/tokens/WrapperLock/WrapperLock.sol";
 import { WrapperLockEth as EthWrapper } from "../../utils/tokens/WrapperLockEth/WrapperLockEth.sol";
 import { ERC20Face as Token } from "../../utils/tokens/ERC20/ERC20Face.sol";
+import { ERC20Old as TokenOld } from "../../utils/ERC20Old/ERC20Old.sol";
 
 import { Drago } from "../../Drago/Drago.sol";
 import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";
@@ -31,16 +32,18 @@ import { ExchangesAuthorityFace as ExchangesAuthority } from "../../exchanges/Ex
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract AEthfinex {
 
-    /// @dev wraps eth or tokens to the ethfinex wrappers
-    /// @param token Address of the base token
-    /// @param wrapper Address of the token wrapper
-    /// @param amount Number of tokens
-    /// @param forTime Number of hours for lockup
+    /// @dev wraps eth or tokens to the ethfinex wrappers.
+    /// @param token Address of the base token.
+    /// @param wrapper Address of the token wrapper.
+    /// @param amount Number of tokens.
+    /// @param forTime Number of hours for lockup.
+    /// @param erc20Old Bool is an old ERC20.
     function wrapToEfx(
         address token,
         address wrapper,
         uint256 amount,
-        uint256 forTime)
+        uint256 forTime,
+        bool erc20Old)
         external
     {
         require(
@@ -65,7 +68,7 @@ contract AEthfinex {
                 )
                 .getExchangesAuth()
             )
-            .canTradeTokenOnExchange(token, wrapper)
+            .canWrapTokenOnWrapper(token, wrapper)
         );
 
         if (token == address(0)) {
@@ -75,28 +78,31 @@ contract AEthfinex {
                 .value(amount)(amount, forTime)
             );
         } else {
-            require(setAllowances(wrapper, token, 2**256 -1));
+            require(setAllowances(wrapper, token, 2**256 -1, erc20Old));
             require(
                 TokenWrapper(wrapper)
                 .deposit(amount, forTime)
             );
-            require(setAllowances(wrapper, token, 0));
+            require(setAllowances(wrapper, token, 0, erc20Old));
         }
     }
 
-    /// @dev unwraps eth or tokens from the ethfinex wrappers
-    /// @param token Address of the base token
-    /// @param wrapper Address of the token wrapper
-    /// @param value Number of tokens to withdraw
-    /// @param signatureValidUntilBlock Signature for withdrawing before lockup
+    /// @dev unwraps eth or tokens from the ethfinex wrappers.
+    /// @param token Address of the base token.
+    /// @param wrapper Address of the token wrapper.
+    /// @param value Number of tokens to withdraw.
+    /// @param v ECDSA signature parameter v.
+    /// @param r ECDSA signature parameters r.
+    /// @param s ECDSA signature parameters s.
+    /// @param signatureValidUntilBlock Signature for withdrawing before lockup.
     function unwrap(
         address token,
         address wrapper,
+        uint256 value,
         uint8 v,
         bytes32 r,
         bytes32 s,
-        uint value,
-        uint signatureValidUntilBlock)
+        uint256 signatureValidUntilBlock)
         external
     {
         require(
@@ -121,30 +127,41 @@ contract AEthfinex {
                 )
                 .getExchangesAuth()
             )
-            .canTradeTokenOnExchange(token, wrapper)
+            .canWrapTokenOnWrapper(token, wrapper)
         );
 
         require(
             TokenWrapper(wrapper)
-            .withdraw(v, r, s, value, signatureValidUntilBlock)
+            .withdraw(value, v, r, s, signatureValidUntilBlock)
         );
     }
 
     // INTERNAL FUNCTIONS
 
-    /// @dev Allows owner to set an infinite allowance to an approved exchange
-    /// @param wrapper Address of the proxy to be approved
-    /// @param token Address of the token to receive allowance for
+    /// @dev Allows owner to set an infinite allowance to an approved exchange.
+    /// @param wrapper Address of the proxy to be approved.
+    /// @param token Address of the token to receive allowance for.
     function setAllowances(
         address wrapper,
         address token,
-        uint256 amount)
+        uint256 amount,
+        bool erc20Old)
         internal
-        returns (bool)
+        returns (bool success)
     {
-        require(
-            Token(token)
-            .approve(wrapper, amount)
-        ); return true;
+        success = false;
+
+        if (erc20Old) {
+            TokenOld(token)
+            .approve(wrapper, amount);
+
+        } else {
+            require(
+                Token(token)
+                .approve(wrapper, amount)
+            );
+        }
+
+        return (success = true);
     }
 }

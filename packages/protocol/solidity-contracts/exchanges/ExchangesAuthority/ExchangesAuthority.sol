@@ -65,6 +65,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         // Mapping of exchange => method => approved
         mapping (address => mapping (bytes4 => bool)) allowedMethods;
         mapping (address => mapping (address => bool)) allowedTokens;
+        mapping (address => mapping (address => bool)) allowedWrappers;
     }
 
     // EVENTS
@@ -75,7 +76,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     event WhitelistedExchange(address indexed exchange, bool approved);
     event WhitelistedWrapper(address indexed wrapper, bool approved);
     event WhitelistedProxy(address indexed proxy, bool approved);
-    event WhitelistedMethod(bytes4 indexed method, address indexed exchange, bool approved);
+    event WhitelistedMethod(bytes4 indexed method, address indexed adapter, bool approved);
     event NewSigVerifier(address indexed sigVerifier);
     event NewExchangeEventful(address indexed exchangeEventful);
     event NewCasper(address indexed casper);
@@ -160,7 +161,8 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     /// @param _tokenTransferProxy Address of the proxy
     /// @param _isWhitelisted Bool whitelisted
     function whitelistTokenTransferProxy(
-        address _tokenTransferProxy, bool _isWhitelisted)
+        address _tokenTransferProxy,
+        bool _isWhitelisted)
         external
         onlyWhitelister
     {
@@ -175,7 +177,10 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     /// @param _asset Address of the token
     /// @param _exchange Address of the exchange
     /// @param _isWhitelisted Bool whitelisted
-    function whitelistAssetOnExchange(address _asset, address _exchange, bool _isWhitelisted)
+    function whitelistAssetOnExchange(
+        address _asset,
+        address _exchange,
+        bool _isWhitelisted)
         external
         onlyAdmin
     {
@@ -183,15 +188,30 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         emit WhitelistedAsset(_asset, _isWhitelisted);
     }
 
-    /// @dev Allows an admin to whitelist a factory
-    /// @param _method Hex of the function ABI
+    /// @dev Allows a whitelister to enable assiciate wrappers to a token
+    /// @param _token Address of the token
+    /// @param _wrapper Address of the exchange
     /// @param _isWhitelisted Bool whitelisted
-    function whitelistMethod(bytes4 _method, address _exchange, bool _isWhitelisted)
+    function whitelistTokenOnWrapper(address _token, address _wrapper, bool _isWhitelisted)
         external
         onlyAdmin
     {
-        blocks.allowedMethods[_exchange][_method] = _isWhitelisted;
-        emit WhitelistedMethod(_method, _exchange, _isWhitelisted);
+        blocks.allowedWrappers[_wrapper][_token] = _isWhitelisted;
+        emit WhitelistedAsset(_token, _isWhitelisted);
+    }
+
+    /// @dev Allows an admin to whitelist a factory
+    /// @param _method Hex of the function ABI
+    /// @param _isWhitelisted Bool whitelisted
+    function whitelistMethod(
+        bytes4 _method,
+        address _adapter,
+        bool _isWhitelisted)
+        external
+        onlyAdmin
+    {
+        blocks.allowedMethods[_adapter][_method] = _isWhitelisted;
+        emit WhitelistedMethod(_method, _adapter, _isWhitelisted);
     }
 
     /// @dev Allows the owner to set the signature verifier
@@ -318,15 +338,26 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         return blocks.allowedTokens[_exchange][_token];
     }
 
-    /// @dev Checkes whether a method is allowed on an exchange
-    /// @param _method Bytes of the function signature
-    /// @param _exchange Address of the exchange
-    /// @return Bool the method is allowed
-    function isMethodAllowed(bytes4 _method, address _exchange)
+    /// @dev Checkes whether a token is allowed on a wrapper
+    /// @param _token Address of the token
+    /// @param _wrapper Address of the token wrapper
+    /// @return Bool the token is whitelisted on the exchange
+    function canWrapTokenOnWrapper(address _token, address _wrapper)
         external view
         returns (bool)
     {
-        return blocks.allowedMethods[_exchange][_method];
+        return blocks.allowedWrappers[_wrapper][_token];
+    }
+
+    /// @dev Checkes whether a method is allowed on an exchange
+    /// @param _method Bytes of the function signature
+    /// @param _adapter Address of the exchange
+    /// @return Bool the method is allowed
+    function isMethodAllowed(bytes4 _method, address _adapter)
+        external view
+        returns (bool)
+    {
+        return blocks.allowedMethods[_adapter][_method];
     }
 
     /// @dev Checkes whether casper has been inizialized

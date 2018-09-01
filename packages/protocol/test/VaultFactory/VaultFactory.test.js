@@ -35,10 +35,9 @@ describeContract(contractName, () => {
       expect(txHash2).toBeHash()
     })
 
-    it('throws an error when provided with uppercase parameters in name', async () => {
-      await expect(
-        baseContracts[contractName].createVault('testName', 'NAM')
-      ).rejects.toThrowErrorMatchingSnapshot()
+    it('does not throw an error when provided with uppercase parameters in name', async () => {
+      const txHash1 = await baseContracts[contractName].createVault('testName', 'NAM')
+      expect(txHash1).toBeHash()
     })
 
     it('throws an error when provided with special ascii parameters', async () => {

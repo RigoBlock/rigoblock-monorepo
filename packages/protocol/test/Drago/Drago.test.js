@@ -12,7 +12,7 @@ describeContract(contractName, () => {
   let transactionDefault
   let tokenTransferProxy
   let GRGtokenAddress
-  // let whitelister
+  let whitelister
 
   beforeAll(async () => {
     await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
@@ -32,10 +32,10 @@ describeContract(contractName, () => {
     }
     tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
     GRGtokenAddress = await baseContracts['RigoToken'].address
-    // whitelister = await baseContracts['Authority'].setWhitelister(
-    //   accounts[0],
-    //   true
-    // )
+    whitelister = await baseContracts['Authority'].setWhitelister(
+      accounts[0],
+      true
+    )
   })
 
   describe('setTransactionFee', () => {
@@ -96,14 +96,14 @@ describeContract(contractName, () => {
       const dragoData = await dragoInstance.methods.getData().call()
       const buyPrice = dragoData[3]
       const decimals = 1e6
-      const tokensAmount = await (netPurchaseAmount / buyPrice * decimals)
+      const tokensAmount = await ((netPurchaseAmount / buyPrice) * decimals)
       const adminData = await dragoInstance.methods.getAdminData().call()
       const transactionFee = adminData[4]
       const ratio = adminData[3] //fee split ratio
       // the purchase fee is applied on the tokens
       const purchaseFee = tokensAmount * (transactionFee / 10000)
       // if the purchaser is also the wizard, 80% of the fee gets paid back
-      const commission = purchaseFee * ratio / 100
+      const commission = (purchaseFee * ratio) / 100
       const netTokensAmount = (tokensAmount - purchaseFee + commission).toFixed(
         0
       ) //.toString()
