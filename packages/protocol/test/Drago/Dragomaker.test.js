@@ -46,11 +46,10 @@ describeContract(contractName, () => {
         ...transactionDefault,
         value: purchaseAmount
       })
-      await web3.eth.getBalance(dragoAddress)
 
       const ETHtokenAddress = null //Ether has address 0x0
       const ETHtokenWrapper = await baseContracts['WrapperLockEth'].address
-      const toBeWrapped = web3.utils.toWei('0.01') //web3.utils.toWei('1.1') //1e16 is 10 finney
+      const toBeWrapped = web3.utils.toWei('1.51') //web3.utils.toWei('1.1') //1e16 is 10 finney
       const time = 1 // 1 hour lockup (the minimum)
       const isOld = 0 // is a standard ERC20
 
@@ -129,7 +128,7 @@ describeContract(contractName, () => {
       const EXCHANGE_ADDRESS = baseContracts['ExchangeEfx'].address
 
       const maker = dragoAddress
-      const taker = ZeroEx.NULL_ADDRESS
+      const taker = accounts[0] // ZeroEx.NULL_ADDRESS
       const feeRecipient = ZeroEx.NULL_ADDRESS
       const makerTokenAddress = ETHtokenWrapper.toString()
       const takerTokenAddress = GRGtokenWrapper.toString()
@@ -190,9 +189,17 @@ describeContract(contractName, () => {
         expirationUnixTimestampSec,
         salt
       ]
+      // console.log(orderValues)
 
       const fillTakerTokenAmount = web3.utils.toWei('0.15')
-      const shouldThrowOnInsufficientBalanceOrAllowance = 0
+      const shouldThrowOnInsufficientBalanceOrAllowance = false // if set to 0 the transaction stops and does not throw and error
+
+      // check the balances
+      const makerBalance = await baseContracts['WrapperLockEth'].balanceOf(maker)
+      const takerBalance = await baseContracts['WrapperLock'].balanceOf(taker)
+      console.log(makerBalance.toString())
+      console.log(takerBalance.toString())
+
       const v = (new BigNumber(ecSignature.v)).toString()
       const r = ecSignature.r
       const s = ecSignature.s
@@ -204,22 +211,23 @@ describeContract(contractName, () => {
         r,
         s
       )
-      console.log(isValidSignature)
+      //console.log(isValidSignature)
 
       // in order to move wrapped tokens, either the from or to address must be signer
       const isETHWSigner = await baseContracts['WrapperLockEth'].isSigner(accounts[0])
       const isGRGWSigner = await baseContracts['WrapperLockEth'].isSigner(accounts[0])
 
-      const txHash = await baseContracts['ExchangeEfx'].fillOrder(
+      const txHash = await baseContracts['ExchangeEfx'].fillOrder.sendTransactionAsync(
         orderAddresses,
         orderValues,
         fillTakerTokenAmount,
         shouldThrowOnInsufficientBalanceOrAllowance,
         v,
         r,
-        s
+        s,
+        transactionDefault
       )
-      console.log(txHash)
+      //console.log(txHash)
 
       const GRGremainingTokensAmount = await baseContracts['WrapperLock'].balanceOf(accounts[0])
       console.log(GRGwrappedTokensAmount.toString())
