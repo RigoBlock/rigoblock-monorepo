@@ -1,7 +1,5 @@
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
-import { fromMicro, fromWei, toBigNumber } from '../utils'
 import aEthfinexArtifact from '../../artifacts/AEthfinex.json'
-import { BigNumber } from 'bignumber.js'
 
 import web3 from '../web3'
 
