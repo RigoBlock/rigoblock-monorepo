@@ -20,7 +20,6 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
-//import { ExchangesAuthorityFace as DexAuth } from "../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
 import { ERC20Face as Token } from "../utils/tokens/ERC20/ERC20Face.sol";
 
