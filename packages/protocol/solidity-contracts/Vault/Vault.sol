@@ -20,8 +20,9 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
+//import { ExchangesAuthorityFace as DexAuth } from "../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
-import { CasperFace as Casper } from "../Casper/CasperFace.sol";
+import { ERC20Face as Token } from "../utils/tokens/ERC20/ERC20Face.sol";
 
 import { VaultFace } from "./VaultFace.sol";
 import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
@@ -39,6 +40,10 @@ contract Vault is Owned, SafeMath, VaultFace {
     Admin admin;
 
     mapping (address => Account) accounts;
+
+    mapping (address => uint256) totalTokens;
+    mapping (address => mapping (address => uint256)) public depositLock;
+    mapping (address => mapping (address => uint256)) public tokenBalances;
 
     struct Receipt {
         uint32 activation;
@@ -75,12 +80,6 @@ contract Vault is Owned, SafeMath, VaultFace {
 
     modifier onlyOwner {
         require(msg.sender == owner);
-        _;
-    }
-
-    modifier casperContractOnly {
-        Authority auth = Authority(admin.authority);
-        if (msg.sender != auth.getCasper()) return;
         _;
     }
 
@@ -125,13 +124,6 @@ contract Vault is Owned, SafeMath, VaultFace {
     }
 
     // CORE FUNCTIONS
-
-    /// @dev Allows a casper contract to send Ether back
-    function()
-        external
-        payable
-        casperContractOnly
-    {}
 
     /// @dev Allows a user to buy into a vault
     /// @return Bool the function executed correctly
@@ -181,40 +173,6 @@ contract Vault is Owned, SafeMath, VaultFace {
         return true;
     }
 
-    /// @dev Allows to deposit from vault to casper contract for pooled PoS mining
-    /// @dev _withdrawal address must be == this
-    /// @param _validation Address of the casper miner
-    /// @param _withdrawal Address where to withdraw
-    /// @param _amount Value of deposit in wei
-    /// @return Bool the function executed correctly
-    function depositCasper(address _validation, address _withdrawal, uint256 _amount)
-        external
-        onlyOwner
-        minimumStake(_amount)
-        returns (bool success)
-    {
-        require(_withdrawal == address(this));
-        Authority auth = Authority(admin.authority);
-        Casper casper = Casper(auth.getCasper());
-        data.validatorIndex = casper.nextValidatorIndex();
-        casper.deposit.value(_amount)(_validation, _withdrawal);
-        VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.depositToCasper(msg.sender, this, auth.getCasper(), _validation, _withdrawal, _amount));
-        return true;
-    }
-
-    /// @dev Allows vault owner to withdraw from casper to vault contract
-    function withdrawCasper()
-        external
-        onlyOwner
-    {
-        Authority auth = Authority(admin.authority);
-        Casper casper = Casper(auth.getCasper());
-        casper.withdraw(data.validatorIndex);
-        VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.withdrawFromCasper(msg.sender, this, auth.getCasper(), data.validatorIndex));
-    }
-
     /// @dev Allows vault dao/factory to change fee split ratio
     /// @param _ratio Number of ratio for wizard, from 0 to 100
     function changeRatio(uint256 _ratio)
@@ -257,6 +215,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     function changeVaultDao(address _vaultDao)
         external
         onlyVaultDao
+
     {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
@@ -274,7 +233,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     }
 
     /// @dev Allows vault dao/factory to change the minimum holding period
-    /// @param _minPeriod Number of blocks
+    /// @param _minPeriod Lockup time in seconds
     function changeMinPeriod(uint32 _minPeriod)
         external
         onlyVaultDao
@@ -282,7 +241,59 @@ contract Vault is Owned, SafeMath, VaultFace {
         data.minPeriod = _minPeriod;
     }
 
-    // CONSTANT FUNCTIONS
+    /// @dev Allows anyone to deposit tokens to a vault
+    /// @param _token Address of the token
+    /// @param _value Amount to deposit
+    /// @param _forTime Lockup time in seconds
+    /// @notice lockup time can be zero
+    function depositToken(
+        address _token,
+        uint256 _value,
+        uint8 _forTime)
+        external
+        returns (bool success)
+    {
+        require(depositTokenInternal(_token, msg.sender, _value, _forTime));
+        return true;
+    }
+
+    /// @dev Allows anyone to deposit tokens to a vault on behalf of someone
+    /// @param _token Address of the token
+    /// @param _value Amount to deposit
+    /// @param _forTime Lockup time in seconds
+    /// @notice lockup time can be zero
+    function depositTokenOnBehalf(
+        address _token,
+        address _hodler,
+        uint256 _value,
+        uint8 _forTime)
+        external
+        returns (bool success)
+    {
+        require(depositTokenInternal(_token, _hodler, _value, _forTime));
+        return true;
+    }
+
+    /// @dev Allows anyone to withdraw tokens from a vault
+    /// @param _token Address of the token
+    /// @param _value Amount to withdraw
+    /// @return Bool the transaction was successful
+    function withdrawToken(
+        address _token,
+        uint256 _value)
+        external
+        returns
+        (bool success)
+    {
+        require(tokenBalances[_token][msg.sender] >= _value);
+        require(uint32(now) > depositLock[_token][msg.sender]);
+        tokenBalances[_token][msg.sender] = safeSub(tokenBalances[_token][msg.sender], _value);
+        totalTokens[_token] = safeSub(totalTokens[_token], _value);
+        require(Token(_token).transfer(msg.sender, _value));
+        return true;
+    }
+
+    // CONSTANT PUBLIC FUNCTIONS
 
     /// @dev Calculates how many shares a user holds
     /// @param _from Address of the target account
@@ -292,6 +303,38 @@ contract Vault is Owned, SafeMath, VaultFace {
         returns (uint256)
     {
         return accounts[_from].balance;
+    }
+
+    /// @dev Returns a user balance of a certain deposited token
+    /// @param _token Address of the token
+    /// @param _owner Address of the user
+    /// @return Number of tokens
+    function tokenBalanceOf(address _token, address _owner)
+        external view
+        returns (uint256)
+    {
+        return tokenBalances[_token][_owner];
+    }
+
+    /// @dev Returns the time needed to withdraw
+    /// @param _token Address of the token
+    /// @param _user Address of the user
+    /// @return Time in seconds
+    function timeToUnlock(address _token, address _user)
+        external view
+        returns (uint256)
+    {
+        return depositLock[_token][_user];
+    }
+
+    /// @dev Returns the amount of tokens of a certain token in vault
+    /// @param _token Address of the token
+    /// @return _value in custody
+    function tokensInVault(address _token)
+        external view
+        returns (uint256)
+    {
+        return totalTokens[_token];
     }
 
     /// @dev Gets the address of the logger contract
@@ -362,16 +405,10 @@ contract Vault is Owned, SafeMath, VaultFace {
         );
     }
 
-    /// @dev Finds the value of the deposit of this vault at the casper contract
-    /// @return Value of the deposit at casper in wei
-    function getCasperDeposit() external view returns (uint256) {
-        return getCasperDepositInternal();
-    }
-
     /// @dev Returns the version of the type of vault
     /// @return String of the version
     function getVersion()
-        external view
+        external pure
         returns (string)
     {
         return VERSION;
@@ -523,50 +560,29 @@ contract Vault is Owned, SafeMath, VaultFace {
         );
     }
 
-    /// @dev Queries the addres of the inizialized casper
-    /// @return Address of the casper address
-    function getCasper()
-        internal view
-        returns (address)
-    {
-        Authority auth = Authority(admin.authority);
-        if (casperInitialized()) {
-            return auth.getCasper();
-        }
-    }
-
-    /// @dev Checkes whether casper has been inizialized by the Authority
-    /// @return Bool the casper contract has been initialized
-    function casperInitialized()
-        internal view
-        returns (bool)
-    {
-        Authority auth = Authority(admin.authority);
-        return auth.isCasperInitialized();
-    }
-
-    /// @dev Finds the value of the deposit of this vault at the casper contract
-    /// @return Value of the deposit at casper in wei
-    function getCasperDepositInternal()
-        internal view
-        returns (uint256)
-    {
-        if (casperInitialized()) {
-            Casper casper = Casper(getCasper());
-            return uint256(casper.deposit_size(data.validatorIndex));
-        } else {
-            return 0;
-        }
-    }
-
     /// @dev Calculates the value of the shares
     /// @return Value of the shares in wei
     function getNav()
         internal view
         returns (uint256)
     {
-        uint256 casperDeposit = (casperInitialized() ? getCasperDepositInternal() : 0);
-        uint256 aum = safeAdd(address(this).balance, casperDeposit) - msg.value;
+        uint256 aum = address(this).balance - msg.value;
         return (data.totalSupply == 0 ? data.price : safeDiv(aum * BASE, data.totalSupply));
+    }
+
+    function depositTokenInternal(
+        address _token,
+        address _hodler,
+        uint256 _value,
+        uint8 _forTime)
+        internal
+        returns (bool success)
+    {
+        require(now + _forTime * 1 hours >= depositLock[_token][_hodler]);
+        require(Token(_token).transferFrom(msg.sender, address(this), _value));
+        tokenBalances[_token][_hodler] = safeAdd(tokenBalances[_token][_hodler], _value);
+        totalTokens[_token] = safeAdd(totalTokens[_token], _value);
+        depositLock[_token][_hodler] = safeAdd(uint(now), _forTime);
+        return true;
     }
 }

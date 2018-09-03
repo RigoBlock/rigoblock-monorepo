@@ -19,7 +19,6 @@
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
-//import { PoolFace as Pool } from "../../Pool/PoolFace.sol";
 import { Owned } from "../../utils/Owned/Owned.sol";
 import { RigoToken } from "../RigoToken/RigoToken.sol";
 import { AuthorityFace as Authority } from "../../Authority/AuthorityFace.sol";

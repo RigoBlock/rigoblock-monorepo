@@ -184,24 +184,4 @@ describeContract(contractName, () => {
       expect(highWatermark).toEqual(toBigNumber(vaultPrice))
     })
   })
-
-  describe.skip('getPoolPrices', () => {
-    // atm only works if there are no pools created, needs fix
-    it('returns the total vaultSupply and price for each fund', async () => {
-      const prices = await baseContracts[contractName].getPoolPrices()
-      console.log(prices)
-    })
-  })
-
-  describe('calcNetworkValue', () => {
-    it('calculates the total network vaultSupply and the number of funds', async () => {
-      const networkValues = await baseContracts[contractName]
-        .calcNetworkValue()
-        .then(res => res.map(val => val.toNumber()))
-      const networkValue = networkValues.shift()
-      const numberOfFunds = networkValues.pop()
-      expect(networkValue).toEqual(parseInt(vaultSupply, 10))
-      expect(numberOfFunds).toEqual(1)
-    })
-  })
 })

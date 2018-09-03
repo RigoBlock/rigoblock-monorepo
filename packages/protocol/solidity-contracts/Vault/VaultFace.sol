@@ -25,27 +25,29 @@ interface VaultFace {
 
     // CORE FUNCTIONS
 
-    function() external payable;
     function buyVault() external payable returns (bool success);
     function buyVaultOnBehalf(address _hodler) external payable returns (bool success);
     function sellVault(uint256 amount) external returns (bool success);
-    function depositCasper(address _validation, address _withdrawal, uint256 _amount) external returns (bool success);
-    function withdrawCasper() external;
     function changeRatio(uint256 _ratio) external;
     function setTransactionFee(uint256 _transactionFee) external;
     function changeFeeCollector(address _feeCollector) external;
     function changeVaultDao(address _vaultDao) external;
     function updatePrice() external;
     function changeMinPeriod(uint32 _minPeriod) external;
+    function depositToken(address _token, uint256 _value, uint8 _forTime) external returns (bool success);
+    function depositTokenOnBehalf(address _token, address _hodler, uint256 _value, uint8 _forTime) external returns (bool success);
+    function withdrawToken(address _token, uint256 _value) external returns (bool success);
 
     // CONSTANT PUBLIC FUNCTIONS
 
     function balanceOf(address _who) external view returns (uint256);
+    function tokenBalanceOf(address _token, address _owner) external view returns (uint256);
+    function timeToUnlock(address _token, address _user) external view returns (uint256);
+    function tokensInVault(address _token) external view returns (uint256);
     function getEventful() external view returns (address);
     function getData() external view returns (string name, string symbol, uint256 sellPrice, uint256 buyPrice);
     function calcSharePrice() external view returns (uint256);
     function getAdminData() external view returns (address, address feeCollector, address vaultDao, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
     function totalSupply() external view returns (uint256);
-    function getVersion() external view returns (string);
-    function getCasperDeposit() external view returns (uint256);
+    function getVersion() external pure returns (string);
 }

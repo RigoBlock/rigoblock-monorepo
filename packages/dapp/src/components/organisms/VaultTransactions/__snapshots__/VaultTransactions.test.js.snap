@@ -431,7 +431,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                           role="row"
                         >
                           <ThComponent
-                            className=" rt-resizable-header -cursor-pointer"
+                            className="rt-resizable-header -cursor-pointer"
                             key="0-id"
                             style={
                               Object {
@@ -443,7 +443,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             toggleSort={[Function]}
                           >
                             <div
-                              className="rt-th  rt-resizable-header -cursor-pointer"
+                              className="rt-th rt-resizable-header -cursor-pointer"
                               onClick={[Function]}
                               role="columnheader"
                               style={
@@ -473,7 +473,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             </div>
                           </ThComponent>
                           <ThComponent
-                            className=" rt-resizable-header -cursor-pointer"
+                            className="rt-resizable-header -cursor-pointer"
                             key="1-date"
                             style={
                               Object {
@@ -485,7 +485,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             toggleSort={[Function]}
                           >
                             <div
-                              className="rt-th  rt-resizable-header -cursor-pointer"
+                              className="rt-th rt-resizable-header -cursor-pointer"
                               onClick={[Function]}
                               role="columnheader"
                               style={
@@ -515,7 +515,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             </div>
                           </ThComponent>
                           <ThComponent
-                            className=" rt-resizable-header -cursor-pointer"
+                            className="rt-resizable-header -cursor-pointer"
                             key="2-type"
                             style={
                               Object {
@@ -527,7 +527,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             toggleSort={[Function]}
                           >
                             <div
-                              className="rt-th  rt-resizable-header -cursor-pointer"
+                              className="rt-th rt-resizable-header -cursor-pointer"
                               onClick={[Function]}
                               role="columnheader"
                               style={
@@ -557,7 +557,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             </div>
                           </ThComponent>
                           <ThComponent
-                            className=" rt-resizable-header -cursor-pointer"
+                            className="rt-resizable-header -cursor-pointer"
                             key="3-symbol"
                             style={
                               Object {
@@ -569,7 +569,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             toggleSort={[Function]}
                           >
                             <div
-                              className="rt-th  rt-resizable-header -cursor-pointer"
+                              className="rt-th rt-resizable-header -cursor-pointer"
                               onClick={[Function]}
                               role="columnheader"
                               style={
@@ -599,7 +599,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             </div>
                           </ThComponent>
                           <ThComponent
-                            className=" rt-resizable-header -cursor-pointer"
+                            className="rt-resizable-header -cursor-pointer"
                             key="4-value"
                             style={
                               Object {
@@ -611,7 +611,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             toggleSort={[Function]}
                           >
                             <div
-                              className="rt-th  rt-resizable-header -cursor-pointer"
+                              className="rt-th rt-resizable-header -cursor-pointer"
                               onClick={[Function]}
                               role="columnheader"
                               style={
@@ -641,7 +641,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             </div>
                           </ThComponent>
                           <ThComponent
-                            className=" rt-resizable-header -cursor-pointer"
+                            className="rt-resizable-header -cursor-pointer"
                             key="5-units"
                             style={
                               Object {
@@ -653,7 +653,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             toggleSort={[Function]}
                           >
                             <div
-                              className="rt-th  rt-resizable-header -cursor-pointer"
+                              className="rt-th rt-resizable-header -cursor-pointer"
                               onClick={[Function]}
                               role="columnheader"
                               style={
@@ -683,7 +683,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             </div>
                           </ThComponent>
                           <ThComponent
-                            className=" rt-resizable-header"
+                            className="rt-resizable-header"
                             key="6-transactionLink"
                             style={
                               Object {
@@ -695,7 +695,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                             toggleSort={[Function]}
                           >
                             <div
-                              className="rt-th  rt-resizable-header"
+                              className="rt-th rt-resizable-header"
                               onClick={[Function]}
                               role="columnheader"
                               style={
@@ -954,7 +954,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                                     >
                                       <a
                                         className="link medium"
-                                        href="#"
+                                        href="/"
                                         onClick={[Function]}
                                       >
                                         <Icon
@@ -1192,7 +1192,7 @@ exports[`VaultTransactions component renders correctly 1`] = `
                                     >
                                       <a
                                         className="link medium"
-                                        href="#"
+                                        href="/"
                                         onClick={[Function]}
                                       >
                                         <Icon

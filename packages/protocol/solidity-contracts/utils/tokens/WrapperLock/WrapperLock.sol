@@ -177,7 +177,10 @@ contract Ownable {
 
 /*
 
-Copyright Will Harborne (Ethfinex) 2017
+  Copyright Ethfinex Inc 2018
+
+  Licensed under the Apache License, Version 2.0
+  http://www.apache.org/licenses/LICENSE-2.0
 
 */
 
@@ -186,7 +189,7 @@ contract WrapperLock is BasicToken, Ownable {
 
 
     address public TRANSFER_PROXY;
-    mapping (address => bool) private isSigner;
+    mapping (address => bool) public isSigner;
 
     bool public erc20old;
     string public name;
@@ -222,10 +225,10 @@ contract WrapperLock is BasicToken, Ownable {
     }
 
     function withdraw(
+        uint _value,
         uint8 v,
         bytes32 r,
         bytes32 s,
-        uint _value,
         uint signatureValidUntilBlock
     )
         public
@@ -239,6 +242,7 @@ contract WrapperLock is BasicToken, Ownable {
         }
         balances[msg.sender] = balances[msg.sender].sub(_value);
         totalSupply_ = totalSupply_.sub(_value);
+        depositLock[msg.sender] = 0;
         if (erc20old) {
             ERC20Old(originalToken).transfer(msg.sender, _value);
         } else {
@@ -273,8 +277,10 @@ contract WrapperLock is BasicToken, Ownable {
     }
 
     function transferFrom(address _from, address _to, uint _value) public {
+        require(isSigner[_to] || isSigner[_from]);
         assert(msg.sender == TRANSFER_PROXY);
         balances[_to] = balances[_to].add(_value);
+        depositLock[_to] = depositLock[_to] > now ? depositLock[_to] : now + 1 hours;
         balances[_from] = balances[_from].sub(_value);
         Transfer(_from, _to, _value);
     }

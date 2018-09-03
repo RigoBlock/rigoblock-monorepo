@@ -28,47 +28,37 @@ interface AuthorityFace {
     event SetAuthority (address indexed authority);
     event SetWhitelister (address indexed whitelister);
     event WhitelistedUser(address indexed target, bool approved);
-    event WhitelistedAsset(address indexed asset, bool approved);
-    event WhitelistedExchange(address indexed exchange, bool approved);
     event WhitelistedRegistry(address indexed registry, bool approved);
     event WhitelistedFactory(address indexed factory, bool approved);
     event WhitelistedVault(address indexed vault, bool approved);
     event WhitelistedDrago(address indexed drago, bool isWhitelisted);
     event NewDragoEventful(address indexed dragoEventful);
     event NewVaultEventful(address indexed vaultEventful);
-    event NewExchangeEventful(address indexed exchangeEventful);
-    event NewCasper(address indexed casper);
+    event NewExchangesAuthority(address indexed exchangesAuthority);
 
     // CORE FUNCTIONS
 
     function setAuthority(address _authority, bool _isWhitelisted) external;
     function setWhitelister(address _whitelister, bool _isWhitelisted) external;
     function whitelistUser(address _target, bool _isWhitelisted) external;
-    function whitelistAsset(address _asset, bool _isWhitelisted) external;
-    function whitelistExchange(address _exchange, bool _isWhitelisted) external;
     function whitelistDrago(address _drago, bool _isWhitelisted) external;
     function whitelistVault(address _vault, bool _isWhitelisted) external;
     function whitelistRegistry(address _registry, bool _isWhitelisted) external;
     function whitelistFactory(address _factory, bool _isWhitelisted) external;
     function setDragoEventful(address _dragoEventful) external;
     function setVaultEventful(address _vaultEventful) external;
-    function setExchangeEventful(address _exchangeEventful) external;
-    function setExchangeAdapter(address _exchange, address _adapter) external;
-    function setCasper(address _casper) external;
+    function setNavVerifier(address _navVerifier) external;
+    function setExchangesAuthority(address _exchangesAuthority) external;
 
     function isWhitelistedUser(address _target) external view returns (bool);
     function isAuthority(address _authority) external view returns (bool);
-    function isWhitelistedAsset(address _asset) external view returns (bool);
-    function isWhitelistedExchange(address _exchange) external view returns (bool);
     function isWhitelistedRegistry(address _registry) external view returns (bool);
     function isWhitelistedDrago(address _drago) external view returns (bool);
     function isWhitelistedVault(address _vault) external view returns (bool);
     function isWhitelistedFactory(address _factory) external view returns (bool);
     function getDragoEventful() external view returns (address);
     function getVaultEventful() external view returns (address);
-    function getExchangeEventful() external view returns (address);
-    function isCasperInitialized() external view returns (bool);
-    function getCasper() external view returns (address);
-    function getExchangeAdapter(address _exchange) external view returns (address);
+    function getNavVerifier() external view returns (address);
+    function getExchangesAuthority() external view returns (address);
     function getListsByGroups(string _group) external view returns (address[]);
 }

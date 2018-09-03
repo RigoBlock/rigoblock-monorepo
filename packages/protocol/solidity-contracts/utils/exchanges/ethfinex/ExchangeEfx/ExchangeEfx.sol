@@ -18,6 +18,8 @@
 
 pragma solidity ^0.4.19;
 
+import { Owned } from "../../../Owned/Owned.sol"; // GR ADDITION
+
 interface Token {
 
     /// @notice send `_value` token to `_to` from `msg.sender`
@@ -54,9 +56,9 @@ interface Token {
 
 
 //solhint-disable-next-line
-/// @title TokenTransferProxy - Transfers tokens on behalf of exchange
+/// @title TokenTransferProxyEfx - Transfers tokens on behalf of exchange
 /// @author Ahmed Ali <Ahmed@bitfinex.com>
-contract TokenTransferProxy {
+contract TokenTransferProxyEfx {
 
     modifier onlyExchange {
         require(msg.sender == exchangeAddress);
@@ -68,7 +70,7 @@ contract TokenTransferProxy {
 
     event LogAuthorizedAddressAdded(address indexed target, address indexed caller);
 
-    function TokenTransferProxy() public {
+    function TokenTransferProxyEfx() public {
         setExchange(msg.sender);
     }
     /*
@@ -174,10 +176,11 @@ contract SafeMath {
 }
 
 
-/// @title Exchange - Facilitates exchange of ERC20 tokens.
+/// @title ExchangeEfx - Facilitates exchange of ERC20 tokens.
 /// @author Amir Bandeali - <amir@0xProject.com>, Will Warren - <will@0xProject.com>
 // Modified by Ahmed Ali <Ahmed@bitfinex.com>
-contract Exchange is SafeMath {
+/// @notice Modified by Gabriele Rigo - <gab@rigoblock.com>
+contract ExchangeEfx is SafeMath {
 
     // Error Codes
     enum Errors {
@@ -240,9 +243,9 @@ contract Exchange is SafeMath {
     }
 
     // MODIFIED CODE, constructor changed
-    function Exchange() public {
+    function ExchangeEfx() public {
         // ZRX_TOKEN_CONTRACT = _zrxToken;
-        TOKEN_TRANSFER_PROXY_CONTRACT = address(new TokenTransferProxy());
+        TOKEN_TRANSFER_PROXY_CONTRACT = address(new TokenTransferProxyEfx());
     }
 
     /*
@@ -285,8 +288,18 @@ contract Exchange is SafeMath {
 
         require(order.taker == address(0) || order.taker == msg.sender);
         require(order.makerTokenAmount > 0 && order.takerTokenAmount > 0 && fillTakerTokenAmount > 0);
+/*
         require(isValidSignature(
             order.maker,
+            order.orderHash,
+            v,
+            r,
+            s
+        ));
+*/
+        // GR ADDITION
+        require(isValidSignature(
+            getSignerInternal(order.maker),
             order.orderHash,
             v,
             r,
@@ -629,6 +642,18 @@ contract Exchange is SafeMath {
         );
     }
 
+    // GR ADDITION
+    /// @dev Get the address of the signer of a transaction, maker or fund manager
+    /// @param _target Address to be inspected
+    /// @return Address of the signer
+    function getSigner(
+        address _target)
+        external view
+        returns (address)
+    {
+        return getSignerInternal(_target);
+    }
+
     /// @dev Checks if rounding error > 0.1%.
     /// @param numerator Numerator.
     /// @param denominator Denominator.
@@ -692,7 +717,7 @@ contract Exchange is SafeMath {
         internal
         returns (bool)
     {
-        return TokenTransferProxy(TOKEN_TRANSFER_PROXY_CONTRACT).transferFrom(token, from, to, value);
+        return TokenTransferProxyEfx(TOKEN_TRANSFER_PROXY_CONTRACT).transferFrom(token, from, to, value);
     }
 
     /// @dev Checks if any order transfers will fail.
@@ -766,5 +791,37 @@ contract Exchange is SafeMath {
         returns (uint)
     {
         return Token(token).allowance.gas(EXTERNAL_QUERY_GAS_LIMIT)(owner, TOKEN_TRANSFER_PROXY_CONTRACT); // Limit gas to prevent reentrancy
+    }
+
+    // GR ADDITION
+    /// @dev Get the address of the signer of a transaction, maker or fund manager
+    /// @param _target Address to be inspected
+    /// @return Address of the signer
+    function getSignerInternal(
+        address _target)
+        internal view
+        returns (address)
+    {
+        if (isContract(_target)) {
+            return Owned(_target).owner();
+        } else {
+            return _target;
+        }
+    }
+
+    // GR ADDITION
+    /// @dev Determines whether an address is an account or a contract
+    /// @param _target Address to be inspected
+    /// @return Boolean the address is a contract
+    /// @notice if it is a contract, we use this function to lookup for the owner
+    function isContract(address _target)
+        internal view
+        returns (bool)
+    {
+        uint size;
+        assembly {
+            size := extcodesize(_target)
+        }
+        return size > 0;
     }
 }

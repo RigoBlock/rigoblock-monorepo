@@ -11,6 +11,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
               "meta": Object {
                 "form": "createVault",
                 "keepDirty": false,
+                "keepValues": undefined,
                 "updateUnregisteredFields": false,
               },
               "payload": Object {
@@ -137,6 +138,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                 "meta": Object {
                   "form": "createVault",
                   "keepDirty": false,
+                  "keepValues": undefined,
                   "updateUnregisteredFields": false,
                 },
                 "payload": Object {
@@ -273,6 +275,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                   "meta": Object {
                     "form": "createVault",
                     "keepDirty": false,
+                    "keepValues": undefined,
                     "updateUnregisteredFields": false,
                   },
                   "payload": Object {
@@ -459,6 +462,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                     "meta": Object {
                       "form": "createVault",
                       "keepDirty": false,
+                      "keepValues": undefined,
                       "updateUnregisteredFields": false,
                     },
                     "payload": Object {
@@ -668,6 +672,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                       "meta": Object {
                         "form": "createVault",
                         "keepDirty": false,
+                        "keepValues": undefined,
                         "updateUnregisteredFields": false,
                       },
                       "payload": Object {
@@ -954,6 +959,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                   "meta": Object {
                                     "form": "createVault",
                                     "keepDirty": false,
+                                    "keepValues": undefined,
                                     "updateUnregisteredFields": false,
                                   },
                                   "payload": Object {
@@ -1196,6 +1202,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                     "meta": Object {
                                       "form": "createVault",
                                       "keepDirty": false,
+                                      "keepValues": undefined,
                                       "updateUnregisteredFields": false,
                                     },
                                     "payload": Object {
@@ -1328,6 +1335,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                   "meta": Object {
                                     "form": "createVault",
                                     "keepDirty": false,
+                                    "keepValues": undefined,
                                     "updateUnregisteredFields": false,
                                   },
                                   "payload": Object {
@@ -1441,6 +1449,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                       "meta": Object {
                                         "form": "createVault",
                                         "keepDirty": false,
+                                        "keepValues": undefined,
                                         "updateUnregisteredFields": false,
                                       },
                                       "payload": Object {
@@ -2073,6 +2082,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                   "meta": Object {
                                     "form": "createVault",
                                     "keepDirty": false,
+                                    "keepValues": undefined,
                                     "updateUnregisteredFields": false,
                                   },
                                   "payload": Object {
@@ -2299,6 +2309,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                     "meta": Object {
                                       "form": "createVault",
                                       "keepDirty": false,
+                                      "keepValues": undefined,
                                       "updateUnregisteredFields": false,
                                     },
                                     "payload": Object {
@@ -2431,6 +2442,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                   "meta": Object {
                                     "form": "createVault",
                                     "keepDirty": false,
+                                    "keepValues": undefined,
                                     "updateUnregisteredFields": false,
                                   },
                                   "payload": Object {
@@ -2512,6 +2524,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                       "meta": Object {
                                         "form": "createVault",
                                         "keepDirty": false,
+                                        "keepValues": undefined,
                                         "updateUnregisteredFields": false,
                                       },
                                       "payload": Object {
@@ -2625,6 +2638,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                 onChange={[Function]}
                                 onFocus={[Function]}
                                 placeholder=""
+                                required={false}
                                 size={10}
                                 type="text"
                                 value="New Vault"
@@ -2636,6 +2650,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                   onChange={[Function]}
                                   onFocus={[Function]}
                                   placeholder=""
+                                  required={false}
                                   size={10}
                                   type="text"
                                   value="New Vault"
@@ -2809,6 +2824,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                   "meta": Object {
                                     "form": "createVault",
                                     "keepDirty": false,
+                                    "keepValues": undefined,
                                     "updateUnregisteredFields": false,
                                   },
                                   "payload": Object {
@@ -3038,6 +3054,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                     "meta": Object {
                                       "form": "createVault",
                                       "keepDirty": false,
+                                      "keepValues": undefined,
                                       "updateUnregisteredFields": false,
                                     },
                                     "payload": Object {
@@ -3170,6 +3187,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                   "meta": Object {
                                     "form": "createVault",
                                     "keepDirty": false,
+                                    "keepValues": undefined,
                                     "updateUnregisteredFields": false,
                                   },
                                   "payload": Object {
@@ -3254,6 +3272,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                       "meta": Object {
                                         "form": "createVault",
                                         "keepDirty": false,
+                                        "keepValues": undefined,
                                         "updateUnregisteredFields": false,
                                       },
                                       "payload": Object {
@@ -3367,6 +3386,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                 onChange={[Function]}
                                 onFocus={[Function]}
                                 placeholder="3 Letters"
+                                required={false}
                                 size={8}
                                 type="text"
                                 value="VLT"
@@ -3378,6 +3398,7 @@ exports[`CreateVaultForm component renders correctly 1`] = `
                                   onChange={[Function]}
                                   onFocus={[Function]}
                                   placeholder="3 Letters"
+                                  required={false}
                                   size={8}
                                   type="text"
                                   value="VLT"
