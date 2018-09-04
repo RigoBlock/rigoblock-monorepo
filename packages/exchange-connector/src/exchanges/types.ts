@@ -37,7 +37,7 @@ export interface IExchange<
   RawTicker = {},
   TICKERS_TOKEN_PAIRS = {}
 > {
-  networkId: string
+  networkId: number
   API_URL: string
 
   raw: {

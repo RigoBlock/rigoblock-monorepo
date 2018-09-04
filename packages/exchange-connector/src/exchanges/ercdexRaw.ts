@@ -12,17 +12,18 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   public STANDARD_API_URL: string
 
   constructor(
-    public networkId: NETWORKS,
+    public networkId: NETWORKS | number,
     public transport: TRANSPORTS = TRANSPORTS.HTTP,
-    public web3: Web3
+    public web3: Web3,
+    public apiUrl?: string
   ) {
     super(
       networkId,
       transport,
       web3,
-      `${ERCdEXRaw.API_URLS[transport]}/standard/${networkId}`
+      apiUrl || `${ERCdEXRaw.API_URLS[transport]}/standard/${networkId}`
     )
-    this.API_URL = ERCdEXRaw.API_URLS[transport]
+    this.API_URL = apiUrl ? apiUrl : ERCdEXRaw.API_URLS[transport]
   }
 
   public async getBestOrders(options: {

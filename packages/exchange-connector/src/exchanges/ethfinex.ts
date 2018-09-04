@@ -1,14 +1,23 @@
-import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
+import {
+  AMOUNT_PRECISION,
+  NETWORKS,
+  PRICE_PRECISION,
+  TRANSPORTS
+} from '../constants'
 import { IExchange, OrderType, OrdersList, TickersList } from './types'
 import BigNumber from 'bignumber.js'
+import Web3 from 'web3'
 
 export class Ethfinex
   implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
-  public static HTTP_API_URLS = {
-    [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
-    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
-    [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
+  public static HTTP_API_URLS = {}
+  public static API_URLS = {
+    [TRANSPORTS.HTTP]: {
+      [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
+      [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
+      [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
+    }
   }
   public API_URL: string
   private TICKERS_TOKEN_PAIRS: string[] = [
@@ -17,8 +26,13 @@ export class Ethfinex
     Ethfinex.TokenPairs.GNTETH
   ]
 
-  constructor(public networkId, public transport = 'http') {
-    this.API_URL = Ethfinex.HTTP_API_URLS[networkId]
+  constructor(
+    public networkId: NETWORKS | number,
+    public transport: TRANSPORTS = TRANSPORTS.HTTP,
+    public web3: Web3,
+    public apiUrl?: string
+  ) {
+    this.API_URL = apiUrl ? apiUrl : Ethfinex.API_URLS[transport][networkId]
   }
 
   public async getOrders(
@@ -124,7 +138,7 @@ export class Ethfinex
   }
 
   public network(id: number = NETWORKS.MAINNET): Ethfinex {
-    return new Ethfinex(id, this.transport)
+    return new Ethfinex(id, this.transport, this.web3)
   }
 
   private checkForError(array: any[]) {
