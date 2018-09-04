@@ -1,6 +1,7 @@
-import { NETWORKS } from '../constants'
+import { NETWORKS, TRANSPORTS } from '../constants'
 import { ZeroExStandardRelayerRaw } from './zeroExStandardRelayerRaw'
-import { getQueryParameters } from '../utils'
+import { fetchJSON, getQueryParameters, postJSON } from '../utils'
+import Web3 from 'web3'
 
 export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
@@ -10,8 +11,17 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   public API_URL: string
   public STANDARD_API_URL: string
 
-  constructor(public networkId, public transport = 'http') {
-    super(`${ERCdEXRaw.API_URLS[transport]}/standard/${networkId}`)
+  constructor(
+    public networkId: NETWORKS,
+    public transport: TRANSPORTS = TRANSPORTS.HTTP,
+    public web3: Web3
+  ) {
+    super(
+      networkId,
+      transport,
+      web3,
+      `${ERCdEXRaw.API_URLS[transport]}/standard/${networkId}`
+    )
     this.API_URL = ERCdEXRaw.API_URLS[transport]
   }
 
@@ -22,34 +32,23 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     quantity: string // Quantity of pair requested
     takerAddress: string // Address of order taker
   }): Promise<ERCdEXRaw.BestOrders> {
-    if (
-      !options ||
-      !options.makerTokenAddress ||
-      !options.takerTokenAddress ||
-      !options.baseTokenAddress ||
-      !options.quantity ||
-      !options.takerAddress
-    ) {
-      throw new Error(
-        'makerTokenAddress, takerTokenAddress, baseTokenAddress, quantity and takerAddress are required.'
-      )
-    }
-    const queryParameters = getQueryParameters(options)
-    const url = `${this.API_URL}/orders/best${queryParameters}&networkId=${
-      this.networkId
-    }`
-    return fetch(url).then(r => r.json())
+    const url = `${this.API_URL}/orders/best`
+    const queryParams = getQueryParameters({
+      ...options,
+      networkId: this.networkId
+    })
+    return fetchJSON(url, queryParams)
   }
 
   public async getTickers(): Promise<ERCdEXRaw.Ticker[]> {
     const url = `${this.API_URL}/reports/ticker`
-    return fetch(url).then(r => r.json())
+    return fetchJSON(url)
   }
 
   // TODO: check which parameters we want to implement
   public async getTradeHistoryLogs(): Promise<ERCdEXRaw.HistoryLogs> {
     const url = `${this.API_URL}/trade_history_logs`
-    return fetch(url).then(r => r.json())
+    return fetchJSON(url)
   }
 
   public async getHistoricalPrices(options: {
@@ -57,43 +56,26 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     quoteTokenAddress: string
     startDate: string
   }): Promise<ERCdEXRaw.HistoricalPrice[]> {
-    if (
-      !options ||
-      !options.baseTokenAddress ||
-      !options.quoteTokenAddress ||
-      !options.startDate
-    ) {
-      throw new Error(
-        'baseTokenAddress, quoteTokenAddress and startDate are required.'
-      )
+    if (!options) {
+      throw new Error('Please specify the correct parameters.')
     }
     const url = `${this.API_URL}/reports/historical`
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        networkId: this.networkId,
-        baseTokenAddress: options.baseTokenAddress,
-        quoteTokenAddress: options.quoteTokenAddress,
-        startDate: options.startDate
-      })
-    }).then(r => r.json())
+    return postJSON(url, {
+      ...options,
+      networkId: this.networkId
+    })
   }
 
   public async getAggregatedOrders(options: {
     baseTokenAddress: string
     quoteTokenAddress: string
   }): Promise<ERCdEXRaw.AggregatedOrders> {
-    if (!options || !options.baseTokenAddress || !options.quoteTokenAddress) {
-      throw new Error('baseTokenAddress and quoteTokenAddress are required.')
-    }
-    const queryParameters = getQueryParameters(options)
-    const url = `${
-      this.API_URL
-    }/aggregated_orders${queryParameters}&networkId=${this.networkId}`
-    return fetch(url).then(r => r.json())
+    const url = `${this.API_URL}/aggregated_orders`
+    const queryParams = getQueryParameters({
+      ...options,
+      networkId: this.networkId
+    })
+    return fetchJSON(url, queryParams)
   }
 }
 

@@ -32,12 +32,10 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       expect(result).toMatchSnapshot()
     })
     it('Accepts one token as a filter', async () => {
+      const tokenA = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetTokenPairsWithTokenA.json',
-        () =>
-          exchange.getTokenPairs({
-            tokenA: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-          })
+        () => exchange.getTokenPairs({ tokenA })
       )
       expect(result).toMatchSnapshot()
     })
@@ -80,30 +78,38 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         '0x7109947a8f4c595f2604445cc4cfc0927fcef5b84b9b33a34528ada629dbd846'
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetOrder.json',
-        () => exchange.getOrder(orderHash)
+        () => exchange.getOrder({ orderHash })
       )
       expect(result).toMatchSnapshot()
     })
-    it("throws an error if we don't specify the order hash", () => {
+    it("throws an error if parameters aren't specified", async () => {
       expect(exchange.getOrder()).rejects.toThrowErrorMatchingSnapshot()
     })
   })
   describe('getOrderbook', () => {
-    const baseTokenAddress = '0xe41d2489571d322189246dafa5ebde1f4699f498'
-    const quoteTokenAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
     it('retrieves the orderbook for a given token pair.', async () => {
+      const baseTokenAddress = '0xe41d2489571d322189246dafa5ebde1f4699f498'
+      const quoteTokenAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetOrderbook.json',
-        () => exchange.getOrderbook(baseTokenAddress, quoteTokenAddress)
+        () => exchange.getOrderbook({ baseTokenAddress, quoteTokenAddress })
       )
       expect(result).toMatchSnapshot()
     })
-    it("throws an error if we don't specify both the token addresses", async () => {
+    it("returns an error response if we don't specify both addresses", async () => {
       const baseTokenAddress = '0xe41d2489571d322189246dafa5ebde1f4699f498'
-      expect(
-        exchange.getOrderbook(baseTokenAddress)
-      ).rejects.toThrowErrorMatchingSnapshot()
-      expect(exchange.getOrderbook()).rejects.toThrowErrorMatchingSnapshot()
+      const result: any = await nockBackPromise(
+        'zeroExStandardRelayer/GetOrderbookWithOneAddress.json',
+        () => exchange.getOrderbook({ baseTokenAddress })
+      )
+      expect(result).toMatchSnapshot()
+    })
+    it("returns an error response if we don't specify any address", async () => {
+      const result: any = await nockBackPromise(
+        'zeroExStandardRelayer/GetOrderbookWithNoAddresses.json',
+        () => exchange.getOrderbook()
+      )
+      expect(result).toMatchSnapshot()
     })
   })
 })

@@ -1,4 +1,4 @@
-import { NETWORKS } from '../constants'
+import { NETWORKS, TRANSPORTS } from '../constants'
 import { ZeroEx } from '0x.js'
 import { fetchJSON, getQueryParameters } from '../utils'
 import Web3 from 'web3'
@@ -11,10 +11,10 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   ]
   public zeroEx: ZeroEx
   constructor(
-    public networkId,
-    public transport = 'http',
+    public networkId: NETWORKS | number,
+    public transport: TRANSPORTS = TRANSPORTS.HTTP,
     public web3: Web3,
-    public STANDARD_API_URL
+    public STANDARD_API_URL: string
   ) {
     if (!STANDARD_API_URL) {
       throw new Error('API url must be specified for 0x standard relayers.')

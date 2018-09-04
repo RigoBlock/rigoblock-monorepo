@@ -1,6 +1,7 @@
 import { Ethfinex } from './exchanges/ethfinex'
 import { NETWORKS, TRANSPORTS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
+import Web3 from 'web3'
 import ZeroExStandardRelayerRaw from './exchanges/zeroExStandardRelayerRaw'
 
 function exchangeConnector(
@@ -16,26 +17,25 @@ function exchangeConnector(
   options = {
     networkId: NETWORKS.MAINNET,
     transport: TRANSPORTS.HTTP,
-    apiUrl: ''
+    apiUrl: '',
+    web3: null
   }
 ): any {
-  if (exchangeName === supportedExchanges.ZEROEXRELAYER) {
-    if (!options.apiUrl) {
-      throw new Error('API url must be specified for 0x standard relayers')
-    }
-    return new ZeroExStandardRelayerRaw(options.apiUrl, options.transport)
+  const selectedExchange = ExchangesMap[exchangeName]
+  if (!selectedExchange) {
+    throw new Error(`Exchange not supported: ${exchangeName}`)
   }
-  if (ExchangesMap[exchangeName]) {
-    const selectedExchange = ExchangesMap[exchangeName]
-    if (!selectedExchange.SUPPORTED_NETWORKS.includes(options.networkId)) {
-      throw new Error(
-        `Network not supported on this exchange: ${options.networkId}`
-      )
-    }
-    return new selectedExchange(options.networkId, options.transport)
+  if (!selectedExchange.SUPPORTED_NETWORKS.includes(options.networkId)) {
+    throw new Error(
+      `Network Id not supported for selected network: ${options.networkId}`
+    )
   }
-
-  throw new Error(`Exchange not supported: ${exchangeName}`)
+  return new selectedExchange(
+    options.networkId,
+    options.transport,
+    options.web3,
+    options.apiUrl
+  )
 }
 
 export default exchangeConnector
@@ -44,4 +44,5 @@ interface ExchangeOptions {
   networkId?: NETWORKS
   transport?: TRANSPORTS
   apiUrl?: string
+  web3?: Web3
 }
