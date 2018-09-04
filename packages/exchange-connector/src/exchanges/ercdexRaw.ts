@@ -72,7 +72,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     })
     return fetchJSON(url, queryParams)
   }
-
+  // TODO: find out how to add a test
   public async softCancelOrder(options: {
     orderHash: string
     signature?: {
@@ -94,10 +94,11 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     taker: string
   }): Promise<ZeroExStandardRelayerRaw.RawFee> {
     const url = `${this.API_URL}/fees`
-    return postJSON(url, {
+    const queryParams = getQueryParameters({
       ...options,
       networkId: this.networkId
     })
+    return postJSON([url, queryParams].join('?'))
   }
 }
 
