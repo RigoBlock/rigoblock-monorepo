@@ -72,6 +72,33 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     })
     return fetchJSON(url, queryParams)
   }
+
+  public async softCancelOrder(options: {
+    orderHash: string
+    signature?: {
+      v: number
+      r: string
+      s: string
+    }
+  }): Promise<any> {
+    const url = `${this.API_URL}/orders/soft-cancel`
+    return postJSON(url, options)
+  }
+
+  public async getFeesERCdEX(options: {
+    makerTokenAddress: string
+    takerTokenAddress: string
+    makerTokenAmount: string
+    takerTokenAmount: string
+    maker: string
+    taker: string
+  }): Promise<ZeroExStandardRelayerRaw.RawFee> {
+    const url = `${this.API_URL}/fees`
+    return postJSON(url, {
+      ...options,
+      networkId: this.networkId
+    })
+  }
 }
 
 export namespace ERCdEXRaw {
