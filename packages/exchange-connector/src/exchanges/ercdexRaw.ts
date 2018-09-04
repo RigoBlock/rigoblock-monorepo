@@ -57,9 +57,6 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     quoteTokenAddress: string
     startDate: string
   }): Promise<ERCdEXRaw.HistoricalPrice[]> {
-    if (!options) {
-      throw new Error('Please specify the correct parameters.')
-    }
     const url = `${this.API_URL}/reports/historical`
     return postJSON(url, {
       ...options,

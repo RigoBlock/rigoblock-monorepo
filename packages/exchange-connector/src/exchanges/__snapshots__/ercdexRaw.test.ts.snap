@@ -1848,6 +1848,31 @@ Object {
 }
 `;
 
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getAggregatedOrders Returns an error response if correct parameters are not specified 1`] = `
+Object {
+  "fields": Object {
+    "baseTokenAddress": Object {
+      "message": "'baseTokenAddress' is required",
+    },
+    "makerTokenAddress": Object {
+      "message": "'makerTokenAddress' is required",
+    },
+    "quantity": Object {
+      "message": "'quantity' is required",
+    },
+    "takerAddress": Object {
+      "message": "'takerAddress' is required",
+    },
+    "takerTokenAddress": Object {
+      "message": "'takerTokenAddress' is required",
+    },
+  },
+  "message": "An error occurred during the request.",
+  "name": "ValidateError",
+  "status": 400,
+}
+`;
+
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getBestOrders Gets the order(s) representing the best market price 1`] = `
 Object {
   "orders": Array [
@@ -1881,6 +1906,31 @@ Object {
     },
   ],
   "totalQuantity": "2202372349432846194",
+}
+`;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getBestOrders Returns an error response if correct parameters are not specified 1`] = `
+Object {
+  "fields": Object {
+    "baseTokenAddress": Object {
+      "message": "'baseTokenAddress' is required",
+    },
+    "makerTokenAddress": Object {
+      "message": "'makerTokenAddress' is required",
+    },
+    "quantity": Object {
+      "message": "'quantity' is required",
+    },
+    "takerAddress": Object {
+      "message": "'takerAddress' is required",
+    },
+    "takerTokenAddress": Object {
+      "message": "'takerTokenAddress' is required",
+    },
+  },
+  "message": "An error occurred during the request.",
+  "name": "ValidateError",
+  "status": 400,
 }
 `;
 
@@ -3239,6 +3289,31 @@ Array [
     "volume": 0,
   },
 ]
+`;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getHistoricalPrices Returns an error response if correct parameters are not specified 1`] = `
+Object {
+  "fields": Object {
+    "baseTokenAddress": Object {
+      "message": "'baseTokenAddress' is required",
+    },
+    "makerTokenAddress": Object {
+      "message": "'makerTokenAddress' is required",
+    },
+    "quantity": Object {
+      "message": "'quantity' is required",
+    },
+    "takerAddress": Object {
+      "message": "'takerAddress' is required",
+    },
+    "takerTokenAddress": Object {
+      "message": "'takerTokenAddress' is required",
+    },
+  },
+  "message": "An error occurred during the request.",
+  "name": "ValidateError",
+  "status": 400,
+}
 `;
 
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getTickers Retrieves tickers data. 1`] = `

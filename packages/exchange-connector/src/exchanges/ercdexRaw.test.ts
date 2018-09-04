@@ -32,6 +32,13 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       )
       expect(result).toMatchSnapshot()
     })
+    it('Returns an error response if correct parameters are not specified', async () => {
+      const result: any = await nockBackPromise(
+        'ercdexRaw/getBestOrdersError.json',
+        () => exchange.getBestOrders()
+      )
+      expect(result).toMatchSnapshot()
+    })
   })
   describe('getTickers', () => {
     it('Retrieves tickers data.', async () => {
@@ -64,6 +71,13 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       )
       expect(result).toMatchSnapshot()
     })
+    it('Returns an error response if correct parameters are not specified', async () => {
+      const result: any = await nockBackPromise(
+        'ercdexRaw/getHistoricalPricesError.json',
+        () => exchange.getBestOrders()
+      )
+      expect(result).toMatchSnapshot()
+    })
   })
   describe('getAggregatedOrders', () => {
     it('Gets historical data for order book', async () => {
@@ -74,6 +88,13 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
             baseTokenAddress: '0xe41d2489571d322189246dafa5ebde1f4699f498',
             quoteTokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
           })
+      )
+      expect(result).toMatchSnapshot()
+    })
+    it('Returns an error response if correct parameters are not specified', async () => {
+      const result: any = await nockBackPromise(
+        'ercdexRaw/getAggregatedOrdersError.json',
+        () => exchange.getBestOrders()
       )
       expect(result).toMatchSnapshot()
     })
