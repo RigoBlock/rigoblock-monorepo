@@ -1,0 +1,53 @@
+[
+    {
+        "scope": "https://api.ercdex.com:443",
+        "method": "GET",
+        "path": "/api/orders/best?&makerTokenAddress=0xe41d2489571d322189246dafa5ebde1f4699f498&takerTokenAddress=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&baseTokenAddress=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&quantity=1&takerAddress=0x0000000000000000000000000000000000000000&networkId=1",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b08000000000000038c544d6f243510fd2f3e77a2faf247cd0d452038c2662f3068556d97b3ad4c7a424f0f6459ed7f473d4b1682b212be597eef959f5f953f86e3d27c3985dd2f1fc3d4c20e5115b40ca1d9ea378bdbea2dec0201962b2857546e31ed5877a8d710cbcfe133f0ed637b01d42b905bc41da41d976b96f40cbc391c4f1b6e3e1f0e43987dfde3b8dcffb011310cc19fea7b9beffce638af8bd5f59bd6163f9dc22ec0139244ad1a11293b54ced2bb22c4d60c34a744069441f922f3382db64ec7f9ed3c3ddd4e0f7e5aede1f18dd7ad4ee40229628e6108ddfd27afd3e3e4f37aa96214cbc8aa51aaf7584714ea2da66c926a6b23a3a50c481286f060f7be5c4871546e1db0414a24aa5692aa3441890d92b0d0d8b0257f267de7bef19eb7b7c77b9fff6dd5051b49d198b13111162549cdba451f9b6397a4da45cb4b8187e3f96202e1b5158670b2c3769e8492c0e6820b265692c20c904a81123300698e3973a292b960218cc425a160899c318aaab0a6585463a64dd697c90ed39fdebead6fa6bbd9d6f3b2f9fbb80fbfefc38ef2b00fcb3eecf6019eead8c8c651a517808451991343f23c8e39a11b8ebd14e9b15627678bdc5b895d05dcc63c46da87611f4e7f8b81a6989c3aab246ec05151b9b56491b83577e9254ae7ea286d248b712c894dab6147062efbf0290c61fd1223",
+            "fccff54cfa27c6f5d5182b9099b18e44dcbd3430f058a553766b0a856b8ea9567a29f01c2395f84ae1c51f6c9aa7f9eef615060171261615a62209756bd3cb7c7f6fa7f79ffb3bb75aad23f8d8d1d89472040370ec8d492c8e636505f15144c06acb2a8d7a62ec1c05d396f76aab871d0ce1743c2f757b83c59a2d578b1fec431882d5badd689b6a1ec2e3325d30700d40651bba6a877a3e6cffc5bbff1cbee2f73c6f6edffdb67ef88ac34fbf0e613dae76f8f16cf33a7d1df717000000ffff030063a3a33eeb040000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Tue, 04 Sep 2018 11:07:01 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=dfcecd7950648846f14365e850d47f7011536059221; expires=Wed, 04-Sep-19 11:07:01 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "X-DNS-Prefetch-Control",
+            "off",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Strict-Transport-Security",
+            "max-age=15552000; includeSubDomains",
+            "X-Download-Options",
+            "noopen",
+            "X-Content-Type-Options",
+            "nosniff",
+            "X-XSS-Protection",
+            "1; mode=block",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY-ID",
+            "Via",
+            "1.1 google",
+            "Alt-Svc",
+            "clear",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "454ffd77ef773dbf-MXP",
+            "Content-Encoding",
+            "gzip"
+        ]
+    }
+]

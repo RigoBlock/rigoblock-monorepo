@@ -1,0 +1,69 @@
+[
+    {
+        "scope": "https://api.ercdex.com:443",
+        "method": "GET",
+        "path": "/api/orders/best?&networkId=1",
+        "body": "",
+        "status": 400,
+        "response": {
+            "fields": {
+                "makerTokenAddress": {
+                    "message": "'makerTokenAddress' is required"
+                },
+                "takerTokenAddress": {
+                    "message": "'takerTokenAddress' is required"
+                },
+                "baseTokenAddress": {
+                    "message": "'baseTokenAddress' is required"
+                },
+                "quantity": {
+                    "message": "'quantity' is required"
+                },
+                "takerAddress": {
+                    "message": "'takerAddress' is required"
+                }
+            },
+            "message": "An error occurred during the request.",
+            "name": "ValidateError",
+            "status": 400
+        },
+        "rawHeaders": [
+            "Date",
+            "Tue, 04 Sep 2018 11:16:06 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Content-Length",
+            "398",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=dedc5e09cd10903ddf611a42078ac266b1536059766; expires=Wed, 04-Sep-19 11:16:06 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "X-DNS-Prefetch-Control",
+            "off",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Strict-Transport-Security",
+            "max-age=15552000; includeSubDomains",
+            "X-Download-Options",
+            "noopen",
+            "X-Content-Type-Options",
+            "nosniff",
+            "X-XSS-Protection",
+            "1; mode=block",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY-ID",
+            "Via",
+            "1.1 google",
+            "Alt-Svc",
+            "clear",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "45500ac28ccf431c-MXP"
+        ]
+    }
+]

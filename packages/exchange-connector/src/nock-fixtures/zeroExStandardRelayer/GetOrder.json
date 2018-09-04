@@ -1,0 +1,53 @@
+[
+    {
+        "scope": "https://api.ercdex.com:443",
+        "method": "GET",
+        "path": "/api/standard/1/v0/order/0x7109947a8f4c595f2604445cc4cfc0927fcef5b84b9b33a34528ada629dbd846?",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b08000000000000039491cd6e5c310885dfc5eb5185316033bbaa52d575933e00c638bd4ae74e7433a9224579f76a9226fd53a59625700ef0f190c22f96abd54e775ba4fd43fa9af6d876694bfb04f792a599d531a09a8458cf5a906a50d5685dad171719a25a2b612d302d4f9ba459c9c078a45dba7d32a2886283c421b466f651c40d8abb1721acc86372761dda7480699fb9e798dad9a6ce69901e7729eefdb3ad57f1eeb89e36f3d3db31b6b87df6cf48acae9c33d6002f95e6d40c3c8681561134c00a5ad2d9e666d9ecb41cd74feb727fb91ce2f664879b8bf0b44f940189a801a45d9a111fc3979b25d6d3f3945a0c49aa87479e95317aa32c514a1d30a173731b5539edd2c1aee33b43e826368a8a4feb927d601e3518631252b4660073d07c11bd8f48fbd40a006a452284862fb5cbe375ac3fdfed806656b42396196d8041b0d3c41a36145af1cae2fe9bc1e178f774514661f811e76fd9977381495a11200692d6b2b2226163c9ad520504a00c67ae500b56ae5809b01402459122ac92b14923842c4c69974eaf34e01fe345f44c2373ab505848b2b220302bbeb6fc01857088208ef0284a9d4955671fb58c0c2d636920532cb75f0d5ea0f0df37dae260cbbaac5797ff253b6e23b60f76fbf969bb9a4195aab549ceca13058888ddc9a783629d1e937ba3aebd142bc4d86c98a08e3e",
+            "1ac9f94bc7bbcdcf5c62f311f769976eb6e529016f5e072397f4f80d0000ffff030040124e88df030000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Tue, 04 Sep 2018 10:39:26 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=d1038e5fb05d6bdbc513d1c8d1f9d0f441536057564; expires=Wed, 04-Sep-19 10:39:24 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "X-DNS-Prefetch-Control",
+            "off",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Strict-Transport-Security",
+            "max-age=15552000; includeSubDomains",
+            "X-Download-Options",
+            "noopen",
+            "X-Content-Type-Options",
+            "nosniff",
+            "X-XSS-Protection",
+            "1; mode=block",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY-ID",
+            "Via",
+            "1.1 google",
+            "Alt-Svc",
+            "clear",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "454fd503fcb5be57-MXP",
+            "Content-Encoding",
+            "gzip"
+        ]
+    }
+]

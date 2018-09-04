@@ -1,24 +1,36 @@
-import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
+import {
+  AMOUNT_PRECISION,
+  NETWORKS,
+  PRICE_PRECISION,
+  TRANSPORTS
+} from '../constants'
 import { IExchange, OrderType, OrdersList, TickersList } from './types'
 import BigNumber from 'bignumber.js'
 
 export class Ethfinex
   implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
-  public static HTTP_API_URLS = {
-    [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
-    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
-    [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
+  public static HTTP_API_URLS = {}
+  public static API_URLS = {
+    [TRANSPORTS.HTTP]: {
+      [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
+      [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
+      [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
+    }
   }
-  public HTTP_API_URL: string
+  public API_URL: string
   private TICKERS_TOKEN_PAIRS: string[] = [
     Ethfinex.TokenPairs.ZRXETH,
     Ethfinex.TokenPairs.MKRETH,
     Ethfinex.TokenPairs.GNTETH
   ]
 
-  constructor(public networkId, public transport = 'http') {
-    this.HTTP_API_URL = Ethfinex.HTTP_API_URLS[networkId]
+  constructor(
+    public networkId: NETWORKS | number,
+    public transport: TRANSPORTS = TRANSPORTS.HTTP,
+    public apiUrl?: string
+  ) {
+    this.API_URL = apiUrl ? apiUrl : Ethfinex.API_URLS[transport][networkId]
   }
 
   public async getOrders(
@@ -48,7 +60,7 @@ export class Ethfinex
       }
     ): Promise<Ethfinex.RawTicker[]> => {
       const url = `${
-        this.HTTP_API_URL
+        this.API_URL
       }/tickers?symbols=${options.tokenPairs.toString()}`
       return fetch(url).then(r => r.json())
     },
@@ -57,9 +69,7 @@ export class Ethfinex
       quoteToken: string,
       precision: Ethfinex.OrderPrecisions = Ethfinex.OrderPrecisions.P0
     ): Promise<Ethfinex.RawOrder[]> => {
-      const url = `${
-        this.HTTP_API_URL
-      }/book/t${baseToken}${quoteToken}/${precision}`
+      const url = `${this.API_URL}/book/t${baseToken}${quoteToken}/${precision}`
       return fetch(url).then(r => r.json())
     },
     getCandles: async (
@@ -72,7 +82,7 @@ export class Ethfinex
       end?: string // filter end (ms)
     ): Promise<Ethfinex.RawCandle[]> => {
       const url = `${
-        this.HTTP_API_URL
+        this.API_URL
       }/candles/trade:${timeFrame}:${tokenPair}/${section}?limit=${limit}&sort=${sort}&start=${start}&end=${end}`
       return fetch(url).then(r => r.json())
     }
@@ -125,7 +135,7 @@ export class Ethfinex
     return tickersList
   }
 
-  public network(id: string = NETWORKS.MAINNET): Ethfinex {
+  public network(id: number = NETWORKS.MAINNET): Ethfinex {
     return new Ethfinex(id, this.transport)
   }
 

@@ -8,6 +8,8 @@
     "src/**/*.test.ts"
   ],
   "compilerOptions": {
-    "declarationDir": "./"
+    "declarationDir": "./",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   }
 }
