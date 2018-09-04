@@ -1,14 +1,17 @@
 import 'whatwg-fetch'
 import * as nock from 'nock'
 import { ERCdEXRaw } from './ercdexRaw'
-import { NETWORKS } from '../constants'
+import { NETWORKS, TRANSPORTS } from '../constants'
+import Web3 from 'web3'
 import nockBackPromise from '../nockBackPromise'
 
 describe('it allows us to perform API calls to exchanges following 0x Standard Relayer API', () => {
+  const kovanUrl = 'https://kovan.dev.endpoint.network/rpc'
+  const web3 = new Web3(new Web3.providers.HttpProvider(kovanUrl))
   let exchange
   beforeAll(() => {
     nock.disableNetConnect()
-    exchange = new ERCdEXRaw(NETWORKS.MAINNET)
+    exchange = new ERCdEXRaw(NETWORKS.MAINNET, TRANSPORTS.HTTP, web3)
   })
 
   afterAll(() => {
@@ -28,9 +31,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
           })
       )
       expect(result).toMatchSnapshot()
-    })
-    it('Returns an error response if the correct parameters are not passed to the call.', async () => {
-      expect(exchange.getBestOrders()).rejects.toThrowErrorMatchingSnapshot()
     })
   })
   describe('getTickers', () => {
@@ -64,11 +64,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       )
       expect(result).toMatchSnapshot()
     })
-    it('Returns an error response if the correct parameters are not passed to the call.', async () => {
-      expect(
-        exchange.getHistoricalPrices()
-      ).rejects.toThrowErrorMatchingSnapshot()
-    })
   })
   describe('getAggregatedOrders', () => {
     it('Gets historical data for order book', async () => {
@@ -81,11 +76,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
           })
       )
       expect(result).toMatchSnapshot()
-    })
-    it('Returns an error response if the correct parameters are not passed to the call.', async () => {
-      expect(
-        exchange.getAggregatedOrders()
-      ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
   describe('Standard Relayer calls', () => {
