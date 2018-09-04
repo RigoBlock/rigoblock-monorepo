@@ -1,7 +1,7 @@
+import { BigNumber } from 'bignumber.js'
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import { fromMicro, fromWei, toBigNumber } from '../utils'
 import aEthfinexArtifact from '../../artifacts/AEthfinex.json'
-import { BigNumber } from 'bignumber.js'
 
 import web3 from '../web3'
 
@@ -42,46 +42,55 @@ describeContract(contractName, () => {
       const time = 1 // 1 hour lockup (the minimum)
       const authorityAddress = baseContracts['ExchangesAuthority'].address
 
-      await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
+      await baseContracts['ExchangesAuthority'].whitelistWrapper(
+        tokenWrapper,
+        true
+      )
       await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
         tokenAddress,
         tokenWrapper,
         true
       )
       await aEthfinexInstance.methods
-        .wrapToEfx(
-          tokenAddress,
-          tokenWrapper,
-          toBeWrapped,
-          time
-        ).send({
+        .wrapToEfx(tokenAddress, tokenWrapper, toBeWrapped, time)
+        .send({
           ...transactionDefault,
           value: toBeWrapped
         })
-      const wethBalance = await baseContracts['WrapperLockEth'].balanceOf(aEthfinexAddress)
+      const wethBalance = await baseContracts['WrapperLockEth'].balanceOf(
+        aEthfinexAddress
+      )
       // if a deposit is repeated, weth balance will be equal to the sum of depositAmouns
       expect(wethBalance.toString()).toEqual(toBeWrapped.toString())
     })
     it.skip('wraps some GRG tokens to its efx token wrapper', async () => {
       //must send some GRGs to the adapter first
       const GRGtokensAmount = web3.utils.toWei('101')
-      await baseContracts['RigoToken'].transfer(aEthfinexAddress, GRGtokensAmount)
+      await baseContracts['RigoToken'].transfer(
+        aEthfinexAddress,
+        GRGtokensAmount
+      )
 
       const tokenAddress = await baseContracts['RigoToken'].address
       const tokenWrapper = await baseContracts['WrapperLock'].address
       const toBeWrapped = web3.utils.toWei('10') // alt 200000
       const time = 1 // minimum duration 1 hour.
 
-      await baseContracts['ExchangesAuthority'].whitelistWrapper(tokenWrapper, true)
-      await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(tokenAddress, tokenWrapper, true)
+      await baseContracts['ExchangesAuthority'].whitelistWrapper(
+        tokenWrapper,
+        true
+      )
+      await baseContracts['ExchangesAuthority'].whitelistAssetOnExchange(
+        tokenAddress,
+        tokenWrapper,
+        true
+      )
       await aEthfinexInstance.methods
-        .wrapToEfx(
-          tokenAddress,
-          tokenWrapper,
-          toBeWrapped,
-          time
-        ).send({ ...transactionDefault })
-      const wrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(aEthfinexAddress)
+        .wrapToEfx(tokenAddress, tokenWrapper, toBeWrapped, time)
+        .send({ ...transactionDefault })
+      const wrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(
+        aEthfinexAddress
+      )
       expect(wrappedTokensAmount.toString()).toEqual(toBeWrapped.toString())
     })
   })
