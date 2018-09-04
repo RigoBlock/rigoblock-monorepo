@@ -1,7 +1,6 @@
 import { NETWORKS, TRANSPORTS } from '../constants'
 import { ZeroExStandardRelayerRaw } from './zeroExStandardRelayerRaw'
 import { fetchJSON, getQueryParameters, postJSON } from '../utils'
-import Web3 from 'web3'
 
 export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
@@ -14,13 +13,11 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   constructor(
     public networkId: NETWORKS | number,
     public transport: TRANSPORTS = TRANSPORTS.HTTP,
-    public web3: Web3,
     public apiUrl?: string
   ) {
     super(
       networkId,
       transport,
-      web3,
       apiUrl || `${ERCdEXRaw.API_URLS[transport]}/standard/${networkId}`
     )
     this.API_URL = apiUrl ? apiUrl : ERCdEXRaw.API_URLS[transport]

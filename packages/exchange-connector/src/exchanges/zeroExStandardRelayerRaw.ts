@@ -1,6 +1,5 @@
 import { NETWORKS, TRANSPORTS } from '../constants'
 import { fetchJSON, getQueryParameters } from '../utils'
-import Web3 from 'web3'
 
 export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   static SUPPORTED_NETWORKS: NETWORKS[] = [
@@ -11,14 +10,10 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   constructor(
     public networkId: NETWORKS | number,
     public transport: TRANSPORTS = TRANSPORTS.HTTP,
-    public web3: Web3,
     public STANDARD_API_URL: string
   ) {
     if (!STANDARD_API_URL) {
       throw new Error('API url must be specified for 0x standard relayers.')
-    }
-    if (!web3) {
-      throw new Error('web3 instance is required.')
     }
   }
   /**

@@ -6,7 +6,6 @@ import {
 } from '../constants'
 import { IExchange, OrderType, OrdersList, TickersList } from './types'
 import BigNumber from 'bignumber.js'
-import Web3 from 'web3'
 
 export class Ethfinex
   implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
@@ -29,7 +28,6 @@ export class Ethfinex
   constructor(
     public networkId: NETWORKS | number,
     public transport: TRANSPORTS = TRANSPORTS.HTTP,
-    public web3: Web3,
     public apiUrl?: string
   ) {
     this.API_URL = apiUrl ? apiUrl : Ethfinex.API_URLS[transport][networkId]
@@ -138,7 +136,7 @@ export class Ethfinex
   }
 
   public network(id: number = NETWORKS.MAINNET): Ethfinex {
-    return new Ethfinex(id, this.transport, this.web3)
+    return new Ethfinex(id, this.transport)
   }
 
   private checkForError(array: any[]) {

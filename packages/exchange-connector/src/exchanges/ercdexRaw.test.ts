@@ -2,16 +2,13 @@ import 'whatwg-fetch'
 import * as nock from 'nock'
 import { ERCdEXRaw } from './ercdexRaw'
 import { NETWORKS, TRANSPORTS } from '../constants'
-import Web3 from 'web3'
 import nockBackPromise from '../nockBackPromise'
 
 describe('it allows us to perform API calls to exchanges following 0x Standard Relayer API', () => {
-  const kovanUrl = 'https://kovan.dev.endpoint.network/rpc'
-  const web3 = new Web3(new Web3.providers.HttpProvider(kovanUrl))
   let exchange
   beforeAll(() => {
     nock.disableNetConnect()
-    exchange = new ERCdEXRaw(NETWORKS.MAINNET, TRANSPORTS.HTTP, web3)
+    exchange = new ERCdEXRaw(NETWORKS.MAINNET, TRANSPORTS.HTTP)
   })
 
   afterAll(() => {

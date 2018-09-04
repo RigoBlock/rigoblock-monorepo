@@ -1,7 +1,6 @@
 import { Ethfinex } from './exchanges/ethfinex'
 import { NETWORKS, TRANSPORTS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
-import Web3 from 'web3'
 import ZeroExStandardRelayerRaw from './exchanges/zeroExStandardRelayerRaw'
 
 function exchangeConnector(
@@ -17,8 +16,7 @@ function exchangeConnector(
   options = {
     networkId: NETWORKS.MAINNET,
     transport: TRANSPORTS.HTTP,
-    apiUrl: '',
-    web3: null
+    apiUrl: ''
   }
 ): any {
   const selectedExchange = ExchangesMap[exchangeName]
@@ -33,7 +31,6 @@ function exchangeConnector(
   return new selectedExchange(
     options.networkId,
     options.transport,
-    options.web3,
     options.apiUrl
   )
 }
@@ -41,8 +38,7 @@ function exchangeConnector(
 export default exchangeConnector
 
 interface ExchangeOptions {
-  networkId?: NETWORKS
+  networkId?: NETWORKS | number
   transport?: TRANSPORTS
   apiUrl?: string
-  web3?: Web3
 }
