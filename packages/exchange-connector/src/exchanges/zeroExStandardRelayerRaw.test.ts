@@ -96,17 +96,9 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       )
       expect(result).toMatchSnapshot()
     })
-    it("returns an error response if we don't specify both addresses", async () => {
-      const baseTokenAddress = '0xe41d2489571d322189246dafa5ebde1f4699f498'
+    it('Returns an error response if correct parameters are not specified', async () => {
       const result: any = await nockBackPromise(
-        'zeroExStandardRelayer/GetOrderbookWithOneAddress.json',
-        () => exchange.getOrderbook({ baseTokenAddress })
-      )
-      expect(result).toMatchSnapshot()
-    })
-    it("returns an error response if we don't specify any address", async () => {
-      const result: any = await nockBackPromise(
-        'zeroExStandardRelayer/GetOrderbookWithNoAddresses.json',
+        'zeroExStandardRelayer/GetOrderbookError.json',
         () => exchange.getOrderbook()
       )
       expect(result).toMatchSnapshot()

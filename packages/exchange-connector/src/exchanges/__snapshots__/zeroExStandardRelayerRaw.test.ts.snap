@@ -28,6 +28,22 @@ Object {
 
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrder throws an error if parameters aren't specified 1`] = `"Cannot read property 'orderHash' of undefined"`;
 
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrderbook Returns an error response if correct parameters are not specified 1`] = `
+Object {
+  "fields": Object {
+    "baseTokenAddress": Object {
+      "message": "'baseTokenAddress' is required",
+    },
+    "quoteTokenAddress": Object {
+      "message": "'quoteTokenAddress' is required",
+    },
+  },
+  "message": "An error occurred during the request.",
+  "name": "ValidateError",
+  "status": 400,
+}
+`;
+
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrderbook retrieves the orderbook for a given token pair. 1`] = `
 Object {
   "asks": Array [
@@ -149,35 +165,6 @@ Object {
       "takerTokenAmount": "1064269458836718005843",
     },
   ],
-}
-`;
-
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrderbook returns an error response if we don't specify any address 1`] = `
-Object {
-  "fields": Object {
-    "baseTokenAddress": Object {
-      "message": "'baseTokenAddress' is required",
-    },
-    "quoteTokenAddress": Object {
-      "message": "'quoteTokenAddress' is required",
-    },
-  },
-  "message": "An error occurred during the request.",
-  "name": "ValidateError",
-  "status": 400,
-}
-`;
-
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrderbook returns an error response if we don't specify both addresses 1`] = `
-Object {
-  "fields": Object {
-    "quoteTokenAddress": Object {
-      "message": "'quoteTokenAddress' is required",
-    },
-  },
-  "message": "An error occurred during the request.",
-  "name": "ValidateError",
-  "status": 400,
 }
 `;
 
