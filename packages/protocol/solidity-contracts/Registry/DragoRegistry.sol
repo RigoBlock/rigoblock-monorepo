@@ -43,7 +43,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     mapping (bytes32 => address) mapFromKey;
     mapping (address => uint256) mapFromAddress;
     mapping (string => uint256) mapFromName;
-    mapping (string => uint256) mapFromSymbol;
 
     struct Drago {
         address drago;
@@ -73,16 +72,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         _;
     }
 
-    modifier whenIsSymbol(string _symbol) {
-        require(bytes(_symbol).length == 3);
-        _;
-    }
-
-    modifier whenHasSymbol(string _symbol) {
-        require(mapFromSymbol[_symbol] != 0);
-        _;
-    }
-
     modifier onlyDragoOwner(uint256 _id) {
         require(dragos[_id].owner == msg.sender);
         _;
@@ -96,11 +85,11 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     modifier whenNameSanitized(string _input) {
         require(bytes(_input).length >= 4 && bytes(_input).length <= 50);
         require(LibSanitize.isValidCheck(_input));
-        require(LibSanitize.isLowercase(_input));
         _;
     }
 
     modifier whenSymbolSanitized(string _input) {
+        require(bytes(_input).length >= 3 && bytes(_input).length <= 5);
         require(LibSanitize.isValidCheck(_input));
         require(LibSanitize.isUppercase(_input));
         _;
@@ -143,7 +132,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         whenNameSanitized(_name)
         whenSymbolSanitized(_symbol)
         whenNameFree(_name)
-        whenIsSymbol(_symbol)
         returns (bool)
     {
         return registerAs(_drago, _name, _symbol, _dragoId, _owner, msg.sender);
@@ -158,7 +146,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         emit Unregistered(dragos[_id].name, dragos[_id].symbol, _id);
         delete mapFromAddress[dragos[_id].drago];
         delete mapFromName[dragos[_id].name];
-        delete mapFromSymbol[dragos[_id].symbol];
         delete dragos[_id];
     }
 
@@ -330,22 +317,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         );
     }
 
-    /// @dev Provides a pool's struct data
-    /// @param _name Name of the pool
-    /// @param _symbol Symbol of the pool
-    /// @return Pool struct data
-    function fromNameSymbol(string _name, string _symbol)
-        external view
-        returns (address)
-    {
-        uint256 id = mapFromName[_name] - 1;
-        uint256 idCheck = mapFromSymbol[_symbol] - 1;
-        Drago memory pool = dragos[id];
-        require(id == idCheck);
-        address drago = pool.drago;
-        return drago;
-    }
-
     /// @dev Provides a pool's name from its address
     /// @param _pool Address of the pool
     /// @return Name of the pool
@@ -421,7 +392,6 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         dragos.push(Drago(_drago, _name, _symbol, _dragoId, _owner, _group));
         mapFromAddress[_drago] = dragos.length;
         mapFromName[_name] = dragos.length;
-        mapFromSymbol[_symbol] = dragos.length;
         emit Registered(_name, _symbol, dragos.length - 1, _drago, _owner, _group);
         return true;
     }
