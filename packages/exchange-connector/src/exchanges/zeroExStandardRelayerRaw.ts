@@ -1,5 +1,4 @@
 import { NETWORKS, TRANSPORTS } from '../constants'
-import { ZeroEx } from '0x.js'
 import { fetchJSON, getQueryParameters } from '../utils'
 import Web3 from 'web3'
 
@@ -9,7 +8,6 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
     NETWORKS.KOVAN,
     NETWORKS.ROPSTEN
   ]
-  public zeroEx: ZeroEx
   constructor(
     public networkId: NETWORKS | number,
     public transport: TRANSPORTS = TRANSPORTS.HTTP,
@@ -22,9 +20,6 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
     if (!web3) {
       throw new Error('web3 instance is required.')
     }
-    this.zeroEx = new ZeroEx(web3.currentProvider as any, {
-      networkId
-    })
   }
   /**
    * Accepts one or two optional token addresses.
