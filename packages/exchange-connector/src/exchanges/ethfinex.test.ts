@@ -1,4 +1,3 @@
-import 'jest'
 import * as ExchangeTypes from './types'
 import { NETWORKS } from '../constants'
 

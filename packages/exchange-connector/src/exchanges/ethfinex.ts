@@ -123,7 +123,7 @@ export class Ethfinex
     return tickersList
   }
 
-  public network(id: string = NETWORKS.MAINNET): Ethfinex {
+  public network(id: number = NETWORKS.MAINNET): Ethfinex {
     return new Ethfinex(id, this.transport)
   }
 

@@ -13,9 +13,9 @@ export enum supportedExchanges {
 }
 
 export enum NETWORKS {
-  MAINNET = '1',
-  KOVAN = '42',
-  ROPSTEN = '3'
+  MAINNET = 1,
+  KOVAN = 42,
+  ROPSTEN = 3
 }
 
 export enum TRANSPORTS {

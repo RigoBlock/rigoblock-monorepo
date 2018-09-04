@@ -1,4 +1,3 @@
-import 'jest'
 import { Ethfinex } from './exchanges/ethfinex'
 import { NETWORKS, supportedExchanges } from './constants'
 import { ZeroExStandardRelayerRaw } from './exchanges/zeroExStandardRelayerRaw'

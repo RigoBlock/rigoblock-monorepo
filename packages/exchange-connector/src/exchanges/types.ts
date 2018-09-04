@@ -62,5 +62,5 @@ export interface IExchange<
     tokenPairs?: TICKERS_TOKEN_PAIRS
   }): Promise<TickersList>
 
-  network(id: string): IExchange
+  network(id: number): IExchange
 }

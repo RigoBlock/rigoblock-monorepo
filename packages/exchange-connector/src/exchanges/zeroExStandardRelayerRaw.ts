@@ -1,71 +1,73 @@
-import { getQueryParameters } from '../utils'
+import { NETWORKS } from '../constants'
+import { ZeroEx } from '0x.js'
+import { fetchJSON, getQueryParameters } from '../utils'
+import Web3 from 'web3'
 
 export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
-  constructor(public STANDARD_API_URL, public transport = 'http') {}
+  static SUPPORTED_NETWORKS: NETWORKS[] = [
+    NETWORKS.MAINNET,
+    NETWORKS.KOVAN,
+    NETWORKS.ROPSTEN
+  ]
+  public zeroEx: ZeroEx
+  constructor(
+    public networkId,
+    public transport = 'http',
+    public web3: Web3,
+    public STANDARD_API_URL
+  ) {
+    if (!STANDARD_API_URL) {
+      throw new Error('API url must be specified for 0x standard relayers.')
+    }
+    if (!web3) {
+      throw new Error('web3 instance is required.')
+    }
+    this.zeroEx = new ZeroEx(web3.currentProvider as any, {
+      networkId
+    })
+  }
   /**
    * Accepts one or two optional token addresses.
    * Setting only tokenA or tokenB returns pairs filtered by that token only
    */
-  public async getTokenPairs(
-    options: {
-      tokenA?: string
-      tokenB?: string
-    } = {}
-  ): Promise<ZeroExStandardRelayerRaw.TokenPair[]> {
-    if (!Object.keys(options).length) {
-      const url = `${this.STANDARD_API_URL}/v0/token_pairs`
-      return fetch(url).then(r => r.json())
-    }
-    const queryParameters = getQueryParameters(options)
-    const url = `${this.STANDARD_API_URL}/v0/token_pairs${queryParameters}`
-    return fetch(url).then(r => r.json())
+  public async getTokenPairs(options: {
+    tokenA?: string
+    tokenB?: string
+  }): Promise<ZeroExStandardRelayerRaw.TokenPair[]> {
+    const url = `${this.STANDARD_API_URL}/v0/token_pairs`
+    const queryParams = getQueryParameters(options)
+    return fetchJSON(url, queryParams)
   }
 
-  // !! TODO: Add parameters to query
-  public async getOrders(
-    options: {
-      exchangeContractAddress?: string // returns orders created for this exchange address
-      tokenAddress?: string // returns orders where makerTokenAddress or takerTokenAddress is token address,
-      makerTokenAddress?: string // returns orders with specified makerTokenAddress,
-      takerTokenAddress?: string // returns orders with specified makerTokenAddress,
-      maker?: string // returns orders where maker is maker address,
-      taker?: string // returns orders where taker is taker address,
-      trader?: string // returns orders where maker or taker is trader address,
-      feeRecipient?: string // returns orders where feeRecipient is feeRecipient address
-    } = {}
-  ): Promise<ZeroExStandardRelayerRaw.RawOrder[]> {
-    if (!Object.keys(options).length) {
-      const url = `${this.STANDARD_API_URL}/v0/orders`
-      return fetch(url).then(r => r.json())
-    }
-    const queryParameters = getQueryParameters(options)
-    const url = `${this.STANDARD_API_URL}/v0/orders${queryParameters}`
-    return fetch(url).then(r => r.json())
+  public async getOrders(options: {
+    exchangeContractAddress?: string
+    tokenAddress?: string
+    makerTokenAddress?: string
+    takerTokenAddress?: string
+    maker?: string
+    taker?: string
+    trader?: string
+    feeRecipient?: string
+  }): Promise<ZeroExStandardRelayerRaw.RawOrder[]> {
+    const url = `${this.STANDARD_API_URL}/v0/orders`
+    const queryParams = getQueryParameters(options)
+    return fetchJSON(url, queryParams)
   }
 
-  public async getOrder(
+  public async getOrder(options: {
     orderHash: string
-  ): Promise<ZeroExStandardRelayerRaw.RawOrder> {
-    if (!orderHash) {
-      throw new Error('Order hash must be specified.')
-    }
-    const url = `${this.STANDARD_API_URL}/v0/order/${orderHash}`
-    return fetch(url).then(r => r.json())
+  }): Promise<ZeroExStandardRelayerRaw.RawOrder> {
+    const url = `${this.STANDARD_API_URL}/v0/order/${options.orderHash}`
+    return fetchJSON(url)
   }
 
-  public async getOrderbook(
-    baseTokenAddress: string, // address of token designated as the baseToken in the currency pair calculation of price
-    quoteTokenAddress: string // address of token designated as the quoteToken in the currency pair calculation of price
-  ): Promise<ZeroExStandardRelayerRaw.OrderBook> {
-    if (!baseTokenAddress || !quoteTokenAddress) {
-      throw new Error(
-        'Both baseTokenAddress and quoteTokenAddress must be specified.'
-      )
-    }
-    const url = `${
-      this.STANDARD_API_URL
-    }/v0/orderbook?baseTokenAddress=${baseTokenAddress}&quoteTokenAddress=${quoteTokenAddress}`
-    return fetch(url).then(r => r.json())
+  public async getOrderbook(options: {
+    baseTokenAddress: string
+    quoteTokenAddress: string
+  }): Promise<ZeroExStandardRelayerRaw.OrderBook> {
+    const url = `${this.STANDARD_API_URL}/v0/orderbook`
+    const queryParams = getQueryParameters(options)
+    return fetchJSON(url, queryParams)
   }
 }
 
