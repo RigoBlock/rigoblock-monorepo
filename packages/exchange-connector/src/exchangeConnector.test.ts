@@ -1,9 +1,13 @@
+import 'jest'
 import { Ethfinex } from './exchanges/ethfinex'
 import { NETWORKS, supportedExchanges } from './constants'
 import { ZeroExStandardRelayerRaw } from './exchanges/zeroExStandardRelayerRaw'
+import Web3 from 'web3'
 import exchangeConnector from './exchangeConnector'
 
 describe('Exchange factory class', () => {
+  const kovanUrl = 'https://kovan.dev.endpoint.network/rpc'
+  const web3 = new Web3(new Web3.providers.HttpProvider(kovanUrl))
   it('returns a new instance of the selected Exchange class', () => {
     const exchange = exchangeConnector(supportedExchanges.ETHFINEX)
     expect(exchange).toBeInstanceOf(Ethfinex)
@@ -25,7 +29,9 @@ describe('Exchange factory class', () => {
 
   it('instantiates the ZeroExStandardRelayerRaw if we pass "0xStandardRelayer" as exchangeName and an api url', () => {
     const exchange = exchangeConnector(supportedExchanges.ZEROEXRELAYER, {
-      apiUrl: 'https://api.radarrelay.com/0x'
+      apiUrl: 'https://api.radarrelay.com/0x',
+      networkId: NETWORKS.MAINNET,
+      web3
     })
     expect(JSON.stringify(exchange.constructor)).toEqual(
       JSON.stringify(ZeroExStandardRelayerRaw)

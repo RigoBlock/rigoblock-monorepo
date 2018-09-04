@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Exchange factory class throws an error if we try to instance an exchange with an unsupported network 1`] = `"Network not supported on this exchange: 3"`;
+exports[`Exchange factory class throws an error if we try to instance an exchange with an unsupported network 1`] = `"Network Id not supported for selected network: 3"`;
 
 exports[`Exchange factory class throws an error if we try to instance an unsupported exchange 1`] = `"Exchange not supported: random"`;
 
-exports[`Exchange factory class throws an error if we try to instantiate a 0x relayer without passing the API url 1`] = `"API url must be specified for 0x standard relayers"`;
+exports[`Exchange factory class throws an error if we try to instantiate a 0x relayer without passing the API url 1`] = `"API url must be specified for 0x standard relayers."`;
