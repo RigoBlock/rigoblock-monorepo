@@ -40,7 +40,9 @@
   "dependencies": {
     "node-fetch": "^2.2.0",
     "promise": "^8.0.1",
-    "whatwg-fetch": "^2.0.4"
+    "reconnecting-websocket": "^4.0.0-rc5",
+    "whatwg-fetch": "^2.0.4",
+    "ws": "^6.0.0"
   },
   "babel": {
     "presets": [
