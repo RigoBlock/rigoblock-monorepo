@@ -17,7 +17,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       nock.enableNetConnect()
     })
     describe('getTickers', () => {
-      it('Gets the order(s) representing the best market price', async () => {
+      it('returns data representing a high level overview of the state of the market.', async () => {
         const options = { symbols: ['BTCUSD'] }
         const result: any = await nockBackPromise(
           'ethfinexRaw/http_getTickers.json',
@@ -27,7 +27,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       })
     })
     describe('getOrders', () => {
-      it('Gets the order(s) representing the best market price', async () => {
+      it('returns orders on a price aggregated basis, with customizable precision.', async () => {
         const options = { symbols: 'BTCUSD' }
         const result: any = await nockBackPromise(
           'ethfinexRaw/http_getOrders.json',
@@ -37,7 +37,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       })
     })
     describe('getCandles', () => {
-      it('Gets the order(s) representing the best market price', async () => {
+      it('returns data that provides a way to access charting candle info.', async () => {
         const options = { timeframe: '15m', symbols: 'BTCUSD', section: 'last' }
         const result: any = await nockBackPromise(
           'ethfinexRaw/http_getCandles.json',

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getCandles Gets the order(s) representing the best market price 1`] = `null`;
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getCandles returns data that provides a way to access charting candle info. 1`] = `null`;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getOrders Gets the order(s) representing the best market price 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getOrders returns orders on a price aggregated basis, with customizable precision. 1`] = `
 Array [
   Array [
     6989.4,
@@ -257,7 +257,7 @@ Array [
 ]
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getTickers Gets the order(s) representing the best market price 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getTickers returns data representing a high level overview of the state of the market. 1`] = `
 Array [
   Array [
     "tBTCUSD",
