@@ -1,4 +1,3 @@
-import 'jest'
 import 'whatwg-fetch'
 import * as nock from 'nock'
 import { NETWORKS } from '../constants'
