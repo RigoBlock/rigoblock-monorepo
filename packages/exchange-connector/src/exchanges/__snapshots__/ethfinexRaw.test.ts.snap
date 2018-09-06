@@ -1,6 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getCandles returns data that provides a way to access charting candle info. 1`] = `null`;
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getCandles returns data that provides a way to access charting candle info. 1`] = `
+Array [
+  1536246900000,
+  6437,
+  6448.3,
+  6448.9,
+  6437,
+  92.21998464,
+]
+`;
 
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getOrders accepts a precision parameter 1`] = `
 Array [
