@@ -189,16 +189,9 @@ describeContract(contractName, () => {
         expirationUnixTimestampSec,
         salt
       ]
-      // console.log(orderValues)
 
       const fillTakerTokenAmount = web3.utils.toWei('0.15')
       const shouldThrowOnInsufficientBalanceOrAllowance = false // if set to 0 the transaction stops and does not throw and error
-
-      // check the balances
-      const makerBalance = await baseContracts['WrapperLockEth'].balanceOf(maker)
-      const takerBalance = await baseContracts['WrapperLock'].balanceOf(taker)
-      console.log(makerBalance.toString())
-      console.log(takerBalance.toString())
 
       const v = (new BigNumber(ecSignature.v)).toString()
       const r = ecSignature.r
@@ -211,11 +204,11 @@ describeContract(contractName, () => {
         r,
         s
       )
-      //console.log(isValidSignature)
 
       // in order to move wrapped tokens, either the from or to address must be signer
       const isETHWSigner = await baseContracts['WrapperLockEth'].isSigner(accounts[0])
       const isGRGWSigner = await baseContracts['WrapperLockEth'].isSigner(accounts[0])
+      expect(isETHWSigner || isGRGWSigner).toEqual(true)
 
       const txHash = await baseContracts['ExchangeEfx'].fillOrder.sendTransactionAsync(
         orderAddresses,
@@ -227,12 +220,7 @@ describeContract(contractName, () => {
         s,
         transactionDefault
       )
-      //console.log(txHash)
-
-      const GRGremainingTokensAmount = await baseContracts['WrapperLock'].balanceOf(accounts[0])
-      console.log(GRGwrappedTokensAmount.toString())
-      console.log(GRGremainingTokensAmount.toString())
-      //expect(GRGwrappedTokensAmount.toString()).toEqual(GRGtoBeWrapped.toString())
+      expect(txHash).toBeHash()
     })
   })
 })
