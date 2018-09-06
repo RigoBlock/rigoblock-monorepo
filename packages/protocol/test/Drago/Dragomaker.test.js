@@ -189,7 +189,6 @@ describeContract(contractName, () => {
         expirationUnixTimestampSec,
         salt
       ]
-      // console.log(orderValues)
 
       const fillTakerTokenAmount = web3.utils.toWei('0.15')
       const shouldThrowOnInsufficientBalanceOrAllowance = true // if set to 0 the transaction stops and does not throw and error
