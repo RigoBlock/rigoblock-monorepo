@@ -1,0 +1,276 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getCandles Gets the order(s) representing the best market price 1`] = `null`;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getOrders Gets the order(s) representing the best market price 1`] = `
+Array [
+  Array [
+    6989.4,
+    3,
+    0.06743498,
+  ],
+  Array [
+    6988.9,
+    4,
+    3.2757,
+  ],
+  Array [
+    6988.3,
+    2,
+    1.6,
+  ],
+  Array [
+    6988,
+    1,
+    14.90515794,
+  ],
+  Array [
+    6986,
+    3,
+    1.2,
+  ],
+  Array [
+    6985.5,
+    1,
+    0.4,
+  ],
+  Array [
+    6985.4,
+    1,
+    0.1,
+  ],
+  Array [
+    6985.3,
+    1,
+    1.5,
+  ],
+  Array [
+    6985,
+    1,
+    0.074,
+  ],
+  Array [
+    6982.9,
+    3,
+    2.50693346,
+  ],
+  Array [
+    6982.7,
+    2,
+    0.7723036,
+  ],
+  Array [
+    6982.2,
+    1,
+    0.04627444,
+  ],
+  Array [
+    6982,
+    1,
+    1.5,
+  ],
+  Array [
+    6981.8,
+    1,
+    0.00563259,
+  ],
+  Array [
+    6981.7,
+    1,
+    3,
+  ],
+  Array [
+    6981.2,
+    1,
+    0.04627305,
+  ],
+  Array [
+    6980.9,
+    1,
+    2.5,
+  ],
+  Array [
+    6980.5,
+    1,
+    0.33696134,
+  ],
+  Array [
+    6980.4,
+    2,
+    4.1,
+  ],
+  Array [
+    6979.7,
+    14,
+    2.71275259,
+  ],
+  Array [
+    6979.3,
+    1,
+    1,
+  ],
+  Array [
+    6979.2,
+    1,
+    1.5,
+  ],
+  Array [
+    6979,
+    2,
+    30.7620468,
+  ],
+  Array [
+    6978.7,
+    2,
+    4.95,
+  ],
+  Array [
+    6978.5,
+    1,
+    2.25,
+  ],
+  Array [
+    6989.5,
+    5,
+    -2.5752109,
+  ],
+  Array [
+    6990,
+    1,
+    -3.03,
+  ],
+  Array [
+    6990.2,
+    1,
+    -0.01038707,
+  ],
+  Array [
+    6990.4,
+    1,
+    -0.07162755,
+  ],
+  Array [
+    6990.9,
+    1,
+    -0.14325509,
+  ],
+  Array [
+    6991.4,
+    1,
+    -0.1,
+  ],
+  Array [
+    6991.5,
+    1,
+    -0.4,
+  ],
+  Array [
+    6991.6,
+    3,
+    -1.20000001,
+  ],
+  Array [
+    6992.1,
+    1,
+    -0.4,
+  ],
+  Array [
+    6992.2,
+    1,
+    -0.4,
+  ],
+  Array [
+    6993.9,
+    1,
+    -0.3,
+  ],
+  Array [
+    6994,
+    1,
+    -1.5,
+  ],
+  Array [
+    6994.4,
+    1,
+    -0.24864528,
+  ],
+  Array [
+    6994.6,
+    2,
+    -0.21474521,
+  ],
+  Array [
+    6995.3,
+    1,
+    -0.2,
+  ],
+  Array [
+    6995.4,
+    1,
+    -2.5,
+  ],
+  Array [
+    6996.7,
+    2,
+    -5.32436465,
+  ],
+  Array [
+    6996.8,
+    1,
+    -0.5,
+  ],
+  Array [
+    6997.5,
+    1,
+    -2.89,
+  ],
+  Array [
+    6997.9,
+    1,
+    -0.01,
+  ],
+  Array [
+    6998.1,
+    2,
+    -0.31274765,
+  ],
+  Array [
+    6999,
+    1,
+    -0.10497273,
+  ],
+  Array [
+    6999.2,
+    1,
+    -0.039,
+  ],
+  Array [
+    6999.7,
+    1,
+    -2.86,
+  ],
+  Array [
+    7000,
+    1,
+    -0.96,
+  ],
+]
+`;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getTickers Gets the order(s) representing the best market price 1`] = `
+Array [
+  Array [
+    "tBTCUSD",
+    6979.9,
+    173.63342034,
+    6980,
+    19.86753773,
+    -414,
+    -0.056,
+    6979.9,
+    38117.9531546,
+    7410.9,
+    6921.5,
+  ],
+]
+`;

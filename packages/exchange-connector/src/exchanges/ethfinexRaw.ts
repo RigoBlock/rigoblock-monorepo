@@ -6,9 +6,9 @@ import WS from 'ws'
 export class EthfinexRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
   public static API_HTTP_URLS = {
-    [NETWORKS.MAINNET]: 'https://api.EthfinexRaw.com/v2',
-    [NETWORKS.KOVAN]: 'https://test.EthfinexRaw.com/v2',
-    [NETWORKS.ROPSTEN]: 'https://test.EthfinexRaw.com/v2'
+    [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
+    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
+    [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
   }
   public static API_WS_URLS = {
     [NETWORKS.MAINNET]: 'wss://api.ethfinex.com/ws/2',
@@ -17,7 +17,7 @@ export class EthfinexRaw {
   }
   public HTTP_URL: string
   public WS_URL: string
-  public wsIstance
+  private wsInstance
   private wsTimeout = 10000
 
   constructor(
@@ -31,27 +31,24 @@ export class EthfinexRaw {
 
   public http = {
     getTickers: async (options: {
-      tokenPairs: string[]
+      symbols: string[]
     }): Promise<EthfinexRaw.RawTicker[]> => {
       const url = `${this.HTTP_URL}/tickers`
-      const symbols = options.tokenPairs.map(pair => `t${pair}`).toString()
+      const symbols = options.symbols.map(pair => `t${pair}`).toString()
       const queryParams = getQueryParameters({ symbols })
       return fetchJSON(url, queryParams)
     },
     getOrders: async (options: {
-      baseToken: string
-      quoteToken: string
+      symbols: string
       precision: EthfinexRaw.OrderPrecisions
     }): Promise<EthfinexRaw.RawOrder[]> => {
       const precision = options.precision || EthfinexRaw.OrderPrecisions.P0
-      const url = `${this.HTTP_URL}/book/t${options.baseToken}${
-        options.quoteToken
-      }/${precision}`
+      const url = `${this.HTTP_URL}/book/t${options.symbols}/${precision}`
       return fetchJSON(url)
     },
     getCandles: async (options: {
       timeFrame: EthfinexRaw.CandlesTimeFrame
-      tokenPair: string
+      symbols: string
       section: EthfinexRaw.CandlesSection
       limit?: string // max number of candles we want to receive
       sort?: EthfinexRaw.CandlesSort
@@ -59,7 +56,7 @@ export class EthfinexRaw {
       end?: string // filter end (ms)
     }): Promise<EthfinexRaw.RawCandle[]> => {
       const url = `${this.HTTP_URL}/candles/trade:${options.timeFrame}:${
-        options.tokenPair
+        options.symbols
       }/${options.section}`
       const { limit, start, sort, end } = options
       const queryParams = getQueryParameters({ limit, sort, start, end })
@@ -68,66 +65,107 @@ export class EthfinexRaw {
   }
 
   public ws = {
-    open: () =>
-      new Promise((resolve, reject) => {
-        const ws = new ReconnectingWebSocket(this.WS_URL, [], { WebSocket: WS })
-        ws.addEventListener('open', () => {
-          this.wsIstance = ws
-          return resolve(this.wsIstance)
+    open: () => {
+      this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
+        WebSocket: WS
+        // window['Websocket'] ||
+      })
+      return new Promise((resolve, reject) => {
+        const rejectError = err => {
+          return reject(err)
+        }
+        this.wsInstance.addEventListener('open', () => {
+          this.wsInstance.removeEventListener('error', rejectError)
+          return resolve(this.wsInstance)
         })
-      }),
-    close: () =>
+        this.wsInstance.addEventListener('error', rejectError)
+      })
+    },
+    connection: () => {
+      return this.wsInstance
+    },
+    close: () => {
       new Promise((resolve, reject) => {
-        this.wsIstance.addEventListener('close', () => {
-          this.wsIstance = null
-          resolve()
+        const rejectError = err => {
+          return reject(err)
+        }
+        this.wsInstance.addEventListener('close', () => {
+          this.wsInstance.removeEventListener('error', rejectError)
+          this.wsInstance = null
+          return resolve()
         })
-      }),
+        this.wsInstance.addEventListener('error', rejectError)
+        this.wsInstance.close()
+      })
+    },
     getConnection: () => {
-      return this.wsIstance || this.ws.open()
+      return this.wsInstance || this.ws.open()
     },
     getTickers: async (
       options: { symbols: string },
       callback: (err: Error, message?: any) => any
-    ) => {
+    ): Promise<any> => {
       const ws = await this.ws.getConnection()
-      let chanId
-      let msgTimestamp
-      let timerId
-      const msg = JSON.stringify({
+      const msg = {
         event: 'subscribe',
         channel: 'ticker',
         symbol: `t${options.symbols}`
-      })
-      ws.addEventListener('message', message => {
-        let msg = JSON.parse(message.data)
-        if (msg.event === 'subscribed' && msg.pair === options.symbols) {
-          chanId = msg.chanId
-          msgTimestamp = new Date().valueOf()
-
-          timerId = setTimeout(() => {
-            const timestamp = new Date().valueOf()
-            if (timestamp >= msgTimestamp + this.wsTimeout) {
-              clearTimeout(timerId)
-              return callback(
-                new Error(
-                  `No tickers informations received within ${
-                    this.wsTimeout
-                  } seconds`
-                )
-              )
-            }
-          }, this.wsTimeout)
-        }
-        if (Array.isArray(msg) && msg[0] === chanId) {
-          clearTimeout(timerId)
-          return callback(null, msg.pop())
-        }
-      })
-      ws.send(msg)
-
-      return () => clearInterval(timerId)
+      }
+      const unsubscribe = this.addWsListener(
+        ws,
+        callback,
+        m => m['pair'] === options.symbols
+      )
+      ws.send(JSON.stringify(msg))
+      return unsubscribe
+    },
+    getCandles: async (
+      options: {
+        timeframe: string
+        symbols: string
+      },
+      callback: (err: Error, message?: any) => any
+    ): Promise<any> => {
+      const ws = await this.ws.getConnection()
+      const msg = {
+        event: 'subscribe',
+        channel: 'candles',
+        key: `trade:${options.timeframe}:t${options.symbols}`
+      }
+      this.addWsListener(ws, callback, m => m['key'] === msg.key)
+      return ws.send(JSON.stringify(msg))
     }
+  }
+
+  private addWsListener = (ws, callback, filterFunction) => {
+    let chanId
+    let msgCallback
+    const unsubscribe = () =>
+      msgCallback ? ws.removeEventListener('message', msgCallback) : null
+
+    msgCallback = message => {
+      let timer
+      const msg = JSON.parse(message.data)
+      if (msg.event === 'subscribed' && filterFunction(msg)) {
+        chanId = msg.chanId
+        timer = setTimeout(() => {
+          unsubscribe()
+          return callback(
+            new Error(
+              `No data received within ${this.wsTimeout / 1000} seconds`
+            )
+          )
+        }, this.wsTimeout)
+      }
+      if (Array.isArray(msg) && msg[0] === chanId) {
+        timer ? clearTimeout(timer) : null
+        return callback(null, msg.pop())
+      }
+    }
+
+    ws.addEventListener('message', msgCallback)
+
+    return unsubscribe
   }
 
   public network(id: number = NETWORKS.MAINNET): EthfinexRaw {

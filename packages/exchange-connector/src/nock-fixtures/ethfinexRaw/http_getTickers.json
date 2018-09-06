@@ -1,0 +1,38 @@
+[
+    {
+        "scope": "https://api.ethfinex.com:443",
+        "method": "GET",
+        "path": "/v2/tickers?&symbols=tBTCUSD",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b080000000000000335cbbb0d80300c05c05da88de5877f710b6c005451b6607f9186f6a4eb7d79f7fb78ae73a1a82c2e422a87aa6da236ad09a1b845ba662aad06a355583cfea00d482e57b805a54126466d601fe3036552b13261000000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Wed, 05 Sep 2018 16:30:03 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=d575a03b12920156aa1b29d974476b2f81536165003; expires=Thu, 05-Sep-19 16:30:03 GMT; path=/; domain=.ethfinex.com; HttpOnly",
+            "Vary",
+            "Accept-Encoding",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "X-BFX-APIKEY,X-BFX-PAYLOAD,X-BFX-SIGNATURE,Content-Type,X-CSRF-Token,bfx-token,bfx-signature,bfx-apikey,bfx-nonce,bfx-flags",
+            "Content-Encoding",
+            "gzip",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "455a1407de22be25-MXP"
+        ]
+    }
+]

@@ -8,6 +8,7 @@ export const TO_WEI: number = 1e18
 
 export enum supportedExchanges {
   ETHFINEX = 'Ethfinex',
+  ETHFINEX_RAW = 'EthfinexRaw',
   ERCDEX = 'ERCdEX',
   ZEROEXRELAYER = '0xStandardRelayer'
 }

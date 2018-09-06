@@ -1,0 +1,38 @@
+[
+    {
+        "scope": "https://api.ethfinex.com:443",
+        "method": "GET",
+        "path": "/v2/candles/trade:undefined:BTCUSD/last?&limit=&sort=&start=&end=",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b0800000000000003cb2bcdc901004ffccb2504000000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Wed, 05 Sep 2018 16:34:33 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=d391d89eeef938804a07757644f0692761536165273; expires=Thu, 05-Sep-19 16:34:33 GMT; path=/; domain=.ethfinex.com; HttpOnly",
+            "Vary",
+            "Accept-Encoding",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "X-BFX-APIKEY,X-BFX-PAYLOAD,X-BFX-SIGNATURE,Content-Type,X-CSRF-Token,bfx-token,bfx-signature,bfx-apikey,bfx-nonce,bfx-flags",
+            "Content-Encoding",
+            "gzip",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "455a1a9dbc9cbe2f-MXP"
+        ]
+    }
+]
