@@ -1,4 +1,3 @@
-import 'jest'
 import 'whatwg-fetch'
 import * as nock from 'nock'
 import { EventEmitter } from 'events'
@@ -152,7 +151,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
           .then(() => {
             jest.advanceTimersByTime(10000)
             expect(cbSpy).toHaveBeenCalledWith(
-              new Error(`No data received within 10 seconds`)
+              new Error(`No data received within 10 seconds.`)
             )
             return done()
           })
@@ -231,7 +230,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
           .then(() => {
             jest.advanceTimersByTime(10000)
             expect(cbSpy).toHaveBeenCalledWith(
-              new Error(`No data received within 10 seconds`)
+              new Error(`No data received within 10 seconds.`)
             )
             return done()
           })

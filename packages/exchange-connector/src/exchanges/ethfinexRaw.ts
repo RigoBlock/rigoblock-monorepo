@@ -1,7 +1,6 @@
-import { NETWORKS, TRANSPORTS } from '../constants'
+import { NETWORKS } from '../constants'
 import { fetchJSON, getQueryParameters } from '../utils'
 import ReconnectingWebSocket from 'reconnecting-websocket'
-import WS from 'ws'
 
 export class EthfinexRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
@@ -66,10 +65,7 @@ export class EthfinexRaw {
 
   public ws = {
     open: () => {
-      this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
-        WebSocket: WS
-        // window['Websocket'] ||
-      })
+      this.wsInstance = new ReconnectingWebSocket(this.WS_URL)
       return new Promise((resolve, reject) => {
         const rejectError = err => {
           return reject(err)
@@ -152,7 +148,7 @@ export class EthfinexRaw {
           unsubscribe()
           return callback(
             new Error(
-              `No data received within ${this.wsTimeout / 1000} seconds`
+              `No data received within ${this.wsTimeout / 1000} seconds.`
             )
           )
         }, this.wsTimeout)
