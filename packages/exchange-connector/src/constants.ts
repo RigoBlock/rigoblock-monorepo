@@ -18,8 +18,3 @@ export enum NETWORKS {
   KOVAN = 42,
   ROPSTEN = 3
 }
-
-export enum TRANSPORTS {
-  HTTP = 'http',
-  WS = 'ws'
-}

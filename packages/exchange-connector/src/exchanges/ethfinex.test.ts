@@ -1,5 +1,5 @@
 import * as ExchangeTypes from './types'
-import { NETWORKS, TRANSPORTS } from '../constants'
+import { NETWORKS } from '../constants'
 
 describe('Ethfinex exchange', () => {
   const baseToken = 'ZRX'
@@ -79,7 +79,7 @@ describe('Ethfinex exchange', () => {
   })
   describe('network()', () => {
     it('sets the network Id and returns a new instance with the network set', () => {
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       expect(ethfinex.networkId).toEqual(NETWORKS.MAINNET)
       expect(ethfinex.network(NETWORKS.KOVAN).networkId).toEqual(NETWORKS.KOVAN)
     })
@@ -92,7 +92,7 @@ describe('Ethfinex exchange', () => {
             json: () => rawTickers
           })
         )
-        const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
         const tickers = await ethfinex.raw.getTickers({
           tokenPairs: ['tZRXETH']
         })
@@ -105,7 +105,7 @@ describe('Ethfinex exchange', () => {
             json: () => []
           })
         )
-        const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
         const tickers = await ethfinex.raw.getTickers({
           tokenPairs: ['tZRXWETH']
         })
@@ -120,7 +120,7 @@ describe('Ethfinex exchange', () => {
             json: () => rawOrders
           })
         )
-        const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
         const orders = await ethfinex.raw.getOrders(baseToken, quoteToken)
         expect(orders).toEqual(rawOrders)
       })
@@ -132,7 +132,7 @@ describe('Ethfinex exchange', () => {
             json: () => responseError
           })
         )
-        const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
         const orders = await ethfinex.raw.getOrders(baseToken, 'WETH')
         expect(orders).toEqual(responseError)
       })
@@ -145,7 +145,7 @@ describe('Ethfinex exchange', () => {
             json: () => rawCandles
           })
         )
-        const ethfinex = new Ethfinex(1, TRANSPORTS.HTTP)
+        const ethfinex = new Ethfinex(1)
         const candles = await ethfinex.raw.getCandles(
           Ethfinex.CandlesTimeFrame.ONE_MONTH,
           'tZRXETH',
@@ -164,7 +164,7 @@ describe('Ethfinex exchange', () => {
           json: () => rawTickers
         })
       )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       const tickers = await ethfinex.getTickers({ tokenPairs: ['tZRXETH'] })
       expect(tickers).toEqual(formattedTickers)
     })
@@ -175,7 +175,7 @@ describe('Ethfinex exchange', () => {
           json: () => []
         })
       )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       await expect(
         ethfinex.getTickers({ tokenPairs: ['tZRXWETH'] })
       ).rejects.toThrowError('Tokens Pair not recognised by exchange')
@@ -189,7 +189,7 @@ describe('Ethfinex exchange', () => {
           json: () => rawOrders
         })
       )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       const orders = await ethfinex.getOrders(baseToken, quoteToken)
       expect(orders).toEqual(formattedOrders)
     })
@@ -200,7 +200,7 @@ describe('Ethfinex exchange', () => {
           json: () => ['error', 10020, 'symbol: invalid']
         })
       )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       await expect(ethfinex.getOrders(baseToken, 'WETH')).rejects.toThrowError(
         'symbol: invalid'
       )
@@ -212,7 +212,7 @@ describe('Ethfinex exchange', () => {
           json: () => ['error', 10020, 'prec: invalid']
         })
       )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
       await expect(
         ethfinex.getOrders(baseToken, 'WETH', 'P9' as any)
       ).rejects.toThrowError('prec: invalid')

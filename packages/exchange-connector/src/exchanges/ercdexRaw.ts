@@ -1,26 +1,20 @@
-import { NETWORKS, TRANSPORTS } from '../constants'
+import { NETWORKS } from '../constants'
 import { ZeroExStandardRelayerRaw } from './zeroExStandardRelayerRaw'
 import { fetchJSON, getQueryParameters, postJSON } from '../utils'
 
 export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
-  public static API_URLS = {
-    http: 'https://api.ercdex.com/api'
-  }
+  public static API_HTTP_URL = 'https://api.ercdex.com/api'
+
   public API_URL: string
   public STANDARD_API_URL: string
 
-  constructor(
-    public networkId: NETWORKS | number,
-    public transport: TRANSPORTS = TRANSPORTS.HTTP,
-    public apiUrl?: string
-  ) {
+  constructor(public networkId: NETWORKS | number, public apiUrl?: string) {
     super(
       networkId,
-      transport,
-      apiUrl || `${ERCdEXRaw.API_URLS[transport]}/standard/${networkId}`
+      apiUrl || `${ERCdEXRaw.API_HTTP_URL}/standard/${networkId}`
     )
-    this.API_URL = apiUrl ? apiUrl : ERCdEXRaw.API_URLS[transport]
+    this.API_URL = apiUrl ? apiUrl : ERCdEXRaw.API_HTTP_URL
   }
 
   public async getBestOrders(options: {
