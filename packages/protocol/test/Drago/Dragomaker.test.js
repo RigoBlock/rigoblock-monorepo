@@ -1,10 +1,10 @@
-import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
-import dragoArtifact from '../../artifacts/Drago.json'
 import { BigNumber } from 'bignumber.js'
+import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import Web3 from 'web3'
+import dragoArtifact from '../../artifacts/Drago.json'
 
-import web3 from '../web3'
 import { ZeroEx } from '0x.js'
+import web3 from '../web3'
 
 const contractName = 'Drago'
 
@@ -114,16 +114,16 @@ describeContract(contractName, () => {
       expect(wethBalance.toString()).toEqual(toBeWrapped.toString())
 
       // wrap some GRG from the user account, so that the user can sell GRG buy ETH
-      const GRGtokenAddress = await baseContracts['RigoToken'].address
       const GRGtokenWrapper = await baseContracts['WrapperLock'].address
       const GRGtoBeWrapped = web3.utils.toWei('2')
       await baseContracts['RigoToken'].approve(GRGtokenWrapper, GRGtoBeWrapped)
-      await baseContracts['WrapperLock'].deposit(
-        GRGtoBeWrapped,
-        time
+      await baseContracts['WrapperLock'].deposit(GRGtoBeWrapped, time)
+      const GRGwrappedTokensAmount = await baseContracts[
+        'WrapperLock'
+      ].balanceOf(accounts[0])
+      expect(GRGwrappedTokensAmount.toString()).toEqual(
+        GRGtoBeWrapped.toString()
       )
-      const GRGwrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(accounts[0])
-      expect(GRGwrappedTokensAmount.toString()).toEqual(GRGtoBeWrapped.toString())
 
       const EXCHANGE_ADDRESS = baseContracts['ExchangeEfx'].address
 
@@ -134,11 +134,13 @@ describeContract(contractName, () => {
       const takerTokenAddress = GRGtokenWrapper.toString()
       const exchangeContractAddress = EXCHANGE_ADDRESS
       const salt = ZeroEx.generatePseudoRandomSalt().toString()
-      const makerFee = (new BigNumber(0)).toString()
-      const takerFee = (new BigNumber(0)).toString()
+      const makerFee = new BigNumber(0).toString()
+      const takerFee = new BigNumber(0).toString()
       const makerTokenAmount = web3.utils.toWei('0.2')
       const takerTokenAmount = web3.utils.toWei('0.3')
-      const expirationUnixTimestampSec = (new BigNumber(Date.now() + 3600000)).toString() // Valid for up to an hour
+      const expirationUnixTimestampSec = new BigNumber(
+        Date.now() + 3600000
+      ).toString() // Valid for up to an hour
 
       // Generate order
       const order = {
@@ -164,15 +166,19 @@ describeContract(contractName, () => {
 
       // Instantiate 0x.js instance
       const configs = {
-        networkId: 50, // (1-mainnet, 3-ropsten, 4-rinkeby, 42-kovan, 50-testrpc)
+        networkId: 50 // (1-mainnet, 3-ropsten, 4-rinkeby, 42-kovan, 50-testrpc)
       }
       const zeroEx = new ZeroEx(provider, configs)
 
       // Signing orderHash -> ecSignature
       const signerAddress = await dragoInstance.methods.owner().call()
 
-      const shouldAddPersonalMessagePrefix = false;
-      const ecSignature = await zeroEx.signOrderHashAsync(orderHash, signerAddress, shouldAddPersonalMessagePrefix)
+      const shouldAddPersonalMessagePrefix = false
+      const ecSignature = await zeroEx.signOrderHashAsync(
+        orderHash,
+        signerAddress,
+        shouldAddPersonalMessagePrefix
+      )
 
       const orderAddresses = [
         maker,
@@ -193,11 +199,11 @@ describeContract(contractName, () => {
       const fillTakerTokenAmount = web3.utils.toWei('0.15')
       const shouldThrowOnInsufficientBalanceOrAllowance = false // if set to 0 the transaction stops and does not throw and error
 
-      const v = (new BigNumber(ecSignature.v)).toString()
+      const v = new BigNumber(ecSignature.v).toString()
       const r = ecSignature.r
       const s = ecSignature.s
 
-      const isValidSignature = await baseContracts['ExchangeEfx'].isValidSignature(
+      await baseContracts['ExchangeEfx'].isValidSignature(
         signerAddress,
         orderHash,
         v,
@@ -206,11 +212,17 @@ describeContract(contractName, () => {
       )
 
       // in order to move wrapped tokens, either the from or to address must be signer
-      const isETHWSigner = await baseContracts['WrapperLockEth'].isSigner(accounts[0])
-      const isGRGWSigner = await baseContracts['WrapperLockEth'].isSigner(accounts[0])
+      const isETHWSigner = await baseContracts['WrapperLockEth'].isSigner(
+        accounts[0]
+      )
+      const isGRGWSigner = await baseContracts['WrapperLockEth'].isSigner(
+        accounts[0]
+      )
       expect(isETHWSigner || isGRGWSigner).toEqual(true)
 
-      const txHash = await baseContracts['ExchangeEfx'].fillOrder.sendTransactionAsync(
+      const txHash = await baseContracts[
+        'ExchangeEfx'
+      ].fillOrder.sendTransactionAsync(
         orderAddresses,
         orderValues,
         fillTakerTokenAmount,
