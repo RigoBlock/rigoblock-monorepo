@@ -37,15 +37,15 @@ export interface IExchange<
   RawTicker = {},
   TICKERS_TOKEN_PAIRS = {}
 > {
-  networkId: string
-  HTTP_API_URL: string
+  networkId: number
+  API_URL: string
 
   raw: {
     getOrders(
       baseToken: string,
       quoteToken: string,
       precision?: string
-    ): Promise<RawOrder[]>
+    ): Promise<RawOrder[] | RawOrder>
 
     getTickers(options: {
       networkId?: string
@@ -62,5 +62,5 @@ export interface IExchange<
     tokenPairs?: TICKERS_TOKEN_PAIRS
   }): Promise<TickersList>
 
-  network(id: string): IExchange
+  network(id: number): IExchange
 }

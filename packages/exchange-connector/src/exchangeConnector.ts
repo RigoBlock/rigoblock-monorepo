@@ -1,19 +1,44 @@
-import { IExchange } from './exchanges/types'
-import { NETWORKS, supportedExchanges } from './constants'
+import { Ethfinex } from './exchanges/ethfinex'
+import { NETWORKS, TRANSPORTS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
+import ZeroExStandardRelayerRaw from './exchanges/zeroExStandardRelayerRaw'
 
-export default function exchangeConnector(
-  exchangeName: supportedExchanges | string,
-  networkId: NETWORKS | string = NETWORKS.MAINNET,
-  transport: string = 'http'
-): IExchange {
+function exchangeConnector(
+  exchangeName: supportedExchanges.ZEROEXRELAYER,
+  options: ExchangeOptions
+): ZeroExStandardRelayerRaw
+function exchangeConnector(
+  exchangeName: supportedExchanges.ETHFINEX,
+  options?: ExchangeOptions
+): Ethfinex
+function exchangeConnector(
+  exchangeName: supportedExchanges,
+  options = {
+    networkId: NETWORKS.MAINNET,
+    transport: TRANSPORTS.HTTP,
+    apiUrl: ''
+  }
+): any {
   const selectedExchange = ExchangesMap[exchangeName]
   if (!selectedExchange) {
-    throw new Error(`Exchange ${exchangeName} is not supported.`)
+    throw new Error(`Exchange not supported: ${exchangeName}`)
   }
-  if (!selectedExchange.SUPPORTED_NETWORKS.includes(networkId)) {
-    throw new Error(`Network not supported on this exchange: ${networkId}`)
+  if (!selectedExchange.SUPPORTED_NETWORKS.includes(options.networkId)) {
+    throw new Error(
+      `Network Id not supported for selected network: ${options.networkId}`
+    )
   }
+  return new selectedExchange(
+    options.networkId,
+    options.transport,
+    options.apiUrl
+  )
+}
 
-  return new selectedExchange(networkId, transport)
+export default exchangeConnector
+
+interface ExchangeOptions {
+  networkId?: NETWORKS | number
+  transport?: TRANSPORTS
+  apiUrl?: string
 }

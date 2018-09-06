@@ -30,13 +30,13 @@ describeContract(contractName, () => {
   describe('wrapToEfx', () => {
     // this works only with wrapToEfx payable
     it.skip('wraps eth to the efx wrapper', async () => {
-      // const balance = await web3.eth.getBalance(accounts[0])
+      await web3.eth.getBalance(accounts[0])
 
       const tokenAddress = null //Ether has address 0x0
       const tokenWrapper = await baseContracts['WrapperLockEth'].address
       const toBeWrapped = 1e16 // 10 finney
       const time = 1 // 1 hour lockup (the minimum)
-      // const authorityAddress = baseContracts['ExchangesAuthority'].address
+      baseContracts['ExchangesAuthority'].address
 
       await baseContracts['ExchangesAuthority'].whitelistWrapper(
         tokenWrapper,

@@ -1,0 +1,60 @@
+[
+    {
+        "scope": "https://api.ercdex.com:443",
+        "method": "GET",
+        "path": "/api/standard/1/v0/orderbook?",
+        "body": "",
+        "status": 400,
+        "response": {
+            "fields": {
+                "baseTokenAddress": {
+                    "message": "'baseTokenAddress' is required"
+                },
+                "quoteTokenAddress": {
+                    "message": "'quoteTokenAddress' is required"
+                }
+            },
+            "message": "An error occurred during the request.",
+            "name": "ValidateError",
+            "status": 400
+        },
+        "rawHeaders": [
+            "Date",
+            "Tue, 04 Sep 2018 11:19:47 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Content-Length",
+            "228",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=db35effa58e81ac7cc59af7f53ea38fed1536059987; expires=Wed, 04-Sep-19 11:19:47 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "X-DNS-Prefetch-Control",
+            "off",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Strict-Transport-Security",
+            "max-age=15552000; includeSubDomains",
+            "X-Download-Options",
+            "noopen",
+            "X-Content-Type-Options",
+            "nosniff",
+            "X-XSS-Protection",
+            "1; mode=block",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY-ID",
+            "Via",
+            "1.1 google",
+            "Alt-Svc",
+            "clear",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "4550102908ea3da1-MXP"
+        ]
+    }
+]
