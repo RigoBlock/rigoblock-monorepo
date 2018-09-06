@@ -1,6 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getCandles Gets the order(s) representing the best market price 1`] = `null`;
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getCandles Gets the order(s) representing the best market price 1`] = `
+Array [
+  1536246900000,
+  6437,
+  6448.277268,
+  6448.9,
+  6437,
+  83.52559096,
+]
+`;
 
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getOrders Gets the order(s) representing the best market price 1`] = `
 Array [

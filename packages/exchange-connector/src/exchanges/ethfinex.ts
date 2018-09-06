@@ -1,9 +1,9 @@
 import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
+import { EthfinexRaw } from './ethfinexRaw'
 import { IExchange, OrderType, OrdersList, TickersList } from './types'
 import BigNumber from 'bignumber.js'
 
-export class Ethfinex
-  implements IExchange<Ethfinex.RawOrder, Ethfinex.RawTicker> {
+export class Ethfinex {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
   public static API_HTTP_URLS = {
     [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
@@ -11,72 +11,56 @@ export class Ethfinex
     [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
   }
   public API_URL: string
-  private TICKERS_TOKEN_PAIRS: string[] = [
-    Ethfinex.TokenPairs.ZRXETH,
-    Ethfinex.TokenPairs.MKRETH,
-    Ethfinex.TokenPairs.GNTETH
-  ]
+  private raw: EthfinexRaw
 
   constructor(public networkId: NETWORKS | number, public apiUrl?: string) {
     this.API_URL = apiUrl ? apiUrl : Ethfinex.API_HTTP_URLS[networkId]
+    this.raw = new EthfinexRaw(networkId, apiUrl)
   }
-
-  public async getOrders(
-    baseToken: string,
-    quoteToken: string,
-    precision: Ethfinex.OrderPrecisions = Ethfinex.OrderPrecisions.P0
-  ): Promise<OrdersList> {
-    return this.raw
-      .getOrders(baseToken, quoteToken, precision)
-      .then(result => this.formatOrders(result))
-  }
-
-  public async getTickers(
-    options = {
-      tokenPairs: this.TICKERS_TOKEN_PAIRS
-    }
-  ): Promise<TickersList> {
-    return this.raw
-      .getTickers(options)
-      .then(result => this.formatTickers(result))
-  }
-
-  public raw = {
-    getTickers: async (
-      options = {
-        tokenPairs: this.TICKERS_TOKEN_PAIRS
-      }
-    ): Promise<Ethfinex.RawTicker[]> => {
-      const url = `${
-        this.API_URL
-      }/tickers?symbols=${options.tokenPairs.toString()}`
-      return fetch(url).then(r => r.json())
+  public http = {
+    getOrders: async (options: {
+      symbols: string
+      precision?: EthfinexRaw.OrderPrecisions
+    }): Promise<OrdersList> => {
+      return this.raw.http
+        .getOrders(options)
+        .then(result => this.formatOrders(result))
     },
-    getOrders: async (
-      baseToken: string,
-      quoteToken: string,
-      precision: Ethfinex.OrderPrecisions = Ethfinex.OrderPrecisions.P0
-    ): Promise<Ethfinex.RawOrder[]> => {
-      const url = `${this.API_URL}/book/t${baseToken}${quoteToken}/${precision}`
-      return fetch(url).then(r => r.json())
+    getTickers: (options: { symbols: string[] }): Promise<TickersList> => {
+      return this.raw.http
+        .getTickers(options)
+        .then(result => this.formatTickers(result))
     },
-    getCandles: async (
-      timeFrame: Ethfinex.CandlesTimeFrame,
-      tokenPair: string,
-      section: Ethfinex.CandlesSection,
-      limit?: string, // max number of candles we want to receive
-      sort?: Ethfinex.CandlesSort,
-      start?: string, // filter start (ms)
+    getCandles: (options: {
+      timeframe: EthfinexRaw.CandlesTimeFrame
+      symbols: string
+      section: EthfinexRaw.CandlesSection
+      limit?: string // max number of candles we want to receive
+      sort?: EthfinexRaw.CandlesSort
+      start?: string // filter start (ms)
       end?: string // filter end (ms)
-    ): Promise<Ethfinex.RawCandle[]> => {
-      const url = `${
-        this.API_URL
-      }/candles/trade:${timeFrame}:${tokenPair}/${section}?limit=${limit}&sort=${sort}&start=${start}&end=${end}`
-      return fetch(url).then(r => r.json())
+      // TODO: fix return type
+    }): Promise<any> => {
+      return this.raw.http.getCandles(options).then(result => result)
     }
   }
+  public ws = {
+    open: () => this.raw.ws.open(),
+    close: () => this.raw.ws.close(),
+    getTickers: async (
+      options: { symbols: string },
+      callback: (err: Error, message?: any) => any
+    ) => this.raw.ws.getTickers(options, callback),
+    getCandles: async (
+      options: {
+        timeframe: string
+        symbols: string
+      },
+      callback: (err: Error, message?: any) => any
+    ) => this.raw.ws.getCandles(options, callback)
+  }
 
-  private formatOrders(orders: Ethfinex.RawOrder[]): OrdersList {
+  private formatOrders(orders: EthfinexRaw.RawOrder[]): OrdersList {
     if (this.checkForError(orders as any)) {
       throw new Error(orders.pop() as any)
     }
@@ -98,7 +82,7 @@ export class Ethfinex
     })
   }
 
-  private formatTickers(tickers: Ethfinex.RawTicker[]) {
+  private formatTickers(tickers: EthfinexRaw.RawTicker[]) {
     if (this.checkForError(tickers as any)) {
       throw new Error(tickers.pop() as any)
     }
@@ -133,40 +117,6 @@ export class Ethfinex
 }
 
 export namespace Ethfinex {
-  export enum TokenPairs {
-    ZRXETH = 'tZRXETH',
-    MKRETH = 'tMKRETH',
-    GNTETH = 'tGNTETH'
-  }
-
-  export type RawTicker = [
-    string, // SYMBOL
-    number, // BID,
-    number, // BID_SIZE,
-    number, // ASK,
-    number, // ASK_SIZE,
-    number, // DAILY_CHANGE,
-    number, // DAILY_CHANGE_PERC,
-    number, // LAST_PRICE,
-    number, // VOLUME,
-    number, // HIGH,
-    number // LOW
-  ]
-  export type RawOrder = [
-    number, // PRICE,
-    number, // COUNT,
-    number // AMOUNT
-  ]
-
-  export type RawCandle = [
-    number, //MTS,
-    number, //OPEN,
-    number, //CLOSE,
-    number, //HIGH,
-    number, //LOW,
-    number //VOLUME
-  ]
-
   export enum OrderPrecisions {
     P0 = 'P0',
     P1 = 'P1',

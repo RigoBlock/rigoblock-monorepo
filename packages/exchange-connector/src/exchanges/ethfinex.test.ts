@@ -1,221 +1,98 @@
-import * as ExchangeTypes from './types'
+import 'jest'
+import 'whatwg-fetch'
+import * as nock from 'nock'
+import { EventEmitter } from 'events'
 import { NETWORKS } from '../constants'
+import nockBackPromise from '../nockBackPromise'
 
-describe('Ethfinex exchange', () => {
-  const baseToken = 'ZRX'
-  const quoteToken = 'ETH'
-  const globalAny: any = global
-  let fetchSpy
-  let Ethfinex
-
-  const rawTickers = [
-    [
-      'tZRXETH',
-      0.0023431,
-      24512.28039151,
-      0.0023666,
-      64147.80807233,
-      -0.0001033,
-      -0.0421,
-      0.0023502,
-      47296.58474659,
-      0.0025569,
-      0.0022708
-    ]
-  ]
-
-  const rawOrders = [[0.0023421, 1, 1000], [0.0023692, 4, -1184]]
-
-  const rawCandles = [
-    [
-      1533081600000,
-      0.0016661,
-      0.0025585,
-      0.0026716,
-      0.0016296,
-      1842676.23491335
-    ],
-    [1530403200000, 0.0022332, 0.0016628, 0.0022478, 0.0013885, 772607.43012305]
-  ]
-
-  const formattedTickers = [
-    {
-      symbol: 'ZRX',
-      priceEth: '0.0023502',
-      priceUsd: ''
-    },
-    {
-      priceEth: '1',
-      priceUsd: '',
-      symbol: 'WETH'
-    },
-    {
-      priceEth: '1',
-      priceUsd: '',
-      symbol: 'ETH'
-    }
-  ]
-
-  const formattedOrders = [
-    {
-      type: ExchangeTypes.OrderType.BUY,
-      price: '0.0023421',
-      amount: '1000.00000',
-      ordersCount: 1
-    },
-    {
-      type: ExchangeTypes.OrderType.SELL,
-      price: '0.0023692',
-      amount: '1184.00000',
-      ordersCount: 4
-    }
-  ]
-
-  beforeEach(() => {
-    jest.resetModules()
-    fetchSpy = jest.fn()
-    globalAny.fetch = fetchSpy
-    Ethfinex = require('./ethfinex').default
-  })
-  describe('network()', () => {
-    it('sets the network Id and returns a new instance with the network set', () => {
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-      expect(ethfinex.networkId).toEqual(NETWORKS.MAINNET)
-      expect(ethfinex.network(NETWORKS.KOVAN).networkId).toEqual(NETWORKS.KOVAN)
+describe('it allows us to perform API calls to exchanges following 0x Standard Relayer API', () => {
+  fdescribe('http', () => {
+    let exchange
+    beforeAll(() => {
+      nock.disableNetConnect()
+      const Ethfinex = require('./ethfinex').Ethfinex
+      exchange = new Ethfinex(NETWORKS.MAINNET)
     })
-  })
-  describe('raw functions', () => {
+
+    afterAll(() => {
+      nock.enableNetConnect()
+    })
     describe('getTickers', () => {
-      it('returns the raw tickers data from the exchange', async () => {
-        fetchSpy.mockReturnValueOnce(
-          Promise.resolve({
-            json: () => rawTickers
-          })
+      it('returns data representing a high level overview of the state of the market.', async () => {
+        const options = { symbols: ['BTCUSD'] }
+        const result: any = await nockBackPromise(
+          'ethfinex/http_getTickers.json',
+          () => exchange.http.getTickers(options)
         )
-        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-        const tickers = await ethfinex.raw.getTickers({
-          tokenPairs: ['tZRXETH']
-        })
-        expect(tickers).toEqual(rawTickers)
-      })
-
-      it('returns an empty array if the tokenPair is invalid', async () => {
-        fetchSpy.mockReturnValueOnce(
-          Promise.resolve({
-            json: () => []
-          })
-        )
-        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-        const tickers = await ethfinex.raw.getTickers({
-          tokenPairs: ['tZRXWETH']
-        })
-        expect(tickers).toEqual([])
+        expect(result).toMatchSnapshot()
       })
     })
-
     describe('getOrders', () => {
-      it('returns the raw orders from the exchange', async () => {
-        fetchSpy.mockReturnValueOnce(
-          Promise.resolve({
-            json: () => rawOrders
-          })
+      it('returns orders provided on a price aggregated basis', async () => {
+        const options = { symbols: 'BTCUSD' }
+        const result: any = await nockBackPromise(
+          'ethfinex/http_getOrders.json',
+          () => exchange.http.getOrders(options)
         )
-        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-        const orders = await ethfinex.raw.getOrders(baseToken, quoteToken)
-        expect(orders).toEqual(rawOrders)
-      })
-
-      it('returns the error response from the Exchange if the parameters are invalid', async () => {
-        const responseError = ['error', 10020, 'symbol: invalid']
-        fetchSpy.mockReturnValueOnce(
-          Promise.resolve({
-            json: () => responseError
-          })
-        )
-        const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-        const orders = await ethfinex.raw.getOrders(baseToken, 'WETH')
-        expect(orders).toEqual(responseError)
+        expect(result).toMatchSnapshot()
       })
     })
-
     describe('getCandles', () => {
-      it('returns the raw candles data from the exchange', async () => {
-        fetchSpy.mockReturnValueOnce(
-          Promise.resolve({
-            json: () => rawCandles
-          })
+      it('returns data which provides a way to access charting candle info', async () => {
+        const options = { timeframe: '15m', symbols: 'BTCUSD', section: 'hist' }
+        const result: any = await nockBackPromise(
+          'ethfinex/http_getCandles.json',
+          () => exchange.http.getCandles(options)
         )
-        const ethfinex = new Ethfinex(1)
-        const candles = await ethfinex.raw.getCandles(
-          Ethfinex.CandlesTimeFrame.ONE_MONTH,
-          'tZRXETH',
-          Ethfinex.CandlesSection.HIST,
-          '2'
-        )
-        expect(candles).toEqual(rawCandles)
+        expect(result).toMatchSnapshot()
       })
     })
   })
-
-  describe('getTickers', () => {
-    it('returns the tickers formatted', async () => {
-      fetchSpy.mockReturnValueOnce(
-        Promise.resolve({
-          json: () => rawTickers
+  describe('websocket', () => {
+    let exchange
+    const sendSpy = jest.fn()
+    class WebsocketMock extends EventEmitter {
+      public _listeners = {
+        error: [],
+        message: [],
+        open: [],
+        close: []
+      }
+      public send = sendSpy
+      public addEventListener() {
+        this._listeners[arguments['0']].push(arguments['1'])
+        return this.addListener.apply(this, arguments)
+      }
+      public removeEventListener() {
+        this._listeners[arguments['0']] = this._listeners[
+          arguments['0']
+        ].filter(listener => {
+          return listener !== arguments['1']
         })
-      )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-      const tickers = await ethfinex.getTickers({ tokenPairs: ['tZRXETH'] })
-      expect(tickers).toEqual(formattedTickers)
+        return this.removeListener.apply(this, arguments)
+      }
+    }
+    beforeEach(() => {
+      jest.resetModules()
+      jest.doMock('reconnecting-websocket', () => WebsocketMock)
+      const Ethfinex = require('./ethfinexRaw').Ethfinex
+      exchange = new Ethfinex(NETWORKS.MAINNET)
+      jest.useFakeTimers()
     })
-
-    it('returns an error if the parameters are incorrect', async () => {
-      fetchSpy.mockReturnValueOnce(
-        Promise.resolve({
-          json: () => []
-        })
-      )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-      await expect(
-        ethfinex.getTickers({ tokenPairs: ['tZRXWETH'] })
-      ).rejects.toThrowError('Tokens Pair not recognised by exchange')
+    afterEach(() => {
+      jest.clearAllTimers()
     })
-  })
-
-  describe('getOrders', () => {
-    it('returns the orders formatted', async () => {
-      fetchSpy.mockReturnValueOnce(
-        Promise.resolve({
-          json: () => rawOrders
-        })
-      )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-      const orders = await ethfinex.getOrders(baseToken, quoteToken)
-      expect(orders).toEqual(formattedOrders)
-    })
-
-    it('returns an error if the parameters are incorrect', async () => {
-      fetchSpy.mockReturnValueOnce(
-        Promise.resolve({
-          json: () => ['error', 10020, 'symbol: invalid']
-        })
-      )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-      await expect(ethfinex.getOrders(baseToken, 'WETH')).rejects.toThrowError(
-        'symbol: invalid'
-      )
-    })
-
-    it('returns an error if the "precision" parameter is incorrect', async () => {
-      fetchSpy.mockReturnValueOnce(
-        Promise.resolve({
-          json: () => ['error', 10020, 'prec: invalid']
-        })
-      )
-      const ethfinex = new Ethfinex(NETWORKS.MAINNET)
-      await expect(
-        ethfinex.getOrders(baseToken, 'WETH', 'P9' as any)
-      ).rejects.toThrowError('prec: invalid')
+    describe('open', () => {
+      it('opens a websocket connection and assigns the websocket instance', done => {
+        const exchangePromise = exchange.ws.open()
+        exchange.ws.connection().emit('open')
+        exchangePromise
+          .then(ws => {
+            expect(ws).toBeInstanceOf(WebsocketMock)
+            done()
+          })
+          .catch(e => done(e))
+      })
     })
   })
 })

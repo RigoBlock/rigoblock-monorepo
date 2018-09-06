@@ -39,14 +39,14 @@ export class EthfinexRaw {
     },
     getOrders: async (options: {
       symbols: string
-      precision: EthfinexRaw.OrderPrecisions
+      precision?: EthfinexRaw.OrderPrecisions
     }): Promise<EthfinexRaw.RawOrder[]> => {
       const precision = options.precision || EthfinexRaw.OrderPrecisions.P0
       const url = `${this.HTTP_URL}/book/t${options.symbols}/${precision}`
       return fetchJSON(url)
     },
     getCandles: async (options: {
-      timeFrame: EthfinexRaw.CandlesTimeFrame
+      timeframe: EthfinexRaw.CandlesTimeFrame
       symbols: string
       section: EthfinexRaw.CandlesSection
       limit?: string // max number of candles we want to receive
@@ -54,7 +54,7 @@ export class EthfinexRaw {
       start?: string // filter start (ms)
       end?: string // filter end (ms)
     }): Promise<EthfinexRaw.RawCandle[]> => {
-      const url = `${this.HTTP_URL}/candles/trade:${options.timeFrame}:${
+      const url = `${this.HTTP_URL}/candles/trade:${options.timeframe}:t${
         options.symbols
       }/${options.section}`
       const { limit, start, sort, end } = options
