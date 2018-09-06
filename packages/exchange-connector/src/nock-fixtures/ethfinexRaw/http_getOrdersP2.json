@@ -1,0 +1,38 @@
+[
+    {
+        "scope": "https://api.ethfinex.com:443",
+        "method": "GET",
+        "path": "/v2/book/tBTCUSD/P2?",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b08000000000000033593d98de0300c431b7204dd472d83e9bf8da5e5d95f4251f828fae7273df9a41c0925e56a0dfb3d50834f0fd4263156d18e951dc37924833484276356363e5e4746c8c3ccc59fac7c0c4b54c9a5d2659e2c7ca28f35698fd4df66e63373548a9cc7bca4ae6cc347315b64991d91bd6a438d634625d66eba62ade84316929db220063cd890300a1f658e5c197c66678c462f87af083a018639494f45fbfb1be8c48f1bb504e77f55d799fa1d4eed1c5919708684d8c83441e7cf1cf044f04327a0794bae0d051eb6838e6b3878a350d0392e2241dcda35f566c1e77ea4a9ccd5db3620bde7b31342088753de06d04d9c0ab2c12fa63677059edb29215c246f72abe2ff86b54ad1c1aaf3d6eade08b3ac3681f93d122cc89c0fccb8f268ebe6e6d7709eaf01373887eb6ef60b2798165293aacabd48200ac7129144448d4ebd71f4e9e91bf4204fde9fc6b5c2d09bc6a3b3de05c336a50fbde511657f890620c3cf9749d7756bbde5b7cf909b31ed15214fcee73c02f42db0b44001ce3038bf59771bdbde367a6bfe9512541dadcd2ac099d720ac840209f5bb7ade4a635cc3f1b418ad7d9d4ed9e67cb723ddf8ba5e75525f5e8a37c71af5f714d3b6239fa268b82ff4b59efef8113a97aabd9788744f2a9c07253b427c99c3cbee6872d58083c5cc7a3cd7b88b0de69f91de77fbe1ddde47eea8e9cae074ecc62bc78d2a45b6daf55e2eee26542eb89aed78c9d6ed93b9a9cc5c87bfff00fc9932da71040000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Thu, 06 Sep 2018 15:00:46 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=d84ef1e0df244c74d210deb72409f7d3e1536246045; expires=Fri, 06-Sep-19 15:00:45 GMT; path=/; domain=.ethfinex.com; HttpOnly",
+            "Vary",
+            "Accept-Encoding",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "X-BFX-APIKEY,X-BFX-PAYLOAD,X-BFX-SIGNATURE,Content-Type,X-CSRF-Token,bfx-token,bfx-signature,bfx-apikey,bfx-nonce,bfx-flags",
+            "Content-Encoding",
+            "gzip",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "4561ce9b2de2be61-MXP"
+        ]
+    }
+]

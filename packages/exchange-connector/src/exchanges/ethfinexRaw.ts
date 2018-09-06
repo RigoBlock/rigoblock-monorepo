@@ -39,7 +39,7 @@ export class EthfinexRaw {
     },
     getOrders: async (options: {
       symbols: string
-      precision: EthfinexRaw.OrderPrecisions
+      precision?: EthfinexRaw.OrderPrecisions
     }): Promise<EthfinexRaw.RawOrder[]> => {
       const precision = options.precision || EthfinexRaw.OrderPrecisions.P0
       const url = `${this.HTTP_URL}/book/t${options.symbols}/${precision}`

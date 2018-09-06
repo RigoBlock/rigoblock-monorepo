@@ -30,7 +30,18 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       it('returns orders on a price aggregated basis, with customizable precision.', async () => {
         const options = { symbols: 'BTCUSD' }
         const result: any = await nockBackPromise(
-          'ethfinexRaw/http_getOrders.json',
+          'ethfinexRaw/http_getOrdersP0.json',
+          () => exchange.http.getOrders(options)
+        )
+        expect(result).toMatchSnapshot()
+      })
+      it('accepts a precision parameter', async () => {
+        const options = {
+          symbols: 'BTCUSD',
+          precision: 'P2'
+        }
+        const result: any = await nockBackPromise(
+          'ethfinexRaw/http_getOrdersP2.json',
           () => exchange.http.getOrders(options)
         )
         expect(result).toMatchSnapshot()
