@@ -29,7 +29,9 @@ const task = async (job, web3: Web3) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `${poolType}.${pool.address}.${network}.balance.${symbol}`,
+          `${poolType}.${
+            pool.address
+          }.balance,currency=${symbol},network=${network}`,
           pool.balance,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )

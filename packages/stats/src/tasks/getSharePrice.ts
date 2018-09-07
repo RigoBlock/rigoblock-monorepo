@@ -27,7 +27,7 @@ const task = async (job, web3: Web3) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `${poolType}.${pool.address}.${network}.price.buyprice`,
+          `${poolType}.${pool.address}.price,network=${network},price_type=buy`,
           pool.buyPrice,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )
@@ -38,7 +38,9 @@ const task = async (job, web3: Web3) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `${poolType}.${pool.address}.${network}.price.sellprice`,
+          `${poolType}.${
+            pool.address
+          }.price,network=${network},price_type=sell`,
           pool.sellPrice,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )
