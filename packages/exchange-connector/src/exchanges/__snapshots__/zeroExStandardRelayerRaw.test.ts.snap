@@ -1,5 +1,128 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API createOrder creates an order on the exchange 1`] = `
+Object {
+  "accountId": 2,
+  "dateClosed": null,
+  "dateCreated": "2018-09-04T14:48:50.089Z",
+  "dateUpdated": "2018-09-04T14:48:50.089Z",
+  "exchangeContractAddress": "0x12459c951127e0c374ff9105dda097662a027093",
+  "expirationUnixTimestampSec": 42,
+  "feeRecipient": "0x173a2467cece1f752eb8416e337d0f0b58cad795",
+  "id": 1256127,
+  "maker": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+  "makerFee": "0",
+  "makerTokenAddress": "0xd0a1e359811322d97991e03f863a0c30c2cf029c",
+  "makerTokenAmount": "10000000000000000",
+  "networkId": 42,
+  "orderHash": "0xb2846c3b4e782d00be15c254e15ef659d5e90a7c528a9bac2db01dc1a18b77f1",
+  "price": "0.5",
+  "remainingTakerTokenAmount": "20000000000000000",
+  "salt": "35017268446572149185915261526600509134060290251624415234342848175136386955900",
+  "serializedEcSignature": "{\\"v\\":28,\\"r\\":\\"0xad41a20b4d7c1707c4a2005d7305999937908c2b1578b2746fbaf16e6b55186e\\",\\"s\\":\\"0x40a35ca85b3021147b956ca1595bf51c20c4801f78d3e827a04724478959cb47\\"}",
+  "source": "ercdex",
+  "state": 0,
+  "taker": "0x0000000000000000000000000000000000000000",
+  "takerFee": "0",
+  "takerTokenAddress": "0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570",
+  "takerTokenAmount": "20000000000000000",
+}
+`;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API createOrder returns an error response if we don't pass the parameters 1`] = `
+Object {
+  "fields": Object {
+    "request.ecSignature": Object {
+      "message": "'ecSignature' is required",
+    },
+    "request.exchangeContractAddress": Object {
+      "message": "'exchangeContractAddress' is required",
+    },
+    "request.expirationUnixTimestampSec": Object {
+      "message": "'expirationUnixTimestampSec' is required",
+    },
+    "request.feeRecipient": Object {
+      "message": "'feeRecipient' is required",
+    },
+    "request.maker": Object {
+      "message": "'maker' is required",
+    },
+    "request.makerFee": Object {
+      "message": "'makerFee' is required",
+    },
+    "request.makerTokenAddress": Object {
+      "message": "'makerTokenAddress' is required",
+    },
+    "request.makerTokenAmount": Object {
+      "message": "'makerTokenAmount' is required",
+    },
+    "request.salt": Object {
+      "message": "'salt' is required",
+    },
+    "request.taker": Object {
+      "message": "'taker' is required",
+    },
+    "request.takerFee": Object {
+      "message": "'takerFee' is required",
+    },
+    "request.takerTokenAddress": Object {
+      "message": "'takerTokenAddress' is required",
+    },
+    "request.takerTokenAmount": Object {
+      "message": "'takerTokenAmount' is required",
+    },
+  },
+  "message": "An error occurred during the request.",
+  "name": "ValidateError",
+  "status": 400,
+}
+`;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getFees retrieves the orderbook for a given token pair. 1`] = `
+Object {
+  "feeRecipient": "0x173a2467cece1f752eb8416e337d0f0b58cad795",
+  "makerFee": "0",
+  "takerFee": "0",
+}
+`;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getFees returns an error response if we don't pass the parameters 1`] = `
+Object {
+  "fields": Object {
+    "request.exchangeContractAddress": Object {
+      "message": "'exchangeContractAddress' is required",
+    },
+    "request.expirationUnixTimestampSec": Object {
+      "message": "'expirationUnixTimestampSec' is required",
+    },
+    "request.maker": Object {
+      "message": "'maker' is required",
+    },
+    "request.makerTokenAddress": Object {
+      "message": "'makerTokenAddress' is required",
+    },
+    "request.makerTokenAmount": Object {
+      "message": "'makerTokenAmount' is required",
+    },
+    "request.salt": Object {
+      "message": "'salt' is required",
+    },
+    "request.taker": Object {
+      "message": "'taker' is required",
+    },
+    "request.takerTokenAddress": Object {
+      "message": "'takerTokenAddress' is required",
+    },
+    "request.takerTokenAmount": Object {
+      "message": "'takerTokenAmount' is required",
+    },
+  },
+  "message": "An error occurred during the request.",
+  "name": "ValidateError",
+  "status": 400,
+}
+`;
+
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getOrder retrieves a specific order by orderHash. 1`] = `
 Object {
   "ecSignature": Object {

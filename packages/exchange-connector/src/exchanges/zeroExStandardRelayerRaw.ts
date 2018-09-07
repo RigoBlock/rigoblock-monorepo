@@ -1,5 +1,5 @@
 import { NETWORKS, TRANSPORTS } from '../constants'
-import { fetchJSON, getQueryParameters } from '../utils'
+import { fetchJSON, getQueryParameters, postJSON } from '../utils'
 
 export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   static SUPPORTED_NETWORKS: NETWORKS[] = [
@@ -59,6 +59,44 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
     const queryParams = getQueryParameters(options)
     return fetchJSON(url, queryParams)
   }
+
+  public async getFees(options: {
+    exchangeContractAddress: string
+    maker: string
+    taker: string
+    makerTokenAddress: string
+    takerTokenAddress: string
+    makerTokenAmount: string
+    takerTokenAmount: string
+    expirationUnixTimestampSec: string
+    salt: string
+  }): Promise<ZeroExStandardRelayerRaw.RawFee> {
+    const url = `${this.STANDARD_API_URL}/v0/fees`
+    return postJSON(url, options)
+  }
+
+  public async createOrder(options: {
+    exchangeContractAddress: string
+    maker: string
+    taker: string
+    makerTokenAddress: string
+    takerTokenAddress: string
+    feeRecipient: string
+    makerTokenAmount: string
+    takerTokenAmount: string
+    makerFee: string
+    takerFee: string
+    expirationUnixTimestampSec: string
+    salt: string
+    ecSignature: {
+      v: number
+      r: string
+      s: string
+    }
+  }): Promise<ZeroExStandardRelayerRaw.OrderReceipt> {
+    const url = `${this.STANDARD_API_URL}/v0/order`
+    return postJSON(url, options)
+  }
 }
 
 export namespace ZeroExStandardRelayerRaw {
@@ -75,6 +113,39 @@ export namespace ZeroExStandardRelayerRaw {
       maxAmount: string
       precision: number
     }
+  }
+
+  export type RawFee = {
+    feeRecipient: string
+    makerFee: string
+    takerFee: string
+  }
+
+  export type OrderReceipt = {
+    price: string
+    exchangeContractAddress: string
+    expirationUnixTimestampSec: number
+    feeRecipient: string
+    maker: string
+    makerFee: string
+    makerTokenAddress: string
+    makerTokenAmount: string
+    networkId: number
+    orderHash: string
+    remainingTakerTokenAmount: string
+    salt: string
+    serializedEcSignature: string
+    state: string
+    taker: string
+    takerFee: string
+    takerTokenAddress: string
+    takerTokenAmount: string
+    accountId: number
+    source: string
+    dateUpdated: string
+    dateCreated: string
+    dateClosed: null
+    id: number
   }
 
   export type RawOrder = {
