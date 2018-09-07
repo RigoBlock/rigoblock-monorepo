@@ -30,7 +30,7 @@ export default (
     logger.error(`Job ${jobId} failed: ${err}`)
   })
   queue.on('global:completed', function(jobId, result) {
-    logger.info(`Job ${jobId} completed!` + result ? `Result: ${result}` : '')
+    logger.info(`Job ${jobId} completed!${result ? ` Result: ${result}` : ''}`)
   })
 
   queue.add(initialData, { repeat: { cron: cronExpression } })
