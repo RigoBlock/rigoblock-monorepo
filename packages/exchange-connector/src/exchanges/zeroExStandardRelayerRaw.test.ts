@@ -144,7 +144,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const signerAddress = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
       const kovanExchange = new ZeroExRelayerRaw(
         NETWORKS.KOVAN,
-        TRANSPORTS.HTTP,
         'https://api.ercdex.com/api/standard/42'
       )
       const order = {
@@ -173,7 +172,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       let kovanExchange
       kovanExchange = new ZeroExRelayerRaw(
         NETWORKS.KOVAN,
-        TRANSPORTS.HTTP,
         'https://api.ercdex.com/api/standard/42'
       )
       const result: any = await nockBackPromise(
