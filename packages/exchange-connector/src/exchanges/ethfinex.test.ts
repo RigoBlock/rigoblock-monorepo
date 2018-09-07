@@ -1,4 +1,3 @@
-import 'jest'
 import 'whatwg-fetch'
 import * as nock from 'nock'
 import { EventEmitter } from 'events'
@@ -52,7 +51,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     let exchange
     let emitter
     let websocketInstance
-    const connectionError = new Error('Error during the connection')
     const sendSpy = jest.fn()
     class WebsocketMock extends EventEmitter {
       public _listeners = {
@@ -97,6 +95,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         expect(websocketInstance).toBeInstanceOf(WebsocketMock)
       })
       it('rejects with an error in case the are issues with the connection', async () => {
+        const connectionError = new Error('Error during the connection')
         const exchangePromise = exchange.ws.open()
         const emitter = await exchange.ws.getConnection()
         emitter.emit('error', connectionError)
@@ -151,8 +150,9 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       })
       it('returns an unsubscribe function to remove the listener', async () => {
         const unsub = await exchange.ws.getTickers(options, cbSpy)
+        expect(emitter._listeners.message.length).toEqual(1)
         unsub()
-        expect(emitter._listeners.message).toEqual([])
+        expect(emitter._listeners.message.length).toEqual(0)
       })
     })
     describe('getCandles', () => {

@@ -58,7 +58,10 @@ export class Ethfinex {
     ) => {
       return this.raw.ws.getTickers(
         options,
-        this.msgFilter(m => m['pair'] === options.symbols, callback)
+        this.websocketMessagesFilter(
+          m => m['pair'] === options.symbols,
+          callback
+        )
       )
     },
     getCandles: async (
@@ -70,7 +73,7 @@ export class Ethfinex {
     ) => {
       return this.raw.ws.getCandles(
         options,
-        this.msgFilter(
+        this.websocketMessagesFilter(
           m => m['key'] === `trade:${options.timeframe}:t${options.symbols}`,
           callback
         )
@@ -78,7 +81,7 @@ export class Ethfinex {
     }
   }
 
-  private msgFilter = (filter, callback) => {
+  private websocketMessagesFilter = (filter, callback) => {
     let chanId
     let timer
     return (error: Error, msg: any, unsubscribe: Function) => {
@@ -125,7 +128,7 @@ export class Ethfinex {
     })
   }
 
-  private formatTickers(tickers: EthfinexRaw.RawTicker[]) {
+  private formatTickers(tickers: EthfinexRaw.RawTicker[]): TickersList {
     if (this.checkForError(tickers as any)) {
       throw new Error(tickers.pop() as any)
     }

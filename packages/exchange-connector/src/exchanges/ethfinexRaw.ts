@@ -98,7 +98,7 @@ export class EthfinexRaw {
         channel: 'ticker',
         symbol: `t${options.symbols}`
       }
-      const unsubscribe = this.addWsListener(ws, callback)
+      const unsubscribe = this.messagesListener(ws, callback)
       ws.send(JSON.stringify(msg))
       return unsubscribe
     },
@@ -115,26 +115,28 @@ export class EthfinexRaw {
         channel: 'candles',
         key: `trade:${options.timeframe}:t${options.symbols}`
       }
-      const unsubscribe = this.addWsListener(ws, callback)
+      const unsubscribe = this.messagesListener(ws, callback)
       ws.send(JSON.stringify(msg))
       return unsubscribe
     }
   }
 
-  private addWsListener = (
-    ws,
+  private messagesListener = (
+    websocketInstance,
     callback: (err: Error, message?: any, unsubscribe?: Function) => any
   ) => {
     let msgCallback
     const unsubscribe = () =>
-      msgCallback ? ws.removeEventListener('message', msgCallback) : null
+      msgCallback
+        ? websocketInstance.removeEventListener('message', msgCallback)
+        : null
 
     msgCallback = message => {
       const msg = JSON.parse(message.data)
       return callback(null, msg, unsubscribe)
     }
 
-    ws.addEventListener('message', msgCallback)
+    websocketInstance.addEventListener('message', msgCallback)
 
     return unsubscribe
   }

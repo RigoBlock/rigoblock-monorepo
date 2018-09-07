@@ -1,4 +1,3 @@
-import 'jest'
 import 'whatwg-fetch'
 import * as nock from 'nock'
 import { EventEmitter } from 'events'
@@ -62,8 +61,8 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     let exchange
     let emitter
     let websocketInstance
-    const connectionError = new Error('Error during the connection')
     const sendSpy = jest.fn()
+    const cbSpy = jest.fn()
 
     class WebsocketMock extends EventEmitter {
       public _listeners = {
@@ -108,6 +107,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         expect(websocketInstance).toBeInstanceOf(WebsocketMock)
       })
       it('rejects with an error in case the are issues with the connection', async () => {
+        const connectionError = new Error('Error during the connection')
         const exchangePromise = exchange.ws.open()
         const emitter = await exchange.ws.getConnection()
         emitter.emit('error', connectionError)
@@ -122,7 +122,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     })
     describe('getTickers', () => {
       const options = { symbols: 'BTCUSD' }
-      const cbSpy = jest.fn()
       const tickersResponse = [129, [6935.3]]
       const msg = {
         event: 'subscribe',
@@ -163,7 +162,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     })
     describe('getCandles', () => {
       const options = { timeframe: '15m', symbols: 'BTCUSD' }
-      const cbSpy = jest.fn()
       const candlesResponse = [
         9905,
         [[1536230280000, 6393.5, 6392.8, 6393.5, 6392.8, 1.45]]
