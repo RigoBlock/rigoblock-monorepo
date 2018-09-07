@@ -24,8 +24,8 @@ export class EthfinexRaw {
     public httpUrl?: string,
     public wsUrl?: string
   ) {
-    this.HTTP_URL = httpUrl ? httpUrl : EthfinexRaw.API_HTTP_URLS[networkId]
-    this.WS_URL = wsUrl ? wsUrl : EthfinexRaw.API_WS_URLS[networkId]
+    this.HTTP_URL = httpUrl || EthfinexRaw.API_HTTP_URLS[networkId]
+    this.WS_URL = wsUrl || EthfinexRaw.API_WS_URLS[networkId]
   }
 
   public http = {
@@ -76,9 +76,6 @@ export class EthfinexRaw {
         })
         this.wsInstance.addEventListener('error', rejectError)
       })
-    },
-    connection: () => {
-      return this.wsInstance
     },
     close: () => {
       new Promise((resolve, reject) => {

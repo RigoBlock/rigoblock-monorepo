@@ -6,11 +6,11 @@
         "body": "",
         "status": 200,
         "response": [
-            "1f8b08000000000000038b36343536333231b33400011d33136373206162a167646e6e646601615b42c42d8cf54c8d4c4d2d0d2ccd6201c73d6d8a38000000"
+            "1f8b08000000000000038b36343536333231b33400011d33136373206162a1670ca12c214296467a4686969616266626b100e70bf32033000000"
         ],
         "rawHeaders": [
             "Date",
-            "Thu, 06 Sep 2018 15:21:48 GMT",
+            "Thu, 06 Sep 2018 15:24:06 GMT",
             "Content-Type",
             "application/json; charset=utf-8",
             "Transfer-Encoding",
@@ -18,7 +18,7 @@
             "Connection",
             "close",
             "Set-Cookie",
-            "__cfduid=ded10f980034bafddbe8f04227c0fee121536247308; expires=Fri, 06-Sep-19 15:21:48 GMT; path=/; domain=.ethfinex.com; HttpOnly",
+            "__cfduid=dfaee1e5ec6c76fea9f2a20f216e0166b1536247446; expires=Fri, 06-Sep-19 15:24:06 GMT; path=/; domain=.ethfinex.com; HttpOnly",
             "Vary",
             "Accept-Encoding",
             "Access-Control-Allow-Origin",
@@ -32,7 +32,7 @@
             "Server",
             "cloudflare",
             "CF-RAY",
-            "4561ed6fac5f3d8f-MXP"
+            "4561f0ceedf34352-MXP"
         ]
     }
 ]

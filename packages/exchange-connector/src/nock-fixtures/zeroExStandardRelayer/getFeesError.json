@@ -1,0 +1,83 @@
+[
+    {
+        "scope": "https://api.ercdex.com:443",
+        "method": "POST",
+        "path": "/api/standard/1/v0/fees",
+        "body": "",
+        "status": 400,
+        "response": {
+            "fields": {
+                "request.maker": {
+                    "message": "'maker' is required"
+                },
+                "request.taker": {
+                    "message": "'taker' is required"
+                },
+                "request.exchangeContractAddress": {
+                    "message": "'exchangeContractAddress' is required"
+                },
+                "request.makerTokenAddress": {
+                    "message": "'makerTokenAddress' is required"
+                },
+                "request.takerTokenAddress": {
+                    "message": "'takerTokenAddress' is required"
+                },
+                "request.makerTokenAmount": {
+                    "message": "'makerTokenAmount' is required"
+                },
+                "request.takerTokenAmount": {
+                    "message": "'takerTokenAmount' is required"
+                },
+                "request.expirationUnixTimestampSec": {
+                    "message": "'expirationUnixTimestampSec' is required"
+                },
+                "request.salt": {
+                    "message": "'salt' is required"
+                }
+            },
+            "message": "An error occurred during the request.",
+            "name": "ValidateError",
+            "status": 400
+        },
+        "rawHeaders": [
+            "Date",
+            "Tue, 04 Sep 2018 14:52:07 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Content-Length",
+            "716",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=d2f56787848dab33c8b64288ecacabaf51536072727; expires=Wed, 04-Sep-19 14:52:07 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "X-DNS-Prefetch-Control",
+            "off",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Strict-Transport-Security",
+            "max-age=15552000; includeSubDomains",
+            "X-Download-Options",
+            "noopen",
+            "X-Content-Type-Options",
+            "nosniff",
+            "X-XSS-Protection",
+            "1; mode=block",
+            "Vary",
+            "X-HTTP-Method-Override",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY-ID",
+            "Via",
+            "1.1 google",
+            "Alt-Svc",
+            "clear",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "455147304839431c-MXP"
+        ]
+    }
+]
