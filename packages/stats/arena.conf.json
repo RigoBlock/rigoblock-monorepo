@@ -1,0 +1,124 @@
+{
+  "queues": [
+    {
+      "name": "kovan-fetch-dragos-list",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "kovan-calculate-balance-ETH",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "kovan-calculate-balance-GNT",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "kovan-calculate-balance-GRG",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "kovan-calculate-balance-MKR",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "kovan-calculate-balance-WETH",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "kovan-calculate-balance-USDT",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "kovan-calculate-balance-ZRX",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "kovan-calculate-dragos-totalsupply",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "kovan-calculate-dragos-shareprice",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-fetch-dragos-list",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-ETH",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-GNT",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-GRG",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-MKR",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-USDT",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-WETH",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-ZRX",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-dragos-totalsupply",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-dragos-shareprice",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    }
+  ]
+}
