@@ -98,4 +98,89 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       expect(result).toMatchSnapshot()
     })
   })
+  describe('getFees', () => {
+    const options = {
+      exchangeContractAddress: '0x12459c951127e0c374ff9105dda097662a027093',
+      maker: '0x9e56625509c2f60af937f23b7b532600390e8c8b',
+      taker: '0xa2b31dacf30a9c50ca473337c01d8a201ae33e32',
+      makerTokenAddress: '0x323b5d4c32345ced77393b3530b1eed0f346429d',
+      takerTokenAddress: '0xef7fff64389b814a946f3e92105513705ca6b990',
+      feeRecipient: '0xb046140686d052fff581f63f8136cce132e857da',
+      makerTokenAmount: '10000000000000000',
+      takerTokenAmount: '20000000000000000',
+      makerFee: '100000000000000',
+      takerFee: '200000000000000',
+      expirationUnixTimestampSec: '42',
+      salt:
+        '67006738228878699843088602623665307406148487219438534730168799356281242528500',
+      ecSignature: {
+        v: 27,
+        r: '0x61a3ed31b43c8780e905a260a35faefcc527be7516aa11c0256729b5b351bc33',
+        s: '0x40349190569279751135161d22529dc25add4f6069af05be04cacbda2ace2254'
+      }
+    }
+    it('retrieves the orderbook for a given token pair.', async () => {
+      const result: any = await nockBackPromise(
+        'zeroExStandardRelayer/GetFees.json',
+        () => exchange.getFees(options)
+      )
+      expect(result).toMatchSnapshot()
+    })
+    it("returns an error response if we don't pass the parameters", async () => {
+      const result: any = await nockBackPromise(
+        'zeroExStandardRelayer/getFeesError.json',
+        () => exchange.getFees()
+      )
+      expect(result).toMatchSnapshot()
+    })
+  })
+  describe('createOrder', () => {
+    it('creates an order on the exchange', async () => {
+      const signature = {
+        v: 28,
+        r: '0xad41a20b4d7c1707c4a2005d7305999937908c2b1578b2746fbaf16e6b55186e',
+        s: '0x40a35ca85b3021147b956ca1595bf51c20c4801f78d3e827a04724478959cb47'
+      }
+      const signerAddress = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
+      const kovanExchange = new ZeroExRelayerRaw(
+        NETWORKS.KOVAN,
+        TRANSPORTS.HTTP,
+        'https://api.ercdex.com/api/standard/42'
+      )
+      const order = {
+        maker: signerAddress,
+        taker: '0x0000000000000000000000000000000000000000',
+        makerFee: '0',
+        takerFee: '0',
+        makerTokenAmount: '10000000000000000',
+        takerTokenAmount: '20000000000000000',
+        makerTokenAddress: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
+        takerTokenAddress: '0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570',
+        salt:
+          '35017268446572149185915261526600509134060290251624415234342848175136386955900',
+        exchangeContractAddress: '0x12459c951127e0c374ff9105dda097662a027093',
+        feeRecipient: '0x173a2467cece1f752eb8416e337d0f0b58cad795',
+        expirationUnixTimestampSec: '42',
+        ecSignature: signature
+      }
+      const result: any = await nockBackPromise(
+        'zeroExStandardRelayer/Create.json',
+        () => kovanExchange.createOrder(order)
+      )
+      expect(result).toMatchSnapshot()
+    })
+    it("returns an error response if we don't pass the parameters", async () => {
+      let kovanExchange
+      kovanExchange = new ZeroExRelayerRaw(
+        NETWORKS.KOVAN,
+        TRANSPORTS.HTTP,
+        'https://api.ercdex.com/api/standard/42'
+      )
+      const result: any = await nockBackPromise(
+        'zeroExStandardRelayer/CreateError.json',
+        () => kovanExchange.createOrder()
+      )
+      expect(result).toMatchSnapshot()
+    })
+  })
 })

@@ -6,7 +6,7 @@ export const getQueryParameters = (options = {}) =>
 export const fetchJSON = (url, params?: string) =>
   fetch([url, params || ''].join('?')).then(r => r.json())
 
-export const postJSON = (url, body) =>
+export const postJSON = (url, body?: any) =>
   fetch(url, {
     method: 'POST',
     headers: {
