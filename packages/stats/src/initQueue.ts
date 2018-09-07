@@ -1,5 +1,6 @@
 import * as Queue from 'bull'
 import * as constants from './constants'
+import logger from './logger'
 import tasks from './tasks'
 
 export default (
@@ -21,6 +22,16 @@ export default (
   const queue = new Queue(name, config)
 
   queue.process(tasks[handlerName])
+
+  queue.on('global:stalled', function(job, progress) {
+    logger.warn(`Job ${job} is stalled`)
+  })
+  queue.on('global:failed', function(jobId, err) {
+    logger.error(`Job ${jobId} failed: ${err}`)
+  })
+  queue.on('global:completed', function(jobId, result) {
+    logger.info(`Job ${jobId} completed!` + result ? `Result: ${result}` : '')
+  })
 
   queue.add(initialData, { repeat: { cron: cronExpression } })
 
