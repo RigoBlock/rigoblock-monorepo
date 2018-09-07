@@ -1,14 +1,14 @@
 import 'whatwg-fetch'
 import * as nock from 'nock'
 import { ERCdEXRaw } from './ercdexRaw'
-import { NETWORKS, TRANSPORTS } from '../constants'
+import { NETWORKS } from '../constants'
 import nockBackPromise from '../nockBackPromise'
 
 describe('it allows us to perform API calls to exchanges following 0x Standard Relayer API', () => {
   let exchange
   beforeAll(() => {
     nock.disableNetConnect()
-    exchange = new ERCdEXRaw(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+    exchange = new ERCdEXRaw(NETWORKS.MAINNET)
   })
 
   afterAll(() => {

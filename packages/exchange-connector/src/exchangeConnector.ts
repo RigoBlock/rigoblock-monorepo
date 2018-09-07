@@ -1,5 +1,5 @@
 import { Ethfinex } from './exchanges/ethfinex'
-import { NETWORKS, TRANSPORTS, supportedExchanges } from './constants'
+import { NETWORKS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
 import ZeroExStandardRelayerRaw from './exchanges/zeroExStandardRelayerRaw'
 
@@ -15,7 +15,6 @@ function exchangeConnector(
   exchangeName: supportedExchanges,
   options = {
     networkId: NETWORKS.MAINNET,
-    transport: TRANSPORTS.HTTP,
     apiUrl: ''
   }
 ): any {
@@ -28,17 +27,12 @@ function exchangeConnector(
       `Network Id not supported for selected network: ${options.networkId}`
     )
   }
-  return new selectedExchange(
-    options.networkId,
-    options.transport,
-    options.apiUrl
-  )
+  return new selectedExchange(options.networkId, options.apiUrl)
 }
 
 export default exchangeConnector
 
 interface ExchangeOptions {
   networkId?: NETWORKS | number
-  transport?: TRANSPORTS
   apiUrl?: string
 }

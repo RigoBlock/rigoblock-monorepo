@@ -1,4 +1,4 @@
-import { NETWORKS, TRANSPORTS } from '../constants'
+import { NETWORKS } from '../constants'
 import { fetchJSON, getQueryParameters, postJSON } from '../utils'
 
 export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
@@ -9,7 +9,6 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   ]
   constructor(
     public networkId: NETWORKS | number,
-    public transport: TRANSPORTS = TRANSPORTS.HTTP,
     public STANDARD_API_URL: string
   ) {
     if (!STANDARD_API_URL) {

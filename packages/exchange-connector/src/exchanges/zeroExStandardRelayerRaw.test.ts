@@ -1,7 +1,6 @@
-import 'jest'
 import 'whatwg-fetch'
 import * as nock from 'nock'
-import { NETWORKS, TRANSPORTS } from '../constants'
+import { NETWORKS } from '../constants'
 import ZeroExRelayerRaw from './zeroExStandardRelayerRaw'
 import nockBackPromise from '../nockBackPromise'
 
@@ -11,7 +10,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     nock.disableNetConnect()
     exchange = new ZeroExRelayerRaw(
       NETWORKS.MAINNET,
-      TRANSPORTS.HTTP,
       'https://api.ercdex.com/api/standard/1'
     )
   })
