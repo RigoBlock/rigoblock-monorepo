@@ -18,7 +18,7 @@ export class Ethfinex
   ]
 
   constructor(public networkId: NETWORKS | number, public apiUrl?: string) {
-    this.API_URL = apiUrl ? apiUrl : Ethfinex.API_HTTP_URLS[networkId]
+    this.API_URL = apiUrl || Ethfinex.API_HTTP_URLS[networkId]
   }
 
   public async getOrders(
