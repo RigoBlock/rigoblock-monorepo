@@ -91,7 +91,7 @@ export class EthfinexRaw {
     getTickers: async (
       options: { symbols: string },
       callback: (err: Error, message?: any, unsubscribe?: Function) => any
-    ): Promise<any> => {
+    ): Promise<Function> => {
       const ws = await this.ws.getConnection()
       const msg = {
         event: 'subscribe',
@@ -108,7 +108,7 @@ export class EthfinexRaw {
         symbols: string
       },
       callback: (err: Error, message?: any, unsubscribe?: Function) => any
-    ): Promise<any> => {
+    ): Promise<Function> => {
       const ws = await this.ws.getConnection()
       const msg = {
         event: 'subscribe',

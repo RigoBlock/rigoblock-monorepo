@@ -1,23 +1,21 @@
 import { AMOUNT_PRECISION, NETWORKS, PRICE_PRECISION } from '../constants'
-import { EthfinexRaw } from './ethfinexRaw'
-import { IExchange, OrderType, OrdersList, TickersList } from './types'
+import { OrderType, OrdersList, TickersList } from './types'
 import BigNumber from 'bignumber.js'
+import EthfinexRaw from './ethfinexRaw'
 
 export class Ethfinex {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
-  public static API_HTTP_URLS = {
-    [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
-    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
-    [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
-  }
-  public API_URL: string
   private raw: EthfinexRaw
   private wsTimeout = 10000
 
-  constructor(public networkId: NETWORKS | number, public apiUrl?: string) {
-    this.API_URL = apiUrl ? apiUrl : Ethfinex.API_HTTP_URLS[networkId]
-    this.raw = new EthfinexRaw(networkId, apiUrl)
+  constructor(
+    public networkId: NETWORKS | number,
+    public apiUrl?: string,
+    public wsUrl?: string
+  ) {
+    this.raw = new EthfinexRaw(networkId, apiUrl, wsUrl)
   }
+
   public http = {
     getOrders: async (options: {
       symbols: string
@@ -40,8 +38,7 @@ export class Ethfinex {
       sort?: EthfinexRaw.CandlesSort
       start?: string // filter start (ms)
       end?: string // filter end (ms)
-      // TODO: fix return type
-    }): Promise<any> => {
+    }): Promise<EthfinexRaw.RawCandle[]> => {
       return this.raw.http.getCandles(options)
     }
   }
@@ -52,8 +49,8 @@ export class Ethfinex {
     close: () => {
       return this.raw.ws.close()
     },
-    getConnection: async () => {
-      return await this.raw.ws.getConnection()
+    getConnection: () => {
+      return this.raw.ws.getConnection()
     },
     getTickers: async (
       options: { symbols: string },
@@ -159,42 +156,6 @@ export class Ethfinex {
 
   private checkForError(array: any[]) {
     return array[0] === ('error' as any)
-  }
-}
-
-export namespace Ethfinex {
-  export enum OrderPrecisions {
-    P0 = 'P0',
-    P1 = 'P1',
-    P2 = 'P2',
-    P3 = 'P3',
-    P4 = 'P4',
-    R0 = 'R0'
-  }
-
-  export enum CandlesTimeFrame {
-    ONE_MIN = '1m',
-    FIVE_MINS = '5m',
-    FIFTEEN_MINS = '15m',
-    THIRTY_MINS = '30m',
-    ONE_HOUR = '1h',
-    THREE_HRS = '3h',
-    SIX_HRS = '6h',
-    TWELVE_HRS = '12h',
-    ONE_DAY = '1D',
-    SEVEN_DAYS = '7D',
-    TWO_WEEKS = '14D',
-    ONE_MONTH = '1M'
-  }
-
-  export enum CandlesSection {
-    HIST = 'hist',
-    LAST = 'last'
-  }
-
-  export enum CandlesSort {
-    NEW_FIRST = '-1',
-    OLD_FIRST = '1'
   }
 }
 
