@@ -12,6 +12,7 @@ export class Ethfinex {
   }
   public API_URL: string
   private raw: EthfinexRaw
+  private wsTimeout = 10000
 
   constructor(public networkId: NETWORKS | number, public apiUrl?: string) {
     this.API_URL = apiUrl ? apiUrl : Ethfinex.API_HTTP_URLS[networkId]
@@ -41,23 +42,68 @@ export class Ethfinex {
       end?: string // filter end (ms)
       // TODO: fix return type
     }): Promise<any> => {
-      return this.raw.http.getCandles(options).then(result => result)
+      return this.raw.http.getCandles(options)
     }
   }
   public ws = {
-    open: () => this.raw.ws.open(),
-    close: () => this.raw.ws.close(),
+    open: () => {
+      return this.raw.ws.open()
+    },
+    close: () => {
+      return this.raw.ws.close()
+    },
+    getConnection: async () => {
+      return await this.raw.ws.getConnection()
+    },
     getTickers: async (
       options: { symbols: string },
       callback: (err: Error, message?: any) => any
-    ) => this.raw.ws.getTickers(options, callback),
+    ) => {
+      return this.raw.ws.getTickers(
+        options,
+        this.msgFilter(m => m['pair'] === options.symbols, callback)
+      )
+    },
     getCandles: async (
       options: {
         timeframe: string
         symbols: string
       },
       callback: (err: Error, message?: any) => any
-    ) => this.raw.ws.getCandles(options, callback)
+    ) => {
+      return this.raw.ws.getCandles(
+        options,
+        this.msgFilter(
+          m => m['key'] === `trade:${options.timeframe}:t${options.symbols}`,
+          callback
+        )
+      )
+    }
+  }
+
+  private msgFilter = (filter, callback) => {
+    let chanId
+    let timer
+    return (error: Error, msg: any, unsubscribe: Function) => {
+      if (error) {
+        return callback(error)
+      }
+      if (msg.event === 'subscribed' && filter(msg)) {
+        chanId = msg.chanId
+        timer = setTimeout(() => {
+          unsubscribe()
+          return callback(
+            new Error(
+              `No data received within ${this.wsTimeout / 1000} seconds.`
+            )
+          )
+        }, this.wsTimeout)
+      }
+      if (Array.isArray(msg) && msg[0] === chanId) {
+        timer ? clearTimeout(timer) : null
+        return callback(null, msg.pop())
+      }
+    }
   }
 
   private formatOrders(orders: EthfinexRaw.RawOrder[]): OrdersList {
