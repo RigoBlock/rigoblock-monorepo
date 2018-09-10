@@ -99,6 +99,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     }
   }
   public ws = {
+    ...this.ws,
     open: () => {
       this.wsInstance = new ReconnectingWebSocket(this.WS_URL)
       return new Promise((resolve, reject) => {

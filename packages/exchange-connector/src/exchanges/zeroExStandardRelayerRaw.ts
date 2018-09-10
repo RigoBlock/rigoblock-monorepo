@@ -9,17 +9,18 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   ]
   constructor(
     public networkId: NETWORKS | number,
-    public STANDARD_HTTP_URL: string
+    public STANDARD_HTTP_URL: string,
+    public STANDARD_WS_URL?: string
   ) {
     if (!STANDARD_HTTP_URL) {
       throw new Error('API url must be specified for 0x standard relayers.')
     }
   }
-  /**
-   * Accepts one or two optional token addresses.
-   * Setting only tokenA or tokenB returns pairs filtered by that token only
-   */
   public http = {
+    /**
+     * Accepts one or two optional token addresses.
+     * Setting only tokenA or tokenB returns pairs filtered by that token only
+     */
     getTokenPairs: async (options: {
       tokenA?: string
       tokenB?: string
