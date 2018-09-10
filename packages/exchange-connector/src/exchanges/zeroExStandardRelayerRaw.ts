@@ -9,9 +9,9 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   ]
   constructor(
     public networkId: NETWORKS | number,
-    public STANDARD_API_URL: string
+    public STANDARD_HTTP_URL: string
   ) {
-    if (!STANDARD_API_URL) {
+    if (!STANDARD_HTTP_URL) {
       throw new Error('API url must be specified for 0x standard relayers.')
     }
   }
@@ -23,7 +23,7 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
     tokenA?: string
     tokenB?: string
   }): Promise<ZeroExStandardRelayerRaw.TokenPair[]> {
-    const url = `${this.STANDARD_API_URL}/v0/token_pairs`
+    const url = `${this.STANDARD_HTTP_URL}/v0/token_pairs`
     const queryParams = getQueryParameters(options)
     return fetchJSON(url, queryParams)
   }
@@ -38,7 +38,7 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
     trader?: string
     feeRecipient?: string
   }): Promise<ZeroExStandardRelayerRaw.RawOrder[]> {
-    const url = `${this.STANDARD_API_URL}/v0/orders`
+    const url = `${this.STANDARD_HTTP_URL}/v0/orders`
     const queryParams = getQueryParameters(options)
     return fetchJSON(url, queryParams)
   }
@@ -46,7 +46,7 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
   public async getOrder(options: {
     orderHash: string
   }): Promise<ZeroExStandardRelayerRaw.RawOrder> {
-    const url = `${this.STANDARD_API_URL}/v0/order/${options.orderHash}`
+    const url = `${this.STANDARD_HTTP_URL}/v0/order/${options.orderHash}`
     return fetchJSON(url)
   }
 
@@ -54,7 +54,7 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
     baseTokenAddress: string
     quoteTokenAddress: string
   }): Promise<ZeroExStandardRelayerRaw.OrderBook> {
-    const url = `${this.STANDARD_API_URL}/v0/orderbook`
+    const url = `${this.STANDARD_HTTP_URL}/v0/orderbook`
     const queryParams = getQueryParameters(options)
     return fetchJSON(url, queryParams)
   }
@@ -70,7 +70,7 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
     expirationUnixTimestampSec: string
     salt: string
   }): Promise<ZeroExStandardRelayerRaw.RawFee> {
-    const url = `${this.STANDARD_API_URL}/v0/fees`
+    const url = `${this.STANDARD_HTTP_URL}/v0/fees`
     return postJSON(url, options)
   }
 
@@ -93,7 +93,7 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
       s: string
     }
   }): Promise<ZeroExStandardRelayerRaw.OrderReceipt> {
-    const url = `${this.STANDARD_API_URL}/v0/order`
+    const url = `${this.STANDARD_HTTP_URL}/v0/order`
     return postJSON(url, options)
   }
 }

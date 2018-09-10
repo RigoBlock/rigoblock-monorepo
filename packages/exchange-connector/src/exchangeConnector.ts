@@ -15,7 +15,8 @@ function exchangeConnector(
   exchangeName: supportedExchanges,
   options = {
     networkId: NETWORKS.MAINNET,
-    apiUrl: ''
+    httpUrl: '',
+    wsUrl: ''
   }
 ): any {
   const selectedExchange = ExchangesMap[exchangeName]
@@ -27,12 +28,13 @@ function exchangeConnector(
       `Network Id not supported for selected network: ${options.networkId}`
     )
   }
-  return new selectedExchange(options.networkId, options.apiUrl)
+  return new selectedExchange(options.networkId, options.httpUrl, options.wsUrl)
 }
 
 export default exchangeConnector
 
 interface ExchangeOptions {
   networkId?: NETWORKS | number
-  apiUrl?: string
+  httpUrl?: string
+  wsUrl?: string
 }
