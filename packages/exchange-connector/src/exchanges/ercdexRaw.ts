@@ -20,82 +20,79 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     this.HTTP_URL = HTTP_URL ? HTTP_URL : ERCdEXRaw.API_HTTP_URL
   }
 
-  public async getBestOrders(options: {
-    makerTokenAddress: string // Address of maker token
-    takerTokenAddress: string // Address of taker token
-    baseTokenAddress: string // Address of base token
-    quantity: string // Quantity of pair requested
-    takerAddress: string // Address of order taker
-  }): Promise<ERCdEXRaw.BestOrders> {
-    const url = `${this.HTTP_URL}/orders/best`
-    const queryParams = getQueryParameters({
-      ...options,
-      networkId: this.NETWORK_ID
-    })
-    return fetchJSON(url, queryParams)
-  }
-
-  public async getTickers(): Promise<ERCdEXRaw.Ticker[]> {
-    const url = `${this.HTTP_URL}/reports/ticker`
-    return fetchJSON(url)
-  }
-
-  // TODO: check which parameters we want to implement
-  public async getTradeHistoryLogs(): Promise<ERCdEXRaw.HistoryLogs> {
-    const url = `${this.HTTP_URL}/trade_history_logs`
-    return fetchJSON(url)
-  }
-
-  public async getHistoricalPrices(options: {
-    baseTokenAddress: string
-    quoteTokenAddress: string
-    startDate: string
-  }): Promise<ERCdEXRaw.HistoricalPrice[]> {
-    const url = `${this.HTTP_URL}/reports/historical`
-    return postJSON(url, {
-      ...options,
-      networkId: this.NETWORK_ID
-    })
-  }
-
-  public async getAggregatedOrders(options: {
-    baseTokenAddress: string
-    quoteTokenAddress: string
-  }): Promise<ERCdEXRaw.AggregatedOrders> {
-    const url = `${this.HTTP_URL}/aggregated_orders`
-    const queryParams = getQueryParameters({
-      ...options,
-      networkId: this.NETWORK_ID
-    })
-    return fetchJSON(url, queryParams)
-  }
-  // TODO: find out how to add a test
-  public async softCancelOrder(options: {
-    orderHash: string
-    signature?: {
-      v: number
-      r: string
-      s: string
+  public http = {
+    getBestOrders: async (options: {
+      makerTokenAddress: string // Address of maker token
+      takerTokenAddress: string // Address of taker token
+      baseTokenAddress: string // Address of base token
+      quantity: string // Quantity of pair requested
+      takerAddress: string // Address of order taker
+    }): Promise<ERCdEXRaw.BestOrders> => {
+      const url = `${this.HTTP_URL}/orders/best`
+      const queryParams = getQueryParameters({
+        ...options,
+        networkId: this.NETWORK_ID
+      })
+      return fetchJSON(url, queryParams)
+    },
+    getTickers: async (): Promise<ERCdEXRaw.Ticker[]> => {
+      const url = `${this.HTTP_URL}/reports/ticker`
+      return fetchJSON(url)
+    },
+    // TODO: check which parameters we want to implement
+    getTradeHistoryLogs: (): Promise<ERCdEXRaw.HistoryLogs> => {
+      const url = `${this.HTTP_URL}/trade_history_logs`
+      return fetchJSON(url)
+    },
+    getHistoricalPrices: async (options: {
+      baseTokenAddress: string
+      quoteTokenAddress: string
+      startDate: string
+    }): Promise<ERCdEXRaw.HistoricalPrice[]> => {
+      const url = `${this.HTTP_URL}/reports/historical`
+      return postJSON(url, {
+        ...options,
+        networkId: this.NETWORK_ID
+      })
+    },
+    getAggregatedOrders: async (options: {
+      baseTokenAddress: string
+      quoteTokenAddress: string
+    }): Promise<ERCdEXRaw.AggregatedOrders> => {
+      const url = `${this.HTTP_URL}/aggregated_orders`
+      const queryParams = getQueryParameters({
+        ...options,
+        networkId: this.NETWORK_ID
+      })
+      return fetchJSON(url, queryParams)
+    },
+    // TODO: find out how to add a test
+    softCancelOrder: async (options: {
+      orderHash: string
+      signature?: {
+        v: number
+        r: string
+        s: string
+      }
+    }): Promise<any> => {
+      const url = `${this.HTTP_URL}/orders/soft-cancel`
+      return postJSON(url, options)
+    },
+    getFeesERCdEX: async (options: {
+      makerTokenAddress: string
+      takerTokenAddress: string
+      makerTokenAmount: string
+      takerTokenAmount: string
+      maker: string
+      taker: string
+    }): Promise<ZeroExStandardRelayerRaw.RawFee> => {
+      const url = `${this.HTTP_URL}/fees`
+      const queryParams = getQueryParameters({
+        ...options,
+        networkId: this.NETWORK_ID
+      })
+      return postJSON([url, queryParams].join('?'))
     }
-  }): Promise<any> {
-    const url = `${this.HTTP_URL}/orders/soft-cancel`
-    return postJSON(url, options)
-  }
-
-  public async getFeesERCdEX(options: {
-    makerTokenAddress: string
-    takerTokenAddress: string
-    makerTokenAmount: string
-    takerTokenAmount: string
-    maker: string
-    taker: string
-  }): Promise<ZeroExStandardRelayerRaw.RawFee> {
-    const url = `${this.HTTP_URL}/fees`
-    const queryParams = getQueryParameters({
-      ...options,
-      networkId: this.NETWORK_ID
-    })
-    return postJSON([url, queryParams].join('?'))
   }
 }
 

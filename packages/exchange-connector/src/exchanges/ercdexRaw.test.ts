@@ -19,7 +19,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const result: any = await nockBackPromise(
         'ercdexRaw/getBestOrders.json',
         () =>
-          exchange.getBestOrders({
+          exchange.http.getBestOrders({
             makerTokenAddress: '0xe41d2489571d322189246dafa5ebde1f4699f498',
             takerTokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
             baseTokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
@@ -32,7 +32,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     it('Returns an error response if correct parameters are not specified', async () => {
       const result: any = await nockBackPromise(
         'ercdexRaw/getBestOrdersError.json',
-        () => exchange.getBestOrders()
+        () => exchange.http.getBestOrders()
       )
       expect(result).toMatchSnapshot()
     })
@@ -41,7 +41,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     it('Retrieves tickers data.', async () => {
       const result: any = await nockBackPromise(
         'ercdexRaw/getTickers.json',
-        () => exchange.getTickers()
+        () => exchange.http.getTickers()
       )
       expect(result).toMatchSnapshot()
     })
@@ -50,7 +50,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     it('Retrieves trade history logs.', async () => {
       const result: any = await nockBackPromise(
         'ercdexRaw/getTradeHistoryLogs.json',
-        () => exchange.getTradeHistoryLogs()
+        () => exchange.http.getTradeHistoryLogs()
       )
       expect(result).toMatchSnapshot()
     })
@@ -60,7 +60,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const result: any = await nockBackPromise(
         'ercdexRaw/getHistoricalPrices.json',
         () =>
-          exchange.getHistoricalPrices({
+          exchange.http.getHistoricalPrices({
             baseTokenAddress: '0xe41d2489571d322189246dafa5ebde1f4699f498',
             quoteTokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
             startDate: '2018-08-28T10:06:02Z'
@@ -71,7 +71,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     it('Returns an error response if correct parameters are not specified', async () => {
       const result: any = await nockBackPromise(
         'ercdexRaw/getHistoricalPricesError.json',
-        () => exchange.getBestOrders()
+        () => exchange.http.getBestOrders()
       )
       expect(result).toMatchSnapshot()
     })
@@ -81,7 +81,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const result: any = await nockBackPromise(
         'ercdexRaw/getAggregatedOrders.json',
         () =>
-          exchange.getAggregatedOrders({
+          exchange.http.getAggregatedOrders({
             baseTokenAddress: '0xe41d2489571d322189246dafa5ebde1f4699f498',
             quoteTokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
           })
@@ -91,7 +91,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     it('Returns an error response if correct parameters are not specified', async () => {
       const result: any = await nockBackPromise(
         'ercdexRaw/getAggregatedOrdersError.json',
-        () => exchange.getBestOrders()
+        () => exchange.http.getBestOrders()
       )
       expect(result).toMatchSnapshot()
     })
@@ -101,7 +101,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const result: any = await nockBackPromise(
         'ercdexRaw/getFeesERCdEX.json',
         () =>
-          exchange.getFeesERCdEX({
+          exchange.http.getFeesERCdEX({
             makerTokenAddress: '0x323b5d4c32345ced77393b3530b1eed0f346429d',
             takerTokenAddress: '0xef7fff64389b814a946f3e92105513705ca6b990',
             makerTokenAmount: '10000000000000000',
