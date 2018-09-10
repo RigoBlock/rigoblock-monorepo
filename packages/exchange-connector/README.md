@@ -5,7 +5,7 @@ An API to simplify interaction with token Exchanges.
 ## Importing the package
 
 ```javascript
-import exchangeConnector, { supportedExchanges, NETWORKS } from '@rigoblock/exchange-connector'
+import exchangeConnector, { supportedExchanges, NETWORKS, exchanges } from '@rigoblock/exchange-connector'
 ```
 
 ## How to use it
@@ -42,11 +42,26 @@ const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX, {
   networkId: NETWORKS.KOVAN
 })
 
+const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX, {
+  networkId: NETWORKS.KOVAN
+})
+
 const orders = await ethfinex.http.getOrders({
   symbols: 'ZRXETH',
   precision: exchanges[supportedExchanges.ETHFINEX_RAW].OrderPrecisions.P4
 })
 ```
+
+To use websocket methods, a callback is to be passed as a second parameter to the call, to be able to receive the data
+
+```javascript
+const tickers = await ethfinex.ws.getTickers(
+  { symbols: 'ZRXETH' },
+  (error, data) => (error ? console.error(error) : console.log(data))
+)
+```
+
+'RAW' exchange classes will return data unfiltered and unformatted from the API,while non RAW ones will return the data formatted.
 
 ## Available Scripts
 
