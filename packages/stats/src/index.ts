@@ -15,3 +15,8 @@ const queues = Object.keys(config).map(queueName => {
 })
 
 logger.info(`Created ${queues.length} queues`)
+
+process.on('uncaughtException', err => {
+  logger.error('Error during the execution')
+  logger.error(err)
+})

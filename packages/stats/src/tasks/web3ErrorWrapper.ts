@@ -1,4 +1,5 @@
 import Web3 = require('web3')
+import logger from '../logger'
 
 export default task => async job => {
   const { web3Provider = {} } = job.data
@@ -12,6 +13,7 @@ export default task => async job => {
     await (<any>web3.currentProvider).connection.close()
     return
   } catch (e) {
+    logger.error('Error', e)
     await (<any>web3.currentProvider).connection.close()
     throw e
   }
