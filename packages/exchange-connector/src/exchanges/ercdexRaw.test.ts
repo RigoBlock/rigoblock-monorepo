@@ -117,7 +117,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     it('Works with inherited standard relayer calls', async () => {
       const result: any = await nockBackPromise(
         'ercdexRaw/standard-getTokenPairs.json',
-        () => exchange.getTokenPairs()
+        () => exchange.http.getTokenPairs()
       )
       expect(result).toMatchSnapshot()
     })

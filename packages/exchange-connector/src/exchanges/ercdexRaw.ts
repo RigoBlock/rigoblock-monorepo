@@ -21,6 +21,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   }
 
   public http = {
+    ...this.http,
     getBestOrders: async (options: {
       makerTokenAddress: string // Address of maker token
       takerTokenAddress: string // Address of taker token
