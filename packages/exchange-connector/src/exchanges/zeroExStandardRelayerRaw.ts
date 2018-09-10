@@ -93,6 +93,7 @@ export class ZeroExStandardRelayerRaw<T = ZeroExStandardRelayerRaw.RawOrder[]> {
       return postJSON(url, options)
     }
   }
+  public ws = {}
 }
 
 export namespace ZeroExStandardRelayerRaw {

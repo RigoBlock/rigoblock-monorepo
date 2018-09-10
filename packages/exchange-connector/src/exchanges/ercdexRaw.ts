@@ -1,12 +1,14 @@
 import { NETWORKS } from '../constants'
 import { ZeroExStandardRelayerRaw } from './zeroExStandardRelayerRaw'
 import { fetchJSON, getQueryParameters, postJSON } from '../utils'
+import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
   public static API_HTTP_URL = 'https://api.ercdex.com/api'
-
+  public static API_WS_URL = 'wss://api.ercdex.com'
   public API_URL: string
+  private wsInstance
 
   constructor(
     public NETWORK_ID: NETWORKS | number,
@@ -17,7 +19,8 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       NETWORK_ID,
       HTTP_URL || `${ERCdEXRaw.API_HTTP_URL}/standard/${NETWORK_ID}`
     )
-    this.HTTP_URL = HTTP_URL ? HTTP_URL : ERCdEXRaw.API_HTTP_URL
+    this.HTTP_URL = HTTP_URL || ERCdEXRaw.API_HTTP_URL
+    this.WS_URL = WS_URL || ERCdEXRaw.API_WS_URL
   }
 
   public http = {
@@ -94,6 +97,86 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       })
       return postJSON([url, queryParams].join('?'))
     }
+  }
+  public ws = {
+    open: () => {
+      this.wsInstance = new ReconnectingWebSocket(this.WS_URL)
+      return new Promise((resolve, reject) => {
+        const rejectError = err => {
+          return reject(err)
+        }
+        this.wsInstance.addEventListener('error', rejectError)
+        this.wsInstance.addEventListener('open', () => {
+          this.wsInstance.removeEventListener('error', rejectError)
+          return resolve(this.wsInstance)
+        })
+      })
+    },
+    close: () => {
+      return new Promise(resolve => {
+        this.wsInstance.addEventListener('close', () => {
+          this.wsInstance = null
+          return resolve()
+        })
+        this.wsInstance.close()
+      })
+    },
+    getConnection: () => {
+      return Promise.resolve(this.wsInstance) || this.ws.open()
+    },
+    getTickers: async (
+      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    ): Promise<Function> => {
+      const ws = await this.ws.getConnection()
+      const msg = `sub:ticker`
+      const unsubscribe = this.messagesListener(ws, callback)
+      ws.send(msg)
+      return unsubscribe
+    },
+    getPairOrderChange: async (
+      options: { baseTokenAddress: string; quoteTokenAddress: string },
+      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    ): Promise<Function> => {
+      const ws = await this.ws.getConnection()
+      const msg = `sub:pair-order-change/${options.baseTokenAddress}/${
+        options.quoteTokenAddress
+      }`
+      const unsubscribe = this.messagesListener(ws, callback)
+      ws.send(msg)
+      return unsubscribe
+    },
+    getAggregatedOrderFeed: async (
+      options: { baseTokenAddress: string; quoteTokenAddress: string },
+      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    ): Promise<Function> => {
+      const ws = await this.ws.getConnection()
+      const msg = `sub:aggregated-order-feed/${options.baseTokenAddress}/${
+        options.quoteTokenAddress
+      }`
+      const unsubscribe = this.messagesListener(ws, callback)
+      ws.send(msg)
+      return unsubscribe
+    }
+  }
+
+  private messagesListener = (
+    websocketInstance,
+    callback: (err: Error, message?: any, unsubscribe?: Function) => any
+  ) => {
+    let msgCallback
+    const unsubscribe = () =>
+      msgCallback
+        ? websocketInstance.removeEventListener('message', msgCallback)
+        : null
+
+    msgCallback = message => {
+      const msg = JSON.parse(message.data)
+      return callback(null, msg, unsubscribe)
+    }
+
+    websocketInstance.addEventListener('message', msgCallback)
+
+    return unsubscribe
   }
 }
 
