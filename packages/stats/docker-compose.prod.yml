@@ -1,12 +1,37 @@
-version: '3'
+version: '3.2'
 services:
+  traefik:
+    image: traefik:1.7.0-rc4
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    expose:
+      - "8080"
+    networks:
+      - stats
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./conf/traefik/traefik.toml:/traefik.toml
+      - ./conf/traefik/acme.json:/acme.json
+    container_name: traefik
+    labels:
+      traefik.backend: "traefik"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:${TRAEFIK_URI:?err}"
+      traefik.docker.network: "stats_stats"
+      traefik.port: "8080"
+      traefik.frontend.auth.basic.users: "${TRAEFIK_CREDENTIALS:?err}"
+
   influxdb:
     image: influxdb:latest
     container_name: influxdb
     ports:
-      - "8083:8083"
-      - "8086:8086"
-      - "8090:8090"
+      - "127.0.0.1:8083:8083"
+      - "127.0.0.1:8086:8086"
+      - "127.0.0.1:8090:8090"
+    networks:
+      - stats
     env_file:
       - 'env.influxdb'
     volumes:
@@ -17,26 +42,36 @@ services:
     container_name: telegraf
     ports:
       - "8125:8125/udp"
+    networks:
+      - stats
     links:
       - influxdb
     volumes:
-      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./conf/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   chronograf:
     image: chronograf:latest
     container_name: chronograf
     environment:
-      AUTH_DURATION: ${AUTH_DURATION}
-      TOKEN_SECRET: ${TOKEN_SECRET}
-      GH_CLIENT_ID: ${GH_CLIENT_ID}
-      GH_CLIENT_SECRET: ${GH_CLIENT_SECRET}
-      GH_ORGS: ${GH_ORGS}
+      AUTH_DURATION: ${AUTH_DURATION:?err}
+      TOKEN_SECRET: ${TOKEN_SECRET:?err}
+      GH_CLIENT_ID: ${GH_CLIENT_ID:?err}
+      GH_CLIENT_SECRET: ${GH_CLIENT_SECRET:?err}
+      GH_ORGS: ${GH_ORGS:?err}
     ports:
-      - "8888:8888"
+      - "8888"
+    networks:
+      - stats
     links:
       - influxdb
     volumes:
       - ~/data/chronograf:/var/lib/chronograf
+    labels:
+      traefik.backend: "chronograf"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:${CHRONOGRAF_URI:?err}"
+      traefik.docker.network: "stats_stats"
+      traefik.port: "8888"
     command: ['chronograf', '--influxdb-url=http://influxdb:8086']
 
   redis:
@@ -44,24 +79,45 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+    networks:
+      - stats
 
   arena:
     image: vshjxyz/arena:latest
     container_name: arena
     ports:
-      - "4567:4567"
+      - "4567"
+    networks:
+      - stats
     links:
       - redis
     volumes:
-      - ./arena.prod.conf.json:/opt/arena/src/server/config/index.json:ro
+      - ./conf/arena/arena.prod.conf.json:/opt/arena/src/server/config/index.json:ro
+    labels:
+      traefik.backend: "arena"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:${ARENA_URI:?err}"
+      traefik.docker.network: "stats_stats"
+      traefik.port: "4567"
+      traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS:?err}"
 
   bull:
     container_name: bull
     environment:
-      REDIS_HOST: dev-04.endpoint.network
-      TELEGRAF_HOST: dev-04.endpoint.network
+      REDIS_HOST: redis
+      TELEGRAF_HOST: telegraf
     build:
       context: ../../
       dockerfile: ./packages/stats/Dockerfile
       args:
-        - NPM_KEY=${NPM_KEY}
+        - NPM_KEY=${NPM_KEY:?err}
+    networks:
+      - stats
+
+networks:
+    stats:
+      driver: bridge
+      ipam:
+        driver: default
+        config:
+          - subnet: 172.20.1.0/16
