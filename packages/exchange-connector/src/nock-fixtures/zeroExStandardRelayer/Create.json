@@ -1,0 +1,73 @@
+[
+    {
+        "scope": "https://api.ercdex.com:443",
+        "method": "POST",
+        "path": "/api/standard/42/v0/order",
+        "body": {
+            "maker": "0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196",
+            "taker": "0x0000000000000000000000000000000000000000",
+            "makerFee": "0",
+            "takerFee": "0",
+            "makerTokenAmount": "10000000000000000",
+            "takerTokenAmount": "20000000000000000",
+            "makerTokenAddress": "0xd0a1e359811322d97991e03f863a0c30c2cf029c",
+            "takerTokenAddress": "0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570",
+            "salt": "35017268446572149185915261526600509134060290251624415234342848175136386955900",
+            "exchangeContractAddress": "0x12459c951127e0c374ff9105dda097662a027093",
+            "feeRecipient": "0x173a2467cece1f752eb8416e337d0f0b58cad795",
+            "expirationUnixTimestampSec": "42",
+            "ecSignature": {
+                "v": 28,
+                "r": "0xad41a20b4d7c1707c4a2005d7305999937908c2b1578b2746fbaf16e6b55186e",
+                "s": "0x40a35ca85b3021147b956ca1595bf51c20c4801f78d3e827a04724478959cb47"
+            }
+        },
+        "status": 200,
+        "response": [
+            "1f8b08000000000000038c534d8f13310cfd2f390f2bdb8993b83784407065970beac5499c65b4edb49ace4205e2bfa3e92edf086da4448a6cbfbc67bf7c71c779ace6360eaed80dcecef5834eb7f6e2302db3d6e5796bb39d4e6bfc8c1458aa30222583ea53e85d10b835054931920225107f81398eb32ee3617a378de79b716fa745f7c76bab6e136870ddecadd5f138dab43c6027af1462aa560d7b62b2920346f33e35e85038576d49568a7bbdb3f95244810ab54668c950a910636ca05e2116ce464d4a1794f8bde8955d847ebfde1cee6cfa55600345f32c19d11335492268e07b8e5ea17aa8543b90d4df01f687fb8b08843f961bdc64cba7c37cf7a63dc83ecccde6d77afa7079ae500eb1fa122c656a00c5902b713064eb91a5b10968aa4c59a568a556005b45c55c52eae80637db5ec7699c6e6ffee643ffe073d2dd1af20c9828e6102227c22098599029ae3b023008fa001148606d2a85804c3ef84039644c8c3efa1c85591e606d1e75377eb6f6b25e8fb7932ef7f3daea2f5bf771eb369487ad9bb76eb37570d61650094a68a9628254831200b7e48145447c12c8950a72ca855288bd68c768b130638eb675c3d69d1ec102a8e7aa998b07420ca908c7aac8c2a53356821a32604fb979cb941442a2105216",
+            "965a42dabaaf2bfd4517731b18dcf2c35bf0c4e51e8b7e7a6bf9a7b762efb142efd8622e12830076c9b1852a5dbdd698fd3a8c3f00fe374bad758daedea2c19d0ef7f3e51fdb5c9b9ddde09a2ef6eeb89eed8280f919c83308371836216f18ae20cbfbc7c417b33d31717738ad79d3fd6e37b8b1b90d1247a4f4f51b000000ffff030063e4018e4b040000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Tue, 04 Sep 2018 14:48:50 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=d924b15309b07aa0c26caa09274634b051536072530; expires=Wed, 04-Sep-19 14:48:50 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "X-DNS-Prefetch-Control",
+            "off",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Strict-Transport-Security",
+            "max-age=15552000; includeSubDomains",
+            "X-Download-Options",
+            "noopen",
+            "X-Content-Type-Options",
+            "nosniff",
+            "X-XSS-Protection",
+            "1; mode=block",
+            "Vary",
+            "X-HTTP-Method-Override",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY-ID",
+            "Via",
+            "1.1 google",
+            "Alt-Svc",
+            "clear",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "455142607bef4310-MXP",
+            "Content-Encoding",
+            "gzip"
+        ]
+    }
+]

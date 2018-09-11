@@ -1,26 +1,20 @@
-import { NETWORKS, TRANSPORTS } from '../constants'
+import { NETWORKS } from '../constants'
 import { ZeroExStandardRelayerRaw } from './zeroExStandardRelayerRaw'
 import { fetchJSON, getQueryParameters, postJSON } from '../utils'
 
 export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
-  public static API_URLS = {
-    http: 'https://api.ercdex.com/api'
-  }
+  public static API_HTTP_URL = 'https://api.ercdex.com/api'
+
   public API_URL: string
   public STANDARD_API_URL: string
 
-  constructor(
-    public networkId: NETWORKS | number,
-    public transport: TRANSPORTS = TRANSPORTS.HTTP,
-    public apiUrl?: string
-  ) {
+  constructor(public networkId: NETWORKS | number, public apiUrl?: string) {
     super(
       networkId,
-      transport,
-      apiUrl || `${ERCdEXRaw.API_URLS[transport]}/standard/${networkId}`
+      apiUrl || `${ERCdEXRaw.API_HTTP_URL}/standard/${networkId}`
     )
-    this.API_URL = apiUrl ? apiUrl : ERCdEXRaw.API_URLS[transport]
+    this.API_URL = apiUrl ? apiUrl : ERCdEXRaw.API_HTTP_URL
   }
 
   public async getBestOrders(options: {
@@ -71,6 +65,34 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       networkId: this.networkId
     })
     return fetchJSON(url, queryParams)
+  }
+  // TODO: find out how to add a test
+  public async softCancelOrder(options: {
+    orderHash: string
+    signature?: {
+      v: number
+      r: string
+      s: string
+    }
+  }): Promise<any> {
+    const url = `${this.API_URL}/orders/soft-cancel`
+    return postJSON(url, options)
+  }
+
+  public async getFeesERCdEX(options: {
+    makerTokenAddress: string
+    takerTokenAddress: string
+    makerTokenAmount: string
+    takerTokenAmount: string
+    maker: string
+    taker: string
+  }): Promise<ZeroExStandardRelayerRaw.RawFee> {
+    const url = `${this.API_URL}/fees`
+    const queryParams = getQueryParameters({
+      ...options,
+      networkId: this.networkId
+    })
+    return postJSON([url, queryParams].join('?'))
   }
 }
 

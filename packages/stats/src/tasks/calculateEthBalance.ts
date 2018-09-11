@@ -1,5 +1,5 @@
+import Web3 = require('web3')
 import redis from '../redis'
-import Web3 from 'web3'
 import statsD from '../statsd'
 import web3ErrorWrapper from './web3ErrorWrapper'
 
@@ -26,7 +26,7 @@ const task = async (job, web3: Web3) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `${poolType}.${pool.address}.${network}.balance.ETH`,
+          `${poolType}.${pool.address}.balance,currency=ETH,network=${network}`,
           pool.balance,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )

@@ -1,14 +1,14 @@
 import 'whatwg-fetch'
 import * as nock from 'nock'
 import { ERCdEXRaw } from './ercdexRaw'
-import { NETWORKS, TRANSPORTS } from '../constants'
+import { NETWORKS } from '../constants'
 import nockBackPromise from '../nockBackPromise'
 
 describe('it allows us to perform API calls to exchanges following 0x Standard Relayer API', () => {
   let exchange
   beforeAll(() => {
     nock.disableNetConnect()
-    exchange = new ERCdEXRaw(NETWORKS.MAINNET, TRANSPORTS.HTTP)
+    exchange = new ERCdEXRaw(NETWORKS.MAINNET)
   })
 
   afterAll(() => {
@@ -92,6 +92,23 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const result: any = await nockBackPromise(
         'ercdexRaw/getAggregatedOrdersError.json',
         () => exchange.getBestOrders()
+      )
+      expect(result).toMatchSnapshot()
+    })
+  })
+  describe('getFeesERCdEX', () => {
+    it('Get fees for an order of described parameters', async () => {
+      const result: any = await nockBackPromise(
+        'ercdexRaw/getFeesERCdEX.json',
+        () =>
+          exchange.getFeesERCdEX({
+            makerTokenAddress: '0x323b5d4c32345ced77393b3530b1eed0f346429d',
+            takerTokenAddress: '0xef7fff64389b814a946f3e92105513705ca6b990',
+            makerTokenAmount: '10000000000000000',
+            takerTokenAmount: '20000000000000000',
+            maker: '0x9e56625509c2f60af937f23b7b532600390e8c8b',
+            taker: '0x0000000000000000000000000000000000000000'
+          })
       )
       expect(result).toMatchSnapshot()
     })
