@@ -1,4 +1,3 @@
-import 'jest'
 import 'whatwg-fetch'
 import * as nock from 'nock'
 import { EventEmitter } from 'events'
@@ -60,7 +59,11 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
   })
   describe('websocket', () => {
     let exchange
+    let emitter
+    let websocketInstance
     const sendSpy = jest.fn()
+    const cbSpy = jest.fn()
+
     class WebsocketMock extends EventEmitter {
       public _listeners = {
         error: [],
@@ -69,6 +72,9 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         close: []
       }
       public send = sendSpy
+      public close() {
+        return this.emit('close')
+      }
       public addEventListener() {
         this._listeners[arguments['0']].push(arguments['1'])
         return this.addListener.apply(this, arguments)
@@ -82,27 +88,40 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         return this.removeListener.apply(this, arguments)
       }
     }
-    beforeEach(() => {
+    beforeEach(async () => {
       jest.resetModules()
       jest.doMock('reconnecting-websocket', () => WebsocketMock)
       const EthfinexRaw = require('./ethfinexRaw').EthfinexRaw
       exchange = new EthfinexRaw(NETWORKS.MAINNET)
       jest.useFakeTimers()
+      const exchangePromise = exchange.ws.open()
+      emitter = await exchange.ws.getConnection()
+      emitter.emit('open')
+      websocketInstance = await exchangePromise
     })
     afterEach(() => {
       jest.clearAllTimers()
     })
     describe('open', () => {
       it('opens a websocket connection and assigns the websocket instance', async () => {
+        expect(websocketInstance).toBeInstanceOf(WebsocketMock)
+      })
+      it('rejects with an error in case the are issues with the connection', async () => {
+        const connectionError = new Error('Error during the connection')
         const exchangePromise = exchange.ws.open()
-        exchange.ws.getConnection().emit('open')
-        const websocket = await exchangePromise
-        expect(websocket).toBeInstanceOf(WebsocketMock)
+        const emitter = await exchange.ws.getConnection()
+        emitter.emit('error', connectionError)
+        await expect(exchangePromise).rejects.toThrow(connectionError)
+      })
+    })
+    describe('close', () => {
+      it('closes a websocket connection and assigns the websocket instance to null', async () => {
+        await exchange.ws.close()
+        expect(exchange.wsInstance).toBe(null)
       })
     })
     describe('getTickers', () => {
       const options = { symbols: 'BTCUSD' }
-      const cbSpy = jest.fn()
       const tickersResponse = [129, [6935.3]]
       const msg = {
         event: 'subscribe',
@@ -117,53 +136,36 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         pair: 'BTCUSD'
       }
       it('sends a websocket message with the specified options', async () => {
-        const exchangePromise = exchange.ws.getTickers(options, cbSpy)
-        exchange.ws.getConnection().emit('open')
-        await exchangePromise
-        expect(exchange.wsInstance.send).toHaveBeenCalledWith(
-          JSON.stringify(msg)
-        )
+        await exchange.ws.getTickers(options, cbSpy)
+        expect(sendSpy).toHaveBeenCalledWith(JSON.stringify(msg))
       })
-      it('filters the messages for and returns data for the specified pair', async () => {
-        const exchangePromise = exchange.ws.getTickers(options, cbSpy)
-        exchange.ws.getConnection().emit('open')
-        await exchangePromise
-        exchange.ws.getConnection().emit('message', {
+      it('returns the messages unfiltered to the callback + an unsubscribe function', async () => {
+        await exchange.ws.getTickers(options, cbSpy)
+        emitter.emit('message', {
           data: JSON.stringify(subscribeEvent)
         })
-        exchange.ws.getConnection().emit('message', {
+        emitter.emit('message', {
           data: JSON.stringify(tickersResponse)
         })
-        expect(cbSpy).toHaveBeenCalledWith(null, tickersResponse.pop())
-      })
-      it('calls the callback with an error if no data is returned within 10 seconds', async () => {
-        const exchangePromise = exchange.ws.getTickers(options, cbSpy)
-        exchange.ws.getConnection().emit('open')
-        await exchangePromise
-        exchange.ws.getConnection().emit('message', {
-          data: JSON.stringify(subscribeEvent)
-        })
-        jest.advanceTimersByTime(10000)
         expect(cbSpy).toHaveBeenCalledWith(
-          new Error(`No data received within 10 seconds.`)
+          null,
+          tickersResponse,
+          expect.any(Function)
         )
       })
       it('returns an unsubscribe function to remove the listener', async () => {
-        const exchangePromise = exchange.ws.getTickers(options, cbSpy)
-        exchange.ws.getConnection().emit('open')
-        const unsub = await exchangePromise
+        const unsub = await exchange.ws.getTickers(options, cbSpy)
+        expect(emitter._listeners.message.length).toEqual(1)
         unsub()
-        expect(exchange.ws.getConnection()._listeners.message).toEqual([])
+        expect(emitter._listeners.message.length).toEqual(0)
       })
     })
     describe('getCandles', () => {
       const options = { timeframe: '15m', symbols: 'BTCUSD' }
-      const cbSpy = jest.fn()
       const candlesResponse = [
         9905,
         [[1536230280000, 6393.5, 6392.8, 6393.5, 6392.8, 1.45]]
       ]
-
       const msg = {
         event: 'subscribe',
         channel: 'candles',
@@ -176,35 +178,21 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         key: `trade:${options.timeframe}:t${options.symbols}`
       }
       it('sends a websocket message with the specified options', async () => {
-        const exchangePromise = exchange.ws.getCandles(options, cbSpy)
-        exchange.ws.getConnection().emit('open')
-        await exchangePromise
-        expect(exchange.wsInstance.send).toHaveBeenCalledWith(
-          JSON.stringify(msg)
-        )
+        await exchange.ws.getCandles(options, cbSpy)
+        expect(sendSpy).toHaveBeenCalledWith(JSON.stringify(msg))
       })
       it('filters the messages for and returns data for the specified pair', async () => {
-        const exchangePromise = exchange.ws.getCandles(options, cbSpy)
-        exchange.ws.getConnection().emit('open')
-        await exchangePromise
-        exchange.ws.getConnection().emit('message', {
+        await exchange.ws.getCandles(options, cbSpy)
+        emitter.emit('message', {
           data: JSON.stringify(subscribeEvent)
         })
-        exchange.ws.getConnection().emit('message', {
+        emitter.emit('message', {
           data: JSON.stringify(candlesResponse)
         })
-        expect(cbSpy).toHaveBeenCalledWith(null, candlesResponse.pop())
-      })
-      it('calls the callback with an error if no data is returned within 10 seconds', async () => {
-        const exchangePromise = exchange.ws.getCandles(options, cbSpy)
-        exchange.ws.getConnection().emit('open')
-        await exchangePromise
-        exchange.ws.getConnection().emit('message', {
-          data: JSON.stringify(subscribeEvent)
-        })
-        jest.advanceTimersByTime(10000)
         expect(cbSpy).toHaveBeenCalledWith(
-          new Error(`No data received within 10 seconds.`)
+          null,
+          candlesResponse,
+          expect.any(Function)
         )
       })
     })

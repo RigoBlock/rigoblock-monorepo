@@ -17,7 +17,6 @@ export class EthfinexRaw {
   public HTTP_URL: string
   public WS_URL: string
   private wsInstance
-  private wsTimeout = 10000
 
   constructor(
     public networkId: NETWORKS | number,
@@ -70,45 +69,36 @@ export class EthfinexRaw {
         const rejectError = err => {
           return reject(err)
         }
+        this.wsInstance.addEventListener('error', rejectError)
         this.wsInstance.addEventListener('open', () => {
           this.wsInstance.removeEventListener('error', rejectError)
           return resolve(this.wsInstance)
         })
-        this.wsInstance.addEventListener('error', rejectError)
       })
     },
     close: () => {
-      new Promise((resolve, reject) => {
-        const rejectError = err => {
-          return reject(err)
-        }
+      return new Promise(resolve => {
         this.wsInstance.addEventListener('close', () => {
-          this.wsInstance.removeEventListener('error', rejectError)
           this.wsInstance = null
           return resolve()
         })
-        this.wsInstance.addEventListener('error', rejectError)
         this.wsInstance.close()
       })
     },
     getConnection: () => {
-      return this.wsInstance || this.ws.open()
+      return Promise.resolve(this.wsInstance) || this.ws.open()
     },
     getTickers: async (
       options: { symbols: string },
-      callback: (err: Error, message?: any) => any
-    ): Promise<any> => {
+      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    ): Promise<Function> => {
       const ws = await this.ws.getConnection()
       const msg = {
         event: 'subscribe',
         channel: 'ticker',
         symbol: `t${options.symbols}`
       }
-      const unsubscribe = this.addWsListener(
-        ws,
-        callback,
-        m => m['pair'] === options.symbols
-      )
+      const unsubscribe = this.messagesListener(ws, callback)
       ws.send(JSON.stringify(msg))
       return unsubscribe
     },
@@ -117,46 +107,36 @@ export class EthfinexRaw {
         timeframe: string
         symbols: string
       },
-      callback: (err: Error, message?: any) => any
-    ): Promise<any> => {
+      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    ): Promise<Function> => {
       const ws = await this.ws.getConnection()
       const msg = {
         event: 'subscribe',
         channel: 'candles',
         key: `trade:${options.timeframe}:t${options.symbols}`
       }
-      this.addWsListener(ws, callback, m => m['key'] === msg.key)
-      return ws.send(JSON.stringify(msg))
+      const unsubscribe = this.messagesListener(ws, callback)
+      ws.send(JSON.stringify(msg))
+      return unsubscribe
     }
   }
 
-  private addWsListener = (ws, callback, filterFunction) => {
-    let chanId
+  private messagesListener = (
+    websocketInstance,
+    callback: (err: Error, message?: any, unsubscribe?: Function) => any
+  ) => {
     let msgCallback
     const unsubscribe = () =>
-      msgCallback ? ws.removeEventListener('message', msgCallback) : null
+      msgCallback
+        ? websocketInstance.removeEventListener('message', msgCallback)
+        : null
 
     msgCallback = message => {
-      let timer
       const msg = JSON.parse(message.data)
-      if (msg.event === 'subscribed' && filterFunction(msg)) {
-        chanId = msg.chanId
-        timer = setTimeout(() => {
-          unsubscribe()
-          return callback(
-            new Error(
-              `No data received within ${this.wsTimeout / 1000} seconds.`
-            )
-          )
-        }, this.wsTimeout)
-      }
-      if (Array.isArray(msg) && msg[0] === chanId) {
-        timer ? clearTimeout(timer) : null
-        return callback(null, msg.pop())
-      }
+      return callback(null, msg, unsubscribe)
     }
 
-    ws.addEventListener('message', msgCallback)
+    websocketInstance.addEventListener('message', msgCallback)
 
     return unsubscribe
   }
