@@ -44,6 +44,11 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+    volumes:
+      - ~/data/redis:/data
+    command:
+      ['redis-server', '--loglevel', 'debug', '--appendonly', 'yes']
+    restart: always
 
   arena:
     image: vshjxyz/arena:latest
