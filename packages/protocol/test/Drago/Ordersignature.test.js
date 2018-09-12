@@ -1,8 +1,6 @@
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import dragoArtifact from '../../artifacts/Drago.json'
 import { BigNumber } from 'bignumber.js'
-import Web3 from 'web3'
-
 import web3 from '../web3'
 import { ZeroEx } from '0x.js'
 
@@ -54,7 +52,9 @@ describeContract(contractName, () => {
       const takerFee = (new BigNumber(0)).toString()
       const makerTokenAmount = web3.utils.toWei('0.2')
       const takerTokenAmount = web3.utils.toWei('0.3')
-      const expirationUnixTimestampSec = (new BigNumber(Date.now() + 3600000)).toString() // Valid for up to an hour
+      const expirationUnixTimestampSec = new BigNumber(
+        Date.now() + 3600000
+      ).toString() // Valid for up to an hour
 
       // Generate order
       const order = {
@@ -72,11 +72,8 @@ describeContract(contractName, () => {
         expirationUnixTimestampSec: expirationUnixTimestampSec
       }
 
-      // sign an order
       const orderHash = await ZeroEx.getOrderHashHex(order)
-
-      // Provider pointing to local TestRPC on default port 8545
-      const provider = new Web3.providers.HttpProvider('http://localhost:8545')
+      const provider = web3.currentProvider
 
       // Instantiate 0x.js instance
       const configs = {
@@ -88,8 +85,11 @@ describeContract(contractName, () => {
       const signerAddress = accounts[0] //'0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3' must include pkey
 
       const shouldAddPersonalMessagePrefix = false;
-      const ecSignature = await zeroEx.signOrderHashAsync(orderHash, signerAddress, shouldAddPersonalMessagePrefix)
-
+      const ecSignature = await zeroEx.signOrderHashAsync(
+        orderHash,
+        signerAddress,
+        shouldAddPersonalMessagePrefix
+      )
       const orderAddresses = [
         maker,
         taker,
