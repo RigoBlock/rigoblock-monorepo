@@ -1,8 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
-import Web3 from 'web3'
 import dragoArtifact from '../../artifacts/Drago.json'
-
 import { ZeroEx } from '0x.js'
 import web3 from '../web3'
 
@@ -31,7 +29,7 @@ describeContract(contractName, () => {
       gas: GAS_ESTIMATE,
       gasPrice: 1
     }
-    ethfinexAddress = await baseContracts['ExchangeEfx'].address
+    ethfinexAddress = baseContracts['ExchangeEfx'].address
     ethfinexAdapterAddress = await baseContracts[
       'ExchangesAuthority'
     ].getExchangeAdapter(ethfinexAddress)
@@ -62,7 +60,6 @@ describeContract(contractName, () => {
         ETHtokenWrapper,
         true
       )
-      //const isTrue = await baseContracts['AEthfinex'].isApprovedWrapper(ETHtokenWrapper)
       const methodInterface = {
         name: 'wrapToEfx',
         type: 'function',
@@ -102,7 +99,6 @@ describeContract(contractName, () => {
         ethfinexAdapterAddress,
         true
       ) // byte4(keccak256(method))
-      //const isApprovedMethod = await baseContracts['ExchangesAuthority'].isMethodAllowed(methodSignature, ethfinexAdapterAddress)
 
       await dragoInstance.methods
         .operateOnExchange(ethfinexAddress, assembledTransaction)
@@ -110,23 +106,14 @@ describeContract(contractName, () => {
       const wethBalance = await baseContracts['WrapperLockEth'].balanceOf(
         dragoAddress
       )
-      // if a deposit is repeated, weth balance will be equal to the sum of depositAmouns
-      expect(wethBalance.toString()).toEqual(toBeWrapped.toString())
 
       // wrap some GRG from the user account, so that the user can sell GRG buy ETH
       const GRGtokenWrapper = await baseContracts['WrapperLock'].address
       const GRGtoBeWrapped = web3.utils.toWei('2')
       await baseContracts['RigoToken'].approve(GRGtokenWrapper, GRGtoBeWrapped)
       await baseContracts['WrapperLock'].deposit(GRGtoBeWrapped, time)
-      const GRGwrappedTokensAmount = await baseContracts[
-        'WrapperLock'
-      ].balanceOf(accounts[0])
-      expect(GRGwrappedTokensAmount.toString()).toEqual(
-        GRGtoBeWrapped.toString()
-      )
 
       const EXCHANGE_ADDRESS = baseContracts['ExchangeEfx'].address
-
       const maker = dragoAddress
       const taker = accounts[0] // ZeroEx.NULL_ADDRESS
       const feeRecipient = ZeroEx.NULL_ADDRESS
@@ -158,11 +145,8 @@ describeContract(contractName, () => {
         expirationUnixTimestampSec: expirationUnixTimestampSec
       }
 
-      // sign an order
       const orderHash = await ZeroEx.getOrderHashHex(order)
-
-      // Provider pointing to local TestRPC on default port 8545
-      const provider = new Web3.providers.HttpProvider('http://localhost:8545')
+      const provider = web3.currentProvider
 
       // Instantiate 0x.js instance
       const configs = {
