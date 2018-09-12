@@ -40,7 +40,7 @@ services:
     command: ['chronograf', '--influxdb-url=http://influxdb:8086']
 
   redis:
-    image: redis:latest
+    image: redis:5.0-rc-alpine
     container_name: redis
     ports:
       - "6379:6379"
