@@ -28,9 +28,7 @@ describe('Exchange factory class', () => {
       apiUrl: 'https://api.radarrelay.com/0x',
       networkId: NETWORKS.MAINNET
     })
-    expect(JSON.stringify(exchange.constructor)).toEqual(
-      JSON.stringify(ZeroExStandardRelayerRaw)
-    )
+    expect(exchange).toBeInstanceOf(ZeroExStandardRelayerRaw)
   })
 
   it('throws an error if we try to instantiate a 0x relayer without passing the API url', () => {
