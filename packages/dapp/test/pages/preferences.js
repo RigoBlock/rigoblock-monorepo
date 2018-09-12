@@ -33,7 +33,7 @@ module.exports = {
 
   checkTimezoneHasChanged(timezone) {
     I.seeTextEquals(
-      `${timezone}\nkeyboard_arrow_down\n`,
+      `${timezone}\nkeyboard_arrow_down`,
       'div.md-select-field__toggle'
     )
   },

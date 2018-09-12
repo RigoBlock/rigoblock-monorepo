@@ -1,5 +1,12 @@
 /*
 
+  Copyright 2018 Ethfinex Inc
+
+  This is a derivative work based on software developed by ZeroEx Intl
+  This and the original are licensed under Apache License, Version 2.0
+
+  Original attribution:
+
   Copyright 2017 ZeroEx Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +23,9 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity 0.4.19; // MUST BE COMPILED WITH COMPILER VERSION 0.4.19
 
-import { Owned } from "../../../Owned/Owned.sol"; // GR ADDITION
+contract Owned { address public owner; } // GR ADDITION
 
 interface Token {
 
@@ -56,9 +63,9 @@ interface Token {
 
 
 //solhint-disable-next-line
-/// @title TokenTransferProxyEfx - Transfers tokens on behalf of exchange
+/// @title TokenTransferProxy - Transfers tokens on behalf of exchange
 /// @author Ahmed Ali <Ahmed@bitfinex.com>
-contract TokenTransferProxyEfx {
+contract TokenTransferProxy {
 
     modifier onlyExchange {
         require(msg.sender == exchangeAddress);
@@ -70,7 +77,7 @@ contract TokenTransferProxyEfx {
 
     event LogAuthorizedAddressAdded(address indexed target, address indexed caller);
 
-    function TokenTransferProxyEfx() public {
+    function TokenTransferProxy() public {
         setExchange(msg.sender);
     }
     /*
@@ -179,7 +186,6 @@ contract SafeMath {
 /// @title ExchangeEfx - Facilitates exchange of ERC20 tokens.
 /// @author Amir Bandeali - <amir@0xProject.com>, Will Warren - <will@0xProject.com>
 // Modified by Ahmed Ali <Ahmed@bitfinex.com>
-/// @notice Modified by Gabriele Rigo - <gab@rigoblock.com>
 contract ExchangeEfx is SafeMath {
 
     // Error Codes
@@ -190,9 +196,9 @@ contract ExchangeEfx is SafeMath {
         INSUFFICIENT_BALANCE_OR_ALLOWANCE // Insufficient balance or allowance for token transfer
     }
 
-    string constant public VERSION = "1.0.0";
+    string constant public VERSION = "ETHFX.0.0";
     uint16 constant public EXTERNAL_QUERY_GAS_LIMIT = 4999;    // Changes to state require at least 5000 gas
-    uint constant public ETHFINEX_FEE = 200; // Amount - (Amount/fee) is what gets send to user
+    uint constant public ETHFINEX_FEE = 400; // Amount - (Amount/fee) is what gets send to user
 
     // address public ZRX_TOKEN_CONTRACT;
     address public TOKEN_TRANSFER_PROXY_CONTRACT;
@@ -200,6 +206,10 @@ contract ExchangeEfx is SafeMath {
     // Mappings of orderHash => amounts of takerTokenAmount filled or cancelled.
     mapping (bytes32 => uint) public filled;
     mapping (bytes32 => uint) public cancelled;
+
+    // GR ADDITION
+    // Mapping of signer => validator => approved
+    mapping (address => mapping (address => bool)) public allowedValidators;
 
     event LogFill(
         address indexed maker,
@@ -228,6 +238,12 @@ contract ExchangeEfx is SafeMath {
 
     event LogError(uint8 indexed errorId, bytes32 indexed orderHash);
 
+    event SignatureValidatorApproval(
+        address indexed signerAddress,     // Address that approves or disapproves a contract to verify signatures.
+        address indexed validatorAddress,  // Address of signature validator contract.
+        bool approved                      // Approval or disapproval of validator contract.
+    );
+
     struct Order {
         address maker;
         address taker;
@@ -245,7 +261,7 @@ contract ExchangeEfx is SafeMath {
     // MODIFIED CODE, constructor changed
     function ExchangeEfx() public {
         // ZRX_TOKEN_CONTRACT = _zrxToken;
-        TOKEN_TRANSFER_PROXY_CONTRACT = address(new TokenTransferProxyEfx());
+        TOKEN_TRANSFER_PROXY_CONTRACT = address(new TokenTransferProxy());
     }
 
     /*
@@ -288,18 +304,9 @@ contract ExchangeEfx is SafeMath {
 
         require(order.taker == address(0) || order.taker == msg.sender);
         require(order.makerTokenAmount > 0 && order.takerTokenAmount > 0 && fillTakerTokenAmount > 0);
-/*
+
         require(isValidSignature(
             order.maker,
-            order.orderHash,
-            v,
-            r,
-            s
-        ));
-*/
-        // GR ADDITION
-        require(isValidSignature(
-            getSignerInternal(order.maker),
             order.orderHash,
             v,
             r,
@@ -329,9 +336,7 @@ contract ExchangeEfx is SafeMath {
         }
 
         /////////////// modified code /////////////////
-        // uint filledMakerTokenAmount = getPartialAmount(filledTakerTokenAmount, order.takerTokenAmount, order.makerTokenAmount);
         uint filledMakerTokenAmount = getPartialAmount(filledTakerTokenAmount, order.takerTokenAmount, order.makerTokenAmount);
-        filledMakerTokenAmount = filledMakerTokenAmount - safeDiv(filledMakerTokenAmount, ETHFINEX_FEE);
         ///////////// modified code ///////////
 
         uint paidMakerFee;
@@ -347,7 +352,7 @@ contract ExchangeEfx is SafeMath {
             order.takerToken,
             msg.sender,
             order.maker,
-            filledTakerTokenAmount
+            filledTakerTokenAmount - safeDiv(filledTakerTokenAmount, ETHFINEX_FEE)
         ));
         // if (order.feeRecipient != address(0)) {
         //     if (order.makerFee > 0) {
@@ -617,41 +622,39 @@ contract ExchangeEfx is SafeMath {
         );
     }
 
+
     /// @dev Verifies that an order signature is valid.
-    /// @param signer address of signer.
+    /// @param maker address of maker.
     /// @param hash Signed Keccak-256 hash.
     /// @param v ECDSA signature parameter v.
     /// @param r ECDSA signature parameters r.
     /// @param s ECDSA signature parameters s.
     /// @return Validity of order signature.
     function isValidSignature(
-        address signer,
+        address maker,
         bytes32 hash,
         uint8 v,
         bytes32 r,
         bytes32 s)
         public
-        pure
+        //pure
+        view // GR ADDITION
         returns (bool)
     {
-        return signer == ecrecover(
+        address validator = ecrecover(
             keccak256("\x19Ethereum Signed Message:\n32", hash),
             v,
             r,
             s
         );
-    }
 
-    // GR ADDITION
-    /// @dev Get the address of the signer of a transaction, maker or fund manager
-    /// @param _target Address to be inspected
-    /// @return Address of the signer
-    function getSigner(
-        address _target)
-        external view
-        returns (address)
-    {
-        return getSignerInternal(_target);
+        if (allowedValidators[maker][validator]) {
+            return true;
+        } else if (isContract(maker)) {
+            return Owned(maker).owner() == validator;
+        } else {
+            return maker == validator;
+        }
     }
 
     /// @dev Checks if rounding error > 0.1%.
@@ -717,7 +720,7 @@ contract ExchangeEfx is SafeMath {
         internal
         returns (bool)
     {
-        return TokenTransferProxyEfx(TOKEN_TRANSFER_PROXY_CONTRACT).transferFrom(token, from, to, value);
+        return TokenTransferProxy(TOKEN_TRANSFER_PROXY_CONTRACT).transferFrom(token, from, to, value);
     }
 
     /// @dev Checks if any order transfers will fail.
@@ -794,22 +797,6 @@ contract ExchangeEfx is SafeMath {
     }
 
     // GR ADDITION
-    /// @dev Get the address of the signer of a transaction, maker or fund manager
-    /// @param _target Address to be inspected
-    /// @return Address of the signer
-    function getSignerInternal(
-        address _target)
-        internal view
-        returns (address)
-    {
-        if (isContract(_target)) {
-            return Owned(_target).owner();
-        } else {
-            return _target;
-        }
-    }
-
-    // GR ADDITION
     /// @dev Determines whether an address is an account or a contract
     /// @param _target Address to be inspected
     /// @return Boolean the address is a contract
@@ -823,5 +810,23 @@ contract ExchangeEfx is SafeMath {
             size := extcodesize(_target)
         }
         return size > 0;
+    }
+
+    /// @dev Approves/unnapproves a Validator contract to verify signatures on signer's behalf.
+    /// @param validatorAddress Address of Validator contract.
+    /// @param approval Approval or disapproval of  Validator contract.
+    function setSignatureValidatorApproval(
+        address validatorAddress,
+        bool approval
+    )
+        external
+    {
+        address signerAddress = msg.sender;
+        allowedValidators[signerAddress][validatorAddress] = approval;
+        SignatureValidatorApproval(
+            signerAddress,
+            validatorAddress,
+            approval
+        );
     }
 }
