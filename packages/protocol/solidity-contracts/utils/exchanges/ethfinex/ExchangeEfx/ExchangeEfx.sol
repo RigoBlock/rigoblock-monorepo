@@ -1,5 +1,12 @@
 /*
 
+  Copyright 2018 Ethfinex Inc
+
+  This is a derivative work based on software developed by ZeroEx Intl
+  This and the original are licensed under Apache License, Version 2.0
+
+  Original attribution:
+
   Copyright 2017 ZeroEx Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +23,9 @@
 
 */
 
-pragma solidity ^0.4.19;
+pragma solidity 0.4.19;
 
-import { Owned } from "../../../Owned/Owned.sol"; // GR ADDITION
+contract Owned { address public owner; } // GR ADDITION
 
 interface Token {
 
@@ -56,9 +63,9 @@ interface Token {
 
 
 //solhint-disable-next-line
-/// @title TokenTransferProxyEfx - Transfers tokens on behalf of exchange
+/// @title TokenTransferProxy - Transfers tokens on behalf of exchange
 /// @author Ahmed Ali <Ahmed@bitfinex.com>
-contract TokenTransferProxyEfx {
+contract TokenTransferProxy {
 
     modifier onlyExchange {
         require(msg.sender == exchangeAddress);
@@ -70,7 +77,7 @@ contract TokenTransferProxyEfx {
 
     event LogAuthorizedAddressAdded(address indexed target, address indexed caller);
 
-    function TokenTransferProxyEfx() public {
+    function TokenTransferProxy() public {
         setExchange(msg.sender);
     }
     /*
@@ -179,7 +186,6 @@ contract SafeMath {
 /// @title ExchangeEfx - Facilitates exchange of ERC20 tokens.
 /// @author Amir Bandeali - <amir@0xProject.com>, Will Warren - <will@0xProject.com>
 // Modified by Ahmed Ali <Ahmed@bitfinex.com>
-/// @notice Modified by Gabriele Rigo - <gab@rigoblock.com>
 contract ExchangeEfx is SafeMath {
 
     // Error Codes
@@ -190,9 +196,9 @@ contract ExchangeEfx is SafeMath {
         INSUFFICIENT_BALANCE_OR_ALLOWANCE // Insufficient balance or allowance for token transfer
     }
 
-    string constant public VERSION = "1.0.0";
+    string constant public VERSION = "ETHFX.0.0";
     uint16 constant public EXTERNAL_QUERY_GAS_LIMIT = 4999;    // Changes to state require at least 5000 gas
-    uint constant public ETHFINEX_FEE = 200; // Amount - (Amount/fee) is what gets send to user
+    uint constant public ETHFINEX_FEE = 400; // Amount - (Amount/fee) is what gets send to user
 
     // address public ZRX_TOKEN_CONTRACT;
     address public TOKEN_TRANSFER_PROXY_CONTRACT;
@@ -245,7 +251,7 @@ contract ExchangeEfx is SafeMath {
     // MODIFIED CODE, constructor changed
     function ExchangeEfx() public {
         // ZRX_TOKEN_CONTRACT = _zrxToken;
-        TOKEN_TRANSFER_PROXY_CONTRACT = address(new TokenTransferProxyEfx());
+        TOKEN_TRANSFER_PROXY_CONTRACT = address(new TokenTransferProxy());
     }
 
     /*
@@ -288,6 +294,7 @@ contract ExchangeEfx is SafeMath {
 
         require(order.taker == address(0) || order.taker == msg.sender);
         require(order.makerTokenAmount > 0 && order.takerTokenAmount > 0 && fillTakerTokenAmount > 0);
+
 /*
         require(isValidSignature(
             order.maker,
@@ -329,9 +336,7 @@ contract ExchangeEfx is SafeMath {
         }
 
         /////////////// modified code /////////////////
-        // uint filledMakerTokenAmount = getPartialAmount(filledTakerTokenAmount, order.takerTokenAmount, order.makerTokenAmount);
         uint filledMakerTokenAmount = getPartialAmount(filledTakerTokenAmount, order.takerTokenAmount, order.makerTokenAmount);
-        filledMakerTokenAmount = filledMakerTokenAmount - safeDiv(filledMakerTokenAmount, ETHFINEX_FEE);
         ///////////// modified code ///////////
 
         uint paidMakerFee;
@@ -347,7 +352,7 @@ contract ExchangeEfx is SafeMath {
             order.takerToken,
             msg.sender,
             order.maker,
-            filledTakerTokenAmount
+            filledTakerTokenAmount - safeDiv(filledTakerTokenAmount, ETHFINEX_FEE)
         ));
         // if (order.feeRecipient != address(0)) {
         //     if (order.makerFee > 0) {
@@ -717,7 +722,7 @@ contract ExchangeEfx is SafeMath {
         internal
         returns (bool)
     {
-        return TokenTransferProxyEfx(TOKEN_TRANSFER_PROXY_CONTRACT).transferFrom(token, from, to, value);
+        return TokenTransferProxy(TOKEN_TRANSFER_PROXY_CONTRACT).transferFrom(token, from, to, value);
     }
 
     /// @dev Checks if any order transfers will fail.

@@ -10,6 +10,8 @@ describeContract(contractName, () => {
   let aEthfinexAddress
   let aEthfinexInstance
   let transactionDefault
+  // let GRGtokenAddress
+  // let authorityAddress
 
   beforeAll(async () => {
     aEthfinexAddress = baseContracts['AEthfinex'].address
@@ -30,13 +32,13 @@ describeContract(contractName, () => {
   describe('wrapToEfx', () => {
     // this works only with wrapToEfx payable
     it.skip('wraps eth to the efx wrapper', async () => {
-      await web3.eth.getBalance(accounts[0])
+      // const balance = await web3.eth.getBalance(accounts[0])
 
       const tokenAddress = null //Ether has address 0x0
       const tokenWrapper = await baseContracts['WrapperLockEth'].address
       const toBeWrapped = 1e16 // 10 finney
       const time = 1 // 1 hour lockup (the minimum)
-      baseContracts['ExchangesAuthority'].address
+      // const authorityAddress = baseContracts['ExchangesAuthority'].address
 
       await baseContracts['ExchangesAuthority'].whitelistWrapper(
         tokenWrapper,
