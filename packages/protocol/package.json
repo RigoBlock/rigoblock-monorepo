@@ -1,12 +1,12 @@
 {
   "name": "@rigoblock/protocol",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "dist/contracts.js",
   "scripts": {
     "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
     "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "compile": "node deploy/compiler.js",
-    "lint": "eslint src --ext js,jsx --ignore-path .gitignore --fix",
+    "lint": "eslint test contracts deploy --ext js,jsx --ignore-path .gitignore --fix",
     "test": "NODE_ENV=test node --trace-warnings node_modules/.bin/jest --env=node --runInBand"
   },
   "files": [
@@ -63,7 +63,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.54",
     "@babel/polyfill": "^7.0.0-beta.54",
     "@babel/preset-env": "^7.0.0-beta.54",
-    "@rigoblock/deployer": "^0.1.3",
+    "@rigoblock/deployer": "^0.1.4",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "23.4.2",
     "babel-loader": "^8.0.0-beta",
@@ -72,7 +72,7 @@
     "ganache-cli": "^6.1.0",
     "jest": "23.4.1",
     "pino": "^4.17.3",
-    "web3": "^1.0.0-beta.33",
+    "web3": "1.0.0-beta.33",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0"
   }

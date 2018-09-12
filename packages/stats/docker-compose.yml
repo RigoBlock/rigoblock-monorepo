@@ -41,4 +41,4 @@ arena:
   ports:
     - "4567:4567"
   volumes:
-    - ./arena.conf:/opt/arena/src/server/config/index.json:ro
+    - ./arena.conf.json:/opt/arena/src/server/config/index.json:ro

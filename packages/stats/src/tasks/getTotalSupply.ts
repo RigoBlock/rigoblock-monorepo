@@ -1,13 +1,12 @@
+import Web3 = require('web3')
 import protocol from '@rigoblock/protocol'
 import redis from '../redis'
 import statsD from '../statsd'
-import Web3 from 'web3'
-import { NETWORKS } from '../constants'
 import web3ErrorWrapper from './web3ErrorWrapper'
 
 const task = async (job, web3: Web3) => {
   const { key, network, poolType } = job.data
-  const contractsMap = await protocol(NETWORKS.KOVAN)
+  const contractsMap = await protocol(network)
   const pools = await redis.hgetall(`${key}:${network}`)
   const poolAbi = contractsMap[poolType].abi
 
@@ -26,7 +25,7 @@ const task = async (job, web3: Web3) => {
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
-          `${poolType}.${pool.address}.${network}.totalsupply`,
+          `${poolType}.${pool.address}.totalsupply,network=${network}`,
           pool.totalSupply,
           (error, bytes) => (error ? reject(error) : resolve(bytes))
         )

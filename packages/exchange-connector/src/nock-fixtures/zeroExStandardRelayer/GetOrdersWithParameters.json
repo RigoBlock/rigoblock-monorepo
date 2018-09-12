@@ -1,0 +1,53 @@
+[
+    {
+        "scope": "https://api.ercdex.com:443",
+        "method": "GET",
+        "path": "/api/standard/1/v0/orders?&maker=0x2f0d03fb9a8a6cc4b04128c29b9861adbb818015&makerTokenAddress=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&takerTokenAddres=0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b0800000000000003ecd84d8b1ec71100e0fff29e9750df1fba8540c839764e2187eaea6a7b71b412ab551018fff73072b496c14904894ed2cc61de77a0aaa7a679a67ae6af3fdea6bfb9ffeea19ede3eceedc58fb77fdc5e50dcdd1e6f2f6ef08e36abd641642293d52a4b10b2b74fa45a0549d4b6bd83d6da8c4bc9d6d9cc863d1073bbbbbd799fc8ced1de153e82a2c6cdb09824876794a33983dd1ab94b72adc89dde2aea9b6d42e5f6d3dd6ddef5f7f5f0ddfce1d5c3d363f5d3eff77e9c373fe74712cd4e45241f687639271174ef8274332a2087e4db95e6f5fd633dddbf7af8cbc3fdbb6fef5fce9ba77af9fa9be9db8b9b20908804c0edee7666fe3c7dfffa7e1e9e7e1ec5b948cc7b7af0b8d2ac10b461f60d079646d7f6d4dbdded65fd30ffba870736f0595951d62d0b04299a726518d65e2b30009f83fe3873c57df8fbedab1fe6e1e3521ba8aa3817119f890d05a32d877c6a2704b7ab75d3af13bc7cf5f67d1188f0bc5db3537fbfce327b305ed7a14e41642ac882c209e6ec1e9ca09998a00081ac6c49012480ce06610616e111a671a57d7aae1e3e71fb10f44bf54fbf593dec70d76312c2609ee59093b169412f23854d113ee7d7097eabfa8f877e9c9775ff70fff0ddb79f1ef3ea71cfe39feacdf7efaf6b708d22d45e00718a44fa602820520fd86664d8338cb1371c4b26",
+            "5bbc8b2a6458f1fd5cbc7afbd857f5f3d87bdeddee6eaf1fefdf9f80df7d18176f3fddfd67b21eb4ec4447c0a93591d19b1310579d031ebd67844b1181bdb081b1574e6ddde7acd167b26431820844ba0884e148e5898844733b660d51ad08c1ee724ce6f4a16634a8a273be92fd0c643f461b0a8c1e00ec014110ef772113015760bac0866206301190b2b8b20aaab91b835a0480aa3b867e9168853716afbd81cd15933bc9b7e54159b6bcac0d43446d5b04d5d5f9848e4c2e6ec9f24f42fb6fc9fa07b26be19cde1814b3980fd902658d415d8cb03221c4a8af467c9960846271f6d2d059fe4c160f06d0849a03766585db618ee55c267dec002c9c60616c4068cd416601d9d621fe95ec6721fb915941178e5401d5eb06640853904ba0815d0f56b90ec8612ea8a1570b110dc2147174486414774501fe22cdba31352e0039e5cd41764d3d5784c212175d02bd7295e119de25ed78d84a560b74d4a798fdef6433319ccf9ad4b8d6a9edde077baa6a6fc35cacc40787aaa575ed93d1e97556c56650fc85ac685fab0632da01b49db408a5e0e8413dbb0428a96b2d0cd88776a79513d30148e7f595ece727ab999629e00962d7cf0441c500c8402753554896307732044a46160bf6d47087f090abfb261a7d916469472f2d042c3a04a8601cb88b54372fb715c5ee88bcd598bd7ad43b6a16a730baff7fc8ce8c2ee5001c85a5676b54f9e86a1731b3d5b30eba0da04f68ab250af471a838ebf43359f71ef6c565673c050301ae078f52e5cea3728515051d6f57b509572b3eb2cd1aa5bf92fddc6413304394c3afee7ab54c031770b7341027770a9088104f65be5e634d948c08c05985c42348203033be48b2899276e4fa0053c0e474a862ed06a53907c7f75e4bb933d68a3967c508a94a2259a3e1ff44f6f95d760fb3b626765ddf8c8ad3e2ec5925aa3de0e7e4e676522a99e4b5718e679c45a7a6449ec9eaaabdca331cab99cc19954c02db788d72456fd3343e198bb996e740c6c962e1d6af643f3fd9a464110ac34b2f3b448012fc3c4d49404e680cc4824e1900e1e6e6aa11604e4ec1712dca50f28b14bbd28a8950c566c74a2c84c5592d4a6913e5b0276d8894b022283b06cf120b91d2f944b17ffb27000000ffff03008e8ae64532160000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Tue, 04 Sep 2018 10:39:24 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=ded7875f36f6d089bb6c895321a2f05731536057564; expires=Wed, 04-Sep-19 10:39:24 GMT; path=/; domain=.ercdex.com; HttpOnly; Secure",
+            "X-DNS-Prefetch-Control",
+            "off",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Strict-Transport-Security",
+            "max-age=15552000; includeSubDomains",
+            "X-Download-Options",
+            "noopen",
+            "X-Content-Type-Options",
+            "nosniff",
+            "X-XSS-Protection",
+            "1; mode=block",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY-ID",
+            "Via",
+            "1.1 google",
+            "Alt-Svc",
+            "clear",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "454fd5028870be11-MXP",
+            "Content-Encoding",
+            "gzip"
+        ]
+    }
+]

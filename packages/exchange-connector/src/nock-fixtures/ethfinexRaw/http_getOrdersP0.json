@@ -1,0 +1,38 @@
+[
+    {
+        "scope": "https://api.ethfinex.com:443",
+        "method": "GET",
+        "path": "/v2/book/tBTCUSD/P0?",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b08000000000000035d925992042108442f641920fb593ae6fed71854a859a23f3af2a90964f1f9289b0c1e6b3a0aa1837c8dcd78c6c001b3244d4b8957e0ef13a88b207680c6f403b8a50e497b5230b3c0a2e7ca42bdd28f3db5d0738a5e16d70f6f41b52957b7e441290d41847c35a5813004aed49c10d3c1c5c42f92d337b6b06a0832056bb8fbc01c3056939c24af85134648b577dba92b5c4e60de402b9fd6523a4c00de673b549c559a8fa884659fc97874721813c3cb5776f3e497e00639f4062ce02af8622ddcda328e87268036893f37349d8fc6d6fcef5c6ee5951b13cba5f129f4366ef7d1325d5c71989f419352a055ae09577ec37c48aeec2cdab8ca2a3ab93036de0bf150abeabd8ac6d851a514055d5d216e34d7c173b04a0e10d91ad6d0c0b8806b4f1257130481b91e2ff61d62fe31a8badd6ebc863329793d73b0c83d811f4cef60f94bcfaf6f364c40c889030000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Thu, 06 Sep 2018 14:59:50 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=d464f9789d2ba29a0c2459e3457add3bb1536245990; expires=Fri, 06-Sep-19 14:59:50 GMT; path=/; domain=.ethfinex.com; HttpOnly",
+            "Vary",
+            "Accept-Encoding",
+            "Access-Control-Allow-Origin",
+            "*",
+            "Access-Control-Allow-Headers",
+            "X-BFX-APIKEY,X-BFX-PAYLOAD,X-BFX-SIGNATURE,Content-Type,X-CSRF-Token,bfx-token,bfx-signature,bfx-apikey,bfx-nonce,bfx-flags",
+            "Content-Encoding",
+            "gzip",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "4561cd411fddbe20-MXP"
+        ]
+    }
+]

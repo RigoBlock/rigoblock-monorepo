@@ -114,7 +114,10 @@ export class Compiler {
 
     let shouldCompile = false
     const currentArtifact = currentArtifactIfExists as ContractArtifact
-    if (_.isUndefined(currentArtifactIfExists) || !currentArtifact.networks[this._networkId]) {
+    if (
+      _.isUndefined(currentArtifactIfExists) ||
+      !currentArtifact.networks[this._networkId]
+    ) {
       shouldCompile = true
     } else {
       shouldCompile =

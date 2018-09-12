@@ -1,18 +1,12 @@
 {
 	"meta": {
-		"chronografVersion": "1.6.1",
-		"sources": {
-			"0": {
-				"name": "http://influxdb:8086",
-				"link": "/chronograf/v1/sources/0"
-			}
-		}
+		"chronografVersion": "1.6.0"
 	},
 	"dashboard": {
 		"id": 3,
 		"cells": [
 			{
-				"i": "9e0ad70b-1162-4e85-9bc1-f5a9cc09eaa2",
+				"i": "9a0ea968-b4c7-4469-beb4-7935791949fc",
 				"x": 4,
 				"y": 4,
 				"w": 4,
@@ -20,10 +14,10 @@
 				"name": "ETH Balances",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_balance_ETH\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ETH' AND \"network\"='3' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_balance_ETH",
+							"measurement": "balance",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -40,8 +34,11 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"currency": [
+									"ETH"
+								],
+								"network": [
+									"3"
 								]
 							},
 							"groupBy": {
@@ -51,7 +48,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -142,11 +139,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/9e0ad70b-1162-4e85-9bc1-f5a9cc09eaa2"
+					"self": "/chronograf/v1/dashboards/3/cells/9a0ea968-b4c7-4469-beb4-7935791949fc"
 				}
 			},
 			{
-				"i": "6edd38f7-83b2-4c1c-9d68-79fadedc8212",
+				"i": "bddbef42-ecf7-42f5-bd40-9359857587b9",
 				"x": 0,
 				"y": 4,
 				"w": 4,
@@ -154,10 +151,10 @@
 				"name": "WETH Balances",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_balance_WETH\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='WETH' AND \"network\"='3' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_balance_WETH",
+							"measurement": "balance",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -174,8 +171,11 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"currency": [
+									"WETH"
+								],
+								"network": [
+									"3"
 								]
 							},
 							"groupBy": {
@@ -185,7 +185,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -276,11 +276,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/6edd38f7-83b2-4c1c-9d68-79fadedc8212"
+					"self": "/chronograf/v1/dashboards/3/cells/bddbef42-ecf7-42f5-bd40-9359857587b9"
 				}
 			},
 			{
-				"i": "c50c7b47-fb67-4385-a17f-bc6663853666",
+				"i": "adca914e-53d3-43c9-a578-81452e1e4bd1",
 				"x": 8,
 				"y": 4,
 				"w": 4,
@@ -288,10 +288,10 @@
 				"name": "GRG Balances",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_balance_GRG\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='GRG' AND \"network\"='3' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_balance_GRG",
+							"measurement": "balance",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -308,8 +308,11 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"currency": [
+									"GRG"
+								],
+								"network": [
+									"3"
 								]
 							},
 							"groupBy": {
@@ -319,7 +322,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -410,11 +413,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/c50c7b47-fb67-4385-a17f-bc6663853666"
+					"self": "/chronograf/v1/dashboards/3/cells/adca914e-53d3-43c9-a578-81452e1e4bd1"
 				}
 			},
 			{
-				"i": "beac33bb-fa8d-4e4e-8dc1-78c378eda709",
+				"i": "f24a280f-25b8-4c01-aab7-4cddeab348c7",
 				"x": 0,
 				"y": 0,
 				"w": 4,
@@ -422,10 +425,10 @@
 				"name": "Supply Totals",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_totalsupply\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"totalsupply\" WHERE time > :dashboardTime: AND \"network\"='3' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_totalsupply",
+							"measurement": "totalsupply",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -442,8 +445,8 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"network": [
+									"3"
 								]
 							},
 							"groupBy": {
@@ -453,7 +456,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -544,11 +547,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/beac33bb-fa8d-4e4e-8dc1-78c378eda709"
+					"self": "/chronograf/v1/dashboards/3/cells/f24a280f-25b8-4c01-aab7-4cddeab348c7"
 				}
 			},
 			{
-				"i": "26b6eb66-3197-4340-b226-d8de18e69606",
+				"i": "9f4969be-4044-4232-8e7d-7b37f039362f",
 				"x": 8,
 				"y": 0,
 				"w": 4,
@@ -556,10 +559,10 @@
 				"name": "Sell Prices",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_price_sellprice\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"price\" WHERE time > :dashboardTime: AND \"network\"='3' AND \"price_type\"='sell' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_price_sellprice",
+							"measurement": "price",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -576,8 +579,11 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"network": [
+									"3"
+								],
+								"price_type": [
+									"sell"
 								]
 							},
 							"groupBy": {
@@ -587,7 +593,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -678,11 +684,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/26b6eb66-3197-4340-b226-d8de18e69606"
+					"self": "/chronograf/v1/dashboards/3/cells/9f4969be-4044-4232-8e7d-7b37f039362f"
 				}
 			},
 			{
-				"i": "f02c0c41-e73f-4fcc-8441-e3563063f02a",
+				"i": "5b27496f-0087-4e7d-9c60-91dc0cd86285",
 				"x": 4,
 				"y": 0,
 				"w": 4,
@@ -690,10 +696,10 @@
 				"name": "Buy Prices",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_price_buyprice\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"price\" WHERE time > :dashboardTime: AND \"network\"='3' AND \"price_type\"='buy' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_price_buyprice",
+							"measurement": "price",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -710,8 +716,11 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"network": [
+									"3"
+								],
+								"price_type": [
+									"buy"
 								]
 							},
 							"groupBy": {
@@ -721,7 +730,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -812,11 +821,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/f02c0c41-e73f-4fcc-8441-e3563063f02a"
+					"self": "/chronograf/v1/dashboards/3/cells/5b27496f-0087-4e7d-9c60-91dc0cd86285"
 				}
 			},
 			{
-				"i": "84c38c60-1d53-4b53-a1c4-1731492df98f",
+				"i": "582a7771-8fa8-4ab0-83f6-ae7c38a2d8a9",
 				"x": 0,
 				"y": 8,
 				"w": 4,
@@ -824,10 +833,10 @@
 				"name": "GNT Balances",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_balance_GNT\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='GNT' AND \"network\"='3' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_balance_GNT",
+							"measurement": "balance",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -844,8 +853,11 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"currency": [
+									"GNT"
+								],
+								"network": [
+									"3"
 								]
 							},
 							"groupBy": {
@@ -855,7 +867,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -946,11 +958,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/84c38c60-1d53-4b53-a1c4-1731492df98f"
+					"self": "/chronograf/v1/dashboards/3/cells/582a7771-8fa8-4ab0-83f6-ae7c38a2d8a9"
 				}
 			},
 			{
-				"i": "28434e2d-518f-4a3e-bfb2-e89556a91e43",
+				"i": "42845763-5dd3-488e-8d78-ad08bb2b6c0e",
 				"x": 4,
 				"y": 8,
 				"w": 4,
@@ -958,10 +970,10 @@
 				"name": "USDT Balances",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_balance_USDT\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='USDT' AND \"network\"='3' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_balance_USDT",
+							"measurement": "balance",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -978,8 +990,11 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"currency": [
+									"USDT"
+								],
+								"network": [
+									"3"
 								]
 							},
 							"groupBy": {
@@ -989,7 +1004,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -1080,11 +1095,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/28434e2d-518f-4a3e-bfb2-e89556a91e43"
+					"self": "/chronograf/v1/dashboards/3/cells/42845763-5dd3-488e-8d78-ad08bb2b6c0e"
 				}
 			},
 			{
-				"i": "a01945d4-6ec7-4b2a-9b51-0beb5acd6f04",
+				"i": "bec04008-8c1c-47e0-ab7a-4eb4a841e194",
 				"x": 8,
 				"y": 8,
 				"w": 4,
@@ -1092,10 +1107,10 @@
 				"name": "ZRX Balances",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_balance_ZRX\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ZRX' AND \"network\"='3' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_balance_ZRX",
+							"measurement": "balance",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -1112,8 +1127,11 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"currency": [
+									"ZRX"
+								],
+								"network": [
+									"3"
 								]
 							},
 							"groupBy": {
@@ -1123,7 +1141,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -1214,11 +1232,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/a01945d4-6ec7-4b2a-9b51-0beb5acd6f04"
+					"self": "/chronograf/v1/dashboards/3/cells/bec04008-8c1c-47e0-ab7a-4eb4a841e194"
 				}
 			},
 			{
-				"i": "a3e286e5-b646-49f5-ba71-63f3ee8dd773",
+				"i": "fb6a37f7-8cfc-4422-b2c5-3726e0487818",
 				"x": 0,
 				"y": 12,
 				"w": 4,
@@ -1226,10 +1244,10 @@
 				"name": "MKR Balances",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"3_balance_MKR\" WHERE time > :dashboardTime: AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='MKR' AND \"network\"='3' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
-							"measurement": "3_balance_MKR",
+							"measurement": "balance",
 							"retentionPolicy": "autogen",
 							"fields": [
 								{
@@ -1246,8 +1264,11 @@
 								}
 							],
 							"tags": {
-								"type": [
-									"Drago"
+								"currency": [
+									"MKR"
+								],
+								"network": [
+									"3"
 								]
 							},
 							"groupBy": {
@@ -1257,7 +1278,7 @@
 								]
 							},
 							"areTagsAccepted": true,
-							"fill": "null",
+							"fill": "previous",
 							"rawText": null,
 							"range": null,
 							"shifts": null
@@ -1348,7 +1369,7 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/a3e286e5-b646-49f5-ba71-63f3ee8dd773"
+					"self": "/chronograf/v1/dashboards/3/cells/fb6a37f7-8cfc-4422-b2c5-3726e0487818"
 				}
 			}
 		],
