@@ -1,11 +1,10 @@
 import Web3 = require('web3')
-import redis from '../redis'
-import statsD from '../statsd'
-import web3ErrorWrapper from './web3ErrorWrapper'
+import redis from '../../redis'
+import statsD from '../../statsd'
+import web3ErrorWrapper from '../web3ErrorWrapper'
 
 const task = async (job, web3: Web3) => {
   const { key, network, poolType } = job.data
-
   const pools = await redis.hgetall(`${key}:${network}`)
 
   if (!Object.keys(pools).length) {
