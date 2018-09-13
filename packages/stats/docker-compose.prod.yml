@@ -65,6 +65,7 @@ services:
     environment:
       REDIS_HOST: dev-04.endpoint.network
       TELEGRAF_HOST: dev-04.endpoint.network
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
     build:
       context: ../../
       dockerfile: ./packages/stats/Dockerfile
