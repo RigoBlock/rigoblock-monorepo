@@ -1,13 +1,7 @@
-import calculateBalance from './calculateBalance'
-import calculateEthBalance from './calculateEthBalance'
-import fetchDragos from './fetchDragos'
-import getSharePrice from './getSharePrice'
-import getTotalSupply from './getTotalSupply'
-
 export default {
-  calculateBalance,
-  fetchDragos,
-  getTotalSupply,
-  getSharePrice,
-  calculateEthBalance
+  calculateBalance: __dirname + '/calculateBalance.js',
+  fetchDragos: __dirname + '/fetchDragos.js',
+  getTotalSupply: __dirname + '/getTotalSupply.js',
+  getSharePrice: __dirname + '/getSharePrice.js',
+  calculateEthBalance: __dirname + '/calculateEthBalance.js'
 }
