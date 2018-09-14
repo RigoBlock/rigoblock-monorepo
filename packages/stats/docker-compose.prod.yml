@@ -44,6 +44,11 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+    volumes:
+      - ~/data/redis:/data
+    command:
+      ['redis-server', '--loglevel', 'notice', '--requirepass', '${REDIS_PASSWORD}']
+    restart: always
 
   arena:
     image: vshjxyz/arena:latest
@@ -60,6 +65,7 @@ services:
     environment:
       REDIS_HOST: dev-04.endpoint.network
       TELEGRAF_HOST: dev-04.endpoint.network
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
     build:
       context: ../../
       dockerfile: ./packages/stats/Dockerfile
