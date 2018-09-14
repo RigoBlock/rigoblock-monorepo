@@ -29,7 +29,7 @@ const tickersMainnet = await ethfinex.network(NETWORKS.MAINNET).http.getTickers(
 })
 ```
 
-Some methods require specific parameters to be passed, so these are saved under an exchange class namespace
+Some methods require specific parameters to be passed, so these are saved under an exchange class namespace.
 
 ```javascript
 import exchangeConnector, {
@@ -42,26 +42,28 @@ const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX, {
   networkId: NETWORKS.KOVAN
 })
 
-const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX, {
-  networkId: NETWORKS.KOVAN
-})
-
 const orders = await ethfinex.http.getOrders({
   symbols: 'ZRXETH',
   precision: exchanges[supportedExchanges.ETHFINEX_RAW].OrderPrecisions.P4
 })
 ```
 
-To use websocket methods, a callback is to be passed as a second parameter to the call, to be able to receive the data
+The first websocket method that gets invoked will create the connection, which is reused by subsequent calls. A callback is to be passed to these calls as a second parameter to be able to receive the data. All the websocket methods return an unsubscribe function that removes the even listener added to the connection.
+
+To close the websocket connection, you can call the `close()` method.
 
 ```javascript
-const tickers = await ethfinex.ws.getTickers(
+const unsubscribe = await ethfinex.ws.getTickers(
   { symbols: 'ZRXETH' },
   (error, data) => (error ? console.error(error) : console.log(data))
 )
+// later when you wish to stop listening
+unsubscribe()
+
+await ethfinex.ws.close()
 ```
 
-'RAW' exchange classes will return data unfiltered and unformatted from the API,while non RAW ones will return the data formatted.
+'RAW' exchange classes will return data unfiltered and unformatted from the API, while non RAW ones will return the data formatted.
 
 ## Available Scripts
 

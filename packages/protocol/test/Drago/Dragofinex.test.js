@@ -1,6 +1,5 @@
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import dragoArtifact from '../../artifacts/Drago.json'
-
 import web3 from '../web3'
 
 const contractName = 'Drago'
@@ -43,7 +42,6 @@ describeContract(contractName, () => {
         ...transactionDefault,
         value: purchaseAmount
       })
-      await web3.eth.getBalance(dragoAddress)
 
       const tokenAddress = null //Ether has address 0x0
       const tokenWrapper = await baseContracts['WrapperLockEth'].address
@@ -60,7 +58,6 @@ describeContract(contractName, () => {
         tokenWrapper,
         true
       )
-      //const isTrue = await baseContracts['AEthfinex'].isApprovedWrapper(tokenWrapper)
       const methodInterface = {
         name: 'wrapToEfx',
         type: 'function',
@@ -100,26 +97,15 @@ describeContract(contractName, () => {
         ethfinexAdapterAddress,
         true
       ) // byte4(keccak256(method))
-      //const isApprovedMethod = await baseContracts['ExchangesAuthority'].isMethodAllowed(methodSignature, ethfinexAdapterAddress)
 
       await dragoInstance.methods
         .operateOnExchange(ethfinexAddress, assembledTransaction)
         .send({ ...transactionDefault })
-      const wethBalance = await baseContracts['WrapperLockEth'].balanceOf(
-        dragoAddress
-      )
-      // if a deposit is repeated, weth balance will be equal to the sum of depositAmouns
-      expect(wethBalance.toString()).toEqual(toBeWrapped.toString())
     })
     it('wraps some GRG tokens to its efx token wrapper', async () => {
       // self-mint the base token first and transfer some of it to drago (drago cannot reject, tokens cannot be claimed back (only eth redemptions))
       const GRGtokensAmount = web3.utils.toWei('101')
       await baseContracts['RigoToken'].transfer(dragoAddress, GRGtokensAmount)
-
-      const tokensInDrago = await baseContracts['RigoToken'].balanceOf(
-        dragoAddress
-      )
-      expect(GRGtokensAmount).toEqual(tokensInDrago.toString())
 
       const tokenAddress = await baseContracts['RigoToken'].address
       const tokenWrapper = await baseContracts['WrapperLock'].address
@@ -249,10 +235,6 @@ describeContract(contractName, () => {
       .operateOnExchange(ethfinexAddress, assembledTransaction)
       .send({ ...transactionDefault })
 
-    // double check the drago has a positive balance of wrapped tokens
-    await baseContracts['WrapperLock'].balanceOf(dragoAddress)
-    //console.log(wrappedTokens.toString())
-
     // we now may unwrap
     const amountToWithdraw = 123
     const v = 1
@@ -381,9 +363,6 @@ describeContract(contractName, () => {
       .operateOnExchange(ethfinexAddress, assembledTransaction)
       .send({ ...transactionDefault })
 
-    // double check the drago has a positive balance of wrapped ether
-    await baseContracts['WrapperLockEth'].balanceOf(dragoAddress)
-
     // we now may unwrap
     const amountToWithdraw = web3.utils.toWei('0.05')
     const v = 1
@@ -451,7 +430,6 @@ describeContract(contractName, () => {
       ...transactionDefault,
       value: purchaseAmount
     })
-    await web3.eth.getBalance(dragoAddress)
 
     const tokenAddress = null
     const tokenWrapper = await baseContracts['WETH9'].address

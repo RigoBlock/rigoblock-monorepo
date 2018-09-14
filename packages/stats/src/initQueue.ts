@@ -33,7 +33,10 @@ export default (
     logger.info(`Job ${jobId} completed!${result ? ` Result: ${result}` : ''}`)
   })
 
-  queue.add(initialData, { repeat: { cron: cronExpression } })
+  queue.add(initialData, {
+    timeout: 1000 * 60 * 5,
+    repeat: { cron: cronExpression }
+  })
 
   return queue
 }
