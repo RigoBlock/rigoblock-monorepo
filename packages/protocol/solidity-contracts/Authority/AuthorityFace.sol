@@ -60,5 +60,4 @@ interface AuthorityFace {
     function getVaultEventful() external view returns (address);
     function getNavVerifier() external view returns (address);
     function getExchangesAuthority() external view returns (address);
-    function getListsByGroups(string _group) external view returns (address[]);
 }
