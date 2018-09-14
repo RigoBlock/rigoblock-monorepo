@@ -7,14 +7,17 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   public static API_HTTP_URL = 'https://api.ercdex.com/api'
 
   public API_URL: string
-  public STANDARD_API_URL: string
 
-  constructor(public networkId: NETWORKS | number, public apiUrl?: string) {
+  constructor(
+    public NETWORK_ID: NETWORKS | number,
+    public HTTP_URL?: string,
+    public WS_URL?: string
+  ) {
     super(
-      networkId,
-      apiUrl || `${ERCdEXRaw.API_HTTP_URL}/standard/${networkId}`
+      NETWORK_ID,
+      HTTP_URL || `${ERCdEXRaw.API_HTTP_URL}/standard/${NETWORK_ID}`
     )
-    this.API_URL = apiUrl ? apiUrl : ERCdEXRaw.API_HTTP_URL
+    this.HTTP_URL = HTTP_URL ? HTTP_URL : ERCdEXRaw.API_HTTP_URL
   }
 
   public async getBestOrders(options: {
@@ -24,22 +27,22 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     quantity: string // Quantity of pair requested
     takerAddress: string // Address of order taker
   }): Promise<ERCdEXRaw.BestOrders> {
-    const url = `${this.API_URL}/orders/best`
+    const url = `${this.HTTP_URL}/orders/best`
     const queryParams = getQueryParameters({
       ...options,
-      networkId: this.networkId
+      networkId: this.NETWORK_ID
     })
     return fetchJSON(url, queryParams)
   }
 
   public async getTickers(): Promise<ERCdEXRaw.Ticker[]> {
-    const url = `${this.API_URL}/reports/ticker`
+    const url = `${this.HTTP_URL}/reports/ticker`
     return fetchJSON(url)
   }
 
   // TODO: check which parameters we want to implement
   public async getTradeHistoryLogs(): Promise<ERCdEXRaw.HistoryLogs> {
-    const url = `${this.API_URL}/trade_history_logs`
+    const url = `${this.HTTP_URL}/trade_history_logs`
     return fetchJSON(url)
   }
 
@@ -48,10 +51,10 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     quoteTokenAddress: string
     startDate: string
   }): Promise<ERCdEXRaw.HistoricalPrice[]> {
-    const url = `${this.API_URL}/reports/historical`
+    const url = `${this.HTTP_URL}/reports/historical`
     return postJSON(url, {
       ...options,
-      networkId: this.networkId
+      networkId: this.NETWORK_ID
     })
   }
 
@@ -59,10 +62,10 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     baseTokenAddress: string
     quoteTokenAddress: string
   }): Promise<ERCdEXRaw.AggregatedOrders> {
-    const url = `${this.API_URL}/aggregated_orders`
+    const url = `${this.HTTP_URL}/aggregated_orders`
     const queryParams = getQueryParameters({
       ...options,
-      networkId: this.networkId
+      networkId: this.NETWORK_ID
     })
     return fetchJSON(url, queryParams)
   }
@@ -75,7 +78,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       s: string
     }
   }): Promise<any> {
-    const url = `${this.API_URL}/orders/soft-cancel`
+    const url = `${this.HTTP_URL}/orders/soft-cancel`
     return postJSON(url, options)
   }
 
@@ -87,10 +90,10 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     maker: string
     taker: string
   }): Promise<ZeroExStandardRelayerRaw.RawFee> {
-    const url = `${this.API_URL}/fees`
+    const url = `${this.HTTP_URL}/fees`
     const queryParams = getQueryParameters({
       ...options,
-      networkId: this.networkId
+      networkId: this.NETWORK_ID
     })
     return postJSON([url, queryParams].join('?'))
   }

@@ -5,38 +5,65 @@ An API to simplify interaction with token Exchanges.
 ## Importing the package
 
 ```javascript
-import exchangeConnector, { supportedExchanges, NETWORKS } from '@rigoblock/exchange-connector'
-```
-
-or
-
-```javascript
-const exchangeConnector = require('@rigoblock/exchange-connector').default
+import exchangeConnector, { supportedExchanges, NETWORKS, exchanges } from '@rigoblock/exchange-connector'
 ```
 
 ## How to use it
 
-You can instantiate a new exchange using the `exchangeConnector` function, passing the exchange name, network id and transport as strings.
+You can instantiate a new exchange using the `exchangeConnector` function, passing the exchange name as first parameter and an options object as second parameter.
+The available options are: `networkdId` (defaults to 1), `httpUrl` and `wsUrl`. Supported relayers do not need the API's http url and websocket url to be specified, but they are needed when instantiating a 0x standard relayer.
 
 ```javascript
 import exchangeConnector, { supportedExchanges, NETWORKS } from '@rigoblock/exchange-connector'
 
-const exchange = exchangeConnector(supportedExchanges.ETHFINEX, NETWORKS.KOVAN, 'http')
+const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX, {
+  networkId: NETWORKS.KOVAN
+})
 
-// or const exchange = exchangeConnector('Ethfinex', '42', 'http')
+const tickersKovan = await ethfinex.http.getTickers({
+  symbols: ['ZRXETH']
+})
 
-const zrxOrders = await exchange.getOrders('ZRX', 'ETH')
-
-await exchangeConnector(
-  supportedExchanges.ETHFINEX,
-  NETWORKS.MAINNET
-).getTickers({
-  tokenPairs: ['tZRXETH']
+const tickersMainnet = await ethfinex.network(NETWORKS.MAINNET).http.getTickers({
+  symbols: ['ZRXETH']
 })
 ```
 
->When instantiating an exchange, 'transport' defaults to **http** if left unspecified.
+Some methods require specific parameters to be passed, so these are saved under an exchange class namespace.
 
+```javascript
+import exchangeConnector, {
+  NETWORKS,
+  exchanges,
+  supportedExchanges
+} from '@rigoblock/exchange-connector'
+
+const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX, {
+  networkId: NETWORKS.KOVAN
+})
+
+const orders = await ethfinex.http.getOrders({
+  symbols: 'ZRXETH',
+  precision: exchanges[supportedExchanges.ETHFINEX_RAW].OrderPrecisions.P4
+})
+```
+
+The first websocket method that gets invoked will create the connection, which is reused by subsequent calls. A callback is to be passed to these calls as a second parameter to be able to receive the data. All the websocket methods return an unsubscribe function that removes the even listener added to the connection.
+
+To close the websocket connection, you can call the `close()` method.
+
+```javascript
+const unsubscribe = await ethfinex.ws.getTickers(
+  { symbols: 'ZRXETH' },
+  (error, data) => (error ? console.error(error) : console.log(data))
+)
+// later when you wish to stop listening
+unsubscribe()
+
+await ethfinex.ws.close()
+```
+
+'RAW' exchange classes will return data unfiltered and unformatted from the API, while non RAW ones will return the data formatted.
 
 ## Available Scripts
 
