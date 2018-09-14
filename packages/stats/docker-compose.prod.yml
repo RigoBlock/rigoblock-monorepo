@@ -47,7 +47,7 @@ services:
     volumes:
       - ~/data/redis:/data
     command:
-      ['redis-server', '--loglevel', 'debug', '--appendonly', 'yes', '--requirepass', '${REDIS_PASSWORD}']
+      ['redis-server', '--loglevel', 'notice', '--requirepass', '${REDIS_PASSWORD}']
     restart: always
 
   arena:
