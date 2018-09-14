@@ -63,5 +63,6 @@
       "**/jsdom",
       "**/@0xproject/*"
     ]
-  }
+  },
+  "eslintIgnore": ["packages/stats/examples"]
 }
