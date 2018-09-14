@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
-import dragoArtifact from '../../artifacts/Drago.json'
 import { ZeroEx } from '0x.js'
+import dragoArtifact from '../../artifacts/Drago.json'
 import web3 from '../web3'
 
 const contractName = 'Drago'
@@ -103,9 +103,6 @@ describeContract(contractName, () => {
       await dragoInstance.methods
         .operateOnExchange(ethfinexAddress, assembledTransaction)
         .send({ ...transactionDefault })
-      const wethBalance = await baseContracts['WrapperLockEth'].balanceOf(
-        dragoAddress
-      )
 
       // wrap some GRG from the user account, so that the user can sell GRG buy ETH
       const GRGtokenWrapper = await baseContracts['WrapperLock'].address

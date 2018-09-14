@@ -1,12 +1,14 @@
 import { NETWORKS } from '../constants'
 import { ZeroExStandardRelayerRaw } from './zeroExStandardRelayerRaw'
 import { fetchJSON, getQueryParameters, postJSON } from '../utils'
+import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
   public static API_HTTP_URL = 'https://api.ercdex.com/api'
-
+  public static API_WS_URL = 'wss://api.ercdex.com'
   public API_URL: string
+  private wsInstance
 
   constructor(
     public NETWORK_ID: NETWORKS | number,
@@ -17,85 +19,165 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       NETWORK_ID,
       HTTP_URL || `${ERCdEXRaw.API_HTTP_URL}/standard/${NETWORK_ID}`
     )
-    this.HTTP_URL = HTTP_URL ? HTTP_URL : ERCdEXRaw.API_HTTP_URL
+    this.HTTP_URL = HTTP_URL || ERCdEXRaw.API_HTTP_URL
+    this.WS_URL = WS_URL || ERCdEXRaw.API_WS_URL
   }
 
-  public async getBestOrders(options: {
-    makerTokenAddress: string // Address of maker token
-    takerTokenAddress: string // Address of taker token
-    baseTokenAddress: string // Address of base token
-    quantity: string // Quantity of pair requested
-    takerAddress: string // Address of order taker
-  }): Promise<ERCdEXRaw.BestOrders> {
-    const url = `${this.HTTP_URL}/orders/best`
-    const queryParams = getQueryParameters({
-      ...options,
-      networkId: this.NETWORK_ID
-    })
-    return fetchJSON(url, queryParams)
-  }
-
-  public async getTickers(): Promise<ERCdEXRaw.Ticker[]> {
-    const url = `${this.HTTP_URL}/reports/ticker`
-    return fetchJSON(url)
-  }
-
-  // TODO: check which parameters we want to implement
-  public async getTradeHistoryLogs(): Promise<ERCdEXRaw.HistoryLogs> {
-    const url = `${this.HTTP_URL}/trade_history_logs`
-    return fetchJSON(url)
-  }
-
-  public async getHistoricalPrices(options: {
-    baseTokenAddress: string
-    quoteTokenAddress: string
-    startDate: string
-  }): Promise<ERCdEXRaw.HistoricalPrice[]> {
-    const url = `${this.HTTP_URL}/reports/historical`
-    return postJSON(url, {
-      ...options,
-      networkId: this.NETWORK_ID
-    })
-  }
-
-  public async getAggregatedOrders(options: {
-    baseTokenAddress: string
-    quoteTokenAddress: string
-  }): Promise<ERCdEXRaw.AggregatedOrders> {
-    const url = `${this.HTTP_URL}/aggregated_orders`
-    const queryParams = getQueryParameters({
-      ...options,
-      networkId: this.NETWORK_ID
-    })
-    return fetchJSON(url, queryParams)
-  }
-  // TODO: find out how to add a test
-  public async softCancelOrder(options: {
-    orderHash: string
-    signature?: {
-      v: number
-      r: string
-      s: string
+  public http = {
+    ...this.http,
+    getBestOrders: async (options: {
+      makerTokenAddress: string // Address of maker token
+      takerTokenAddress: string // Address of taker token
+      baseTokenAddress: string // Address of base token
+      quantity: string // Quantity of pair requested
+      takerAddress: string // Address of order taker
+    }): Promise<ERCdEXRaw.BestOrders> => {
+      const url = `${this.HTTP_URL}/orders/best`
+      const queryParams = getQueryParameters({
+        ...options,
+        networkId: this.NETWORK_ID
+      })
+      return fetchJSON(url, queryParams)
+    },
+    getTickers: async (): Promise<ERCdEXRaw.Ticker[]> => {
+      const url = `${this.HTTP_URL}/reports/ticker`
+      return fetchJSON(url)
+    },
+    // TODO: check which parameters we want to implement
+    getTradeHistoryLogs: (): Promise<ERCdEXRaw.HistoryLogs> => {
+      const url = `${this.HTTP_URL}/trade_history_logs`
+      return fetchJSON(url)
+    },
+    getHistoricalPrices: async (options: {
+      baseTokenAddress: string
+      quoteTokenAddress: string
+      startDate: string
+    }): Promise<ERCdEXRaw.HistoricalPrice[]> => {
+      const url = `${this.HTTP_URL}/reports/historical`
+      return postJSON(url, {
+        ...options,
+        networkId: this.NETWORK_ID
+      })
+    },
+    getAggregatedOrders: async (options: {
+      baseTokenAddress: string
+      quoteTokenAddress: string
+    }): Promise<ERCdEXRaw.AggregatedOrders> => {
+      const url = `${this.HTTP_URL}/aggregated_orders`
+      const queryParams = getQueryParameters({
+        ...options,
+        networkId: this.NETWORK_ID
+      })
+      return fetchJSON(url, queryParams)
+    },
+    // TODO: find out how to add a test
+    softCancelOrder: async (options: {
+      orderHash: string
+      signature?: {
+        v: number
+        r: string
+        s: string
+      }
+    }): Promise<any> => {
+      const url = `${this.HTTP_URL}/orders/soft-cancel`
+      return postJSON(url, options)
+    },
+    getFeesERCdEX: async (options: {
+      makerTokenAddress: string
+      takerTokenAddress: string
+      makerTokenAmount: string
+      takerTokenAmount: string
+      maker: string
+      taker: string
+    }): Promise<ZeroExStandardRelayerRaw.RawFee> => {
+      const url = `${this.HTTP_URL}/fees`
+      const queryParams = getQueryParameters({
+        ...options,
+        networkId: this.NETWORK_ID
+      })
+      return postJSON([url, queryParams].join('?'))
     }
-  }): Promise<any> {
-    const url = `${this.HTTP_URL}/orders/soft-cancel`
-    return postJSON(url, options)
+  }
+  public ws = {
+    ...this.ws,
+    open: () => {
+      this.wsInstance = new ReconnectingWebSocket(this.WS_URL)
+      return new Promise((resolve, reject) => {
+        const rejectError = err => {
+          return reject(err)
+        }
+        this.wsInstance.addEventListener('error', rejectError)
+        this.wsInstance.addEventListener('open', () => {
+          this.wsInstance.removeEventListener('error', rejectError)
+          return resolve(this.wsInstance)
+        })
+      })
+    },
+    close: () => {
+      return new Promise(resolve => {
+        this.wsInstance.addEventListener('close', () => {
+          this.wsInstance = null
+          return resolve()
+        })
+        this.wsInstance.close()
+      })
+    },
+    getConnection: () => {
+      return this.wsInstance || this.ws.open()
+    },
+    getTickers: async (
+      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    ): Promise<Function> => {
+      const ws = await this.ws.getConnection()
+      const msg = `sub:ticker`
+      const unsubscribe = this.messagesListener(ws, callback)
+      ws.send(msg)
+      return unsubscribe
+    },
+    getPairOrderChange: async (
+      options: { baseTokenAddress: string; quoteTokenAddress: string },
+      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    ): Promise<Function> => {
+      const ws = await this.ws.getConnection()
+      const msg = `sub:pair-order-change/${options.baseTokenAddress}/${
+        options.quoteTokenAddress
+      }`
+      const unsubscribe = this.messagesListener(ws, callback)
+      ws.send(msg)
+      return unsubscribe
+    },
+    getAggregatedOrderFeed: async (
+      options: { baseTokenAddress: string; quoteTokenAddress: string },
+      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    ): Promise<Function> => {
+      const ws = await this.ws.getConnection()
+      const msg = `sub:aggregated-order-feed/${options.baseTokenAddress}/${
+        options.quoteTokenAddress
+      }`
+      const unsubscribe = this.messagesListener(ws, callback)
+      ws.send(msg)
+      return unsubscribe
+    }
   }
 
-  public async getFeesERCdEX(options: {
-    makerTokenAddress: string
-    takerTokenAddress: string
-    makerTokenAmount: string
-    takerTokenAmount: string
-    maker: string
-    taker: string
-  }): Promise<ZeroExStandardRelayerRaw.RawFee> {
-    const url = `${this.HTTP_URL}/fees`
-    const queryParams = getQueryParameters({
-      ...options,
-      networkId: this.NETWORK_ID
-    })
-    return postJSON([url, queryParams].join('?'))
+  private messagesListener = (
+    websocketInstance,
+    callback: (err: Error, message?: any, unsubscribe?: Function) => any
+  ) => {
+    let msgCallback
+    const unsubscribe = () =>
+      msgCallback
+        ? websocketInstance.removeEventListener('message', msgCallback)
+        : null
+
+    msgCallback = message => {
+      const msg = JSON.parse(message.data)
+      return callback(null, msg, unsubscribe)
+    }
+
+    websocketInstance.addEventListener('message', msgCallback)
+
+    return unsubscribe
   }
 }
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API Standard Relayer calls Works with inherited standard relayer calls 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http Standard Relayer calls Works with inherited standard relayer calls 1`] = `
 Array [
   Object {
     "tokenA": Object {
@@ -1405,7 +1405,7 @@ Array [
 ]
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getAggregatedOrders Gets historical data for order book 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getAggregatedOrders Gets historical data for order book 1`] = `
 Object {
   "buys": Object {
     "priceLevels": Array [
@@ -1848,7 +1848,7 @@ Object {
 }
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getAggregatedOrders Returns an error response if correct parameters are not specified 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getAggregatedOrders Returns an error response if correct parameters are not specified 1`] = `
 Object {
   "fields": Object {
     "baseTokenAddress": Object {
@@ -1873,7 +1873,7 @@ Object {
 }
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getBestOrders Gets the order(s) representing the best market price 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getBestOrders Gets the order(s) representing the best market price 1`] = `
 Object {
   "orders": Array [
     Object {
@@ -1909,7 +1909,7 @@ Object {
 }
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getBestOrders Returns an error response if correct parameters are not specified 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getBestOrders Returns an error response if correct parameters are not specified 1`] = `
 Object {
   "fields": Object {
     "baseTokenAddress": Object {
@@ -1934,7 +1934,7 @@ Object {
 }
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getFeesERCdEX Get fees for an order of described parameters 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getFeesERCdEX Get fees for an order of described parameters 1`] = `
 Object {
   "feeRecipient": "0x173a2467cece1f752eb8416e337d0f0b58cad795",
   "makerFee": "0",
@@ -1942,7 +1942,7 @@ Object {
 }
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getHistoricalPrices Gets historical data for order book 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getHistoricalPrices Gets historical data for order book 1`] = `
 Array [
   Object {
     "close": 0.002856398861190195,
@@ -3299,7 +3299,7 @@ Array [
 ]
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getHistoricalPrices Returns an error response if correct parameters are not specified 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getHistoricalPrices Returns an error response if correct parameters are not specified 1`] = `
 Object {
   "fields": Object {
     "baseTokenAddress": Object {
@@ -3324,7 +3324,7 @@ Object {
 }
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getTickers Retrieves tickers data. 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getTickers Retrieves tickers data. 1`] = `
 Array [
   Object {
     "dailyPercentageChange": "5.23",
@@ -3725,7 +3725,7 @@ Array [
 ]
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API getTradeHistoryLogs Retrieves trade history logs. 1`] = `
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getTradeHistoryLogs Retrieves trade history logs. 1`] = `
 Object {
   "page": 1,
   "pages": 13148,
