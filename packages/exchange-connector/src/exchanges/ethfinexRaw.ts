@@ -86,7 +86,7 @@ export class EthfinexRaw {
       })
     },
     getConnection: () => {
-      return Promise.resolve(this.wsInstance) || this.ws.open()
+      return this.wsInstance || this.ws.open()
     },
     getTickers: async (
       options: { symbols: string },

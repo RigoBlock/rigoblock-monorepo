@@ -123,7 +123,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       })
     },
     getConnection: () => {
-      return Promise.resolve(this.wsInstance) || this.ws.open()
+      return this.wsInstance || this.ws.open()
     },
     getTickers: async (
       callback: (err: Error, message?: any, unsubscribe?: Function) => any
