@@ -1,11 +1,13 @@
+bin
 node_modules
 npm-debug.log*
 yarn-debug.log*
 lerna-debug.log*
 yarn-error.log*
 .vscode
-.idea
-monorepo.code-workspace
+.idea.
+.directory
+rigoblock-monorepo.code-workspace
 
 # testing
 coverage

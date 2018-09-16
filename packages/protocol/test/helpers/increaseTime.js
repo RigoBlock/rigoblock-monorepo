@@ -1,34 +1,35 @@
-import latestTime from './latestTime'
+import { latestTime } from './latestTime'
+import web3 from '../web3'
 
 // Increases ganache time by the passed duration in seconds
-export default function increaseTime(duration) {
-  const id = Date.now()
-
-  return new Promise((resolve, reject) => {
-    web3.currentProvider.sendAsync(
-      {
-        jsonrpc: '2.0',
-        method: 'evm_increaseTime',
-        params: [duration],
-        id: id
-      },
-      err1 => {
-        if (err1) return reject(err1)
-
-        web3.currentProvider.sendAsync(
-          {
-            jsonrpc: '2.0',
-            method: 'evm_mine',
-            id: id + 1
-          },
-          (err2, res) => {
-            return err2 ? reject(err2) : resolve(res)
-          }
-        )
-      }
-    )
-  })
+export const increaseTime = async duration => {
+  // const id = Date.now()
+  return await web3.evm.evmIncreaseTime(duration)
 }
+
+// export const increaseTime = async (duration) => {
+//   const id = Date.now()
+//   console.log(duration)
+//   return new Promise((resolve, reject) => {
+//       web3.currentProvider.send({
+//           jsonrpc: '2.0',
+//           method: 'evm_increaseTime',
+//           params: [duration],
+//           id: id,
+//       }, err1 => {
+//           if (err1) return reject(err1)
+//           console.log('second')
+//           web3.currentProvider.send({
+//               jsonrpc: '2.0',
+//               method: 'evm_mine',
+//               params: [],
+//               id: id + 1,
+//           }, (err2, res) => {
+//               return err2 ? reject(err2) : resolve(res)
+//           })
+//       })
+//   })
+// }
 
 /**
  * Beware that due to the need of calling two separate ganache methods and rpc calls overhead
@@ -37,8 +38,8 @@ export default function increaseTime(duration) {
  *
  * @param target time in seconds
  */
-export function increaseTimeTo(target) {
-  let now = latestTime()
+export const increaseTimeTo = async target => {
+  let now = await latestTime()
   if (target < now)
     throw Error(
       `Cannot increase current time(${now}) to a moment in the past(${target})`

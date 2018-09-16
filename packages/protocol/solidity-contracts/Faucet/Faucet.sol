@@ -9,7 +9,7 @@ pragma solidity ^0.4.24;
  */
 
 import { ERC20Face as Token } from "../utils/tokens/ERC20/ERC20Face.sol";
-import { OwnedUninitialized as Owned } from "../utils/Owned/OwnedUninitialized.sol";
+import { Owned as Owned } from "../utils/Owned/Owned.sol";
 
 contract Faucet is Owned {
 
@@ -17,7 +17,7 @@ contract Faucet is Owned {
     * Events
     */
     event Deposit(address indexed sender, uint256 value);
-    event OneTokenSent(address receiver);
+    event OneTokenSent(address indexed receiver);
     event FaucetOn(bool status);
     event FaucetOff(bool status);
 
@@ -75,40 +75,43 @@ contract Faucet is Owned {
     // }
 
     /// @dev send 1000 Token with a minimum time lock of 1 hour
-    function drip1000Token()
+    /// @return bool on success
+    function drip1Token()
       external
       faucetOn()
+      returns (bool success)
     {
         require(!checkStatus(msg.sender),"Required too early.");
-        // if(checkStatus(msg.sender)) {
-        //     revert();
-        // }
-        tokenInstance.transfer(msg.sender, oneToken);
         updateStatus(msg.sender, twentyFourHours);
-
+        tokenInstance.transfer(msg.sender, oneToken);
         emit OneTokenSent(msg.sender);
+        return true;
     }
 
     /// @dev turn faucet on
+    /// @return bool on success
     function turnFaucetOn()
       external
       onlyOwner
       faucetOff()
+      returns (bool success)
     {
         faucetStatus = true;
-
         emit FaucetOn(faucetStatus);
+        return true;
     }
 
     /// @dev turn faucet off
+    /// @return bool on success
     function turnFaucetOff()
       external
       onlyOwner
       faucetOn()
+      returns (bool success)
     {
         faucetStatus = false;
-
         emit FaucetOff(faucetStatus);
+        return true;
     }
 
     /*
@@ -141,10 +144,13 @@ contract Faucet is Owned {
     /// @dev updates timeLock for account
     /// @param _address of msg.sender
     /// @param _timelock of sender address
+    /// @return bool on success
     function updateStatus(address _address, uint256 _timelock)
       internal
+      returns (bool)
     {   // solium-disable-next-line security/no-block-members
         status[_address] = block.timestamp + _timelock;
+        return true;
     }
 
 }

@@ -1,3 +1,24 @@
+# Developing new contracts
+
+Create a new directory into `solidity-contracts` and name it accordinly.
+
+Edit `constants/index.js` and add the contract name to `CONTRACT_NAMES` array.
+
+Edit `deploy/index.js` and add the code to deploy in `module.exports`. For example:
+
+```
+const faucet = await deploy(baseAccount, network, 'Faucet')
+printAddress('Faucet', faucet.address)
+```
+
+`deploy` funtion accepts the following:
+
+```
+const deploy: (from: any, networkUrl: any, contractName: any, args?: any[]) => Promise<Web3.ContractInstance>
+```
+
+Do not forget to return the resulting object.
+
 # Smart Contract Tests
 
 We use [Jest](https://facebook.github.io/jest/docs/en/api.html "Jest API") to test our smart contracts.

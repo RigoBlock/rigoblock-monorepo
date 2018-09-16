@@ -181,6 +181,12 @@ module.exports = async (baseAccount, network) => {
     aEthfinex.address
   )
 
+  const faucet = await deploy(baseAccount, network, 'Faucet', [
+    rigoToken.address,
+    'GRGFaucet'
+  ])
+  printAddress('Faucet', faucet.address)
+
   return {
     AEthfinex: aEthfinex,
     AWeth: aWeth,
@@ -192,6 +198,7 @@ module.exports = async (baseAccount, network) => {
     DragoFactory: dragoFactory,
     ExchangeEfx: exchangeEfx,
     ExchangeV1Fork: exchangeV1Fork,
+    Faucet: faucet,
     ExchangesAuthority: exchangesAuthority,
     NavVerifier: navVerifier,
     RigoToken: rigoToken,
