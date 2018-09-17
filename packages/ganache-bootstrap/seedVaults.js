@@ -31,7 +31,6 @@ module.exports = async network => {
   //   .estimateGas()
 
   // first vault
-
   receipt = await vaultFactoryInstance.methods
     .createVault(...vault1options)
     .send({
