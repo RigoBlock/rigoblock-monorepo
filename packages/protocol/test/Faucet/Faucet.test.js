@@ -99,7 +99,7 @@ describeContract(contractName, () => {
   })
 
   describe('Faucet Contract - Faucet OFF and ON', () => {
-    it('Correctly turns Faucet OFF and ONN', async () => {
+    it('Correctly turns Faucet OFF and ON', async () => {
       // Turn faucet OFF
       await faucet.turnFaucetOff.sendTransactionAsync({
         from: accounts[0]
