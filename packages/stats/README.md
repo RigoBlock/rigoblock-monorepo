@@ -41,7 +41,7 @@ mkdir data
 Create `acme.json` file. This file contains private keys. Protect it.
 ```
 touch rigoblock-monorepo/packages/stats/config/traefik/acme.json
-chmod 600 rigoblock-monorepo/packages/stats/conf/traefik/acme.json
+chmod 600 rigoblock-monorepo/packages/stats/config/traefik/acme.json
 ```
 ### Build docker image (from within rigoblock-monorepo root)
 `docker-compose -f ./packages/stats/docker-compose.prod.yml build --build-arg NPM_KEY=<insert npm key> bull`

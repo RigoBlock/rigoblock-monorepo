@@ -12,8 +12,8 @@ services:
       - stats
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./conf/traefik/traefik.toml:/traefik.toml
-      - ./conf/traefik/acme.json:/acme.json
+      - ./config/traefik/traefik.toml:/traefik.toml
+      - ./config/traefik/acme.json:/acme.json
     container_name: traefik
     labels:
       traefik.backend: "traefik"
@@ -47,7 +47,7 @@ services:
     links:
       - influxdb
     volumes:
-      - ./conf/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./config/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   chronograf:
     image: chronograf:latest
@@ -92,7 +92,7 @@ services:
     links:
       - redis
     volumes:
-      - ./conf/arena/arena.prod.conf.json:/opt/arena/src/server/config/index.json:ro
+      - ./config/arena/arena.prod.conf.json:/opt/arena/src/server/config/index.json:ro
     labels:
       traefik.backend: "arena"
       traefik.enable: "true"
