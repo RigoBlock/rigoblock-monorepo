@@ -1,4 +1,6 @@
 const path = require('path')
+const AbiExtractPlugin = require('./abiExtractPlugin')
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'production',
@@ -26,5 +28,12 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new AbiExtractPlugin(),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 2, // Must be greater than or equal to one
+      minChunkSize: 1000
+    })
+  ]
 }
