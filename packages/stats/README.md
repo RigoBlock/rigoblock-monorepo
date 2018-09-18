@@ -1,7 +1,6 @@
 # Rigoblock Stats
 ![](./rigoblockStats.svg)
 
-
 ## Services
 
 ### Traefik
@@ -17,7 +16,6 @@ Chronograf is a UI dashboard that allows us to see the data that we have stored 
 Bull is a package that allows us to create queues of repeatable jobs, configurated using a cron expression. Our package is set up to have one queue for each different task. Tasks can be found in the folder of the same name, while queues are listed in `src/config.ts`.
 To add a new queue, simply add it to the `config.ts` file following the template we used.
 To add a new task, write an async function that accepts a `job` and a `web3` parameters and returns a promise. Make sure to wrap the task with `web3ErrorWrapper` to handle the closing of the websocket connection and possible web3 errors.
-
 
 ### Arena
 
@@ -70,7 +68,6 @@ docker-compose -f ./packages/stats/docker-compose.prod.yml build --build-arg NPM
 ```sh
 docker-compose -f ./packages/stats/docker-compose.prod.yml up
 ```
-
 
 ## Tasks
 
