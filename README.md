@@ -13,6 +13,7 @@
 | [`Rigoblock Protocol`](/packages/protocol)          | Rigoblock Protocol                                                 |
 | [`Deployer`](/packages/deployer)          | A package to compile and deploy our smart contracts                                       |
 | [`Ganache Bootstrap`](/packages/ganache-bootstrap)  | A bootstrapping package to deploy smart contracts and seed Ganache |
+| [`Stats`](/packages/stats)  | Data collection system |
 
 
 ### Install
