@@ -9,6 +9,7 @@ const NETWORKS = process.env.NETWORKS
     ]
 
 module.exports = {
+  TMP_DIR: '.tmp',
   ARTIFACTS_DIR: path.resolve(__dirname, '../artifacts'),
   CONTRACTS_DIR: path.resolve(__dirname, '../solidity-contracts'),
   NETWORKS,

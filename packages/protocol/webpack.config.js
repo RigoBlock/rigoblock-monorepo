@@ -1,4 +1,6 @@
 const path = require('path')
+const Jarvis = require('webpack-jarvis')
+const AbiExtractPlugin = require('./abiExtractPlugin')
 
 module.exports = {
   mode: 'production',
@@ -26,5 +28,12 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new AbiExtractPlugin(),
+    new Jarvis({
+      port: 8081,
+      watchOnly: false
+    })
+  ]
 }
