@@ -18,18 +18,18 @@ services:
     labels:
       traefik.backend: "traefik"
       traefik.enable: "true"
-      traefik.frontend.rule: "Host:${TRAEFIK_URI:?err}"
+      traefik.frontend.rule: "Host:${TRAEFIK_URI}"
       traefik.docker.network: "stats_stats"
       traefik.port: "8080"
-      traefik.frontend.auth.basic.users: "${TRAEFIK_CREDENTIALS:?err}"
+      traefik.frontend.auth.basic.users: "${TRAEFIK_CREDENTIALS}"
 
   influxdb:
     image: influxdb:latest
     container_name: influxdb
-    ports:
-      - "127.0.0.1:8083:8083"
-      - "127.0.0.1:8086:8086"
-      - "127.0.0.1:8090:8090"
+    expose:
+      - "8083"
+      - "8086"
+      - "8090"
     networks:
       - stats
     env_file:
@@ -40,8 +40,8 @@ services:
   telegraf:
     image: telegraf:latest
     container_name: telegraf
-    ports:
-      - "8125:8125/udp"
+    expose:
+      - "8125"
     networks:
       - stats
     links:
@@ -53,11 +53,11 @@ services:
     image: chronograf:latest
     container_name: chronograf
     environment:
-      AUTH_DURATION: ${AUTH_DURATION:?err}
-      TOKEN_SECRET: ${TOKEN_SECRET:?err}
-      GH_CLIENT_ID: ${GH_CLIENT_ID:?err}
-      GH_CLIENT_SECRET: ${GH_CLIENT_SECRET:?err}
-      GH_ORGS: ${GH_ORGS:?err}
+      AUTH_DURATION: ${AUTH_DURATION}
+      TOKEN_SECRET: ${TOKEN_SECRET}
+      GH_CLIENT_ID: ${GH_CLIENT_ID}
+      GH_CLIENT_SECRET: ${GH_CLIENT_SECRET}
+      GH_ORGS: ${GH_ORGS}
     ports:
       - "8888"
     networks:
@@ -69,7 +69,7 @@ services:
     labels:
       traefik.backend: "chronograf"
       traefik.enable: "true"
-      traefik.frontend.rule: "Host:${CHRONOGRAF_URI:?err}"
+      traefik.frontend.rule: "Host:${CHRONOGRAF_URI}"
       traefik.docker.network: "stats_stats"
       traefik.port: "8888"
     command: ['chronograf', '--influxdb-url=http://influxdb:8086']
@@ -77,8 +77,8 @@ services:
   redis:
     image: redis:latest
     container_name: redis
-    ports:
-      - "6379:6379"
+    expose:
+     - "6379"
     networks:
       - stats
 
@@ -96,10 +96,10 @@ services:
     labels:
       traefik.backend: "arena"
       traefik.enable: "true"
-      traefik.frontend.rule: "Host:${ARENA_URI:?err}"
+      traefik.frontend.rule: "Host:${ARENA_URI}"
       traefik.docker.network: "stats_stats"
       traefik.port: "4567"
-      traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS:?err}"
+      traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS}"
 
   bull:
     container_name: bull
@@ -110,7 +110,7 @@ services:
       context: ../../
       dockerfile: ./packages/stats/Dockerfile
       args:
-        - NPM_KEY=${NPM_KEY:?err}
+        - NPM_KEY=${NPM_KEY}
     networks:
       - stats
 

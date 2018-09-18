@@ -9,12 +9,13 @@ export GH_ORGS=RigoBlock
 export NPM_KEY=
 
 #e.g.: traefik.stats.endpoint.network
-export TRAEFIK_URI= 
+export TRAEFIK_URI=
 
 # Generate with:
 # htpasswd -n admin
-# Remember to escape $ characters with $
-export TRAEFIK_CREDENTIALS=admin:CHANGE_ME
+# and enclose in ''
+
+export TRAEFIK_CREDENTIALS=''
 
 #e.g.: chronograf.stats.endpoint.network
 export CHRONOGRAF_URI=
@@ -24,8 +25,8 @@ export ARENA_URI=
 
 # Generate with:
 # htpasswd -n admin
-# Remember to escape $ characters with $
+# and enclose in ''
 
-export ARENA_CREDENTIALS=admin:CHANGE_ME 
+export ARENA_CREDENTIALS=''
 
 cd rigoblock-monorepo && docker-compose -f packages/stats/docker-compose.prod.yml up
