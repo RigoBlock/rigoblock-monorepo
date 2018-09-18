@@ -1,6 +1,16 @@
 # getSharePrice
 
-This task accepts `key`, `poolType` and `network` as parameters on the initialData object, `network` being the networkId. Depending on the poolType (_Drago_ or, in the future, _Vault_) and relative key, it will fetch the correct hash from redis and map over the addresses, instantiate the pool using the correct abi and address, and call the `getData` method, which returns buyPrice and sellPrice of each pool.
+## _initialData_ properties:
 
-_sellPrice_ and _buyprice_ data are sent to statsD as two separate series as gauge data type.
+- key
+- poolType
+- network (Network ID)
+- web3Provider (web3 Provider url)
+
+## Steps
+
+- Fetch the correct list of pools from _Redis_ according to the `poolType` and `key`
+- Instantiate the correct pool Contract according to the `poolType`
+- Map over the pools calling the Contract's `getData` to obtain the _BuyPrice_ and _SellPrice_
+- Send the prices to _Telegraf_ as two separate series following **StatsD Protocol**
 

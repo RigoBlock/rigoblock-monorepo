@@ -1,6 +1,18 @@
 # calculateBalance
 
-This task accepts `symbol`, `address`, `key`, `poolType` and `network` as parameters on the initialData object, `network` being the networkId and `address` being the specified token's address. Depending on the poolType (_Drago_ or, in the future, _Vault_) and relative key, it will fetch the correct hash from redis, instantiate an ERC20 contract instance with the supplied token address, and map over the addresses performing a `balanceOf` call.
+## _initialData_ properties:
 
-The balance data is then sent to statsD as gauge data type.
+- symbol
+- address
+- key
+- poolType
+- network (Network ID)
+- web3Provider (web3 Provider url)
+
+## Steps
+
+- Fetch the correct list of pools from _Redis_ according to the `poolType` and `key`
+- Instantiate a Web3 Contract using the token `symbol` and `address`
+- Map over the pools calling the Contract's `balanceOf` method
+- Send balances to _Telegraf_ following **StatsD Protocol**
 
