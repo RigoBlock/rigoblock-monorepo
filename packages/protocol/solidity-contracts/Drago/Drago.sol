@@ -16,9 +16,8 @@
 
 */
 
-pragma solidity ^0.4.24;
+pragma solidity 0.4.24;
 pragma experimental "v0.5.0";
-//pragma experimental ABIEncoderV2;
 
 import { AuthorityFace as Authority } from "../Authority/AuthorityFace.sol";
 import { ExchangesAuthorityFace as ExchangesAuthority } from "../exchanges/ExchangesAuthority/ExchangesAuthorityFace.sol";
@@ -57,10 +56,6 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         uint256 balance;
         Receipt receipt;
         mapping(address => address[]) approvedAccount;
-    }
-
-    struct Transaction {
-        bytes assembledData;
     }
 
     struct DragoData {

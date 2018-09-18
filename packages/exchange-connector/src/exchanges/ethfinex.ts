@@ -9,11 +9,11 @@ export class Ethfinex {
   private wsTimeout = 10000
 
   constructor(
-    public networkId: NETWORKS | number,
-    public apiUrl?: string,
-    public wsUrl?: string
+    public NETWORK_ID: NETWORKS | number,
+    public HTTP_URL?: string,
+    public WS_URL?: string
   ) {
-    this.raw = new EthfinexRaw(networkId, apiUrl, wsUrl)
+    this.raw = new EthfinexRaw(NETWORK_ID, HTTP_URL, WS_URL)
   }
 
   public http = {

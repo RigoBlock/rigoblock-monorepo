@@ -21,7 +21,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     it('Retrieves a list of available token pairs and the information required to trade them.', async () => {
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetTokenPairs.json',
-        () => exchange.getTokenPairs()
+        () => exchange.http.getTokenPairs()
       )
       expect(result).toMatchSnapshot()
     })
@@ -29,7 +29,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const tokenA = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetTokenPairsWithTokenA.json',
-        () => exchange.getTokenPairs({ tokenA })
+        () => exchange.http.getTokenPairs({ tokenA })
       )
       expect(result).toMatchSnapshot()
     })
@@ -37,7 +37,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetTokenPairsWithBothTokens.json',
         () =>
-          exchange.getTokenPairs({
+          exchange.http.getTokenPairs({
             tokenA: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
             tokenB: '0x0d8775f648430679a709e98d2b0cb6250d2887ef'
           })
@@ -49,7 +49,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     it('Works without parameters', async () => {
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetOrders.json',
-        () => exchange.getOrders()
+        () => exchange.http.getOrders()
       )
       expect(result).toMatchSnapshot()
     })
@@ -57,7 +57,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetOrdersWithParameters.json',
         () =>
-          exchange.getOrders({
+          exchange.http.getOrders({
             maker: '0x2f0d03fb9a8a6cc4b04128c29b9861adbb818015',
             makerTokenAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
             takerTokenAddres: '0x0d8775f648430679a709e98d2b0cb6250d2887ef'
@@ -72,12 +72,12 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         '0x7109947a8f4c595f2604445cc4cfc0927fcef5b84b9b33a34528ada629dbd846'
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetOrder.json',
-        () => exchange.getOrder({ orderHash })
+        () => exchange.http.getOrder({ orderHash })
       )
       expect(result).toMatchSnapshot()
     })
     it("throws an error if parameters aren't specified", async () => {
-      expect(exchange.getOrder()).rejects.toThrowErrorMatchingSnapshot()
+      expect(exchange.http.getOrder()).rejects.toThrowErrorMatchingSnapshot()
     })
   })
   describe('getOrderbook', () => {
@@ -86,14 +86,15 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       const quoteTokenAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetOrderbook.json',
-        () => exchange.getOrderbook({ baseTokenAddress, quoteTokenAddress })
+        () =>
+          exchange.http.getOrderbook({ baseTokenAddress, quoteTokenAddress })
       )
       expect(result).toMatchSnapshot()
     })
     it('Returns an error response if correct parameters are not specified', async () => {
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetOrderbookError.json',
-        () => exchange.getOrderbook()
+        () => exchange.http.getOrderbook()
       )
       expect(result).toMatchSnapshot()
     })
@@ -122,14 +123,14 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     it('retrieves the orderbook for a given token pair.', async () => {
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/GetFees.json',
-        () => exchange.getFees(options)
+        () => exchange.http.getFees(options)
       )
       expect(result).toMatchSnapshot()
     })
     it("returns an error response if we don't pass the parameters", async () => {
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/getFeesError.json',
-        () => exchange.getFees()
+        () => exchange.http.getFees()
       )
       expect(result).toMatchSnapshot()
     })
@@ -164,7 +165,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       }
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/Create.json',
-        () => kovanExchange.createOrder(order)
+        () => kovanExchange.http.createOrder(order)
       )
       expect(result).toMatchSnapshot()
     })
@@ -176,7 +177,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       )
       const result: any = await nockBackPromise(
         'zeroExStandardRelayer/CreateError.json',
-        () => kovanExchange.createOrder()
+        () => kovanExchange.http.createOrder()
       )
       expect(result).toMatchSnapshot()
     })

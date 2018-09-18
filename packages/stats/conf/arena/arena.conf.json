@@ -109,6 +109,30 @@
       "port": 6379
     },
     {
+      "name": "ropsten-calculate-balance-ZRXW",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-ETHW",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-USDTW",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
+      "name": "ropsten-calculate-balance-GRGW",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379
+    },
+    {
       "name": "ropsten-calculate-dragos-totalsupply",
       "hostId": "localhost",
       "host": "docker.for.mac.localhost",

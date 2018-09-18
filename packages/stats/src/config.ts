@@ -230,6 +230,58 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
     }
   },
+  'ropsten-calculate-balance-ZRXW': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates ZRXW balance',
+    cronExpression: '*/15 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'ZRXW',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].ZRXW,
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
+  },
+  'ropsten-calculate-balance-ETHW': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates ETHW balance',
+    cronExpression: '*/15 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'ETHW',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].ETHW,
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
+  },
+  'ropsten-calculate-balance-USDTW': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates USDTW balance',
+    cronExpression: '*/15 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'USDTW',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].USDTW,
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
+  },
+  'ropsten-calculate-balance-GRGW': {
+    handlerName: 'calculateBalance',
+    description: 'Calculates GRGW balance',
+    cronExpression: '*/15 * * * * *',
+    initialData: {
+      key: 'dragos',
+      symbol: 'GRGW',
+      poolType: 'Drago',
+      address: CONTRACT_ADDRESSES[NETWORKS.ROPSTEN].GRGW,
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].RIGOBLOCK
+    }
+  },
   'ropsten-calculate-dragos-totalsupply': {
     handlerName: 'getTotalSupply',
     description: 'Gets the total supply',

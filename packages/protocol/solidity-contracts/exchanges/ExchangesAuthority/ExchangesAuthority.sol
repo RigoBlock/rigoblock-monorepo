@@ -37,7 +37,6 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
 
     struct Type {
         string types;
-        mapping (string=> address[]) mapFromGroup;
         List[] list;
     }
 
@@ -377,16 +376,6 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         returns (address)
     {
         return blocks.casper;
-    }
-
-    /// @dev Provides an array of addresses for a group
-    /// @param _group Address of the group/factory
-    /// @return Array of addresses of the pools for a specific group
-    function getListsByGroups(string _group)
-        external view
-        returns (address[])
-    {
-        return types.mapFromGroup[_group];
     }
 
     // INTERNAL FUNCTIONS

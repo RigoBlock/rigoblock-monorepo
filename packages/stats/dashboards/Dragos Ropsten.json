@@ -1,14 +1,641 @@
 {
 	"meta": {
-		"chronografVersion": "1.6.0"
+		"sources": {
+			"0": {
+				"name": "http://influxdb:8086",
+				"link": "/chronograf/v1/sources/0"
+			}
+		}
 	},
 	"dashboard": {
-		"id": 3,
+		"id": 6,
 		"cells": [
 			{
-				"i": "9a0ea968-b4c7-4469-beb4-7935791949fc",
+				"i": "c5e157b9-6f14-4875-bb9c-3eec8e34d0d4",
+				"x": 8,
+				"y": 12,
+				"w": 4,
+				"h": 4,
+				"name": "Total GRG Balance (GRG + GRGW)",
+				"queries": [
+					{
+						"query": "select mean(grg_value) + mean(grgw_value) as total_value from (SELECT mean(\"value\") AS \"grg_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='GRG' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)), (SELECT mean(\"value\") AS \"grgw_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='GRGW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)) GROUP BY time(:interval:), \"id\" FILL(previous)",
+						"queryConfig": {
+							"database": "",
+							"measurement": "",
+							"retentionPolicy": "",
+							"fields": [],
+							"tags": {},
+							"groupBy": {
+								"time": "",
+								"tags": []
+							},
+							"areTagsAccepted": false,
+							"rawText": "select mean(grg_value) + mean(grgw_value) as total_value from (SELECT mean(\"value\") AS \"grg_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='GRG' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)), (SELECT mean(\"value\") AS \"grgw_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='GRGW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)) GROUP BY time(:interval:), \"id\" FILL(previous)",
+							"range": null,
+							"shifts": null
+						},
+						"source": "/chronograf/v1/sources/0"
+					}
+				],
+				"axes": {
+					"x": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y2": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					}
+				},
+				"type": "line",
+				"colors": [
+					{
+						"id": "c20644a8-22e6-4d38-a0d2-bcbfbb2c64a4",
+						"type": "scale",
+						"hex": "#31C0F6",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "83cb3f31-3187-4645-a0c2-a0a045626dc4",
+						"type": "scale",
+						"hex": "#A500A5",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "adea9450-d99f-4e92-be2a-7b0606c6a279",
+						"type": "scale",
+						"hex": "#FF7E27",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					}
+				],
+				"legend": {},
+				"tableOptions": {
+					"verticalTimeAxis": true,
+					"sortBy": {
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					"wrapping": "truncate",
+					"fixFirstColumn": true
+				},
+				"fieldOptions": [
+					{
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					}
+				],
+				"timeFormat": "MM/DD/YYYY HH:mm:ss",
+				"decimalPlaces": {
+					"isEnforced": true,
+					"digits": 2
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/6/cells/c5e157b9-6f14-4875-bb9c-3eec8e34d0d4"
+				}
+			},
+			{
+				"i": "ca248d0c-85ed-467a-a199-34e5b36d73bd",
+				"x": 8,
+				"y": 8,
+				"w": 4,
+				"h": 4,
+				"name": "Total ETH balance (ETH + ETHW)",
+				"queries": [
+					{
+						"query": "select mean(eth_value) + mean(ethw_value) as total_value from (SELECT mean(\"value\") AS \"eth_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ETH' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)), (SELECT mean(\"value\") AS \"ethw_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ETHW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)) GROUP BY time(:interval:), \"id\" FILL(previous)",
+						"queryConfig": {
+							"database": "",
+							"measurement": "",
+							"retentionPolicy": "",
+							"fields": [],
+							"tags": {},
+							"groupBy": {
+								"time": "",
+								"tags": []
+							},
+							"areTagsAccepted": false,
+							"rawText": "select mean(eth_value) + mean(ethw_value) as total_value from (SELECT mean(\"value\") AS \"eth_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ETH' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)), (SELECT mean(\"value\") AS \"ethw_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ETHW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)) GROUP BY time(:interval:), \"id\" FILL(previous)",
+							"range": null,
+							"shifts": null
+						},
+						"source": "/chronograf/v1/sources/0"
+					}
+				],
+				"axes": {
+					"x": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y2": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					}
+				},
+				"type": "line",
+				"colors": [
+					{
+						"id": "c20644a8-22e6-4d38-a0d2-bcbfbb2c64a4",
+						"type": "scale",
+						"hex": "#31C0F6",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "83cb3f31-3187-4645-a0c2-a0a045626dc4",
+						"type": "scale",
+						"hex": "#A500A5",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "adea9450-d99f-4e92-be2a-7b0606c6a279",
+						"type": "scale",
+						"hex": "#FF7E27",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					}
+				],
+				"legend": {},
+				"tableOptions": {
+					"verticalTimeAxis": true,
+					"sortBy": {
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					"wrapping": "truncate",
+					"fixFirstColumn": true
+				},
+				"fieldOptions": [
+					{
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					}
+				],
+				"timeFormat": "MM/DD/YYYY HH:mm:ss",
+				"decimalPlaces": {
+					"isEnforced": true,
+					"digits": 2
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/6/cells/ca248d0c-85ed-467a-a199-34e5b36d73bd"
+				}
+			},
+			{
+				"i": "b5216865-ea8b-4b61-adca-ea1d9b792a3f",
 				"x": 4,
-				"y": 4,
+				"y": 8,
+				"w": 4,
+				"h": 4,
+				"name": "ETHW Balances",
+				"queries": [
+					{
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ETHW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)",
+						"queryConfig": {
+							"database": "telegraf",
+							"measurement": "balance",
+							"retentionPolicy": "autogen",
+							"fields": [
+								{
+									"value": "mean",
+									"type": "func",
+									"alias": "mean_value",
+									"args": [
+										{
+											"value": "value",
+											"type": "field",
+											"alias": ""
+										}
+									]
+								}
+							],
+							"tags": {
+								"currency": [
+									"ETHW"
+								],
+								"network": [
+									"3"
+								],
+								"type": [
+									"Drago"
+								]
+							},
+							"groupBy": {
+								"time": "auto",
+								"tags": [
+									"id"
+								]
+							},
+							"areTagsAccepted": true,
+							"fill": "previous",
+							"rawText": null,
+							"range": null,
+							"shifts": null
+						},
+						"source": "/chronograf/v1/sources/0"
+					}
+				],
+				"axes": {
+					"x": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y2": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					}
+				},
+				"type": "line",
+				"colors": [
+					{
+						"id": "c20644a8-22e6-4d38-a0d2-bcbfbb2c64a4",
+						"type": "scale",
+						"hex": "#31C0F6",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "83cb3f31-3187-4645-a0c2-a0a045626dc4",
+						"type": "scale",
+						"hex": "#A500A5",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "adea9450-d99f-4e92-be2a-7b0606c6a279",
+						"type": "scale",
+						"hex": "#FF7E27",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					}
+				],
+				"legend": {},
+				"tableOptions": {
+					"verticalTimeAxis": true,
+					"sortBy": {
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					"wrapping": "truncate",
+					"fixFirstColumn": true
+				},
+				"fieldOptions": [
+					{
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					}
+				],
+				"timeFormat": "MM/DD/YYYY HH:mm:ss",
+				"decimalPlaces": {
+					"isEnforced": true,
+					"digits": 2
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/6/cells/b5216865-ea8b-4b61-adca-ea1d9b792a3f"
+				}
+			},
+			{
+				"i": "78332c66-f812-401f-a257-8f2ecf779160",
+				"x": 4,
+				"y": 16,
+				"w": 4,
+				"h": 4,
+				"name": "ZRXW balance",
+				"queries": [
+					{
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ZRXW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)",
+						"queryConfig": {
+							"database": "telegraf",
+							"measurement": "balance",
+							"retentionPolicy": "autogen",
+							"fields": [
+								{
+									"value": "mean",
+									"type": "func",
+									"alias": "mean_value",
+									"args": [
+										{
+											"value": "value",
+											"type": "field",
+											"alias": ""
+										}
+									]
+								}
+							],
+							"tags": {
+								"currency": [
+									"ZRXW"
+								],
+								"network": [
+									"3"
+								],
+								"type": [
+									"Drago"
+								]
+							},
+							"groupBy": {
+								"time": "auto",
+								"tags": [
+									"id"
+								]
+							},
+							"areTagsAccepted": true,
+							"fill": "previous",
+							"rawText": null,
+							"range": null,
+							"shifts": null
+						},
+						"source": "/chronograf/v1/sources/0"
+					}
+				],
+				"axes": {
+					"x": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y2": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					}
+				},
+				"type": "line",
+				"colors": [
+					{
+						"id": "49926308-e7f3-474e-a85f-b8b948160a93",
+						"type": "scale",
+						"hex": "#31C0F6",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "d1a56267-3ccd-48d7-a0ea-9cb5d3f3d313",
+						"type": "scale",
+						"hex": "#A500A5",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "853e88b9-4184-4ced-8d48-a9006bf1fccb",
+						"type": "scale",
+						"hex": "#FF7E27",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					}
+				],
+				"legend": {},
+				"tableOptions": {
+					"verticalTimeAxis": true,
+					"sortBy": {
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					"wrapping": "truncate",
+					"fixFirstColumn": true
+				},
+				"fieldOptions": [
+					{
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					}
+				],
+				"timeFormat": "MM/DD/YYYY HH:mm:ss",
+				"decimalPlaces": {
+					"isEnforced": true,
+					"digits": 2
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/6/cells/78332c66-f812-401f-a257-8f2ecf779160"
+				}
+			},
+			{
+				"i": "b4f83882-42d4-4459-83bb-9af1d028770b",
+				"x": 8,
+				"y": 16,
+				"w": 4,
+				"h": 4,
+				"name": "Total ZRX balance (ZRX + ZRXW)",
+				"queries": [
+					{
+						"query": "select mean(zrx_value) + mean(zrxw_value) as total_value from (SELECT mean(\"value\") AS \"zrx_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ZRX' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)), (SELECT mean(\"value\") AS \"zrxw_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ZRXW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)) GROUP BY time(:interval:), \"id\" FILL(previous)\n",
+						"queryConfig": {
+							"database": "",
+							"measurement": "",
+							"retentionPolicy": "",
+							"fields": [],
+							"tags": {},
+							"groupBy": {
+								"time": "",
+								"tags": []
+							},
+							"areTagsAccepted": false,
+							"rawText": "select mean(zrx_value) + mean(zrxw_value) as total_value from (SELECT mean(\"value\") AS \"zrx_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ZRX' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)), (SELECT mean(\"value\") AS \"zrxw_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ZRXW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)) GROUP BY time(:interval:), \"id\" FILL(previous)\n",
+							"range": null,
+							"shifts": null
+						},
+						"source": "/chronograf/v1/sources/0"
+					}
+				],
+				"axes": {
+					"x": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y2": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					}
+				},
+				"type": "line",
+				"colors": [
+					{
+						"id": "49926308-e7f3-474e-a85f-b8b948160a93",
+						"type": "scale",
+						"hex": "#31C0F6",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "d1a56267-3ccd-48d7-a0ea-9cb5d3f3d313",
+						"type": "scale",
+						"hex": "#A500A5",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "853e88b9-4184-4ced-8d48-a9006bf1fccb",
+						"type": "scale",
+						"hex": "#FF7E27",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					}
+				],
+				"legend": {},
+				"tableOptions": {
+					"verticalTimeAxis": true,
+					"sortBy": {
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					"wrapping": "truncate",
+					"fixFirstColumn": true
+				},
+				"fieldOptions": [
+					{
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					}
+				],
+				"timeFormat": "MM/DD/YYYY HH:mm:ss",
+				"decimalPlaces": {
+					"isEnforced": true,
+					"digits": 2
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/6/cells/b4f83882-42d4-4459-83bb-9af1d028770b"
+				}
+			},
+			{
+				"i": "eded7e0e-a3b4-4ba9-b81e-3ad172479266",
+				"x": 0,
+				"y": 8,
 				"w": 4,
 				"h": 4,
 				"name": "ETH Balances",
@@ -139,11 +766,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/9a0ea968-b4c7-4469-beb4-7935791949fc"
+					"self": "/chronograf/v1/dashboards/6/cells/eded7e0e-a3b4-4ba9-b81e-3ad172479266"
 				}
 			},
 			{
-				"i": "bddbef42-ecf7-42f5-bd40-9359857587b9",
+				"i": "a42d8cc6-1100-4d7c-8f6a-f7be0ed7d8cb",
 				"x": 0,
 				"y": 4,
 				"w": 4,
@@ -276,13 +903,13 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/bddbef42-ecf7-42f5-bd40-9359857587b9"
+					"self": "/chronograf/v1/dashboards/6/cells/a42d8cc6-1100-4d7c-8f6a-f7be0ed7d8cb"
 				}
 			},
 			{
-				"i": "adca914e-53d3-43c9-a578-81452e1e4bd1",
-				"x": 8,
-				"y": 4,
+				"i": "637b5360-3d06-4109-8954-d79a5ca2ed2d",
+				"x": 0,
+				"y": 12,
 				"w": 4,
 				"h": 4,
 				"name": "GRG Balances",
@@ -413,11 +1040,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/adca914e-53d3-43c9-a578-81452e1e4bd1"
+					"self": "/chronograf/v1/dashboards/6/cells/637b5360-3d06-4109-8954-d79a5ca2ed2d"
 				}
 			},
 			{
-				"i": "f24a280f-25b8-4c01-aab7-4cddeab348c7",
+				"i": "23dfd446-86d7-473b-a76c-d2df24ff5afb",
 				"x": 0,
 				"y": 0,
 				"w": 4,
@@ -547,11 +1174,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/f24a280f-25b8-4c01-aab7-4cddeab348c7"
+					"self": "/chronograf/v1/dashboards/6/cells/23dfd446-86d7-473b-a76c-d2df24ff5afb"
 				}
 			},
 			{
-				"i": "9f4969be-4044-4232-8e7d-7b37f039362f",
+				"i": "c6b81242-cc7c-4e1a-a9c4-209ece3894c3",
 				"x": 8,
 				"y": 0,
 				"w": 4,
@@ -684,11 +1311,11 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/9f4969be-4044-4232-8e7d-7b37f039362f"
+					"self": "/chronograf/v1/dashboards/6/cells/c6b81242-cc7c-4e1a-a9c4-209ece3894c3"
 				}
 			},
 			{
-				"i": "5b27496f-0087-4e7d-9c60-91dc0cd86285",
+				"i": "94b5a8bf-1da5-486b-a133-bacc71e21853",
 				"x": 4,
 				"y": 0,
 				"w": 4,
@@ -821,13 +1448,13 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/5b27496f-0087-4e7d-9c60-91dc0cd86285"
+					"self": "/chronograf/v1/dashboards/6/cells/94b5a8bf-1da5-486b-a133-bacc71e21853"
 				}
 			},
 			{
-				"i": "582a7771-8fa8-4ab0-83f6-ae7c38a2d8a9",
-				"x": 0,
-				"y": 8,
+				"i": "4fcbbc7b-6fc9-467d-923c-3d079a5ee765",
+				"x": 4,
+				"y": 4,
 				"w": 4,
 				"h": 4,
 				"name": "GNT Balances",
@@ -958,13 +1585,13 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/582a7771-8fa8-4ab0-83f6-ae7c38a2d8a9"
+					"self": "/chronograf/v1/dashboards/6/cells/4fcbbc7b-6fc9-467d-923c-3d079a5ee765"
 				}
 			},
 			{
-				"i": "42845763-5dd3-488e-8d78-ad08bb2b6c0e",
-				"x": 4,
-				"y": 8,
+				"i": "9981b415-e3cf-4979-bd62-a063603139e2",
+				"x": 0,
+				"y": 20,
 				"w": 4,
 				"h": 4,
 				"name": "USDT Balances",
@@ -1095,19 +1722,19 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/42845763-5dd3-488e-8d78-ad08bb2b6c0e"
+					"self": "/chronograf/v1/dashboards/6/cells/9981b415-e3cf-4979-bd62-a063603139e2"
 				}
 			},
 			{
-				"i": "bec04008-8c1c-47e0-ab7a-4eb4a841e194",
-				"x": 8,
-				"y": 8,
+				"i": "198bc864-daad-4555-8472-693261788df9",
+				"x": 0,
+				"y": 16,
 				"w": 4,
 				"h": 4,
 				"name": "ZRX Balances",
 				"queries": [
 					{
-						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ZRX' AND \"network\"='3' GROUP BY time(:interval:), \"id\" FILL(previous)",
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='ZRX' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)",
 						"queryConfig": {
 							"database": "telegraf",
 							"measurement": "balance",
@@ -1132,6 +1759,9 @@
 								],
 								"network": [
 									"3"
+								],
+								"type": [
+									"Drago"
 								]
 							},
 							"groupBy": {
@@ -1232,13 +1862,13 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/bec04008-8c1c-47e0-ab7a-4eb4a841e194"
+					"self": "/chronograf/v1/dashboards/6/cells/198bc864-daad-4555-8472-693261788df9"
 				}
 			},
 			{
-				"i": "fb6a37f7-8cfc-4422-b2c5-3726e0487818",
-				"x": 0,
-				"y": 12,
+				"i": "a8325211-34d1-4480-bf9a-1aaade32357b",
+				"x": 8,
+				"y": 4,
 				"w": 4,
 				"h": 4,
 				"name": "MKR Balances",
@@ -1369,7 +1999,401 @@
 					"digits": 2
 				},
 				"links": {
-					"self": "/chronograf/v1/dashboards/3/cells/fb6a37f7-8cfc-4422-b2c5-3726e0487818"
+					"self": "/chronograf/v1/dashboards/6/cells/a8325211-34d1-4480-bf9a-1aaade32357b"
+				}
+			},
+			{
+				"i": "f3c4f547-0c6a-4ce9-a5a3-743cd4de7055",
+				"x": 4,
+				"y": 20,
+				"w": 4,
+				"h": 4,
+				"name": "USDTW Balances",
+				"queries": [
+					{
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='USDTW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)",
+						"queryConfig": {
+							"database": "telegraf",
+							"measurement": "balance",
+							"retentionPolicy": "autogen",
+							"fields": [
+								{
+									"value": "mean",
+									"type": "func",
+									"alias": "mean_value",
+									"args": [
+										{
+											"value": "value",
+											"type": "field",
+											"alias": ""
+										}
+									]
+								}
+							],
+							"tags": {
+								"currency": [
+									"USDTW"
+								],
+								"network": [
+									"3"
+								],
+								"type": [
+									"Drago"
+								]
+							},
+							"groupBy": {
+								"time": "auto",
+								"tags": [
+									"id"
+								]
+							},
+							"areTagsAccepted": true,
+							"fill": "previous",
+							"rawText": null,
+							"range": null,
+							"shifts": null
+						},
+						"source": "/chronograf/v1/sources/0"
+					}
+				],
+				"axes": {
+					"x": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y2": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					}
+				},
+				"type": "line",
+				"colors": [
+					{
+						"id": "49926308-e7f3-474e-a85f-b8b948160a93",
+						"type": "scale",
+						"hex": "#31C0F6",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "d1a56267-3ccd-48d7-a0ea-9cb5d3f3d313",
+						"type": "scale",
+						"hex": "#A500A5",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "853e88b9-4184-4ced-8d48-a9006bf1fccb",
+						"type": "scale",
+						"hex": "#FF7E27",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					}
+				],
+				"legend": {},
+				"tableOptions": {
+					"verticalTimeAxis": true,
+					"sortBy": {
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					"wrapping": "truncate",
+					"fixFirstColumn": true
+				},
+				"fieldOptions": [
+					{
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					}
+				],
+				"timeFormat": "MM/DD/YYYY HH:mm:ss",
+				"decimalPlaces": {
+					"isEnforced": true,
+					"digits": 2
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/6/cells/f3c4f547-0c6a-4ce9-a5a3-743cd4de7055"
+				}
+			},
+			{
+				"i": "fe64ffb7-b4c7-4614-a8b0-75988ef72640",
+				"x": 4,
+				"y": 12,
+				"w": 4,
+				"h": 4,
+				"name": "GRGW Balances",
+				"queries": [
+					{
+						"query": "SELECT mean(\"value\") AS \"mean_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='GRGW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(null)",
+						"queryConfig": {
+							"database": "telegraf",
+							"measurement": "balance",
+							"retentionPolicy": "autogen",
+							"fields": [
+								{
+									"value": "mean",
+									"type": "func",
+									"alias": "mean_value",
+									"args": [
+										{
+											"value": "value",
+											"type": "field",
+											"alias": ""
+										}
+									]
+								}
+							],
+							"tags": {
+								"currency": [
+									"GRGW"
+								],
+								"network": [
+									"3"
+								],
+								"type": [
+									"Drago"
+								]
+							},
+							"groupBy": {
+								"time": "auto",
+								"tags": [
+									"id"
+								]
+							},
+							"areTagsAccepted": true,
+							"fill": "null",
+							"rawText": null,
+							"range": null,
+							"shifts": null
+						},
+						"source": "/chronograf/v1/sources/0"
+					}
+				],
+				"axes": {
+					"x": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y2": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					}
+				},
+				"type": "line",
+				"colors": [
+					{
+						"id": "49926308-e7f3-474e-a85f-b8b948160a93",
+						"type": "scale",
+						"hex": "#31C0F6",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "d1a56267-3ccd-48d7-a0ea-9cb5d3f3d313",
+						"type": "scale",
+						"hex": "#A500A5",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "853e88b9-4184-4ced-8d48-a9006bf1fccb",
+						"type": "scale",
+						"hex": "#FF7E27",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					}
+				],
+				"legend": {},
+				"tableOptions": {
+					"verticalTimeAxis": true,
+					"sortBy": {
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					"wrapping": "truncate",
+					"fixFirstColumn": true
+				},
+				"fieldOptions": [
+					{
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					}
+				],
+				"timeFormat": "MM/DD/YYYY HH:mm:ss",
+				"decimalPlaces": {
+					"isEnforced": true,
+					"digits": 2
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/6/cells/fe64ffb7-b4c7-4614-a8b0-75988ef72640"
+				}
+			},
+			{
+				"i": "74331ba8-a6b0-4294-b92d-584a49805028",
+				"x": 8,
+				"y": 20,
+				"w": 4,
+				"h": 4,
+				"name": "Total USDT Balances (USDT + USDTW)",
+				"queries": [
+					{
+						"query": "select mean(usdt_value) + mean(usdtw_value) as total_value from (SELECT mean(\"value\") AS \"usdt_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='USDT' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)), (SELECT mean(\"value\") AS \"usdtw_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='USDTW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)) GROUP BY time(:interval:), \"id\" FILL(previous)\n",
+						"queryConfig": {
+							"database": "",
+							"measurement": "",
+							"retentionPolicy": "",
+							"fields": [],
+							"tags": {},
+							"groupBy": {
+								"time": "",
+								"tags": []
+							},
+							"areTagsAccepted": false,
+							"rawText": "select mean(usdt_value) + mean(usdtw_value) as total_value from (SELECT mean(\"value\") AS \"usdt_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='USDT' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)), (SELECT mean(\"value\") AS \"usdtw_value\" FROM \"telegraf\".\"autogen\".\"balance\" WHERE time > :dashboardTime: AND \"currency\"='USDTW' AND \"network\"='3' AND \"type\"='Drago' GROUP BY time(:interval:), \"id\" FILL(previous)) GROUP BY time(:interval:), \"id\" FILL(previous)\n",
+							"range": null,
+							"shifts": null
+						},
+						"source": "/chronograf/v1/sources/0"
+					}
+				],
+				"axes": {
+					"x": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y2": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					}
+				},
+				"type": "line",
+				"colors": [
+					{
+						"id": "c20644a8-22e6-4d38-a0d2-bcbfbb2c64a4",
+						"type": "scale",
+						"hex": "#31C0F6",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "83cb3f31-3187-4645-a0c2-a0a045626dc4",
+						"type": "scale",
+						"hex": "#A500A5",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "adea9450-d99f-4e92-be2a-7b0606c6a279",
+						"type": "scale",
+						"hex": "#FF7E27",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					}
+				],
+				"legend": {},
+				"tableOptions": {
+					"verticalTimeAxis": true,
+					"sortBy": {
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					"wrapping": "truncate",
+					"fixFirstColumn": true
+				},
+				"fieldOptions": [
+					{
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					}
+				],
+				"timeFormat": "MM/DD/YYYY HH:mm:ss",
+				"decimalPlaces": {
+					"isEnforced": true,
+					"digits": 2
+				},
+				"links": {
+					"self": "/chronograf/v1/dashboards/6/cells/74331ba8-a6b0-4294-b92d-584a49805028"
 				}
 			}
 		],
@@ -1377,9 +2401,9 @@
 		"name": "Dragos Ropsten",
 		"organization": "default",
 		"links": {
-			"self": "/chronograf/v1/dashboards/3",
-			"cells": "/chronograf/v1/dashboards/3/cells",
-			"templates": "/chronograf/v1/dashboards/3/templates"
+			"self": "/chronograf/v1/dashboards/6",
+			"cells": "/chronograf/v1/dashboards/6/cells",
+			"templates": "/chronograf/v1/dashboards/6/templates"
 		}
 	}
 }

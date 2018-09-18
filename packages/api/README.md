@@ -54,20 +54,18 @@ Creating a Vault from the VaultFactory contract
 ```javascript
 import Api from '@rigoblock/api'
 
-;async () => {
-  const api = new Api()
-  await api.init()
-  const vaultFactory = api.contract.VaultFactory.createAndValidate(
-    api.web3._web3,
-    api.contract.VaultFactory.address
-  )
-  vaultFactory.createVaultTx('rocksolidvault', 'VLT').send({
-    value: 0,
-    from: '0x...196',
-    gas: 5700000,
-    gasPrice: 100000000000
-  })
-}
+const api = new Api()
+await api.init()
+const vaultFactory = api.contract.VaultFactory.createAndValidate(
+  api.web3._web3,
+  api.contract.VaultFactory.address
+)
+vaultFactory.createVaultTx('rocksolidvault', 'VLT').send({
+  value: 0,
+  from: '0x...196',
+  gas: 5700000,
+  gasPrice: 100000000000
+})
 
 ```
 ## Adding custom methods
@@ -103,29 +101,25 @@ Listening for the `VaultCreated` event
 ```javascript
 import Api from '@rigoblock/api'
 
-;async () => {
-  const api = new Api()
-  await api.init()
+const api = new Api()
+await api.init()
 
-  const vaultEventful = api.contract.VaultEventful.createAndValidate(
-    api.web3._web3,
-    api.contract.VaultEventful.address
-  )
-  // filter for vaults created by this account
-  const myEvent = vaultEventful.VaultCreatedEvent({
-    owner: '0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d',
-    fromBlock: 0,
-    toBlock: 'latest'
-  })
+const vaultEventful = api.contract.VaultEventful.createAndValidate(
+  api.web3._web3,
+  api.contract.VaultEventful.address
+)
+// filter for vaults created by this account
+const myEvent = vaultEventful.VaultCreatedEvent({
+  owner: '0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d',
+  fromBlock: 0,
+  toBlock: 'latest'
+})
 
-  // get all past events
-  myEvent.get((error, data) => (error ? error : data))
+// get all past events
+myEvent.get((error, data) => (error ? error : data))
 
-  // listen for new events
-  myEvent.watch((error, data) => (error ? error : data))
-}
-
-
+// listen for new events
+myEvent.watch((error, data) => (error ? error : data))
 ```
 
 If we wish to listen for all events of a particular contract, we have to use typechain's rawWeb3Contract method.
@@ -134,24 +128,22 @@ If we wish to listen for all events of a particular contract, we have to use typ
 ```javascript
 import Api from '@rigoblock/api'
 
-;async () => {
-  const api = new Api()
-  await api.init()
+const api = new Api()
+await api.init()
 
-  const vaultEventful = api.contract.VaultEventful.createAndValidate(
-    api.web3._web3,
-    api.contract.VaultEventful.address
-  )
-  const events = vaultEventful.VaultCreatedEvent.rawWeb3Contract.allEvents({
-    fromBlock: 0,
-    toBlock: 'latest'
-  })
+const vaultEventful = api.contract.VaultEventful.createAndValidate(
+  api.web3._web3,
+  api.contract.VaultEventful.address
+)
+const events = vaultEventful.VaultCreatedEvent.rawWeb3Contract.allEvents({
+  fromBlock: 0,
+  toBlock: 'latest'
+})
 
-  // get all events
-  events.get((error, data) => (error ? error : data))
+// get all events
+events.get((error, data) => (error ? error : data))
 
-  // listen for new events
-  events.watch((error, data) => (error ? error : data))
-}
+// listen for new events
+events.watch((error, data) => (error ? error : data))
 
 ```

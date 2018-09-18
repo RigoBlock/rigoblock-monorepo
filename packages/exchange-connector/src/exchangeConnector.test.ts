@@ -25,7 +25,7 @@ describe('Exchange factory class', () => {
 
   it('instantiates the ZeroExStandardRelayerRaw if we pass "0xStandardRelayer" as exchangeName and an api url', () => {
     const exchange = exchangeConnector(supportedExchanges.ZEROEXRELAYER, {
-      apiUrl: 'https://api.radarrelay.com/0x',
+      httpUrl: 'https://api.radarrelay.com/0x',
       networkId: NETWORKS.MAINNET
     })
     expect(exchange).toBeInstanceOf(ZeroExStandardRelayerRaw)
