@@ -4,7 +4,8 @@ const { CONTRACT_NAMES, TMP_DIR } = require('./constants')
 class AbiExtractPlugin {
   apply(compiler) {
     const artifactsRegExp = new RegExp(
-      CONTRACT_NAMES.reduce((acc, curr) => `${acc}|${curr}`)
+      CONTRACT_NAMES.map(contract => `(${contract}\.json)$`).join('|'),
+      'i'
     )
     compiler.hooks.normalModuleFactory.tap('AbiExtractPlugin', nmf => {
       nmf.hooks.beforeResolve.tap('AbiExtractPlugin', result => {
