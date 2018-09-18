@@ -1,6 +1,7 @@
 const path = require('path')
 const Jarvis = require('webpack-jarvis')
 const AbiExtractPlugin = require('./abiExtractPlugin')
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'production',
@@ -31,9 +32,13 @@ module.exports = {
   },
   plugins: [
     new AbiExtractPlugin(),
-    new Jarvis({
-      port: 8081,
-      watchOnly: false
+    // new Jarvis({
+    //   port: 8081,
+    //   watchOnly: false
+    // }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 2, // Must be greater than or equal to one
+      minChunkSize: 1000
     })
   ]
 }

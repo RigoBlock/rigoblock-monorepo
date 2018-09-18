@@ -1,13 +1,13 @@
 const fs = require('fs-extra')
 const { CONTRACT_NAMES, TMP_DIR } = require('./constants')
 
-class TestPlugin {
+class AbiExtractPlugin {
   apply(compiler) {
     const artifactsRegExp = new RegExp(
       CONTRACT_NAMES.reduce((acc, curr) => `${acc}|${curr}`)
     )
-    compiler.hooks.normalModuleFactory.tap('TestPlugin', nmf => {
-      nmf.hooks.beforeResolve.tap('TestPlugin', result => {
+    compiler.hooks.normalModuleFactory.tap('AbiExtractPlugin', nmf => {
+      nmf.hooks.beforeResolve.tap('AbiExtractPlugin', result => {
         fs.ensureDirSync(`./${TMP_DIR}`)
         if (!result) return
         if (artifactsRegExp.test(result.request)) {
@@ -30,10 +30,10 @@ class TestPlugin {
         return result
       })
     })
-    compiler.hooks.afterEmit.tap('TestPlugin', () => {
+    compiler.hooks.afterEmit.tap('AbiExtractPlugin', () => {
       fs.removeSync(`./${TMP_DIR}`)
     })
   }
 }
 
-module.exports = TestPlugin
+module.exports = AbiExtractPlugin
