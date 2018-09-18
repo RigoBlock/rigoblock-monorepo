@@ -70,3 +70,12 @@ docker-compose -f ./packages/stats/docker-compose.prod.yml build --build-arg NPM
 ```sh
 docker-compose -f ./packages/stats/docker-compose.prod.yml up
 ```
+
+
+## Tasks
+
+- [calculateBalance](src/tasks/calculateBalance/README.md)
+- [calculateEthBalance](src/tasks/calculateEthBalance/README.md)
+- [fetchDragos](src/tasks/fetchDragos/README.md)
+- [getSharePrice](src/tasks/getSharePrice/README.md)
+- [getTotalSupply](src/tasks/getTotalSupply/README.md)
