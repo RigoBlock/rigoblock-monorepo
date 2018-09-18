@@ -6,11 +6,6 @@ defaultEntryPoints = ["http", "https"]
 [entryPoints]
  [entryPoints.traefik]
    address=":8080"
-  #  [entryPoints.traefik.auth]
-    #  [entryPoints.traefik.auth.basic]
-    #    users = [
-    #      "admin:$apr1$CmyX3sA9$iDyMOjnxCzCrz12iKYPCv0"
-    #    ]
   [entryPoints.http]
   address = ":80"
     [entryPoints.http.redirect]

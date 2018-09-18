@@ -1,22 +1,14 @@
 # Rigoblock Stats
 TODO
 
-## Tools
+## Services
 
 ### Traefik
 
-Træfik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy: https://docs.traefik.io/
-
-Rigoblock:
-
-https://traefik.stats.endpoint.network/
+Træfik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.
 
 ### Chronograf
-Chronograf is an open-source web application written in Go and React.js that provides the tools to visualize your monitoring data and easily create alerting and automation rules: https://github.com/influxdata/chronograf
-Rigoblock:
-https://chronograf.stats.endpoint.network/
-
-username: admin
+Chronograf is an open-source web application written in Go and React.js that provides the tools to visualize your monitoring data and easily create alerting and automation rules.
 
 ### Arena
 Rigoblock:
@@ -30,7 +22,9 @@ username: admin
 
 Add `rbstats` system user:
 
-`adduser rbstats`
+```
+adduser rbstats
+```
 
 Clone the repo into `rbstats` home:
 
