@@ -5,7 +5,8 @@ lerna-debug.log*
 yarn-error.log*
 .vscode
 .idea
-monorepo.code-workspace
+*.code-workspace
+.directory
 
 # testing
 coverage

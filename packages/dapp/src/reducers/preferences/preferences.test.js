@@ -1,16 +1,19 @@
 import { MANAGER } from '../../constants/user'
 import blockChainActions from '../../actions/blockchain-actions'
+import moment from 'moment'
 import preferencesReducer from './preferences'
 import userActions from '../../actions/user-actions'
 
+const account = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
+const provider = 'metamask'
+const timezone = `GMT ${moment.tz(moment.tz.guess()).format('Z')}`
+
 const initialState = {
-  timezone: 'GMT +02:00',
+  timezone,
   type: MANAGER,
   currentAccount: null,
   provider: null
 }
-const account = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
-const provider = 'metamask'
 
 describe('preferences reducer', () => {
   const preferencesTest = reducerTester(preferencesReducer)
@@ -38,7 +41,7 @@ describe('preferences reducer', () => {
       undefined,
       blockChainActions.blockChainLogIn({ provider, account }),
       {
-        timezone: 'GMT +02:00',
+        timezone,
         type: MANAGER,
         currentAccount: account,
         provider
@@ -49,7 +52,7 @@ describe('preferences reducer', () => {
   it('clears account number on logout', () => {
     preferencesTest(
       {
-        timezone: 'GMT +02:00',
+        timezone,
         type: MANAGER,
         currentAccount: account,
         provider

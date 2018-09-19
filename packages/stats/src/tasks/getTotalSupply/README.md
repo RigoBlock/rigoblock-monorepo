@@ -1,6 +1,16 @@
 # getTotalSupply
 
-This task accepts `key`, `poolType` and `network` as parameters on the initialData object, `network` being the networkId. Depending on the poolType (_Drago_ or, in the future, _Vault_) and relative key, it will fetch the correct hash from redis and map over the addresses, instantiate the pool using the correct abi and address, and call the `totalSupply()` method, which returns the totalSupply of each pool.
+## _initialData_ properties:
 
-_totalSupply_ data is sent to statsD as gauge data type.
+- key
+- poolType
+- network (Network ID)
+- web3Provider (web3 Provider url)
+
+## Steps
+
+- Fetch the correct list of pools from _Redis_ according to the `poolType` and `key`
+- Instantiate the correct pool Contract according to the `poolType`
+- Map over the pools calling the Contract's `totalSupply()` method to obtain the _TotalSupply_
+- Send totalSupply to _Telegraf_ following **StatsD Protocol**
 
