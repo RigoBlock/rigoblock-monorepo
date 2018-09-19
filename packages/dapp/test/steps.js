@@ -1,6 +1,6 @@
 'use strict'
 const Web3 = require('web3')
-const protocol = require('@rigoblock/protocol').default
+const protocol = require('@rigoblock/contracts').default
 // in this file you can append custom step methods to 'I' object
 
 const GANACHE_URL = 'http://localhost:8545'

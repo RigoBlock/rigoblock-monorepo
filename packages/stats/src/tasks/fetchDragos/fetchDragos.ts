@@ -1,5 +1,5 @@
 import Web3 = require('web3')
-import protocol from '@rigoblock/protocol'
+import protocol from '@rigoblock/contracts'
 import redis from '../../redis'
 import web3ErrorWrapper from '../web3ErrorWrapper'
 

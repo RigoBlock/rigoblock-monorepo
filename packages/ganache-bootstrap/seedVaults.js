@@ -1,5 +1,5 @@
 const Web3 = require('web3')
-const protocol = require('@rigoblock/protocol').default
+const protocol = require('@rigoblock/contracts').default
 const logger = require('./logger')
 
 module.exports = async network => {
