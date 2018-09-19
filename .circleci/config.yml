@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-asd-{{ checksum "yarn.lock" }}
       - run:
           name: Install lerna and monorepo dependencies
           command: yarn install --frozen-lockfile
@@ -32,13 +32,13 @@ jobs:
           name: Installing all dependencies
           command: yarn bootstrap
       - save_cache:
-          key: rigoblock-monorepo-{{ checksum "yarn.lock" }}
+          key: rigoblock-monorepo-asd-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - packages/dapp/node_modules
             - packages/ganache-bootstrap/node_modules
             - packages/api/node_modules
-            - packages/protocol/node_modules
+            - packages/contracts/node_modules
             - packages/deployer/node_modules
             - packages/exchange-connector/node_modules
             - .cache/yarn
@@ -49,7 +49,7 @@ jobs:
             - packages/dapp/node_modules
             - packages/ganache-bootstrap/node_modules
             - packages/api/node_modules
-            - packages/protocol/node_modules
+            - packages/contracts/node_modules
             - packages/deployer/node_modules
             - packages/exchange-connector/node_modules
             - .cache/yarn
@@ -68,7 +68,7 @@ jobs:
       - store_artifacts:
           path: coverage/dapp/lcov-report
 
-  build-protocol:
+  build-contracts:
     working_directory: *workspace_root
     environment:
       TZ: *timezone
@@ -99,11 +99,11 @@ jobs:
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - packages/protocol/artifacts
-            - packages/protocol/dist
+            - packages/contracts/artifacts
+            - packages/contracts/dist
             - packages/deployer/dist
 
-  test-protocol:
+  test-contracts:
     working_directory: *workspace_root
     environment:
       TZ: *timezone
@@ -114,8 +114,8 @@ jobs:
       - checkout
       - *attach_workspace
       - run:
-         name: Test protocol
-         command: npx lerna run --scope @rigoblock/protocol test --stream
+         name: Test contracts
+         command: npx lerna run --scope @rigoblock/contracts test --stream
 
   build-api:
     working_directory: *workspace_root
@@ -383,15 +383,15 @@ workflows:
       - test-unit-dapp:
           requires:
             - setup
-      - build-protocol:
+      - build-contracts:
           requires:
             - test-unit-dapp
-      - test-protocol:
+      - test-contracts:
           requires:
-            - build-protocol
+            - build-contracts
       - build-api:
           requires:
-            - build-protocol
+            - build-contracts
       - build-dapp:
           requires:
             - build-api
