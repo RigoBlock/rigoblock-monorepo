@@ -20,7 +20,6 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
-
 import { Drago } from "../../Drago/Drago.sol";
 
 /// @title Drago Factory library - Reduces size of drago factory.

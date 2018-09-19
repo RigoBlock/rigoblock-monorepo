@@ -22,7 +22,6 @@ pragma experimental "v0.5.0";
 import { AuthorityFace as Authority } from "../authorities/Authority/AuthorityFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
 import { ERC20Face as Token } from "../../tokens/ERC20/ERC20Face.sol";
-
 import { VaultFace } from "./VaultFace.sol";
 import { OwnedUninitialized as Owned } from "../../utils/Owned/OwnedUninitialized.sol";
 import { SafeMathLight as SafeMath } from "../../utils/SafeMath/SafeMathLight.sol";

@@ -22,7 +22,6 @@ pragma experimental "v0.5.0";
 import { DragoRegistryFace as DragoRegistry } from "../../DragoRegistry/DragoRegistryFace.sol";
 import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
 import { DragoEventfulFace as DragoEventful } from "../../DragoEventful/DragoEventfulFace.sol";
-
 import { DragoFactoryLibrary, Drago } from "../DragoFactoryLibrary/DragoFactoryLibrary.sol";
 import { OwnedUninitialized as Owned } from "../../../utils/Owned/OwnedUninitialized.sol";
 import { DragoFactoryFace } from "./DragoFactoryFace.sol";

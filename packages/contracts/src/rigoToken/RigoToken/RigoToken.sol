@@ -20,7 +20,6 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { InflationFace as Inflation } from "../Inflation/InflationFace.sol";
-
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { UnlimitedAllowanceToken } from "../../tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol";
 import { RigoTokenFace } from "./RigoTokenFace.sol";

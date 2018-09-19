@@ -20,7 +20,6 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { VaultFace as Vault } from "../../protocol/Vault/Vault.sol";
-
 import { DistributionFace } from "./DistributionFace.sol";
 import { SafeMathLight as SafeMath } from "../../utils/SafeMath/SafeMathLight.sol";
 

@@ -23,7 +23,6 @@ import { PoolFace as Pool } from "../../utils/Pool/PoolFace.sol";
 import { RigoToken } from "../RigoToken/RigoToken.sol";
 import { DragoRegistryFace as DragoRegistry } from "../../protocol/DragoRegistry/DragoRegistry.sol";
 import { InflationFace as Inflation } from "../Inflation/InflationFace.sol";
-
 import { ReentrancyGuard } from "../../utils/ReentrancyGuard//ReentrancyGuard.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";

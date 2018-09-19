@@ -20,7 +20,6 @@ pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
-
 import { Vault } from "../../Vault/Vault.sol";
 
 /// @title Vault Factory library - Reduces size of vault factory.

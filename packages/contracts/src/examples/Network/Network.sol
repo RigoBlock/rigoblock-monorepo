@@ -22,9 +22,6 @@ pragma experimental "v0.5.0";
 import { PoolFace as Pool } from "../utils/Pool/PoolFace.sol";
 import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistry.sol";
 
-//import { Owned } from "../../utils/Owned/Owned.sol";
-//import { ExchangesAuthorityFace } from "./ExchangesAuthorityFace.sol";
-
 /// @title Network - Returns data of active funds and network value.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 contract Network {

@@ -22,7 +22,6 @@ pragma experimental "v0.5.0";
 import { Owned } from "../../utils/Owned/Owned.sol";
 import { DragoRegistryFace } from "./DragoRegistryFace.sol";
 import { AuthorityFace as Authority } from "../authorities/Authority/AuthorityFace.sol";
-
 import { LibSanitize } from "../../utils/LibSanitize/LibSanitize.sol";
 
 /// @title Drago Registry - Allows registration of pools.

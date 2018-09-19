@@ -22,7 +22,6 @@ pragma experimental "v0.5.0";
 import { Owned } from "../../utils/Owned/Owned.sol";
 import { RigoToken } from "../RigoToken/RigoToken.sol";
 import { AuthorityFace as Authority } from "../../protocol/authorities/Authority/AuthorityFace.sol";
-
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { InflationFace } from "./InflationFace.sol";
 

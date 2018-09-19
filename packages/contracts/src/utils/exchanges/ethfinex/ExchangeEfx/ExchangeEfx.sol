@@ -23,7 +23,7 @@
 
 */
 
-pragma solidity ^0.4.19; // MUST BE COMPILED WITH COMPILER VERSION 0.4.19
+pragma solidity 0.4.19; // MUST BE COMPILED WITH COMPILER VERSION 0.4.19
 
 contract Owned { address public owner; } // GR ADDITION
 
