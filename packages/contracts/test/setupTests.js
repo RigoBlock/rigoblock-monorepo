@@ -6,6 +6,8 @@ import logger from '../deploy/logger'
 import pkg from '../package.json'
 import web3 from './web3'
 
+require('jest-extended')
+
 let server
 process.on('warning', e => console.error(e.stack))
 process.on('error', e => console.error(e.stack))
@@ -28,6 +30,9 @@ const setupGanache = async () => {
   console.log = () => {}
   global.baseContracts = await deploy(accounts[0], NETWORKS[0])
   console.log = prevLog
+  // var wait = ms => new Promise((r, j)=>setTimeout(r, ms))
+  // await wait(1000)
+  // console.warn('done')
 }
 
 global.describeContract = (name, f) => {
