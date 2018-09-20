@@ -1334,6 +1334,13 @@
     "@types/bn.js" "*"
     "@types/underscore" "*"
 
+"@types/web3@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/web3/-/web3-1.0.6.tgz#ea6bd4591a59efa73c3399b2bf172a268630edbf"
+  dependencies:
+    "@types/bn.js" "*"
+    "@types/underscore" "*"
+
 "@types/yargs@10.0.2":
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-10.0.2.tgz#cc4ea921877874d1261e2c44b89807bc836e1b12"
