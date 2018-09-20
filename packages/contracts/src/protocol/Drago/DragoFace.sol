@@ -40,7 +40,7 @@ interface DragoFace {
     function changeDragoDao(address _dragoDao) external;
     function enforceKyc(bool _enforced, address _kycProvider) external;
     function setAllowance(address _tokenTransferProxy, address _token, uint256 _amount) external;
-    function SetMultipleAllowances(address _tokenTransferProxy, address[] _tokens, uint256[] _amounts) external;
+    function setMultipleAllowances(address _tokenTransferProxy, address[] _tokens, uint256[] _amounts) external;
     function operateOnExchange(address _exchange, bytes _assembledTransaction) external;
 
     /*

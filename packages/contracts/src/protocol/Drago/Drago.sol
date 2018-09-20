@@ -332,7 +332,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @param _tokenTransferProxy Address of the proxy to be approved.
     /// @param _tokens Address of the token to receive allowance for.
     /// @param _amounts Array of number of tokens to be approved.
-    function SetMultipleAllowances(
+    function setMultipleAllowances(
         address _tokenTransferProxy,
         address[] _tokens,
         uint256[] _amounts)
