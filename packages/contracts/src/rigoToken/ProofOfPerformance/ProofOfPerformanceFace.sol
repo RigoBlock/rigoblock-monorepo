@@ -16,14 +16,18 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Proof of Performance Interface - Allows interaction with the PoP contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface ProofOfPerformanceFace {
 
-    // CORE FUNCTIONS
+/*
+ * CORE FUNCTIONS
+ */
 
     function claimPop(uint256 _ofPool) external;
     function setRegistry(address _dragoRegistry) external;
@@ -31,7 +35,9 @@ interface ProofOfPerformanceFace {
     function setRatio(address _ofGroup, uint256 _ratio) external;
     function setMinimumRigo(uint256 _amount) external;
 
-    // CONSTANT PUBLIC FUNCTIONS
+    /*
+ * CONSTANT PUBLIC FUNCTIONS
+ */
 
     function getPoolData(uint256 _ofPool)
         external view

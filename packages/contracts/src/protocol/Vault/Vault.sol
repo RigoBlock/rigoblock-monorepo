@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -28,7 +29,7 @@ import { SafeMathLight as SafeMath } from "../../utils/SafeMath/SafeMathLight.so
 
 /// @title Vault - contract for creating a vault type of pool.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-/// @dev includes pooled proof-of-stake mining
+// solhint-disable-next-line
 contract Vault is Owned, SafeMath, VaultFace {
 
     string constant VERSION = 'VC 0.5.2';
@@ -121,7 +122,9 @@ contract Vault is Owned, SafeMath, VaultFace {
         admin.ratio = 80;
     }
 
-    // CORE FUNCTIONS
+/*
+ * CORE FUNCTIONS
+ */
 
     /// @dev Allows a user to buy into a vault
     /// @return Bool the function executed correctly
@@ -291,7 +294,9 @@ contract Vault is Owned, SafeMath, VaultFace {
         return true;
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
+    /*
+ * CONSTANT PUBLIC FUNCTIONS
+ */
 
     /// @dev Calculates how many shares a user holds
     /// @param _from Address of the target account
@@ -421,7 +426,9 @@ contract Vault is Owned, SafeMath, VaultFace {
         return data.totalSupply;
     }
 
-    // INTERNAL FUNCTIONS
+    /*
+  * INTERNAL FUNCTIONS
+ */
 
     /// @dev Executes purchase function
     /// @param _hodler Address of the target user

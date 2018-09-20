@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -24,13 +25,15 @@ import { AuthorityFace } from "./AuthorityFace.sol";
 
 /// @title Authority - Allows to set up the base rules of the protocol.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract Authority is Owned, AuthorityFace {
+// solhint-disable-next-line
+contract Authority is
+    Owned,
+    AuthorityFace
+{
+    BuildingBlocks public blocks;
+    Type public types;
 
-    BuildingBlocks blocks;
-    Type types;
-
-    mapping (address => Account) accounts;
-    //mapping (address => address) adapter;
+    mapping (address => Account) public accounts;
 
     struct List {
         address target;
@@ -66,10 +69,11 @@ contract Authority is Owned, AuthorityFace {
         mapping (address => bool) initialized;
     }
 
-    // EVENTS
-
-    event SetAuthority (address indexed authority);
-    event SetWhitelister (address indexed whitelister);
+    /*
+     * EVENTS
+     */
+    event AuthoritySet(address indexed authority);
+    event WhitelisterSet(address indexed whitelister);
     event WhitelistedUser(address indexed target, bool approved);
     event WhitelistedRegistry(address indexed registry, bool approved);
     event WhitelistedFactory(address indexed factory, bool approved);
@@ -80,8 +84,9 @@ contract Authority is Owned, AuthorityFace {
     event NewNavVerifier(address indexed navVerifier);
     event NewExchangesAuthority(address indexed exchangesAuthority);
 
-    // MODIFIERS
-
+    /*
+     * MODIFIERS
+     */
     modifier onlyAdmin {
         require(msg.sender == owner || isWhitelister(msg.sender));
         _;
@@ -92,8 +97,9 @@ contract Authority is Owned, AuthorityFace {
         _;
     }
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Allows the owner to whitelist an authority
     /// @param _authority Address of the authority
     /// @param _isWhitelisted Bool whitelisted
@@ -225,8 +231,9 @@ contract Authority is Owned, AuthorityFace {
         emit NewExchangesAuthority(blocks.exchangesAuthority);
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Provides whether a user is whitelisted
     /// @param _target Address of the target user
     /// @return Bool is whitelisted
@@ -323,8 +330,9 @@ contract Authority is Owned, AuthorityFace {
         return blocks.exchangesAuthority;
     }
 
-    // INTERNAL FUNCTIONS
-
+    /*
+  * INTERNAL FUNCTIONS
+ */
     /// @dev Allows to whitelist an authority
     /// @param _authority Address of the authority
     /// @param _isWhitelisted Bool whitelisted

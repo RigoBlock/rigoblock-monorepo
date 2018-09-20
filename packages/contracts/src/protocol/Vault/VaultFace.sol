@@ -16,14 +16,18 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Vault Interface - Allows interaction with the Vault contracts.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface VaultFace {
 
-    // CORE FUNCTIONS
+/*
+ * CORE FUNCTIONS
+ */
 
     function buyVault() external payable returns (bool success);
     function buyVaultOnBehalf(address _hodler) external payable returns (bool success);
@@ -38,7 +42,9 @@ interface VaultFace {
     function depositTokenOnBehalf(address _token, address _hodler, uint256 _value, uint8 _forTime) external returns (bool success);
     function withdrawToken(address _token, uint256 _value) external returns (bool success);
 
-    // CONSTANT PUBLIC FUNCTIONS
+    /*
+ * CONSTANT PUBLIC FUNCTIONS
+ */
 
     function balanceOf(address _who) external view returns (uint256);
     function tokenBalanceOf(address _token, address _owner) external view returns (uint256);

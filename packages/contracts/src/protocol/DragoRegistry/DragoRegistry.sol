@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -26,6 +27,7 @@ import { LibSanitize } from "../../utils/LibSanitize/LibSanitize.sol";
 
 /// @title Drago Registry - Allows registration of pools.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract DragoRegistry is DragoRegistryFace, Owned {
 
     using LibSanitize for bool;
@@ -53,13 +55,17 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         mapping (bytes32 => bytes32) meta;
     }
 
-    // EVENTS
+    /*
+ * EVENTS
+ */
 
     event Registered(string name, string symbol, uint256 id, address indexed drago, address indexed owner, address indexed group);
     event Unregistered(string indexed name, string indexed symbol, uint256 indexed id);
     event MetaChanged(uint256 indexed id, bytes32 indexed key, bytes32 value);
 
-    // MODIFIERS
+    /*
+ * MODIFIERS
+ */
 
     modifier whenFeePaid {
         require(msg.value >= fee);
@@ -228,7 +234,9 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         msg.sender.transfer(address(this).balance);
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
+    /*
+ * CONSTANT PUBLIC FUNCTIONS
+ */
 
     /// @dev Provides the total number of registered pools
     /// @return Number of pools
@@ -369,7 +377,9 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         return fee;
     }
 
-    // INTERNAL FUNCTIONS
+    /*
+  * INTERNAL FUNCTIONS
+ */
 
     /// @dev Allows authority to register a pool for a certain group
     /// @param _drago Address of the pool

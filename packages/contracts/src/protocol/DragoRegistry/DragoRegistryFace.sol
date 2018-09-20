@@ -16,11 +16,13 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Drago Registry Interface - Allows external intaction with Drago Registry.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface DragoRegistryFace {
 
     //EVENTS
@@ -29,7 +31,9 @@ interface DragoRegistryFace {
     event Unregistered(string indexed name, string indexed symbol, uint256 indexed id);
     event MetaChanged(uint256 indexed id, bytes32 indexed key, bytes32 value);
 
-    // CORE FUNCTIONS
+/*
+ * CORE FUNCTIONS
+ */
 
     function register(address _drago, string _name, string _symbol, uint256 _dragoId, address _owner) external payable returns (bool);
     function unregister(uint256 _id) external;

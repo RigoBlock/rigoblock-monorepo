@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -25,6 +26,7 @@ import { DragoEventfulFace } from "./DragoEventfulFace.sol";
 
 /// @title Drago Eventful contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract DragoEventful is DragoEventfulFace {
 
     string public constant VERSION = 'DH0.4.2';
@@ -195,7 +197,9 @@ contract DragoEventful is DragoEventfulFace {
         AUTHORITY = _authority;
     }
 
-    // CORE FUNCTIONS
+/*
+ * CORE FUNCTIONS
+ */
 
     /// @dev Logs a Buy Drago event.
     /// @param _who Address of who is buying
@@ -463,7 +467,9 @@ contract DragoEventful is DragoEventfulFace {
         return true;
     }
 
-    // INTERNAL FUNCTIONS
+    /*
+  * INTERNAL FUNCTIONS
+ */
 
     /// @dev Logs a purchase event
     /// @param _who Address of the caller

@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -27,6 +28,7 @@ import { InflationFace } from "./InflationFace.sol";
 
 /// @title Inflation - Allows ProofOfPerformance to mint tokens.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract Inflation is SafeMath, InflationFace {
 
     address public RIGOTOKENADDRESS;
@@ -92,7 +94,9 @@ contract Inflation is SafeMath, InflationFace {
         authority = _authority;
     }
 
-    // CORE FUNCTIONS
+/*
+ * CORE FUNCTIONS
+ */
 
     /// @dev Allows ProofOfPerformance to mint rewards
     /// @param _thePool Address of the target pool
@@ -173,7 +177,9 @@ contract Inflation is SafeMath, InflationFace {
         period = _newPeriod;
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
+    /*
+ * CONSTANT PUBLIC FUNCTIONS
+ */
 
     /// @dev Returns whether a wizard can claim reward tokens
     /// @param _thePool Address of the target pool
@@ -197,7 +203,9 @@ contract Inflation is SafeMath, InflationFace {
         return groups[_group].epochReward;
     }
 
-    // INTERNAL FUNCTIONS
+    /*
+  * INTERNAL FUNCTIONS
+ */
 
     /// @dev Returns the address of the pool owner
     /// @param _ofPool Number of the registered pool

@@ -1,6 +1,6 @@
 /*
 
- Copyright 2018 RigoBlock, Rigo Investment Sagl, ZeroEx Intl.
+ Copyright 2018 RigoBlock, Rigo Investment Sagl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
-/// @title SigVerifier Interface - Allows interaction with the signature verifier contract.
+/// @title SigVerifier - Allows verify whether a transaction has been signed correctly.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract SigVerifier {
 
     /// @dev Verifies that a signature is valid.
@@ -29,8 +31,10 @@ contract SigVerifier {
     /// @return Validity of order signature.
     /// @notice mock function whici returns false
     function isValidSignature(
+        /* solhint-disable */
         bytes32 hash,
         bytes signature
+        /* solhint-disable */
     )
         external
         view

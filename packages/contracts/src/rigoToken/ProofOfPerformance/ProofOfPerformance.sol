@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -27,6 +28,9 @@ import { ReentrancyGuard } from "../../utils/ReentrancyGuard//ReentrancyGuard.so
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
 
+/// @title Proof of Performance - Controls parameters of inflation.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace {
 
     address public RIGOTOKENADDRESS;
@@ -68,7 +72,9 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
         dragoRegistry = _dragoRegistry;
     }
 
-    // CORE FUNCTIONS
+/*
+ * CORE FUNCTIONS
+ */
 
     /// @dev Allows anyone to allocate the pop reward to pool wizards.
     /// @param _ofPool Number of pool id in registry.
@@ -126,7 +132,9 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
         groups[_ofGroup].rewardRatio = _ratio;
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
+    /*
+ * CONSTANT PUBLIC FUNCTIONS
+ */
 
     /// @dev Gets data of a pool.
     /// @param _ofPool Id of the pool.
@@ -183,7 +191,9 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
         return poolPrice[_ofPool].highwatermark;
     }
 
-    // INTERNAL FUNCTIONS
+    /*
+  * INTERNAL FUNCTIONS
+ */
 
     /// @dev Returns the reward factor for a pool.
     /// @param _ofPool Id of the pool.

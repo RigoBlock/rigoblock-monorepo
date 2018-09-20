@@ -24,9 +24,13 @@ pragma experimental "v0.5.0";
 /// @notice only public view functions are used
 interface PoolFace {
     
-    // CORE FUNCTIONS
+/*
+ * CORE FUNCTIONS
+ */
 
-    // CONSTANT PUBLIC FUNCTIONS
+    /*
+ * CONSTANT PUBLIC FUNCTIONS
+ */
 
     function balanceOf(address _who) external view returns (uint256);
     function totalSupply() external view returns (uint256 totaSupply);

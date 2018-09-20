@@ -16,14 +16,18 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Inflation Interface - Allows interaction with the Inflation contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface InflationFace {
 
-    // CORE FUNCTIONS
+/*
+ * CORE FUNCTIONS
+ */
 
     function mintInflation(address _thePool, uint256 _reward) external returns (bool);
     function setInflationFactor(address _group, uint256 _inflationFactor) external;
@@ -33,7 +37,9 @@ interface InflationFace {
     function setProofOfPerformance(address _pop) external;
     function setPeriod(uint256 _newPeriod) external;
 
-    // CONSTANT PUBLIC FUNCTIONS
+    /*
+ * CONSTANT PUBLIC FUNCTIONS
+ */
 
     function canWithdraw(address _thePool) external view returns (bool);
     function getInflationFactor(address _group) external view returns (uint256);

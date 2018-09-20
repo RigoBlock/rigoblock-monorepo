@@ -16,11 +16,13 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Drago Factory Interface - Allows external interaction with Drago Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface DragoFactoryFace {
 
     event DragoCreated(string name, string symbol, address indexed drago, address indexed owner, uint256 dragoId);

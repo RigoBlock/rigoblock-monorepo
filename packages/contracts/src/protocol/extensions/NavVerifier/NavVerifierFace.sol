@@ -1,6 +1,6 @@
 /*
 
- Copyright 2018 ZeroEx Intl.
+ Copyright 2018 RigoBlock, Rigo Investment Sagl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,9 +16,12 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4s
 pragma solidity ^0.4.24;
 
-
+/// @title Nav Verifier Interface - Allows to check if new NAV comes from approved authority.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface NavVerifierFace {
 
     /// @dev Verifies that a signature is valid.
@@ -37,4 +40,4 @@ interface NavVerifierFace {
         external
         view
         returns (bool isValid);
-}        
+}

@@ -45,8 +45,9 @@ contract Distribution is SafeMath {
         _;
     }
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     function subscribe(address _pool, address _distributor, address _buyer)
         external
         payable
@@ -67,8 +68,9 @@ contract Distribution is SafeMath {
         distributor[_distributor].fee = _fee;
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
-
+    /*
+    * CONSTANT PUBLIC FUNCTIONS
+    */
     function getFee(address _distributor)
         external view
         returns (uint256)
