@@ -72,10 +72,9 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
         dragoRegistry = _dragoRegistry;
     }
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Allows anyone to allocate the pop reward to pool wizards.
     /// @param _ofPool Number of pool id in registry.
     function claimPop(uint256 _ofPool)
@@ -133,9 +132,8 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
     }
 
     /*
- * CONSTANT PUBLIC FUNCTIONS
- */
-
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Gets data of a pool.
     /// @param _ofPool Id of the pool.
     /// @return Bool the pool is active.
@@ -192,9 +190,8 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
     }
 
     /*
-  * INTERNAL FUNCTIONS
- */
-
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Returns the reward factor for a pool.
     /// @param _ofPool Id of the pool.
     /// @return Value of the reward factor.

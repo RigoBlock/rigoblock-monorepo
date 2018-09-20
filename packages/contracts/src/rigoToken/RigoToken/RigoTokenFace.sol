@@ -26,23 +26,20 @@ pragma experimental "v0.5.0";
 interface RigoTokenFace {
 
     /*
- * EVENTS
- */
-
+     * EVENTS
+     */
     event TokenMinted(address indexed recipient, uint256 amount);
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     function mintToken(address _recipient, uint256 _amount) external;
     function changeMintingAddress(address _newAddress) external;
     function changeRigoblockAddress(address _newAddress) external;
 
     /*
- * CONSTANT PUBLIC FUNCTIONS
- */
-
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function getName() external view returns (string);
     function getSymbol() external view returns (string);
     function getDecimals() external view returns (uint256);

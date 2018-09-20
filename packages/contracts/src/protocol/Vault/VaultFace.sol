@@ -25,10 +25,9 @@ pragma experimental "v0.5.0";
 // solhint-disable-next-line
 interface VaultFace {
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     function buyVault() external payable returns (bool success);
     function buyVaultOnBehalf(address _hodler) external payable returns (bool success);
     function sellVault(uint256 amount) external returns (bool success);
@@ -43,9 +42,8 @@ interface VaultFace {
     function withdrawToken(address _token, uint256 _value) external returns (bool success);
 
     /*
- * CONSTANT PUBLIC FUNCTIONS
- */
-
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function balanceOf(address _who) external view returns (uint256);
     function tokenBalanceOf(address _token, address _owner) external view returns (uint256);
     function timeToUnlock(address _token, address _user) external view returns (uint256);

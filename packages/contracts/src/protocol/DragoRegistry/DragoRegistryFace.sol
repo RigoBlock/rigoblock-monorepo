@@ -31,10 +31,9 @@ interface DragoRegistryFace {
     event Unregistered(string indexed name, string indexed symbol, uint256 indexed id);
     event MetaChanged(uint256 indexed id, bytes32 indexed key, bytes32 value);
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     function register(address _drago, string _name, string _symbol, uint256 _dragoId, address _owner) external payable returns (bool);
     function unregister(uint256 _id) external;
     function setMeta(uint256 _id, bytes32 _key, bytes32 _value) external;
@@ -46,6 +45,9 @@ interface DragoRegistryFace {
     function setUpgraded(uint256 _version) external;
     function drain() external;
 
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function dragoCount() external view returns (uint256);
     function fromId(uint256 _id) external view returns (address drago, string name, string symbol, uint256 dragoId, address owner, address group);
     function fromAddress(address _drago) external view returns (uint256 id, string name, string symbol, uint256 dragoId, address owner, address group);

@@ -225,7 +225,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     }
 
     /*
-  * INTERNAL FUNCTIONS
+     * INTERNAL FUNCTIONS
      */
     /// @dev Creates a drago and routes to eventful
     /// @param _name String of the name

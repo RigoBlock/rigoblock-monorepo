@@ -25,10 +25,9 @@ pragma experimental "v0.5.0";
 // solhint-disable-next-line
 interface ProofOfPerformanceFace {
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     function claimPop(uint256 _ofPool) external;
     function setRegistry(address _dragoRegistry) external;
     function setRigoblockDao(address _rigoblockDao) external;
@@ -36,9 +35,8 @@ interface ProofOfPerformanceFace {
     function setMinimumRigo(uint256 _amount) external;
 
     /*
- * CONSTANT PUBLIC FUNCTIONS
- */
-
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function getPoolData(uint256 _ofPool)
         external view
         returns (

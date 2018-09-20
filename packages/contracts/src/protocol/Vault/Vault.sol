@@ -122,10 +122,9 @@ contract Vault is Owned, SafeMath, VaultFace {
         admin.ratio = 80;
     }
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Allows a user to buy into a vault
     /// @return Bool the function executed correctly
     function buyVault()
@@ -295,9 +294,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     }
 
     /*
- * CONSTANT PUBLIC FUNCTIONS
- */
-
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Calculates how many shares a user holds
     /// @param _from Address of the target account
     /// @return Number of shares
@@ -427,9 +425,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     }
 
     /*
-  * INTERNAL FUNCTIONS
- */
-
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Executes purchase function
     /// @param _hodler Address of the target user
     /// @return Bool the function executed correctly

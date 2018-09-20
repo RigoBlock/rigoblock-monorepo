@@ -26,9 +26,8 @@ pragma experimental "v0.5.0";
 interface DragoEventfulFace {
 
     /*
- * EVENTS
- */
-
+     * EVENTS
+     */
     event BuyDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
     event SellDrago(address indexed drago, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
     event NewRatio(address indexed drago, address indexed from, uint256 newRatio);
@@ -46,10 +45,9 @@ interface DragoEventfulFace {
     event CustomDragoLog2(bytes4 indexed methodHash,  bytes32 topic2, bytes32 topic3, bytes encodedParams);
     event DragoCreated(address indexed drago, address indexed group, address indexed owner, uint256 dragoId, string name, string symbol);
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     function buyDrago(address _who, address _targetDrago, uint256 _value, uint256 _amount, bytes _name, bytes _symbol) external returns (bool success);
     function sellDrago(address _who, address _targetDrago, uint256 _amount, uint256 _revenue, bytes _name, bytes _symbol) external returns(bool success);
     function changeRatio(address _who, address _targetDrago, uint256 _ratio) external returns(bool success);

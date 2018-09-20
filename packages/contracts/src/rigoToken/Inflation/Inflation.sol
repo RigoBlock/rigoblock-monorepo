@@ -94,10 +94,9 @@ contract Inflation is SafeMath, InflationFace {
         authority = _authority;
     }
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Allows ProofOfPerformance to mint rewards
     /// @param _thePool Address of the target pool
     /// @param _reward Number of reward in Rigo tokens
@@ -178,9 +177,8 @@ contract Inflation is SafeMath, InflationFace {
     }
 
     /*
- * CONSTANT PUBLIC FUNCTIONS
- */
-
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Returns whether a wizard can claim reward tokens
     /// @param _thePool Address of the target pool
     /// @return Bool the wizard can claim
@@ -204,9 +202,8 @@ contract Inflation is SafeMath, InflationFace {
     }
 
     /*
-  * INTERNAL FUNCTIONS
- */
-
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Returns the address of the pool owner
     /// @param _ofPool Number of the registered pool
     /// @return Address of the pool owner

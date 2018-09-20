@@ -25,10 +25,9 @@ pragma experimental "v0.5.0";
 // solhint-disable-next-line
 interface InflationFace {
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     function mintInflation(address _thePool, uint256 _reward) external returns (bool);
     function setInflationFactor(address _group, uint256 _inflationFactor) external;
     function setMinimumRigo(uint256 _minimum) external;
@@ -38,9 +37,8 @@ interface InflationFace {
     function setPeriod(uint256 _newPeriod) external;
 
     /*
- * CONSTANT PUBLIC FUNCTIONS
- */
-
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function canWithdraw(address _thePool) external view returns (bool);
     function getInflationFactor(address _group) external view returns (uint256);
 }

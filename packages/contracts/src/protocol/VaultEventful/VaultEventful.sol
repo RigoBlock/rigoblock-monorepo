@@ -111,10 +111,9 @@ contract VaultEventful is VaultEventfulFace {
         AUTHORITY = _authority;
     }
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Logs a Buy Vault event.
     /// @param _who Address of who is buying
     /// @param _targetVault Address of the target vault
@@ -255,9 +254,8 @@ contract VaultEventful is VaultEventfulFace {
     }
 
     /*
-  * INTERNAL FUNCTIONS
- */
-
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Logs a purchase event
     /// @param _who Address of the caller
     /// @param _targetVault Address of the vault

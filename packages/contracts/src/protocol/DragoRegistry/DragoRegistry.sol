@@ -56,17 +56,15 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     }
 
     /*
- * EVENTS
- */
-
+     * EVENTS
+     */
     event Registered(string name, string symbol, uint256 id, address indexed drago, address indexed owner, address indexed group);
     event Unregistered(string indexed name, string indexed symbol, uint256 indexed id);
     event MetaChanged(uint256 indexed id, bytes32 indexed key, bytes32 value);
 
     /*
- * MODIFIERS
- */
-
+     * MODIFIERS
+     */
     modifier whenFeePaid {
         require(msg.value >= fee);
         _;
@@ -115,8 +113,9 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         AUTHORITY = _authority;
     }
 
-    // CORE CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Allows a factory which is an authority to register a pool
     /// @param _drago Address of the pool
     /// @param _name Name of the pool
@@ -235,9 +234,8 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     }
 
     /*
- * CONSTANT PUBLIC FUNCTIONS
- */
-
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Provides the total number of registered pools
     /// @return Number of pools
     function dragoCount()
@@ -378,9 +376,8 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     }
 
     /*
-  * INTERNAL FUNCTIONS
- */
-
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Allows authority to register a pool for a certain group
     /// @param _drago Address of the pool
     /// @param _name Name of the pool

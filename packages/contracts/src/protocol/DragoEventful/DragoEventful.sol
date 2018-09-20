@@ -197,10 +197,9 @@ contract DragoEventful is DragoEventfulFace {
         AUTHORITY = _authority;
     }
 
-/*
- * CORE FUNCTIONS
- */
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Logs a Buy Drago event.
     /// @param _who Address of who is buying
     /// @param _targetDrago Address of the target drago
@@ -468,9 +467,8 @@ contract DragoEventful is DragoEventfulFace {
     }
 
     /*
-  * INTERNAL FUNCTIONS
- */
-
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Logs a purchase event
     /// @param _who Address of the caller
     /// @param _targetDrago Address of the drago
