@@ -1272,6 +1272,12 @@
   version "23.3.2"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.2.tgz#07b90f6adf75d42c34230c026a2529e56c249dbb"
 
+"@types/mkdirp@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@types/mkdirp/-/mkdirp-0.5.2.tgz#503aacfe5cc2703d5484326b1b27efa67a339c1f"
+  dependencies:
+    "@types/node" "*"
+
 "@types/nock@^9.3.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@types/nock/-/nock-9.3.0.tgz#9d34358fdcc08afd07144e0784ac9e951d412dd4"
@@ -1301,6 +1307,10 @@
     "@types/events" "*"
     "@types/node" "*"
 
+"@types/prettier@^1.13.2":
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.13.2.tgz#ffe96278e712a8d4e467e367a338b05e22872646"
+
 "@types/promise@^7.1.30":
   version "7.1.30"
   resolved "https://registry.yarnpkg.com/@types/promise/-/promise-7.1.30.tgz#1b6714b321fdfc54d1527e7a17116a0e1f2ab810"
@@ -1320,6 +1330,13 @@
 "@types/web3@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@types/web3/-/web3-1.0.4.tgz#93f5b7a88def1fc5ca0469a719633cba48907ea9"
+  dependencies:
+    "@types/bn.js" "*"
+    "@types/underscore" "*"
+
+"@types/web3@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/web3/-/web3-1.0.6.tgz#ea6bd4591a59efa73c3399b2bf172a268630edbf"
   dependencies:
     "@types/bn.js" "*"
     "@types/underscore" "*"
@@ -2200,7 +2217,7 @@ babel-core@6.26.0:
     slash "^1.0.0"
     source-map "^0.5.6"
 
-babel-core@^6.0.0, babel-core@^6.0.14, babel-core@^6.26.0:
+babel-core@^6.0.0, babel-core@^6.0.14, babel-core@^6.26.0, babel-core@^6.26.3:
   version "6.26.3"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.26.3.tgz#b2e2f09e342d0f0c88e2f02e067794125e75c207"
   dependencies:
@@ -7181,7 +7198,7 @@ fs-extra@^2.0.0, fs-extra@^2.1.2:
     graceful-fs "^4.1.2"
     jsonfile "^2.1.0"
 
-fs-extra@^4.0.1, fs-extra@^4.0.2:
+fs-extra@^4.0.1:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.3.tgz#0d852122e5bc5beb453fb028e9c0c9bf36340c94"
   dependencies:
@@ -12446,9 +12463,13 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@^1.11.1, prettier@^1.12.1, prettier@^1.9.1:
+prettier@^1.11.1, prettier@^1.12.1:
   version "1.14.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.2.tgz#0ac1c6e1a90baa22a62925f41963c841983282f9"
+
+prettier@^1.14.2:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
 
 pretty-bytes@^4.0.2:
   version "4.0.2"
@@ -15488,6 +15509,17 @@ trough@^1.0.0:
   dependencies:
     glob "^7.1.2"
 
+ts-generator@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/ts-generator/-/ts-generator-0.0.5.tgz#9c2fa3ae201352ca672c8ff30873f446704d96fc"
+  dependencies:
+    "@types/mkdirp" "^0.5.2"
+    "@types/prettier" "^1.13.2"
+    chalk "^2.4.1"
+    glob "^7.1.2"
+    mkdirp "^0.5.1"
+    prettier "^1.14.2"
+
 ts-jest@^23.1.3, ts-jest@^23.1.4:
   version "23.1.4"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-23.1.4.tgz#66ac1d8d3fbf8f9a98432b11aa377aa850664b2b"
@@ -15563,16 +15595,14 @@ type-is@~1.6.15, type-is@~1.6.16:
     media-typer "0.3.0"
     mime-types "~2.1.18"
 
-typechain@^0.2.2:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/typechain/-/typechain-0.2.7.tgz#46a52f25176d8cecf08cd509a768aacf92d3f4a3"
+typechain@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/typechain/-/typechain-0.3.5.tgz#51e975f93aa084ac8774ce3d1c41155498242cba"
   dependencies:
-    chalk "^2.3.0"
     command-line-args "^4.0.7"
     debug "^3.0.1"
-    fs-extra "^4.0.2"
-    glob "^7.1.2"
-    prettier "^1.9.1"
+    fs-extra "^7.0.0"
+    ts-generator "^0.0.5"
 
 typedarray-to-buffer@^3.1.2:
   version "3.1.5"
@@ -16809,17 +16839,7 @@ web3@1.0.0-beta.35:
     web3-shh "1.0.0-beta.35"
     web3-utils "1.0.0-beta.35"
 
-web3@^0.20.0:
-  version "0.20.7"
-  resolved "https://registry.yarnpkg.com/web3/-/web3-0.20.7.tgz#1605e6d81399ed6f85a471a4f3da0c8be57df2f7"
-  dependencies:
-    bignumber.js "git+https://github.com/frozeman/bignumber.js-nolookahead.git"
-    crypto-js "^3.1.4"
-    utf8 "^2.1.1"
-    xhr2-cookies "^1.1.0"
-    xmlhttprequest "*"
-
-web3@^1.0.0-beta.33, web3@^1.0.0-beta.34:
+web3@1.0.0-beta.36, web3@^1.0.0-beta.33, web3@^1.0.0-beta.34:
   version "1.0.0-beta.36"
   resolved "https://registry.yarnpkg.com/web3/-/web3-1.0.0-beta.36.tgz#2954da9e431124c88396025510d840ba731c8373"
   dependencies:
@@ -16830,6 +16850,16 @@ web3@^1.0.0-beta.33, web3@^1.0.0-beta.34:
     web3-net "1.0.0-beta.36"
     web3-shh "1.0.0-beta.36"
     web3-utils "1.0.0-beta.36"
+
+web3@^0.20.0:
+  version "0.20.7"
+  resolved "https://registry.yarnpkg.com/web3/-/web3-0.20.7.tgz#1605e6d81399ed6f85a471a4f3da0c8be57df2f7"
+  dependencies:
+    bignumber.js "git+https://github.com/frozeman/bignumber.js-nolookahead.git"
+    crypto-js "^3.1.4"
+    utf8 "^2.1.1"
+    xhr2-cookies "^1.1.0"
+    xmlhttprequest "*"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
