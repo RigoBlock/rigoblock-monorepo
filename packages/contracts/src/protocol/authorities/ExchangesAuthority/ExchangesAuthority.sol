@@ -385,7 +385,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     }
 
     /*
-  * INTERNAL FUNCTIONS
+     * INTERNAL FUNCTIONS
      */
     /// @dev Allows to whitelist an authority
     /// @param _authority Address of the authority
@@ -400,7 +400,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         accounts[_authority].groups[_isWhitelisted].authority = _isWhitelisted;
         setWhitelisterInternal(_authority, _isWhitelisted);
         types.list.push(List(_authority));
-        emit SetAuthority(_authority);
+        emit AuthoritySet(_authority);
     }
 
     /// @dev Allows the owner to whitelist a whitelister
@@ -415,7 +415,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         accounts[_whitelister].authorized = _isWhitelisted;
         accounts[_whitelister].groups[_isWhitelisted].whitelister = _isWhitelisted;
         types.list.push(List(_whitelister));
-        emit SetWhitelister(_whitelister);
+        emit WhitelisterSet(_whitelister);
     }
 
     /// @dev Provides whether an address is whitelister

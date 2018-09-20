@@ -218,7 +218,7 @@ contract Authority is
         onlyOwner
     {
         blocks.navVerifier = _navVerifier;
-        //emit NewNavVerifier(blocks.navVerifier);
+        emit NewNavVerifier(blocks.navVerifier);
     }
 
     /// @dev Allows the owner to set the exchanges authority
@@ -346,7 +346,7 @@ contract Authority is
         accounts[_authority].groups[_isWhitelisted].authority = _isWhitelisted;
         setWhitelisterInternal(_authority, _isWhitelisted);
         types.list.push(List(_authority));
-        emit SetAuthority(_authority);
+        emit AuthoritySet(_authority);
     }
 
     /// @dev Allows the owner to whitelist a whitelister
@@ -361,7 +361,7 @@ contract Authority is
         accounts[_whitelister].authorized = _isWhitelisted;
         accounts[_whitelister].groups[_isWhitelisted].whitelister = _isWhitelisted;
         types.list.push(List(_whitelister));
-        emit SetWhitelister(_whitelister);
+        emit WhitelisterSet(_whitelister);
     }
 
     /// @dev Provides whether an address is whitelister

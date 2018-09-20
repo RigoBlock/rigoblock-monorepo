@@ -37,6 +37,7 @@ interface AuthorityFace {
     event WhitelistedDrago(address indexed drago, bool isWhitelisted);
     event NewDragoEventful(address indexed dragoEventful);
     event NewVaultEventful(address indexed vaultEventful);
+    event NewNavVerifier(address indexed navVerifier);
     event NewExchangesAuthority(address indexed exchangesAuthority);
 
     /*
