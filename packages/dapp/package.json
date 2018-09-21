@@ -149,7 +149,7 @@
     ]
   },
   "dependencies": {
-    "@rigoblock/protocol": "^0.3.2",
+    "@rigoblock/contracts": "^0.3.2",
     "core-js": "3.0.0-beta.3"
   }
 }

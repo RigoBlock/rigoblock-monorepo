@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@rigoblock/api": "^0.2.7",
-    "@rigoblock/protocol": "^0.3.2",
+    "@rigoblock/contracts": "^0.3.2",
     "bull": "^3.4.7",
     "node-statsd": "^0.1.1",
     "pino": "^5.1.1"

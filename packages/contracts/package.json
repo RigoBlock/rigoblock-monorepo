@@ -1,0 +1,81 @@
+{
+  "name": "@rigoblock/contracts",
+  "version": "0.3.2",
+  "main": "dist/contracts.js",
+  "scripts": {
+    "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
+    "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
+    "compile": "node deploy/compiler.js",
+    "lint": "eslint test contracts deploy --ext js,jsx --ignore-path .gitignore --fix",
+    "test": "NODE_ENV=test node --trace-warnings node_modules/.bin/jest --env=node --runInBand"
+  },
+  "files": [
+    "artifacts",
+    "deploy",
+    "dist"
+  ],
+  "config": {
+    "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/test/setupTests.js",
+    "testMatch": [
+      "<rootDir>/test/**/?(*.)(spec|test).{js}"
+    ],
+    "testURL": "http://localhost",
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "node"
+    ],
+    "clearMocks": true
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "modules": false
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread",
+      "@babel/plugin-syntax-dynamic-import"
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "modules": "commonjs"
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "devDependencies": {
+    "0x.js": "^0.38.6",
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.54",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.54",
+    "@babel/polyfill": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.0.0-beta.54",
+    "@rigoblock/deployer": "^0.1.5",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "23.4.2",
+    "babel-loader": "^8.0.0-beta",
+    "bignumber.js": "^7.2.1",
+    "chalk": "^2.4.1",
+    "fs-extra": "^7.0.0",
+    "ganache-cli": "^6.1.0",
+    "jest": "23.4.1",
+    "jest-extended": "^0.8.1",
+    "pino": "^4.17.3",
+    "web3": "1.0.0-beta.33",
+    "webpack": "^4.16.3",
+    "webpack-cli": "^3.1.0"
+  }
+}

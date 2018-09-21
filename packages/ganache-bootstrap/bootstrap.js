@@ -1,6 +1,6 @@
 const Web3 = require('web3')
 const c = require('chalk')
-const deploy = require('@rigoblock/protocol/deploy')
+const deploy = require('@rigoblock/contracts/deploy')
 const logger = require('./logger')
 
 module.exports = async network => {

@@ -5,7 +5,7 @@ import * as Web3 from 'web3'
 import { ContractModels } from './contracts'
 import { InjectedWeb3Subprovider } from '@0xproject/subproviders'
 import { Web3Wrapper } from '@0xproject/web3-wrapper'
-import protocol from '@rigoblock/protocol'
+import protocol from '@rigoblock/contracts'
 
 interface Web3Window extends Window {
   web3: Web3

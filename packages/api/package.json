@@ -27,7 +27,7 @@
     "@0xproject/subproviders": "^0.10.4",
     "@0xproject/typescript-typings": "^0.4.1",
     "@0xproject/web3-wrapper": "^0.7.1",
-    "@rigoblock/protocol": "^0.3.2",
+    "@rigoblock/contracts": "^0.3.2",
     "@types/node": "^9.6.6",
     "bignumber.js": "^5.0.0",
     "typechain": "^0.2.2",

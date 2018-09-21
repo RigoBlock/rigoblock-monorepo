@@ -6,7 +6,10 @@ import userActions from '../../actions/user-actions'
 
 const account = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
 const provider = 'metamask'
-const timezone = `GMT ${moment.tz(moment.tz.guess()).format('Z')}`
+
+const d = new Date()
+const offset = (-1 * d.getTimezoneOffset()) / 60
+const timezone = 'GMT' + (offset >= 0 ? ' +0' + offset : offset) + ':00'
 
 const initialState = {
   timezone,
