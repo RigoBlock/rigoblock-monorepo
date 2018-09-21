@@ -4,13 +4,13 @@ const webpack = require('webpack')
 
 module.exports = {
   mode: 'production',
-  entry: path.join(__dirname, '/contracts/index.js'),
+  entry: path.join(__dirname, '/contractsMap.js'),
   output: {
-    filename: 'contracts.js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'umd',
     globalObject: 'this',
-    library: 'contracts'
+    library: 'index'
   },
   target: 'node',
   resolve: {
