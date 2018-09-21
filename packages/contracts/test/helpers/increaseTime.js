@@ -5,13 +5,9 @@ export const increaseTime = async duration => {
   return await web3.evm.evmIncreaseTime(duration)
 }
 
-/**
- * Beware that due to the need of calling two separate ganache methods and rpc calls overhead
- * it's hard to increase time precisely to a target point so design your test to tolerate
- * small fluctuations from time to time.
- *
- * @param target time in seconds
- */
+// Beware that due to the need of calling two separate ganache methods and rpc calls overhead
+// it's hard to increase time precisely to a target point so design your test to tolerate
+// small fluctuations from time to time.
 export const increaseTimeTo = async target => {
   let now = await latestTime()
   if (target < now)
