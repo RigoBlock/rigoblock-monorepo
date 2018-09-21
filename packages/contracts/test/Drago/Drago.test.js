@@ -1,7 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import dragoArtifact from '../../artifacts/Drago.json'
-
 import web3 from '../web3'
 
 const contractName = 'Drago'

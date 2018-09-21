@@ -25,7 +25,7 @@ We use [Jest](https://facebook.github.io/jest/docs/en/api.html "Jest API") to te
 
 ## Running tests
 
-To run existing tests, you can run the command `yarn test` from the protocol directory. If you wish to run a specific test only, you can specify a regexp pattern:
+To run existing tests, you can run the command `yarn test` from the contracts directory. If you wish to run a specific test only, you can specify a regexp pattern:
 
 ```
 yarn test Inflation.test

@@ -1,4 +1,4 @@
-# RigoBlock Protocol
+# RigoBlock Contracts
 
 ## Available Scripts
 
