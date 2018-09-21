@@ -1,7 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import { duration, increaseTimeTo } from '../helpers/increaseTime'
 import { latestTime } from '../helpers/latestTime'
-import assertRevert from '../helpers/assertRevert'
 
 const contractName = 'Faucet'
 const balance = 2000000000000000000000
@@ -63,11 +62,11 @@ describeContract(contractName, () => {
       )
 
       //check previous sender is now locked from requesting again
-      await assertRevert(
+      await expect(
         faucet.drip1Token.sendTransactionAsync({
           from: accounts[1]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       //advancing 48 hour in time
       let lastBlockTimestamp = await latestTime()
@@ -100,11 +99,11 @@ describeContract(contractName, () => {
       expect(faucetStatus).toBe(false)
 
       // Cannot turn faucet OFF again
-      await assertRevert(
+      await expect(
         faucet.turnFaucetOff.sendTransactionAsync({
           from: accounts[0]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       faucetStatus = await faucet.faucetStatus()
       expect(faucetStatus).toBe(false)
@@ -113,11 +112,11 @@ describeContract(contractName, () => {
       await rigoToken.transfer(faucet.address, balance)
 
       // Cannot drip if faucet is off
-      await assertRevert(
+      await expect(
         faucet.drip1Token.sendTransactionAsync({
           from: accounts[0]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       // Turn faucet ON
       await faucet.turnFaucetOn.sendTransactionAsync({
@@ -128,11 +127,11 @@ describeContract(contractName, () => {
       expect(faucetStatus).toBe(true)
 
       // Cannot turn faucet ON again
-      await assertRevert(
+      await expect(
         faucet.turnFaucetOn.sendTransactionAsync({
           from: accounts[0]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       faucetStatus = await faucet.faucetStatus()
       expect(faucetStatus).toBe(true)
@@ -140,18 +139,18 @@ describeContract(contractName, () => {
 
     it('Non owner cannot turn faucet OFF/ON', async () => {
       // Non owner cannot turn OFF
-      await assertRevert(
+      await expect(
         faucet.turnFaucetOff.sendTransactionAsync({
           from: accounts[1]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       // Non owner cannot turn ON
-      await assertRevert(
+      await expect(
         faucet.turnFaucetOff.sendTransactionAsync({
           from: accounts[1]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
 })
