@@ -29,7 +29,6 @@ RUN mkdir -p /root/packages/stats
 
 COPY packages/stats ./packages/stats
 COPY yarn.lock .
-COPY tsconfig.json .
 
 WORKDIR /root/packages/stats
 
