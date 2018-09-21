@@ -1,5 +1,5 @@
 import Web3 = require('web3')
-import protocol from '@rigoblock/contracts'
+import fetchContracts from '@rigoblock/contracts'
 import redis from '../../redis'
 import web3ErrorWrapper from '../web3ErrorWrapper'
 
@@ -12,7 +12,7 @@ type Event = {
 
 const task = async (job, web3: Web3) => {
   const { network } = job.data
-  const contractsMap = await protocol(network)
+  const contractsMap = await fetchContracts(network)
   const { abi, address } = contractsMap.DragoEventful
   const dragoEventful = new web3.eth.Contract(abi, address)
   const dragoEvents = await new Promise<Event[]>((resolve, reject) =>

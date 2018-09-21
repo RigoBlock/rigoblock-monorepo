@@ -1,7 +1,7 @@
 const path = require('path')
 const clk = require('chalk')
 const fs = require('fs')
-const protocol = require('@rigoblock/contracts').default
+const fetchContracts = require('@rigoblock/contracts').default
 
 const writeFilePromise = (name, content) =>
   new Promise((resolve, reject) =>
@@ -13,7 +13,7 @@ const extractor = async networkId => {
   if (!fs.existsSync(tmpFolder)) {
     fs.mkdirSync(tmpFolder)
   }
-  const contractsMap = await protocol(networkId)
+  const contractsMap = await fetchContracts(networkId)
   const abiPromises = Object.keys(contractsMap).map(contractName => {
     console.log(`Extracting ${clk.magenta(contractName)}`)
     return writeFilePromise(
