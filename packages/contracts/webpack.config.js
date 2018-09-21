@@ -4,7 +4,7 @@ const webpack = require('webpack')
 
 module.exports = {
   mode: 'production',
-  entry: path.join(__dirname, '/contractsMap.js'),
+  entry: path.join(__dirname, '/fetchContracts.js'),
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
