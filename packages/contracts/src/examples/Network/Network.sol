@@ -91,8 +91,8 @@ contract Network {
 
 
     /*
-    * INTERNAL FUNCTIONS
-    */
+     * INTERNAL FUNCTIONS
+     */
 
     /// @dev Checks whether a pool is registered and active
     /// @param _ofPool Id of the pool

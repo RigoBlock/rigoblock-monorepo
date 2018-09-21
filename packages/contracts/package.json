@@ -59,7 +59,6 @@
   },
   "devDependencies": {
     "0x.js": "^0.38.6",
-    "@0xproject/tslint-config": "^1.0.7",
     "@babel/core": "^7.0.0-beta.54",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.54",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.54",
@@ -76,7 +75,6 @@
     "jest": "23.4.1",
     "pino": "^4.17.3",
     "solhint": "^1.2.1",
-    "tslint": "^5.11.0",
     "web3": "1.0.0-beta.33",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0"

@@ -23,15 +23,9 @@ pragma experimental "v0.5.0";
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 /// @notice only public view functions are used
 interface PoolFace {
-    
-/*
- * CORE FUNCTIONS
- */
-
     /*
- * CONSTANT PUBLIC FUNCTIONS
- */
-
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function balanceOf(address _who) external view returns (uint256);
     function totalSupply() external view returns (uint256 totaSupply);
     function getEventful() external view returns (address);

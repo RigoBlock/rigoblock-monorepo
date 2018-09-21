@@ -140,8 +140,8 @@ contract AEthfinex {
     }
 
     /*
-    * INTERNAL FUNCTIONS
-    */
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Allows owner to set an infinite allowance to an approved exchange.
     /// @param wrapper Address of the proxy to be approved.
     /// @param token Address of the token to receive allowance for.

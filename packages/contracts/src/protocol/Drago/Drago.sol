@@ -158,8 +158,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     }
 
     /*
-    * CORE FUNCTIONS
-    */
+     * CORE FUNCTIONS
+     */
     /// @dev Allows Ether to be received.
     /// @notice Used for settlements and withdrawals.
     function()
@@ -524,8 +524,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     }
 
     /*
-  * INTERNAL FUNCTIONS
- */
+     * INTERNAL FUNCTIONS
+     */
 
     /// @dev Executes the pool purchase.
     /// @param _hodler Address of the target user.

@@ -70,8 +70,8 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     }
 
     /*
-    * EVENTS
-    */
+     * EVENTS
+     */
     event AuthoritySet(address indexed authority);
     event WhitelisterSet(address indexed whitelister);
     event WhitelistedAsset(address indexed asset, bool approved);
@@ -84,8 +84,8 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     event NewCasper(address indexed casper);
 
     /*
-    * MODIFIERS
-    */
+     * MODIFIERS
+     */
     modifier onlyAdmin {
         require(msg.sender == owner || isWhitelister(msg.sender));
         _;

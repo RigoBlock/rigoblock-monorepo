@@ -543,8 +543,8 @@ contract ExchangeV1Fork is SafeMath {
 
 
     /*
-    * INTERNAL FUNCTIONS
-    */
+     * INTERNAL FUNCTIONS
+     */
 
     /// @dev Transfers a token using TokenTransferProxy transferFrom function.
     /// @param token Address of token to transferFrom.

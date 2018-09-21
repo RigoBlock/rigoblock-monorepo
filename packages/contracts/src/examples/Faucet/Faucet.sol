@@ -116,7 +116,7 @@ contract Faucet is Owned {
     }
 
     /*
-  * INTERNAL FUNCTIONS
+     * INTERNAL FUNCTIONS
      */
     /// @dev locks and unlocks account based on time range
     /// @param _address of msg.sender

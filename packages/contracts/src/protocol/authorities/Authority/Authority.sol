@@ -331,8 +331,8 @@ contract Authority is
     }
 
     /*
-  * INTERNAL FUNCTIONS
- */
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Allows to whitelist an authority
     /// @param _authority Address of the authority
     /// @param _isWhitelisted Bool whitelisted

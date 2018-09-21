@@ -26,8 +26,8 @@ pragma experimental "v0.5.0";
 interface DragoFace {
 
     /*
-    * CORE FUNCTIONS
-    */
+     * CORE FUNCTIONS
+     */
     function() external payable;
     function buyDrago() external payable returns (bool success);
     function buyDragoOnBehalf(address _hodler) external payable returns (bool success);
