@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -24,6 +25,7 @@ import { VaultEventfulFace } from "./VaultEventfulFace.sol";
 
 /// @title Vault Eventful - Logs events for all vaults.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract VaultEventful is VaultEventfulFace {
 
     string public constant VERSION = 'DH 0.4.2';
@@ -109,8 +111,9 @@ contract VaultEventful is VaultEventfulFace {
         AUTHORITY = _authority;
     }
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Logs a Buy Vault event.
     /// @param _who Address of who is buying
     /// @param _targetVault Address of the target vault
@@ -250,8 +253,9 @@ contract VaultEventful is VaultEventfulFace {
         return true;
     }
 
-    // INTERNAL FUNCTIONS
-
+    /*
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Logs a purchase event
     /// @param _who Address of the caller
     /// @param _targetVault Address of the vault

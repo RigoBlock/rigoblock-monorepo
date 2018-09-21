@@ -16,15 +16,18 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Vault Eventful Interface - Logs all vaults transactions.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface VaultEventfulFace {
 
-    // EVENTS
-
+    /*
+     * EVENTS
+     */
     event BuyVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
     event SellVault(address indexed vault, address indexed from, address indexed to, uint256 amount, uint256 revenue, bytes name, bytes symbol);
     event NewRatio(address indexed vault, address indexed from, uint256 newRatio);
@@ -33,8 +36,9 @@ interface VaultEventfulFace {
     event VaultDao(address indexed vault, address indexed from, address indexed to, address vaultDao);
     event VaultCreated(address indexed vault, address indexed group, address indexed owner, uint256 vaultId, string name, string symbol);
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     function buyVault(address _who, address _targetVault, uint256 _value, uint256 _amount, bytes _name, bytes _symbol) external returns (bool success);
     function sellVault(address _who, address _targetVault, uint256 _amount, uint256 _revenue, bytes _name, bytes _symbol) external returns(bool success);
     function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success);

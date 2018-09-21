@@ -16,15 +16,18 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Drago Interface - Allows interaction with the Drago contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface DragoFace {
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     function() external payable;
     function buyDrago() external payable returns (bool success);
     function buyDragoOnBehalf(address _hodler) external payable returns (bool success);
@@ -37,11 +40,12 @@ interface DragoFace {
     function changeDragoDao(address _dragoDao) external;
     function enforceKyc(bool _enforced, address _kycProvider) external;
     function setAllowance(address _tokenTransferProxy, address _token, uint256 _amount) external;
-    function SetMultipleAllowances(address _tokenTransferProxy, address[] _tokens, uint256[] _amounts) external;
+    function setMultipleAllowances(address _tokenTransferProxy, address[] _tokens, uint256[] _amounts) external;
     function operateOnExchange(address _exchange, bytes _assembledTransaction) external;
 
-    // PUBLIC CONSTANT FUNCTIONS
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function balanceOf(address _who) external view returns (uint256);
     function getEventful() external view returns (address);
     function getData() external view returns (string name, string symbol, uint256 sellPrice, uint256 buyPrice);

@@ -16,11 +16,13 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Vault Factory Interface - Allows external interaction with Vault Factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface VaultFactoryFace {
 
     event VaultCreated(string name, string symbol, address indexed vault, address indexed owner, uint256 vaultId);

@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -26,6 +27,7 @@ import { WETH9 } from "../../../tokens/WETH9/WETH9.sol";
 
 /// @title Weth adapter - A helper to wrap eth to the 0x wrapper token.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract AWeth {
 
     /// @dev allows a manager to deposit eth to an approved exchange/wrap eth

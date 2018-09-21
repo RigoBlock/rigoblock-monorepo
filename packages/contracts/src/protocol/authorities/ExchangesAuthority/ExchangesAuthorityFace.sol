@@ -16,17 +16,20 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Exchange Authority Interface - A helper contract for the exchange adapters.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface ExchangesAuthorityFace {
 
-    // EVENTS
-
-    event SetAuthority (address indexed authority);
-    event SetWhitelister (address indexed whitelister);
+    /*
+     * EVENTS
+     */
+    event AuthoritySet(address indexed authority);
+    event WhitelisterSet(address indexed whitelister);
     event WhitelistedAsset(address indexed asset, bool approved);
     event WhitelistedExchange(address indexed exchange, bool approved);
     event WhitelistedWrapper(address indexed wrapper, bool approved);
@@ -36,8 +39,9 @@ interface ExchangesAuthorityFace {
     event NewExchangeEventful(address indexed exchangeEventful);
     event NewCasper(address indexed casper);
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Allows the owner to whitelist an authority
     /// @param _authority Address of the authority
     /// @param _isWhitelisted Bool whitelisted
@@ -125,8 +129,9 @@ interface ExchangesAuthorityFace {
     function setCasper(address _casper)
         external;
 
-    // PUBLIC CONSTANT FUNCTIONS
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Provides whether an address is an authority
     /// @param _authority Address of the target authority
     /// @return Bool is whitelisted

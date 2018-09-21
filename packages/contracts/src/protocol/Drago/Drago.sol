@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -33,6 +34,7 @@ import { LibFindMethod } from "../../utils/LibFindMethod/LibFindMethod.sol";
 
 /// @title Drago - A set of rules for a drago.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract Drago is Owned, SafeMath, ReentrancyGuard {
 
     using LibFindMethod for *;
@@ -155,8 +157,9 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         admin.ratio = 80;
     }
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Allows Ether to be received.
     /// @notice Used for settlements and withdrawals.
     function()
@@ -329,7 +332,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @param _tokenTransferProxy Address of the proxy to be approved.
     /// @param _tokens Address of the token to receive allowance for.
     /// @param _amounts Array of number of tokens to be approved.
-    function SetMultipleAllowances(
+    function setMultipleAllowances(
         address _tokenTransferProxy,
         address[] _tokens,
         uint256[] _amounts)
@@ -388,8 +391,9 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         return (success = true);
     }
 
-    // PUBLIC CONSTANT FUNCTIONS
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Calculates how many shares a user holds.
     /// @param _who Address of the target account.
     /// @return Number of shares.
@@ -519,7 +523,9 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         return data.totalSupply;
     }
 
-    // INTERNAL FUNCTIONS
+    /*
+     * INTERNAL FUNCTIONS
+     */
 
     /// @dev Executes the pool purchase.
     /// @param _hodler Address of the target user.

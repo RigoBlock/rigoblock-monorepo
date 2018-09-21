@@ -25,9 +25,14 @@ import { SafeMathLight as SafeMath } from "../../utils/SafeMath/SafeMathLight.so
 
 /// @title Distribution - Allows to collect subscription fees on vaults.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
-contract Distribution is SafeMath {
-
-    event Subscription(address indexed buyer, address indexed distributor, uint256 amount);
+contract Distribution is
+    SafeMath
+{
+    event Subscription(
+        address indexed buyer,
+        address indexed distributor,
+        uint256 amount
+    );
 
     mapping (address => Distributor) distributor;
 
@@ -45,9 +50,14 @@ contract Distribution is SafeMath {
         _;
     }
 
-    // CORE FUNCTIONS
-
-    function subscribe(address _pool, address _distributor, address _buyer)
+    /*
+     * CORE FUNCTIONS
+     */
+    function subscribe(
+        address _pool,
+        address _distributor,
+        address _buyer
+    )
         external
         payable
     {
@@ -59,7 +69,10 @@ contract Distribution is SafeMath {
         emit Subscription(_buyer, _distributor, netAmount);
     }
 
-    function setFee(uint256 _fee, address _distributor)
+    function setFee(
+        uint256 _fee,
+        address _distributor
+    )
         external
         addressFree(_distributor)
         nonZeroAddress(_distributor)
@@ -67,8 +80,9 @@ contract Distribution is SafeMath {
         distributor[_distributor].fee = _fee;
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function getFee(address _distributor)
         external view
         returns (uint256)

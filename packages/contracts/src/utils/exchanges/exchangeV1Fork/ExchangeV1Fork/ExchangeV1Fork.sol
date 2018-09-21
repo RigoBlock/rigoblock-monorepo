@@ -97,8 +97,8 @@ contract ExchangeV1Fork is SafeMath {
     }
 
     /*
-    * Core exchange functions
-    */
+     * Core exchange functions
+     */
 
     /// @notice temporary change of TOKEN_TRANSFER_PROXY_CONTRACT for tests
     function setTokenTransferProxyContract(
@@ -284,8 +284,8 @@ contract ExchangeV1Fork is SafeMath {
     }
 
     /*
-    * Wrapper functions
-    */
+     * Wrapper functions
+     */
 
 
     /// @dev Fills an order with specified parameters and ECDSA signature, throws if specified amount not filled entirely.
@@ -433,8 +433,8 @@ contract ExchangeV1Fork is SafeMath {
 
 
     /*
-    * Constant public functions
-    */
+     * Constant public functions
+     */
 
     /// @dev Calculates Keccak-256 hash of order with specified parameters.
     /// @param orderAddresses Array of order's maker, taker, makerToken, takerToken, and feeRecipient.
@@ -543,8 +543,8 @@ contract ExchangeV1Fork is SafeMath {
 
 
     /*
-    * Internal functions
-    */
+     * INTERNAL FUNCTIONS
+     */
 
     /// @dev Transfers a token using TokenTransferProxy transferFrom function.
     /// @param token Address of token to transferFrom.

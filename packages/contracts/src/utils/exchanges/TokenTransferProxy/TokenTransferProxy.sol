@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.11;
 
 import { ERC20Face as Token } from "../../../tokens/ERC20/ERC20.sol";
@@ -23,6 +24,7 @@ import { Owned } from "../../Owned/Owned.sol";
 
 /// @title TokenTransferProxy - Transfers tokens on behalf of contracts that have been approved via decentralized governance.
 /// @author Amir Bandeali - <amir@0xProject.com>, Will Warren - <will@0xProject.com>
+// solhint-disable-next-line
 contract TokenTransferProxy is Owned {
 
     /// @dev Only authorized addresses can invoke functions with this modifier.
@@ -50,7 +52,6 @@ contract TokenTransferProxy is Owned {
     /*
      * Public functions
      */
-
     /// @dev Authorizes an address.
     /// @param target Address to authorize.
     function addAuthorizedAddress(address target)
@@ -102,7 +103,6 @@ contract TokenTransferProxy is Owned {
     /*
      * Public constant functions
      */
-
     /// @dev Gets all authorized addresses.
     /// @return Array of authorized addresses.
     function getAuthorizedAddresses()

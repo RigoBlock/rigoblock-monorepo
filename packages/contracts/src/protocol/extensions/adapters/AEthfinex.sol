@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -30,6 +31,7 @@ import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/
 
 /// @title Ethfinex adapter - A helper contract for the Ethfinex exchange.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract AEthfinex {
 
     /// @dev wraps eth or tokens to the ethfinex wrappers.
@@ -78,6 +80,7 @@ contract AEthfinex {
                 .value(amount)(amount, forTime)
             );
         } else {
+            // solhint-disable-next-line
             require(setAllowances(wrapper, token, 2**256 -1, erc20Old));
             require(
                 TokenWrapper(wrapper)
@@ -136,8 +139,9 @@ contract AEthfinex {
         );
     }
 
-    // INTERNAL FUNCTIONS
-
+    /*
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Allows owner to set an infinite allowance to an approved exchange.
     /// @param wrapper Address of the proxy to be approved.
     /// @param token Address of the token to receive allowance for.

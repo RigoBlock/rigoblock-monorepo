@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -28,13 +29,14 @@ import { DragoFactoryFace } from "./DragoFactoryFace.sol";
 
 /// @title Drago Factory contract - allows creation of new dragos.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract DragoFactory is Owned, DragoFactoryFace {
 
-    DragoFactoryLibrary.NewDrago libraryData;
+    DragoFactoryLibrary.NewDrago private libraryData;
 
-    string public constant VERSION = 'VF 0.4.2';
+    string public constant VERSION = "DF 0.4.2";
 
-    Data data;
+    Data private data;
 
     struct Data {
         uint256 fee;
@@ -84,8 +86,9 @@ contract DragoFactory is Owned, DragoFactoryFace {
         owner = msg.sender;
     }
 
-    // CORE FUNCTIONS
-
+    /*
+     * PUBLIC FUNCTIONS
+     */
     /// @dev allows creation of a new drago
     /// @param _name String of the name
     /// @param _symbol String of the symbol
@@ -167,8 +170,9 @@ contract DragoFactory is Owned, DragoFactoryFace {
         data.dragoDao.transfer(address(this).balance);
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Returns the address of the pool registry
     /// @return Address of the registry
     function getRegistry()
@@ -220,8 +224,9 @@ contract DragoFactory is Owned, DragoFactoryFace {
         return data.dragos[_owner];
     }
 
-    // INTERNAL FUNCTIONS
-
+    /*
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Creates a drago and routes to eventful
     /// @param _name String of the name
     /// @param _symbol String of the symbol

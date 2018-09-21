@@ -31,8 +31,9 @@ import { Owned as Owned } from "../../utils/Owned/Owned.sol";
 /// @author David Fava - <david@rigoblock.com>
 contract Faucet is Owned {
 
-    // EVENTS
-
+    /*
+     * EVENTS
+     */
     event Deposit(address indexed sender, uint256 value);
     event OneTokenSent(address indexed receiver);
     event FaucetOn(bool status);
@@ -45,8 +46,9 @@ contract Faucet is Owned {
     bool public faucetStatus;
     mapping(address => uint256) status;
 
-    // MODIFIERS
-
+    /*
+     * MODIFIERS
+     */
     modifier faucetOn() {
         require(faucetStatus,"Faucet has to be on");
         _;
@@ -70,8 +72,9 @@ contract Faucet is Owned {
         emit FaucetOn(faucetStatus);
     }
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev send 1000 Token with a minimum time lock of 1 hour
     /// @return bool on success
     function drip1Token()
@@ -112,8 +115,9 @@ contract Faucet is Owned {
         return true;
     }
 
-    // INTERNAL FUNCTIONS
-
+    /*
+     * INTERNAL FUNCTIONS
+     */
     /// @dev locks and unlocks account based on time range
     /// @param _address of msg.sender
     /// @return bool of current lock status of address

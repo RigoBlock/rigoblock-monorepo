@@ -16,17 +16,20 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Authority Interface - Allows interaction with the Authority contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface AuthorityFace {
 
-    // EVENTS
-
-    event SetAuthority (address indexed authority);
-    event SetWhitelister (address indexed whitelister);
+    /*
+     * EVENTS
+     */
+    event AuthoritySet(address indexed authority);
+    event WhitelisterSet(address indexed whitelister);
     event WhitelistedUser(address indexed target, bool approved);
     event WhitelistedRegistry(address indexed registry, bool approved);
     event WhitelistedFactory(address indexed factory, bool approved);
@@ -34,10 +37,12 @@ interface AuthorityFace {
     event WhitelistedDrago(address indexed drago, bool isWhitelisted);
     event NewDragoEventful(address indexed dragoEventful);
     event NewVaultEventful(address indexed vaultEventful);
+    event NewNavVerifier(address indexed navVerifier);
     event NewExchangesAuthority(address indexed exchangesAuthority);
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     function setAuthority(address _authority, bool _isWhitelisted) external;
     function setWhitelister(address _whitelister, bool _isWhitelisted) external;
     function whitelistUser(address _target, bool _isWhitelisted) external;
@@ -50,6 +55,9 @@ interface AuthorityFace {
     function setNavVerifier(address _navVerifier) external;
     function setExchangesAuthority(address _exchangesAuthority) external;
 
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function isWhitelistedUser(address _target) external view returns (bool);
     function isAuthority(address _authority) external view returns (bool);
     function isWhitelistedRegistry(address _registry) external view returns (bool);

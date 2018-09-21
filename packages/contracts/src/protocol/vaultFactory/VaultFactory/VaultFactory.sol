@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -28,13 +29,14 @@ import { VaultFactoryFace } from "./VaultFactoryFace.sol";
 
 /// @title Vault Factory contract - allows creation of new vaults.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract VaultFactory is Owned, VaultFactoryFace {
 
-    VaultFactoryLibrary.NewVault libraryData;
+    VaultFactoryLibrary.NewVault private libraryData;
 
-    string public constant VERSION = 'VF 0.4.2';
+    string public constant VERSION = "VF 0.4.2";
 
-    Data data;
+    Data private data;
 
     struct Data {
         uint256 fee;
@@ -85,8 +87,9 @@ contract VaultFactory is Owned, VaultFactoryFace {
         owner = msg.sender;
     }
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev allows creation of a new vault
     /// @param _name String of the name
     /// @param _symbol String of the symbol
@@ -168,8 +171,9 @@ contract VaultFactory is Owned, VaultFactoryFace {
         data.vaultDao.transfer(address(this).balance);
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Returns the address of the pool registry
     /// @return Address of the registry
     function getRegistry()
@@ -219,8 +223,9 @@ contract VaultFactory is Owned, VaultFactoryFace {
         return data.vaults[_owner];
     }
 
-    // INTERNAL FUNCTIONS
-
+    /*
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Creates a vault and routes to eventful
     /// @param _name String of the name
     /// @param _symbol String of the symbol

@@ -1,6 +1,6 @@
 /*
 
- Copyright 2018 ZeroEx Intl.
+ Copyright 2018 RigoBlock, Rigo Investment Sagl, ZeroEx Intl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,9 +16,12 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 
-
+/// @title SigVerifier Interface - Allows interaction with the signature verifier contract.
+/// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 interface SigVerifierFace {
 
     /// @dev Verifies that a signature is valid.

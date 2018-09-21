@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -24,12 +25,13 @@ import { ExchangesAuthorityFace } from "./ExchangesAuthorityFace.sol";
 
 /// @title Exchanges Authority - A helper contract for the exchange adapters.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
 
-    BuildingBlocks blocks;
-    Type types;
+    BuildingBlocks public blocks;
+    Type public types;
 
-    mapping (address => Account) accounts;
+    mapping (address => Account) public accounts;
 
     struct List {
         address target;
@@ -67,10 +69,11 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         mapping (address => mapping (address => bool)) allowedWrappers;
     }
 
-    // EVENTS
-
-    event SetAuthority (address indexed authority);
-    event SetWhitelister (address indexed whitelister);
+    /*
+     * EVENTS
+     */
+    event AuthoritySet(address indexed authority);
+    event WhitelisterSet(address indexed whitelister);
     event WhitelistedAsset(address indexed asset, bool approved);
     event WhitelistedExchange(address indexed exchange, bool approved);
     event WhitelistedWrapper(address indexed wrapper, bool approved);
@@ -80,8 +83,9 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
     event NewExchangeEventful(address indexed exchangeEventful);
     event NewCasper(address indexed casper);
 
-    // MODIFIERS
-
+    /*
+     * MODIFIERS
+     */
     modifier onlyAdmin {
         require(msg.sender == owner || isWhitelister(msg.sender));
         _;
@@ -92,8 +96,9 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         _;
     }
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Allows the owner to whitelist an authority
     /// @param _authority Address of the authority
     /// @param _isWhitelisted Bool whitelisted
@@ -255,8 +260,9 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         emit NewCasper(blocks.casper);
     }
 
-    // PUBLIC CONSTANT FUNCTIONS
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Provides whether an address is an authority
     /// @param _authority Address of the target authority
     /// @return Bool is whitelisted
@@ -378,8 +384,9 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         return blocks.casper;
     }
 
-    // INTERNAL FUNCTIONS
-
+    /*
+     * INTERNAL FUNCTIONS
+     */
     /// @dev Allows to whitelist an authority
     /// @param _authority Address of the authority
     /// @param _isWhitelisted Bool whitelisted
@@ -393,7 +400,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         accounts[_authority].groups[_isWhitelisted].authority = _isWhitelisted;
         setWhitelisterInternal(_authority, _isWhitelisted);
         types.list.push(List(_authority));
-        emit SetAuthority(_authority);
+        emit AuthoritySet(_authority);
     }
 
     /// @dev Allows the owner to whitelist a whitelister
@@ -408,7 +415,7 @@ contract ExchangesAuthority is Owned, ExchangesAuthorityFace {
         accounts[_whitelister].authorized = _isWhitelisted;
         accounts[_whitelister].groups[_isWhitelisted].whitelister = _isWhitelisted;
         types.list.push(List(_whitelister));
-        emit SetWhitelister(_whitelister);
+        emit WhitelisterSet(_whitelister);
     }
 
     /// @dev Provides whether an address is whitelister

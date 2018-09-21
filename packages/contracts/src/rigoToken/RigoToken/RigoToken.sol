@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -37,12 +38,14 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
     address public minter;
     address public rigoblock;
 
-    // EVENTS
-
+    /*
+     * EVENTS
+     */
     event TokenMinted(address indexed recipient, uint256 amount);
 
-    // MODIFIERS
-
+    /*
+     * MODIFIERS
+     */
     modifier onlyMinter {
         require(msg.sender == minter);
         _;
@@ -59,8 +62,9 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
         balances[msg.sender] = totalSupply;
     }
 
-    // CORE FUNCTIONS
-
+    /*
+     * CORE FUNCTIONS
+     */
     /// @dev Allows minter to create new tokens
     /// @param _recipient Address of who receives new tokens
     /// @param _amount Number of new tokens
@@ -82,8 +86,9 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
         rigoblock = _newAddress;
     }
 
-    // CONSTANT PUBLIC FUNCTIONS
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Returns name of Rigo token
     /// @return String with name
     function getName() external view returns (string) {

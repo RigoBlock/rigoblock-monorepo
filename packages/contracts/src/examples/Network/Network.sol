@@ -35,7 +35,9 @@ contract Network {
         dragoRegistry = _dragoRegistry;
     }
 
-
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     /// @dev Returns two arrays of prices and total supply
     /// @return Array of addressed of the active pools
     /// @return Array of the prices of the active pools
@@ -88,7 +90,9 @@ contract Network {
     }
 
 
-    // INTERNAL FUNCTIONS
+    /*
+     * INTERNAL FUNCTIONS
+     */
 
     /// @dev Checks whether a pool is registered and active
     /// @param _ofPool Id of the pool

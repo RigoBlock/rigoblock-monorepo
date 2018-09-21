@@ -16,6 +16,7 @@
 
 */
 
+// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
 pragma solidity ^0.4.24;
 pragma experimental "v0.5.0";
 
@@ -24,6 +25,7 @@ import { Drago } from "../../Drago/Drago.sol";
 
 /// @title Drago Factory library - Reduces size of drago factory.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
+// solhint-disable-next-line
 library DragoFactoryLibrary {
 
     struct NewDrago {
