@@ -2,17 +2,13 @@ import { BigNumber } from 'bignumber.js'
 import { duration, increaseTimeTo } from '../helpers/increaseTime'
 import { latestTime } from '../helpers/latestTime'
 import assertRevert from '../helpers/assertRevert'
-// import utils from '../helpers/utils'
-// import web3 from '../web3'
 
 const contractName = 'Faucet'
-let faucet
-let rigoToken
-// let eventEmitted
-// let txHash
 const balance = 2000000000000000000000
 const amount = 3000000000000000000000
 const oneToken = 1000000000000000000
+let faucet
+let rigoToken
 
 describeContract(contractName, () => {
   beforeAll(async () => {
