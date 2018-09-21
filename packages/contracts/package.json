@@ -4,9 +4,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
-    "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
+    "ganache": "ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "compile": "node deploy/compiler.js",
-    "lint": "tslint src/**/**/**/* --exclude **/dist/**/* --exclude **/artifacts/**/* && yarn lint-contracts",
+    "lint": "eslint test deploy . --ext js --ignore-path .gitignore --fix && npm run lint-contracts",
     "test": "NODE_ENV=test node --trace-warnings node_modules/.bin/jest --env=node --runInBand",
     "lint-contracts": "solhint src/**/**/**/*.sol"
   },
@@ -70,6 +70,7 @@
     "babel-loader": "^8.0.0-beta",
     "bignumber.js": "^7.2.1",
     "chalk": "^2.4.1",
+    "eslint": "^5.6.0",
     "fs-extra": "^7.0.0",
     "ganache-cli": "^6.1.0",
     "jest": "23.4.1",
