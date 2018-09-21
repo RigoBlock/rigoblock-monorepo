@@ -62,11 +62,6 @@ describeContract(contractName, () => {
         new BigNumber(faucetBalance).minus(oneToken).toFixed()
       )
 
-      //Check event was emitted
-      // let txReceipt = await web3.eth.getTransactionReceipt(txHash)
-      // eventEmitted = utils.getParamFromTxEvent(txReceipt, 'receiver', null, 'OneTokenSent')
-      // expect(eventEmitted).toBe(accounts[0])
-
       //check previous sender is now locked from requesting again
       await assertRevert(
         faucet.drip1Token.sendTransactionAsync({
