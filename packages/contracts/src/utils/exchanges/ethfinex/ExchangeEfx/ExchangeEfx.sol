@@ -265,8 +265,8 @@ contract ExchangeEfx is SafeMath {
     }
 
     /*
-    * Core exchange functions
-    */
+     * Core exchange functions
+     */
 
     /// @dev Fills the input order.
     /// @param orderAddresses Array of order's maker, taker, makerToken, takerToken, and feeRecipient.
@@ -448,8 +448,8 @@ contract ExchangeEfx is SafeMath {
     // }
 
     /*
-    * Wrapper functions
-    */
+     * Wrapper functions
+     */
 
     /// @dev Fills an order with specified parameters and ECDSA signature, throws if specified amount not filled entirely.
     /// @param orderAddresses Array of order's maker, taker, makerToken, takerToken, and feeRecipient.

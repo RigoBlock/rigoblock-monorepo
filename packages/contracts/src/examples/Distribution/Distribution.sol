@@ -81,8 +81,8 @@ contract Distribution is
     }
 
     /*
-    * CONSTANT PUBLIC FUNCTIONS
-    */
+     * CONSTANT PUBLIC FUNCTIONS
+     */
     function getFee(address _distributor)
         external view
         returns (uint256)

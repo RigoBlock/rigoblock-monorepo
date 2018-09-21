@@ -26,8 +26,8 @@ pragma experimental "v0.5.0";
 interface AuthorityFace {
 
     /*
-    * EVENTS
-    */
+     * EVENTS
+     */
     event AuthoritySet(address indexed authority);
     event WhitelisterSet(address indexed whitelister);
     event WhitelistedUser(address indexed target, bool approved);

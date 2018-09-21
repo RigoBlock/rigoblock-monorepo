@@ -32,8 +32,8 @@ import { Owned as Owned } from "../../utils/Owned/Owned.sol";
 contract Faucet is Owned {
 
     /*
-    * EVENTS
-    */
+     * EVENTS
+     */
     event Deposit(address indexed sender, uint256 value);
     event OneTokenSent(address indexed receiver);
     event FaucetOn(bool status);
@@ -47,8 +47,8 @@ contract Faucet is Owned {
     mapping(address => uint256) status;
 
     /*
-    * MODIFIERS
-    */
+     * MODIFIERS
+     */
     modifier faucetOn() {
         require(faucetStatus,"Faucet has to be on");
         _;
