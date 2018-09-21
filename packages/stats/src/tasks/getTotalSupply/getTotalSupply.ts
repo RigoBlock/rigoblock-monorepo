@@ -1,12 +1,12 @@
 import Web3 = require('web3')
-import protocol from '@rigoblock/contracts'
+import fetchContracts from '@rigoblock/contracts'
 import redis from '../../redis'
 import statsD from '../../statsd'
 import web3ErrorWrapper from '../web3ErrorWrapper'
 
 const task = async (job, web3: Web3) => {
   const { key, network, poolType } = job.data
-  const contractsMap = await protocol(network)
+  const contractsMap = await fetchContracts(network)
   const pools = await redis.hgetall(`${key}:${network}`)
   const poolAbi = contractsMap[poolType].abi
 

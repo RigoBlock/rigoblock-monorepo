@@ -1,7 +1,7 @@
 dapp: packages/dapp
 api: packages/api
 ganache-bootstrap: packages/ganache-bootstrap
-protocol: packages/protocol
+contracts: packages/contracts
 exchange-connector: packages/exchange-connector
 deployer: packages/deployer
 stats: packages/stats

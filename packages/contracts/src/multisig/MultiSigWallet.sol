@@ -280,7 +280,7 @@ contract MultiSigWallet {
     }
 
     /*
-  * INTERNAL FUNCTIONS
+     * INTERNAL FUNCTIONS
      */
     /// @dev Adds a new transaction to the transaction mapping, if transaction does not exist yet.
     /// @param destination Transaction target address.

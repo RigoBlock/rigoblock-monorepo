@@ -1,5 +1,5 @@
 const Web3 = require('web3')
-const protocol = require('@rigoblock/contracts').default
+const fetchContracts = require('@rigoblock/contracts').default
 const logger = require('./logger')
 
 module.exports = async network => {
@@ -10,7 +10,7 @@ module.exports = async network => {
   const web3 = new Web3(new Web3.providers.HttpProvider(network))
   const networkId = await web3.eth.net.getId()
   const accounts = await web3.eth.getAccounts()
-  const contractsMap = await protocol(networkId)
+  const contractsMap = await fetchContracts(networkId)
   const vaultFactoryInstance = new web3.eth.Contract(
     contractsMap['VaultFactory'].abi,
     contractsMap['VaultFactory'].address,

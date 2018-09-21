@@ -10,7 +10,7 @@
 | - | - |
 | [`Rigoblock DApp`](/packages/dapp)                  | Rigoblock DApp                                                     |
 | [`API`](/packages/api)                    | Rigoblock API               |
-| [`Rigoblock Protocol`](/packages/protocol)          | Rigoblock Protocol                                                 |
+| [`Rigoblock Contracts`](/packages/contracts)          | Rigoblock Contracts                                                 |
 | [`Deployer`](/packages/deployer)          | A package to compile and deploy our smart contracts                                       |
 | [`Ganache Bootstrap`](/packages/ganache-bootstrap)  | A bootstrapping package to deploy smart contracts and seed Ganache |
 | [`Stats`](/packages/stats)  | Data collection system |
@@ -41,7 +41,7 @@ Bootstrap all packages and install all their dependencies
 ```
 yarn bootstrap
 ```
-Build all packages in order. Ganache needs to be launched first as it is required for protocol contracts to be compiled. Optionally you can open the Ganache client instead of using the CLI.
+Build all packages in order. Ganache needs to be launched first as it is required for our contracts to be compiled. Optionally you can open the Ganache client instead of using the CLI.
 ```
 npx lerna run --loglevel silent --scope @rigoblock/dapp ganache &> /dev/null &
 yarn build

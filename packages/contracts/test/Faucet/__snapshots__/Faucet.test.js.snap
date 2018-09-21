@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` Faucet Faucet Contract - Faucet OFF and ON Correctly turns Faucet OFF and ON 1`] = `"VM Exception while processing transaction: revert Faucet has to be on"`;
+
+exports[` Faucet Faucet Contract - Faucet OFF and ON Correctly turns Faucet OFF and ON 2`] = `"VM Exception while processing transaction: revert Faucet has to be on"`;
+
+exports[` Faucet Faucet Contract - Faucet OFF and ON Correctly turns Faucet OFF and ON 3`] = `"VM Exception while processing transaction: revert Faucet has to be off"`;
+
+exports[` Faucet Faucet Contract - Faucet OFF and ON Non owner cannot turn faucet OFF/ON 1`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` Faucet Faucet Contract - Faucet OFF and ON Non owner cannot turn faucet OFF/ON 2`] = `"VM Exception while processing transaction: revert"`;
+
+exports[` Faucet Faucet Contract - drips 1 Token Correctly drips 1 Token 1`] = `"VM Exception while processing transaction: revert Required too early."`;

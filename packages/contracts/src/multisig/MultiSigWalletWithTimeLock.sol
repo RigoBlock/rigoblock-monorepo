@@ -114,7 +114,7 @@ contract MultiSigWalletWithTimeLock is
     }
 
     /*
-  * INTERNAL FUNCTIONS
+     * INTERNAL FUNCTIONS
      */
 
     /// @dev Sets the time of when a submission first passed.

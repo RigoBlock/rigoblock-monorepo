@@ -1,10 +1,15 @@
 {
-  "extends": "../../tsconfig",
   "include": [
     "src/**/*.ts"
   ],
   "compilerOptions": {
-    "target": "es5",
-    "typeRoots": ["node_modules/@0xproject/typescript-typings/types", "node_modules/@types"]
+    "module": "commonjs",
+    "target": "es6",
+    "lib": ["es2017", "dom"],
+    "noImplicitReturns": true,
+    "declaration": true,
+    "sourceMap": true,
+    "pretty": true,
+    "typeRoots": ["node_modules/@0xproject/typescript-typings/types", "node_modules/@types"],
   }
 }

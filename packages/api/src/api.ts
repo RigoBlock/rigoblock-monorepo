@@ -5,7 +5,7 @@ import * as Web3 from 'web3'
 import { ContractModels } from './contracts'
 import { InjectedWeb3Subprovider } from '@0xproject/subproviders'
 import { Web3Wrapper } from '@0xproject/web3-wrapper'
-import protocol from '@rigoblock/contracts'
+import fetchContracts from '@rigoblock/contracts'
 
 interface Web3Window extends Window {
   web3: Web3
@@ -45,7 +45,7 @@ class Api {
       )
     )
 
-    const contractsMap: Contract.ContractsMap = await protocol(networkId)
+    const contractsMap: Contract.ContractsMap = await fetchContracts(networkId)
     const contracts = new Contract()
     await contracts.init(web3, contractsMap)
     this.contract = contracts
