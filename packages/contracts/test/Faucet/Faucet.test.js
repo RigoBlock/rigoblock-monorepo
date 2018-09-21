@@ -1,18 +1,13 @@
 import { BigNumber } from 'bignumber.js'
 import { duration, increaseTimeTo } from '../helpers/increaseTime'
 import { latestTime } from '../helpers/latestTime'
-import assertRevert from '../helpers/assertRevert'
-// import utils from '../helpers/utils'
-// import web3 from '../web3'
 
 const contractName = 'Faucet'
-let faucet
-let rigoToken
-// let eventEmitted
-// let txHash
 const balance = 2000000000000000000000
 const amount = 3000000000000000000000
 const oneToken = 1000000000000000000
+let faucet
+let rigoToken
 
 describeContract(contractName, () => {
   beforeAll(async () => {
@@ -66,17 +61,12 @@ describeContract(contractName, () => {
         new BigNumber(faucetBalance).minus(oneToken).toFixed()
       )
 
-      //Check event was emitted
-      // let txReceipt = await web3.eth.getTransactionReceipt(txHash)
-      // eventEmitted = utils.getParamFromTxEvent(txReceipt, 'receiver', null, 'OneTokenSent')
-      // expect(eventEmitted).toBe(accounts[0])
-
       //check previous sender is now locked from requesting again
-      await assertRevert(
+      await expect(
         faucet.drip1Token.sendTransactionAsync({
           from: accounts[1]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       //advancing 48 hour in time
       let lastBlockTimestamp = await latestTime()
@@ -109,11 +99,11 @@ describeContract(contractName, () => {
       expect(faucetStatus).toBe(false)
 
       // Cannot turn faucet OFF again
-      await assertRevert(
+      await expect(
         faucet.turnFaucetOff.sendTransactionAsync({
           from: accounts[0]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       faucetStatus = await faucet.faucetStatus()
       expect(faucetStatus).toBe(false)
@@ -122,11 +112,11 @@ describeContract(contractName, () => {
       await rigoToken.transfer(faucet.address, balance)
 
       // Cannot drip if faucet is off
-      await assertRevert(
+      await expect(
         faucet.drip1Token.sendTransactionAsync({
           from: accounts[0]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       // Turn faucet ON
       await faucet.turnFaucetOn.sendTransactionAsync({
@@ -137,11 +127,11 @@ describeContract(contractName, () => {
       expect(faucetStatus).toBe(true)
 
       // Cannot turn faucet ON again
-      await assertRevert(
+      await expect(
         faucet.turnFaucetOn.sendTransactionAsync({
           from: accounts[0]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       faucetStatus = await faucet.faucetStatus()
       expect(faucetStatus).toBe(true)
@@ -149,18 +139,18 @@ describeContract(contractName, () => {
 
     it('Non owner cannot turn faucet OFF/ON', async () => {
       // Non owner cannot turn OFF
-      await assertRevert(
+      await expect(
         faucet.turnFaucetOff.sendTransactionAsync({
           from: accounts[1]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
 
       // Non owner cannot turn ON
-      await assertRevert(
+      await expect(
         faucet.turnFaucetOff.sendTransactionAsync({
           from: accounts[1]
         })
-      )
+      ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
 })

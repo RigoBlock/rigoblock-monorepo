@@ -1,6 +1,6 @@
 'use strict'
 const Web3 = require('web3')
-const protocol = require('@rigoblock/contracts').default
+const fetchContracts = require('@rigoblock/contracts').default
 // in this file you can append custom step methods to 'I' object
 
 const GANACHE_URL = 'http://localhost:8545'
@@ -8,7 +8,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_URL))
 const getContractsAndAccounts = async () => {
   const networkId = await web3.eth.net.getId()
   const accounts = await web3.eth.getAccounts()
-  const contracts = await protocol(networkId)
+  const contracts = await fetchContracts(networkId)
   return [accounts, contracts]
 }
 const defaultOptions = {
