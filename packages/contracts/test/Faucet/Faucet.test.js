@@ -5,8 +5,6 @@ import { latestTime } from '../helpers/latestTime'
 const contractName = 'Faucet'
 let faucet
 let rigoToken
-// let eventEmitted
-// let txHash
 const balance = 2000000000000000000000
 const amount = 3000000000000000000000
 const oneToken = 1000000000000000000
@@ -92,7 +90,7 @@ describeContract(contractName, () => {
         new BigNumber(faucetBalance).minus(oneToken).toFixed()
       )
 
-      //Check event was emitted
+      // TODO: add test for events. This is an example.
       // let txReceipt = await web3.eth.getTransactionReceipt(txHash)
       // eventEmitted = utils.getParamFromTxEvent(txReceipt, 'receiver', null, 'OneTokenSent')
       // expect(eventEmitted).toBe(accounts[0])
