@@ -1,11 +1,7 @@
 const Handlebars = require('handlebars')
 
-Handlebars.registerHelper('getAbi', (ctor, events, methods) => {
-  const abi = [ctor, ...events, ...methods]
-  const nuovo = JSON.stringify(abi, null, 2)
-  console.log(nuovo)
-  return nuovo
-})
+Handlebars.registerHelper('getAbi', (ctor, events, methods) =>
+  JSON.stringify([ctor, ...events, ...methods], null, 2)
+)
 
 const abiGen = require('@0xproject/abi-gen')
-
