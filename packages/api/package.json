@@ -12,7 +12,7 @@
     "tsc": "rm -rf dist/* && tsc --outDir './dist'",
     "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
-    "typechain": "rm -rf .tmp && node src/abi-extractor.js && typechain --force --outDir src/contracts/models '.tmp/*.json'"
+    "abi-gen": "rm -rf src/generated && ts-node abi-gen.ts --abis './abis/*.json' -o src/generated --template './template.handlebars' --partials './partials/*.handlebars'"
   },
   "files": [
     "dist"
@@ -30,6 +30,7 @@
     "@rigoblock/contracts": "^0.3.2",
     "@types/node": "^9.6.6",
     "bignumber.js": "^5.0.0",
+    "handlebars": "^4.0.12",
     "typechain": "^0.2.2",
     "web3": "0.20.6",
     "web3-provider-engine": "^14.0.5"
