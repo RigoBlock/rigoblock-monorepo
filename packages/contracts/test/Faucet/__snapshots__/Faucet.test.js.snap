@@ -11,3 +11,5 @@ exports[` Faucet Faucet Contract - Faucet OFF and ON Non owner cannot turn fauce
 exports[` Faucet Faucet Contract - Faucet OFF and ON Non owner cannot turn faucet OFF/ON 2`] = `"VM Exception while processing transaction: revert"`;
 
 exports[` Faucet Faucet Contract - drips 1 Token Correctly drips 1 Token 1`] = `"VM Exception while processing transaction: revert Required too early."`;
+
+exports[` Faucet Faucet Contract - receive and withdraw Correctly receive and withdraw tokens 1`] = `"VM Exception while processing transaction: revert"`;

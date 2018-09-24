@@ -3,11 +3,11 @@ import { duration, increaseTimeTo } from '../helpers/increaseTime'
 import { latestTime } from '../helpers/latestTime'
 
 const contractName = 'Faucet'
+let faucet
+let rigoToken
 const balance = 2000000000000000000000
 const amount = 3000000000000000000000
 const oneToken = 1000000000000000000
-let faucet
-let rigoToken
 
 describeContract(contractName, () => {
   beforeAll(async () => {
@@ -39,6 +39,35 @@ describeContract(contractName, () => {
     })
   })
 
+  describe('Faucet Contract - receive and withdraw', () => {
+    it('Correctly receive and withdraw tokens', async () => {
+      let faucetBalance
+
+      // Donor sends GRG to faucet
+      await rigoToken.transfer(faucet.address, amount)
+      faucetBalance = await rigoToken.balanceOf(faucet.address)
+      expect(new BigNumber(faucetBalance).toFixed()).toBe(
+        new BigNumber(amount).toFixed()
+      )
+
+      // Donor withdraws GRG from faucet
+      await faucet.withdraw.sendTransactionAsync(amount, {
+        from: accounts[0]
+      })
+      faucetBalance = await rigoToken.balanceOf(faucet.address)
+      expect(new BigNumber(faucetBalance).toFixed()).toBe(
+        new BigNumber(0).toFixed()
+      )
+
+      // Non owners cannot withdraw GRG from faucet
+      await expect(
+        faucet.withdraw.sendTransactionAsync(amount, {
+          from: accounts[1]
+        })
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
+  })
+
   describe('Faucet Contract - drips 1 Token', () => {
     it('Correctly drips 1 Token', async () => {
       // Donor sends GRG to faucet
@@ -60,6 +89,11 @@ describeContract(contractName, () => {
       expect(new BigNumber(faucetBalanceDrip).toFixed()).toBe(
         new BigNumber(faucetBalance).minus(oneToken).toFixed()
       )
+
+      // TODO: add test for events. This is an example.
+      // let txReceipt = await web3.eth.getTransactionReceipt(txHash)
+      // eventEmitted = utils.getParamFromTxEvent(txReceipt, 'receiver', null, 'OneTokenSent')
+      // expect(eventEmitted).toBe(accounts[0])
 
       //check previous sender is now locked from requesting again
       await expect(
