@@ -1,10 +1,6 @@
 async callAsync(
 {{> typed_params inputs=inputs}}
 ): Promise<{{> return_type outputs=outputs}}> {
-{{#if this.inputs.length}}
     return this.promisify(this.rawWeb3Contract.{{this.tsName}}, [{{> params inputs=inputs}}])
-{{else}}
-    return this.promisify(this.rawWeb3Contract.{{this.tsName}}, [])
-{{/if}}
 }
 

@@ -1,8 +1,17 @@
-import BaseContract from '../baseContract'
+import * as _ from 'lodash'
 import { BigNumber } from 'bignumber.js'
-import { BlockParam, BlockParamLiteral, CallData, ContractAbi, ContractArtifact, DecodedLogArgs, MethodAbi, Provider, TxData, TxDataPayable } from 'ethereum-types';
-import * as ethers from 'ethers';
-import * as _ from 'lodash';
+import {
+  BlockParam,
+  BlockParamLiteral,
+  CallData,
+  ContractAbi,
+  DecodedLogArgs,
+  MethodAbi,
+  Provider,
+  TxData,
+  TxDataPayable
+} from 'ethereum-types'
+import BaseContract from '../baseContract'
 
 const {{{contractName}}}Abi = {{{getAbi ctor events methods}}}
 
@@ -50,7 +59,7 @@ export class {{contractName}} extends BaseContract {
   public static address: string
   {{#each methods}}
     {{#this.constant}}
-    {{> call contractName=../contractName}}
+  {{> constantFunction contractName=../contractName}}
     {{/this.constant}}
     {{!-- {{^this.constant}}
     {{> tx contractName=../contractName}}
