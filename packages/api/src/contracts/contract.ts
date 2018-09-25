@@ -3,6 +3,7 @@ import { ContractExtension } from './contract-extension'
 import { ContractModels } from './'
 import { TypeChainContract } from './models/typechain-runtime'
 
+// abi-gen support
 class Contract extends ContractModels {
   async init(web3: Web3, contractsMap: Contract.ContractsMap) {
     const contractNames: string[] = Object.keys(contractsMap)
