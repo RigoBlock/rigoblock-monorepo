@@ -1,6 +1,5 @@
 import { GAS_ESTIMATE } from '../../constants'
 import { toBigNumber } from '../utils'
-import {BigNumber} from 'bignumber.js'
 
 const contractName = 'RigoToken'
 
@@ -20,15 +19,15 @@ describeContract(contractName, () => {
     }
   })
 
-  fdescribe('mintToken', () => {
+  describe('mintToken', () => {
     afterAll(async () => {
       // reset minting address
       await baseContracts[contractName].changeMintingAddress(inflationAddress)
     })
 
-    fit('mints new tokens and emits a TokenMinted event', async () => {
+    it('mints new tokens and emits a TokenMinted event', async () => {
       await baseContracts[contractName].changeMintingAddress(accounts[0])
-      const tokenAmount = new BigNumber(10)
+      const tokenAmount = '10'
       const txHash = await baseContracts[contractName].mintToken(
         accounts[0],
         tokenAmount
@@ -44,7 +43,7 @@ describeContract(contractName, () => {
       expect(events.length).toEqual(1)
       expect(events.pop().args).toEqual({
         recipient: accounts[0],
-        amount: 5
+        amount: toBigNumber(tokenAmount)
       })
     })
 
