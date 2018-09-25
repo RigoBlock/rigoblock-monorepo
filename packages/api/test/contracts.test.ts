@@ -115,11 +115,8 @@ describe('generated contract', () => {
           }
           const filterCallback = (err, event) =>
             err ? console.error(err) : console.log(event)
-          const events = await vaultFactory.allEvents(
-            filterOptions,
-            filterCallback
-          )
-          expect(events.callback).toEqual(filterCallback)
+          const events = await vaultFactory.allEvents(filterOptions)
+          expect(events)
         })
       })
       // describe('', () => {

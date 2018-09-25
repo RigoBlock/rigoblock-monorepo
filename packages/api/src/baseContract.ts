@@ -24,7 +24,18 @@ export default class BaseContract<Events> {
     return this.rawWeb3Contract.getPastEvents(eventName, options || {})
   }
 
-  public allEvents(options?: EventOptions): Promise<EventEmitter> {
-    return this.rawWeb3Contract.events.allEvents(options || {})
+  public allEvents(
+    options?: EventOptions,
+    cb?: Function
+  ): Promise<EventEmitter> {
+    return this.rawWeb3Contract.events.allEvents(options || {}, cb)
+  }
+  // TODO: write test for once
+  public once(
+    eventName: Events,
+    options?: EventOptions,
+    cb?: Function
+  ): Promise<EventEmitter> {
+    return this.rawWeb3Contract.once(eventName, options || {}, cb)
   }
 }
