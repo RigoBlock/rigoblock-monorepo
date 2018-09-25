@@ -36,11 +36,13 @@ describe('generated contract', () => {
         '0x7ce6e371085cb611fb46d5065397223ef2f952ff'
       )
     })
+
     it('constant method', async () => {
       const registry = '0xf7cBB0849d4a8ec5aB4650030FA776c00Eb52dA7'
       const res = await vaultFactory.getRegistry()
       expect(res).toEqual(registry)
     })
+
     it('createVault', async () => {
       const vaultName = Math.random()
         .toString(36)
@@ -58,12 +60,8 @@ describe('generated contract', () => {
         )
 
       extendedExpect(receipt.transactionHash).toBeHash()
-      const eventLog = await vaultFactory.getPastEvents(
-        VaultFactoryEvents.VaultCreated,
-        { fromBlock: 0, toBlock: 'latest' }
-      )
-      expect(eventLog[eventLog.length - 1].returnValues.name).toEqual(vaultName)
     })
+
     describe('payable methods', async () => {
       let vaultInstance
       beforeAll(async () => {
@@ -96,6 +94,40 @@ describe('generated contract', () => {
             obj.send({ ...options, gasPrice, gas: gasEstimate + 5000 })
           )
       })
+    })
+
+    describe('event functions', () => {
+      describe('getPastEvents', () => {
+        it('returns past logs for the specified event', async () => {
+          const eventLog = await vaultFactory.getPastEvents(
+            VaultFactoryEvents.VaultCreated,
+            { fromBlock: 0, toBlock: 'latest' }
+          )
+          expect(Array.isArray(eventLog)).toBe(true)
+        })
+      })
+      // TODO: improve the test if possible
+      describe('allEvents', () => {
+        it('returns an event emitter to subscribe to all events of the smart contracts', async () => {
+          const filterOptions = {
+            fromBlock: 0,
+            toBlock: 'latest'
+          }
+          const filterCallback = (err, event) =>
+            err ? console.error(err) : console.log(event)
+          const events = await vaultFactory.allEvents(
+            filterOptions,
+            filterCallback
+          )
+          expect(events.callback).toEqual(filterCallback)
+        })
+      })
+      // describe('', () => {
+      //   it('', async () => {})
+      // })
+      // describe('', () => {
+      //   it('', async () => {})
+      // })
     })
   })
 })

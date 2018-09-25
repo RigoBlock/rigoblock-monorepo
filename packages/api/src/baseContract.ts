@@ -1,3 +1,5 @@
+import { EventEmitter, EventLog } from 'web3/types'
+
 interface EventFilter {
   [key: string]: string
 }
@@ -15,7 +17,14 @@ export default class BaseContract<Events> {
     this.rawWeb3Contract = new web3.eth.Contract(abi, address)
   }
 
-  public async getPastEvents(eventName: Events, options?: EventOptions) {
+  public getPastEvents(
+    eventName: Events,
+    options?: EventOptions
+  ): Promise<EventLog[]> {
     return this.rawWeb3Contract.getPastEvents(eventName, options || {})
+  }
+
+  public allEvents(options?: EventOptions): Promise<EventEmitter> {
+    return this.rawWeb3Contract.events.allEvents(options || {})
   }
 }
