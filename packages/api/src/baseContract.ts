@@ -1,10 +1,10 @@
 import { EventEmitter, EventLog } from 'web3/types'
 
-interface EventFilter {
+export interface EventFilter {
   [key: string]: string
 }
 
-interface EventOptions {
+export interface EventOptions {
   filter?: EventFilter
   fromBlock?: number
   toBlock?: number

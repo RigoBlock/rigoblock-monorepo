@@ -1,5 +1,5 @@
 import Web3 = require('web3')
-import 'jest'
+import 'jest' // TODO: remove this
 import { Vault } from '../src/contracts/models/vault'
 import {
   VaultFactory,
@@ -119,12 +119,14 @@ describe('generated contract', () => {
           expect(events)
         })
       })
-      // describe('', () => {
+      // describe('once', () => {
       //   it('', async () => {})
       // })
-      // describe('', () => {
-      //   it('', async () => {})
-      // })
+      fdescribe('contract event', () => {
+        it('works', async () => {
+          const event = vaultFactory.VaultFactoryEvent()
+        })
+      })
     })
   })
 })

@@ -1,5 +1,6 @@
 public {{this.name}}Event(
-    {{> typed_params inputs=inputs}}
+  options?: EventOptions,
+  cb?: Function
 ) {
-    return this.rawWeb3Contract.events.{{this.name}}(({{> params inputs=inputs}}))
+    return this.rawWeb3Contract.events.{{this.name}}(options || {}, cb)
 }
