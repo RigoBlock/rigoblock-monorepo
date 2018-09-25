@@ -2,11 +2,13 @@
 import { BigNumber } from 'bignumber.js'
 import BaseContract from '../../baseContract'
 
+{{#if events}}
 export enum {{contractName}}Events {
     {{#each events}}
     {{name}} = '{{name}}',
     {{/each}}
 }
+{{/if}}
 
 export class {{contractName}} extends BaseContract<{{contractName}}Events> {
   public constructor(web3: any, address: string) {
@@ -30,6 +32,7 @@ export class {{contractName}} extends BaseContract<{{contractName}}Events> {
   }
 
   public static address: string
+
   {{#each methods}}
     {{#this.constant}}
   {{> constantFunction contractName=../contractName}}
@@ -38,6 +41,12 @@ export class {{contractName}} extends BaseContract<{{contractName}}Events> {
   {{> txFunction contractName=../contractName}}
     {{/this.constant}}
   {{/each}}
+  {{#if events}}
+    {{#each events}}
+    {{log this}}
+  {{> event contractName=../contractName}}
+    {{/each}}
+  {{/if}}
 
   static isDeployed() {
     return !!this.address
