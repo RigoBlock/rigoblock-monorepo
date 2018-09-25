@@ -64,7 +64,7 @@ describe('generated contract', () => {
 
       extendedExpect(receipt.transactionHash).toBeHash()
     })
-    fdescribe('payable methods', async () => {
+    describe('payable methods', async () => {
       let vaultInstance
       beforeAll(async () => {
         const vaultName = Math.random()
