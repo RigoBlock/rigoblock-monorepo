@@ -10,16 +10,22 @@
   "scripts": {
     "build": "npm run typechain && npm run tsc",
     "tsc": "rm -rf dist/* && tsc --outDir './dist'",
+    "test": "jest",
     "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
-    "typechain": "rm -rf .tmp && node src/abi-extractor.js && typechain --force --outDir src/contracts/models '.tmp/*.json'"
+    "abi-gen": "node src/abi-extractor.js && rm -rf src/generated && ts-node abi-gen.ts --abis './.tmp/*.json' -o src/generated --template './template.handlebars' --partials './partials/*.handlebars'"
   },
   "files": [
     "dist"
   ],
   "devDependencies": {
+    "@0xproject/abi-gen": "^1.0.9",
+    "@types/jest": "^23.3.2",
+    "bignumber.js": "^7.2.1",
     "chalk": "^2.4.1",
     "eslint-plugin-typescript": "^0.12.0",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.1",
     "typescript": "^3.0.1",
     "typescript-eslint-parser": "^18.0.0"
   },
@@ -30,8 +36,25 @@
     "@rigoblock/contracts": "^0.3.2",
     "@types/node": "^9.6.6",
     "bignumber.js": "^5.0.0",
+    "handlebars": "^4.0.12",
     "typechain": "^0.2.2",
-    "web3": "0.20.6",
+    "web3": "1.0.0-beta.36",
     "web3-provider-engine": "^14.0.5"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/test/setupTests.ts",
+    "roots": [
+      "<rootDir>/test"
+    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ]
   }
 }
