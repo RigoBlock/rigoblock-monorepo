@@ -3,13 +3,4 @@ export default class BaseContract {
   constructor(web3: any, address: string, abi: any) {
     this.rawWeb3Contract = new web3.eth.Contract(abi, address)
   }
-
-  protected async promisify(func: any, args: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      func(
-        ...args,
-        (err: any, data: any) => (err ? reject(err) : resolve(data))
-      )
-    })
-  }
 }

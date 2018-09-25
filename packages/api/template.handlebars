@@ -61,10 +61,11 @@ export class {{contractName}} extends BaseContract {
     {{#this.constant}}
   {{> constantFunction contractName=../contractName}}
     {{/this.constant}}
-    {{!-- {{^this.constant}}
-    {{> tx contractName=../contractName}}
-    {{/this.constant}} --}}
+    {{^this.constant}}
+  {{> txFunction contractName=../contractName}}
+    {{/this.constant}}
   {{/each}}
+
   static isDeployed() {
     return !!this.address
   }

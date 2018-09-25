@@ -1,6 +1,0 @@
-async callAsync(
-{{> typed_params inputs=inputs}}
-): Promise<{{> return_type outputs=outputs}}> {
-    return this.promisify(this.rawWeb3Contract.{{this.tsName}}, [{{> params inputs=inputs}}])
-}
-
