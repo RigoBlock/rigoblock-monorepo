@@ -13,8 +13,7 @@
     "test": "jest",
     "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
-    "gen": "npm run abi-gen && eslint src/generated --ext ts --fix",
-    "abi-gen": "rm -rf src/generated && ts-node abi-gen.ts --abis './abis/*.json' -o src/generated --template './template.handlebars' --partials './partials/*.handlebars'"
+    "abi-gen": "node src/abi-extractor.js && rm -rf src/generated && ts-node abi-gen.ts --abis './.tmp/*.json' -o src/generated --template './template.handlebars' --partials './partials/*.handlebars'"
   },
   "files": [
     "dist"
