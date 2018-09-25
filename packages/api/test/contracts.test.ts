@@ -37,20 +37,11 @@ describe('generated contract', () => {
       const res = await vaultFactory.getRegistry()
       expect(res).toEqual(registry)
     })
-    it('constant function', async () => {
-      const result = {
-        '0': '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
-        '1': 'VF 0.4.2',
-        '2': '0',
-        vaultDao: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
-        version: 'VF 0.4.2',
-        nextVaultId: '0'
-      }
-      const res = await vaultFactory.getStorage()
-      expect(res).toEqual(result)
-    })
     it('createVault', async () => {
-      const vaultOptions = ['testVaultam', 'ASD']
+      const vaultName = Math.random()
+        .toString(36)
+        .substring(2, 7)
+      const vaultOptions = [vaultName, 'ASD']
       const gasPrice = await web3.eth.getGasPrice()
       const gasEstimate = await vaultFactory // 2538415
         .createVault(...vaultOptions)
