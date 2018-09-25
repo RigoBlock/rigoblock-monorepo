@@ -1,6 +1,6 @@
 coverage
 .tmp
-src/generated
+src/contracts/models
 dist
 lib
 node_modules

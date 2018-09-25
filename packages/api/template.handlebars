@@ -1,13 +1,6 @@
 /* eslint-disable */
 import { BigNumber } from 'bignumber.js'
-import BaseContract from '../baseContract'
-
-{{!-- TODO: add events --}}
-{{!-- {{#if events}}
-export type {{contractName}}EventArgs =
-{{#each events}}
-    | {{@root.contractName}}{{name}}EventArgs{{#if @last}};{{/if}}
-{{/each}}
+import BaseContract from '../../baseContract'
 
 export enum {{contractName}}Events {
     {{#each events}}
@@ -15,12 +8,7 @@ export enum {{contractName}}Events {
     {{/each}}
 }
 
-{{#each events}}
-{{> event}}
-
-{{/each}}
-{{/if}} --}}
-export class {{contractName}} extends BaseContract {
+export class {{contractName}} extends BaseContract<{{contractName}}Events> {
   public constructor(web3: any, address: string) {
     const abi = {{{getAbi ctor events methods}}}
     super(web3, address, abi);

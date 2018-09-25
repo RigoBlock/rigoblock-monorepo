@@ -1,6 +1,10 @@
 import Web3 = require('web3')
-import { Vault } from '../src/generated/vault'
-import { VaultFactory } from '../src/generated/vault_factory'
+import 'jest'
+import { Vault } from '../src/contracts/models/vault'
+import {
+  VaultFactory,
+  VaultFactoryEvents
+} from '../src/contracts/models/vault_factory'
 
 describe('generated contract', () => {
   let web3
@@ -54,6 +58,11 @@ describe('generated contract', () => {
         )
 
       extendedExpect(receipt.transactionHash).toBeHash()
+      const eventLog = await vaultFactory.getPastEvents(
+        VaultFactoryEvents.VaultCreated,
+        { fromBlock: 0, toBlock: 'latest' }
+      )
+      expect(eventLog[eventLog.length - 1].returnValues.name).toEqual(vaultName)
     })
     describe('payable methods', async () => {
       let vaultInstance
