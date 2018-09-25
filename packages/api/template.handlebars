@@ -1,22 +1,7 @@
-import * as _ from 'lodash'
 import { BigNumber } from 'bignumber.js'
-import {
-  BlockParam,
-  BlockParamLiteral,
-  CallData,
-  ContractAbi,
-  DecodedLogArgs,
-  MethodAbi,
-  Provider,
-  TxData,
-  TxDataPayable
-} from 'ethereum-types'
 import BaseContract from '../baseContract'
 
-const {{{contractName}}}Abi = {{{getAbi ctor events methods}}}
-
-{{!-- {{log methods}} --}}
-
+{{!-- TODO: add events --}}
 {{!-- {{#if events}}
 export type {{contractName}}EventArgs =
 {{#each events}}
@@ -35,10 +20,9 @@ export enum {{contractName}}Events {
 {{/each}}
 {{/if}} --}}
 export class {{contractName}} extends BaseContract {
-  private abi
   public constructor(web3: any, address: string) {
-    super(web3, address, {{{contractName}}}Abi);
-    this.abi = {{{contractName}}}Abi
+    const abi = {{{getAbi ctor events methods}}}
+    super(web3, address, abi);
   }
 
   static async createAndValidate(
