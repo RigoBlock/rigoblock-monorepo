@@ -25,9 +25,21 @@ describe('generated contract', () => {
       )
     })
     it('constant method', async () => {
+      const registry = '0xf7cBB0849d4a8ec5aB4650030FA776c00Eb52dA7'
       const res = await vaultFactory.getRegistry()
-      const asd = await res.call()
-      console.log(asd)
+      expect(res).toEqual(registry)
+    })
+    it('constant function', async () => {
+      const result = {
+        '0': '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
+        '1': 'VF 0.4.2',
+        '2': '0',
+        vaultDao: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
+        version: 'VF 0.4.2',
+        nextVaultId: '0'
+      }
+      const res = await vaultFactory.getStorage()
+      expect(res).toEqual(result)
     })
   })
 })
