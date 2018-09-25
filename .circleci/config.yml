@@ -389,28 +389,28 @@ workflows:
       - test-contracts:
           requires:
             - build-contracts
-      - build-api:
-          requires:
-            - build-contracts
-      - build-dapp:
-          requires:
-            - build-api
-      - test-feature-dapp:
-          requires:
-            - build-dapp
-      - deploy-dapp-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
-      - deploy-storybook-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
+      # - build-api:
+      #     requires:
+      #       - build-contracts
+      # - build-dapp:
+      #     requires:
+      #       - build-api
+      # - test-feature-dapp:
+      #     requires:
+      #       - build-dapp
+      # - deploy-dapp-staging:
+      #     requires:
+      #       - test-unit-dapp
+      #       - build-dapp
+      #       - test-feature-dapp
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy-storybook-staging:
+      #     requires:
+      #       - test-unit-dapp
+      #       - build-dapp
+      #       - test-feature-dapp
+      #     filters:
+      #       branches:
+      #         only: master
