@@ -1,3 +1,4 @@
+import Web3 = require('web3')
 import { EventEmitter, EventLog } from 'web3/types'
 
 export interface EventFilter {
@@ -13,7 +14,7 @@ export interface EventOptions {
 
 export default class BaseContract<Events> {
   public readonly rawWeb3Contract: any
-  constructor(web3: any, address: string, abi: any) {
+  constructor(web3: Web3, address: string, abi: any) {
     this.rawWeb3Contract = new web3.eth.Contract(abi, address)
   }
 

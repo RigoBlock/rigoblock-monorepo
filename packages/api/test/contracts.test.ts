@@ -1,5 +1,6 @@
 import Web3 = require('web3')
 import 'jest' // TODO: remove this
+import { EventEmitter } from 'events'
 import { Vault } from '../src/contracts/models/vault'
 import {
   VaultFactory,
@@ -12,7 +13,7 @@ describe('generated contract', () => {
   let accounts
   let txOptions
   beforeAll(async () => {
-    web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+    web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8545'))
     accounts = await web3.eth.getAccounts()
     extendedExpect = expect as any
   })
@@ -97,6 +98,7 @@ describe('generated contract', () => {
     })
 
     describe('event functions', () => {
+      class WebsocketMock extends EventEmitter {}
       describe('getPastEvents', () => {
         it('returns past logs for the specified event', async () => {
           const eventLog = await vaultFactory.getPastEvents(
@@ -107,7 +109,11 @@ describe('generated contract', () => {
         })
       })
       // TODO: improve the test if possible
-      describe('allEvents', () => {
+      fdescribe('allEvents', () => {
+        // beforeEach(async () => {
+        //   jest.resetModules()
+        //   jest.doMock()
+        // })
         it('returns an event emitter to subscribe to all events of the smart contracts', async () => {
           const filterOptions = {
             fromBlock: 0,
@@ -115,16 +121,24 @@ describe('generated contract', () => {
           }
           const filterCallback = (err, event) =>
             err ? console.error(err) : console.log(event)
-          const events = await vaultFactory.allEvents(filterOptions)
-          expect(events)
+          const events = await vaultFactory.allEvents(
+            filterOptions,
+            filterCallback
+          )
+          console.log(events.options.requestManager)
         })
       })
       // describe('once', () => {
       //   it('', async () => {})
       // })
-      fdescribe('contract event', () => {
+      describe.skip('contract event', () => {
         it('works', async () => {
-          const event = vaultFactory.VaultFactoryEvent()
+          const event = vaultFactory.VaultCreatedEvent({
+            fromBlock: 0,
+            toBlock: 'latest'
+          })
+          console.log(event)
+          expect(event)
         })
       })
     })

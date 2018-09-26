@@ -12,8 +12,12 @@
     "tsc": "rm -rf dist/* && tsc --outDir './dist'",
     "test": "jest",
     "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
+    "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
     "abi-gen": "rm -rf src/contracts/models && ts-node abi-gen.ts --abis './.tmp/*.json' -o src/contracts/models --template './template.handlebars' --partials './partials/*.handlebars'"
+  },
+  "config": {
+    "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
   },
   "files": [
     "dist"
@@ -21,6 +25,7 @@
   "devDependencies": {
     "@0xproject/abi-gen": "^1.0.9",
     "@types/jest": "^23.3.2",
+    "@types/web3": "^1.0.6",
     "bignumber.js": "^7.2.1",
     "chalk": "^2.4.1",
     "eslint-plugin-typescript": "^0.12.0",
@@ -36,6 +41,7 @@
     "@rigoblock/contracts": "^0.3.2",
     "@types/node": "^9.6.6",
     "bignumber.js": "^5.0.0",
+    "ganache-cli": "7.0.0-beta.0",
     "handlebars": "^4.0.12",
     "typechain": "^0.2.2",
     "web3": "1.0.0-beta.36",
