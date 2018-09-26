@@ -10,10 +10,18 @@ export enum {{contractName}}Events {
 }
 {{/if}}
 
+{{#if events}}
 export class {{contractName}} extends BaseContract<{{contractName}}Events> {
-  public constructor(web3: any, address: string) {
+    public constructor(web3: any, address: string) {
+      super()
+{{else}}
+export class {{contractName}} {
+    public rawWeb3Contract: any
+    public constructor(web3: any, address: string) {
+{{/if}}
+
     const abi = {{{getAbi ctor events methods}}}
-    super(web3, address, abi);
+    this.rawWeb3Contract = new web3.eth.Contract(abi, address)
   }
 
   static async createAndValidate(

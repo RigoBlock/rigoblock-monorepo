@@ -13,10 +13,7 @@ export interface EventOptions {
 }
 
 export default class BaseContract<Events> {
-  public readonly rawWeb3Contract: any
-  constructor(web3: Web3, address: string, abi: any) {
-    this.rawWeb3Contract = new web3.eth.Contract(abi, address)
-  }
+  public rawWeb3Contract: any
 
   public getPastEvents(
     eventName: Events,
