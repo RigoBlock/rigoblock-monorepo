@@ -32,18 +32,14 @@ class Api {
         rpcUrl
       })
     )
-    console.log(this.engine)
     this.web3 = new Web3(this.engine)
-
     const networkId = await newWeb3.eth.net.getId()
     const contractsMap: Contract.ContractsMap = await fetchContracts(networkId)
     const contracts = new Contract()
     await contracts.init(contractsMap)
     this.contract = contracts
 
-    await this.startEngine().catch(err => {
-      console.error('Err', err)
-    })
+    await this.startEngine().catch(err => console.error(err))
 
     return this
   }

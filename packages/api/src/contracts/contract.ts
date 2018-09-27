@@ -2,7 +2,6 @@ import toSnakeCase = require('to-snake-case')
 import { ContractModels } from './'
 import Web3Contract from 'web3/eth/contract'
 
-// abi-gen support
 class Contract extends ContractModels {
   async init(contractsMap: Contract.ContractsMap) {
     const contractNames: string[] = Object.keys(contractsMap)
