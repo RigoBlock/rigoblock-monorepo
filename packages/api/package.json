@@ -9,8 +9,8 @@
   },
   "scripts": {
     "build": "rm -rf dist/* && tsc --outDir './dist'",
+    "build:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "test": "jest",
-    "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
     "abi-gen": "rm -rf src/contracts/models && ts-node abi-gen.ts --abis './.tmp/*.json' -o src/contracts/models --template './template.handlebars' --partials './partials/*.handlebars'"
