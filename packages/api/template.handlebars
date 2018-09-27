@@ -1,29 +1,28 @@
 /* eslint-disable */
 import { BigNumber } from 'bignumber.js'
-import BaseContract from '../baseContract'
+import BaseContract, { EventOptions } from '../../baseContract'
+import { TransactionObject } from 'web3/eth/types'
 
-{{!-- TODO: add events --}}
-{{!-- {{#if events}}
-export type {{contractName}}EventArgs =
-{{#each events}}
-    | {{@root.contractName}}{{name}}EventArgs{{#if @last}};{{/if}}
-{{/each}}
-
+{{#if events}}
 export enum {{contractName}}Events {
     {{#each events}}
     {{name}} = '{{name}}',
     {{/each}}
 }
+{{/if}}
 
-{{#each events}}
-{{> event}}
+{{#if events}}
+export class {{contractName}} extends BaseContract<{{contractName}}Events> {
+    public constructor(web3: any, address: string) {
+      super()
+{{else}}
+export class {{contractName}} {
+    public rawWeb3Contract: any
+    public constructor(web3: any, address: string) {
+{{/if}}
 
-{{/each}}
-{{/if}} --}}
-export class {{contractName}} extends BaseContract {
-  public constructor(web3: any, address: string) {
     const abi = {{{getAbi ctor events methods}}}
-    super(web3, address, abi);
+    this.rawWeb3Contract = new web3.eth.Contract(abi, address)
   }
 
   static async createAndValidate(
@@ -42,6 +41,7 @@ export class {{contractName}} extends BaseContract {
   }
 
   public static address: string
+
   {{#each methods}}
     {{#this.constant}}
   {{> constantFunction contractName=../contractName}}
@@ -50,6 +50,11 @@ export class {{contractName}} extends BaseContract {
   {{> txFunction contractName=../contractName}}
     {{/this.constant}}
   {{/each}}
+  {{#if events}}
+    {{#each events}}
+  {{> event contractName=../contractName}}
+    {{/each}}
+  {{/if}}
 
   static isDeployed() {
     return !!this.address

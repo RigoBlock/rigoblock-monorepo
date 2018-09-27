@@ -1,5 +1,6 @@
-export interface {{@root.contractName}}{{name}}EventArgs extends DecodedLogArgs {
-    {{#each inputs}}
-    {{name}}: {{#returnType type components}}{{/returnType}};
-    {{/each}}
+public {{this.name}}Event(
+  options?: EventOptions,
+  cb?: Function
+) {
+    return this.rawWeb3Contract.events.{{this.name}}(options || {}, cb)
 }
