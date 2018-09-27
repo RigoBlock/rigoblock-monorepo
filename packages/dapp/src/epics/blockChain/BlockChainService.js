@@ -1,5 +1,6 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concat'
+import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
@@ -43,11 +44,8 @@ class BlockChainService {
     return timer(0, 1000, this.scheduler)
       .exhaustMap(() =>
         zip(
-          fromPromise(this.api.web3.getNodeVersionAsync(), this.scheduler),
-          fromPromise(
-            this.api.web3.getAvailableAddressesAsync(),
-            this.scheduler
-          )
+          fromPromise(this.api.web3.eth.getNodeInfo(), this.scheduler),
+          fromPromise(this.api.web3.eth.getAccounts(), this.scheduler)
         )
       )
       .map(([nodeVersion, accounts]) => {
@@ -75,6 +73,7 @@ class BlockChainService {
   }
 
   init() {
+    console.log(this.api)
     const return$ = fromPromise(this.api.init(), this.scheduler)
       .mapTo(blockChainActions.blockChainInit())
       .merge(this.errorListener())
@@ -93,28 +92,16 @@ class BlockChainService {
     fromBlock = fromBlock || 0
     const VaultEventful = this.api.contract.VaultEventful
     const allVaultEvents = fromPromise(
-      VaultEventful.createAndValidate(
-        this.api.web3._web3,
-        VaultEventful.address
-      ),
+      VaultEventful.createAndValidate(this.api.web3, VaultEventful.address),
       this.scheduler
     )
       .mergeMap(vaultEventful =>
-        Observable.create(observer => {
-          const events = vaultEventful.rawWeb3Contract.allEvents({
+        fromPromise(
+          vaultEventful.getPastEvents('allEvents', {
             fromBlock,
             toBlock
           })
-          events.get((err, events) => {
-            if (err) {
-              return observer.error(err)
-            }
-            observer.next(events)
-            return observer.complete()
-          })
-          // we are passing an empty callback so that the function uses web3's sendAsync method
-          return () => events.stopWatching(() => {})
-        })
+        )
       )
       .mergeMap(events => from(events))
     const filteredBlocks = this._filterBlocksByAccounts(VAULT, allVaultEvents)
@@ -127,20 +114,21 @@ class BlockChainService {
     fromBlock = fromBlock || 0
     const allVaultEvents = fromPromise(
       this.api.contract.VaultEventful.createAndValidate(
-        this.api.web3._web3,
+        this.api.web3,
         this.api.contract.VaultEventful.address
       ),
       this.scheduler
     ).mergeMap(vaultEventful => {
       return Observable.create(observer => {
-        const events = vaultEventful.rawWeb3Contract.allEvents({
-          fromBlock,
-          toBlock
-        })
-        events.watch((err, events) => {
-          return err ? observer.error(err) : observer.next(events)
-        })
-        return () => events.stopWatching(() => {})
+        const events = vaultEventful.allEvents(
+          {
+            fromBlock,
+            toBlock
+          },
+          (err, events) => (err ? observer.error(err) : observer.next(events))
+        )
+        console.log(events)
+        return () => events.unsubscribe()
       })
     })
     return this.wrapError(this._filterBlocksByAccounts(VAULT, allVaultEvents))
@@ -149,7 +137,7 @@ class BlockChainService {
   _filterBlocksByAccounts(label, obs) {
     return obs
       .map(block => {
-        const account = Object.values(block.args).reduce(
+        const account = Object.values(block.returnValues).reduce(
           (accountInvolved, blockAcc) =>
             this.accounts.has(blockAcc) ? blockAcc : accountInvolved,
           null
@@ -159,9 +147,12 @@ class BlockChainService {
       .filter(block => !!block)
       .mergeMap(block => {
         return fromPromise(
-          this.api.web3.getBlockTimestampAsync(block.blockNumber),
+          this.api.web3.eth.getBlock(block.blockNumber),
           this.scheduler
-        ).map(timestamp => ({ ...block, timestamp: timestamp * 1000 }))
+        ).map(retrievedBlock => ({
+          ...block,
+          timestamp: retrievedBlock.timestamp * 1000
+        }))
       })
       .map(decoratedBlock => {
         const { account, ...block } = decoratedBlock

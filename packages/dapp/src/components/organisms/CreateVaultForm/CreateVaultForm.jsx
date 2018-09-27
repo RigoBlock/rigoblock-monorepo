@@ -50,7 +50,7 @@ const asyncValidate = async values => {
   const parsedValues = parseFormValues(values)
   const vaultExistError = { vaultName: 'Vault already exists.' }
   const registry = await api.contract.DragoRegistry.createAndValidate(
-    api.web3._web3,
+    api.web3,
     api.contract.DragoRegistry.address
   )
   try {

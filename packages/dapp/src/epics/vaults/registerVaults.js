@@ -26,22 +26,22 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
     .mergeMap(action => {
       const registry = api.contract.DragoRegistry
       return fromPromise(
-        registry.createAndValidate(api.web3._web3, registry.address)
+        registry.createAndValidate(api.web3, registry.address)
       ).mergeMap(registry => {
-        const address = action.payload.block.args.vault
+        const address = action.payload.block.returnValues.vault
         const account = action.payload.account
-        return fromPromise(registry.fromAddress(address), ts).map(
-          vaultData => ({ account, address, vaultData })
-        )
+        return fromPromise(registry.fromAddress(address), ts).map(vaultData => {
+          return { account, address, vaultData }
+        })
       })
     })
     .map(
-      ({ account, address, vaultData: [id, name, symbol, , owner, group] }) =>
-        vaultActions.registerVault({
+      ({ account, address, vaultData: { id, name, symbol, owner, group } }) => {
+        return vaultActions.registerVault({
           account,
           vaultData: {
             [address]: {
-              id: id.toNumber(),
+              id: parseInt(id),
               name,
               symbol,
               owner,
@@ -49,6 +49,7 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
             }
           }
         })
+      }
     )
   return merge(action$1, action$2)
 }

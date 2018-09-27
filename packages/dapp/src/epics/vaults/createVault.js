@@ -24,7 +24,7 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
     ({ payload: { accountNumber, vaultName, vaultSymbol } }) =>
       fromPromise(
         api.contract.VaultFactory.createAndValidate(
-          api.web3._web3,
+          api.web3,
           api.contract.VaultFactory.address
         ),
         ts

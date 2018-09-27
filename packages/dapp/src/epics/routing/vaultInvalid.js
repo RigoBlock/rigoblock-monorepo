@@ -17,7 +17,7 @@ const vaultInvalidEpic = (action$, store, ts = Scheduler.async) =>
         type === LOCATION_CHANGE && VAULT_ID_REGEXP.test(payload.pathname)
     )
     .mergeMap(({ payload }) =>
-      fromPromise(api.web3.getAvailableAddressesAsync(), ts)
+      fromPromise(api.web3.eth.getAccounts(), ts)
         .map(([account]) => {
           const vaultId = payload.pathname.match(VAULT_ID_REGEXP).pop()
           const vaults = get(
