@@ -389,9 +389,9 @@ workflows:
       - test-contracts:
           requires:
             - build-contracts
-      # - build-api:
-      #     requires:
-      #       - build-contracts
+      - build-api:
+          requires:
+            - build-contracts
       # - build-dapp:
       #     requires:
       #       - build-api
