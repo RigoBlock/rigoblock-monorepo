@@ -24,7 +24,6 @@ class Api {
   }
 
   async init(web3: Web3 = window.web3, rpcUrl = 'http://localhost:8545') {
-    const newWeb3 = new Web3(web3.currentProvider)
     this.engine = new ProviderEngine()
     this.engine.addProvider(new SignerSubprovider(<any>web3.currentProvider))
     this.engine.addProvider(
@@ -33,7 +32,7 @@ class Api {
       })
     )
     this.web3 = new Web3(this.engine)
-    const networkId = await newWeb3.eth.net.getId()
+    const networkId = await this.web3.eth.net.getId()
     const contractsMap: Contract.ContractsMap = await fetchContracts(networkId)
     const contracts = new Contract()
     await contracts.init(contractsMap)
