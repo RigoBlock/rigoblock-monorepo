@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@0xproject/subproviders": "^2.0.5",
-    "@rigoblock/contracts": "^0.3.3",
+    "@rigoblock/contracts": "^0.3.2",
     "@types/node": "^10.11.0",
     "bignumber.js": "^7.2.1",
     "ganache-cli": "7.0.0-beta.0",
