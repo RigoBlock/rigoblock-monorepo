@@ -1,4 +1,3 @@
-import Web3 = require('web3')
 import { EventEmitter, EventLog } from 'web3/types'
 
 export interface EventFilter {
@@ -8,7 +7,7 @@ export interface EventFilter {
 export interface EventOptions {
   filter?: EventFilter
   fromBlock?: number
-  toBlock?: number
+  toBlock?: number | 'latest'
   topics?: string[]
 }
 
@@ -28,7 +27,7 @@ export default class BaseContract<Events> {
   ): Promise<EventEmitter> {
     return this.rawWeb3Contract.events.allEvents(options || {}, cb)
   }
-  // TODO: write test for once
+
   public once(
     eventName: Events,
     options?: EventOptions,

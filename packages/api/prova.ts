@@ -52,10 +52,10 @@ const getData = async () => {
   }
   const filterCallback = (err, event) =>
     err ? console.error(err) : console.log(event)
-  const events = await vaultFactory.VaultCreatedEvent(
-    filterOptions,
-    filterCallback
-  )
+  const events = await vaultFactory.VaultCreatedEvent(filterOptions, undefined)
+  events.on('data', function(event) {
+    console.log(event) // same results as the optional callback above
+  })
   // ---------------------
   const vaultName = Math.random()
     .toString(36)
@@ -65,10 +65,10 @@ const getData = async () => {
   }
   const gasPrice = await web3.eth.getGasPrice()
   const gasEstimate = await vaultFactory
-    .createVault('staminchia', 'ASD')
+    .createVault(vaultName, 'ASD')
     .then(obj => obj.estimateGas(txOptions))
   const receipt = await vaultFactory
-    .createVault('staminchia', 'ASD')
+    .createVault(vaultName, 'ASD')
     .then(obj => obj.send({ ...txOptions, gasPrice, gas: gasEstimate + 5000 }))
 }
 
