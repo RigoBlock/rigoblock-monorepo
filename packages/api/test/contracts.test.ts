@@ -54,7 +54,6 @@ describe('generated contract', () => {
           const gasEstimate = await vaultFactory // 2538415
             .createVault(...vaultOptions)
             .then(obj => {
-              console.log('OB J', obj)
               return obj.estimateGas(txOptions)
             })
           const receipt = await vaultFactory
