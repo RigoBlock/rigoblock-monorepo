@@ -1,51 +1,41 @@
-import { Authority } from './models/Authority'
-import { Distribution } from './models/Distribution'
-import { Drago } from './models/Drago'
-import { DragoEventful } from './models/DragoEventful'
-import { DragoFactory } from './models/DragoFactory'
-import { DragoRegistry } from './models/DragoRegistry'
-import { ERC20 } from './models/ERC20'
-import { Inflation } from './models/Inflation'
-import { Migrations } from './models/Migrations'
-import { Owned } from './models/Owned'
-import { OwnedUninitialized } from './models/OwnedUninitialized'
-import { ProofOfPerformance } from './models/ProofOfPerformance'
-import { RigoToken } from './models/RigoToken'
-import { UnlimitedAllowanceToken } from './models/UnlimitedAllowanceToken'
-import { Vault } from './models/Vault'
-import { VaultEventful } from './models/VaultEventful'
-import { VaultFactory } from './models/VaultFactory'
-
-// Custom extension
-import { ContractExtension } from './contract-extension'
-
-export type EnhancedContract<T> = T & typeof ContractExtension
+import { Authority } from './models/authority'
+import { Distribution } from './models/distribution'
+import { Drago } from './models/drago'
+import { DragoEventful } from './models/drago_eventful'
+import { DragoFactory } from './models/drago_factory'
+import { DragoRegistry } from './models/drago_registry'
+import { ERC20 } from './models/erc20'
+import { Inflation } from './models/inflation'
+import { Migrations } from './models/migrations'
+import { Owned } from './models/owned'
+import { OwnedUninitialized } from './models/owned_uninitialized'
+import { ProofOfPerformance } from './models/proof_of_performance'
+import { RigoToken } from './models/rigo_token'
+import { UnlimitedAllowanceToken } from './models/unlimited_allowance_token'
+import { Vault } from './models/vault'
+import { VaultEventful } from './models/vault_eventful'
+import { VaultFactory } from './models/vault_factory'
 
 // typeof Authority & Authority = needed to expose all static methods and
 // instance methods of the Authority contract
 
 export abstract class ContractModels {
-  Authority: EnhancedContract<typeof Authority & Authority>
-  ERC20: EnhancedContract<typeof ERC20 & ERC20>
-  RigoToken: EnhancedContract<typeof RigoToken & RigoToken>
-  Distribution: EnhancedContract<typeof Distribution & Distribution>
-  Inflation: EnhancedContract<typeof Inflation & Inflation>
-  UnlimitedAllowanceToken: EnhancedContract<
-    typeof UnlimitedAllowanceToken & UnlimitedAllowanceToken
-  >
-  Drago: EnhancedContract<typeof Drago & Drago>
-  Migrations: EnhancedContract<typeof Migrations & Migrations>
-  Vault: EnhancedContract<typeof Vault & Vault>
-  DragoEventful: EnhancedContract<typeof DragoEventful & DragoEventful>
-  Owned: EnhancedContract<typeof Owned & Owned>
-  VaultEventful: EnhancedContract<typeof VaultEventful & VaultEventful>
-  DragoFactory: EnhancedContract<typeof DragoFactory & DragoFactory>
-  OwnedUninitialized: EnhancedContract<
-    typeof OwnedUninitialized & OwnedUninitialized
-  >
-  VaultFactory: EnhancedContract<typeof VaultFactory & VaultFactory>
-  DragoRegistry: EnhancedContract<typeof DragoRegistry & DragoRegistry>
-  ProofOfPerformance: EnhancedContract<
-    typeof ProofOfPerformance & ProofOfPerformance
-  >
+  Authority: typeof Authority & Authority
+  ERC20: typeof ERC20 & ERC20
+  RigoToken: typeof RigoToken & RigoToken
+  Distribution: typeof Distribution & Distribution
+  Inflation: typeof Inflation & Inflation
+  UnlimitedAllowanceToken: typeof UnlimitedAllowanceToken &
+    UnlimitedAllowanceToken
+  Drago: typeof Drago & Drago
+  Migrations: typeof Migrations & Migrations
+  Vault: typeof Vault & Vault
+  DragoEventful: typeof DragoEventful & DragoEventful
+  Owned: typeof Owned & Owned
+  VaultEventful: typeof VaultEventful & VaultEventful
+  DragoFactory: typeof DragoFactory & DragoFactory
+  OwnedUninitialized: typeof OwnedUninitialized & OwnedUninitialized
+  VaultFactory: typeof VaultFactory & VaultFactory
+  DragoRegistry: typeof DragoRegistry & DragoRegistry
+  ProofOfPerformance: typeof ProofOfPerformance & ProofOfPerformance
 }

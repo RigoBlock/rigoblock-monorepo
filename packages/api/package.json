@@ -8,8 +8,7 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "build": "npm run typechain && npm run tsc",
-    "tsc": "rm -rf dist/* && tsc --outDir './dist'",
+    "build": "rm -rf dist/* && tsc --outDir './dist'",
     "test": "jest",
     "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
@@ -30,22 +29,22 @@
     "chalk": "^2.4.1",
     "eslint-plugin-typescript": "^0.12.0",
     "jest": "^23.6.0",
+    "to-snake-case": "^1.0.0",
     "ts-jest": "^23.10.1",
     "typescript": "^3.0.1",
     "typescript-eslint-parser": "^18.0.0"
   },
   "dependencies": {
-    "@0xproject/subproviders": "^0.10.4",
-    "@0xproject/typescript-typings": "^0.4.1",
-    "@0xproject/web3-wrapper": "^0.7.1",
-    "@rigoblock/contracts": "^0.3.2",
-    "@types/node": "^9.6.6",
-    "bignumber.js": "^5.0.0",
+    "@0xproject/subproviders": "^2.0.5",
+    "@0xproject/typescript-typings": "^2.0.2",
+    "@0xproject/web3-wrapper": "^3.0.1",
+    "@rigoblock/contracts": "^0.3.3",
+    "@types/node": "^10.11.0",
+    "bignumber.js": "^7.2.1",
     "ganache-cli": "7.0.0-beta.0",
     "handlebars": "^4.0.12",
-    "typechain": "^0.2.2",
     "web3": "1.0.0-beta.36",
-    "web3-provider-engine": "^14.0.5"
+    "web3-provider-engine": "^14.0.6"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/test/setupTests.ts",
