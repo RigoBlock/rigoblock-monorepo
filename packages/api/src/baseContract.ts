@@ -1,5 +1,11 @@
 import { EventEmitter, EventLog } from 'web3/types'
 
+export interface TransactionObject {
+  call
+  send
+  encodeABI
+  estimateGas
+}
 export interface EventFilter {
   [key: string]: string
 }

@@ -53,7 +53,10 @@ describe('generated contract', () => {
           const gasPrice = await web3.eth.getGasPrice()
           const gasEstimate = await vaultFactory // 2538415
             .createVault(...vaultOptions)
-            .then(obj => obj.estimateGas(txOptions))
+            .then(obj => {
+              console.log('OB J', obj)
+              return obj.estimateGas(txOptions)
+            })
           const receipt = await vaultFactory
             .createVault(...vaultOptions)
             .then(obj =>
