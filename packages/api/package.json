@@ -8,12 +8,14 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "build": "rm -rf dist/* && tsc --outDir './dist'",
-    "build:watch": "rm -rf dist; tsc -w --outDir './dist'",
+    "build": "npm run abi-gen && npm run tsc",
+    "tsc": "rm -rf dist/* && tsc --outDir './dist'",
+    "tsc:watch" : "rm -rf dist; tsc -w --outDir './dist'",
     "test": "jest",
     "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
-    "abi-gen": "rm -rf src/contracts/models && ts-node abi-gen.ts --abis './.tmp/*.json' -o src/contracts/models --template './template.handlebars' --partials './partials/*.handlebars'"
+    "abi-gen": "npm run abi-extract && rm -rf src/contracts/models && ts-node abi-gen.ts --abis './.tmp/*.json' -o src/contracts/models --template './template.handlebars' --partials './partials/*.handlebars'",
+    "abi-extract": "rm -rf .tmp && node src/abi-extractor.js"
   },
   "config": {
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
