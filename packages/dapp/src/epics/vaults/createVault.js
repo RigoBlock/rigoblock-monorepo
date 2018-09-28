@@ -33,8 +33,10 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
           .mergeMap(() =>
             fromPromise(
               vaultFactory
-                .createVaultTx(vaultName.toLowerCase(), vaultSymbol)
-                .send({ from: accountNumber, gasPrice: 1, gas: 6654755 }),
+                .createVault(vaultName.toLowerCase(), vaultSymbol)
+                .then(obj =>
+                  obj.send({ from: accountNumber, gasPrice: 1, gas: 6654755 })
+                ),
               ts
             ).map(txHash =>
               blockChainActions.transactionCompleted({
