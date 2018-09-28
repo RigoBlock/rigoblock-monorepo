@@ -2,6 +2,7 @@ import Web3 = require('web3')
 import ProviderEngine = require('web3-provider-engine')
 import * as Contract from './contracts/contract'
 import * as RpcSubprovider from 'web3-provider-engine/subproviders/rpc.js'
+import * as WebSocketSubProvider from 'web3-provider-engine/subproviders/websocket.js'
 import { ContractModels } from './contracts'
 import { SignerSubprovider } from '@0xproject/subproviders'
 import fetchContracts from '@rigoblock/contracts'
@@ -27,12 +28,18 @@ class Api {
     this.engine = new ProviderEngine()
     this.engine.addProvider(new SignerSubprovider(<any>web3.currentProvider))
     this.engine.addProvider(
-      new RpcSubprovider({
-        rpcUrl
+      new WebSocketSubProvider({
+        rpcUrl: 'ws://localhost:8545'
       })
     )
-    this.web3 = new Web3(this.engine)
+    // this.engine.addProvider(
+    //   new RpcSubprovider({
+    //     rpcUrl
+    //   })
+    // )
+    this.web3 = new Web3(web3.currentProvider)
     const networkId = await this.web3.eth.net.getId()
+    console.log('yo')
     const contractsMap: Contract.ContractsMap = await fetchContracts(networkId)
     const contracts = new Contract()
     await contracts.init(contractsMap)

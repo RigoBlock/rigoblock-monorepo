@@ -83,9 +83,10 @@ class BlockChainService {
   }
 
   wrapError(action$) {
-    return action$.catch(err =>
-      of(blockChainActions.blockChainError(err.stack))
-    )
+    return action$.catch(err => {
+      console.log(err)
+      return of(blockChainActions.blockChainError(err.stack))
+    })
   }
 
   fetchVaultEvents(fromBlock, toBlock = 'latest') {
