@@ -37,7 +37,10 @@ class Api {
     //     rpcUrl
     //   })
     // )
-    this.web3 = new Web3(web3.currentProvider)
+
+    // new Web3.providers.WebsocketProvider('ws://localhost:8545')
+    this.web3 = new Web3(this.engine)
+
     const networkId = await this.web3.eth.net.getId()
     console.log('yo')
     const contractsMap: Contract.ContractsMap = await fetchContracts(networkId)
