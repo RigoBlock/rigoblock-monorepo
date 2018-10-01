@@ -21,8 +21,11 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
   )
 
   const action$2 = source.mergeMap(
-    ({ payload: { accountNumber, vaultName, vaultSymbol } }) =>
-      fromPromise(contractFactory('VaultFactory'), ts).switchMap(vaultFactory =>
+    ({ payload: { accountNumber, vaultName, vaultSymbol } }) => {
+      return fromPromise(
+        contractFactory.getInstance('VaultFactory'),
+        ts
+      ).switchMap(vaultFactory =>
         of(vaultFactory)
           .mergeMap(() =>
             fromPromise(
@@ -41,6 +44,7 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
           )
           .catch(e => of(blockChainActions.transactionFailed(e.toString())))
       )
+    }
   )
 
   return merge(action$1, action$2)
