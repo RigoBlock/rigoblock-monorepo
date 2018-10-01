@@ -380,21 +380,21 @@ workflows:
       - test-exchange-connector:
           requires:
             - build-exchange-connector
-      - test-unit-dapp:
-          requires:
-            - setup
+    #   - test-unit-dapp:
+    #       requires:
+    #         - setup
       - build-contracts:
           requires:
-            - test-unit-dapp
+            - setup
       - test-contracts:
           requires:
             - build-contracts
       - build-api:
           requires:
             - build-contracts
-      # - build-dapp:
-      #     requires:
-      #       - build-api
+      - build-dapp:
+          requires:
+            - build-api
       # - test-feature-dapp:
       #     requires:
       #       - build-dapp
