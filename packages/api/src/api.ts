@@ -47,7 +47,7 @@ class Api {
 
     this.web3 = new Web3(this.engine)
 
-    // const networkId = await this.web3.eth.net.getId()
+    const networkId = this.web3.eth.net.getId()
     const contractsMap: Contract.ContractsMap = await fetchContracts(5777)
     const contracts = new Contract()
     await contracts.init(contractsMap)

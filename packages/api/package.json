@@ -10,9 +10,8 @@
   "scripts": {
     "build": "npm run abi-gen && npm run tsc",
     "tsc": "rm -rf dist/* && tsc --outDir './dist'",
-    "tsc:watch" : "rm -rf dist; tsc -w --outDir './dist'",
+    "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "test": "jest",
-    "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
     "abi-gen": "npm run abi-extract && rm -rf src/contracts/models && ts-node abi-gen.ts --abis './.tmp/*.json' -o src/contracts/models --template './template.handlebars' --partials './partials/*.handlebars'",
     "abi-extract": "rm -rf .tmp && node src/abi-extractor.js"
@@ -41,7 +40,6 @@
     "@rigoblock/contracts": "^0.3.2",
     "@types/node": "^10.11.0",
     "bignumber.js": "^7.2.1",
-    "ganache-cli": "7.0.0-beta.0",
     "handlebars": "^4.0.12",
     "web3": "1.0.0-beta.36",
     "web3-provider-engine": "^14.0.6"
