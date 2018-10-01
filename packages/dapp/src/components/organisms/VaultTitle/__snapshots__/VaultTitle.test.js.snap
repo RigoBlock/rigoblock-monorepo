@@ -56,16 +56,9 @@ exports[`VaultTitle component renders correctly as investor 1`] = `
                 flat={true}
                 ink={
                   <InkContainer
-                    className={undefined}
-                    disabledInteractions={undefined}
-                    inkClassName={undefined}
-                    inkStyle={undefined}
-                    pulse={undefined}
-                    style={undefined}
                     transitionEnterTimeout={450}
                     transitionLeaveTimeout={300}
                     transitionOverlap={150}
-                    waitForInkTransition={undefined}
                   />
                 }
                 onClick={[Function]}
@@ -80,16 +73,9 @@ exports[`VaultTitle component renders correctly as investor 1`] = `
                   iconBefore={true}
                   ink={
                     <InkContainer
-                      className={undefined}
-                      disabledInteractions={undefined}
-                      inkClassName={undefined}
-                      inkStyle={undefined}
-                      pulse={undefined}
-                      style={undefined}
                       transitionEnterTimeout={450}
                       transitionLeaveTimeout={300}
                       transitionOverlap={150}
-                      waitForInkTransition={undefined}
                     />
                   }
                   onClick={[Function]}
@@ -153,16 +139,9 @@ exports[`VaultTitle component renders correctly as investor 1`] = `
                 flat={true}
                 ink={
                   <InkContainer
-                    className={undefined}
-                    disabledInteractions={undefined}
-                    inkClassName={undefined}
-                    inkStyle={undefined}
-                    pulse={undefined}
-                    style={undefined}
                     transitionEnterTimeout={450}
                     transitionLeaveTimeout={300}
                     transitionOverlap={150}
-                    waitForInkTransition={undefined}
                   />
                 }
                 onClick={[Function]}
@@ -177,16 +156,9 @@ exports[`VaultTitle component renders correctly as investor 1`] = `
                   iconBefore={true}
                   ink={
                     <InkContainer
-                      className={undefined}
-                      disabledInteractions={undefined}
-                      inkClassName={undefined}
-                      inkStyle={undefined}
-                      pulse={undefined}
-                      style={undefined}
                       transitionEnterTimeout={450}
                       transitionLeaveTimeout={300}
                       transitionOverlap={150}
-                      waitForInkTransition={undefined}
                     />
                   }
                   onClick={[Function]}

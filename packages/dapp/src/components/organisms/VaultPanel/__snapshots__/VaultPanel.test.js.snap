@@ -273,16 +273,9 @@ exports[`VaultPanel component renders correctly if vaults and transactions are p
                                 flat={true}
                                 ink={
                                   <InkContainer
-                                    className={undefined}
-                                    disabledInteractions={undefined}
-                                    inkClassName={undefined}
-                                    inkStyle={undefined}
-                                    pulse={undefined}
-                                    style={undefined}
                                     transitionEnterTimeout={450}
                                     transitionLeaveTimeout={300}
                                     transitionOverlap={150}
-                                    waitForInkTransition={undefined}
                                   />
                                 }
                                 onClick={[Function]}
@@ -297,16 +290,9 @@ exports[`VaultPanel component renders correctly if vaults and transactions are p
                                   iconBefore={true}
                                   ink={
                                     <InkContainer
-                                      className={undefined}
-                                      disabledInteractions={undefined}
-                                      inkClassName={undefined}
-                                      inkStyle={undefined}
-                                      pulse={undefined}
-                                      style={undefined}
                                       transitionEnterTimeout={450}
                                       transitionLeaveTimeout={300}
                                       transitionOverlap={150}
-                                      waitForInkTransition={undefined}
                                     />
                                   }
                                   onClick={[Function]}
@@ -4466,16 +4452,9 @@ exports[`VaultPanel component renders correctly if vaults are present but no tra
                                 flat={true}
                                 ink={
                                   <InkContainer
-                                    className={undefined}
-                                    disabledInteractions={undefined}
-                                    inkClassName={undefined}
-                                    inkStyle={undefined}
-                                    pulse={undefined}
-                                    style={undefined}
                                     transitionEnterTimeout={450}
                                     transitionLeaveTimeout={300}
                                     transitionOverlap={150}
-                                    waitForInkTransition={undefined}
                                   />
                                 }
                                 onClick={[Function]}
@@ -4490,16 +4469,9 @@ exports[`VaultPanel component renders correctly if vaults are present but no tra
                                   iconBefore={true}
                                   ink={
                                     <InkContainer
-                                      className={undefined}
-                                      disabledInteractions={undefined}
-                                      inkClassName={undefined}
-                                      inkStyle={undefined}
-                                      pulse={undefined}
-                                      style={undefined}
                                       transitionEnterTimeout={450}
                                       transitionLeaveTimeout={300}
                                       transitionOverlap={150}
-                                      waitForInkTransition={undefined}
                                     />
                                   }
                                   onClick={[Function]}

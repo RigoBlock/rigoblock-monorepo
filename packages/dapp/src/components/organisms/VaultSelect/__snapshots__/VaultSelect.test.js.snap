@@ -12,6 +12,12 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
             [Function],
           ],
         ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
       },
     }
   }
@@ -79,16 +85,9 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
                 flat={true}
                 ink={
                   <InkContainer
-                    className={undefined}
-                    disabledInteractions={undefined}
-                    inkClassName={undefined}
-                    inkStyle={undefined}
-                    pulse={undefined}
-                    style={undefined}
                     transitionEnterTimeout={450}
                     transitionLeaveTimeout={300}
                     transitionOverlap={150}
-                    waitForInkTransition={undefined}
                   />
                 }
                 onClick={[Function]}
@@ -103,16 +102,9 @@ exports[`VaultSelect component redirects if no vaults are present but we try to 
                   iconBefore={true}
                   ink={
                     <InkContainer
-                      className={undefined}
-                      disabledInteractions={undefined}
-                      inkClassName={undefined}
-                      inkStyle={undefined}
-                      pulse={undefined}
-                      style={undefined}
                       transitionEnterTimeout={450}
                       transitionLeaveTimeout={300}
                       transitionOverlap={150}
-                      waitForInkTransition={undefined}
                     />
                   }
                   onClick={[Function]}
@@ -174,6 +166,12 @@ exports[`VaultSelect component renders correctly 1`] = `
             [Function],
           ],
         ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
       },
     }
   }
@@ -230,16 +228,9 @@ exports[`VaultSelect component renders correctly 1`] = `
               flat={true}
               ink={
                 <InkContainer
-                  className={undefined}
-                  disabledInteractions={undefined}
-                  inkClassName={undefined}
-                  inkStyle={undefined}
-                  pulse={undefined}
-                  style={undefined}
                   transitionEnterTimeout={450}
                   transitionLeaveTimeout={300}
                   transitionOverlap={150}
-                  waitForInkTransition={undefined}
                 />
               }
               onClick={[Function]}
@@ -254,16 +245,9 @@ exports[`VaultSelect component renders correctly 1`] = `
                 iconBefore={true}
                 ink={
                   <InkContainer
-                    className={undefined}
-                    disabledInteractions={undefined}
-                    inkClassName={undefined}
-                    inkStyle={undefined}
-                    pulse={undefined}
-                    style={undefined}
                     transitionEnterTimeout={450}
                     transitionLeaveTimeout={300}
                     transitionOverlap={150}
-                    waitForInkTransition={undefined}
                   />
                 }
                 onClick={[Function]}
@@ -464,6 +448,12 @@ exports[`VaultSelect component renders correctly if there are no vaults on state
             [Function],
           ],
         ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
       },
     }
   }
@@ -496,16 +486,9 @@ exports[`VaultSelect component renders correctly if there are no vaults on state
             flat={true}
             ink={
               <InkContainer
-                className={undefined}
-                disabledInteractions={undefined}
-                inkClassName={undefined}
-                inkStyle={undefined}
-                pulse={undefined}
-                style={undefined}
                 transitionEnterTimeout={450}
                 transitionLeaveTimeout={300}
                 transitionOverlap={150}
-                waitForInkTransition={undefined}
               />
             }
             onClick={[Function]}
@@ -520,16 +503,9 @@ exports[`VaultSelect component renders correctly if there are no vaults on state
               iconBefore={true}
               ink={
                 <InkContainer
-                  className={undefined}
-                  disabledInteractions={undefined}
-                  inkClassName={undefined}
-                  inkStyle={undefined}
-                  pulse={undefined}
-                  style={undefined}
                   transitionEnterTimeout={450}
                   transitionLeaveTimeout={300}
                   transitionOverlap={150}
-                  waitForInkTransition={undefined}
                 />
               }
               onClick={[Function]}
