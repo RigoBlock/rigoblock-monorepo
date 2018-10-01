@@ -1,6 +1,5 @@
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concat'
-import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/exhaustMap'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
@@ -16,6 +15,7 @@ import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
 import { zip } from 'rxjs/observable/zip'
 import blockChainActions from '../../actions/blockchain-actions'
+import contractFactory from '../../contractFactory'
 
 class BlockChainService {
   constructor(api, action$, subject$, ts = Scheduler.async) {
@@ -83,17 +83,15 @@ class BlockChainService {
   }
 
   wrapError(action$) {
-    return action$.catch(err => {
-      console.log(err)
-      return of(blockChainActions.blockChainError(err.stack))
-    })
+    return action$.catch(err =>
+      of(blockChainActions.blockChainError(err.stack))
+    )
   }
 
   fetchVaultEvents(fromBlock, toBlock = 'latest') {
     fromBlock = fromBlock || 0
-    const VaultEventful = this.api.contract.VaultEventful
     const allVaultEvents = fromPromise(
-      VaultEventful.createAndValidate(this.api.web3, VaultEventful.address),
+      contractFactory.getInstance('VaultEventful'),
       this.scheduler
     )
       .mergeMap(vaultEventful =>
@@ -114,10 +112,7 @@ class BlockChainService {
   watchVaultEvents(fromBlock, toBlock = 'latest') {
     fromBlock = fromBlock || 0
     const allVaultEvents = fromPromise(
-      this.api.contract.VaultEventful.createAndValidate(
-        this.api.web3,
-        this.api.contract.VaultEventful.address
-      ),
+      contractFactory.getInstance('VaultEventful'),
       this.scheduler
     ).mergeMap(vaultEventful => {
       return Observable.create(observer => {
@@ -128,7 +123,6 @@ class BlockChainService {
           },
           (err, events) => (err ? observer.error(err) : observer.next(events))
         )
-        console.log(events)
         return () => events.unsubscribe()
       })
     })

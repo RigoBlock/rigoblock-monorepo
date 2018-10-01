@@ -8,8 +8,8 @@ import { Scheduler } from 'rxjs/Scheduler'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { merge } from 'rxjs/observable/merge'
 import { of } from 'rxjs/observable/of'
-import api from '../../api'
 import blockChainActions from '../../actions/blockchain-actions'
+import contractFactory from '../../contractFactory'
 import vaultActions from '../../actions/vault-actions'
 
 const createVaultEpic = (action$, store, ts = Scheduler.async) => {
@@ -22,13 +22,7 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
 
   const action$2 = source.mergeMap(
     ({ payload: { accountNumber, vaultName, vaultSymbol } }) =>
-      fromPromise(
-        api.contract.VaultFactory.createAndValidate(
-          api.web3,
-          api.contract.VaultFactory.address
-        ),
-        ts
-      ).switchMap(vaultFactory =>
+      fromPromise(contractFactory('VaultFactory'), ts).switchMap(vaultFactory =>
         of(vaultFactory)
           .mergeMap(() =>
             fromPromise(
