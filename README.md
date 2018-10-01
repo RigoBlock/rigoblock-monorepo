@@ -8,7 +8,7 @@
 
 | Package| Description|
 | - | - |
-| [`Rigoblock DApp`](/packages/dapp)                  | Rigoblock DApp                                                     |
+| [`Rigoblock ĐApp`](/packages/dapp)                  | Rigoblock ĐApp                                                     |
 | [`API`](/packages/api)                    | Rigoblock API               |
 | [`Rigoblock Contracts`](/packages/contracts)          | Rigoblock Contracts                                                 |
 | [`Deployer`](/packages/deployer)          | A package to compile and deploy our smart contracts                                       |
