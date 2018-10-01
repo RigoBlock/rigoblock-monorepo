@@ -9,6 +9,7 @@ describe('blockChain services function', () => {
   let BlockChainService
   let fromPromiseSpy
   let apiMock
+  let contractFactoryMock
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const blocks = [
     {
@@ -36,7 +37,7 @@ describe('blockChain services function', () => {
   ]
   beforeEach(() => {
     fromPromiseSpy = jest.fn()
-    const contractFactoryMock = {
+    contractFactoryMock = {
       getInstance: jest.fn()
     }
     jest.resetModules()

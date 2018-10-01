@@ -8,7 +8,7 @@ import vaultActions from '../../actions/vault-actions'
 describe('getVaultSupply epics', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const vaultAddress = '0x86a1ba4d485ce346bded508e2426798f825558be'
-  const supply = new BigNumber('14000000')
+  const supply = '14000000'
   let fromPromiseSpy
   let getVaultSupply
 
@@ -23,16 +23,13 @@ describe('getVaultSupply epics', () => {
   }
 
   class VaultMock {
-    totalSupply
+    totalSupply() {
+      return supply
+    }
   }
   const apiMock = {
     web3: {
       _web3: {}
-    },
-    contract: {
-      Vault: {
-        createAndValidate: () => VaultMock
-      }
     }
   }
 
@@ -57,7 +54,7 @@ describe('getVaultSupply epics', () => {
         account: owner,
         vaultData: {
           address: vaultAddress,
-          data: { totalSupply: supply.times(MICRO_TO_WEI) }
+          data: { totalSupply: new BigNumber(supply).times(MICRO_TO_WEI) }
         }
       })
     }

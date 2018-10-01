@@ -7,8 +7,14 @@ import vaultActions from '../../actions/vault-actions'
 describe('getVaultFees epics', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const vaultAddress = '0x86a1ba4d485ce346bded508e2426798f825558be'
-  const transactionFee = new BigNumber('1')
-  const vaultData = ['0x123', '0x123', '0x123', '1', transactionFee]
+  const transactionFee = '1'
+  const vaultData = {
+    feeCollector: '0x7328eF1d7Ab7583Eb9968B2f4a9c900f8a2e2d6d',
+    minPeriod: '0',
+    ratio: '80',
+    transactionFee,
+    vaultDao: '0x7ce6e371085cb611fb46d5065397223ef2F952Ff'
+  }
   let fromPromiseSpy
   let getVaultFees
 
@@ -58,7 +64,7 @@ describe('getVaultFees epics', () => {
         account: owner,
         vaultData: {
           address: vaultAddress,
-          data: { transactionFee }
+          data: { transactionFee: new BigNumber(transactionFee) }
         }
       })
     }
