@@ -1,5 +1,5 @@
 import { ActionsObservable } from 'redux-observable'
-import { ETH_TO_WEI } from '../../constants/utils'
+import { BigNumber } from 'bignumber.js'
 import { TestScheduler } from 'rxjs'
 import { VAULT } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
@@ -11,10 +11,9 @@ describe('getAccountBalanceEpic', () => {
   const getBalanceSpy = jest.fn()
   const apiMock = {
     web3: {
-      _web3: {
-        fromWei: val => val / ETH_TO_WEI
-      },
-      getBalanceInWeiAsync: getBalanceSpy
+      eth: {
+        getBalance: getBalanceSpy
+      }
     }
   }
   const vaultEvent = {
@@ -53,7 +52,7 @@ describe('getAccountBalanceEpic', () => {
     const expectedValues = {
       b: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '25999999999952600000'
+        balance: new BigNumber('25999999999952600000')
       })
     }
 
@@ -87,7 +86,7 @@ describe('getAccountBalanceEpic', () => {
     const expectedValues = {
       b: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '10000000000000000000'
+        balance: new BigNumber('10000000000000000000')
       })
     }
 
@@ -126,11 +125,11 @@ describe('getAccountBalanceEpic', () => {
     const expectedValues = {
       a: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '10000000000000000000'
+        balance: new BigNumber('10000000000000000000')
       }),
       b: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '20000000000000000000'
+        balance: new BigNumber('20000000000000000000')
       })
     }
 
@@ -178,19 +177,19 @@ describe('getAccountBalanceEpic', () => {
     const expectedValues = {
       a: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '10000000000000000000'
+        balance: new BigNumber('10000000000000000000')
       }),
       b: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '20000000000000000000'
+        balance: new BigNumber('20000000000000000000')
       }),
       c: blockChainActions.updateAccountBalance({
         account: otherAccount,
-        balance: '15000000000000000000'
+        balance: new BigNumber('15000000000000000000')
       }),
       d: blockChainActions.updateAccountBalance({
         account: otherAccount,
-        balance: '25000000000000000000'
+        balance: new BigNumber('25000000000000000000')
       })
     }
 

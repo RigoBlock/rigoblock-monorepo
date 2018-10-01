@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 const AccountSummary = ({ provider, number, balance, tokenBalance }) => {
-  const ethBalance = new BigNumber(balance).div(ETH_TO_WEI)
+  const ethBalance = balance.div(ETH_TO_WEI)
   return (
     <div className="account-summary">
       <AccountItem
@@ -25,7 +25,7 @@ const AccountSummary = ({ provider, number, balance, tokenBalance }) => {
 
 AccountSummary.propTypes = {
   provider: PropTypes.string.isRequired,
-  balance: PropTypes.string,
+  balance: PropTypes.object,
   tokenBalance: PropTypes.object,
   number: PropTypes.string.isRequired
 }

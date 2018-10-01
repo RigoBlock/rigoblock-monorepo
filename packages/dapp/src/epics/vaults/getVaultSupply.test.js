@@ -11,6 +11,7 @@ describe('getVaultSupply epics', () => {
   const supply = '14000000'
   let fromPromiseSpy
   let getVaultSupply
+  let contractFactoryMock
 
   const vault = {
     [vaultAddress]: {
@@ -34,11 +35,15 @@ describe('getVaultSupply epics', () => {
   }
 
   beforeEach(() => {
+    contractFactoryMock = {
+      getInstance: jest.fn()
+    }
     fromPromiseSpy = jest.fn()
     jest.resetModules()
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy
     }))
+    jest.doMock('../../contractFactory', () => contractFactoryMock)
     jest.doMock('../../api', () => apiMock)
     getVaultSupply = require('./getVaultSupply').default
   })

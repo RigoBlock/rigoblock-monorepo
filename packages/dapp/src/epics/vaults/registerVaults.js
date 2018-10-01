@@ -29,9 +29,7 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
           const address = action.payload.block.returnValues.vault
           const account = action.payload.account
           return fromPromise(registry.fromAddress(address), ts).map(
-            vaultData => {
-              return { account, address, vaultData }
-            }
+            vaultData => ({ account, address, vaultData })
           )
         }
       )
