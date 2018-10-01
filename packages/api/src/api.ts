@@ -39,21 +39,16 @@ class Api {
         rpcUrl: 'ws://localhost:8545'
       })
     )
-    // this.engine.addProvider(
-    //   new RpcSubprovider({
-    //     rpcUrl
-    //   })
-    // )
 
     this.web3 = new Web3(this.engine)
 
-    const networkId = this.web3.eth.net.getId()
-    const contractsMap: Contract.ContractsMap = await fetchContracts(5777)
+    await this.startEngine().catch(err => console.error(err))
+
+    const networkId = await this.web3.eth.net.getId()
+    const contractsMap: Contract.ContractsMap = await fetchContracts(networkId)
     const contracts = new Contract()
     await contracts.init(contractsMap)
     this.contract = contracts
-
-    await this.startEngine().catch(err => console.error(err))
 
     return this
   }
