@@ -1,4 +1,5 @@
 import { ActionsObservable } from 'redux-observable'
+import { BigNumber } from 'bignumber.js'
 import { DEPOSIT, ETH, WITHDRAW } from '../../constants/blockchain'
 import { TestScheduler } from 'rxjs'
 import getVaultTransactions from './getVaultTransactions'
@@ -17,7 +18,7 @@ describe('getVaultTransactions epic', () => {
     address: '0x6dddcaede2071883c85c6e5781524985608d2460',
     type: 'mined',
     event: 'BuyVault',
-    args: {
+    returnValues: {
       vault: '0x03910164aa522fb1a68bebea515e54610e4a9b94',
       from: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323',
       to: '0x03910164aa522fb1a68bebea515e54610e4a9b94',
@@ -32,7 +33,7 @@ describe('getVaultTransactions epic', () => {
   const sellVaultEvent = {
     ...buyVaultEvent,
     event: 'SellVault',
-    args: {
+    returnValues: {
       vault: '0x03910164aa522fb1a68bebea515e54610e4a9b94',
       from: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323',
       to: '0x03910164aa522fb1a68bebea515e54610e4a9b94',
@@ -50,7 +51,7 @@ describe('getVaultTransactions epic', () => {
       date: 1530698497000,
       type: DEPOSIT,
       symbol: ETH,
-      value: '3000000000000000000',
+      value: new BigNumber('3000000000000000000'),
       units: '3000000',
       account: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323'
     }
@@ -62,7 +63,7 @@ describe('getVaultTransactions epic', () => {
       date: 1530698497000,
       type: WITHDRAW,
       symbol: ETH,
-      value: '3000000000000000000',
+      value: new BigNumber('3000000000000000000'),
       units: '3000000',
       account: '0x8bb7481495d45ccd5cffae1c3a84155fea85a323'
     }
