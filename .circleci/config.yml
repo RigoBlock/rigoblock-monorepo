@@ -380,12 +380,12 @@ workflows:
       - test-exchange-connector:
           requires:
             - build-exchange-connector
-    #   - test-unit-dapp:
-    #       requires:
-    #         - setup
-      - build-contracts:
+      - test-unit-dapp:
           requires:
             - setup
+      - build-contracts:
+          requires:
+            - test-unit-dapp
       - test-contracts:
           requires:
             - build-contracts
@@ -395,22 +395,22 @@ workflows:
       - build-dapp:
           requires:
             - build-api
-      # - test-feature-dapp:
-      #     requires:
-      #       - build-dapp
-      # - deploy-dapp-staging:
-      #     requires:
-      #       - test-unit-dapp
-      #       - build-dapp
-      #       - test-feature-dapp
-      #     filters:
-      #       branches:
-      #         only: master
-      # - deploy-storybook-staging:
-      #     requires:
-      #       - test-unit-dapp
-      #       - build-dapp
-      #       - test-feature-dapp
-      #     filters:
-      #       branches:
-      #         only: master
+      - test-feature-dapp:
+          requires:
+            - build-dapp
+      - deploy-dapp-staging:
+          requires:
+            - test-unit-dapp
+            - build-dapp
+            - test-feature-dapp
+          filters:
+            branches:
+              only: master
+      - deploy-storybook-staging:
+          requires:
+            - test-unit-dapp
+            - build-dapp
+            - test-feature-dapp
+          filters:
+            branches:
+              only: master
