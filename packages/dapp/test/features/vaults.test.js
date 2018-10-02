@@ -1,6 +1,6 @@
 Feature('Vaults').retry(3)
 
-const account = '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196'
+const account = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
 
 Scenario('test correct vaults render', vaults => {
   vaults.navigateTo()
