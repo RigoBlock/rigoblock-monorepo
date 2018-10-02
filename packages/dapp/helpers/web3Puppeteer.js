@@ -49,7 +49,7 @@ class Web3Puppeteer extends Helper {
 
   async inject() {
     const web3Raw = await fetch(
-      'https://rawgit.com/ethereum/web3.js/v1.0.0-beta.36/dist/web3.min.js'
+      'https://cdn.rawgit.com/ethereum/web3.js/v1.0.0-beta.36/dist/web3.min.js'
     ).then(res => res.text())
     const page = this.helpers['Puppeteer'].page
     await page.evaluate(web3Raw => {
