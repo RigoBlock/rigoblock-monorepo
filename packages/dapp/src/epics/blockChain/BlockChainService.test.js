@@ -40,11 +40,6 @@ describe('blockChain services function', () => {
     contractFactoryMock = {
       getInstance: jest.fn()
     }
-    jest.resetModules()
-    jest.doMock('rxjs/observable/fromPromise', () => ({
-      fromPromise: fromPromiseSpy
-    }))
-    jest.doMock('../../contractFactory', () => contractFactoryMock)
     apiMock = {
       init: () => Promise.resolve(),
       engine: {
@@ -57,8 +52,19 @@ describe('blockChain services function', () => {
           getAccounts: jest.fn(() => Promise.resolve([])),
           getBlock: jest.fn(() => Promise.resolve({ timestamp: '1528811195' }))
         }
+      },
+      contract: {
+        VaultEventful: {
+          address: '0x0'
+        }
       }
     }
+    jest.resetModules()
+    jest.doMock('rxjs/observable/fromPromise', () => ({
+      fromPromise: fromPromiseSpy
+    }))
+    jest.doMock('../../contractFactory', () => contractFactoryMock)
+    jest.doMock('../../api', () => apiMock)
     BlockChainService = require('./BlockChainService').default
   })
   describe('main observable flow', () => {

@@ -29,6 +29,11 @@ describe('createVault Epic', () => {
   const apiMock = {
     web3: {
       _web3: {}
+    },
+    contract: {
+      VaultFactory: {
+        address: '0x0'
+      }
     }
   }
 
