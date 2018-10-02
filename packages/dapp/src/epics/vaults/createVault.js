@@ -8,6 +8,7 @@ import { Scheduler } from 'rxjs/Scheduler'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { merge } from 'rxjs/observable/merge'
 import { of } from 'rxjs/observable/of'
+import api from '../../api'
 import blockChainActions from '../../actions/blockchain-actions'
 import contractFactory from '../../contractFactory'
 import vaultActions from '../../actions/vault-actions'
@@ -22,25 +23,30 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
 
   const action$2 = source.mergeMap(
     ({ payload: { accountNumber, vaultName, vaultSymbol } }) =>
-      fromPromise(contractFactory.getInstance('VaultFactory'), ts).switchMap(
-        vaultFactory =>
-          of(vaultFactory)
-            .mergeMap(() =>
-              fromPromise(
-                vaultFactory
-                  .createVault(vaultName.toLowerCase(), vaultSymbol)
-                  .then(obj =>
-                    obj.send({ from: accountNumber, gasPrice: 1, gas: 6654755 })
-                  ),
-                ts
-              ).map(txHash =>
-                blockChainActions.transactionCompleted({
-                  type: CREATE_VAULT,
-                  txHash
-                })
-              )
+      fromPromise(
+        contractFactory.getInstance(
+          'VaultFactory',
+          api.contract.VaultFactory.address
+        ),
+        ts
+      ).switchMap(vaultFactory =>
+        of(vaultFactory)
+          .mergeMap(() =>
+            fromPromise(
+              vaultFactory
+                .createVault(vaultName.toLowerCase(), vaultSymbol)
+                .then(obj =>
+                  obj.send({ from: accountNumber, gasPrice: 1, gas: 6654755 })
+                ),
+              ts
+            ).map(txHash =>
+              blockChainActions.transactionCompleted({
+                type: CREATE_VAULT,
+                txHash
+              })
             )
-            .catch(e => of(blockChainActions.transactionFailed(e.toString())))
+          )
+          .catch(e => of(blockChainActions.transactionFailed(e.toString())))
       )
   )
 
