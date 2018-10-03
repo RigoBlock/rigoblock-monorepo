@@ -106,26 +106,45 @@ export class Ethfinex {
     }
   }
 
-  private formatOrders(orders: EthfinexRaw.RawOrder[]): OrdersList {
+  private formatOrders(orders: EthfinexRaw.RawOrder[]): any {
     if (this.checkForError(orders as any)) {
       throw new Error(orders.pop() as any)
     }
-    return orders.map((order: number[]) => {
+    const bids = []
+    const asks = []
+    let spread
+    // format orders and divide between asks and bids
+    orders.map((order: number[]) => {
       const type =
         order.slice(order.length - 1).pop() > 0 ? OrderType.BUY : OrderType.SELL
-
-      const price = new BigNumber(order.shift()).toFixed(PRICE_PRECISION)
+      const orderPrice = new BigNumber(order.shift()).toFixed(PRICE_PRECISION)
       const ordersCount: number = order.shift()
-      const amount = new BigNumber(order.pop())
+      const orderAmount = new BigNumber(order.pop())
         .absoluteValue()
         .toFixed(AMOUNT_PRECISION)
-      return {
-        type,
-        price,
-        amount,
+      const formattedOrder = {
+        orderPrice,
+        orderAmount,
         ordersCount
       }
+      return type === OrderType.BUY
+        ? bids.push(formattedOrder)
+        : asks.push(formattedOrder)
     })
+    // calculate spread
+    if (bids.length && asks.length) {
+      spread = new BigNumber(asks[0].orderPrice)
+        .minus(new BigNumber(bids[0].orderPrice))
+        .toFixed(6)
+    } else {
+      spread = new BigNumber(0).toFixed(6)
+    }
+    return {
+      aggregated: true,
+      asks: asks.reverse(),
+      bids,
+      spread
+    }
   }
 
   private formatTickers(tickers: EthfinexRaw.RawTicker[]): TickersList {
