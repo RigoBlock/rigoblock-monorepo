@@ -970,118 +970,8 @@ Object {
   "aggregated": true,
   "asks": Array [
     Object {
-      "orderAmount": "1.29037",
-      "orderPrice": "6441.7000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.62825",
-      "orderPrice": "6441.8000000",
-      "ordersCount": 2,
-    },
-    Object {
-      "orderAmount": "0.20000",
-      "orderPrice": "6443.5000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.01405",
-      "orderPrice": "6443.7000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.10000",
-      "orderPrice": "6444.2000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "15.45500",
-      "orderPrice": "6444.3000000",
-      "ordersCount": 2,
-    },
-    Object {
-      "orderAmount": "4.80000",
-      "orderPrice": "6444.4000000",
-      "ordersCount": 2,
-    },
-    Object {
-      "orderAmount": "0.06373",
-      "orderPrice": "6444.9000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.34034",
-      "orderPrice": "6445.0000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.40000",
-      "orderPrice": "6445.6000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.11928",
-      "orderPrice": "6445.8000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.29996",
-      "orderPrice": "6446.0000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "1.00000",
-      "orderPrice": "6446.4000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.50000",
-      "orderPrice": "6447.0000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.70000",
-      "orderPrice": "6448.4000000",
-      "ordersCount": 2,
-    },
-    Object {
-      "orderAmount": "2.25000",
-      "orderPrice": "6448.5000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.07765",
-      "orderPrice": "6449.1000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.30000",
-      "orderPrice": "6449.3000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "0.50000",
-      "orderPrice": "6449.4000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "1.11618",
-      "orderPrice": "6450.9000000",
-      "ordersCount": 2,
-    },
-    Object {
-      "orderAmount": "1.41000",
-      "orderPrice": "6451.0000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "4.60348",
-      "orderPrice": "6451.2000000",
-      "ordersCount": 1,
-    },
-    Object {
-      "orderAmount": "1.31000",
-      "orderPrice": "6451.3000000",
+      "orderAmount": "0.00400",
+      "orderPrice": "6451.8000000",
       "ordersCount": 1,
     },
     Object {
@@ -1090,8 +980,118 @@ Object {
       "ordersCount": 1,
     },
     Object {
-      "orderAmount": "0.00400",
-      "orderPrice": "6451.8000000",
+      "orderAmount": "1.31000",
+      "orderPrice": "6451.3000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "4.60348",
+      "orderPrice": "6451.2000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.41000",
+      "orderPrice": "6451.0000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.11618",
+      "orderPrice": "6450.9000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "0.50000",
+      "orderPrice": "6449.4000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.30000",
+      "orderPrice": "6449.3000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.07765",
+      "orderPrice": "6449.1000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "2.25000",
+      "orderPrice": "6448.5000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.70000",
+      "orderPrice": "6448.4000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "0.50000",
+      "orderPrice": "6447.0000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.00000",
+      "orderPrice": "6446.4000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.29996",
+      "orderPrice": "6446.0000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.11928",
+      "orderPrice": "6445.8000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.40000",
+      "orderPrice": "6445.6000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.34034",
+      "orderPrice": "6445.0000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.06373",
+      "orderPrice": "6444.9000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "4.80000",
+      "orderPrice": "6444.4000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "15.45500",
+      "orderPrice": "6444.3000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "0.10000",
+      "orderPrice": "6444.2000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.01405",
+      "orderPrice": "6443.7000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.20000",
+      "orderPrice": "6443.5000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.62825",
+      "orderPrice": "6441.8000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "1.29037",
+      "orderPrice": "6441.7000000",
       "ordersCount": 1,
     },
   ],

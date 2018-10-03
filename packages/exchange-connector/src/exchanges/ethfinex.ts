@@ -141,7 +141,7 @@ export class Ethfinex {
     }
     return {
       aggregated: true,
-      asks,
+      asks: asks.reverse(),
       bids,
       spread
     }
