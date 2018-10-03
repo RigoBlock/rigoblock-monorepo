@@ -25,7 +25,7 @@ class Api {
     })
   }
 
-  async init(web3: Web3 = window.web3, rpcUrl = 'http://localhost:8545') {
+  async init(web3: Web3 = window.web3, rpcUrl = 'ws://localhost:8545') {
     this.engine = new ProviderEngine()
     this.engine.addProvider(new SignerSubprovider(<any>web3.currentProvider))
     this.engine.addProvider(new FilterSubprovider())
@@ -36,7 +36,7 @@ class Api {
     })
     this.engine.addProvider(
       new WebSocketSubProvider({
-        rpcUrl: 'ws://localhost:8545'
+        rpcUrl
       })
     )
 

@@ -10,9 +10,7 @@ describe('Vaults page', () => {
         createAndValidate: jest.fn()
       }
     },
-    web3: {
-      '._web3': {}
-    }
+    web3: {}
   }
   let Vaults
 

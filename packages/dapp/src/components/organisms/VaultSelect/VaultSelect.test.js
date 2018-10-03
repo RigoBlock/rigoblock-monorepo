@@ -16,9 +16,6 @@ describe('VaultSelect component', () => {
         address: '0xf7cbb0849d4a8ec5ab4650030fa776c00eb52la4',
         createAndValidate: jest.fn()
       }
-    },
-    web3: {
-      '._web3': {}
     }
   }
 

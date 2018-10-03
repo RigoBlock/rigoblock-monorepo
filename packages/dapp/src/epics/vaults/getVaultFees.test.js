@@ -15,9 +15,6 @@ describe('getVaultFees epics', () => {
     transactionFee,
     vaultDao: '0x7ce6e371085cb611fb46d5065397223ef2F952Ff'
   }
-  let fromPromiseSpy
-  let getVaultFees
-
   const vault = {
     [vaultAddress]: {
       id: new BigNumber('0'),
@@ -27,28 +24,31 @@ describe('getVaultFees epics', () => {
       group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff'
     }
   }
-
+  const contractFactoryMock = {
+    getInstance: jest.fn()
+  }
   class VaultMock {
     getAdminData = () => transactionFee
   }
   const apiMock = {
-    web3: {
-      _web3: {}
-    },
+    web3: {},
     contract: {
       Vault: {
         createAndValidate: () => new VaultMock()
       }
     }
   }
+  let fromPromiseSpy
+  let getVaultFees
 
   beforeEach(() => {
-    fromPromiseSpy = jest.fn()
     jest.resetModules()
+    fromPromiseSpy = jest.fn()
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy
     }))
     jest.doMock('../../api', () => apiMock)
+    jest.doMock('../../contractFactory', () => contractFactoryMock)
     getVaultFees = require('./getVaultFees').default
   })
 

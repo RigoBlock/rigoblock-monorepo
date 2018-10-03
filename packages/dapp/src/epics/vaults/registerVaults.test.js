@@ -42,20 +42,18 @@ describe('registerVaults epic', () => {
   }
   let fromPromiseSpy
   let registerVaults
-  let contractFactoryMock
+  const contractFactoryMock = {
+    getInstance: jest.fn()
+  }
 
   beforeEach(() => {
     jest.resetModules()
     fromPromiseSpy = jest.fn()
-    contractFactoryMock = {
-      getInstance: jest.fn()
-    }
     jest.doMock('../../api', () => apiMock)
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy
     }))
     jest.doMock('../../contractFactory', () => contractFactoryMock)
-
     registerVaults = require('./registerVaults').default
   })
 
