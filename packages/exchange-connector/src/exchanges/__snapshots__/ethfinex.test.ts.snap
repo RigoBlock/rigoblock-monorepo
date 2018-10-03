@@ -966,308 +966,264 @@ Array [
 `;
 
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getOrders returns orders provided on a price aggregated basis 1`] = `
-Array [
-  Object {
-    "amount": "0.02000",
-    "ordersCount": 1,
-    "price": "6441.4000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "1.20000",
-    "ordersCount": 1,
-    "price": "6441.3000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "1.00000",
-    "ordersCount": 1,
-    "price": "6440.9000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.40000",
-    "ordersCount": 1,
-    "price": "6440.2000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.40000",
-    "ordersCount": 1,
-    "price": "6440.1000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.20000",
-    "ordersCount": 1,
-    "price": "6439.3000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.34532",
-    "ordersCount": 1,
-    "price": "6439.2000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "3.00000",
-    "ordersCount": 1,
-    "price": "6438.9000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.31434",
-    "ordersCount": 1,
-    "price": "6437.7000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.59000",
-    "ordersCount": 2,
-    "price": "6437.4000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.10000",
-    "ordersCount": 1,
-    "price": "6437.2000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.01725",
-    "ordersCount": 1,
-    "price": "6437.1000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "1.00000",
-    "ordersCount": 1,
-    "price": "6436.9000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.65325",
-    "ordersCount": 1,
-    "price": "6436.3000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "1.00000",
-    "ordersCount": 1,
-    "price": "6436.2000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "3.00000",
-    "ordersCount": 1,
-    "price": "6436.1000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.10000",
-    "ordersCount": 1,
-    "price": "6435.0000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.63935",
-    "ordersCount": 1,
-    "price": "6434.3000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.53257",
-    "ordersCount": 2,
-    "price": "6434.1000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.38650",
-    "ordersCount": 1,
-    "price": "6433.9000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.03000",
-    "ordersCount": 1,
-    "price": "6433.8000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.01221",
-    "ordersCount": 1,
-    "price": "6433.4000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.08761",
-    "ordersCount": 1,
-    "price": "6433.3000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "4.57576",
-    "ordersCount": 3,
-    "price": "6432.7000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "0.00315",
-    "ordersCount": 1,
-    "price": "6431.9000000",
-    "type": 0,
-  },
-  Object {
-    "amount": "1.29037",
-    "ordersCount": 1,
-    "price": "6441.7000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.62825",
-    "ordersCount": 2,
-    "price": "6441.8000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.20000",
-    "ordersCount": 1,
-    "price": "6443.5000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.01405",
-    "ordersCount": 1,
-    "price": "6443.7000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.10000",
-    "ordersCount": 1,
-    "price": "6444.2000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "15.45500",
-    "ordersCount": 2,
-    "price": "6444.3000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "4.80000",
-    "ordersCount": 2,
-    "price": "6444.4000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.06373",
-    "ordersCount": 1,
-    "price": "6444.9000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.34034",
-    "ordersCount": 1,
-    "price": "6445.0000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.40000",
-    "ordersCount": 1,
-    "price": "6445.6000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.11928",
-    "ordersCount": 1,
-    "price": "6445.8000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.29996",
-    "ordersCount": 1,
-    "price": "6446.0000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "1.00000",
-    "ordersCount": 1,
-    "price": "6446.4000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.50000",
-    "ordersCount": 1,
-    "price": "6447.0000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.70000",
-    "ordersCount": 2,
-    "price": "6448.4000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "2.25000",
-    "ordersCount": 1,
-    "price": "6448.5000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.07765",
-    "ordersCount": 1,
-    "price": "6449.1000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.30000",
-    "ordersCount": 1,
-    "price": "6449.3000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.50000",
-    "ordersCount": 1,
-    "price": "6449.4000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "1.11618",
-    "ordersCount": 2,
-    "price": "6450.9000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "1.41000",
-    "ordersCount": 1,
-    "price": "6451.0000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "4.60348",
-    "ordersCount": 1,
-    "price": "6451.2000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "1.31000",
-    "ordersCount": 1,
-    "price": "6451.3000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "2.00000",
-    "ordersCount": 1,
-    "price": "6451.6000000",
-    "type": 1,
-  },
-  Object {
-    "amount": "0.00400",
-    "ordersCount": 1,
-    "price": "6451.8000000",
-    "type": 1,
-  },
-]
+Object {
+  "aggregated": true,
+  "asks": Array [
+    Object {
+      "orderAmount": "0.00400",
+      "orderPrice": "6451.8000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "2.00000",
+      "orderPrice": "6451.6000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.31000",
+      "orderPrice": "6451.3000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "4.60348",
+      "orderPrice": "6451.2000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.41000",
+      "orderPrice": "6451.0000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.11618",
+      "orderPrice": "6450.9000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "0.50000",
+      "orderPrice": "6449.4000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.30000",
+      "orderPrice": "6449.3000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.07765",
+      "orderPrice": "6449.1000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "2.25000",
+      "orderPrice": "6448.5000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.70000",
+      "orderPrice": "6448.4000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "0.50000",
+      "orderPrice": "6447.0000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.00000",
+      "orderPrice": "6446.4000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.29996",
+      "orderPrice": "6446.0000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.11928",
+      "orderPrice": "6445.8000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.40000",
+      "orderPrice": "6445.6000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.34034",
+      "orderPrice": "6445.0000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.06373",
+      "orderPrice": "6444.9000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "4.80000",
+      "orderPrice": "6444.4000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "15.45500",
+      "orderPrice": "6444.3000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "0.10000",
+      "orderPrice": "6444.2000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.01405",
+      "orderPrice": "6443.7000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.20000",
+      "orderPrice": "6443.5000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.62825",
+      "orderPrice": "6441.8000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "1.29037",
+      "orderPrice": "6441.7000000",
+      "ordersCount": 1,
+    },
+  ],
+  "bids": Array [
+    Object {
+      "orderAmount": "0.02000",
+      "orderPrice": "6441.4000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.20000",
+      "orderPrice": "6441.3000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.00000",
+      "orderPrice": "6440.9000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.40000",
+      "orderPrice": "6440.2000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.40000",
+      "orderPrice": "6440.1000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.20000",
+      "orderPrice": "6439.3000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.34532",
+      "orderPrice": "6439.2000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "3.00000",
+      "orderPrice": "6438.9000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.31434",
+      "orderPrice": "6437.7000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.59000",
+      "orderPrice": "6437.4000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "0.10000",
+      "orderPrice": "6437.2000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.01725",
+      "orderPrice": "6437.1000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.00000",
+      "orderPrice": "6436.9000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.65325",
+      "orderPrice": "6436.3000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "1.00000",
+      "orderPrice": "6436.2000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "3.00000",
+      "orderPrice": "6436.1000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.10000",
+      "orderPrice": "6435.0000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.63935",
+      "orderPrice": "6434.3000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.53257",
+      "orderPrice": "6434.1000000",
+      "ordersCount": 2,
+    },
+    Object {
+      "orderAmount": "0.38650",
+      "orderPrice": "6433.9000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.03000",
+      "orderPrice": "6433.8000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.01221",
+      "orderPrice": "6433.4000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "0.08761",
+      "orderPrice": "6433.3000000",
+      "ordersCount": 1,
+    },
+    Object {
+      "orderAmount": "4.57576",
+      "orderPrice": "6432.7000000",
+      "ordersCount": 3,
+    },
+    Object {
+      "orderAmount": "0.00315",
+      "orderPrice": "6431.9000000",
+      "ordersCount": 1,
+    },
+  ],
+  "spread": "0.300000",
+}
 `;
 
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getTickers returns data representing a high level overview of the state of the market. 1`] = `
