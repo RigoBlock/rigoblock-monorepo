@@ -29,9 +29,7 @@ describe('getVaultSupply epics', () => {
     }
   }
   const apiMock = {
-    web3: {
-      _web3: {}
-    }
+    web3: {}
   }
 
   beforeEach(() => {

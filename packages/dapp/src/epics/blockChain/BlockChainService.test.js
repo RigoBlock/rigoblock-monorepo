@@ -6,14 +6,10 @@ import blockChainActions from '../../actions/blockchain-actions'
 
 describe('blockChain services function', () => {
   const testError = new Error('test error')
-  let BlockChainService
-  let fromPromiseSpy
-  let apiMock
-  let contractFactoryMock
+  const nodeVersion = 'MetaMask/v4.6.1'
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const blocks = [
     {
-      address: '0x001',
       returnValues: {
         vault: '0x123',
         from: owner,
@@ -24,7 +20,6 @@ describe('blockChain services function', () => {
       event: 'BuyVault'
     },
     {
-      address: '0x002',
       returnValues: {
         vault: '0x123',
         from: '0x242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9192',
@@ -35,7 +30,14 @@ describe('blockChain services function', () => {
       event: 'SellVault'
     }
   ]
+
+  let BlockChainService
+  let fromPromiseSpy
+  let apiMock
+  let contractFactoryMock
+
   beforeEach(() => {
+    jest.resetModules()
     fromPromiseSpy = jest.fn()
     contractFactoryMock = {
       getInstance: jest.fn()
@@ -48,9 +50,9 @@ describe('blockChain services function', () => {
       },
       web3: {
         eth: {
-          getNodeInfo: jest.fn(() => Promise.resolve('')),
-          getAccounts: jest.fn(() => Promise.resolve([])),
-          getBlock: jest.fn(() => Promise.resolve({ timestamp: '1528811195' }))
+          getNodeInfo: jest.fn(),
+          getAccounts: jest.fn(),
+          getBlock: jest.fn()
         }
       },
       contract: {
@@ -59,7 +61,6 @@ describe('blockChain services function', () => {
         }
       }
     }
-    jest.resetModules()
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy
     }))
@@ -75,7 +76,7 @@ describe('blockChain services function', () => {
     })
     it('returns a blockchain init action', () => {
       fromPromiseSpy
-        .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+        .mockReturnValueOnce(of(nodeVersion))
         .mockReturnValueOnce(of([]))
 
       const expectedValues = {
@@ -100,11 +101,11 @@ describe('blockChain services function', () => {
         const address2 = 'address2'
 
         fromPromiseSpy
-          .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+          .mockReturnValueOnce(of(nodeVersion))
           .mockReturnValueOnce(of([address1]))
-          .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+          .mockReturnValueOnce(of(nodeVersion))
           .mockReturnValueOnce(of([address2]))
-          .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+          .mockReturnValueOnce(of(nodeVersion))
           .mockReturnValueOnce(of([address1]))
 
         const expectedValues = {
@@ -138,7 +139,7 @@ describe('blockChain services function', () => {
 
       it('sends blockChainError action if web3 getAvailableAddressesAsync fails', () => {
         fromPromiseSpy
-          .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+          .mockReturnValueOnce(of(nodeVersion))
           .mockReturnValueOnce(_throw(testError))
 
         const expectedValues = {
@@ -161,16 +162,15 @@ describe('blockChain services function', () => {
       })
 
       it('sends blockChainLogin action if web3 retrieves accounts list', () => {
-        const address = owner
         fromPromiseSpy
-          .mockReturnValueOnce(of('MetaMask/v4.6.1'))
-          .mockReturnValueOnce(of([address]))
+          .mockReturnValueOnce(of(nodeVersion))
+          .mockReturnValueOnce(of([owner]))
 
         const expectedValues = {
           a: blockChainActions.blockChainInit(),
           b: blockChainActions.blockChainLogIn({
             provider: 'metamask',
-            account: address
+            account: owner
           })
         }
 
@@ -190,7 +190,7 @@ describe('blockChain services function', () => {
 
       it("sends blockChainLogout action if web3 doesn't retrieve accounts list", () => {
         fromPromiseSpy
-          .mockReturnValueOnce(of('MetaMask/v4.6.1'))
+          .mockReturnValueOnce(of(nodeVersion))
           .mockReturnValueOnce(of([]))
 
         const expectedValues = {
@@ -220,7 +220,7 @@ describe('blockChain services function', () => {
       it('listens for connectivity issues', () => {
         fromPromiseSpy.mockReturnValueOnce(of('')).mockReturnValueOnce(of([]))
 
-        const mockApi = {
+        const apiWithError = {
           ...apiMock,
           engine: {
             on: (_, cb) => cb(testError),
@@ -239,7 +239,12 @@ describe('blockChain services function', () => {
           expect(actual).toEqual(expected)
         })
 
-        const blockChainService = new BlockChainService(mockApi, null, null, ts)
+        const blockChainService = new BlockChainService(
+          apiWithError,
+          null,
+          null,
+          ts
+        )
         const outputAction = blockChainService.init()
         ts.expectObservable(outputAction).toBe(expectedMarble, expectedValues)
         ts.flush()

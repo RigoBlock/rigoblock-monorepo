@@ -28,7 +28,6 @@ describe('watchVaultEvents', () => {
   }
   const getStateSpy = jest.fn()
   const watchVaultEventsSpy = jest.fn()
-
   const mockStore = {
     getState: getStateSpy
   }

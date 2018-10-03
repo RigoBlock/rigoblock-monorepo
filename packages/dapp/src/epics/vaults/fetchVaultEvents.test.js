@@ -27,7 +27,6 @@ describe('fetchVaultEventsEpic', () => {
   }
   const getStateSpy = jest.fn()
   const fetchVaultEventsSpy = jest.fn()
-
   const mockStore = {
     getState: getStateSpy
   }

@@ -150,9 +150,9 @@ class BlockChainService {
         return fromPromise(
           this.api.web3.eth.getBlock(block.blockNumber),
           this.scheduler
-        ).map(retrievedBlock => ({
+        ).map(({ timestamp }) => ({
           ...block,
-          timestamp: retrievedBlock.timestamp * 1000
+          timestamp: timestamp * 1000
         }))
       })
       .map(decoratedBlock => {
