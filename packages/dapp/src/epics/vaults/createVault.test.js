@@ -9,11 +9,15 @@ import vaultActions from '../../actions/vault-actions'
 
 describe('createVault Epic', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
-  const txHash =
-    '0x5d5d3dd42388e0f7fffb8f526117a01202015ced105caf216ede7f560b0e1082'
+  const transaction = {
+    transactionHash:
+      '0x5d5d3dd42388e0f7fffb8f526117a01202015ced105caf216ede7f560b0e1082'
+  }
   const txError = new Error(
     'MetaMask Tx Signature: User denied transaction signature.'
   )
+  const gasPrice = '20000000000'
+  const gasEstimate = '2455473'
   const getStateMock = jest.fn()
   const mockStore = {
     getState: getStateMock
@@ -27,12 +31,20 @@ describe('createVault Epic', () => {
     }
   }
   const apiMock = {
-    web3: {},
+    web3: {
+      eth: {
+        getGasPrice: jest.fn()
+      }
+    },
     contract: {
       VaultFactory: {
         address: '0x0'
       }
     }
+  }
+  const txObject = {
+    estimateGas: jest.fn(() => Promise.resolve(gasEstimate)),
+    send: jest.fn()
   }
   let createVaultEpic
   let fromPromiseSpy
@@ -51,7 +63,9 @@ describe('createVault Epic', () => {
   it('emits transactionInProgress action when createVault is fired, and a transactionCompleted when the transaction resolves', () => {
     fromPromiseSpy
       .mockReturnValueOnce(of(new VaultFactoryMock()))
-      .mockReturnValueOnce(of(txHash))
+      .mockReturnValueOnce(of(gasPrice))
+      .mockReturnValueOnce(of(txObject))
+      .mockReturnValueOnce(of(transaction))
 
     const inputValues = {
       a: vaultActions.createVault({
@@ -62,7 +76,10 @@ describe('createVault Epic', () => {
     }
     const expectedValues = {
       b: blockChainActions.transactionInProgress('Create Vault'),
-      c: blockchainActions.transactionCompleted({ type: CREATE_VAULT, txHash })
+      c: blockchainActions.transactionCompleted({
+        type: CREATE_VAULT,
+        txHash: transaction.transactionHash
+      })
     }
 
     const inputMarble = 'a'
@@ -84,6 +101,8 @@ describe('createVault Epic', () => {
   it('emits a transactionFailed action if there was an error during the transaction', () => {
     fromPromiseSpy
       .mockReturnValueOnce(of(new VaultFactoryMock()))
+      .mockReturnValueOnce(of(gasPrice))
+      .mockReturnValueOnce(of(txObject))
       .mockReturnValueOnce(ErrorObservable.create(txError))
 
     const inputValues = {
