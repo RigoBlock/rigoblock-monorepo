@@ -1,5 +1,4 @@
 import { ActionsObservable } from 'redux-observable'
-import { BigNumber } from 'bignumber.js'
 import { TestScheduler } from 'rxjs'
 import { VAULT } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
@@ -10,7 +9,7 @@ describe('registerVaults epic', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const vaultEvent = {
     address: '0x001',
-    args: {
+    returnValues: {
       vault: '0xc1Eba7b6F9f06E4491a499E653878464e40AB70e',
       from: owner,
       to: '0x005',
@@ -19,14 +18,14 @@ describe('registerVaults epic', () => {
     },
     event: 'BuyVault'
   }
-  const vaultData = [
-    new BigNumber('0'),
-    'Rocksolid Vault',
-    'VLT',
+  const vaultData = {
+    dragoId: '0',
+    group: '0x7ce6e371085cb611fb46d5065397223ef2F952Ff',
+    id: '0',
+    name: 'Rocksolid Vault',
     owner,
-    owner,
-    null
-  ]
+    symbol: 'VLT'
+  }
 
   class RegistryMock {
     fromAddress() {
@@ -39,21 +38,23 @@ describe('registerVaults epic', () => {
         address: '0xf7cbb0849d4a8ec5ab4650030fa776c00eb52la4',
         createAndValidate: jest.fn()
       }
-    },
-    web3: {
-      '._web3': {}
     }
   }
   let fromPromiseSpy
   let registerVaults
+  let contractFactoryMock
 
   beforeEach(() => {
     jest.resetModules()
     fromPromiseSpy = jest.fn()
+    contractFactoryMock = {
+      getInstance: jest.fn()
+    }
     jest.doMock('../../api', () => apiMock)
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy
     }))
+    jest.doMock('../../contractFactory', () => contractFactoryMock)
 
     registerVaults = require('./registerVaults').default
   })
@@ -80,7 +81,7 @@ describe('registerVaults epic', () => {
         vaultData: {
           ['0xc1Eba7b6F9f06E4491a499E653878464e40AB70e']: {
             id: 0,
-            group: null,
+            group: '0x7ce6e371085cb611fb46d5065397223ef2F952Ff',
             name: 'Rocksolid Vault',
             symbol: 'VLT',
             owner

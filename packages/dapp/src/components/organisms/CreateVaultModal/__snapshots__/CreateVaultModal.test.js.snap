@@ -57,6 +57,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
             },
           ],
         ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
       },
       "getState": [Function],
       "subscribe": [MockFunction] {
@@ -67,6 +85,16 @@ exports[`CreateVaultModal component renders correctly 1`] = `
           Array [
             [Function],
           ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
         ],
       },
     }
@@ -226,6 +254,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                           },
                         ],
                       ],
+                      "results": Array [
+                        Object {
+                          "isThrow": false,
+                          "value": undefined,
+                        },
+                        Object {
+                          "isThrow": false,
+                          "value": undefined,
+                        },
+                        Object {
+                          "isThrow": false,
+                          "value": undefined,
+                        },
+                        Object {
+                          "isThrow": false,
+                          "value": undefined,
+                        },
+                      ],
                     }
                   }
                   formObject={
@@ -362,6 +408,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                               "type": "@@redux-form/REGISTER_FIELD",
                             },
                           ],
+                        ],
+                        "results": Array [
+                          Object {
+                            "isThrow": false,
+                            "value": undefined,
+                          },
+                          Object {
+                            "isThrow": false,
+                            "value": undefined,
+                          },
+                          Object {
+                            "isThrow": false,
+                            "value": undefined,
+                          },
+                          Object {
+                            "isThrow": false,
+                            "value": undefined,
+                          },
                         ],
                       }
                     }
@@ -549,6 +613,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                 "type": "@@redux-form/REGISTER_FIELD",
                               },
                             ],
+                          ],
+                          "results": Array [
+                            Object {
+                              "isThrow": false,
+                              "value": undefined,
+                            },
+                            Object {
+                              "isThrow": false,
+                              "value": undefined,
+                            },
+                            Object {
+                              "isThrow": false,
+                              "value": undefined,
+                            },
+                            Object {
+                              "isThrow": false,
+                              "value": undefined,
+                            },
                           ],
                         }
                       }
@@ -759,6 +841,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                   "type": "@@redux-form/REGISTER_FIELD",
                                 },
                               ],
+                            ],
+                            "results": Array [
+                              Object {
+                                "isThrow": false,
+                                "value": undefined,
+                              },
+                              Object {
+                                "isThrow": false,
+                                "value": undefined,
+                              },
+                              Object {
+                                "isThrow": false,
+                                "value": undefined,
+                              },
+                              Object {
+                                "isThrow": false,
+                                "value": undefined,
+                              },
                             ],
                           }
                         }
@@ -1047,6 +1147,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             },
                                           ],
                                         ],
+                                        "results": Array [
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                        ],
                                       },
                                       "enableReinitialize": true,
                                       "error": undefined,
@@ -1290,6 +1408,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                               },
                                             ],
                                           ],
+                                          "results": Array [
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                          ],
                                         },
                                         "enableReinitialize": true,
                                         "error": undefined,
@@ -1423,6 +1559,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             },
                                           ],
                                         ],
+                                        "results": Array [
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                        ],
                                       }
                                     }
                                     id="0"
@@ -1537,6 +1691,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                                 },
                                               ],
                                             ],
+                                            "results": Array [
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                            ],
                                           },
                                           "error": undefined,
                                           "form": "createVault",
@@ -1644,7 +1816,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                               active={false}
                                               activeLabel="MetaMask **** 9196"
                                               below={true}
-                                              className={undefined}
                                               dropdownIcon={
                                                 <span
                                                   className="material-icons"
@@ -1653,7 +1824,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                                 </span>
                                               }
                                               error={false}
-                                              errorText={undefined}
                                               id="0"
                                               lineDirection="left"
                                               onBlur={[Function]}
@@ -1661,7 +1831,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                               onClick={[Function]}
                                               onFocus={[Function]}
                                               placeholder={null}
-                                              style={undefined}
                                               transitionName="md-drop"
                                               transitionTime={300}
                                               value="0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196"
@@ -1710,7 +1879,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                                 active={false}
                                                 activeLabel="MetaMask **** 9196"
                                                 below={true}
-                                                className={undefined}
                                                 dropdownIcon={
                                                   <span
                                                     className="material-icons"
@@ -1719,7 +1887,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                                   </span>
                                                 }
                                                 error={false}
-                                                errorText={undefined}
                                                 id="0"
                                                 lineDirection="left"
                                                 onBlur={[Function]}
@@ -1727,7 +1894,6 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                                 onClick={[Function]}
                                                 onFocus={[Function]}
                                                 placeholder={null}
-                                                style={undefined}
                                                 transitionName="md-drop"
                                                 transitionTime={300}
                                                 value="0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196"
@@ -1871,16 +2037,9 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                                               id="0-toggle"
                                                               ink={
                                                                 <InkContainer
-                                                                  className={undefined}
-                                                                  disabledInteractions={undefined}
-                                                                  inkClassName={undefined}
-                                                                  inkStyle={undefined}
-                                                                  pulse={undefined}
-                                                                  style={undefined}
                                                                   transitionEnterTimeout={450}
                                                                   transitionLeaveTimeout={300}
                                                                   transitionOverlap={150}
-                                                                  waitForInkTransition={undefined}
                                                                 />
                                                               }
                                                               listenToEnter={true}
@@ -2170,6 +2329,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             },
                                           ],
                                         ],
+                                        "results": Array [
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                        ],
                                       },
                                       "enableReinitialize": true,
                                       "error": undefined,
@@ -2397,6 +2574,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                               },
                                             ],
                                           ],
+                                          "results": Array [
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                          ],
                                         },
                                         "enableReinitialize": true,
                                         "error": undefined,
@@ -2530,6 +2725,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             },
                                           ],
                                         ],
+                                        "results": Array [
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                        ],
                                       }
                                     }
                                     id="1"
@@ -2611,6 +2824,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                                   "type": "@@redux-form/REGISTER_FIELD",
                                                 },
                                               ],
+                                            ],
+                                            "results": Array [
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
                                             ],
                                           },
                                           "error": undefined,
@@ -2912,6 +3143,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             },
                                           ],
                                         ],
+                                        "results": Array [
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                        ],
                                       },
                                       "enableReinitialize": true,
                                       "error": undefined,
@@ -3142,6 +3391,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                               },
                                             ],
                                           ],
+                                          "results": Array [
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                            Object {
+                                              "isThrow": false,
+                                              "value": undefined,
+                                            },
+                                          ],
                                         },
                                         "enableReinitialize": true,
                                         "error": undefined,
@@ -3275,6 +3542,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             },
                                           ],
                                         ],
+                                        "results": Array [
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                          Object {
+                                            "isThrow": false,
+                                            "value": undefined,
+                                          },
+                                        ],
                                       }
                                     }
                                     fullWidth={false}
@@ -3359,6 +3644,24 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                                   "type": "@@redux-form/REGISTER_FIELD",
                                                 },
                                               ],
+                                            ],
+                                            "results": Array [
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
+                                              Object {
+                                                "isThrow": false,
+                                                "value": undefined,
+                                              },
                                             ],
                                           },
                                           "error": undefined,
@@ -3501,16 +3804,9 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                     flat={true}
                                     ink={
                                       <InkContainer
-                                        className={undefined}
-                                        disabledInteractions={undefined}
-                                        inkClassName={undefined}
-                                        inkStyle={undefined}
-                                        pulse={undefined}
-                                        style={undefined}
                                         transitionEnterTimeout={450}
                                         transitionLeaveTimeout={300}
                                         transitionOverlap={150}
-                                        waitForInkTransition={undefined}
                                       />
                                     }
                                     onClick={[Function]}
@@ -3525,16 +3821,9 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                       iconBefore={true}
                                       ink={
                                         <InkContainer
-                                          className={undefined}
-                                          disabledInteractions={undefined}
-                                          inkClassName={undefined}
-                                          inkStyle={undefined}
-                                          pulse={undefined}
-                                          style={undefined}
                                           transitionEnterTimeout={450}
                                           transitionLeaveTimeout={300}
                                           transitionOverlap={150}
-                                          waitForInkTransition={undefined}
                                         />
                                       }
                                       onClick={[Function]}
@@ -3598,16 +3887,9 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                     flat={true}
                                     ink={
                                       <InkContainer
-                                        className={undefined}
-                                        disabledInteractions={undefined}
-                                        inkClassName={undefined}
-                                        inkStyle={undefined}
-                                        pulse={undefined}
-                                        style={undefined}
                                         transitionEnterTimeout={450}
                                         transitionLeaveTimeout={300}
                                         transitionOverlap={150}
-                                        waitForInkTransition={undefined}
                                       />
                                     }
                                     onClick={[Function]}
@@ -3622,16 +3904,9 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                       iconBefore={true}
                                       ink={
                                         <InkContainer
-                                          className={undefined}
-                                          disabledInteractions={undefined}
-                                          inkClassName={undefined}
-                                          inkStyle={undefined}
-                                          pulse={undefined}
-                                          style={undefined}
                                           transitionEnterTimeout={450}
                                           transitionLeaveTimeout={300}
                                           transitionOverlap={150}
-                                          waitForInkTransition={undefined}
                                         />
                                       }
                                       onClick={[Function]}

@@ -16,7 +16,9 @@ describe('selectFirstVault Epic', () => {
 
   const apiMock = {
     web3: {
-      getAvailableAddressesAsync: () => {}
+      eth: {
+        getAccounts: () => {}
+      }
     }
   }
   let fromPromiseSpy

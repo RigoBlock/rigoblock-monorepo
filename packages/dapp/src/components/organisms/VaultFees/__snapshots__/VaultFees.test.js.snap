@@ -141,16 +141,9 @@ exports[`VaultFees component renders correctly as manager 1`] = `
           flat={true}
           ink={
             <InkContainer
-              className={undefined}
-              disabledInteractions={undefined}
-              inkClassName={undefined}
-              inkStyle={undefined}
-              pulse={undefined}
-              style={undefined}
               transitionEnterTimeout={450}
               transitionLeaveTimeout={300}
               transitionOverlap={150}
-              waitForInkTransition={undefined}
             />
           }
           onClick={[Function]}
@@ -165,16 +158,9 @@ exports[`VaultFees component renders correctly as manager 1`] = `
             iconBefore={true}
             ink={
               <InkContainer
-                className={undefined}
-                disabledInteractions={undefined}
-                inkClassName={undefined}
-                inkStyle={undefined}
-                pulse={undefined}
-                style={undefined}
                 transitionEnterTimeout={450}
                 transitionLeaveTimeout={300}
                 transitionOverlap={150}
-                waitForInkTransition={undefined}
               />
             }
             onClick={[Function]}

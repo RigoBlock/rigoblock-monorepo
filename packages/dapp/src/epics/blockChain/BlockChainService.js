@@ -14,6 +14,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise'
 import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
 import { zip } from 'rxjs/observable/zip'
+import api from '../../api'
 import blockChainActions from '../../actions/blockchain-actions'
 import contractFactory from '../../contractFactory'
 
@@ -90,7 +91,10 @@ class BlockChainService {
   fetchVaultEvents(fromBlock, toBlock = 'latest') {
     fromBlock = fromBlock || 0
     const allVaultEvents = fromPromise(
-      contractFactory.getInstance('VaultEventful'),
+      contractFactory.getInstance(
+        'VaultEventful',
+        api.contract.VaultEventful.address
+      ),
       this.scheduler
     )
       .mergeMap(vaultEventful =>
@@ -111,7 +115,10 @@ class BlockChainService {
   watchVaultEvents(fromBlock, toBlock = 'latest') {
     fromBlock = fromBlock || 0
     const allVaultEvents = fromPromise(
-      contractFactory.getInstance('VaultEventful'),
+      contractFactory.getInstance(
+        'VaultEventful',
+        api.contract.VaultEventful.address
+      ),
       this.scheduler
     ).mergeMap(vaultEventful => {
       return Observable.create(observer => {

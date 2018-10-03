@@ -644,7 +644,6 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                             active={false}
                             activeLabel=""
                             below={true}
-                            className={undefined}
                             dropdownIcon={
                               <span
                                 className="material-icons"
@@ -653,7 +652,6 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                               </span>
                             }
                             error={false}
-                            errorText={undefined}
                             id="1"
                             lineDirection="left"
                             onBlur={[Function]}
@@ -661,7 +659,6 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                             onClick={[Function]}
                             onFocus={[Function]}
                             placeholder={null}
-                            style={undefined}
                             transitionName="md-drop"
                             transitionTime={300}
                             value=""
@@ -710,7 +707,6 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                               active={false}
                               activeLabel=""
                               below={true}
-                              className={undefined}
                               dropdownIcon={
                                 <span
                                   className="material-icons"
@@ -719,7 +715,6 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                                 </span>
                               }
                               error={false}
-                              errorText={undefined}
                               id="1"
                               lineDirection="left"
                               onBlur={[Function]}
@@ -727,7 +722,6 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                               onClick={[Function]}
                               onFocus={[Function]}
                               placeholder={null}
-                              style={undefined}
                               transitionName="md-drop"
                               transitionTime={300}
                               value=""
@@ -871,16 +865,9 @@ exports[`SelectFieldWithTitle component renders correctly 1`] = `
                                             id="1-toggle"
                                             ink={
                                               <InkContainer
-                                                className={undefined}
-                                                disabledInteractions={undefined}
-                                                inkClassName={undefined}
-                                                inkStyle={undefined}
-                                                pulse={undefined}
-                                                style={undefined}
                                                 transitionEnterTimeout={450}
                                                 transitionLeaveTimeout={300}
                                                 transitionOverlap={150}
-                                                waitForInkTransition={undefined}
                                               />
                                             }
                                             listenToEnter={true}

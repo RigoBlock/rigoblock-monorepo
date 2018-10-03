@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SelectFieldWithTitle from '../../molecules/SelectFieldWithTitle'
 import TextFieldWithTitle from '../../molecules/TextFieldWithTitle'
+import api from '../../../api'
 import contractFactory from '../../../contractFactory'
 import get from 'lodash/get'
 import globalActions from '../../../actions/global-actions'
@@ -49,7 +50,10 @@ const validate = values => {
 const asyncValidate = async values => {
   const parsedValues = parseFormValues(values)
   const vaultExistError = { vaultName: 'Vault already exists.' }
-  const registry = await contractFactory.getInstance('DragoRegistry')
+  const registry = await contractFactory.getInstance(
+    'DragoRegistry',
+    api.contract.DragoRegistry.address
+  )
   try {
     const res = await registry.fromName(parsedValues.vaultName.toLowerCase())
     if (res) {

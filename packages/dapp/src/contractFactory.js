@@ -5,13 +5,13 @@ class ContractFactory {
     this.contractInstances = {}
   }
 
-  getInstance(name, address = api.contract[name].address) {
+  getInstance(name, address) {
     return this.contractInstances[name] && this.contractInstances[name][address]
       ? Promise.resolve(this.contractInstances[name][address])
       : this.createInstance(name, address)
   }
 
-  async createInstance(name, address = api.contract[name].address) {
+  async createInstance(name, address) {
     this.contractInstances[name] = this.contractInstances[name] || {}
     this.contractInstances[name][address] = api.contract[
       name

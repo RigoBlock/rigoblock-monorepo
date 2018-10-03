@@ -18,12 +18,11 @@ describe('createVault Epic', () => {
   const mockStore = {
     getState: getStateMock
   }
+  let contractFactoryMock
 
   class VaultFactoryMock {
-    createVaultTx() {
-      return {
-        send: jest.fn()
-      }
+    createVault() {
+      return Promise.resolve({ send: () => {} })
     }
   }
 
@@ -33,8 +32,7 @@ describe('createVault Epic', () => {
     },
     contract: {
       VaultFactory: {
-        address: '0x123123123',
-        createAndValidate: () => {}
+        address: '0x0'
       }
     }
   }
@@ -45,9 +43,13 @@ describe('createVault Epic', () => {
   beforeEach(() => {
     jest.resetModules()
     fromPromiseSpy = jest.fn()
+    contractFactoryMock = {
+      getInstance: jest.fn()
+    }
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy
     }))
+    jest.doMock('../../contractFactory', () => contractFactoryMock)
     jest.doMock('../../api', () => apiMock)
     createVaultEpic = require('./createVault').default
   })
