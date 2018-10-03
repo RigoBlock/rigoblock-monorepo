@@ -1,5 +1,5 @@
 # API
-## Usage
+## Building the package
 
 Start Ganache
 ```
@@ -7,7 +7,7 @@ lerna run --scope @rigoblock/dapp ganache --stream
 ```
 Then run the following command:
 ```
-yarn typechain
+yarn build
 ```
 
 ## Available Scripts
@@ -18,13 +18,17 @@ yarn lint
 ```
 Lints all files.
 ```
-yarn typechain
+yarn abi-extract
 ```
-Extracts all abis of the deployed contracts, then copies them over to the .tmp folder in json format. Typechain will then proceed to generate Typescript classes of the contracts from said abis.
+Extracts all abis of the deployed contracts, then copies them over to the .tmp folder in json format. Requires Ganache to be running.
+```
+yarn abi-gen
+```
+Generates contract wrappers from the abi JSON files.
 ```
 yarn tsc
 ```
-Compiles all .ts files to Javascript, including map and declaration files.
+Compiles all .ts files to Javascript, including map and declaration files into the `dist` folder.
 ```
 yarn tsc:watch
 ```
@@ -32,18 +36,31 @@ Compiles on watch mode
 ```
 yarn build
 ```
-Executes in sequence the typechain and the tsc scripts
+Extracts abis saving them as JSON files, generates wrappers and compiles .ts files into `dist` folder. Requires Ganache to be running unless abi files have been saved previously.
+
+## Initialising the API
+
+```javascript
+import Api from '@rigoblock/api'
+
+const api = new Api()
+await api.init(web3, rpcUrl)
+```
+`rpcUrl` is optional and defaults to `ws://localhost:8545` to work with Ganache.
 
 ## Instantiating contracts
 
-To instantiate a contract we have to use Typechain's `createAndValidate()` function, which will check if the contract is deployed on the blockChain, else it will throw an error. The function accepts two parameters: a web3 instance and the contract's address.
+To instantiate a contract we use the `createAndValidate()` function, which will check if the contract is deployed on the blockChain, throwing an error if it isn't. The function accepts two parameters: a web3 instance and the contract's address.
 
-Some contracts are already deployed when the API is initialised, their address is saved under a `address` method. To check if a contract is deployed we can use the custom `isDeployed()` function
+Some contracts are already deployed when the API is initialised, their address is saved under a `address` property. To check if a contract is deployed we can use the custom `isDeployed()` function.
 
 ```javascript
 api.contract.Authority.isDeployed() // true
 
-const authority = api.contract.Authority.createAndValidate(api.web3._web3, api.contract.Authority.address)
+const authority = await api.contract.Authority.createAndValidate(
+  api.web3,
+  api.contract.Authority.address
+)
 ```
 
 ## Calling methods
@@ -57,93 +74,54 @@ import Api from '@rigoblock/api'
 const api = new Api()
 await api.init()
 const vaultFactory = api.contract.VaultFactory.createAndValidate(
-  api.web3._web3,
+  api.web3,
   api.contract.VaultFactory.address
 )
-vaultFactory.createVaultTx('rocksolidvault', 'VLT').send({
-  value: 0,
-  from: '0x...196',
-  gas: 5700000,
-  gasPrice: 100000000000
+const txOptions = { from: '0x1234...' }
+const txObject = await vaultFactory.createVault('rocksolidvault', 'VLT')
+const gasEstimate = await txObject.estimateGas(txOptions)
+const gasPrice = await api.web3.eth.getGasPrice()
+const receipt = await txObject.send({
+  ...txOptions,
+  gas: new BigNumber(gasEstimate).times(1.2).toFixed(0),
+  gasPrice
 })
 
+const vaultAddress = receipt.events.VaultCreated.returnValues.vault
 ```
+We add some more gas to the estimate as it can be incorrect in case new blocks are added between the estimate and the actual transaction taking place.
+
 ## Adding custom methods
 
-We can add custom methods to the contracts using the `ContractExtension` class.
-
-```typescript
-// contract-extension.ts
-export abstract class ContractExtension {
-  customMethod() {
-    // custom code here
-  }
-}
-
-// contracts/index.ts
-import { Authority } from './models/Authority'
-import { ContractExtension } from './contract-extension'
-
-export abstract class ContractModels {
-  Authority: Authority & ContractExtension
-}
-
-```
+Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
 
 ## Events
 
-To create a new filter for a specific event we simply call the method from the typechain contract, passing in an object to define the arguments we filter the events for.
+To get past events of a contract, use the `getPastEvents` function. To create a subscription to a single event, use the relative method and pass it a callback to retrieve the data.
 
 ### Example
 
 Listening for the `VaultCreated` event
 
 ```javascript
-import Api from '@rigoblock/api'
-
-const api = new Api()
-await api.init()
-
-const vaultEventful = api.contract.VaultEventful.createAndValidate(
-  api.web3._web3,
-  api.contract.VaultEventful.address
+await vaultFactory.VaultCreatedEvent(
+  {
+    fromBlock: 0,
+    toBlock: 'latest'
+  },
+  (err, event) => (err ? console.error(err) : console.log(event))
 )
-// filter for vaults created by this account
-const myEvent = vaultEventful.VaultCreatedEvent({
-  owner: '0x7328ef1d7ab7583eb9968b2f4a9c900f8a2e2d6d',
-  fromBlock: 0,
-  toBlock: 'latest'
-})
-
-// get all past events
-myEvent.get((error, data) => (error ? error : data))
-
-// listen for new events
-myEvent.watch((error, data) => (error ? error : data))
 ```
 
-If we wish to listen for all events of a particular contract, we have to use typechain's rawWeb3Contract method.
+If we wish to listen for all events, use the `allEvents` method.
 
 ### Example
 ```javascript
-import Api from '@rigoblock/api'
-
-const api = new Api()
-await api.init()
-
-const vaultEventful = api.contract.VaultEventful.createAndValidate(
-  api.web3._web3,
-  api.contract.VaultEventful.address
+await vaultFactory.allEvents(
+  {
+    fromBlock,
+    toBlock
+  },
+  (err, events) => (err ? console.error(err) : console.log(events))
 )
-const events = vaultEventful.VaultCreatedEvent.rawWeb3Contract.allEvents({
-  fromBlock: 0,
-  toBlock: 'latest'
-})
-
-// get all events
-events.get((error, data) => (error ? error : data))
-
-// listen for new events
-events.watch((error, data) => (error ? error : data))
-
 ```
