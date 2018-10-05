@@ -7,11 +7,14 @@ import vaultActions from '../../actions/vault-actions'
 describe('getVaultFees epics', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const vaultAddress = '0x86a1ba4d485ce346bded508e2426798f825558be'
-  const transactionFee = new BigNumber('1')
-  const vaultData = ['0x123', '0x123', '0x123', '1', transactionFee]
-  let fromPromiseSpy
-  let getVaultFees
-
+  const transactionFee = '1'
+  const vaultData = {
+    feeCollector: '0x7328eF1d7Ab7583Eb9968B2f4a9c900f8a2e2d6d',
+    minPeriod: '0',
+    ratio: '80',
+    transactionFee,
+    vaultDao: '0x7ce6e371085cb611fb46d5065397223ef2F952Ff'
+  }
   const vault = {
     [vaultAddress]: {
       id: new BigNumber('0'),
@@ -21,28 +24,31 @@ describe('getVaultFees epics', () => {
       group: '0x7ce6e371085cb611fb46d5065397223ef2f952ff'
     }
   }
-
+  const contractFactoryMock = {
+    getInstance: jest.fn()
+  }
   class VaultMock {
     getAdminData = () => transactionFee
   }
   const apiMock = {
-    web3: {
-      _web3: {}
-    },
+    web3: {},
     contract: {
       Vault: {
         createAndValidate: () => new VaultMock()
       }
     }
   }
+  let fromPromiseSpy
+  let getVaultFees
 
   beforeEach(() => {
-    fromPromiseSpy = jest.fn()
     jest.resetModules()
+    fromPromiseSpy = jest.fn()
     jest.doMock('rxjs/observable/fromPromise', () => ({
       fromPromise: fromPromiseSpy
     }))
     jest.doMock('../../api', () => apiMock)
+    jest.doMock('../../contractFactory', () => contractFactoryMock)
     getVaultFees = require('./getVaultFees').default
   })
 
@@ -58,7 +64,7 @@ describe('getVaultFees epics', () => {
         account: owner,
         vaultData: {
           address: vaultAddress,
-          data: { transactionFee }
+          data: { transactionFee: new BigNumber(transactionFee) }
         }
       })
     }

@@ -8,30 +8,56 @@
     "node": ">=6.4"
   },
   "scripts": {
-    "build": "npm run typechain && npm run tsc",
+    "build": "npm run abi-gen && npm run tsc",
     "tsc": "rm -rf dist/* && tsc --outDir './dist'",
     "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
+    "test": "jest",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
-    "typechain": "rm -rf .tmp && node src/abi-extractor.js && typechain --force --outDir src/contracts/models '.tmp/*.json'"
+    "abi-gen": "npm run abi-extract && rm -rf src/contracts/models && ts-node abi-gen.ts --abis './.tmp/*.json' -o src/contracts/models --template './template.handlebars' --partials './partials/*.handlebars'",
+    "abi-extract": "rm -rf .tmp && node src/abi-extractor.js"
+  },
+  "config": {
+    "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
   },
   "files": [
     "dist"
   ],
   "devDependencies": {
+    "@0xproject/abi-gen": "^1.0.9",
+    "@types/jest": "^23.3.2",
+    "@types/web3": "^1.0.6",
+    "bignumber.js": "^7.2.1",
     "chalk": "^2.4.1",
     "eslint-plugin-typescript": "^0.12.0",
+    "jest": "^23.6.0",
+    "to-snake-case": "^1.0.0",
+    "ts-jest": "^23.10.1",
     "typescript": "^3.0.1",
     "typescript-eslint-parser": "^18.0.0"
   },
   "dependencies": {
-    "@0xproject/subproviders": "^0.10.4",
-    "@0xproject/typescript-typings": "^0.4.1",
-    "@0xproject/web3-wrapper": "^0.7.1",
+    "@0xproject/subproviders": "^2.0.5",
     "@rigoblock/contracts": "^0.3.4",
-    "@types/node": "^9.6.6",
-    "bignumber.js": "^5.0.0",
-    "typechain": "^0.2.2",
-    "web3": "0.20.6",
-    "web3-provider-engine": "^14.0.5"
+    "@types/node": "^10.11.0",
+    "bignumber.js": "^7.2.1",
+    "handlebars": "^4.0.12",
+    "web3": "1.0.0-beta.36",
+    "web3-provider-engine": "^14.0.6"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/test/setupTests.ts",
+    "roots": [
+      "<rootDir>/test"
+    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ]
   }
 }

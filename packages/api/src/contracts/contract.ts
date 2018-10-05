@@ -1,20 +1,16 @@
-import * as Web3 from 'web3'
-import { ContractExtension } from './contract-extension'
+import toSnakeCase = require('to-snake-case')
 import { ContractModels } from './'
-import { TypeChainContract } from './models/typechain-runtime'
+import Web3Contract from 'web3/eth/contract'
 
 class Contract extends ContractModels {
-  async init(web3: Web3, contractsMap: Contract.ContractsMap) {
+  async init(contractsMap: Contract.ContractsMap) {
     const contractNames: string[] = Object.keys(contractsMap)
     const contractsPromises: Promise<
-      [string, TypeChainContract][]
+      [string, Web3Contract][]
     >[] = contractNames.map(async contractName => {
-      const contract: TypeChainContract = await import(`./models/${contractName}`)
-      Object.assign(contract[contractName], ContractExtension)
-      Object.assign(
-        contract[contractName].prototype,
-        ContractExtension.prototype
-      )
+      const contract: Web3Contract = await import(`./models/${toSnakeCase(
+        contractName
+      )}`)
       if (contractsMap[contractName].address) {
         contract[contractName].address = contractsMap[contractName].address
       }

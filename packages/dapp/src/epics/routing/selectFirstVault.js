@@ -37,15 +37,13 @@ const selectFirstVaultEpic = (action$, store, ts = Scheduler.async) => {
         Object.keys(getVaultsInState(store, currentAccount)).length
     )
     .mergeMap(() =>
-      fromPromise(api.web3.getAvailableAddressesAsync(), ts).map(
-        ([account]) => {
-          const vaults = getVaultsInState(store, account)
-          const firstVaultId = Object.values(vaults)
-            .map(vault => vault.id)
-            .shift()
-          return routerActions.navigateToVault(firstVaultId)
-        }
-      )
+      fromPromise(api.web3.eth.getAccounts(), ts).map(([account]) => {
+        const vaults = getVaultsInState(store, account)
+        const firstVaultId = Object.values(vaults)
+          .map(vault => vault.id)
+          .shift()
+        return routerActions.navigateToVault(firstVaultId)
+      })
     )
 }
 

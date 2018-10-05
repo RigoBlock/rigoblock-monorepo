@@ -10,6 +10,7 @@ import React from 'react'
 import SelectFieldWithTitle from '../../molecules/SelectFieldWithTitle'
 import TextFieldWithTitle from '../../molecules/TextFieldWithTitle'
 import api from '../../../api'
+import contractFactory from '../../../contractFactory'
 import get from 'lodash/get'
 import globalActions from '../../../actions/global-actions'
 import vaultActions from '../../../actions/vault-actions'
@@ -49,8 +50,8 @@ const validate = values => {
 const asyncValidate = async values => {
   const parsedValues = parseFormValues(values)
   const vaultExistError = { vaultName: 'Vault already exists.' }
-  const registry = await api.contract.DragoRegistry.createAndValidate(
-    api.web3._web3,
+  const registry = await contractFactory.getInstance(
+    'DragoRegistry',
     api.contract.DragoRegistry.address
   )
   try {

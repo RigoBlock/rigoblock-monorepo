@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 import { BUY_VAULT, SELL_VAULT } from '../../constants/blockchain'
+import { BigNumber } from 'bignumber.js'
 import { DEPOSIT, ETH, WITHDRAW } from '../../constants/blockchain'
 import { merge } from 'rxjs/observable/merge'
 import vaultActions from '../../actions/vault-actions'
@@ -15,14 +16,14 @@ const getVaultTransactions = action$ => {
     .map(({ payload: { account, block } }) => {
       const transaction = {
         hash: block.transactionHash,
-        vault: block.args.vault,
+        vault: block.returnValues.vault,
         data: {
           date: block.timestamp,
           type: DEPOSIT,
           symbol: ETH,
-          value: block.args.amount,
-          units: block.args.revenue,
-          account: block.args.from
+          value: new BigNumber(block.returnValues.amount),
+          units: block.returnValues.revenue,
+          account: block.returnValues.from
         }
       }
       return vaultActions.registerTransaction({ account, transaction })
@@ -37,14 +38,14 @@ const getVaultTransactions = action$ => {
     .map(({ payload: { account, block } }) => {
       const transaction = {
         hash: block.transactionHash,
-        vault: block.args.vault,
+        vault: block.returnValues.vault,
         data: {
           date: block.timestamp,
           type: WITHDRAW,
           symbol: ETH,
-          value: block.args.revenue,
-          units: block.args.amount,
-          account: block.args.from
+          value: new BigNumber(block.returnValues.revenue),
+          units: block.returnValues.amount,
+          account: block.returnValues.from
         }
       }
       return vaultActions.registerTransaction({ account, transaction })

@@ -10,6 +10,7 @@ import { merge } from 'rxjs/observable/merge'
 import { of } from 'rxjs/observable/of'
 import api from '../../api'
 import blockChainActions from '../../actions/blockchain-actions'
+import contractFactory from '../../contractFactory'
 import vaultActions from '../../actions/vault-actions'
 
 const createVaultEpic = (action$, store, ts = Scheduler.async) => {
@@ -23,8 +24,8 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
   const action$2 = source.mergeMap(
     ({ payload: { accountNumber, vaultName, vaultSymbol } }) =>
       fromPromise(
-        api.contract.VaultFactory.createAndValidate(
-          api.web3._web3,
+        contractFactory.getInstance(
+          'VaultFactory',
           api.contract.VaultFactory.address
         ),
         ts
@@ -33,8 +34,10 @@ const createVaultEpic = (action$, store, ts = Scheduler.async) => {
           .mergeMap(() =>
             fromPromise(
               vaultFactory
-                .createVaultTx(vaultName.toLowerCase(), vaultSymbol)
-                .send({ from: accountNumber, gasPrice: 1, gas: 6654755 }),
+                .createVault(vaultName.toLowerCase(), vaultSymbol)
+                .then(obj =>
+                  obj.send({ from: accountNumber, gasPrice: 1, gas: 6654755 })
+                ),
               ts
             ).map(txHash =>
               blockChainActions.transactionCompleted({

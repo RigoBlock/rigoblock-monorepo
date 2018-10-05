@@ -1,0 +1,3 @@
+public async {{this.tsName}}({{> typed_params inputs=inputs}}): Promise<TransactionObject<{{> return_type outputs=outputs}}>> {
+  return this.rawWeb3Contract.methods.{{this.tsName}}({{> params inputs=inputs}})
+}

@@ -877,7 +877,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                   active={false}
                                   activeLabel=""
                                   below={true}
-                                  className={undefined}
                                   dropdownIcon={
                                     <span
                                       className="material-icons"
@@ -886,7 +885,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                     </span>
                                   }
                                   error={false}
-                                  errorText={undefined}
                                   id="1"
                                   lineDirection="left"
                                   onBlur={[Function]}
@@ -894,7 +892,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                   onClick={[Function]}
                                   onFocus={[Function]}
                                   placeholder={null}
-                                  style={undefined}
                                   transitionName="md-drop"
                                   transitionTime={300}
                                   value="+02:00"
@@ -943,7 +940,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                     active={false}
                                     activeLabel=""
                                     below={true}
-                                    className={undefined}
                                     dropdownIcon={
                                       <span
                                         className="material-icons"
@@ -952,7 +948,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                       </span>
                                     }
                                     error={false}
-                                    errorText={undefined}
                                     id="1"
                                     lineDirection="left"
                                     onBlur={[Function]}
@@ -960,7 +955,6 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                     onClick={[Function]}
                                     onFocus={[Function]}
                                     placeholder={null}
-                                    style={undefined}
                                     transitionName="md-drop"
                                     transitionTime={300}
                                     value="+02:00"
@@ -1104,16 +1098,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                                                   id="1-toggle"
                                                   ink={
                                                     <InkContainer
-                                                      className={undefined}
-                                                      disabledInteractions={undefined}
-                                                      inkClassName={undefined}
-                                                      inkStyle={undefined}
-                                                      pulse={undefined}
-                                                      style={undefined}
                                                       transitionEnterTimeout={450}
                                                       transitionLeaveTimeout={300}
                                                       transitionOverlap={150}
-                                                      waitForInkTransition={undefined}
                                                     />
                                                   }
                                                   listenToEnter={true}
@@ -1248,16 +1235,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         flat={true}
                         ink={
                           <InkContainer
-                            className={undefined}
-                            disabledInteractions={undefined}
-                            inkClassName={undefined}
-                            inkStyle={undefined}
-                            pulse={undefined}
-                            style={undefined}
                             transitionEnterTimeout={450}
                             transitionLeaveTimeout={300}
                             transitionOverlap={150}
-                            waitForInkTransition={undefined}
                           />
                         }
                         onClick={[Function]}
@@ -1272,16 +1252,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           iconBefore={true}
                           ink={
                             <InkContainer
-                              className={undefined}
-                              disabledInteractions={undefined}
-                              inkClassName={undefined}
-                              inkStyle={undefined}
-                              pulse={undefined}
-                              style={undefined}
                               transitionEnterTimeout={450}
                               transitionLeaveTimeout={300}
                               transitionOverlap={150}
-                              waitForInkTransition={undefined}
                             />
                           }
                           onClick={[Function]}
@@ -1345,16 +1318,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                         flat={true}
                         ink={
                           <InkContainer
-                            className={undefined}
-                            disabledInteractions={undefined}
-                            inkClassName={undefined}
-                            inkStyle={undefined}
-                            pulse={undefined}
-                            style={undefined}
                             transitionEnterTimeout={450}
                             transitionLeaveTimeout={300}
                             transitionOverlap={150}
-                            waitForInkTransition={undefined}
                           />
                         }
                         onClick={[Function]}
@@ -1369,16 +1335,9 @@ exports[`PreferencesForm component renders correctly 1`] = `
                           iconBefore={true}
                           ink={
                             <InkContainer
-                              className={undefined}
-                              disabledInteractions={undefined}
-                              inkClassName={undefined}
-                              inkStyle={undefined}
-                              pulse={undefined}
-                              style={undefined}
                               transitionEnterTimeout={450}
                               transitionLeaveTimeout={300}
                               transitionOverlap={150}
-                              waitForInkTransition={undefined}
                             />
                           }
                           onClick={[Function]}

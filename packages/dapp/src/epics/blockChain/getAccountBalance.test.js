@@ -1,5 +1,5 @@
 import { ActionsObservable } from 'redux-observable'
-import { ETH_TO_WEI } from '../../constants/utils'
+import { BigNumber } from 'bignumber.js'
 import { TestScheduler } from 'rxjs'
 import { VAULT } from '../../constants/blockchain'
 import { of } from 'rxjs/observable/of'
@@ -8,13 +8,16 @@ import blockChainActions from '../../actions/blockchain-actions'
 describe('getAccountBalanceEpic', () => {
   const owner = '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196'
   const otherAccount = '0x8BB7481495D45CCD5CFFAE1C3A84155FEA85A323'
+  const firstBalance = '10000000000000000000'
+  const secondBalance = '20000000000000000000'
+  const thirdBalance = '15000000000000000000'
+  const fourthBalance = '25000000000000000000'
   const getBalanceSpy = jest.fn()
   const apiMock = {
     web3: {
-      _web3: {
-        fromWei: val => val / ETH_TO_WEI
-      },
-      getBalanceInWeiAsync: getBalanceSpy
+      eth: {
+        getBalance: getBalanceSpy
+      }
     }
   }
   const vaultEvent = {
@@ -43,7 +46,7 @@ describe('getAccountBalanceEpic', () => {
   })
 
   it('dispatches an updateAccountBalance action upon user login', () => {
-    fromPromiseSpy.mockReturnValueOnce(of('25999999999952600000'))
+    fromPromiseSpy.mockReturnValueOnce(of(firstBalance))
     const inputValues = {
       a: blockChainActions.blockChainLogIn({
         provider: 'metamask',
@@ -53,7 +56,7 @@ describe('getAccountBalanceEpic', () => {
     const expectedValues = {
       b: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '25999999999952600000'
+        balance: new BigNumber(firstBalance)
       })
     }
 
@@ -74,7 +77,7 @@ describe('getAccountBalanceEpic', () => {
   })
 
   it('dispatches an updateAccountBalance action if we register a block which interests the current account', () => {
-    fromPromiseSpy.mockReturnValueOnce(of('10000000000000000000'))
+    fromPromiseSpy.mockReturnValueOnce(of(firstBalance))
     const inputAction = blockChainActions.registerBlock({
       account: owner,
       label: VAULT,
@@ -87,7 +90,7 @@ describe('getAccountBalanceEpic', () => {
     const expectedValues = {
       b: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '10000000000000000000'
+        balance: new BigNumber(firstBalance)
       })
     }
 
@@ -112,8 +115,8 @@ describe('getAccountBalanceEpic', () => {
 
   it('dispatches the action after emissions stopped for 500ms, only taking last received value', () => {
     fromPromiseSpy
-      .mockReturnValueOnce(of('10000000000000000000'))
-      .mockReturnValueOnce(of('20000000000000000000'))
+      .mockReturnValueOnce(of(firstBalance))
+      .mockReturnValueOnce(of(secondBalance))
 
     const inputAction = blockChainActions.registerBlock({
       account: owner,
@@ -126,11 +129,11 @@ describe('getAccountBalanceEpic', () => {
     const expectedValues = {
       a: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '10000000000000000000'
+        balance: new BigNumber(firstBalance)
       }),
       b: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '20000000000000000000'
+        balance: new BigNumber(secondBalance)
       })
     }
 
@@ -156,10 +159,10 @@ describe('getAccountBalanceEpic', () => {
 
   it('dispatches multiple actions if we receive multiple registration for different accounts', () => {
     fromPromiseSpy
-      .mockReturnValueOnce(of('10000000000000000000'))
-      .mockReturnValueOnce(of('15000000000000000000'))
-      .mockReturnValueOnce(of('20000000000000000000'))
-      .mockReturnValueOnce(of('25000000000000000000'))
+      .mockReturnValueOnce(of(firstBalance))
+      .mockReturnValueOnce(of(thirdBalance))
+      .mockReturnValueOnce(of(secondBalance))
+      .mockReturnValueOnce(of(fourthBalance))
 
     const inputAction1 = blockChainActions.registerBlock({
       account: owner,
@@ -178,19 +181,19 @@ describe('getAccountBalanceEpic', () => {
     const expectedValues = {
       a: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '10000000000000000000'
+        balance: new BigNumber(firstBalance)
       }),
       b: blockChainActions.updateAccountBalance({
         account: owner,
-        balance: '20000000000000000000'
+        balance: new BigNumber(secondBalance)
       }),
       c: blockChainActions.updateAccountBalance({
         account: otherAccount,
-        balance: '15000000000000000000'
+        balance: new BigNumber(thirdBalance)
       }),
       d: blockChainActions.updateAccountBalance({
         account: otherAccount,
-        balance: '25000000000000000000'
+        balance: new BigNumber(fourthBalance)
       })
     }
 

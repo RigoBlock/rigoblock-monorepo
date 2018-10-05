@@ -7,6 +7,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise'
 import { merge } from 'rxjs/observable/merge'
 import api from '../../api'
 import blockChainActions from '../../actions/blockchain-actions'
+import contractFactory from '../../contractFactory'
 import vaultActions from '../../actions/vault-actions'
 
 const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
@@ -23,25 +24,27 @@ const registerVaultsEpic = (action$, store, ts = Scheduler.async) => {
   )
 
   const action$2 = vaultBlock$
-    .mergeMap(action => {
-      const registry = api.contract.DragoRegistry
-      return fromPromise(
-        registry.createAndValidate(api.web3._web3, registry.address)
+    .mergeMap(action =>
+      fromPromise(
+        contractFactory.getInstance(
+          'DragoRegistry',
+          api.contract.DragoRegistry.address
+        )
       ).mergeMap(registry => {
-        const address = action.payload.block.args.vault
+        const address = action.payload.block.returnValues.vault
         const account = action.payload.account
         return fromPromise(registry.fromAddress(address), ts).map(
           vaultData => ({ account, address, vaultData })
         )
       })
-    })
+    )
     .map(
-      ({ account, address, vaultData: [id, name, symbol, , owner, group] }) =>
+      ({ account, address, vaultData: { id, name, symbol, owner, group } }) =>
         vaultActions.registerVault({
           account,
           vaultData: {
             [address]: {
-              id: id.toNumber(),
+              id: parseInt(id),
               name,
               symbol,
               owner,

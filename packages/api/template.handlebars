@@ -1,0 +1,62 @@
+/* eslint-disable */
+import { BigNumber } from 'bignumber.js'
+import BaseContract, { EventOptions } from '../../baseContract'
+import { TransactionObject } from 'web3/eth/types'
+
+{{#if events}}
+export enum {{contractName}}Events {
+    {{#each events}}
+    {{name}} = '{{name}}',
+    {{/each}}
+}
+{{/if}}
+
+{{#if events}}
+export class {{contractName}} extends BaseContract<{{contractName}}Events> {
+    public constructor(web3: any, address: string) {
+      super()
+{{else}}
+export class {{contractName}} {
+    public rawWeb3Contract: any
+    public constructor(web3: any, address: string) {
+{{/if}}
+
+    const abi = {{{getAbi ctor events methods}}}
+    this.rawWeb3Contract = new web3.eth.Contract(abi, address)
+  }
+
+  static async createAndValidate(
+    web3: any,
+    address: string
+  ): Promise<{{contractName}}> {
+    const contract = new {{contractName}}(web3, address)
+    const code = await web3.eth.getCode(address)
+
+    // in case of missing smartcontract, code can be equal to "0x0" or "0x" depending on exact web3 implementation
+    // to cover all these cases we just check against the source code length — there won't be any meaningful EVM program in less then 3 chars
+    if (code.length < 4) {
+      throw new Error(`Contract at ${address} doesn't exist!`);
+    }
+    return contract;
+  }
+
+  public static address: string
+
+  {{#each methods}}
+    {{#this.constant}}
+  {{> constantFunction contractName=../contractName}}
+    {{/this.constant}}
+    {{^this.constant}}
+  {{> txFunction contractName=../contractName}}
+    {{/this.constant}}
+  {{/each}}
+  {{#if events}}
+    {{#each events}}
+  {{> event contractName=../contractName}}
+    {{/each}}
+  {{/if}}
+
+  static isDeployed() {
+    return !!this.address
+  }
+}
