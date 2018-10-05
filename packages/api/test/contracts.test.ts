@@ -1,4 +1,5 @@
 import Web3 = require('web3')
+import { BigNumber } from 'bignumber.js'
 import { Vault } from '../src/contracts/models/vault'
 import {
   VaultFactory,
@@ -81,7 +82,11 @@ describe('generated contract', () => {
             .createVault(...vaultOptions)
             .then(obj =>
               // adding value to gas estimate as it is not always correct
-              obj.send({ ...txOptions, gasPrice, gas: gasEstimate + 5000 })
+              obj.send({
+                ...txOptions,
+                gasPrice,
+                gas: new BigNumber(gasEstimate).times(1.2).toFixed(0)
+              })
             )
           const vaultAddress = receipt.events.VaultCreated.returnValues.vault
           vaultInstance = await Vault.createAndValidate(web3, vaultAddress)
