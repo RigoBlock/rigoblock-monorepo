@@ -88,7 +88,6 @@ describe('generated contract', () => {
                 gas: new BigNumber(gasEstimate).times(1.2).toFixed(0)
               })
             )
-          console.log('receipt', receipt)
           const vaultAddress = receipt.events.VaultCreated.returnValues.vault
           vaultInstance = await Vault.createAndValidate(web3, vaultAddress)
         })
