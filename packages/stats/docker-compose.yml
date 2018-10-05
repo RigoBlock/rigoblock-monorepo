@@ -18,7 +18,7 @@ telegraf:
   links:
     - influxdb
   volumes:
-    - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    - ./config/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
 chronograf:
   image: chronograf:latest
@@ -41,4 +41,4 @@ arena:
   ports:
     - "4567:4567"
   volumes:
-    - ./arena.conf.json:/opt/arena/src/server/config/index.json:ro
+    - ./config/arena/arena.conf.json:/opt/arena/src/server/config/index.json:ro
