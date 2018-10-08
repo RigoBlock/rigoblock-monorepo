@@ -1,0 +1,9 @@
+arena:
+  image: vshjxyz/arena
+  container_name: arena-data-collector
+  ports:
+    - "4568:4568"
+  volumes:
+    - ./config/arena/arena.conf.json:/opt/arena/src/server/config/index.json:ro
+  environment:
+    ARENA_PORT: 4568

@@ -1,0 +1,4 @@
+influxdb-data
+node_modules
+dist
+conf/traefik/acme.json

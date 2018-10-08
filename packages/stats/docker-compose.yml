@@ -37,7 +37,7 @@ redis:
 
 arena:
   image: vshjxyz/arena:latest
-  container_name: arena
+  container_name: arena-stats
   ports:
     - "4567:4567"
   volumes:
