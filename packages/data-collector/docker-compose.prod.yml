@@ -1,87 +1,5 @@
 version: '3.2'
 services:
-  traefik:
-    image: traefik:1.7.0-rc4
-    restart: always
-    ports:
-      - 80:80
-      - 443:443
-    expose:
-      - "8080"
-    networks:
-      - stats
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./config/traefik/traefik.toml:/traefik.toml
-      - ./config/traefik/acme.json:/acme.json
-    container_name: traefik
-    labels:
-      traefik.backend: "traefik"
-      traefik.enable: "true"
-      traefik.frontend.rule: "Host:${TRAEFIK_URI}"
-      traefik.docker.network: "stats_stats"
-      traefik.port: "8080"
-      traefik.frontend.auth.basic.users: "${TRAEFIK_CREDENTIALS}"
-
-  influxdb:
-    image: influxdb:latest
-    container_name: influxdb
-    expose:
-      - "8083"
-      - "8086"
-      - "8090"
-    networks:
-      - stats
-    env_file:
-      - 'env.influxdb'
-    volumes:
-      - ~/data/influxdb:/var/lib/influxdb
-
-  telegraf:
-    image: telegraf:latest
-    container_name: telegraf
-    expose:
-      - "8125"
-    networks:
-      - stats
-    links:
-      - influxdb
-    volumes:
-      - ./config/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-
-  chronograf:
-    image: chronograf:latest
-    container_name: chronograf
-    environment:
-      AUTH_DURATION: ${AUTH_DURATION}
-      TOKEN_SECRET: ${TOKEN_SECRET}
-      GH_CLIENT_ID: ${GH_CLIENT_ID}
-      GH_CLIENT_SECRET: ${GH_CLIENT_SECRET}
-      GH_ORGS: ${GH_ORGS}
-    ports:
-      - "8888"
-    networks:
-      - stats
-    links:
-      - influxdb
-    volumes:
-      - ~/data/chronograf:/var/lib/chronograf
-    labels:
-      traefik.backend: "chronograf"
-      traefik.enable: "true"
-      traefik.frontend.rule: "Host:${CHRONOGRAF_URI}"
-      traefik.docker.network: "stats_stats"
-      traefik.port: "8888"
-    command: ['chronograf', '--influxdb-url=http://influxdb:8086']
-
-  redis:
-    image: redis:latest
-    container_name: redis
-    expose:
-     - "6379"
-    networks:
-      - stats
-
   arena:
     image: vshjxyz/arena:latest
     container_name: arena
@@ -108,7 +26,7 @@ services:
       TELEGRAF_HOST: telegraf
     build:
       context: ../../
-      dockerfile: ./packages/stats/Dockerfile
+      dockerfile: ./packages/data-collector/Dockerfile
       args:
         - NPM_KEY=${NPM_KEY}
     networks:
