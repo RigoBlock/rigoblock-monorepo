@@ -4,145 +4,169 @@
       "name": "kovan-fetch-dragos-list",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "kovan-calculate-balance-ETH",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "kovan-calculate-balance-GNT",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "kovan-calculate-balance-GRG",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "kovan-calculate-balance-MKR",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "kovan-calculate-balance-WETH",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "kovan-calculate-balance-USDT",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "kovan-calculate-balance-ZRX",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "kovan-calculate-dragos-totalsupply",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "kovan-calculate-dragos-shareprice",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-fetch-dragos-list",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-ETH",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-GNT",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-GRG",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-MKR",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-USDT",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-WETH",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-ZRX",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-ZRXW",
       "hostId": "localhost",
       "host": "docker.for.mac.localhost",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-ETHW",
       "hostId": "localhost",
       "host": "docker.for.mac.localhost",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-USDTW",
       "hostId": "localhost",
       "host": "docker.for.mac.localhost",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-balance-GRGW",
       "hostId": "localhost",
       "host": "docker.for.mac.localhost",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-dragos-totalsupply",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     },
     {
       "name": "ropsten-calculate-dragos-shareprice",
       "hostId": "redis",
       "host": "redis",
-      "port": 6379
+      "port": 6379,
+      "prefix": "stats"
     }
   ]
 }
