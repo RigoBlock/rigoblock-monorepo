@@ -20,6 +20,7 @@ export default (
   }
 
   const queue = new Queue(name, config)
+  console.log('QUEUE', queue)
 
   queue.process(tasks[handlerName])
 
