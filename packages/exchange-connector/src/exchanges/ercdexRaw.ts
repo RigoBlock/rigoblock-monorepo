@@ -119,7 +119,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
           this.wsInstance = null
           return resolve()
         })
-        this.wsInstance.close()
+        this.wsInstance.close(1000, 'Closed by client', { keepClosed: true })
       })
     },
     getConnection: () => {
