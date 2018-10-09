@@ -25,12 +25,12 @@ ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-RUN mkdir -p /root/packages/stats
+RUN mkdir -p /root/packages/data-collector
 
-COPY packages/stats ./packages/stats
+COPY packages/data-collector ./packages/data-collector
 COPY yarn.lock .
 
-WORKDIR /root/packages/stats
+WORKDIR /root/packages/data-collector
 
 RUN npm i -g yarn
 

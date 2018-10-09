@@ -2,15 +2,17 @@ version: '3.2'
 services:
   arena:
     image: vshjxyz/arena:latest
-    container_name: arena
+    container_name: arena-data-collector
     ports:
-      - "4567"
+      - "4568:4568"
     networks:
-      - stats
-    links:
+      - stats_default
+    external_links:
       - redis
     volumes:
       - ./config/arena/arena.prod.conf.json:/opt/arena/src/server/config/index.json:ro
+    environment:
+      ARENA_PORT: 4568
     labels:
       traefik.backend: "arena"
       traefik.enable: "true"
@@ -20,7 +22,7 @@ services:
       traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS}"
 
   bull:
-    container_name: bull
+    container_name: bull-data-collector
     environment:
       REDIS_HOST: redis
       TELEGRAF_HOST: telegraf
