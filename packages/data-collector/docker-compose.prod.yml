@@ -33,9 +33,5 @@ services:
       - stats
 
 networks:
-    stats:
-      driver: bridge
-      ipam:
-        driver: default
-        config:
-          - subnet: 172.20.1.0/16
+    stats_default:
+      external: true
