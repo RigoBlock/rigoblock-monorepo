@@ -1,7 +1,7 @@
 export const MAINNET: string = 'mainnet'
 export const ROPSTEN: string = 'ropsten'
 export const KOVAN: string = 'kovan'
-export const RINKEBY: string = 'Rinkeby'
+export const RINKEBY: string = 'rinkeby'
 
 export const PRICE_PRECISION: number = 7
 export const AMOUNT_PRECISION: number = 5
