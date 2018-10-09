@@ -35,7 +35,7 @@ services:
     env_file:
       - 'env.influxdb'
     volumes:
-      - /stats-data/influxdb:/var/lib/influxdb
+      - /stats/data/influxdb:/var/lib/influxdb
 
   telegraf:
     image: telegraf:latest
@@ -65,7 +65,7 @@ services:
     links:
       - influxdb
     volumes:
-      - /stats-data/chronograf:/var/lib/chronograf
+      - /stats/data/chronograf:/var/lib/chronograf
     labels:
       traefik.backend: "chronograf"
       traefik.enable: "true"
