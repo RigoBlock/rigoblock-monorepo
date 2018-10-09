@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import EthfinexRaw from './ethfinexRaw'
 
 export class Ethfinex {
-  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
+  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.ROPSTEN]
   private raw: EthfinexRaw
   private wsTimeout = 10000
 
