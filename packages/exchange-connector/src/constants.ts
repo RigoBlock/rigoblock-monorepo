@@ -1,6 +1,7 @@
 export const MAINNET: string = 'mainnet'
 export const ROPSTEN: string = 'ropsten'
 export const KOVAN: string = 'kovan'
+export const RINKEBY: string = 'rinkeby'
 
 export const PRICE_PRECISION: number = 7
 export const AMOUNT_PRECISION: number = 5
@@ -16,5 +17,6 @@ export enum supportedExchanges {
 export enum NETWORKS {
   MAINNET = 1,
   KOVAN = 42,
-  ROPSTEN = 3
+  ROPSTEN = 3,
+  RINKEBY = 4
 }
