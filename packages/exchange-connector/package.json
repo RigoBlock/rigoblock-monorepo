@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "rm -rf dist/* && webpack",
+    "build:watch": "rm -rf dist/* && webpack --watch",
     "test:unit": "jest",
     "test:unit:watch": "jest --watch",
     "lint": "eslint src --ext js,ts --ignore-path .gitignore --fix"

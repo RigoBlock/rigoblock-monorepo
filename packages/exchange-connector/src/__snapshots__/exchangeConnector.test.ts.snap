@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Exchange factory class throws an error if we try to instance an exchange with an unsupported network 1`] = `"Network Id not supported for selected network: 3"`;
+exports[`Exchange factory class throws an error if we try to instance an exchange with an unsupported network 1`] = `"Network Id not supported for selected network: 4"`;
 
 exports[`Exchange factory class throws an error if we try to instance an unsupported exchange 1`] = `"Exchange not supported: random"`;
 
