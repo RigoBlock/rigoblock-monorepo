@@ -32,7 +32,7 @@ services:
       args:
         - NPM_KEY=${NPM_KEY}
     networks:
-      - stats
+      - stats_default
 
 networks:
     stats_default:
