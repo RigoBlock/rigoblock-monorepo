@@ -18,7 +18,7 @@ describe('Exchange factory class', () => {
   it('throws an error if we try to instance an exchange with an unsupported network', () => {
     expect(() =>
       exchangeConnector(supportedExchanges.ETHFINEX, {
-        networkId: NETWORKS.ROPSTEN
+        networkId: NETWORKS.RINKEBY
       })
     ).toThrowErrorMatchingSnapshot()
   })
