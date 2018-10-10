@@ -18,7 +18,7 @@ services:
       traefik.enable: "true"
       traefik.frontend.rule: "Host:${ARENA_URI}"
       traefik.docker.network: "stats_stats"
-      traefik.port: "4567"
+      traefik.port: "4568"
       traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS}"
 
   bull:
