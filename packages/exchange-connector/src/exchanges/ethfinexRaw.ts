@@ -137,7 +137,6 @@ export class EthfinexRaw {
     }
 
     websocketInstance.addEventListener('message', msgCallback)
-
     return unsubscribe
   }
 
