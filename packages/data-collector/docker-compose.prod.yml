@@ -14,10 +14,10 @@ services:
     environment:
       ARENA_PORT: 4568
     labels:
-      traefik.backend: "arena"
+      traefik.backend: "arena-data-collector"
       traefik.enable: "true"
-      traefik.frontend.rule: "Host:${ARENA_URI}"
-      traefik.docker.network: "stats_stats"
+      traefik.frontend.rule: "Host:${COLLECTOR_ARENA_URI}"
+      traefik.docker.network: "stats_default"
       traefik.port: "4568"
       traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS}"
 
