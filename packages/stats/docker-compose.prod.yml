@@ -9,7 +9,7 @@ services:
     expose:
       - "8080"
     networks:
-      - default
+      - stats
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config/traefik/traefik.toml:/traefik.toml
@@ -19,7 +19,7 @@ services:
       traefik.backend: "traefik"
       traefik.enable: "true"
       traefik.frontend.rule: "Host:${TRAEFIK_URI}"
-      traefik.docker.network: "stats_default"
+      traefik.docker.network: "stats_stats"
       traefik.port: "8080"
       traefik.frontend.auth.basic.users: "${TRAEFIK_CREDENTIALS}"
 
@@ -31,7 +31,7 @@ services:
       - "8086"
       - "8090"
     networks:
-      - default
+      - stats
     env_file:
       - 'env.influxdb'
     volumes:
@@ -43,7 +43,7 @@ services:
     expose:
       - "8125"
     networks:
-      - default
+      - stats
     links:
       - influxdb
     volumes:
@@ -61,7 +61,7 @@ services:
     ports:
       - "8888"
     networks:
-      - default
+      - stats
     links:
       - influxdb
     volumes:
@@ -70,7 +70,7 @@ services:
       traefik.backend: "chronograf"
       traefik.enable: "true"
       traefik.frontend.rule: "Host:${CHRONOGRAF_URI}"
-      traefik.docker.network: "stats_default"
+      traefik.docker.network: "stats_stats"
       traefik.port: "8888"
     command: ['chronograf', '--influxdb-url=http://influxdb:8086']
 
@@ -80,7 +80,7 @@ services:
     expose:
      - "6379"
     networks:
-      - default
+      - stats
 
   arena:
     image: vshjxyz/arena:latest
@@ -88,7 +88,7 @@ services:
     ports:
       - "4567"
     networks:
-      - default
+      - stats
     links:
       - redis
     volumes:
@@ -97,7 +97,7 @@ services:
       traefik.backend: "arena-stats"
       traefik.enable: "true"
       traefik.frontend.rule: "Host:${STATS_ARENA_URI}"
-      traefik.docker.network: "stats_default"
+      traefik.docker.network: "stats_stats"
       traefik.port: "4567"
       traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS}"
 
@@ -112,10 +112,10 @@ services:
       args:
         - NPM_KEY=${NPM_KEY}
     networks:
-      - default
+      - stats
 
 networks:
-    default:
+    stats:
       driver: bridge
       ipam:
         driver: default

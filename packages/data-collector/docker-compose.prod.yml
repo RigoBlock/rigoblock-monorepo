@@ -6,7 +6,7 @@ services:
     ports:
       - "4568:4568"
     networks:
-      - stats_default
+      - stats_stats
     external_links:
       - redis
     volumes:
@@ -17,7 +17,7 @@ services:
       traefik.backend: "arena-data-collector"
       traefik.enable: "true"
       traefik.frontend.rule: "Host:${COLLECTOR_ARENA_URI}"
-      traefik.docker.network: "stats_default"
+      traefik.docker.network: "stats_stats"
       traefik.port: "4568"
       traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS}"
 
@@ -32,8 +32,8 @@ services:
       args:
         - NPM_KEY=${NPM_KEY}
     networks:
-      - stats_default
+      - stats_stats
 
 networks:
-    stats_default:
+    stats_stats:
       external: true
