@@ -13,7 +13,7 @@ const conf: Config = {
   'dummy-task': {
     handlerName: 'dummyTask',
     description: 'Logs',
-    cronExpression: '*/5 * * * * *', // Every five seconds
+    cronExpression: '*/25 * * * * *', // Every twenty five seconds
     initialData: {}
   }
 }
