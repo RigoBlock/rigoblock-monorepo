@@ -9,4 +9,7 @@ export class HtmlResource {
   public loadHTML(html) {
     return cheerio.load(html)
   }
+  public normalizeText(str) {
+    return str.trim().toLowerCase()
+  }
 }
