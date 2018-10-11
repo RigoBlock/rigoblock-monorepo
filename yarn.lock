@@ -1519,6 +1519,11 @@
     "@types/bluebird" "*"
     "@types/ioredis" "*"
 
+"@types/cheerio@^0.22.9":
+  version "0.22.9"
+  resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.9.tgz#b5990152604c2ada749b7f88cab3476f21f39d7b"
+  integrity sha512-q6LuBI0t5u04f0Q4/R+cGBqIbZMtJkVvCSF+nTfFBBdQqQvJR/mNHeWjRkszyLl7oyf2rDoKUYMEjTw5AV0hiw==
+
 "@types/eth-lightwallet@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/eth-lightwallet/-/eth-lightwallet-3.0.0.tgz#9be5b59dc6fb3fcdb01e65c2c2a79cd601f72dd4"
@@ -2551,7 +2556,7 @@ async-eventemitter@^0.2.2:
   dependencies:
     async "^2.4.0"
 
-"async-eventemitter@github:ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c":
+async-eventemitter@ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c:
   version "0.2.3"
   resolved "https://codeload.github.com/ahultgren/async-eventemitter/tar.gz/fa06e39e56786ba541c180061dbf2c0a5bbf951c"
   dependencies:
