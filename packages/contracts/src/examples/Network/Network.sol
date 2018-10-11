@@ -19,7 +19,7 @@
 pragma solidity 0.4.24;
 pragma experimental "v0.5.0";
 
-import { PoolFace as Pool } from /../utils/Pool/PoolFace.sol";
+import { PoolFace as Pool } from "../../utils/Pool/PoolFace.sol";
 import { DragoRegistryFace as DragoRegistry } from "../../protocol/DragoRegistry/DragoRegistry.sol";
 
 /// @title Network - Returns data of active funds and network value.
