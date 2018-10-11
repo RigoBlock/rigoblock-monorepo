@@ -7,14 +7,13 @@ const getData = async () => {
   ).then(res => res.text())
   const $ = cheerio.load(html)
   const whitePaperLink = $('a[title=Whitepaper]').attr('href')
-  const teamList = []
-  $('div.team-section-wrapper > table.table')
-    .find($('td > p'))
-    .each((i, elem) => {
-      const data = elem.children.pop().data.trim()
-      teamList.push(data)
-    })
-  const countryOrigin
+  const teamSection = $('div.team-section-wrapper')
+    .find('td')
+    .toArray()
+  const teamList = teamSection[0].children
+    .filter(el => el.name === 'p')
+    .map(el => el.children.pop().data.trim())
+  const countryOfOrigin = teamSection[1].children.pop().data.trim()
 }
 
 getData()
