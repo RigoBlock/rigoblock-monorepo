@@ -2,12 +2,12 @@ import { HtmlResource } from './htmlResource'
 import tokensMap from '../tokensMap'
 
 export class TokenOverview extends HtmlResource {
-  private $: any
+  private $: CheerioStatic
   constructor() {
     super()
   }
-  public rip(symbol) {
-    const html = this.fetch(tokensMap[symbol].overviewUrl)
+  public async rip(symbol) {
+    const html = await this.fetch(tokensMap[symbol].overviewUrl)
     this.$ = this.loadHTML(html)
     return {
       whitepaper: this.whitePaperUrl,
@@ -15,7 +15,8 @@ export class TokenOverview extends HtmlResource {
       status: this.status,
       blockchain: this.blockChain,
       team: this.team,
-      countryOfOrigin: this.countryOfOrigin
+      countryOfOrigin: this.countryOfOrigin,
+      tokensSaleDate: this.tokenSaleDate
     }
   }
   private get whitePaperUrl() {
@@ -39,8 +40,8 @@ export class TokenOverview extends HtmlResource {
       .find('p')
       .toArray()
       .map(el => {
-        el = this.normalizeText(el.innerText)
-        return el.split(' - ')
+        const teamMember = this.normalizeText(el.children.pop().data)
+        return teamMember.split(' - ')
       })
       .reduce(
         (acc, curr, index) => ({
@@ -56,5 +57,10 @@ export class TokenOverview extends HtmlResource {
         .find('td')
         .text()
     )
+  }
+  private get tokenSaleDate() {
+    return this.$('div.dates-wrapper span')
+      .toArray()
+      .map(el => this.normalizeText(el.children.pop().data))
   }
 }
