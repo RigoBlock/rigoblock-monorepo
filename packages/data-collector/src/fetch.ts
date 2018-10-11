@@ -19,11 +19,10 @@ const getData = async () => {
   //   .toArray()
   const websiteUrl = $('a.visit-website').attr('href')
   const status = $('span.asset-status').text()
-  const asd = $('table.asset-overview-table > tbody a')
-    .last()
-    .text()
-    .trim()
-    .toLowerCase()
+  const asd = $('div.team-section-wrapper > table tr:last-child').text()
+  // .find('td')[
+  //   '0'
+  // ]
   console.log(asd)
   // console.log(blockChain)
 }
