@@ -14,6 +14,9 @@ const getData = async () => {
     .filter(el => el.name === 'p')
     .map(el => el.children.pop().data.trim())
   const countryOfOrigin = teamSection[1].children.pop().data.trim()
+  const tokenSaleDates = $('div.dates-wrapper')
+    .find('span')
+    .toArray()
 }
 
 getData()
