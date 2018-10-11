@@ -87,22 +87,13 @@ export class TokenOverview extends HtmlResource {
   private get githubStats() {
     return this.$('.asset-list-github tr')
       .toArray()
-      .reduce(
-        (acc, curr) => [
-          ...acc,
-          ...curr.children.filter(
-            child => child.name === 'th' || child.name === 'td'
-          )
-        ],
-        []
-      )
-      .map(el => this.normalizeText(el.children.pop().data))
-    // .map(el => {
-    //   console.log(el.children.length)
-    //   // return {
-    //   //   type: el.children.shift(),
-    //   //   data: el.children.shift()
-    //   // }
-    // })
+      .reduce((acc, curr, index) => {
+        const elements = curr.children.filter(
+          child => child.name === 'th' || child.name === 'td'
+        )
+        const type = this.normalizeText(elements.shift().children.pop().data)
+        const data = this.normalizeText(elements.shift().children.pop().data)
+        return { ...acc, [index]: { type, data } }
+      }, {})
   }
 }
