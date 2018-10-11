@@ -16,7 +16,12 @@ export class TokenOverview extends HtmlResource {
       blockchain: this.blockChain,
       team: this.team,
       countryOfOrigin: this.countryOfOrigin,
-      tokensSaleDate: this.tokenSaleDate
+      tokensSaleDate: this.tokenSaleDate,
+      articles: this.articles,
+      github: {
+        url: this.githubUrl,
+        stats: this.githubStats
+      }
     }
   }
   private get whitePaperUrl() {
@@ -62,5 +67,42 @@ export class TokenOverview extends HtmlResource {
     return this.$('div.dates-wrapper span')
       .toArray()
       .map(el => this.normalizeText(el.children.pop().data))
+  }
+  private get articles() {
+    return this.$('table.asset-list-research tr a')
+      .toArray()
+      .map(el => {
+        return {
+          name: this.normalizeText(el.children.pop().data),
+          url: el.attribs.href
+        }
+      })
+  }
+  private get githubUrl() {
+    return this.$('div.technology-section-wrapper h3')
+      .last()
+      .find('a')
+      .attr('href')
+  }
+  private get githubStats() {
+    return this.$('.asset-list-github tr')
+      .toArray()
+      .reduce(
+        (acc, curr) => [
+          ...acc,
+          ...curr.children.filter(
+            child => child.name === 'th' || child.name === 'td'
+          )
+        ],
+        []
+      )
+      .map(el => this.normalizeText(el.children.pop().data))
+    // .map(el => {
+    //   console.log(el.children.length)
+    //   // return {
+    //   //   type: el.children.shift(),
+    //   //   data: el.children.shift()
+    //   // }
+    // })
   }
 }
