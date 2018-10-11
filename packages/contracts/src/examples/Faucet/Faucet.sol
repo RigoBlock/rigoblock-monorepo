@@ -22,7 +22,7 @@
  * Inspired by https://github.com/AvocadoNetwork
  */
 
-pragma solidity ^0.4.24;
+pragma solidity 0.4.24;
 
 import { ERC20Face as Token } from "../../tokens/ERC20/ERC20Face.sol";
 import { Owned as Owned } from "../../utils/Owned/Owned.sol";
@@ -35,7 +35,6 @@ contract Faucet is Owned {
    /*
     * EVENTS
     */
-
     event Deposit(address indexed sender, uint256 value);
     event OneTokenSent(address indexed receiver);
     event FaucetOn(bool status);
@@ -52,7 +51,6 @@ contract Faucet is Owned {
    /*
     * MODIFIERS
     */
-
     modifier faucetOn() {
         require(faucetStatus,"Faucet has to be on");
         _;
@@ -79,7 +77,6 @@ contract Faucet is Owned {
    /*
     * CORE FUNCTIONS
     */
-
     /// @dev send 1000 Token with a minimum time lock of 1 hour
     /// @return bool on success
     function drip1Token()
@@ -137,7 +134,6 @@ contract Faucet is Owned {
     /*
      * INTERNAL FUNCTIONS
      */
-
     /// @dev locks and unlocks account based on time range
     /// @param _address of msg.sender
     /// @return bool of current lock status of address

@@ -16,11 +16,11 @@
 
 */
 
-pragma solidity ^0.4.24;
+pragma solidity 0.4.24;
 pragma experimental "v0.5.0";
 
-import { PoolFace as Pool } from "../utils/Pool/PoolFace.sol";
-import { DragoRegistryFace as DragoRegistry } from "../Registry/DragoRegistry.sol";
+import { PoolFace as Pool } from /../utils/Pool/PoolFace.sol";
+import { DragoRegistryFace as DragoRegistry } from "../../protocol/DragoRegistry/DragoRegistry.sol";
 
 /// @title Network - Returns data of active funds and network value.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -93,7 +93,6 @@ contract Network {
     /*
      * INTERNAL FUNCTIONS
      */
-
     /// @dev Checks whether a pool is registered and active
     /// @param _ofPool Id of the pool
     /// @return Bool the pool is active

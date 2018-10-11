@@ -16,11 +16,45 @@
 
 */
 
-// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
-pragma solidity ^0.4.11;
+pragma solidity 0.4.19;
 
-import { ERC20Face as Token } from "../../../tokens/ERC20/ERC20.sol";
-import { Owned } from "../../Owned/Owned.sol";
+contract Token {
+
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    event Approval(address indexed _owner, address indexed _spender, uint256 _value);
+
+    function transfer(address _to, uint256 _value) external returns (bool success);
+    function transferFrom(address _from, address _to, uint256 _value) external returns (bool success);
+    function approve(address _spender, uint256 _value) external returns (bool success);
+
+    function balanceOf(address _who) external view returns (uint256);
+    function allowance(address _owner, address _spender) external view returns (uint256);
+}
+
+contract Owned {
+
+    address public owner;
+
+    event NewOwner(address indexed old, address indexed current);
+
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+
+    function Owned() public {
+        owner = msg.sender;
+    }
+
+    function setOwner(address _new)
+        public
+        onlyOwner
+    {
+        require(_new != address(0));
+        owner = _new;
+        NewOwner(owner, _new);
+    }
+}
 
 /// @title TokenTransferProxy - Transfers tokens on behalf of contracts that have been approved via decentralized governance.
 /// @author Amir Bandeali - <amir@0xProject.com>, Will Warren - <will@0xProject.com>
