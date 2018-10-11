@@ -17,7 +17,7 @@
 */
 
 pragma solidity 0.4.24;
-pragma experimental "v0.5.0";
+pragma experimental ABIEncoderV2;
 
 import { AuthorityFace as Authority } from "../authorities/Authority/AuthorityFace.sol";
 import { ExchangesAuthorityFace as ExchangesAuthority } from "../authorities/ExchangesAuthority/ExchangesAuthorityFace.sol";
@@ -55,6 +55,10 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         uint256 balance;
         Receipt receipt;
         mapping(address => address[]) approvedAccount;
+    }
+
+    struct Transaction {
+        bytes assembledData;
     }
 
     struct DragoData {
@@ -344,21 +348,21 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
 
     /// @dev Allows owner to operate on exchange through extension.
     /// @param _exchange Address of the target exchange.
-    /// @param _assembledTransaction ABIencoded transaction.
+    /// @param transaction ABIencoded transaction.
     function operateOnExchange(
         address _exchange,
-        bytes _assembledTransaction)
-        external
+        Transaction memory transaction)
+        public
         onlyOwner
         nonReentrant
         whenApprovedExchangeOrWrapper(_exchange)
         returns (bool success)
     {
         address adapter = getExchangeAdapter(_exchange);
-        bytes memory transactionData = _assembledTransaction;
+        bytes memory transactionData = transaction.assembledData;
         require(
             methodAllowedOnExchange(
-                findMethod(_assembledTransaction),
+                findMethod(transactionData),
                 adapter
             )
         );
@@ -388,6 +392,23 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         }
 
         return (success = true);
+    }
+
+    /// @dev Allows owner or approved exchange to send a transaction to exchange
+    /// @dev With data of signed/unsigned transaction
+    /// @param _exchange Address of the exchange
+    /// @param transactions Array of ABI encoded transactions
+    function batchOperateOnExchange(
+        address _exchange,
+        Transaction[] memory transactions)
+        public
+        onlyOwner
+        nonReentrant
+        whenApprovedExchangeOrWrapper(_exchange)
+    {
+        for (uint256 i = 0; i < transactions.length; i++) {
+            if (!operateOnExchange(_exchange, transactions[i])) continue;
+        }
     }
 
     /*
