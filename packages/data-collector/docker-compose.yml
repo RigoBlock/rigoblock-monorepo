@@ -1,0 +1,19 @@
+# not working properly
+version: '3.2'
+services:
+  arena:
+    image: vshjxyz/arena
+    container_name: arena-data-collector
+    ports:
+      - "4568:4568"
+    volumes:
+      - ./config/arena/arena.conf.json:/opt/arena/src/server/config/index.json:ro
+    environment:
+      ARENA_PORT: 4568
+    networks:
+      - stats_default
+    links:
+      - redis
+networks:
+  stats_default:
+    external: true

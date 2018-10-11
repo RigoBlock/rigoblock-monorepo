@@ -14,7 +14,7 @@ export default (
       host: constants.REDIS_HOST,
       port: constants.REDIS_PORT
     },
-    prefix: 'stats'
+    prefix: 'data-collector'
   }
   if (constants.REDIS_PASSWORD) {
     config.redis.password = constants.REDIS_PASSWORD
