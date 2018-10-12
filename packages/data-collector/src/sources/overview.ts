@@ -7,7 +7,9 @@ export class TokenOverview extends HtmlResource {
     super()
   }
   public async rip(symbol) {
-    const html = await this.fetch(tokensMap[symbol].overviewUrl)
+    const html = await this.fetch(tokensMap[symbol].overviewUrl).then(res =>
+      res.text()
+    )
     this.$ = this.loadHTML(html)
     return {
       whitepaper: this.whitePaperUrl,
