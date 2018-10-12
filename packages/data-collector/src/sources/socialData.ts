@@ -12,9 +12,11 @@ export class TokenSocialData extends HtmlResource {
     const socialData = await this.fetch(
       `https://www.cryptocompare.com/api/data/socialstats/?id=${tokenId}`
     ).then(res => res.json())
-    console.log(socialData)
+    const { Reddit, Twitter, Facebook } = socialData.Data
     return {
-      socialData
+      facebook: Facebook,
+      twitter: Twitter,
+      reddit: Reddit
     }
   }
 }
