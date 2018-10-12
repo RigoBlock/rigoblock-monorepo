@@ -1609,6 +1609,13 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.6.tgz#9c03d3fed70a8d517c191b7734da2879b50ca26c"
   integrity sha512-ZBFR7TROLVzCkswA3Fmqq+IIJt62/T7aY/Dmz+QkU7CaW2QFqAitCE8Ups7IzmGhcN1YWMBT4Qcoc07jU9hOJQ==
 
+"@types/puppeteer@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.9.0.tgz#9a4bcca1902259e2cea6e6be7b4a540aad13785e"
+  integrity sha512-ZP3wL4Lqpgu4xZbz/0vQhbIZnllNEawVW3oTpEXyJg+uhf/YQgL8oeTrfoUwj9JXE9UUe53eqmgLl29/d2gjqQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/react@*":
   version "16.4.16"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.16.tgz#99f91b1200ae8c2062030402006d3b3c3a177043"
@@ -14760,7 +14767,7 @@ pupa@^1.0.0:
   resolved "https://registry.yarnpkg.com/pupa/-/pupa-1.0.0.tgz#9a9568a5af7e657b8462a6e9d5328743560ceff6"
   integrity sha1-mpVopa9+ZXuEYqbp1TKHQ1YM7/Y=
 
-puppeteer@^1.5.0, puppeteer@^1.8.0-next.1538070839127:
+puppeteer@^1.5.0, puppeteer@^1.8.0-next.1538070839127, puppeteer@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.9.0.tgz#56dba79e7ea4faac807877bee3b23d63291fc59e"
   integrity sha512-GH4PmhJf9wBRAPvtJkEJLAvdNNOofZortmBZSj8cGWYni98GUFqsf66blOEfJbo5B8l0KG5HR2d/W2MejnUrzg==

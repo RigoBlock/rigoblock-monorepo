@@ -9,7 +9,9 @@ export class TokenNews extends HtmlResource {
     const response = await this.fetch(CRYPTO_NEWS_BASE_URL + symbol).then(res =>
       res.json()
     )
-
-    console.log(response)
+    console.log(response.results)
+    return {
+      news: response.results
+    }
   }
 }

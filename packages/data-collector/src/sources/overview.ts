@@ -1,4 +1,5 @@
 import { HtmlResource } from './htmlResource'
+import { launch } from 'puppeteer'
 import tokensMap from '../tokensMap'
 
 export class TokenOverview extends HtmlResource {
@@ -7,11 +8,11 @@ export class TokenOverview extends HtmlResource {
     super()
   }
   public async rip(symbol) {
-    const html = await this.fetch(tokensMap[symbol].overviewUrl).then(res =>
+    let html = await this.fetch(tokensMap[symbol].overviewUrl).then(res =>
       res.text()
     )
     this.$ = this.loadHTML(html)
-    return {
+    const overview = {
       whitepaper: this.whitePaperUrl,
       website: this.websiteUrl,
       status: this.status,
@@ -25,6 +26,14 @@ export class TokenOverview extends HtmlResource {
         stats: this.githubStats
       }
     }
+    const browser = await launch()
+    const page = await browser.newPage()
+    await page.goto(`https://www.cryptocompare.com/coins/${symbol}/overview`)
+    html = await page.content()
+    browser.close()
+    this.$ = this.loadHTML(html)
+    const description = await this.$('div.coin-description p').text()
+    return { ...overview, description }
   }
   private get whitePaperUrl() {
     return this.$('a[title=Whitepaper]').attr('href')
