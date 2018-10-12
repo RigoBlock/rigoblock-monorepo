@@ -1,6 +1,6 @@
 import { HtmlResource } from './htmlResource'
 
-export class TokenSocialData extends HtmlResource {
+export class TokenSocial extends HtmlResource {
   constructor() {
     super()
   }

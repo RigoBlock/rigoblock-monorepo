@@ -1,11 +1,11 @@
 import { TokenNews } from './sources/news'
 import { TokenOverview } from './sources/overview'
-import { TokenSocialData } from './sources/socialData'
+import { TokenSocial } from './sources/social'
 
 const getData = async () => {
   // const news = new TokenOverview()
   // news.rip('ZRX')
-  const asd = new TokenSocialData()
+  const asd = new TokenNews()
   asd.rip('ZRX')
 }
 
