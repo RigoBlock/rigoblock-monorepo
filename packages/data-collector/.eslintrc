@@ -1,0 +1,22 @@
+{
+  "parser": "typescript-eslint-parser",
+  "plugins": [
+    "typescript",
+    "prettier"
+  ],
+  "rules": {
+    "no-unused-vars": 0,
+    "prettier/prettier": [
+      "error", {
+        "singleQuote": true,
+        "semi": false,
+        "parser": "typescript"
+      }
+    ]
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": false
+    }
+  }
+}

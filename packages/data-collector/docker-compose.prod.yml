@@ -1,0 +1,39 @@
+version: '3.2'
+services:
+  arena:
+    image: vshjxyz/arena:latest
+    container_name: arena-data-collector
+    ports:
+      - "4568:4568"
+    networks:
+      - stats_stats
+    external_links:
+      - redis
+    volumes:
+      - ./config/arena/arena.prod.conf.json:/opt/arena/src/server/config/index.json:ro
+    environment:
+      ARENA_PORT: 4568
+    labels:
+      traefik.backend: "arena-data-collector"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:${COLLECTOR_ARENA_URI}"
+      traefik.docker.network: "stats_stats"
+      traefik.port: "4568"
+      traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS}"
+
+  bull:
+    container_name: bull-data-collector
+    environment:
+      REDIS_HOST: redis
+      TELEGRAF_HOST: telegraf
+    build:
+      context: ../../
+      dockerfile: ./packages/data-collector/Dockerfile
+      args:
+        - NPM_KEY=${NPM_KEY}
+    networks:
+      - stats_stats
+
+networks:
+    stats_stats:
+      external: true

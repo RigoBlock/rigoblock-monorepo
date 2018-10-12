@@ -94,15 +94,15 @@ services:
     volumes:
       - ./config/arena/arena.prod.conf.json:/opt/arena/src/server/config/index.json:ro
     labels:
-      traefik.backend: "arena"
+      traefik.backend: "arena-stats"
       traefik.enable: "true"
-      traefik.frontend.rule: "Host:${ARENA_URI}"
+      traefik.frontend.rule: "Host:${STATS_ARENA_URI}"
       traefik.docker.network: "stats_stats"
       traefik.port: "4567"
       traefik.frontend.auth.basic.users: "${ARENA_CREDENTIALS}"
 
   bull:
-    container_name: bull
+    container_name: bull-stats
     environment:
       REDIS_HOST: redis
       TELEGRAF_HOST: telegraf
