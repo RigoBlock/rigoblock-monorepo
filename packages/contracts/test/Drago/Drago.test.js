@@ -122,7 +122,9 @@ describeContract(contractName, () => {
     })
 
     it('sets an infinite allowance to the tokentransferproxy', async () => {
-      const infiniteAllowance = new BigNumber(2).pow(256).minus(1)
+      const infiniteAllowance = web3.utils.toHex(
+        new BigNumber(2).pow(256).minus(1)
+      )
       await dragoInstance.methods
         .setAllowance(tokenTransferProxy, GRGtokenAddress, infiniteAllowance)
         .send({ ...transactionDefault })
@@ -130,7 +132,9 @@ describeContract(contractName, () => {
         dragoAddress,
         tokenTransferProxy
       )
-      expect(allowance.toString()).toEqual(infiniteAllowance.toString())
+      expect(allowance.toString()).toEqual(
+        new BigNumber(infiniteAllowance).toString()
+      )
     })
     it('sets an discretionary allowance to the tokentransferproxy', async () => {
       const discretionaryAllowance = 1000
@@ -148,7 +152,9 @@ describeContract(contractName, () => {
       expect(allowance.toString()).toEqual(discretionaryAllowance.toString())
     })
     it('fails if non-owner tries to set allowance', async () => {
-      const infiniteAllowance = new BigNumber(2).pow(256).minus(1)
+      const infiniteAllowance = web3.utils.toHex(
+        new BigNumber(2).pow(256).minus(1)
+      )
       const transactionParams = {
         from: accounts[1],
         gas: GAS_ESTIMATE,
@@ -166,7 +172,9 @@ describeContract(contractName, () => {
         tokenTransferProxy,
         false
       )
-      const infiniteAllowance = new BigNumber(2).pow(256).minus(1)
+      const infiniteAllowance = web3.utils.toHex(
+        new BigNumber(2).pow(256).minus(1)
+      )
       await dragoInstance.methods
         .setAllowance(tokenTransferProxy, GRGtokenAddress, infiniteAllowance)
         .send({ ...transactionDefault })
