@@ -153,18 +153,22 @@ export class Deployer {
        * Contract is inferred as 'any' because TypeScript
        * is not able to read 'new' from the Contract interface
        */
-      ;(contract as any).new(...args, txData, (err: Error, res: any): any => {
-        if (err) {
-          reject(err)
-        } else if (
-          _.isUndefined(res.address) &&
-          !_.isUndefined(res.transactionHash)
-        ) {
-          logUtils.log(`transactionHash: ${res.transactionHash}`)
-        } else {
-          resolve(res)
+      ;(contract as any).new(
+        ...args,
+        txData,
+        (err: Error, res: any): any => {
+          if (err) {
+            reject(err)
+          } else if (
+            _.isUndefined(res.address) &&
+            !_.isUndefined(res.transactionHash)
+          ) {
+            logUtils.log(`transactionHash: ${res.transactionHash}`)
+          } else {
+            resolve(res)
+          }
         }
-      })
+      )
     })
     return deployPromise
   }

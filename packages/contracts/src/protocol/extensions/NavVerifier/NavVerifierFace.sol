@@ -16,8 +16,7 @@
 
 */
 
-// solhint-disable-next-line compiler-fixed, compiler-gt-0_4s
-pragma solidity ^0.4.24;
+pragma solidity 0.4.24;
 
 /// @title Nav Verifier Interface - Allows to check if new NAV comes from approved authority.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

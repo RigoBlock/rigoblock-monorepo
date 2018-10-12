@@ -16,8 +16,7 @@
 
 */
 
-// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
-pragma solidity ^0.4.24;
+pragma solidity 0.4.24;
 pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../utils/Pool/PoolFace.sol";
