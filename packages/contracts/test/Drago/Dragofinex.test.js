@@ -43,9 +43,9 @@ describeContract(contractName, () => {
         value: purchaseAmount
       })
 
-      const tokenAddress = null //Ether has address 0x0
+      const tokenAddress = '0x0000000000000000000000000000000000000000' //Ether has address 0x0
       const tokenWrapper = await baseContracts['WrapperLockEth'].address
-      const toBeWrapped = 1e16 // 10 finney
+      const toBeWrapped = '10000000000000000' // 10 finney
       const time = 1 // 1 hour lockup (the minimum)
       const isOld = 0 // is a standard ERC20
 
@@ -99,20 +99,18 @@ describeContract(contractName, () => {
       ) // byte4(keccak256(method))
 
       await dragoInstance.methods
-        .operateOnExchange(ethfinexAddress, assembledTransaction)
+        .operateOnExchange(ethfinexAddress, [assembledTransaction])
         .send({ ...transactionDefault })
     })
     it('wraps some GRG tokens to its efx token wrapper', async () => {
       // self-mint the base token first and transfer some of it to drago (drago cannot reject, tokens cannot be claimed back (only eth redemptions))
       const GRGtokensAmount = web3.utils.toWei('101')
       await baseContracts['RigoToken'].transfer(dragoAddress, GRGtokensAmount)
-
       const tokenAddress = await baseContracts['RigoToken'].address
       const tokenWrapper = await baseContracts['WrapperLock'].address
       const toBeWrapped = web3.utils.toWei('10') // alt 200000
       const time = 1 // minimum duration 1 hour.
       const isOld = 0 // is a standard ERC20 token
-
       await baseContracts['ExchangesAuthority'].whitelistWrapper(
         tokenWrapper,
         true
@@ -122,7 +120,6 @@ describeContract(contractName, () => {
         tokenWrapper,
         true
       )
-
       const methodInterface = {
         name: 'wrapToEfx',
         type: 'function',
@@ -162,7 +159,7 @@ describeContract(contractName, () => {
         true
       ) // byte4(keccak256(method))
       await dragoInstance.methods
-        .operateOnExchange(ethfinexAddress, assembledTransaction)
+        .operateOnExchange(ethfinexAddress, [assembledTransaction])
         .send({ ...transactionDefault })
       const wrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(
         dragoAddress
@@ -473,7 +470,7 @@ describeContract(contractName, () => {
       true
     ) // byte4(keccak256(method))
     await dragoInstance.methods
-      .operateOnExchange(tokenWrapper, assembledTransaction)
+      .operateOnExchange(tokenWrapper, [assembledTransaction])
       .send({ ...transactionDefault })
 
     // double check the drago has a positive balance of wrapped ether
@@ -509,7 +506,7 @@ describeContract(contractName, () => {
       true
     ) // byte4(keccak256(method))
     await dragoInstance.methods
-      .operateOnExchange(tokenWrapper, assembledTransaction2)
+      .operateOnExchange(tokenWrapper, [assembledTransaction2])
       .send({ ...transactionDefault })
   })
   it.skip('does not execute when withdraws the wrapped eth before expiry', async () => {})

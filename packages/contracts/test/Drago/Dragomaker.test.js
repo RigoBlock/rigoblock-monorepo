@@ -45,7 +45,7 @@ describeContract(contractName, () => {
         value: purchaseAmount
       })
 
-      const ETHtokenAddress = null //Ether has address 0x0
+      const ETHtokenAddress = '0x0000000000000000000000000000000000000000' //Ether has address 0x0
       const ETHtokenWrapper = await baseContracts['WrapperLockEth'].address
       const toBeWrapped = web3.utils.toWei('1.51') //web3.utils.toWei('1.1') //1e16 is 10 finney
       const time = 1 // 1 hour lockup (the minimum)
@@ -101,7 +101,7 @@ describeContract(contractName, () => {
       ) // byte4(keccak256(method))
 
       await dragoInstance.methods
-        .operateOnExchange(ethfinexAddress, assembledTransaction)
+        .operateOnExchange(ethfinexAddress, [assembledTransaction])
         .send({ ...transactionDefault })
 
       // wrap some GRG from the user account, so that the user can sell GRG buy ETH
