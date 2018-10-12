@@ -68,11 +68,12 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         return this.addListener.apply(this, arguments)
       }
       public removeEventListener() {
-        this._listeners[arguments['0']] = this._listeners[
-          arguments['0']
-        ].filter(listener => {
-          return listener !== arguments['1']
-        })
+        const funcArgs = arguments
+        this._listeners[funcArgs['0']] = this._listeners[funcArgs['0']].filter(
+          listener => {
+            return listener !== funcArgs['1']
+          }
+        )
         return this.removeListener.apply(this, arguments)
       }
     }

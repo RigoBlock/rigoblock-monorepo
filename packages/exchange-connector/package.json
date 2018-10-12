@@ -1,7 +1,7 @@
 {
   "name": "@rigoblock/exchange-connector",
   "description": "A JS utility to interacts with Exchanges API.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "dist/index.js",
   "author": "",
   "license": "ISC",
@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "rm -rf dist/* && webpack",
+    "build:watch": "rm -rf dist/* && webpack --watch",
     "test:unit": "jest",
     "test:unit:watch": "jest --watch",
     "lint": "eslint src --ext js,ts --ignore-path .gitignore --fix"
@@ -40,7 +41,7 @@
   "dependencies": {
     "node-fetch": "^2.2.0",
     "promise": "^8.0.1",
-    "reconnecting-websocket": "^4.0.0-rc5",
+    "reconnecting-websocket": "^4.1.5",
     "whatwg-fetch": "^2.0.4"
   },
   "babel": {

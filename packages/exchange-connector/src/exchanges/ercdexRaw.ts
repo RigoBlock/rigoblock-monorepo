@@ -4,7 +4,7 @@ import { fetchJSON, getQueryParameters, postJSON } from '../utils'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
-  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
+  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.ROPSTEN]
   public static API_HTTP_URL = 'https://api.ercdex.com/api'
   public static API_WS_URL = 'wss://api.ercdex.com'
   public API_URL: string
@@ -119,7 +119,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
           this.wsInstance = null
           return resolve()
         })
-        this.wsInstance.close()
+        this.wsInstance.close(1000, 'Closed by client', { keepClosed: true })
       })
     },
     getConnection: () => {

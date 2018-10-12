@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import EthfinexRaw from './ethfinexRaw'
 
 export class Ethfinex {
-  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
+  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.ROPSTEN]
   private raw: EthfinexRaw
   private wsTimeout = 10000
 
@@ -179,6 +179,11 @@ export class Ethfinex {
   private checkForError(array: any[]) {
     return array[0] === ('error' as any)
   }
+
+  OrderPrecisions = EthfinexRaw.OrderPrecisions
+  CandlesTimeFrame = EthfinexRaw.CandlesTimeFrame
+  CandlesSection = EthfinexRaw.CandlesSection
+  CandlesSort = EthfinexRaw.CandlesSort
 }
 
 export default Ethfinex

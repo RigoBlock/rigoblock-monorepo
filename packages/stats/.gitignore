@@ -1,4 +1,4 @@
 influxdb-data
 node_modules
 dist
-conf/traefik/acme.json
+config/traefik/acme.json
