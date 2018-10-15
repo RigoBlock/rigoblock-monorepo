@@ -34,6 +34,21 @@ services:
     networks:
       - stats_stats
 
+  couchdb:
+    image: couchdb:latest
+    container_name: couchdb
+    port:
+      - "5984:5984"
+    expose:
+      - "5986:5986"
+    env_file:
+      - 'env.couchdb'
+    volumes:
+       - ./config/couchdb/local.ini:/opt/couchdb/etc/local.ini
+       - ./couchdb-data:/opt/couchdb/data
+    networks:
+      - stats_stats
+
 networks:
     stats_stats:
       external: true
