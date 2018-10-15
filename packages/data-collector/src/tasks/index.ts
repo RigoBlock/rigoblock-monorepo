@@ -1,5 +1,5 @@
-import dummyTask from './dummyTask'
+import fetchData from './fetchData'
 
 export default {
-  dummyTask
+  fetchData
 }
