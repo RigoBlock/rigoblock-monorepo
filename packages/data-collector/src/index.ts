@@ -2,6 +2,7 @@ import config, { ConfigEntry } from './config'
 import initQueue from './initQueue'
 import logger from './logger'
 
+// initial commit
 logger.info(`Creating queues...`)
 
 const queues = Object.keys(config).map(queueName => {
