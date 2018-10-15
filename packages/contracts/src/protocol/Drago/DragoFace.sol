@@ -40,7 +40,9 @@ interface DragoFace {
     function enforceKyc(bool _enforced, address _kycProvider) external;
     function setAllowance(address _tokenTransferProxy, address _token, uint256 _amount) external;
     function setMultipleAllowances(address _tokenTransferProxy, address[] _tokens, uint256[] _amounts) external;
-    function operateOnExchange(address _exchange, bytes _assembledTransaction) external;
+    // structs cannot be implemented in interfaces, hence commented the below functions
+    //function operateOnExchange(address _exchange, Transaction memory transaction) external returns (bool success);
+    //function batchOperateOnExchange(address _exchange, Transaction[] memory transactions) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS

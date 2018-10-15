@@ -4,8 +4,8 @@ const NETWORKS = process.env.NETWORKS
   ? process.env.NETWORKS.split(',')
   : [
       'http://localhost:8545',
-      'https://kovan.dev.endpoint.network/rpc',
-      'https://ropsten.dev.endpoint.network/rpc'
+      'https://ropsten.infura.io/v3/d48872aa1c00471c825e9d856c3c3138',
+      'https://kovan.infura.io/v3/d48872aa1c00471c825e9d856c3c3138'
     ]
 
 module.exports = {
