@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 export class HtmlResource {
   constructor() {}
   public fetch(url) {
-    return fetch(url).then(res => res.text())
+    return fetch(url)
   }
   public loadHTML(html) {
     return cheerio.load(html)
