@@ -16,8 +16,7 @@
 
 */
 
-// solhint-disable-next-line compiler-fixed, compiler-gt-0_4
-pragma solidity ^0.4.24;
+pragma solidity 0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title SigVerifier - Allows verify whether a transaction has been signed correctly.

@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity ^0.4.24;
+pragma solidity 0.4.24;
 pragma experimental "v0.5.0";
 
 /// @title Lib Sanitize - Sanitize strings in smart contracts.

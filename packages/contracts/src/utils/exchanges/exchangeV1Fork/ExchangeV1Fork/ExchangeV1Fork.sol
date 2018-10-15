@@ -16,12 +16,227 @@
 
 */
 
-pragma solidity ^0.4.23;
+pragma solidity 0.4.19;
 
-import { TokenTransferProxy } from "../../TokenTransferProxy/TokenTransferProxy.sol";
-import { ERC20Face as Token } from "../../../../tokens/ERC20/ERC20.sol";
-import { SafeMath } from "../../../SafeMath/SafeMath.sol";
-import { Owned } from "../../../Owned/Owned.sol";
+contract Owned {
+
+    address public owner;
+
+    event NewOwner(address indexed old, address indexed current);
+
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+
+    function Owned() public {
+        owner = msg.sender;
+    }
+
+    function setOwner(address _new)
+        public
+        onlyOwner
+    {
+        require(_new != address(0));
+        owner = _new;
+        NewOwner(owner, _new);
+    }
+}
+
+interface Token {
+
+    /// @notice send `_value` token to `_to` from `msg.sender`
+    /// @param _to The address of the recipient
+    /// @param _value The amount of token to be transferred
+    /// @return Whether the transfer was successful or not
+    function transfer(address _to, uint _value) public returns (bool);
+
+    /// @notice send `_value` token to `_to` from `_from` on the condition it is approved by `_from`
+    /// @param _from The address of the sender
+    /// @param _to The address of the recipient
+    /// @param _value The amount of token to be transferred
+    /// @return Whether the transfer was successful or not
+    function transferFrom(address _from, address _to, uint _value) public returns (bool);
+
+    /// @notice `msg.sender` approves `_addr` to spend `_value` tokens
+    /// @param _spender The address of the account able to transfer the tokens
+    /// @param _value The amount of wei to be approved for transfer
+    /// @return Whether the approval was successful or not
+    function approve(address _spender, uint _value) public returns (bool);
+
+    /// @param _owner The address from which the balance will be retrieved
+    /// @return The balance
+    function balanceOf(address _owner) public view returns (uint);
+
+    /// @param _owner The address of the account owning tokens
+    /// @param _spender The address of the account able to transfer the tokens
+    /// @return Amount of remaining tokens allowed to spent
+    function allowance(address _owner, address _spender) public view returns (uint);
+
+    event Transfer(address indexed _from, address indexed _to, uint _value); // solhint-disable-line
+    event Approval(address indexed _owner, address indexed _spender, uint _value);
+}
+
+contract SafeMath {
+    function safeMul(uint a, uint b)
+        internal
+        pure
+        returns (uint256)
+    {
+        uint c = a * b;
+        assert(a == 0 || c / a == b);
+        return c;
+    }
+
+    function safeDiv(uint a, uint b)
+        internal
+        pure
+        returns (uint256)
+    {
+        uint c = a / b;
+        return c;
+    }
+
+    function safeSub(uint a, uint b)
+        internal
+        pure
+        returns (uint256)
+    {
+        assert(b <= a);
+        return a - b;
+    }
+
+    function safeAdd(uint a, uint b)
+        internal
+        pure
+        returns (uint256)
+    {
+        uint c = a + b;
+        assert(c >= a);
+        return c;
+    }
+
+    function max64(uint64 a, uint64 b)
+        internal
+        pure
+        returns (uint256)
+    {
+        return a >= b ? a : b;
+    }
+
+    function min64(uint64 a, uint64 b)
+        internal
+        pure
+        returns (uint256)
+    {
+        return a < b ? a : b;
+    }
+
+    function max256(uint256 a, uint256 b)
+        internal
+        pure
+        returns (uint256)
+    {
+        return a >= b ? a : b;
+    }
+
+    function min256(uint256 a, uint256 b)
+        internal
+        pure
+        returns (uint256)
+    {
+        return a < b ? a : b;
+    }
+}
+
+contract TokenTransferProxy is Owned {
+
+    /// @dev Only authorized addresses can invoke functions with this modifier.
+    modifier onlyAuthorized {
+        require(authorized[msg.sender]);
+        _;
+    }
+
+    modifier targetAuthorized(address target) {
+        require(authorized[target]);
+        _;
+    }
+
+    modifier targetNotAuthorized(address target) {
+        require(!authorized[target]);
+        _;
+    }
+
+    mapping (address => bool) public authorized;
+    address[] public authorities;
+
+    event LogAuthorizedAddressAdded(address indexed target, address indexed caller);
+    event LogAuthorizedAddressRemoved(address indexed target, address indexed caller);
+
+    /*
+     * Public functions
+     */
+    /// @dev Authorizes an address.
+    /// @param target Address to authorize.
+    function addAuthorizedAddress(address target)
+        public
+        onlyOwner
+        targetNotAuthorized(target)
+    {
+        authorized[target] = true;
+        authorities.push(target);
+        LogAuthorizedAddressAdded(target, msg.sender);
+    }
+
+    /// @dev Removes authorizion of an address.
+    /// @param target Address to remove authorization from.
+    function removeAuthorizedAddress(address target)
+        public
+        onlyOwner
+        targetAuthorized(target)
+    {
+        delete authorized[target];
+        for (uint i = 0; i < authorities.length; i++) {
+            if (authorities[i] == target) {
+                authorities[i] = authorities[authorities.length - 1];
+                authorities.length -= 1;
+                break;
+            }
+        }
+        LogAuthorizedAddressRemoved(target, msg.sender);
+    }
+
+    /// @dev Calls into ERC20 Token contract, invoking transferFrom.
+    /// @param token Address of token to transfer.
+    /// @param from Address to transfer token from.
+    /// @param to Address to transfer token to.
+    /// @param value Amount of token to transfer.
+    /// @return Success of transfer.
+    function transferFrom(
+        address token,
+        address from,
+        address to,
+        uint value)
+        public
+        onlyAuthorized
+        returns (bool)
+    {
+        return Token(token).transferFrom(from, to, value);
+    }
+
+    /*
+     * Public constant functions
+     */
+    /// @dev Gets all authorized addresses.
+    /// @return Array of authorized addresses.
+    function getAuthorizedAddresses()
+        public
+        constant
+        returns (address[])
+    {
+        return authorities;
+    }
+}
 
 /// @title ExchangeV1Fork - Facilitates exchange of ERC20 tokens.
 /// @author Amir Bandeali - <amir@0xProject.com>, Will Warren - <will@0xProject.com>
@@ -87,7 +302,7 @@ contract ExchangeV1Fork is SafeMath {
         bytes32 orderHash;
     }
 
-    constructor(
+    function ExchangeV1Fork(
         address _zrxToken,
         address _tokenTransferProxy)
         public
@@ -153,24 +368,24 @@ contract ExchangeV1Fork is SafeMath {
         ));
 
         if (block.timestamp >= order.expirationTimestampInSec) {
-            emit LogError(uint8(Errors.ORDER_EXPIRED), order.orderHash);
+            LogError(uint8(Errors.ORDER_EXPIRED), order.orderHash);
             return 0;
         }
 
         uint remainingTakerTokenAmount = safeSub(order.takerTokenAmount, getUnavailableTakerTokenAmount(order.orderHash));
         filledTakerTokenAmount = min256(fillTakerTokenAmount, remainingTakerTokenAmount);
         if (filledTakerTokenAmount == 0) {
-            emit LogError(uint8(Errors.ORDER_FULLY_FILLED_OR_CANCELLED), order.orderHash);
+            LogError(uint8(Errors.ORDER_FULLY_FILLED_OR_CANCELLED), order.orderHash);
             return 0;
         }
 
         if (isRoundingError(filledTakerTokenAmount, order.takerTokenAmount, order.makerTokenAmount)) {
-            emit LogError(uint8(Errors.ROUNDING_ERROR_TOO_LARGE), order.orderHash);
+            LogError(uint8(Errors.ROUNDING_ERROR_TOO_LARGE), order.orderHash);
             return 0;
         }
 
         if (!shouldThrowOnInsufficientBalanceOrAllowance && !isTransferable(order, filledTakerTokenAmount)) {
-            emit LogError(uint8(Errors.INSUFFICIENT_BALANCE_OR_ALLOWANCE), order.orderHash);
+            LogError(uint8(Errors.INSUFFICIENT_BALANCE_OR_ALLOWANCE), order.orderHash);
             return 0;
         }
 
@@ -211,7 +426,7 @@ contract ExchangeV1Fork is SafeMath {
             }
         }
 
-        emit LogFill(
+        LogFill(
             order.maker,
             msg.sender,
             order.feeRecipient,
@@ -257,20 +472,20 @@ contract ExchangeV1Fork is SafeMath {
         require(order.makerTokenAmount > 0 && order.takerTokenAmount > 0 && cancelTakerTokenAmount > 0);
 
         if (block.timestamp >= order.expirationTimestampInSec) {
-            emit LogError(uint8(Errors.ORDER_EXPIRED), order.orderHash);
+            LogError(uint8(Errors.ORDER_EXPIRED), order.orderHash);
             return 0;
         }
 
         uint remainingTakerTokenAmount = safeSub(order.takerTokenAmount, getUnavailableTakerTokenAmount(order.orderHash));
         uint cancelledTakerTokenAmount = min256(cancelTakerTokenAmount, remainingTakerTokenAmount);
         if (cancelledTakerTokenAmount == 0) {
-            emit LogError(uint8(Errors.ORDER_FULLY_FILLED_OR_CANCELLED), order.orderHash);
+            LogError(uint8(Errors.ORDER_FULLY_FILLED_OR_CANCELLED), order.orderHash);
             return 0;
         }
 
         cancelled[order.orderHash] = safeAdd(cancelled[order.orderHash], cancelledTakerTokenAmount);
 
-        emit LogCancel(
+        LogCancel(
             order.maker,
             order.feeRecipient,
             order.makerToken,

@@ -179,11 +179,6 @@ export class Ethfinex {
   private checkForError(array: any[]) {
     return array[0] === ('error' as any)
   }
-
-  OrderPrecisions = EthfinexRaw.OrderPrecisions
-  CandlesTimeFrame = EthfinexRaw.CandlesTimeFrame
-  CandlesSection = EthfinexRaw.CandlesSection
-  CandlesSort = EthfinexRaw.CandlesSort
 }
 
 export default Ethfinex
