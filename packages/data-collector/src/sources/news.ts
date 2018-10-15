@@ -1,10 +1,12 @@
 import { CRYPTO_NEWS_BASE_URL } from '../constants'
 import { HtmlResource } from './htmlResource'
 import { launch } from 'puppeteer'
+import tokensMap from '../tokensMap'
 
 export class TokenNews extends HtmlResource {
+  private $: CheerioStatic
   private browser: any
-  private newsUrls: string[] = []
+  private news: any[] = []
   constructor() {
     super()
   }
@@ -12,20 +14,29 @@ export class TokenNews extends HtmlResource {
     const response = await this.fetch(CRYPTO_NEWS_BASE_URL + symbol).then(res =>
       res.json()
     )
-    const urls = response.results.map(res => res.url)
     this.browser = await launch()
-    const promiseChain = urls.reduce(
-      (acc, curr) => acc.then(() => this.getUrl(curr)),
-      Promise.resolve()
-    )
+    const promiseChain = response.results
+      .map(res => ({
+        url: res.url,
+        title: res.title
+      }))
+      .reduce(
+        (acc, curr) => acc.then(() => this.getUrl(curr)),
+        Promise.resolve()
+      )
     await promiseChain
     await this.browser.close()
-    console.log(this.newsUrls)
+    const html = await this.fetch(tokensMap[symbol].overviewUrl).then(res =>
+      res.text()
+    )
+    this.$ = this.loadHTML(html)
+    const otherNews = this.articles
     return {
-      news: this.newsUrls
+      news: [...this.news, ...otherNews]
     }
   }
-  public async getUrl(url) {
+  public async getUrl(article) {
+    const { url, title } = article
     const page = await this.browser.newPage()
     await page.setUserAgent('Chrome')
     await page.goto(url)
@@ -33,6 +44,16 @@ export class TokenNews extends HtmlResource {
     await page.close()
     const $ = this.loadHTML(html)
     const sourceUrl = $('h1.post-title a:nth-child(2)').attr('href')
-    return this.newsUrls.push(sourceUrl)
+    return this.news.push({ title, url: sourceUrl })
+  }
+  private get articles() {
+    return this.$('table.asset-list-research tr a')
+      .toArray()
+      .map(el => {
+        return {
+          title: el.children.pop().data.trim(),
+          url: el.attribs.href
+        }
+      })
   }
 }
