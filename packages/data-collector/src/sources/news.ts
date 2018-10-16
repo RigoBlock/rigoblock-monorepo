@@ -20,7 +20,7 @@ export class TokenNews extends HtmlResource {
       .map(res => ({
         url: res.url,
         title: res.title,
-        date: moment(res.published_at).format('DD-MM-YYYY')
+        date: moment(res.published_at).format('x')
       }))
       .reduce(
         (acc, curr) => acc.then(() => this.getUrl(curr)),
@@ -67,7 +67,7 @@ export class TokenNews extends HtmlResource {
           url,
           date: moment()
             .subtract(<any>time[0], time[1])
-            .format('DD-MM-YYYY')
+            .format('x')
         }
       })
   }

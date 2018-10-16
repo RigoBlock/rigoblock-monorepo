@@ -15,8 +15,7 @@ const task = async job => {
   }
   const currentDate = moment().format('YYYY-MM-DD')
   await db.init()
-  await db.upsert(INFO_DB, `${symbol}::${currentDate}`, info)
-  return
+  return db.upsert(INFO_DB, `${symbol}::${currentDate}`, info)
 }
 
 export default task

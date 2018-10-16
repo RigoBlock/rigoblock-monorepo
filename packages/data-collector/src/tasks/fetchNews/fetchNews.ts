@@ -6,10 +6,14 @@ const task = async job => {
   const { symbol } = job.data
   const news = await new TokenNews().rip(symbol)
   await db.init()
-  news.map(async el => {
-    await db.upsert(NEWS_DB, el.url, { title: el.title, token: symbol })
-  })
-  return
+  const upsertPromises = news.map(async el =>
+    db.upsert(NEWS_DB, el.url, {
+      title: el.title,
+      token: symbol,
+      date: el.date
+    })
+  )
+  return Promise.all(upsertPromises)
 }
 
 export default task
