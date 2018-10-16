@@ -31,9 +31,7 @@ export class TokenNews extends HtmlResource {
     )
     this.$ = this.loadHTML(html)
     const otherNews = this.articles
-    return {
-      news: [...this.news, ...otherNews]
-    }
+    return [...this.news, ...otherNews]
   }
   public async getUrl(article) {
     const { url, title } = article

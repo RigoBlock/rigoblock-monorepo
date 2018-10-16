@@ -1,5 +1,7 @@
-import fetchData from './fetchData'
+import fetchInfo from './fetchInfo'
+import fetchNews from './fetchNews'
 
 export default {
-  fetchData
+  fetchInfo,
+  fetchNews
 }

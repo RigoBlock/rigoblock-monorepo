@@ -12,8 +12,16 @@ export type Config = {
 }
 
 const conf: Config = {
-  'fetch-data-ZRX': {
-    handlerName: 'fetchData',
+  'fetch-info-ZRX': {
+    handlerName: 'fetchInfo',
+    description: 'Fetches token data and saves to the DB',
+    cronExpression: '*/30 * * * * *', // Every thirty seconds
+    initialData: {
+      symbol: tokensMap.ZRX.symbol
+    }
+  },
+  'fetch-news-ZRX': {
+    handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/30 * * * * *', // Every thirty seconds
     initialData: {

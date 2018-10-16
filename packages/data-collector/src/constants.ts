@@ -7,7 +7,8 @@ export const COUCHDB_HOST = process.env.COUCHDB_HOST || 'http://127.0.0.1'
 export const COUCHDB_PORT = parseInt(process.env.COUCHDB_PORT) || 5984
 export const COUCHDB_USERNAME = process.env.COUCHDB_USERNAME || 'admin'
 export const COUCHDB_PASSWORD = process.env.COUCHDB_PASSWORD || ''
-export const TOKEN_DB = 'tokens_db'
+export const INFO_DB = 'tokens_info'
+export const NEWS_DB = 'tokens_news'
 
 export const TOKEN_MARKET_BASE_URL =
   'https://tokenmarket.net/blockchain/ethereum/assets'
