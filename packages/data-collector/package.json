@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
+    "init:db": "node dist/dbscript.js",
     "dev:debug": "node --inspect-brk -r ts-node/register src/index.ts",
     "build": "rm -rf dist/* && tsc --outDir './dist'",
     "test": "NODE_ENV=test node --trace-warnings node_modules/.bin/jest --env=node",

@@ -31,7 +31,10 @@ export class Db {
   }
 
   async createDb(dbName) {
-    await this.conn.db.create(dbName)
+    const dbExists = await this.exists(dbName)
+    return dbExists
+      ? Promise.resolve(`Database already exists: ${dbName}`)
+      : this.conn.db.create(dbName)
   }
 
   async exists(dbName: string, key?: string): Promise<boolean> {
