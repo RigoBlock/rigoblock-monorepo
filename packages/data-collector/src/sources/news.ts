@@ -36,15 +36,14 @@ export class TokenNews extends HtmlResource {
     return [...this.news, ...otherNews]
   }
   public async getUrl(article) {
-    const { url, title, date } = article
     const page = await this.browser.newPage()
     await page.setUserAgent('Chrome')
-    await page.goto(url)
+    await page.goto(article.url)
     const html = await page.content()
     await page.close()
     const $ = this.loadHTML(html)
     const sourceUrl = $('h1.post-title a:nth-child(2)').attr('href')
-    return this.news.push({ title, url: sourceUrl, date })
+    return this.news.push({ ...article, url: sourceUrl })
   }
   private get articles() {
     return this.$('div.about-section-wrapper table.asset-list-news td p')
