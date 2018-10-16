@@ -1,4 +1,5 @@
 import * as Nano from 'nano'
+import * as u from 'updeep'
 import {
   COUCHDB_HOST,
   COUCHDB_PASSWORD,
@@ -49,7 +50,8 @@ export class Db {
     if (exists) {
       doc = await this.get(dbName, documentId)
     }
-    return this.conn.use(dbName).insert({ _id: documentId, ...doc, ...data })
+    const value = u(doc, data)
+    return this.conn.use(dbName).insert({ _id: documentId, ...value })
   }
 }
 

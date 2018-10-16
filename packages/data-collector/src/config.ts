@@ -1,3 +1,5 @@
+import tokensMap from './tokensMap'
+
 export type ConfigEntry = {
   handlerName: string
   description: string
@@ -10,11 +12,21 @@ export type Config = {
 }
 
 const conf: Config = {
-  'dummy-task': {
-    handlerName: 'dummyTask',
-    description: 'Logs',
-    cronExpression: '*/25 * * * * *', // Every twenty five seconds
-    initialData: {}
+  'fetch-info-ZRX': {
+    handlerName: 'fetchInfo',
+    description: 'Fetches token data and saves to the DB',
+    cronExpression: '*/30 * * * * *', // Every thirty seconds
+    initialData: {
+      symbol: tokensMap.ZRX.symbol
+    }
+  },
+  'fetch-news-ZRX': {
+    handlerName: 'fetchNews',
+    description: 'Fetches token data and saves to the DB',
+    cronExpression: '*/30 * * * * *', // Every thirty seconds
+    initialData: {
+      symbol: tokensMap.ZRX.symbol
+    }
   }
 }
 

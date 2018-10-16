@@ -20,7 +20,6 @@ export class TokenOverview extends HtmlResource {
       team: this.team,
       countryOfOrigin: this.countryOfOrigin,
       tokensSaleDate: this.tokenSaleDate,
-      articles: this.articles,
       github: {
         url: this.githubUrl,
         stats: this.githubStats
@@ -78,16 +77,6 @@ export class TokenOverview extends HtmlResource {
     return this.$('div.dates-wrapper span')
       .toArray()
       .map(el => this.normalizeText(el.children.pop().data))
-  }
-  private get articles() {
-    return this.$('table.asset-list-research tr a')
-      .toArray()
-      .map(el => {
-        return {
-          name: this.normalizeText(el.children.pop().data),
-          url: el.attribs.href
-        }
-      })
   }
   private get githubUrl() {
     return this.$('div.technology-section-wrapper h3')
