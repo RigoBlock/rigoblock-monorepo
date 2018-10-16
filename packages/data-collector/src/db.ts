@@ -19,17 +19,22 @@ export class Db {
 
   init() {
     this.conn = Nano({
-      url: `${this.host}:${this.port}`
+      url: `${this.host}:${this.port}`,
+      requestDefaults: { jar: true }
     })
 
     return this.conn.auth(this.username, this.password)
   }
 
-  get(dbName: string, key: string) {
+  get(dbName: string, key?: string) {
     return this.conn.use(dbName).get(key)
   }
 
-  async exists(dbName: string, key: string): Promise<boolean> {
+  async createDb(dbName) {
+    await this.conn.db.create(dbName)
+  }
+
+  async exists(dbName: string, key?: string): Promise<boolean> {
     try {
       await this.conn.use(dbName).head(key)
       return true
