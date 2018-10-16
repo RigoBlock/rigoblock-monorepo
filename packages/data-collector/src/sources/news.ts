@@ -1,3 +1,4 @@
+import * as moment from 'moment'
 import { CRYPTO_NEWS_BASE_URL } from '../constants'
 import { HtmlResource } from './htmlResource'
 import { launch } from 'puppeteer'
@@ -18,7 +19,8 @@ export class TokenNews extends HtmlResource {
     const promiseChain = response.results
       .map(res => ({
         url: res.url,
-        title: res.title
+        title: res.title,
+        date: moment(res.published_at).format('DD-MM-YYYY')
       }))
       .reduce(
         (acc, curr) => acc.then(() => this.getUrl(curr)),
@@ -34,7 +36,7 @@ export class TokenNews extends HtmlResource {
     return [...this.news, ...otherNews]
   }
   public async getUrl(article) {
-    const { url, title } = article
+    const { url, title, date } = article
     const page = await this.browser.newPage()
     await page.setUserAgent('Chrome')
     await page.goto(url)
@@ -42,15 +44,30 @@ export class TokenNews extends HtmlResource {
     await page.close()
     const $ = this.loadHTML(html)
     const sourceUrl = $('h1.post-title a:nth-child(2)').attr('href')
-    return this.news.push({ title, url: sourceUrl })
+    return this.news.push({ title, url: sourceUrl, date })
   }
   private get articles() {
-    return this.$('table.asset-list-research tr a')
+    return this.$('div.about-section-wrapper table.asset-list-news td p')
       .toArray()
       .map(el => {
+        const title = this.$(el)
+          .find('a')
+          .text()
+          .trim()
+        const url = this.$(el)
+          .find('a')
+          .attr('href')
+        const time = this.$(el)
+          .find('.text-muted')
+          .text()
+          .trim()
+          .split(' ')
         return {
-          title: el.children.pop().data.trim(),
-          url: el.attribs.href
+          title,
+          url,
+          date: moment()
+            .subtract(<any>time[0], time[1])
+            .format('DD-MM-YYYY')
         }
       })
   }
