@@ -42,7 +42,9 @@ export class TokenNews extends HtmlResource {
     const html = await page.content()
     await page.close()
     const $ = this.loadHTML(html)
-    const sourceUrl = $('h1.post-title a:nth-child(2)').attr('href')
+    const sourceUrl = $('h1.post-title a.close-button')
+      .next()
+      .attr('href')
     return this.news.push({ ...article, url: sourceUrl })
   }
   private get articles() {
