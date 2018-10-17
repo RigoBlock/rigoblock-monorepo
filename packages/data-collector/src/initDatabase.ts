@@ -1,17 +1,12 @@
 import { INFO_DB, NEWS_DB } from './constants'
 import db from './db'
 
-const emit = (a, b) => {}
-
 const initDatabase = async () => {
   const view = {
     views: {
       by_symbol_and_date: {
-        map: function(doc) {
-          if (doc.date && doc.token) {
-            emit([doc.token, doc.date], doc._id)
-          }
-        }
+        map:
+          'function(doc) { if (doc.date && doc.token) { emit([doc.token, doc.date], doc._id) } }'
       }
     }
   }
