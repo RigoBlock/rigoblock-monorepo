@@ -16,6 +16,9 @@ export class TokenNews extends HtmlResource {
       res.json()
     )
     this.browser = await launch()
+    if (!response.results.length) {
+      return []
+    }
     const promiseChain = response.results
       .map(res => ({
         url: res.url,
