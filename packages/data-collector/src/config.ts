@@ -26,7 +26,7 @@ const conf: Config = {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/2 * * * *',
-    delay: 60000,
+    delay: 300000,
     initialData: {
       symbol: tokensMap.OMG.symbol
     }
@@ -35,7 +35,7 @@ const conf: Config = {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/2 * * * *',
-    delay: 120000,
+    delay: 600000,
     initialData: {
       symbol: tokensMap.SAN.symbol
     }
@@ -44,7 +44,7 @@ const conf: Config = {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/2 * * * *',
-    delay: 180000,
+    delay: 900000,
     initialData: {
       symbol: tokensMap.EDO.symbol
     }
@@ -53,7 +53,7 @@ const conf: Config = {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/2 * * * *',
-    delay: 240000,
+    delay: 1200000,
     initialData: {
       symbol: tokensMap.GNT.symbol
     }
@@ -62,7 +62,7 @@ const conf: Config = {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/2 * * * *',
-    delay: 300000,
+    delay: 1500000,
     initialData: {
       symbol: tokensMap.ZRX.symbol
     }
@@ -71,7 +71,7 @@ const conf: Config = {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/5 * * * *',
-    delay: 360000,
+    delay: 1800000,
     initialData: {
       symbol: tokensMap.OMG.symbol
     }
@@ -80,7 +80,7 @@ const conf: Config = {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/5 * * * *',
-    delay: 660000,
+    delay: 2100000,
     initialData: {
       symbol: tokensMap.GNT.symbol
     }
@@ -89,7 +89,7 @@ const conf: Config = {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/5 * * * *',
-    delay: 960000,
+    delay: 2400000,
     initialData: {
       symbol: tokensMap.SAN.symbol
     }
@@ -98,7 +98,7 @@ const conf: Config = {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/5 * * * *',
-    delay: 1260000,
+    delay: 2700000,
     initialData: {
       symbol: tokensMap.EDO.symbol
     }
