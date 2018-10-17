@@ -1,7 +1,14 @@
 {
   "queues": [
     {
-      "name": "dummy-task",
+      "name": "fetch-info-ZRX",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-ZRX",
       "hostId": "localhost",
       "host": "docker.for.mac.localhost",
       "port": 6379,
