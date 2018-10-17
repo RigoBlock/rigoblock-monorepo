@@ -2,7 +2,6 @@ import config, { ConfigEntry } from './config'
 import initQueue from './initQueue'
 import logger from './logger'
 
-// initial commit
 logger.info(`Creating queues...`)
 
 const queues = Object.keys(config).map(queueName => {
@@ -11,6 +10,7 @@ const queues = Object.keys(config).map(queueName => {
     queueName,
     queueConf.handlerName,
     queueConf.cronExpression,
+    queueConf.delay,
     queueConf.initialData
   )
 })

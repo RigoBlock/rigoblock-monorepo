@@ -5,6 +5,7 @@ import { launch } from 'puppeteer'
 import tokensMap from '../tokensMap'
 
 export class TokenNews extends HtmlResource {
+  private symbol: string
   private $: CheerioStatic
   private browser: any
   private news: any[] = []
@@ -12,10 +13,20 @@ export class TokenNews extends HtmlResource {
     super()
   }
   public async rip(symbol) {
-    const response = await this.fetch(CRYPTO_NEWS_BASE_URL + symbol).then(res =>
-      res.json()
+    this.symbol = symbol
+    await this.fetchCryptoPanicNews()
+    const tokenMarketNews = await this.fetchTokenMarketNews()
+    return [...this.news, ...tokenMarketNews]
+  }
+  private async fetchCryptoPanicNews() {
+    let response = await this.fetch(CRYPTO_NEWS_BASE_URL + this.symbol).then(
+      res => res.json()
     )
-    this.browser = await launch()
+    this.browser = await launch({
+      handleSIGINT: false,
+      handleSIGTERM: false,
+      handleSIGHUP: false
+    })
     if (!response.results.length) {
       return []
     }
@@ -31,14 +42,9 @@ export class TokenNews extends HtmlResource {
       )
     await promiseChain
     await this.browser.close()
-    const html = await this.fetch(tokensMap[symbol].overviewUrl).then(res =>
-      res.text()
-    )
-    this.$ = this.loadHTML(html)
-    const otherNews = this.articles
-    return [...this.news, ...otherNews]
+    return this.news
   }
-  public async getUrl(article) {
+  private async getUrl(article) {
     const page = await this.browser.newPage()
     await page.setUserAgent('Chrome')
     await page.goto(article.url)
@@ -50,7 +56,11 @@ export class TokenNews extends HtmlResource {
       .attr('href')
     return this.news.push({ ...article, url: sourceUrl })
   }
-  private get articles() {
+  private async fetchTokenMarketNews() {
+    const html = await this.fetch(tokensMap[this.symbol].overviewUrl).then(
+      res => res.text()
+    )
+    this.$ = this.loadHTML(html)
     return this.$('div.about-section-wrapper table.asset-list-news td p')
       .toArray()
       .map(el => {

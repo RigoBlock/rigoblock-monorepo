@@ -3,8 +3,12 @@ import fetch from 'node-fetch'
 
 export class HtmlResource {
   constructor() {}
-  public fetch(url) {
-    return fetch(url)
+  public async fetch(url) {
+    const response = await fetch(url)
+    if (response.status !== 200) {
+      throw new Error(`Error with the response: ${response.status}`)
+    }
+    return response
   }
   public loadHTML(html) {
     return cheerio.load(html)
