@@ -71,7 +71,7 @@ const conf: Config = {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/5 * * * *',
-    delay: 300000,
+    delay: 360000,
     initialData: {
       symbol: tokensMap.OMG.symbol
     }
@@ -80,7 +80,7 @@ const conf: Config = {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/5 * * * *',
-    delay: 600000,
+    delay: 660000,
     initialData: {
       symbol: tokensMap.GNT.symbol
     }
@@ -89,7 +89,7 @@ const conf: Config = {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/5 * * * *',
-    delay: 900000,
+    delay: 960000,
     initialData: {
       symbol: tokensMap.SAN.symbol
     }
@@ -98,7 +98,7 @@ const conf: Config = {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/5 * * * *',
-    delay: 1200000,
+    delay: 1260000,
     initialData: {
       symbol: tokensMap.EDO.symbol
     }
