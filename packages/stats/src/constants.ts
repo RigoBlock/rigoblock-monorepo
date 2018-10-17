@@ -32,18 +32,29 @@ export const CONTRACT_ADDRESSES = {
     GRGW: '0x5959f2036608d693B4d085020ACAdBBf664C793E'
   },
   [NETWORKS.MAINNET]: {
+    GNT: '0xa74476443119A942dE498590Fe1f2454d7D4aC0d',
+    GRG: '0xD34cf65739954EB99D284fD20aB4f88c64e4d67D',
+    MKR: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
+    USDT: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     WETH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    GRG: '0xD34cf65739954EB99D284fD20aB4f88c64e4d67D'
+    ZRX: '0xe41d2489571d322189246dafa5ebde1f4699f498',
+    ZRXW: '0xCf67d7A481CEEca0a77f658991A00366FED558F7',
+    ETHW: '0xaa7427d8f17d87a28f5e1ba3adbb270badbe1011',
+    USDTW: '0x1a9B2d827F26B7d7C18fEC4c1B27c1E8dEeBa26e',
+    GRGW: ''
   }
 }
 
 export const WEBSOCKET_URLS = {
-  [NETWORKS.KOVAN]: {
-    INFURA: 'wss://kovan.infura.io/ws/d48872aa1c00471c825e9d856c3c3138',
-    RIGOBLOCK: 'wss://kovan.dev.endpoint.network/ws'
+  [NETWORKS.MAINNET]: {
+    INFURA: 'https://mainnet.infura.io/v3/d48872aa1c00471c825e9d856c3c3138'
   },
   [NETWORKS.ROPSTEN]: {
     INFURA: 'wss://ropsten.infura.io/ws/d48872aa1c00471c825e9d856c3c3138',
     RIGOBLOCK: 'wss://ropsten.dev.endpoint.network/ws'
+  },
+  [NETWORKS.KOVAN]: {
+    INFURA: 'wss://kovan.infura.io/ws/d48872aa1c00471c825e9d856c3c3138',
+    RIGOBLOCK: 'wss://kovan.dev.endpoint.network/ws'
   }
 }
