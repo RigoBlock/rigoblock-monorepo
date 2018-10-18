@@ -4,7 +4,7 @@ export type ConfigEntry = {
   handlerName: string
   description: string
   cronExpression: string
-  delay: number
+  delay?: number
   initialData?: object
 }
 
@@ -17,7 +17,6 @@ const conf: Config = {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
     cronExpression: '*/5 * * * *',
-    delay: 0,
     initialData: {
       symbol: tokensMap.ZRX.symbol
     }
