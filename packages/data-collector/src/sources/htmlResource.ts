@@ -6,7 +6,7 @@ export class HtmlResource {
   public async fetch(url) {
     const response = await fetch(url)
     if (response.status !== 200) {
-      throw new Error(`Error with the response: ${response.status}`)
+      throw new Error(`Status: ${response.status}: ${response.body}`)
     }
     return response
   }
