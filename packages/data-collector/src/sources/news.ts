@@ -22,11 +22,7 @@ export class TokenNews extends HtmlResource {
     let response = await this.fetch(CRYPTO_NEWS_BASE_URL + this.symbol).then(
       res => res.json()
     )
-    this.browser = await launch({
-      handleSIGINT: false,
-      handleSIGTERM: false,
-      handleSIGHUP: false
-    })
+    this.browser = await launch()
     if (!response.results.length) {
       return []
     }

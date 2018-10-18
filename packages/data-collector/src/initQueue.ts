@@ -31,9 +31,9 @@ export default (
   queue.on('global:failed', function(jobId, err) {
     logger.error(`Job ${jobId} failed: ${err}`)
   })
-  // queue.on('global:completed', function(jobId, result) {
-  //   logger.info(`Job ${jobId} completed!${result ? ` Result: ${result}` : ''}`)
-  // })
+  queue.on('global:completed', function(jobId, result) {
+    logger.info(`Job ${jobId} completed!${result ? ` Result: ${result}` : ''}`)
+  })
 
   queue.add(initialData, {
     timeout: 1000 * 60 * 5,

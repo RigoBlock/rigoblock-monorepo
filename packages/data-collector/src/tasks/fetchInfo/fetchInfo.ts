@@ -13,7 +13,9 @@ const task = async job => {
     ...overview,
     ...social
   }
-  const currentDate = moment().format('YYYY-MM-DD')
+  const currentDate = moment()
+    .startOf('day')
+    .toISOString()
   await db.init()
   return db.upsert(INFO_DB, `${symbol}::${currentDate}`, info)
 }
