@@ -8,7 +8,63 @@
      "prefix": "data-collector"
     },
     {
+      "name": "fetch-info-OMG",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-info-SAN",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-info-EDO",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-info-GNT",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
       "name": "fetch-news-ZRX",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-OMG",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-SAN",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-EDO",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-GNT",
       "hostId": "localhost",
       "host": "docker.for.mac.localhost",
       "port": 6379,

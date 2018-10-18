@@ -6,6 +6,9 @@ const task = async job => {
   const { symbol } = job.data
   const news = await new TokenNews().rip(symbol)
   await db.init()
+  if (!news.length) {
+    return null
+  }
   const upsertPromises = news.map(async el =>
     db.upsert(NEWS_DB, el.url, {
       title: el.title,

@@ -1,11 +1,74 @@
 {
   "queues": [
     {
-      "name": "dummy-task",
+      "name": "fetch-info-ZRX",
       "hostId": "redis",
       "host": "redis",
       "port": 6379,
-      "prefix": "data-collector"
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-info-OMG",
+      "hostId": "redis",
+      "host": "redis",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-info-SAN",
+      "hostId": "redis",
+      "host": "redis",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-info-EDO",
+      "hostId": "redis",
+      "host": "redis",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-info-GNT",
+      "hostId": "redis",
+      "host": "redis",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-ZRX",
+      "hostId": "redis",
+      "host": "redis",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-OMG",
+      "hostId": "redis",
+      "host": "redis",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-SAN",
+      "hostId": "redis",
+      "host": "redis",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-EDO",
+      "hostId": "redis",
+      "host": "redis",
+      "port": 6379,
+     "prefix": "data-collector"
+    },
+    {
+      "name": "fetch-news-GNT",
+      "hostId": "redis",
+      "host": "redis",
+      "port": 6379,
+     "prefix": "data-collector"
     }
   ]
 }
