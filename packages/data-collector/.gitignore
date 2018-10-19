@@ -1,2 +1,4 @@
 node_modules
 dist
+couchdb-data
+env.couchdb

@@ -1,8 +1,13 @@
-# not working properly
 version: '3.2'
 services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+
   arena:
-    image: vshjxyz/arena
+    image: vshjxyz/arena:latest
     container_name: arena-data-collector
     ports:
       - "4568:4568"
@@ -10,10 +15,17 @@ services:
       - ./config/arena/arena.conf.json:/opt/arena/src/server/config/index.json:ro
     environment:
       ARENA_PORT: 4568
-    networks:
-      - stats_default
     links:
       - redis
-networks:
-  stats_default:
-    external: true
+
+  couchdb:
+    image: couchdb:latest
+    container_name: couchdb
+    ports:
+    - "5984:5984"
+    - "5986:5986"
+    env_file:
+      - 'env.couchdb'
+    volumes:
+       - ./config/couchdb/local.ini:/opt/couchdb/etc/local.ini
+       - ./couchdb-data:/opt/couchdb/data

@@ -25,12 +25,28 @@ services:
     container_name: bull-data-collector
     environment:
       REDIS_HOST: redis
-      TELEGRAF_HOST: telegraf
+      COUCHDB_HOST: http://couchdb
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
     build:
       context: ../../
       dockerfile: ./packages/data-collector/Dockerfile
       args:
         - NPM_KEY=${NPM_KEY}
+    networks:
+      - stats_stats
+
+  couchdb:
+    image: couchdb:latest
+    container_name: couchdb
+    ports:
+      - "5984:5984"
+    expose:
+      - "5986"
+    env_file:
+      - 'env.couchdb'
+    volumes:
+       - ./config/couchdb/local.ini:/opt/couchdb/etc/local.ini
+       - ./couchdb-data:/opt/couchdb/data
     networks:
       - stats_stats
 
