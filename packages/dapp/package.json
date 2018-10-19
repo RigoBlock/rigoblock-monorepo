@@ -1,6 +1,6 @@
 {
   "name": "@rigoblock/dapp",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "private": true,
   "scripts": {
     "start": "serve -s dist -p 8080",
@@ -29,8 +29,8 @@
     "@babel/plugin-syntax-jsx": "7.0.0",
     "@babel/plugin-transform-react-display-name": "7.0.0",
     "@babel/plugin-transform-react-jsx": "7.0.0",
-    "@rigoblock/api": "^0.2.10",
-    "@rigoblock/ganache-bootstrap": "^0.1.17",
+    "@rigoblock/api": "^0.2.11",
+    "@rigoblock/ganache-bootstrap": "^0.1.18",
     "@storybook/addon-info": "^3.4.8",
     "@storybook/addon-knobs": "^3.4.8",
     "@storybook/addon-options": "^3.4.8",
@@ -160,7 +160,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.1.0",
-    "@rigoblock/contracts": "^0.3.5",
+    "@rigoblock/contracts": "^0.3.6",
     "core-js": "3.0.0-beta.3"
   }
 }
