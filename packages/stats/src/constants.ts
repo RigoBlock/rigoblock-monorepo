@@ -47,14 +47,14 @@ export const CONTRACT_ADDRESSES = {
 
 export const WEBSOCKET_URLS = {
   [NETWORKS.MAINNET]: {
-    INFURA: 'https://mainnet.infura.io/v3/d48872aa1c00471c825e9d856c3c3138'
+    INFURA: 'wss://mainnet.infura.io/ws/'
   },
   [NETWORKS.ROPSTEN]: {
-    INFURA: 'wss://ropsten.infura.io/ws/d48872aa1c00471c825e9d856c3c3138',
+    INFURA: 'wss://ropsten.infura.io/ws/',
     RIGOBLOCK: 'wss://ropsten.dev.endpoint.network/ws'
   },
   [NETWORKS.KOVAN]: {
-    INFURA: 'wss://kovan.infura.io/ws/d48872aa1c00471c825e9d856c3c3138',
+    INFURA: 'wss://kovan.infura.io/ws/',
     RIGOBLOCK: 'wss://kovan.dev.endpoint.network/ws'
   }
 }
