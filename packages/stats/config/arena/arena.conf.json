@@ -167,6 +167,97 @@
       "host": "docker.for.mac.localhost",
       "port": 6379,
       "prefix": "stats"
+    },
+    {
+      "name": "mainnet-fetch-dragos-list",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-ETH",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-GNT",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-GRG",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-MKR",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-USDT",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-WETH",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-ZRX",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-ZRXW",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-ETHW",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-balance-USDTW",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-dragos-totalsupply",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-dragos-shareprice",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
     }
   ]
 }
