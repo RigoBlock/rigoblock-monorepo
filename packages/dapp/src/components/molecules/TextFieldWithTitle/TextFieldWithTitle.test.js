@@ -15,7 +15,7 @@ const props = {
   fieldProps: {
     id: 'testTextField',
     fullWidth: false,
-    size: 10
+    size: '10'
   }
 }
 

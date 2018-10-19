@@ -2860,7 +2860,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                       onChange={[Function]}
                                       placeholder=""
                                       required={false}
-                                      size={10}
+                                      size="10"
                                       type="text"
                                       value=""
                                     >
@@ -2883,7 +2883,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         placeholder=""
                                         required={false}
                                         rightIconStateful={true}
-                                        size={10}
+                                        size="10"
                                         type="text"
                                         value="New Vault"
                                       >
@@ -2912,7 +2912,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             onFocus={[Function]}
                                             placeholder=""
                                             required={false}
-                                            size={10}
+                                            size="10"
                                             type="text"
                                             value="New Vault"
                                           >
@@ -2924,7 +2924,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                               onFocus={[Function]}
                                               placeholder=""
                                               required={false}
-                                              size={10}
+                                              size="10"
                                               type="text"
                                               value="New Vault"
                                             />
@@ -2966,7 +2966,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                 "fullWidth": false,
                                 "id": "2",
                                 "placeholder": "3 Letters",
-                                "size": 8,
+                                "size": "8",
                               }
                             }
                             title="Vault symbol"
@@ -2995,7 +2995,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                 id="2"
                                 name="vaultSymbol"
                                 placeholder="3 Letters"
-                                size={8}
+                                size="8"
                               >
                                 <Connect(ConnectedField)
                                   _reduxForm={
@@ -3243,7 +3243,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                   name="vaultSymbol"
                                   normalize={[Function]}
                                   placeholder="3 Letters"
-                                  size={8}
+                                  size="8"
                                 >
                                   <ConnectedField
                                     _reduxForm={
@@ -3569,7 +3569,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                     normalize={[Function]}
                                     placeholder="3 Letters"
                                     pristine={true}
-                                    size={8}
+                                    size="8"
                                     value="VLT"
                                   >
                                     <TextField
@@ -3680,7 +3680,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                       onChange={[Function]}
                                       placeholder="3 Letters"
                                       required={false}
-                                      size={8}
+                                      size="8"
                                       type="text"
                                       value=""
                                     >
@@ -3703,7 +3703,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                         placeholder="3 Letters"
                                         required={false}
                                         rightIconStateful={true}
-                                        size={8}
+                                        size="8"
                                         type="text"
                                         value="VLT"
                                       >
@@ -3732,7 +3732,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                             onFocus={[Function]}
                                             placeholder="3 Letters"
                                             required={false}
-                                            size={8}
+                                            size="8"
                                             type="text"
                                             value="VLT"
                                           >
@@ -3744,7 +3744,7 @@ exports[`CreateVaultModal component renders correctly 1`] = `
                                               onFocus={[Function]}
                                               placeholder="3 Letters"
                                               required={false}
-                                              size={8}
+                                              size="8"
                                               type="text"
                                               value="VLT"
                                             />
