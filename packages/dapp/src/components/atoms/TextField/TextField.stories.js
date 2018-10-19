@@ -1,5 +1,5 @@
 import '../../_settings/_base.scss'
-import { selectV2, withKnobs } from '@storybook/addon-knobs/react'
+import { select, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 import TextField from './TextField'
@@ -25,7 +25,7 @@ storiesOf('Atoms/TextField', module)
     <TextField
       {...props}
       meta={{
-        error: selectV2('State', options, options.noError),
+        error: select('State', options, options.noError),
         touched: true
       }}
     />

@@ -1,5 +1,5 @@
 import '../../_settings/_base.scss'
-import { selectV2, withKnobs } from '@storybook/addon-knobs/react'
+import { select, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import AccountItem, { ACCOUNT_ITEM_TYPES } from './AccountItem'
 import React from 'react'
@@ -14,7 +14,7 @@ storiesOf('Molecules/AccountItem', module)
   .add('default', () => (
     <AccountItem
       {...props}
-      appearance={selectV2(
+      appearance={select(
         'Item Appearance',
         ACCOUNT_ITEM_TYPES,
         ACCOUNT_ITEM_TYPES.SHORT
