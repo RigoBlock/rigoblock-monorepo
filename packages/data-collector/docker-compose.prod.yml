@@ -25,7 +25,8 @@ services:
     container_name: bull-data-collector
     environment:
       REDIS_HOST: redis
-      TELEGRAF_HOST: telegraf
+      COUCHDB_HOST: http://couchdb
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
     build:
       context: ../../
       dockerfile: ./packages/data-collector/Dockerfile
@@ -37,10 +38,10 @@ services:
   couchdb:
     image: couchdb:latest
     container_name: couchdb
-    port:
+    ports:
       - "5984:5984"
     expose:
-      - "5986:5986"
+      - "5986"
     env_file:
       - 'env.couchdb'
     volumes:

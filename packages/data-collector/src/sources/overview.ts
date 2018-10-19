@@ -25,7 +25,7 @@ export class TokenOverview extends HtmlResource {
         stats: this.githubStats
       }
     }
-    const browser = await launch()
+    const browser = await launch({ args: ['--no-sandbox'] })
     const page = await browser.newPage()
     await page.goto(`https://www.cryptocompare.com/coins/${symbol}/overview`)
     html = await page.content()

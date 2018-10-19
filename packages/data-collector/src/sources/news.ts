@@ -22,7 +22,7 @@ export class TokenNews extends HtmlResource {
     let response = await this.fetch(CRYPTO_NEWS_BASE_URL + this.symbol).then(
       res => res.json()
     )
-    this.browser = await launch()
+    this.browser = await launch({ args: ['--no-sandbox'] })
     if (!response.results.length) {
       return []
     }

@@ -33,7 +33,7 @@ export class Db {
   async createDb(dbName) {
     const dbExists = await this.exists(dbName)
     return dbExists
-      ? Promise.resolve(`Database already exists: ${dbName}`)
+      ? Promise.resolve(console.log(`Database already exists: ${dbName}`))
       : this.conn.db.create(dbName)
   }
 
@@ -60,6 +60,11 @@ export class Db {
     }
     const value = u(doc, data)
     return this.conn.use(dbName).insert({ _id: documentId, ...value })
+  }
+
+  async createIndex(dbName, indexDef) {
+    const db = this.conn.use(dbName)
+    return (db as any).createIndex(indexDef)
   }
 }
 
