@@ -1,5 +1,5 @@
 import * as moment from 'moment'
-import { CRYPTO_NEWS_BASE_URL } from '../constants'
+import { CRYPTO_PANIC_URL } from '../constants'
 import { HtmlResource } from './htmlResource'
 import { launch } from 'puppeteer'
 import tokensMap from '../tokensMap'
@@ -19,9 +19,7 @@ export class TokenNews extends HtmlResource {
     return [...this.news, ...tokenMarketNews]
   }
   private async fetchCryptoPanicNews() {
-    let response = await this.fetch(CRYPTO_NEWS_BASE_URL + this.symbol).then(
-      res => res.json()
-    )
+    let response = await this.fetchJSON(CRYPTO_PANIC_URL(this.symbol))
     this.browser = await launch({ args: ['--no-sandbox'] })
     if (!response.results.length) {
       return []
@@ -53,9 +51,7 @@ export class TokenNews extends HtmlResource {
     return this.news.push({ ...article, url: sourceUrl })
   }
   private async fetchTokenMarketNews() {
-    const html = await this.fetch(tokensMap[this.symbol].overviewUrl).then(
-      res => res.text()
-    )
+    const html = await this.fetchText(tokensMap[this.symbol].overviewUrl)
     this.$ = this.loadHTML(html)
     return this.$('div.about-section-wrapper table.asset-list-news td p')
       .toArray()

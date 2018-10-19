@@ -1,17 +1,14 @@
 import { HtmlResource } from './htmlResource'
+import { SOCIAL_URL, TOKENS_LIST_URL } from '../constants'
 
 export class TokenSocial extends HtmlResource {
   constructor() {
     super()
   }
   public async rip(symbol) {
-    const tokensList = await this.fetch(
-      'https://www.cryptocompare.com/api/data/coinlist/'
-    ).then(res => res.json())
+    const tokensList = await this.fetchJSON(TOKENS_LIST_URL)
     const tokenId = tokensList.Data[symbol].Id
-    const socialData = await this.fetch(
-      `https://www.cryptocompare.com/api/data/socialstats/?id=${tokenId}`
-    ).then(res => res.json())
+    const socialData = await this.fetchJSON(SOCIAL_URL(tokenId))
     const { Reddit, Twitter, Facebook } = socialData.Data
     return {
       facebook: Facebook,

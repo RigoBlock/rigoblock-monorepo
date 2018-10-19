@@ -10,6 +10,15 @@ export class HtmlResource {
     }
     return response
   }
+
+  public fetchJSON(url) {
+    return this.fetch(url).then(res => res.json())
+  }
+
+  public fetchText(url) {
+    return this.fetch(url).then(res => res.text())
+  }
+
   public loadHTML(html) {
     return cheerio.load(html)
   }
