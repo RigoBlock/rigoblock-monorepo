@@ -21,5 +21,5 @@ storiesOf('Molecules/Modal', module)
     </div>
   ))
   .add('default', () => (
-    <Modal Component={boolean('OPENED', true) ? dummyContent : null} />
+    <Modal Component={boolean('OPENED', true) ? dummyContent() : null} />
   ))

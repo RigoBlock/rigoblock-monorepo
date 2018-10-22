@@ -1,5 +1,5 @@
 import '../../_settings/_base.scss'
-import { selectV2, text, withKnobs } from '@storybook/addon-knobs/react'
+import { select, text, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import Icon, { ICON_SIZES } from './Icon'
 import React from 'react'
@@ -18,7 +18,7 @@ storiesOf('Atoms/Icon', module)
   ))
   .add('default', () => (
     <Icon
-      size={selectV2('Icon size', ICON_SIZES, ICON_SIZES.SMALL)}
+      size={select('Icon size', ICON_SIZES, ICON_SIZES.SMALL)}
       type={text('Icon type', 'help')}
     >
       Small Icon
@@ -26,7 +26,7 @@ storiesOf('Atoms/Icon', module)
   ))
   .add('with text', () => (
     <Icon
-      size={selectV2('Icon size', ICON_SIZES, ICON_SIZES.SMALL)}
+      size={select('Icon size', ICON_SIZES, ICON_SIZES.SMALL)}
       type={text('Icon type', 'help')}
       tooltipText={text('Icon text', 'I am a tooltip!')}
     >

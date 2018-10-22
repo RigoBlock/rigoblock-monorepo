@@ -1,13 +1,13 @@
 import { addDecorator } from '@storybook/react'
 import { withInfo } from '@storybook/addon-info'
-import { setOptions } from '@storybook/addon-options'
+import { withOptions } from '@storybook/addon-options'
 import '@storybook/addon-knobs/register'
 import '@storybook/addon-viewport/register'
 import '@storybook/addon-options/register'
 
-addDecorator((story, context) => withInfo('')(story)(context))
+addDecorator(withInfo)
 
-setOptions({
+withOptions({
   name: 'Rigoblock Dapp UI',
   url: '#',
   goFullScreen: false,

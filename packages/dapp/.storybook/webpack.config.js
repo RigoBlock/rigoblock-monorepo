@@ -2,6 +2,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(d.ts|js.map)$/,
+        use: 'null-loader'
+      },
+      {
         test: /\.scss$|\.css/,
         use: [
           require.resolve('style-loader'),
@@ -18,7 +22,6 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        exclude: /node_modules/,
         loader: require.resolve('svg-react-loader'),
         query: {
           xmlnsTest: /^xmlns.*$/

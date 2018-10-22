@@ -1,6 +1,7 @@
 import '../../_settings/_base.scss'
-import { number, text, withKnobs } from '@storybook/addon-knobs/react'
+import { BigNumber } from 'bignumber.js'
 import { storiesOf } from '@storybook/react'
+import { text, withKnobs } from '@storybook/addon-knobs/react'
 import ListItem from './ListItem'
 import React from 'react'
 
@@ -21,6 +22,6 @@ storiesOf('Molecules/ListItem', module)
     <ListItem
       itemSymbol={text('Item Symbol', 'VLT')}
       itemName={text('Item Name', 'Rocksolid Vault')}
-      itemValue={number('Item Value', 12489.51323)}
+      itemValue={text('Item Value', new BigNumber('12489.51323'))}
     />
   ))

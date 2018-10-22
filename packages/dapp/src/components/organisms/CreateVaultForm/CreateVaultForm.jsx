@@ -98,7 +98,7 @@ let CreateVaultForm = ({ accounts, formObject, dispatch, handleSubmit }) => {
         fieldProps={{
           id: '2',
           fullWidth: false,
-          size: 8,
+          size: '8',
           placeholder: '3 Letters'
         }}
       />
