@@ -2,9 +2,9 @@ influxdb:
   image: influxdb:latest
   container_name: influxdb
   ports:
-    - "8083:8083"
-    - "8086:8086"
-    - "8090:8090"
+    - "8083"
+    - "8086"
+    - "8090"
   env_file:
     - 'env.influxdb'
   volumes:
@@ -24,7 +24,7 @@ chronograf:
   image: chronograf:latest
   container_name: chronograf
   ports:
-    - "8888:8888"
+    - "8888"
   links:
     - influxdb
   command: ['chronograf', '--influxdb-url=http://influxdb:8086']
@@ -33,12 +33,12 @@ redis:
   image: redis:latest
   container_name: redis
   ports:
-    - "6379:6379"
+    - "6379"
 
 arena:
   image: vshjxyz/arena:latest
   container_name: arena
   ports:
-    - "4567:4567"
+    - "4567"
   volumes:
     - ./config/arena/arena.conf.json:/opt/arena/src/server/config/index.json:ro
