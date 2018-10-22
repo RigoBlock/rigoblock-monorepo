@@ -1,4 +1,6 @@
 import { HtmlResource } from './htmlResource'
+import { OVERVIEW_URL } from '../constants'
+import { launch } from 'puppeteer'
 import tokensMap from '../tokensMap'
 
 export class TokenOverview extends HtmlResource {
@@ -7,9 +9,9 @@ export class TokenOverview extends HtmlResource {
     super()
   }
   public async rip(symbol) {
-    const html = await this.fetch(tokensMap[symbol].overviewUrl)
+    let html = await this.fetchText(tokensMap[symbol].overviewUrl)
     this.$ = this.loadHTML(html)
-    return {
+    const overview = {
       whitepaper: this.whitePaperUrl,
       website: this.websiteUrl,
       status: this.status,
@@ -17,12 +19,19 @@ export class TokenOverview extends HtmlResource {
       team: this.team,
       countryOfOrigin: this.countryOfOrigin,
       tokensSaleDate: this.tokenSaleDate,
-      articles: this.articles,
       github: {
         url: this.githubUrl,
         stats: this.githubStats
       }
     }
+    const browser = await launch({ args: ['--no-sandbox'] })
+    const page = await browser.newPage()
+    await page.goto(OVERVIEW_URL(symbol))
+    html = await page.content()
+    browser.close()
+    this.$ = this.loadHTML(html)
+    const description = await this.$('div.coin-description p').text()
+    return { ...overview, description }
   }
   private get whitePaperUrl() {
     return this.$('a[title=Whitepaper]').attr('href')
@@ -67,16 +76,6 @@ export class TokenOverview extends HtmlResource {
     return this.$('div.dates-wrapper span')
       .toArray()
       .map(el => this.normalizeText(el.children.pop().data))
-  }
-  private get articles() {
-    return this.$('table.asset-list-research tr a')
-      .toArray()
-      .map(el => {
-        return {
-          name: this.normalizeText(el.children.pop().data),
-          url: el.attribs.href
-        }
-      })
   }
   private get githubUrl() {
     return this.$('div.technology-section-wrapper h3')

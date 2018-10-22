@@ -1,12 +1,13 @@
 {
   "name": "@rigoblock/data-collector",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Rigoblock data collector",
   "private": true,
   "main": "src/index.js",
   "scripts": {
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
+    "init:db": "node dist/initDatabase.js",
     "dev:debug": "node --inspect-brk -r ts-node/register src/index.ts",
     "build": "rm -rf dist/* && tsc --outDir './dist'",
     "test": "NODE_ENV=test node --trace-warnings node_modules/.bin/jest --env=node",
@@ -16,25 +17,30 @@
   "dependencies": {
     "bull": "^3.4.7",
     "bull-arena": "^2.5.0",
+    "nano": "^7.1.0",
     "pino": "^5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.55",
-    "@babel/plugin-proposal-class-properties": "^7.0.0-rc.1",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.0.0-beta.55",
     "@types/bull": "^3.3.19",
     "@types/cheerio": "^0.22.9",
     "@types/jest": "^23.3.1",
     "@types/pino": "^4.16.1",
+    "@types/puppeteer": "^1.9.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.4.2",
     "cheerio": "^1.0.0-rc.2",
     "eslint-plugin-typescript": "^0.12.0",
     "jest": "^23.4.2",
+    "moment": "^2.22.2",
     "node-fetch": "^2.2.0",
+    "puppeteer": "^1.9.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3",
-    "typescript-eslint-parser": "^18.0.0"
+    "typescript-eslint-parser": "^18.0.0",
+    "updeep": "^1.0.0"
   },
   "babel": {
     "presets": [

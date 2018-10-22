@@ -1,0 +1,269 @@
+{
+    "contract_name": "Owned",
+    "networks": {
+        "1": {
+            "solc_version": "0.4.24",
+            "source_tree_hash": "0xad9b5988349eb8bd2d801ccf5194463e9712f0e4f5af1435a88180ebcebcbe5d",
+            "optimizer_enabled": true,
+            "abi": [
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_new",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setOwner",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "owner",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "name": "old",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "name": "current",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "NewOwner",
+                    "type": "event"
+                }
+            ],
+            "bytecode": "0x608060405234801561001057600080fd5b5060008054600160a060020a031916331790556101bf806100326000396000f30060806040526004361061004b5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146100505780638da5cb5b14610080575b600080fd5b34801561005c57600080fd5b5061007e73ffffffffffffffffffffffffffffffffffffffff600435166100be565b005b34801561008c57600080fd5b50610095610177565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005473ffffffffffffffffffffffffffffffffffffffff1633146100e257600080fd5b73ffffffffffffffffffffffffffffffffffffffff8116151561010457600080fd5b600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b60005473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058207599a6453e5d7dfbb4fb222fba2f75e9dac42adbafbd4f3662d0c25b1f7df83c0029",
+            "runtime_bytecode": "0x60806040526004361061004b5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146100505780638da5cb5b14610080575b600080fd5b34801561005c57600080fd5b5061007e73ffffffffffffffffffffffffffffffffffffffff600435166100be565b005b34801561008c57600080fd5b50610095610177565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005473ffffffffffffffffffffffffffffffffffffffff1633146100e257600080fd5b73ffffffffffffffffffffffffffffffffffffffff8116151561010457600080fd5b600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b60005473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058207599a6453e5d7dfbb4fb222fba2f75e9dac42adbafbd4f3662d0c25b1f7df83c0029",
+            "updated_at": 1539683837304,
+            "source_map": "56:432:0:-;;;253:56;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;284:5:0;:18;;-1:-1:-1;;;;;;284:18:0;292:10;284:18;;;56:432;;;;;;",
+            "source_map_runtime": "56:432:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;315:171;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;315:171:0;;;;;;;;;78:20;;8:9:-1;5:2;;;30:1;27;20:12;5:2;78:20:0;;;;;;;;;;;;;;;;;;;;;;;315:171;223:5;;;;209:10;:19;201:28;;;;;;402:18;;;;;394:27;;;;;;431:5;:12;;;;;;;;;;;;;;458:21;;431:12;;467:5;;;458:21;;431:5;458:21;315:171;:::o;78:20::-;;;;;;:::o",
+            "sources": [
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
+            ]
+        },
+        "3": {
+            "solc_version": "0.4.24",
+            "source_tree_hash": "0xad9b5988349eb8bd2d801ccf5194463e9712f0e4f5af1435a88180ebcebcbe5d",
+            "optimizer_enabled": true,
+            "abi": [
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_new",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setOwner",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "owner",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "name": "old",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "name": "current",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "NewOwner",
+                    "type": "event"
+                }
+            ],
+            "bytecode": "0x608060405234801561001057600080fd5b5060008054600160a060020a031916331790556101bf806100326000396000f30060806040526004361061004b5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146100505780638da5cb5b14610080575b600080fd5b34801561005c57600080fd5b5061007e73ffffffffffffffffffffffffffffffffffffffff600435166100be565b005b34801561008c57600080fd5b50610095610177565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005473ffffffffffffffffffffffffffffffffffffffff1633146100e257600080fd5b73ffffffffffffffffffffffffffffffffffffffff8116151561010457600080fd5b600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b60005473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058207599a6453e5d7dfbb4fb222fba2f75e9dac42adbafbd4f3662d0c25b1f7df83c0029",
+            "runtime_bytecode": "0x60806040526004361061004b5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146100505780638da5cb5b14610080575b600080fd5b34801561005c57600080fd5b5061007e73ffffffffffffffffffffffffffffffffffffffff600435166100be565b005b34801561008c57600080fd5b50610095610177565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005473ffffffffffffffffffffffffffffffffffffffff1633146100e257600080fd5b73ffffffffffffffffffffffffffffffffffffffff8116151561010457600080fd5b600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b60005473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058207599a6453e5d7dfbb4fb222fba2f75e9dac42adbafbd4f3662d0c25b1f7df83c0029",
+            "updated_at": 1539344240162,
+            "source_map": "56:432:0:-;;;253:56;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;284:5:0;:18;;-1:-1:-1;;;;;;284:18:0;292:10;284:18;;;56:432;;;;;;",
+            "source_map_runtime": "56:432:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;315:171;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;315:171:0;;;;;;;;;78:20;;8:9:-1;5:2;;;30:1;27;20:12;5:2;78:20:0;;;;;;;;;;;;;;;;;;;;;;;315:171;223:5;;;;209:10;:19;201:28;;;;;;402:18;;;;;394:27;;;;;;431:5;:12;;;;;;;;;;;;;;458:21;;431:12;;467:5;;;458:21;;431:5;458:21;315:171;:::o;78:20::-;;;;;;:::o",
+            "sources": [
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
+            ]
+        },
+        "42": {
+            "solc_version": "0.4.24",
+            "source_tree_hash": "0xad9b5988349eb8bd2d801ccf5194463e9712f0e4f5af1435a88180ebcebcbe5d",
+            "optimizer_enabled": true,
+            "abi": [
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_new",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setOwner",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "owner",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "name": "old",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "name": "current",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "NewOwner",
+                    "type": "event"
+                }
+            ],
+            "bytecode": "0x608060405234801561001057600080fd5b5060008054600160a060020a031916331790556101bf806100326000396000f30060806040526004361061004b5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146100505780638da5cb5b14610080575b600080fd5b34801561005c57600080fd5b5061007e73ffffffffffffffffffffffffffffffffffffffff600435166100be565b005b34801561008c57600080fd5b50610095610177565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005473ffffffffffffffffffffffffffffffffffffffff1633146100e257600080fd5b73ffffffffffffffffffffffffffffffffffffffff8116151561010457600080fd5b600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b60005473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058207599a6453e5d7dfbb4fb222fba2f75e9dac42adbafbd4f3662d0c25b1f7df83c0029",
+            "runtime_bytecode": "0x60806040526004361061004b5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146100505780638da5cb5b14610080575b600080fd5b34801561005c57600080fd5b5061007e73ffffffffffffffffffffffffffffffffffffffff600435166100be565b005b34801561008c57600080fd5b50610095610177565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005473ffffffffffffffffffffffffffffffffffffffff1633146100e257600080fd5b73ffffffffffffffffffffffffffffffffffffffff8116151561010457600080fd5b600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b60005473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058207599a6453e5d7dfbb4fb222fba2f75e9dac42adbafbd4f3662d0c25b1f7df83c0029",
+            "updated_at": 1539344143926,
+            "source_map": "56:432:0:-;;;253:56;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;284:5:0;:18;;-1:-1:-1;;;;;;284:18:0;292:10;284:18;;;56:432;;;;;;",
+            "source_map_runtime": "56:432:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;315:171;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;315:171:0;;;;;;;;;78:20;;8:9:-1;5:2;;;30:1;27;20:12;5:2;78:20:0;;;;;;;;;;;;;;;;;;;;;;;315:171;223:5;;;;209:10;:19;201:28;;;;;;402:18;;;;;394:27;;;;;;431:5;:12;;;;;;;;;;;;;;458:21;;431:12;;467:5;;;458:21;;431:5;458:21;315:171;:::o;78:20::-;;;;;;:::o",
+            "sources": [
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
+            ]
+        },
+        "5777": {
+            "solc_version": "0.4.24",
+            "source_tree_hash": "0xad9b5988349eb8bd2d801ccf5194463e9712f0e4f5af1435a88180ebcebcbe5d",
+            "optimizer_enabled": true,
+            "abi": [
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_new",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setOwner",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "owner",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "name": "old",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "name": "current",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "NewOwner",
+                    "type": "event"
+                }
+            ],
+            "bytecode": "0x608060405234801561001057600080fd5b5060008054600160a060020a031916331790556101bf806100326000396000f30060806040526004361061004b5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146100505780638da5cb5b14610080575b600080fd5b34801561005c57600080fd5b5061007e73ffffffffffffffffffffffffffffffffffffffff600435166100be565b005b34801561008c57600080fd5b50610095610177565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005473ffffffffffffffffffffffffffffffffffffffff1633146100e257600080fd5b73ffffffffffffffffffffffffffffffffffffffff8116151561010457600080fd5b600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b60005473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058207599a6453e5d7dfbb4fb222fba2f75e9dac42adbafbd4f3662d0c25b1f7df83c0029",
+            "runtime_bytecode": "0x60806040526004361061004b5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146100505780638da5cb5b14610080575b600080fd5b34801561005c57600080fd5b5061007e73ffffffffffffffffffffffffffffffffffffffff600435166100be565b005b34801561008c57600080fd5b50610095610177565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005473ffffffffffffffffffffffffffffffffffffffff1633146100e257600080fd5b73ffffffffffffffffffffffffffffffffffffffff8116151561010457600080fd5b600080547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff83811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b60005473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058207599a6453e5d7dfbb4fb222fba2f75e9dac42adbafbd4f3662d0c25b1f7df83c0029",
+            "updated_at": 1539344052251,
+            "source_map": "56:432:0:-;;;253:56;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;284:5:0;:18;;-1:-1:-1;;;;;;284:18:0;292:10;284:18;;;56:432;;;;;;",
+            "source_map_runtime": "56:432:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;315:171;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;315:171:0;;;;;;;;;78:20;;8:9:-1;5:2;;;30:1;27;20:12;5:2;78:20:0;;;;;;;;;;;;;;;;;;;;;;;315:171;223:5;;;;209:10;:19;201:28;;;;;;402:18;;;;;394:27;;;;;;431:5;:12;;;;;;;;;;;;;;458:21;;431:12;;467:5;;;458:21;;431:5;458:21;315:171;:::o;78:20::-;;;;;;:::o",
+            "sources": [
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
+            ]
+        }
+    }
+}

@@ -1,0 +1,1111 @@
+{
+    "contract_name": "Inflation",
+    "networks": {
+        "1": {
+            "solc_version": "0.4.24",
+            "source_tree_hash": "0x8b0ad304389344c5fe5ea0073313dc89a72458f7ae7cc45ec841850b00b90977",
+            "optimizer_enabled": true,
+            "abi": [
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_group",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_inflationFactor",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setInflationFactor",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_newPeriod",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setPeriod",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_thePool",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "canWithdraw",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "rigoblockDao",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_minimum",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setMinimumRigo",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_newRigoblock",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setRigoblock",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_authority",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setAuthority",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "RIGOTOKENADDRESS",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "minimumRigo",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_thePool",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_reward",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "mintInflation",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "authority",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_group",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "getInflationFactor",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_pop",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setProofOfPerformance",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "proofOfPerformance",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "period",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "name": "_rigoTokenAddress",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_proofOfPerformance",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_authority",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                }
+            ],
+            "bytecode": "0x6080604052626ebe0060015534801561001757600080fd5b50604051606080610b0383398101604090815281516020830151919092015160008054600160a060020a03948516600160a060020a031991821617909155600580548216331790556003805493851693821693909317909255600480549390911692909116919091179055610a72806100916000396000f3006080604052600436106100da5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663020e0cdb81146100df5780630f3a9f651461011257806319262d301461012a5780633edd80c31461016c57806374bab550146101aa5780637802815c146101c25780637a9e5e4b146101f0578063a6c9c4431461021e578063bca2dfdb14610233578063be5ddb991461025a578063bf7e214f1461028b578063d410e0c2146102a0578063d9ed29aa146102ce578063e70eadc0146102fc578063ef78d4fd14610311575b600080fd5b3480156100eb57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516602435610326565b005b34801561011e57600080fd5b50610110600435610425565b34801561013657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff6004351661044e565b604080519115158252519081900360200190f35b34801561017857600080fd5b50610181610486565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b3480156101b657600080fd5b506101106004356104a2565b3480156101ce57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff600435166104cb565b3480156101fc57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610536565b34801561022a57600080fd5b506101816105a1565b34801561023f57600080fd5b506102486105bd565b60408051918252519081900360200190f35b34801561026657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff600435166024356105c3565b34801561029757600080fd5b506101816108cd565b3480156102ac57600080fd5b5061024873ffffffffffffffffffffffffffffffffffffffff600435166108e9565b3480156102da57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610911565b34801561030857600080fd5b5061018161097c565b34801561031d57600080fd5b50610248610998565b60055473ffffffffffffffffffffffffffffffffffffffff16331461034a57600080fd5b60048054604080517fdcb7a3e000000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff808716948201949094529051859390921691829163dcb7a3e0916024808301926020929190829003018186803b1580156103c357600080fd5b505afa1580156103d7573d6000803e3d6000fd5b505050506040513d60208110156103ed57600080fd5b505115156103fa57600080fd5b505073ffffffffffffffffffffffffffffffffffffffff909116600090815260076020526040902055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461044957600080fd5b600155565b73ffffffffffffffffffffffffffffffffffffffff81166000908152600660205260408120600301544210610481575060015b919050565b60055473ffffffffffffffffffffffffffffffffffffffff1681565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104c657600080fd5b600255565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104ef57600080fd5b600580547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461055a57600080fd5b600480547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60025481565b60035460009081908190819073ffffffffffffffffffffffffffffffffffffffff1633146105f057600080fd5b600054600254879173ffffffffffffffffffffffffffffffffffffffff1690816370a0823161061e8561099e565b6040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561069a57600080fd5b505afa1580156106ae573d6000803e3d6000fd5b505050506040513d60208110156106c457600080fd5b505110156106d157600080fd5b73ffffffffffffffffffffffffffffffffffffffff8816600090815260066020526040902060030154889042101561070857600080fd5b73ffffffffffffffffffffffffffffffffffffffff8916600090815260066020526040902042600282018190556001805490910160038301556004909101805490910190556064605f89020495506107608887610a34565b60005490955073ffffffffffffffffffffffffffffffffffffffff169350836379c6506861078d8b61099e565b886040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050600060405180830381600087803b15801561081357600080fd5b505af1158015610827573d6000803e3d6000fd5b5050600554604080517f79c6506800000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff9283166004820152602481018a9052905191881693506379c65068925060448082019260009290919082900301818387803b1580156108a657600080fd5b505af11580156108ba573d6000803e3d6000fd5b5060019c9b505050505050505050505050565b60045473ffffffffffffffffffffffffffffffffffffffff1681565b73ffffffffffffffffffffffffffffffffffffffff1660009081526007602052604090205490565b60055473ffffffffffffffffffffffffffffffffffffffff16331461093557600080fd5b600380547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60035473ffffffffffffffffffffffffffffffffffffffff1681565b60015481565b60008173ffffffffffffffffffffffffffffffffffffffff16638da5cb5b6040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b158015610a0257600080fd5b505afa158015610a16573d6000803e3d6000fd5b505050506040513d6020811015610a2c57600080fd5b505192915050565b600082821115610a4057fe5b509003905600a165627a7a72305820b00bb91f28f1b3a95b0084fa3b5ed9ad6403d5ebe682954ef6d2e704e53a23070029",
+            "runtime_bytecode": "0x6080604052600436106100da5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663020e0cdb81146100df5780630f3a9f651461011257806319262d301461012a5780633edd80c31461016c57806374bab550146101aa5780637802815c146101c25780637a9e5e4b146101f0578063a6c9c4431461021e578063bca2dfdb14610233578063be5ddb991461025a578063bf7e214f1461028b578063d410e0c2146102a0578063d9ed29aa146102ce578063e70eadc0146102fc578063ef78d4fd14610311575b600080fd5b3480156100eb57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516602435610326565b005b34801561011e57600080fd5b50610110600435610425565b34801561013657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff6004351661044e565b604080519115158252519081900360200190f35b34801561017857600080fd5b50610181610486565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b3480156101b657600080fd5b506101106004356104a2565b3480156101ce57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff600435166104cb565b3480156101fc57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610536565b34801561022a57600080fd5b506101816105a1565b34801561023f57600080fd5b506102486105bd565b60408051918252519081900360200190f35b34801561026657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff600435166024356105c3565b34801561029757600080fd5b506101816108cd565b3480156102ac57600080fd5b5061024873ffffffffffffffffffffffffffffffffffffffff600435166108e9565b3480156102da57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610911565b34801561030857600080fd5b5061018161097c565b34801561031d57600080fd5b50610248610998565b60055473ffffffffffffffffffffffffffffffffffffffff16331461034a57600080fd5b60048054604080517fdcb7a3e000000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff808716948201949094529051859390921691829163dcb7a3e0916024808301926020929190829003018186803b1580156103c357600080fd5b505afa1580156103d7573d6000803e3d6000fd5b505050506040513d60208110156103ed57600080fd5b505115156103fa57600080fd5b505073ffffffffffffffffffffffffffffffffffffffff909116600090815260076020526040902055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461044957600080fd5b600155565b73ffffffffffffffffffffffffffffffffffffffff81166000908152600660205260408120600301544210610481575060015b919050565b60055473ffffffffffffffffffffffffffffffffffffffff1681565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104c657600080fd5b600255565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104ef57600080fd5b600580547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461055a57600080fd5b600480547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60025481565b60035460009081908190819073ffffffffffffffffffffffffffffffffffffffff1633146105f057600080fd5b600054600254879173ffffffffffffffffffffffffffffffffffffffff1690816370a0823161061e8561099e565b6040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561069a57600080fd5b505afa1580156106ae573d6000803e3d6000fd5b505050506040513d60208110156106c457600080fd5b505110156106d157600080fd5b73ffffffffffffffffffffffffffffffffffffffff8816600090815260066020526040902060030154889042101561070857600080fd5b73ffffffffffffffffffffffffffffffffffffffff8916600090815260066020526040902042600282018190556001805490910160038301556004909101805490910190556064605f89020495506107608887610a34565b60005490955073ffffffffffffffffffffffffffffffffffffffff169350836379c6506861078d8b61099e565b886040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050600060405180830381600087803b15801561081357600080fd5b505af1158015610827573d6000803e3d6000fd5b5050600554604080517f79c6506800000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff9283166004820152602481018a9052905191881693506379c65068925060448082019260009290919082900301818387803b1580156108a657600080fd5b505af11580156108ba573d6000803e3d6000fd5b5060019c9b505050505050505050505050565b60045473ffffffffffffffffffffffffffffffffffffffff1681565b73ffffffffffffffffffffffffffffffffffffffff1660009081526007602052604090205490565b60055473ffffffffffffffffffffffffffffffffffffffff16331461093557600080fd5b600380547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60035473ffffffffffffffffffffffffffffffffffffffff1681565b60015481565b60008173ffffffffffffffffffffffffffffffffffffffff16638da5cb5b6040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b158015610a0257600080fd5b505afa158015610a16573d6000803e3d6000fd5b505050506040513d6020811015610a2c57600080fd5b505192915050565b600082821115610a4057fe5b509003905600a165627a7a72305820b00bb91f28f1b3a95b0084fa3b5ed9ad6403d5ebe682954ef6d2e704e53a23070029",
+            "updated_at": 1539683835154,
+            "source_map": "1120:5419:1:-;;;1235:8;1211:32;;2519:302;8:9:-1;5:2;;;30:1;27;20:12;5:2;2519:302:1;;;;;;;;;;;;;;;;;;;;;;;;;2661:16;:36;;-1:-1:-1;;;;;2661:36:1;;;-1:-1:-1;;;;;;2661:36:1;;;;;;;2707:12;:25;;;;2722:10;2707:25;;;2742:18;:40;;;;;;;;;;;;;;;2792:9;:22;;;;;;;;;;;;;;;;1120:5419;;;;;;",
+            "source_map_runtime": "1120:5419:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;3949:212;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;3949:212:1;;;;;;;;;;;5408:121;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5408:121:1;;;;;5738:181;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5738:181:1;;;;;;;;;;;;;;;;;;;;;;;;;1398:27;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1398:27:1;;;;;;;;;;;;;;;;;;;;;;;4295:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4295:127:1;;;;;4547:136;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4547:136:1;;;;;;;4798:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4798:127:1;;;;;;;1173:31;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1173:31:1;;;;1297:26;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1297:26:1;;;;;;;;;;;;;;;;;;;;3081:678;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;3081:678:1;;;;;;;;;1368:24;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1368:24:1;;;;6061:146;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;6061:146:1;;;;;;;5061:133;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5061:133:1;;;;;;;1329:33;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1329:33:1;;;;1211:32;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1211:32:1;;;;3949:212;2088:12;;;;2074:10;:26;2066:35;;;;;;2314:9;;;2342:35;;;;;;2314:9;2342:35;;;;;;;;;;;;4087:6;;2314:9;;;;;;2342:25;;:35;;;;;;;;;;;;;;2314:9;2342:35;;;5:2:-1;;;;30:1;27;20:12;5:2;2342:35:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;2342:35:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;2342:35:1;2334:44;;;;;;;;-1:-1:-1;;4109:14:1;;;;;;;;:6;:14;;;;;:45;3949:212::o;5408:121::-;2088:12;;;;2074:10;:26;2066:35;;;;;;5503:6;:19;5408:121::o;5738:181::-;5847:20;;;5816:4;5847:20;;;:10;:20;;;;;:28;;;5840:3;:35;5836:77;;-1:-1:-1;5898:4:1;5836:77;5738:181;;;:::o;1398:27::-;;;;;;:::o;4295:127::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4393:11;:22;4295:127::o;4547:136::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4648:12;:28;;;;;;;;;;;;;;;4547:136::o;4798:127::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4896:9;:22;;;;;;;;;;;;;;;4798:127::o;1173:31::-;;;;;;:::o;1297:26::-;;;;:::o;3081:678::-;2189:18;;3269:4;;;;;;;;2189:18;;2175:10;:32;2167:41;;;;;;1881:19;1913:16;1994:11;;3212:8;;1913:16;;;;1948:19;1968:21;3212:8;1968:12;:21::i;:::-;1948:42;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1948:42:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1948:42:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;1948:42:1;:57;;1940:66;;;;;;2466:20;;;;;;;:10;:20;;;;;:28;;;3242:8;;2459:3;:35;;2451:44;;;;;;3289:20;;;;;;;:10;:20;;;;;3322:3;3289:30;;;:36;;;3372:6;;;3366:12;;;3335:28;;;:43;3390:26;;;;3388:28;;;;;;;3458:3;3453:2;3443:12;;:18;3426:35;;3527:24;3535:7;3544:6;3527:7;:24::i;:::-;3593:16;;3501:50;;-1:-1:-1;3593:16:1;;;-1:-1:-1;3593:16:1;3620:19;3640:22;3653:8;3640:12;:22::i;:::-;3664:6;3620:51;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;3620:51:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;;3701:12:1;;3681:50;;;;;;:19;3701:12;;;3681:50;;;;;;;;;;;;:19;;;;-1:-1:-1;3681:19:1;;-1:-1:-1;3681:50:1;;;;;3701:12;;3681:50;;;;;;;;3701:12;3681:19;:50;;;5:2:-1;;;;30:1;27;20:12;5:2;3681:50:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;3748:4:1;;3081:678;-1:-1:-1;;;;;;;;;;;;3081:678:1:o;1368:24::-;;;;;;:::o;6061:146::-;6174:14;;6144:7;6174:14;;;:6;:14;;;;;:26;;6061:146::o;5061:133::-;2088:12;;;;2074:10;:26;2066:35;;;;;;5162:18;:25;;;;;;;;;;;;;;;5061:133::o;1329:33::-;;;;;;:::o;1211:32::-;;;;:::o;6400:137::-;6478:7;6514;6508:20;;;:22;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;6508:22:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;6508:22:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;6508:22:1;;6400:137;-1:-1:-1;;6400:137:1:o;435:124:9:-;497:7;523:6;;;;516:14;;;;-1:-1:-1;547:5:9;;;435:124::o",
+            "sources": [
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/Inflation/Inflation.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/Inflation/InflationFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/RigoToken/RigoToken.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/RigoToken/RigoTokenFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20Face.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
+            ]
+        },
+        "3": {
+            "solc_version": "0.4.24",
+            "source_tree_hash": "0x8b0ad304389344c5fe5ea0073313dc89a72458f7ae7cc45ec841850b00b90977",
+            "optimizer_enabled": true,
+            "abi": [
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_group",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_inflationFactor",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setInflationFactor",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_newPeriod",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setPeriod",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_thePool",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "canWithdraw",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "rigoblockDao",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_minimum",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setMinimumRigo",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_newRigoblock",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setRigoblock",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_authority",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setAuthority",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "RIGOTOKENADDRESS",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "minimumRigo",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_thePool",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_reward",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "mintInflation",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "authority",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_group",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "getInflationFactor",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_pop",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setProofOfPerformance",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "proofOfPerformance",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "period",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "name": "_rigoTokenAddress",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_proofOfPerformance",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_authority",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                }
+            ],
+            "bytecode": "0x6080604052626ebe0060015534801561001757600080fd5b50604051606080610b0383398101604090815281516020830151919092015160008054600160a060020a03948516600160a060020a031991821617909155600580548216331790556003805493851693821693909317909255600480549390911692909116919091179055610a72806100916000396000f3006080604052600436106100da5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663020e0cdb81146100df5780630f3a9f651461011257806319262d301461012a5780633edd80c31461016c57806374bab550146101aa5780637802815c146101c25780637a9e5e4b146101f0578063a6c9c4431461021e578063bca2dfdb14610233578063be5ddb991461025a578063bf7e214f1461028b578063d410e0c2146102a0578063d9ed29aa146102ce578063e70eadc0146102fc578063ef78d4fd14610311575b600080fd5b3480156100eb57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516602435610326565b005b34801561011e57600080fd5b50610110600435610425565b34801561013657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff6004351661044e565b604080519115158252519081900360200190f35b34801561017857600080fd5b50610181610486565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b3480156101b657600080fd5b506101106004356104a2565b3480156101ce57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff600435166104cb565b3480156101fc57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610536565b34801561022a57600080fd5b506101816105a1565b34801561023f57600080fd5b506102486105bd565b60408051918252519081900360200190f35b34801561026657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff600435166024356105c3565b34801561029757600080fd5b506101816108cd565b3480156102ac57600080fd5b5061024873ffffffffffffffffffffffffffffffffffffffff600435166108e9565b3480156102da57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610911565b34801561030857600080fd5b5061018161097c565b34801561031d57600080fd5b50610248610998565b60055473ffffffffffffffffffffffffffffffffffffffff16331461034a57600080fd5b60048054604080517fdcb7a3e000000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff808716948201949094529051859390921691829163dcb7a3e0916024808301926020929190829003018186803b1580156103c357600080fd5b505afa1580156103d7573d6000803e3d6000fd5b505050506040513d60208110156103ed57600080fd5b505115156103fa57600080fd5b505073ffffffffffffffffffffffffffffffffffffffff909116600090815260076020526040902055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461044957600080fd5b600155565b73ffffffffffffffffffffffffffffffffffffffff81166000908152600660205260408120600301544210610481575060015b919050565b60055473ffffffffffffffffffffffffffffffffffffffff1681565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104c657600080fd5b600255565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104ef57600080fd5b600580547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461055a57600080fd5b600480547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60025481565b60035460009081908190819073ffffffffffffffffffffffffffffffffffffffff1633146105f057600080fd5b600054600254879173ffffffffffffffffffffffffffffffffffffffff1690816370a0823161061e8561099e565b6040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561069a57600080fd5b505afa1580156106ae573d6000803e3d6000fd5b505050506040513d60208110156106c457600080fd5b505110156106d157600080fd5b73ffffffffffffffffffffffffffffffffffffffff8816600090815260066020526040902060030154889042101561070857600080fd5b73ffffffffffffffffffffffffffffffffffffffff8916600090815260066020526040902042600282018190556001805490910160038301556004909101805490910190556064605f89020495506107608887610a34565b60005490955073ffffffffffffffffffffffffffffffffffffffff169350836379c6506861078d8b61099e565b886040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050600060405180830381600087803b15801561081357600080fd5b505af1158015610827573d6000803e3d6000fd5b5050600554604080517f79c6506800000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff9283166004820152602481018a9052905191881693506379c65068925060448082019260009290919082900301818387803b1580156108a657600080fd5b505af11580156108ba573d6000803e3d6000fd5b5060019c9b505050505050505050505050565b60045473ffffffffffffffffffffffffffffffffffffffff1681565b73ffffffffffffffffffffffffffffffffffffffff1660009081526007602052604090205490565b60055473ffffffffffffffffffffffffffffffffffffffff16331461093557600080fd5b600380547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60035473ffffffffffffffffffffffffffffffffffffffff1681565b60015481565b60008173ffffffffffffffffffffffffffffffffffffffff16638da5cb5b6040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b158015610a0257600080fd5b505afa158015610a16573d6000803e3d6000fd5b505050506040513d6020811015610a2c57600080fd5b505192915050565b600082821115610a4057fe5b509003905600a165627a7a72305820b00bb91f28f1b3a95b0084fa3b5ed9ad6403d5ebe682954ef6d2e704e53a23070029",
+            "runtime_bytecode": "0x6080604052600436106100da5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663020e0cdb81146100df5780630f3a9f651461011257806319262d301461012a5780633edd80c31461016c57806374bab550146101aa5780637802815c146101c25780637a9e5e4b146101f0578063a6c9c4431461021e578063bca2dfdb14610233578063be5ddb991461025a578063bf7e214f1461028b578063d410e0c2146102a0578063d9ed29aa146102ce578063e70eadc0146102fc578063ef78d4fd14610311575b600080fd5b3480156100eb57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516602435610326565b005b34801561011e57600080fd5b50610110600435610425565b34801561013657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff6004351661044e565b604080519115158252519081900360200190f35b34801561017857600080fd5b50610181610486565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b3480156101b657600080fd5b506101106004356104a2565b3480156101ce57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff600435166104cb565b3480156101fc57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610536565b34801561022a57600080fd5b506101816105a1565b34801561023f57600080fd5b506102486105bd565b60408051918252519081900360200190f35b34801561026657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff600435166024356105c3565b34801561029757600080fd5b506101816108cd565b3480156102ac57600080fd5b5061024873ffffffffffffffffffffffffffffffffffffffff600435166108e9565b3480156102da57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610911565b34801561030857600080fd5b5061018161097c565b34801561031d57600080fd5b50610248610998565b60055473ffffffffffffffffffffffffffffffffffffffff16331461034a57600080fd5b60048054604080517fdcb7a3e000000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff808716948201949094529051859390921691829163dcb7a3e0916024808301926020929190829003018186803b1580156103c357600080fd5b505afa1580156103d7573d6000803e3d6000fd5b505050506040513d60208110156103ed57600080fd5b505115156103fa57600080fd5b505073ffffffffffffffffffffffffffffffffffffffff909116600090815260076020526040902055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461044957600080fd5b600155565b73ffffffffffffffffffffffffffffffffffffffff81166000908152600660205260408120600301544210610481575060015b919050565b60055473ffffffffffffffffffffffffffffffffffffffff1681565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104c657600080fd5b600255565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104ef57600080fd5b600580547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461055a57600080fd5b600480547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60025481565b60035460009081908190819073ffffffffffffffffffffffffffffffffffffffff1633146105f057600080fd5b600054600254879173ffffffffffffffffffffffffffffffffffffffff1690816370a0823161061e8561099e565b6040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561069a57600080fd5b505afa1580156106ae573d6000803e3d6000fd5b505050506040513d60208110156106c457600080fd5b505110156106d157600080fd5b73ffffffffffffffffffffffffffffffffffffffff8816600090815260066020526040902060030154889042101561070857600080fd5b73ffffffffffffffffffffffffffffffffffffffff8916600090815260066020526040902042600282018190556001805490910160038301556004909101805490910190556064605f89020495506107608887610a34565b60005490955073ffffffffffffffffffffffffffffffffffffffff169350836379c6506861078d8b61099e565b886040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050600060405180830381600087803b15801561081357600080fd5b505af1158015610827573d6000803e3d6000fd5b5050600554604080517f79c6506800000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff9283166004820152602481018a9052905191881693506379c65068925060448082019260009290919082900301818387803b1580156108a657600080fd5b505af11580156108ba573d6000803e3d6000fd5b5060019c9b505050505050505050505050565b60045473ffffffffffffffffffffffffffffffffffffffff1681565b73ffffffffffffffffffffffffffffffffffffffff1660009081526007602052604090205490565b60055473ffffffffffffffffffffffffffffffffffffffff16331461093557600080fd5b600380547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60035473ffffffffffffffffffffffffffffffffffffffff1681565b60015481565b60008173ffffffffffffffffffffffffffffffffffffffff16638da5cb5b6040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b158015610a0257600080fd5b505afa158015610a16573d6000803e3d6000fd5b505050506040513d6020811015610a2c57600080fd5b505192915050565b600082821115610a4057fe5b509003905600a165627a7a72305820b00bb91f28f1b3a95b0084fa3b5ed9ad6403d5ebe682954ef6d2e704e53a23070029",
+            "updated_at": 1539344237995,
+            "source_map": "1120:5419:1:-;;;1235:8;1211:32;;2519:302;8:9:-1;5:2;;;30:1;27;20:12;5:2;2519:302:1;;;;;;;;;;;;;;;;;;;;;;;;;2661:16;:36;;-1:-1:-1;;;;;2661:36:1;;;-1:-1:-1;;;;;;2661:36:1;;;;;;;2707:12;:25;;;;2722:10;2707:25;;;2742:18;:40;;;;;;;;;;;;;;;2792:9;:22;;;;;;;;;;;;;;;;1120:5419;;;;;;",
+            "source_map_runtime": "1120:5419:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;3949:212;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;3949:212:1;;;;;;;;;;;5408:121;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5408:121:1;;;;;5738:181;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5738:181:1;;;;;;;;;;;;;;;;;;;;;;;;;1398:27;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1398:27:1;;;;;;;;;;;;;;;;;;;;;;;4295:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4295:127:1;;;;;4547:136;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4547:136:1;;;;;;;4798:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4798:127:1;;;;;;;1173:31;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1173:31:1;;;;1297:26;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1297:26:1;;;;;;;;;;;;;;;;;;;;3081:678;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;3081:678:1;;;;;;;;;1368:24;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1368:24:1;;;;6061:146;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;6061:146:1;;;;;;;5061:133;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5061:133:1;;;;;;;1329:33;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1329:33:1;;;;1211:32;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1211:32:1;;;;3949:212;2088:12;;;;2074:10;:26;2066:35;;;;;;2314:9;;;2342:35;;;;;;2314:9;2342:35;;;;;;;;;;;;4087:6;;2314:9;;;;;;2342:25;;:35;;;;;;;;;;;;;;2314:9;2342:35;;;5:2:-1;;;;30:1;27;20:12;5:2;2342:35:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;2342:35:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;2342:35:1;2334:44;;;;;;;;-1:-1:-1;;4109:14:1;;;;;;;;:6;:14;;;;;:45;3949:212::o;5408:121::-;2088:12;;;;2074:10;:26;2066:35;;;;;;5503:6;:19;5408:121::o;5738:181::-;5847:20;;;5816:4;5847:20;;;:10;:20;;;;;:28;;;5840:3;:35;5836:77;;-1:-1:-1;5898:4:1;5836:77;5738:181;;;:::o;1398:27::-;;;;;;:::o;4295:127::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4393:11;:22;4295:127::o;4547:136::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4648:12;:28;;;;;;;;;;;;;;;4547:136::o;4798:127::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4896:9;:22;;;;;;;;;;;;;;;4798:127::o;1173:31::-;;;;;;:::o;1297:26::-;;;;:::o;3081:678::-;2189:18;;3269:4;;;;;;;;2189:18;;2175:10;:32;2167:41;;;;;;1881:19;1913:16;1994:11;;3212:8;;1913:16;;;;1948:19;1968:21;3212:8;1968:12;:21::i;:::-;1948:42;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1948:42:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1948:42:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;1948:42:1;:57;;1940:66;;;;;;2466:20;;;;;;;:10;:20;;;;;:28;;;3242:8;;2459:3;:35;;2451:44;;;;;;3289:20;;;;;;;:10;:20;;;;;3322:3;3289:30;;;:36;;;3372:6;;;3366:12;;;3335:28;;;:43;3390:26;;;;3388:28;;;;;;;3458:3;3453:2;3443:12;;:18;3426:35;;3527:24;3535:7;3544:6;3527:7;:24::i;:::-;3593:16;;3501:50;;-1:-1:-1;3593:16:1;;;-1:-1:-1;3593:16:1;3620:19;3640:22;3653:8;3640:12;:22::i;:::-;3664:6;3620:51;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;3620:51:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;;3701:12:1;;3681:50;;;;;;:19;3701:12;;;3681:50;;;;;;;;;;;;:19;;;;-1:-1:-1;3681:19:1;;-1:-1:-1;3681:50:1;;;;;3701:12;;3681:50;;;;;;;;3701:12;3681:19;:50;;;5:2:-1;;;;30:1;27;20:12;5:2;3681:50:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;3748:4:1;;3081:678;-1:-1:-1;;;;;;;;;;;;3081:678:1:o;1368:24::-;;;;;;:::o;6061:146::-;6174:14;;6144:7;6174:14;;;:6;:14;;;;;:26;;6061:146::o;5061:133::-;2088:12;;;;2074:10;:26;2066:35;;;;;;5162:18;:25;;;;;;;;;;;;;;;5061:133::o;1329:33::-;;;;;;:::o;1211:32::-;;;;:::o;6400:137::-;6478:7;6514;6508:20;;;:22;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;6508:22:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;6508:22:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;6508:22:1;;6400:137;-1:-1:-1;;6400:137:1:o;435:124:9:-;497:7;523:6;;;;516:14;;;;-1:-1:-1;547:5:9;;;435:124::o",
+            "sources": [
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/Inflation/Inflation.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/Inflation/InflationFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/RigoToken/RigoToken.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/RigoToken/RigoTokenFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20Face.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
+            ]
+        },
+        "42": {
+            "solc_version": "0.4.24",
+            "source_tree_hash": "0x8b0ad304389344c5fe5ea0073313dc89a72458f7ae7cc45ec841850b00b90977",
+            "optimizer_enabled": true,
+            "abi": [
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_group",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_inflationFactor",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setInflationFactor",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_newPeriod",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setPeriod",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_thePool",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "canWithdraw",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "rigoblockDao",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_minimum",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setMinimumRigo",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_newRigoblock",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setRigoblock",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_authority",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setAuthority",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "RIGOTOKENADDRESS",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "minimumRigo",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_thePool",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_reward",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "mintInflation",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "authority",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_group",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "getInflationFactor",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_pop",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setProofOfPerformance",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "proofOfPerformance",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "period",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "name": "_rigoTokenAddress",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_proofOfPerformance",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_authority",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                }
+            ],
+            "bytecode": "0x6080604052626ebe0060015534801561001757600080fd5b50604051606080610b0383398101604090815281516020830151919092015160008054600160a060020a03948516600160a060020a031991821617909155600580548216331790556003805493851693821693909317909255600480549390911692909116919091179055610a72806100916000396000f3006080604052600436106100da5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663020e0cdb81146100df5780630f3a9f651461011257806319262d301461012a5780633edd80c31461016c57806374bab550146101aa5780637802815c146101c25780637a9e5e4b146101f0578063a6c9c4431461021e578063bca2dfdb14610233578063be5ddb991461025a578063bf7e214f1461028b578063d410e0c2146102a0578063d9ed29aa146102ce578063e70eadc0146102fc578063ef78d4fd14610311575b600080fd5b3480156100eb57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516602435610326565b005b34801561011e57600080fd5b50610110600435610425565b34801561013657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff6004351661044e565b604080519115158252519081900360200190f35b34801561017857600080fd5b50610181610486565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b3480156101b657600080fd5b506101106004356104a2565b3480156101ce57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff600435166104cb565b3480156101fc57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610536565b34801561022a57600080fd5b506101816105a1565b34801561023f57600080fd5b506102486105bd565b60408051918252519081900360200190f35b34801561026657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff600435166024356105c3565b34801561029757600080fd5b506101816108cd565b3480156102ac57600080fd5b5061024873ffffffffffffffffffffffffffffffffffffffff600435166108e9565b3480156102da57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610911565b34801561030857600080fd5b5061018161097c565b34801561031d57600080fd5b50610248610998565b60055473ffffffffffffffffffffffffffffffffffffffff16331461034a57600080fd5b60048054604080517fdcb7a3e000000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff808716948201949094529051859390921691829163dcb7a3e0916024808301926020929190829003018186803b1580156103c357600080fd5b505afa1580156103d7573d6000803e3d6000fd5b505050506040513d60208110156103ed57600080fd5b505115156103fa57600080fd5b505073ffffffffffffffffffffffffffffffffffffffff909116600090815260076020526040902055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461044957600080fd5b600155565b73ffffffffffffffffffffffffffffffffffffffff81166000908152600660205260408120600301544210610481575060015b919050565b60055473ffffffffffffffffffffffffffffffffffffffff1681565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104c657600080fd5b600255565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104ef57600080fd5b600580547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461055a57600080fd5b600480547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60025481565b60035460009081908190819073ffffffffffffffffffffffffffffffffffffffff1633146105f057600080fd5b600054600254879173ffffffffffffffffffffffffffffffffffffffff1690816370a0823161061e8561099e565b6040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561069a57600080fd5b505afa1580156106ae573d6000803e3d6000fd5b505050506040513d60208110156106c457600080fd5b505110156106d157600080fd5b73ffffffffffffffffffffffffffffffffffffffff8816600090815260066020526040902060030154889042101561070857600080fd5b73ffffffffffffffffffffffffffffffffffffffff8916600090815260066020526040902042600282018190556001805490910160038301556004909101805490910190556064605f89020495506107608887610a34565b60005490955073ffffffffffffffffffffffffffffffffffffffff169350836379c6506861078d8b61099e565b886040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050600060405180830381600087803b15801561081357600080fd5b505af1158015610827573d6000803e3d6000fd5b5050600554604080517f79c6506800000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff9283166004820152602481018a9052905191881693506379c65068925060448082019260009290919082900301818387803b1580156108a657600080fd5b505af11580156108ba573d6000803e3d6000fd5b5060019c9b505050505050505050505050565b60045473ffffffffffffffffffffffffffffffffffffffff1681565b73ffffffffffffffffffffffffffffffffffffffff1660009081526007602052604090205490565b60055473ffffffffffffffffffffffffffffffffffffffff16331461093557600080fd5b600380547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60035473ffffffffffffffffffffffffffffffffffffffff1681565b60015481565b60008173ffffffffffffffffffffffffffffffffffffffff16638da5cb5b6040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b158015610a0257600080fd5b505afa158015610a16573d6000803e3d6000fd5b505050506040513d6020811015610a2c57600080fd5b505192915050565b600082821115610a4057fe5b509003905600a165627a7a72305820b00bb91f28f1b3a95b0084fa3b5ed9ad6403d5ebe682954ef6d2e704e53a23070029",
+            "runtime_bytecode": "0x6080604052600436106100da5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663020e0cdb81146100df5780630f3a9f651461011257806319262d301461012a5780633edd80c31461016c57806374bab550146101aa5780637802815c146101c25780637a9e5e4b146101f0578063a6c9c4431461021e578063bca2dfdb14610233578063be5ddb991461025a578063bf7e214f1461028b578063d410e0c2146102a0578063d9ed29aa146102ce578063e70eadc0146102fc578063ef78d4fd14610311575b600080fd5b3480156100eb57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516602435610326565b005b34801561011e57600080fd5b50610110600435610425565b34801561013657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff6004351661044e565b604080519115158252519081900360200190f35b34801561017857600080fd5b50610181610486565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b3480156101b657600080fd5b506101106004356104a2565b3480156101ce57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff600435166104cb565b3480156101fc57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610536565b34801561022a57600080fd5b506101816105a1565b34801561023f57600080fd5b506102486105bd565b60408051918252519081900360200190f35b34801561026657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff600435166024356105c3565b34801561029757600080fd5b506101816108cd565b3480156102ac57600080fd5b5061024873ffffffffffffffffffffffffffffffffffffffff600435166108e9565b3480156102da57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610911565b34801561030857600080fd5b5061018161097c565b34801561031d57600080fd5b50610248610998565b60055473ffffffffffffffffffffffffffffffffffffffff16331461034a57600080fd5b60048054604080517fdcb7a3e000000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff808716948201949094529051859390921691829163dcb7a3e0916024808301926020929190829003018186803b1580156103c357600080fd5b505afa1580156103d7573d6000803e3d6000fd5b505050506040513d60208110156103ed57600080fd5b505115156103fa57600080fd5b505073ffffffffffffffffffffffffffffffffffffffff909116600090815260076020526040902055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461044957600080fd5b600155565b73ffffffffffffffffffffffffffffffffffffffff81166000908152600660205260408120600301544210610481575060015b919050565b60055473ffffffffffffffffffffffffffffffffffffffff1681565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104c657600080fd5b600255565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104ef57600080fd5b600580547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461055a57600080fd5b600480547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60025481565b60035460009081908190819073ffffffffffffffffffffffffffffffffffffffff1633146105f057600080fd5b600054600254879173ffffffffffffffffffffffffffffffffffffffff1690816370a0823161061e8561099e565b6040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561069a57600080fd5b505afa1580156106ae573d6000803e3d6000fd5b505050506040513d60208110156106c457600080fd5b505110156106d157600080fd5b73ffffffffffffffffffffffffffffffffffffffff8816600090815260066020526040902060030154889042101561070857600080fd5b73ffffffffffffffffffffffffffffffffffffffff8916600090815260066020526040902042600282018190556001805490910160038301556004909101805490910190556064605f89020495506107608887610a34565b60005490955073ffffffffffffffffffffffffffffffffffffffff169350836379c6506861078d8b61099e565b886040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050600060405180830381600087803b15801561081357600080fd5b505af1158015610827573d6000803e3d6000fd5b5050600554604080517f79c6506800000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff9283166004820152602481018a9052905191881693506379c65068925060448082019260009290919082900301818387803b1580156108a657600080fd5b505af11580156108ba573d6000803e3d6000fd5b5060019c9b505050505050505050505050565b60045473ffffffffffffffffffffffffffffffffffffffff1681565b73ffffffffffffffffffffffffffffffffffffffff1660009081526007602052604090205490565b60055473ffffffffffffffffffffffffffffffffffffffff16331461093557600080fd5b600380547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60035473ffffffffffffffffffffffffffffffffffffffff1681565b60015481565b60008173ffffffffffffffffffffffffffffffffffffffff16638da5cb5b6040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b158015610a0257600080fd5b505afa158015610a16573d6000803e3d6000fd5b505050506040513d6020811015610a2c57600080fd5b505192915050565b600082821115610a4057fe5b509003905600a165627a7a72305820b00bb91f28f1b3a95b0084fa3b5ed9ad6403d5ebe682954ef6d2e704e53a23070029",
+            "updated_at": 1539344141855,
+            "source_map": "1120:5419:1:-;;;1235:8;1211:32;;2519:302;8:9:-1;5:2;;;30:1;27;20:12;5:2;2519:302:1;;;;;;;;;;;;;;;;;;;;;;;;;2661:16;:36;;-1:-1:-1;;;;;2661:36:1;;;-1:-1:-1;;;;;;2661:36:1;;;;;;;2707:12;:25;;;;2722:10;2707:25;;;2742:18;:40;;;;;;;;;;;;;;;2792:9;:22;;;;;;;;;;;;;;;;1120:5419;;;;;;",
+            "source_map_runtime": "1120:5419:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;3949:212;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;3949:212:1;;;;;;;;;;;5408:121;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5408:121:1;;;;;5738:181;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5738:181:1;;;;;;;;;;;;;;;;;;;;;;;;;1398:27;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1398:27:1;;;;;;;;;;;;;;;;;;;;;;;4295:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4295:127:1;;;;;4547:136;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4547:136:1;;;;;;;4798:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4798:127:1;;;;;;;1173:31;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1173:31:1;;;;1297:26;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1297:26:1;;;;;;;;;;;;;;;;;;;;3081:678;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;3081:678:1;;;;;;;;;1368:24;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1368:24:1;;;;6061:146;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;6061:146:1;;;;;;;5061:133;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5061:133:1;;;;;;;1329:33;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1329:33:1;;;;1211:32;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1211:32:1;;;;3949:212;2088:12;;;;2074:10;:26;2066:35;;;;;;2314:9;;;2342:35;;;;;;2314:9;2342:35;;;;;;;;;;;;4087:6;;2314:9;;;;;;2342:25;;:35;;;;;;;;;;;;;;2314:9;2342:35;;;5:2:-1;;;;30:1;27;20:12;5:2;2342:35:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;2342:35:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;2342:35:1;2334:44;;;;;;;;-1:-1:-1;;4109:14:1;;;;;;;;:6;:14;;;;;:45;3949:212::o;5408:121::-;2088:12;;;;2074:10;:26;2066:35;;;;;;5503:6;:19;5408:121::o;5738:181::-;5847:20;;;5816:4;5847:20;;;:10;:20;;;;;:28;;;5840:3;:35;5836:77;;-1:-1:-1;5898:4:1;5836:77;5738:181;;;:::o;1398:27::-;;;;;;:::o;4295:127::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4393:11;:22;4295:127::o;4547:136::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4648:12;:28;;;;;;;;;;;;;;;4547:136::o;4798:127::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4896:9;:22;;;;;;;;;;;;;;;4798:127::o;1173:31::-;;;;;;:::o;1297:26::-;;;;:::o;3081:678::-;2189:18;;3269:4;;;;;;;;2189:18;;2175:10;:32;2167:41;;;;;;1881:19;1913:16;1994:11;;3212:8;;1913:16;;;;1948:19;1968:21;3212:8;1968:12;:21::i;:::-;1948:42;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1948:42:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1948:42:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;1948:42:1;:57;;1940:66;;;;;;2466:20;;;;;;;:10;:20;;;;;:28;;;3242:8;;2459:3;:35;;2451:44;;;;;;3289:20;;;;;;;:10;:20;;;;;3322:3;3289:30;;;:36;;;3372:6;;;3366:12;;;3335:28;;;:43;3390:26;;;;3388:28;;;;;;;3458:3;3453:2;3443:12;;:18;3426:35;;3527:24;3535:7;3544:6;3527:7;:24::i;:::-;3593:16;;3501:50;;-1:-1:-1;3593:16:1;;;-1:-1:-1;3593:16:1;3620:19;3640:22;3653:8;3640:12;:22::i;:::-;3664:6;3620:51;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;3620:51:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;;3701:12:1;;3681:50;;;;;;:19;3701:12;;;3681:50;;;;;;;;;;;;:19;;;;-1:-1:-1;3681:19:1;;-1:-1:-1;3681:50:1;;;;;3701:12;;3681:50;;;;;;;;3701:12;3681:19;:50;;;5:2:-1;;;;30:1;27;20:12;5:2;3681:50:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;3748:4:1;;3081:678;-1:-1:-1;;;;;;;;;;;;3081:678:1:o;1368:24::-;;;;;;:::o;6061:146::-;6174:14;;6144:7;6174:14;;;:6;:14;;;;;:26;;6061:146::o;5061:133::-;2088:12;;;;2074:10;:26;2066:35;;;;;;5162:18;:25;;;;;;;;;;;;;;;5061:133::o;1329:33::-;;;;;;:::o;1211:32::-;;;;:::o;6400:137::-;6478:7;6514;6508:20;;;:22;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;6508:22:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;6508:22:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;6508:22:1;;6400:137;-1:-1:-1;;6400:137:1:o;435:124:9:-;497:7;523:6;;;;516:14;;;;-1:-1:-1;547:5:9;;;435:124::o",
+            "sources": [
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/Inflation/Inflation.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/Inflation/InflationFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/RigoToken/RigoToken.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/RigoToken/RigoTokenFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20Face.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
+            ]
+        },
+        "5777": {
+            "solc_version": "0.4.24",
+            "source_tree_hash": "0x8b0ad304389344c5fe5ea0073313dc89a72458f7ae7cc45ec841850b00b90977",
+            "optimizer_enabled": true,
+            "abi": [
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_group",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_inflationFactor",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setInflationFactor",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_newPeriod",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setPeriod",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_thePool",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "canWithdraw",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "rigoblockDao",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_minimum",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setMinimumRigo",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_newRigoblock",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setRigoblock",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_authority",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setAuthority",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "RIGOTOKENADDRESS",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "minimumRigo",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_thePool",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_reward",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "mintInflation",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "authority",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_group",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "getInflationFactor",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_pop",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setProofOfPerformance",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "proofOfPerformance",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "period",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "name": "_rigoTokenAddress",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_proofOfPerformance",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_authority",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                }
+            ],
+            "bytecode": "0x6080604052626ebe0060015534801561001757600080fd5b50604051606080610b0383398101604090815281516020830151919092015160008054600160a060020a03948516600160a060020a031991821617909155600580548216331790556003805493851693821693909317909255600480549390911692909116919091179055610a72806100916000396000f3006080604052600436106100da5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663020e0cdb81146100df5780630f3a9f651461011257806319262d301461012a5780633edd80c31461016c57806374bab550146101aa5780637802815c146101c25780637a9e5e4b146101f0578063a6c9c4431461021e578063bca2dfdb14610233578063be5ddb991461025a578063bf7e214f1461028b578063d410e0c2146102a0578063d9ed29aa146102ce578063e70eadc0146102fc578063ef78d4fd14610311575b600080fd5b3480156100eb57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516602435610326565b005b34801561011e57600080fd5b50610110600435610425565b34801561013657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff6004351661044e565b604080519115158252519081900360200190f35b34801561017857600080fd5b50610181610486565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b3480156101b657600080fd5b506101106004356104a2565b3480156101ce57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff600435166104cb565b3480156101fc57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610536565b34801561022a57600080fd5b506101816105a1565b34801561023f57600080fd5b506102486105bd565b60408051918252519081900360200190f35b34801561026657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff600435166024356105c3565b34801561029757600080fd5b506101816108cd565b3480156102ac57600080fd5b5061024873ffffffffffffffffffffffffffffffffffffffff600435166108e9565b3480156102da57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610911565b34801561030857600080fd5b5061018161097c565b34801561031d57600080fd5b50610248610998565b60055473ffffffffffffffffffffffffffffffffffffffff16331461034a57600080fd5b60048054604080517fdcb7a3e000000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff808716948201949094529051859390921691829163dcb7a3e0916024808301926020929190829003018186803b1580156103c357600080fd5b505afa1580156103d7573d6000803e3d6000fd5b505050506040513d60208110156103ed57600080fd5b505115156103fa57600080fd5b505073ffffffffffffffffffffffffffffffffffffffff909116600090815260076020526040902055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461044957600080fd5b600155565b73ffffffffffffffffffffffffffffffffffffffff81166000908152600660205260408120600301544210610481575060015b919050565b60055473ffffffffffffffffffffffffffffffffffffffff1681565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104c657600080fd5b600255565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104ef57600080fd5b600580547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461055a57600080fd5b600480547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60025481565b60035460009081908190819073ffffffffffffffffffffffffffffffffffffffff1633146105f057600080fd5b600054600254879173ffffffffffffffffffffffffffffffffffffffff1690816370a0823161061e8561099e565b6040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561069a57600080fd5b505afa1580156106ae573d6000803e3d6000fd5b505050506040513d60208110156106c457600080fd5b505110156106d157600080fd5b73ffffffffffffffffffffffffffffffffffffffff8816600090815260066020526040902060030154889042101561070857600080fd5b73ffffffffffffffffffffffffffffffffffffffff8916600090815260066020526040902042600282018190556001805490910160038301556004909101805490910190556064605f89020495506107608887610a34565b60005490955073ffffffffffffffffffffffffffffffffffffffff169350836379c6506861078d8b61099e565b886040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050600060405180830381600087803b15801561081357600080fd5b505af1158015610827573d6000803e3d6000fd5b5050600554604080517f79c6506800000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff9283166004820152602481018a9052905191881693506379c65068925060448082019260009290919082900301818387803b1580156108a657600080fd5b505af11580156108ba573d6000803e3d6000fd5b5060019c9b505050505050505050505050565b60045473ffffffffffffffffffffffffffffffffffffffff1681565b73ffffffffffffffffffffffffffffffffffffffff1660009081526007602052604090205490565b60055473ffffffffffffffffffffffffffffffffffffffff16331461093557600080fd5b600380547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60035473ffffffffffffffffffffffffffffffffffffffff1681565b60015481565b60008173ffffffffffffffffffffffffffffffffffffffff16638da5cb5b6040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b158015610a0257600080fd5b505afa158015610a16573d6000803e3d6000fd5b505050506040513d6020811015610a2c57600080fd5b505192915050565b600082821115610a4057fe5b509003905600a165627a7a72305820b00bb91f28f1b3a95b0084fa3b5ed9ad6403d5ebe682954ef6d2e704e53a23070029",
+            "runtime_bytecode": "0x6080604052600436106100da5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663020e0cdb81146100df5780630f3a9f651461011257806319262d301461012a5780633edd80c31461016c57806374bab550146101aa5780637802815c146101c25780637a9e5e4b146101f0578063a6c9c4431461021e578063bca2dfdb14610233578063be5ddb991461025a578063bf7e214f1461028b578063d410e0c2146102a0578063d9ed29aa146102ce578063e70eadc0146102fc578063ef78d4fd14610311575b600080fd5b3480156100eb57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516602435610326565b005b34801561011e57600080fd5b50610110600435610425565b34801561013657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff6004351661044e565b604080519115158252519081900360200190f35b34801561017857600080fd5b50610181610486565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b3480156101b657600080fd5b506101106004356104a2565b3480156101ce57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff600435166104cb565b3480156101fc57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610536565b34801561022a57600080fd5b506101816105a1565b34801561023f57600080fd5b506102486105bd565b60408051918252519081900360200190f35b34801561026657600080fd5b5061015873ffffffffffffffffffffffffffffffffffffffff600435166024356105c3565b34801561029757600080fd5b506101816108cd565b3480156102ac57600080fd5b5061024873ffffffffffffffffffffffffffffffffffffffff600435166108e9565b3480156102da57600080fd5b5061011073ffffffffffffffffffffffffffffffffffffffff60043516610911565b34801561030857600080fd5b5061018161097c565b34801561031d57600080fd5b50610248610998565b60055473ffffffffffffffffffffffffffffffffffffffff16331461034a57600080fd5b60048054604080517fdcb7a3e000000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff808716948201949094529051859390921691829163dcb7a3e0916024808301926020929190829003018186803b1580156103c357600080fd5b505afa1580156103d7573d6000803e3d6000fd5b505050506040513d60208110156103ed57600080fd5b505115156103fa57600080fd5b505073ffffffffffffffffffffffffffffffffffffffff909116600090815260076020526040902055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461044957600080fd5b600155565b73ffffffffffffffffffffffffffffffffffffffff81166000908152600660205260408120600301544210610481575060015b919050565b60055473ffffffffffffffffffffffffffffffffffffffff1681565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104c657600080fd5b600255565b60055473ffffffffffffffffffffffffffffffffffffffff1633146104ef57600080fd5b600580547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60055473ffffffffffffffffffffffffffffffffffffffff16331461055a57600080fd5b600480547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60025481565b60035460009081908190819073ffffffffffffffffffffffffffffffffffffffff1633146105f057600080fd5b600054600254879173ffffffffffffffffffffffffffffffffffffffff1690816370a0823161061e8561099e565b6040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561069a57600080fd5b505afa1580156106ae573d6000803e3d6000fd5b505050506040513d60208110156106c457600080fd5b505110156106d157600080fd5b73ffffffffffffffffffffffffffffffffffffffff8816600090815260066020526040902060030154889042101561070857600080fd5b73ffffffffffffffffffffffffffffffffffffffff8916600090815260066020526040902042600282018190556001805490910160038301556004909101805490910190556064605f89020495506107608887610a34565b60005490955073ffffffffffffffffffffffffffffffffffffffff169350836379c6506861078d8b61099e565b886040518363ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200182815260200192505050600060405180830381600087803b15801561081357600080fd5b505af1158015610827573d6000803e3d6000fd5b5050600554604080517f79c6506800000000000000000000000000000000000000000000000000000000815273ffffffffffffffffffffffffffffffffffffffff9283166004820152602481018a9052905191881693506379c65068925060448082019260009290919082900301818387803b1580156108a657600080fd5b505af11580156108ba573d6000803e3d6000fd5b5060019c9b505050505050505050505050565b60045473ffffffffffffffffffffffffffffffffffffffff1681565b73ffffffffffffffffffffffffffffffffffffffff1660009081526007602052604090205490565b60055473ffffffffffffffffffffffffffffffffffffffff16331461093557600080fd5b600380547fffffffffffffffffffffffff00000000000000000000000000000000000000001673ffffffffffffffffffffffffffffffffffffffff92909216919091179055565b60035473ffffffffffffffffffffffffffffffffffffffff1681565b60015481565b60008173ffffffffffffffffffffffffffffffffffffffff16638da5cb5b6040518163ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040160206040518083038186803b158015610a0257600080fd5b505afa158015610a16573d6000803e3d6000fd5b505050506040513d6020811015610a2c57600080fd5b505192915050565b600082821115610a4057fe5b509003905600a165627a7a72305820b00bb91f28f1b3a95b0084fa3b5ed9ad6403d5ebe682954ef6d2e704e53a23070029",
+            "updated_at": 1539344049699,
+            "source_map": "1120:5419:1:-;;;1235:8;1211:32;;2519:302;8:9:-1;5:2;;;30:1;27;20:12;5:2;2519:302:1;;;;;;;;;;;;;;;;;;;;;;;;;2661:16;:36;;-1:-1:-1;;;;;2661:36:1;;;-1:-1:-1;;;;;;2661:36:1;;;;;;;2707:12;:25;;;;2722:10;2707:25;;;2742:18;:40;;;;;;;;;;;;;;;2792:9;:22;;;;;;;;;;;;;;;;1120:5419;;;;;;",
+            "source_map_runtime": "1120:5419:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;3949:212;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;3949:212:1;;;;;;;;;;;5408:121;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5408:121:1;;;;;5738:181;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5738:181:1;;;;;;;;;;;;;;;;;;;;;;;;;1398:27;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1398:27:1;;;;;;;;;;;;;;;;;;;;;;;4295:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4295:127:1;;;;;4547:136;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4547:136:1;;;;;;;4798:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;4798:127:1;;;;;;;1173:31;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1173:31:1;;;;1297:26;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1297:26:1;;;;;;;;;;;;;;;;;;;;3081:678;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;3081:678:1;;;;;;;;;1368:24;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1368:24:1;;;;6061:146;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;6061:146:1;;;;;;;5061:133;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;5061:133:1;;;;;;;1329:33;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1329:33:1;;;;1211:32;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1211:32:1;;;;3949:212;2088:12;;;;2074:10;:26;2066:35;;;;;;2314:9;;;2342:35;;;;;;2314:9;2342:35;;;;;;;;;;;;4087:6;;2314:9;;;;;;2342:25;;:35;;;;;;;;;;;;;;2314:9;2342:35;;;5:2:-1;;;;30:1;27;20:12;5:2;2342:35:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;2342:35:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;2342:35:1;2334:44;;;;;;;;-1:-1:-1;;4109:14:1;;;;;;;;:6;:14;;;;;:45;3949:212::o;5408:121::-;2088:12;;;;2074:10;:26;2066:35;;;;;;5503:6;:19;5408:121::o;5738:181::-;5847:20;;;5816:4;5847:20;;;:10;:20;;;;;:28;;;5840:3;:35;5836:77;;-1:-1:-1;5898:4:1;5836:77;5738:181;;;:::o;1398:27::-;;;;;;:::o;4295:127::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4393:11;:22;4295:127::o;4547:136::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4648:12;:28;;;;;;;;;;;;;;;4547:136::o;4798:127::-;2088:12;;;;2074:10;:26;2066:35;;;;;;4896:9;:22;;;;;;;;;;;;;;;4798:127::o;1173:31::-;;;;;;:::o;1297:26::-;;;;:::o;3081:678::-;2189:18;;3269:4;;;;;;;;2189:18;;2175:10;:32;2167:41;;;;;;1881:19;1913:16;1994:11;;3212:8;;1913:16;;;;1948:19;1968:21;3212:8;1968:12;:21::i;:::-;1948:42;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1948:42:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1948:42:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;1948:42:1;:57;;1940:66;;;;;;2466:20;;;;;;;:10;:20;;;;;:28;;;3242:8;;2459:3;:35;;2451:44;;;;;;3289:20;;;;;;;:10;:20;;;;;3322:3;3289:30;;;:36;;;3372:6;;;3366:12;;;3335:28;;;:43;3390:26;;;;3388:28;;;;;;;3458:3;3453:2;3443:12;;:18;3426:35;;3527:24;3535:7;3544:6;3527:7;:24::i;:::-;3593:16;;3501:50;;-1:-1:-1;3593:16:1;;;-1:-1:-1;3593:16:1;3620:19;3640:22;3653:8;3640:12;:22::i;:::-;3664:6;3620:51;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;3620:51:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;;3701:12:1;;3681:50;;;;;;:19;3701:12;;;3681:50;;;;;;;;;;;;:19;;;;-1:-1:-1;3681:19:1;;-1:-1:-1;3681:50:1;;;;;3701:12;;3681:50;;;;;;;;3701:12;3681:19;:50;;;5:2:-1;;;;30:1;27;20:12;5:2;3681:50:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;3748:4:1;;3081:678;-1:-1:-1;;;;;;;;;;;;3081:678:1:o;1368:24::-;;;;;;:::o;6061:146::-;6174:14;;6144:7;6174:14;;;:6;:14;;;;;:26;;6061:146::o;5061:133::-;2088:12;;;;2074:10;:26;2066:35;;;;;;5162:18;:25;;;;;;;;;;;;;;;5061:133::o;1329:33::-;;;;;;:::o;1211:32::-;;;;:::o;6400:137::-;6478:7;6514;6508:20;;;:22;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;6508:22:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;6508:22:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;6508:22:1;;6400:137;-1:-1:-1;;6400:137:1:o;435:124:9:-;497:7;523:6;;;;516:14;;;;-1:-1:-1;547:5:9;;;435:124::o",
+            "sources": [
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/Inflation/Inflation.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/Inflation/InflationFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/RigoToken/RigoToken.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/rigoToken/RigoToken/RigoTokenFace.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20Face.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol",
+                "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
+            ],
+            "address": "0xd5d9e7d7bc8c690855d94e11f85e641108f61a50",
+            "constructor_args": "0x0000000000000000000000001fb4c7f7197ef339ae4125aeec9406a6788bb065000000000000000000000000c5abe31f6637cc62f37865f23764f32176b7c5400000000000000000000000007e6957630956f2b5ecc3f16e65a28c26032b1a59"
+        }
+    }
+}

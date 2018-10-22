@@ -1,5 +1,7 @@
-import dummyTask from './dummyTask'
+import fetchInfo from './fetchInfo'
+import fetchNews from './fetchNews'
 
 export default {
-  dummyTask
+  fetchInfo,
+  fetchNews
 }
