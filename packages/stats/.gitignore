@@ -2,3 +2,4 @@ influxdb-data
 node_modules
 dist
 config/traefik/acme.json
+env.influxdb

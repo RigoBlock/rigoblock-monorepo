@@ -4,8 +4,8 @@ services:
     image: traefik:1.7.0-rc4
     restart: always
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     expose:
       - "8080"
     networks:
@@ -28,18 +28,29 @@ services:
     container_name: influxdb
     expose:
       - "8083"
-      - "8086"
       - "8090"
+    ports:
+      - "8086"
     networks:
       - stats
     env_file:
       - 'env.influxdb'
     volumes:
       - /stats/data/influxdb:/var/lib/influxdb
+      - ./config/influxdb/:/etc/influxdb/
+    labels:
+      traefik.backend: "influx"
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host:${INFLUXDB_URI}"
+      traefik.docker.network: "stats_stats"
+      traefik.port: "8086"
 
   telegraf:
     image: telegraf:latest
     container_name: telegraf
+    environment:
+      TELEGRAF_USERNAME: ${TELEGRAF_USERNAME}
+      TELEGRAF_PASSWORD: ${TELEGRAF_PASSWORD}
     expose:
       - "8125"
     networks:
