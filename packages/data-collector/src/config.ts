@@ -4,7 +4,6 @@ export type ConfigEntry = {
   handlerName: string
   description: string
   cronExpression: string
-  delay?: number
   initialData?: object
 }
 
@@ -16,7 +15,7 @@ const conf: Config = {
   'fetch-info-ZRX': {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
+    cronExpression: '5 * * * * *',
     initialData: {
       symbol: tokensMap.ZRX.symbol
     }
@@ -24,8 +23,7 @@ const conf: Config = {
   'fetch-info-OMG': {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
-    delay: 300000,
+    cronExpression: '10 * * * * *',
     initialData: {
       symbol: tokensMap.OMG.symbol
     }
@@ -33,8 +31,7 @@ const conf: Config = {
   'fetch-info-SAN': {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
-    delay: 600000,
+    cronExpression: '15 * * * * *',
     initialData: {
       symbol: tokensMap.SAN.symbol
     }
@@ -42,8 +39,7 @@ const conf: Config = {
   'fetch-info-EDO': {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
-    delay: 900000,
+    cronExpression: '20 * * * * *',
     initialData: {
       symbol: tokensMap.EDO.symbol
     }
@@ -51,8 +47,7 @@ const conf: Config = {
   'fetch-info-GNT': {
     handlerName: 'fetchInfo',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
-    delay: 1200000,
+    cronExpression: '25 * * * * *',
     initialData: {
       symbol: tokensMap.GNT.symbol
     }
@@ -60,8 +55,7 @@ const conf: Config = {
   'fetch-news-ZRX': {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
-    delay: 1500000,
+    cronExpression: '30 * * * * *',
     initialData: {
       symbol: tokensMap.ZRX.symbol
     }
@@ -69,8 +63,7 @@ const conf: Config = {
   'fetch-news-OMG': {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
-    delay: 1800000,
+    cronExpression: '35 * * * * *',
     initialData: {
       symbol: tokensMap.OMG.symbol
     }
@@ -78,8 +71,7 @@ const conf: Config = {
   'fetch-news-GNT': {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
-    delay: 2100000,
+    cronExpression: '40 * * * * *',
     initialData: {
       symbol: tokensMap.GNT.symbol
     }
@@ -87,8 +79,7 @@ const conf: Config = {
   'fetch-news-SAN': {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
-    delay: 2400000,
+    cronExpression: '45 * * * * *',
     initialData: {
       symbol: tokensMap.SAN.symbol
     }
@@ -96,8 +87,7 @@ const conf: Config = {
   'fetch-news-EDO': {
     handlerName: 'fetchNews',
     description: 'Fetches token data and saves to the DB',
-    cronExpression: '*/5 * * * *',
-    delay: 2700000,
+    cronExpression: '50 * * * * *',
     initialData: {
       symbol: tokensMap.EDO.symbol
     }

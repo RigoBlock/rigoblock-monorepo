@@ -7,7 +7,6 @@ export default (
   name: string,
   handlerName: string,
   cronExpression: string,
-  delay: number = 0,
   initialData: object = {}
 ) => {
   const config: Queue.QueueOptions = {
@@ -37,7 +36,6 @@ export default (
 
   queue.add(initialData, {
     timeout: 1000 * 60 * 5,
-    delay,
     repeat: { cron: cronExpression }
   })
 
