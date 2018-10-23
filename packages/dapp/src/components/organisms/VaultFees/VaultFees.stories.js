@@ -2,7 +2,7 @@ import '../../_settings/_base.scss'
 import { BigNumber } from 'bignumber.js'
 import { INVESTOR, MANAGER } from '../../../constants/user'
 import { MemoryRouter } from 'react-router-dom'
-import { selectV2, withKnobs } from '@storybook/addon-knobs/react'
+import { select, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 import VaultFees from './VaultFees'
@@ -31,6 +31,6 @@ storiesOf('Organisms/VaultFees', module)
   .add('default', () => (
     <VaultFees
       vault={vault}
-      userType={selectV2('User type', userTypes, userTypes.Investor)}
+      userType={select('User type', userTypes, userTypes.Investor)}
     />
   ))

@@ -42,7 +42,7 @@ TextField.propTypes = {
   type: PropTypes.string,
   required: PropTypes.bool,
   fullWidth: PropTypes.bool,
-  size: PropTypes.number,
+  size: PropTypes.string,
   input: PropTypes.object,
   meta: PropTypes.object,
   placeholder: PropTypes.string
@@ -52,7 +52,7 @@ TextField.defaultProps = {
   type: 'text',
   required: false,
   fullWidth: true,
-  size: 10,
+  size: '10',
   value: '',
   placeholder: '',
   onChange: () => {},

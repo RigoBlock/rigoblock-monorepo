@@ -3,7 +3,7 @@ import * as ROUTES from '../../../constants/routes'
 import { INVESTOR, MANAGER } from '../../../constants/user'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { selectV2, withKnobs } from '@storybook/addon-knobs/react'
+import { select, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 import VaultPanel from './VaultPanel'
@@ -24,13 +24,13 @@ const getState = () => ({
   ...{
     routing: {
       location: {
-        pathname: selectV2('url', vaultUrls, vaultUrls.firstVault)
+        pathname: select('url', vaultUrls, vaultUrls.firstVault)
       }
     },
     preferences: {
       currentAccount: '0x242B2Dd21e7E1a2b2516d0A3a06b58e2D9BF9196',
       timezone: '+02:00',
-      type: selectV2('userType', userTypes, userTypes.Investor)
+      type: select('userType', userTypes, userTypes.Investor)
     }
   }
 })

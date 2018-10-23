@@ -16,7 +16,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
       Object {
         "fullWidth": false,
         "id": "testTextField",
-        "size": 10,
+        "size": "10",
       }
     }
     title="Vault name"
@@ -30,7 +30,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
         Object {
           "fullWidth": false,
           "id": "testTextField",
-          "size": 10,
+          "size": "10",
         }
       }
       forceUnregisterOnUnmount={false}
@@ -93,7 +93,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
           Object {
             "fullWidth": false,
             "id": "testTextField",
-            "size": 10,
+            "size": "10",
           }
         }
         focus={[Function]}
@@ -173,7 +173,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
             Object {
               "fullWidth": false,
               "id": "testTextField",
-              "size": 10,
+              "size": "10",
             }
           }
           form="storyForm"
@@ -251,7 +251,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
               fullWidth={false}
               id="testTextField"
               name="vaultName"
-              size={10}
+              size="10"
             >
               <Connect(ConnectedField)
                 _reduxForm={
@@ -299,7 +299,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                     "fieldProps": Object {
                       "fullWidth": false,
                       "id": "testTextField",
-                      "size": 10,
+                      "size": "10",
                     },
                     "focus": [Function],
                     "forceUnregisterOnUnmount": false,
@@ -360,7 +360,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                 id="testTextField"
                 name="vaultName"
                 normalize={[Function]}
-                size={10}
+                size="10"
               >
                 <ConnectedField
                   _reduxForm={
@@ -408,7 +408,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                       "fieldProps": Object {
                         "fullWidth": false,
                         "id": "testTextField",
-                        "size": 10,
+                        "size": "10",
                       },
                       "focus": [Function],
                       "forceUnregisterOnUnmount": false,
@@ -473,7 +473,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                   name="vaultName"
                   normalize={[Function]}
                   pristine={true}
-                  size={10}
+                  size="10"
                 >
                   <TextField
                     fullWidth={false}
@@ -512,7 +512,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                     onChange={[Function]}
                     placeholder=""
                     required={false}
-                    size={10}
+                    size="10"
                     type="text"
                     value=""
                   >
@@ -535,7 +535,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                       placeholder=""
                       required={false}
                       rightIconStateful={true}
-                      size={10}
+                      size="10"
                       type="text"
                       value=""
                     >
@@ -564,7 +564,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                           onFocus={[Function]}
                           placeholder=""
                           required={false}
-                          size={10}
+                          size="10"
                           type="text"
                           value=""
                         >
@@ -576,7 +576,7 @@ exports[`TextFieldWithTitle component renders correctly 1`] = `
                             onFocus={[Function]}
                             placeholder=""
                             required={false}
-                            size={10}
+                            size="10"
                             type="text"
                             value=""
                           />

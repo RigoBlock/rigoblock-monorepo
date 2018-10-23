@@ -60,7 +60,7 @@ storiesOf('Molecules/TextFieldWithTitle', module)
       fieldProps={{
         id: 'testTextField',
         fullWidth: false,
-        size: text('text size', 15),
+        size: text('text size', '15'),
         placeholder: text('text field placeholder', 'Click me')
       }}
     />

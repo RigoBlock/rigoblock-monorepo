@@ -1,6 +1,6 @@
 import '../../_settings/_base.scss'
 import { BigNumber } from 'bignumber.js'
-import { number, selectV2, withKnobs } from '@storybook/addon-knobs/react'
+import { select, text, withKnobs } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import ItemValue, { ITEM_VALUE_SIZES } from './ItemValue'
 import React from 'react'
@@ -20,17 +20,13 @@ storiesOf('Atoms/ItemValue', module)
   ))
   .add('default', () => (
     <ItemValue
-      itemValue={number('Item value', new BigNumber('12489.51354'))}
-      valueSize={selectV2(
-        'Value size',
-        ITEM_VALUE_SIZES,
-        ITEM_VALUE_SIZES.SMALL
-      )}
+      itemValue={text('Item value', new BigNumber('12489.51354'))}
+      valueSize={select('Value size', ITEM_VALUE_SIZES, ITEM_VALUE_SIZES.SMALL)}
     />
   ))
   .add('growth', () => (
     <ItemValue
-      growth={number('Growth', new BigNumber('0.25423'))}
-      currencyGrowth={number('Currency growth', new BigNumber('2.32'))}
+      growth={text('Growth', new BigNumber('0.25423'))}
+      currencyGrowth={text('Currency growth', new BigNumber('2.32'))}
     />
   ))
