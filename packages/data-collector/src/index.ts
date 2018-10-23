@@ -10,7 +10,6 @@ const queues = Object.keys(config).map(queueName => {
     queueName,
     queueConf.handlerName,
     queueConf.cronExpression,
-    queueConf.delay,
     queueConf.initialData
   )
 })

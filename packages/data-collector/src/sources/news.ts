@@ -20,10 +20,10 @@ export class TokenNews extends HtmlResource {
   }
   private async fetchCryptoPanicNews() {
     let response = await this.fetchJSON(CRYPTO_PANIC_URL(this.symbol))
-    this.browser = await launch({ args: ['--no-sandbox'] })
     if (!response.results.length) {
       return []
     }
+    this.browser = await launch({ args: ['--no-sandbox'] })
     const promiseChain = response.results
       .map(res => ({
         url: res.url,
