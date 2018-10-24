@@ -5,26 +5,26 @@ const c = require('chalk')
 const deploy = require('./deploy')
 
 const script = async () => {
-  const { contractName } = await inquirer.prompt([
+  let selectedNetwork
+  const { network } = await inquirer.prompt([
     {
-      type: 'input',
-      name: 'contractName',
-      message: 'Insert the name of the contract that needs to be deployed.'
-    }
-  ])
-  let { network } = await inquirer.prompt([
-    {
-      type: 'input',
+      type: 'list',
       name: 'network',
-      message:
-        'Select the network to deploy to (mainnet, ropsten, kovan, localhost).'
+      message: 'Select the network.',
+      choices: ['mainnet', 'ropsten', 'kovan', 'ganache', 'custom']
     }
   ])
-  network = network.trim().toLowerCase()
-  if (!NETWORKS[network]) {
-    return logger.error(c.red('Please enter a valid network.'))
+  selectedNetwork = NETWORKS[network]
+  if (network === 'custom') {
+    const { customUrl } = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'customUrl',
+        message: 'Insert the custom url where you want to deploy.'
+      }
+    ])
+    selectedNetwork = customUrl
   }
-  const selectedNetwork = NETWORKS[network]
   const { account } = await inquirer.prompt([
     {
       type: 'input',
@@ -32,15 +32,24 @@ const script = async () => {
       message: 'Insert the account you wish to deploy with.'
     }
   ])
+  const { contractName } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'contractName',
+      message: 'Insert the name of the contract.'
+    }
+  ])
   let { contractArgs } = await inquirer.prompt([
     {
       type: 'input',
       name: 'contractArgs',
-      message: 'Insert any required arguments for the contract.'
+      message:
+        'Insert any required arguments for the contract, comma separated.',
+      filter: input => input.split(',').map(el => el.trim()),
+      default: []
     }
   ])
-  contractArgs = contractArgs || []
-  if (selectedNetwork === NETWORKS.localhost) {
+  if (selectedNetwork === NETWORKS.ganache) {
     try {
       await deploy(account, selectedNetwork, contractName, contractArgs)
     } catch (e) {

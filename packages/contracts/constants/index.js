@@ -1,7 +1,7 @@
 const path = require('path')
 
 const NETWORKS = {
-  localhost: 'http://localhost:8545',
+  ganache: 'http://localhost:8545',
   mainnet: 'https://mainnet.infura.io/v3/d48872aa1c00471c825e9d856c3c3138',
   ropsten: 'https://ropsten.infura.io/v3/d48872aa1c00471c825e9d856c3c3138',
   kovan: 'https://kovan.infura.io/v3/d48872aa1c00471c825e9d856c3c3138'

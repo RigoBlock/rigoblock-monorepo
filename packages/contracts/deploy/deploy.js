@@ -6,7 +6,6 @@ const { GAS_ESTIMATE } = require('../constants')
 const logger = require('./logger')
 
 const deploy = async (from, networkUrl, contractName, args = []) => {
-  console.log('ARGUMENTS', args)
   const web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
   const networkId = await web3.eth.net.getId()
   const deployerOpts = {
