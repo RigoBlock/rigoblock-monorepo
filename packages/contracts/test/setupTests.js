@@ -26,7 +26,7 @@ const setupGanache = async () => {
   global.accounts = rawAccounts.map(acc => acc.toLowerCase())
   const prevLog = console.log
   console.log = () => {}
-  global.baseContracts = await deploy(accounts[0], NETWORKS[0])
+  global.baseContracts = await deploy(accounts[0], NETWORKS.localhost)
   console.log = prevLog
 }
 

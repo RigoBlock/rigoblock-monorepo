@@ -6,6 +6,7 @@
     "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
     "ganache": "ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "compile": "node deploy/compiler.js",
+    "deploy": "node deploy/deployScript.js",
     "lint": "eslint test deploy . --ext js --ignore-path .gitignore --fix && npm run lint-contracts",
     "test": "NODE_ENV=test node --trace-warnings node_modules/.bin/jest --env=node --runInBand",
     "lint-contracts": "solhint src/**/**/**/*.sol"

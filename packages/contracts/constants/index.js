@@ -1,13 +1,11 @@
 const path = require('path')
 
-const NETWORKS = process.env.NETWORKS
-  ? process.env.NETWORKS.split(',')
-  : [
-      'http://localhost:8545',
-      'https://mainnet.infura.io/v3/d48872aa1c00471c825e9d856c3c3138',
-      'https://ropsten.infura.io/v3/d48872aa1c00471c825e9d856c3c3138',
-      'https://kovan.infura.io/v3/d48872aa1c00471c825e9d856c3c3138'
-    ]
+const NETWORKS = {
+  localhost: 'http://localhost:8545',
+  mainnet: 'https://mainnet.infura.io/v3/d48872aa1c00471c825e9d856c3c3138',
+  ropsten: 'https://ropsten.infura.io/v3/d48872aa1c00471c825e9d856c3c3138',
+  kovan: 'https://kovan.infura.io/v3/d48872aa1c00471c825e9d856c3c3138'
+}
 
 module.exports = {
   TMP_DIR: '.tmp',

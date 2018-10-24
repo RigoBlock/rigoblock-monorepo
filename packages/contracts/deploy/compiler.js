@@ -28,7 +28,7 @@ const compile = async (contracts, networkUrl) => {
 }
 
 logger.info(c.bold(`Compiling ${JSON.stringify(CONTRACT_NAMES)}...`))
-const compilePromise = NETWORKS.reduce(
+const compilePromise = Object.values(NETWORKS).reduce(
   (acc, network) => acc.then(() => compile(CONTRACT_NAMES, network)),
   Promise.resolve()
 )
