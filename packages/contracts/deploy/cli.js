@@ -20,7 +20,7 @@ const script = async () => {
       {
         type: 'input',
         name: 'customUrl',
-        message: 'Insert the custom url where you want to deploy.'
+        message: 'Insert your custom RPC url.'
       }
     ])
     selectedNetwork = customUrl
