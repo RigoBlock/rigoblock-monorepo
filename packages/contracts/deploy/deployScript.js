@@ -1,7 +1,6 @@
 const inquirer = require('inquirer')
 const { NETWORKS } = require('../constants')
-const deploy = require('./index.js')
-const Web3 = require('web3')
+const bootstrap = require('./index.js')
 const logger = require('./logger')
 const c = require('chalk')
 
@@ -28,27 +27,12 @@ const script = async () => {
   ])
   if (selectedNetwork === NETWORKS.localhost) {
     try {
-      await deploy(account, selectedNetwork)
+      await bootstrap(account, selectedNetwork)
     } catch (e) {
       logger.error(c.red(`Error: ${e.message}`))
     }
     return
   }
-  const { password } = await inquirer.prompt([
-    {
-      type: 'password',
-      name: 'password',
-      message: 'Insert the account password'
-    }
-  ])
-  const web3 = new Web3(new Web3.providers.HttpProvider(selectedNetwork))
-  try {
-    await web3.eth.personal.unlockAccount(account, password, 180)
-    await deploy(account, selectedNetwork)
-  } catch (e) {
-    logger.error(c.red(`Error: ${e.message}`))
-  }
-  return
 }
 
 script()
