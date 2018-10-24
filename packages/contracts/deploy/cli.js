@@ -45,8 +45,7 @@ const script = async () => {
       name: 'contractArgs',
       message:
         'Insert any required arguments for the contract, comma separated.',
-      filter: input => input.split(',').map(el => el.trim()),
-      default: []
+      filter: input => (input ? input.split(',').map(el => el.trim()) : [])
     }
   ])
   if (selectedNetwork === NETWORKS.ganache) {
