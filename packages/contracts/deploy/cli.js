@@ -1,10 +1,17 @@
 const inquirer = require('inquirer')
 const { NETWORKS } = require('../constants')
-const bootstrap = require('./index.js')
 const logger = require('./logger')
 const c = require('chalk')
+const deploy = require('./deploy')
 
 const script = async () => {
+  const { contractName } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'contractName',
+      message: 'Insert the name of the contract that needs to be deployed.'
+    }
+  ])
   let { network } = await inquirer.prompt([
     {
       type: 'input',
@@ -25,9 +32,17 @@ const script = async () => {
       message: 'Insert the account you wish to deploy with.'
     }
   ])
+  let { contractArgs } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'contractArgs',
+      message: 'Insert any required arguments for the contract.'
+    }
+  ])
+  contractArgs = contractArgs || []
   if (selectedNetwork === NETWORKS.localhost) {
     try {
-      await bootstrap(account, selectedNetwork)
+      await deploy(account, selectedNetwork, contractName, contractArgs)
     } catch (e) {
       logger.error(c.red(`Error: ${e.message}`))
     }
