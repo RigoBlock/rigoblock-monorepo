@@ -14,6 +14,7 @@ const task = async job => {
     ...social
   }
   const currentDate = moment()
+    .utcOffset(0)
     .startOf('day')
     .toISOString()
   await db.init()
