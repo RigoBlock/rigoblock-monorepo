@@ -1,7 +1,6 @@
 const { NETWORKS } = require('../constants')
 const c = require('chalk')
 const deploy = require('./deploy')
-const Web3 = require('web3')
 const HDWalletProvider = require('truffle-hdwallet-provider')
 const figures = require('figures')
 const inquirer = require('inquirer')
@@ -33,7 +32,8 @@ const cli = async () => {
     {
       type: 'input',
       name: 'account',
-      message: 'Insert the account you wish to deploy with.'
+      message: 'Insert the account you wish to deploy with.',
+      filter: input => input.toLowerCase()
     }
   ])
   const { contractName } = await inquirer.prompt([
@@ -57,23 +57,26 @@ const cli = async () => {
       deploy(account, selectedNetwork, contractName, contractArgs, false)
     )
   }
-  // const { privateKey } = await inquirer.prompt([
-  //   {
-  //     type: 'password',
-  //     name: 'privateKey',
-  //     mask: '*',
-  //     message: 'Insert the mnemonic for the account.'
-  //   }
-  // ])
-  // let provider = new HDWalletProvider(privateKey, selectedNetwork)
-  // const web3 = new Web3(provider)
-  // const accounts = await web3.eth.getAccounts()
-  // try {
-  //   await deploy(account, selectedNetwork, contractName, contractArgs, web3)
-  // } catch (e) {
-  //   logger.error(c.red(`Error: ${e.message}`))
-  // }
-  // return provider.engine.stop()
+  const { privateKey } = await inquirer.prompt([
+    {
+      type: 'password',
+      name: 'privateKey',
+      mask: '*',
+      message: 'Insert the private key of the account.'
+    }
+  ])
+  let provider = new HDWalletProvider(privateKey, selectedNetwork)
+  await withSpinner(
+    deploy(
+      account,
+      selectedNetwork,
+      contractName,
+      contractArgs,
+      false,
+      provider
+    )
+  )
+  return provider.engine.stop()
 }
 
 const withSpinner = async promise => {
@@ -101,7 +104,9 @@ const withSpinner = async promise => {
     })
   } catch (e) {
     multispinner.error(message)
-    logger.error(c.red(`Error: ${e.message}`))
+    multispinner.on('done', () => {
+      logger.error(c.red(`Error: ${e.message}`))
+    })
   }
 }
 

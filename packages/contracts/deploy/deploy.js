@@ -9,15 +9,16 @@ const deploy = async (
   contractName,
   args = [],
   verbose = true,
-  web3
+  provider
 ) => {
-  if (!web3) {
-    web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
-  }
+  const web3 = provider
+    ? new Web3(provider)
+    : new Web3(new Web3.providers.HttpProvider(networkUrl))
   const networkId = await web3.eth.net.getId()
   const deployerOpts = {
     artifactsDir: path.resolve(__dirname, '..', 'artifacts'),
     jsonrpcUrl: networkUrl,
+    provider,
     verbose,
     networkId,
     defaults: {
