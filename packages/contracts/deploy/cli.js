@@ -8,15 +8,6 @@ const Multispinner = require('multispinner')
 
 const script = async () => {
   let selectedNetwork
-  const message = 'Deploying...'
-  const opts = {
-    autoStart: false,
-    symbol: {
-      success: figures.tick,
-      error: figures.cross
-    }
-  }
-  const multispinner = new Multispinner([message], opts)
   const { network } = await inquirer.prompt([
     {
       type: 'list',
@@ -60,11 +51,34 @@ const script = async () => {
     }
   ])
   if (selectedNetwork === NETWORKS.ganache) {
-    multispinner.start()
+    const message = `Deploying ${contractName}...`
+    const opts = {
+      symbol: {
+        success: figures.tick,
+        error: figures.cross
+      }
+    }
+    const multispinner = new Multispinner([message], opts)
     try {
-      await deploy(account, selectedNetwork, contractName, contractArgs).then(
-        () => multispinner.success(message)
-      )
+      await deploy(
+        account,
+        selectedNetwork,
+        contractName,
+        contractArgs,
+        false
+      ).then(res => {
+        multispinner.success(message)
+        multispinner.on('done', () => {
+          logger.info(
+            c.green(`transactionHash:`),
+            c.bold(c.white(res._contract.transactionHash))
+          )
+          logger.info(
+            c.green(`Contract successfully deployed at`),
+            c.bold(c.white(res.address))
+          )
+        })
+      })
     } catch (e) {
       multispinner.error(message)
       logger.error(c.red(`Error: ${e.message}`))

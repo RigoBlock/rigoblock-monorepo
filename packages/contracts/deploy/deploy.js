@@ -3,12 +3,19 @@ const Web3 = require('web3')
 const Deployer = require('@rigoblock/deployer').Deployer
 const { GAS_ESTIMATE } = require('../constants')
 
-const deploy = async (from, networkUrl, contractName, args = []) => {
+const deploy = async (
+  from,
+  networkUrl,
+  contractName,
+  args = [],
+  verbose = true
+) => {
   const web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
   const networkId = await web3.eth.net.getId()
   const deployerOpts = {
     artifactsDir: path.resolve(__dirname, '..', 'artifacts'),
     jsonrpcUrl: networkUrl,
+    verbose,
     networkId,
     defaults: {
       from,
