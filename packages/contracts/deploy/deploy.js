@@ -14,9 +14,7 @@ const deploy = async (
   if (!web3) {
     web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
   }
-  console.log(networkUrl)
   const networkId = await web3.eth.net.getId()
-  console.log(networkId)
   const deployerOpts = {
     artifactsDir: path.resolve(__dirname, '..', 'artifacts'),
     jsonrpcUrl: networkUrl,

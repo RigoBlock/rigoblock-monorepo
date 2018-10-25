@@ -53,61 +53,56 @@ const cli = async () => {
     }
   ])
   if (selectedNetwork === NETWORKS.ganache) {
-    return
+    return withSpinner(
+      deploy(account, selectedNetwork, contractName, contractArgs, false)
+    )
   }
-  const { privateKey } = await inquirer.prompt([
-    {
-      type: 'password',
-      name: 'privateKey',
-      mask: '*',
-      message: 'Insert the mnemonic for the account.'
+  // const { privateKey } = await inquirer.prompt([
+  //   {
+  //     type: 'password',
+  //     name: 'privateKey',
+  //     mask: '*',
+  //     message: 'Insert the mnemonic for the account.'
+  //   }
+  // ])
+  // let provider = new HDWalletProvider(privateKey, selectedNetwork)
+  // const web3 = new Web3(provider)
+  // const accounts = await web3.eth.getAccounts()
+  // try {
+  //   await deploy(account, selectedNetwork, contractName, contractArgs, web3)
+  // } catch (e) {
+  //   logger.error(c.red(`Error: ${e.message}`))
+  // }
+  // return provider.engine.stop()
+}
+
+const withSpinner = async promise => {
+  const message = 'Deploying contract...'
+  const opts = {
+    symbol: {
+      success: figures.tick,
+      error: figures.cross
     }
-  ])
-  let provider = new HDWalletProvider(privateKey, selectedNetwork)
-  const web3 = new Web3(provider)
-  const accounts = await web3.eth.getAccounts()
-  console.log(accounts)
+  }
+  const multispinner = new Multispinner([message], opts)
   try {
-    await deploy(account, selectedNetwork, contractName, contractArgs, web3)
+    await promise.then(res => {
+      multispinner.success(message)
+      multispinner.on('done', () => {
+        logger.info(
+          c.green(`transactionHash:`),
+          c.bold(c.white(res._contract.transactionHash))
+        )
+        logger.info(
+          c.green(`Contract successfully deployed at`),
+          c.bold(c.white(res.address))
+        )
+      })
+    })
   } catch (e) {
+    multispinner.error(message)
     logger.error(c.red(`Error: ${e.message}`))
   }
-  return provider.engine.stop()
 }
 
 cli()
-
-// const deployContract = async contractName => {
-//   const message = `Deploying ${contractName}...`
-//   const opts = {
-//     symbol: {
-//       success: figures.tick,
-//       error: figures.cross
-//     }
-//   }
-//   const multispinner = new Multispinner([message], opts)
-//   try {
-//     await deploy(
-//       account,
-//       selectedNetwork,
-//       contractName,
-//       contractArgs,
-//       false
-//     ).then(res => {
-//       multispinner.success(message)
-//       multispinner.on('done', () => {
-//         logger.info(
-//           c.green(`transactionHash:`),
-//           c.bold(c.white(res._contract.transactionHash))
-//         )
-//         logger.info(
-//           c.green(`Contract successfully deployed at`),
-//           c.bold(c.white(res.address))
-//         )
-//       })
-//     })
-//   } catch (e) {
-//     multispinner.error(message)
-//     logger.error(c.red(`Error: ${e.message}`))
-//   }
-// }
