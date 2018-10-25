@@ -34,6 +34,7 @@ export class Deployer {
   private _artifactsDir: string
   private _networkId: number
   private _defaults: Partial<TxData>
+  private _verbose: boolean
 
   /**
    * Instantiate a new instance of the Deployer class.
@@ -44,6 +45,7 @@ export class Deployer {
     this._artifactsDir = opts.artifactsDir
     this._networkId = opts.networkId
     this._defaults = opts.defaults
+    this._verbose = opts.verbose == undefined ? true : opts.verbose
     let provider: Provider
     if (_.isUndefined((opts as ProviderDeployerOptions).provider)) {
       const jsonrpcUrl = (opts as UrlDeployerOptions).jsonrpcUrl
@@ -106,11 +108,13 @@ export class Deployer {
       args,
       txData
     )
-    logUtils.log(
-      `${contractName}.sol successfully deployed at ${
-        web3ContractInstance.address
-      }`
-    )
+    if (this._verbose) {
+      logUtils.log(
+        `${contractName}.sol successfully deployed at ${
+          web3ContractInstance.address
+        }`
+      )
+    }
     const contractInstance = new Contract(web3ContractInstance, this._defaults)
     return contractInstance
   }
@@ -163,7 +167,9 @@ export class Deployer {
             _.isUndefined(res.address) &&
             !_.isUndefined(res.transactionHash)
           ) {
-            logUtils.log(`transactionHash: ${res.transactionHash}`)
+            if (this._verbose) {
+              logUtils.log(`transactionHash: ${res.transactionHash}`)
+            }
           } else {
             resolve(res)
           }

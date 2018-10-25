@@ -1,13 +1,14 @@
 const { NETWORKS } = require('../constants')
 const c = require('chalk')
 const deploy = require('./deploy')
+const Web3 = require('web3')
+const HDWalletProvider = require('truffle-hdwallet-provider')
+const figures = require('figures')
 const inquirer = require('inquirer')
 const logger = require('./logger')
-const Web3 = require('web3')
-const pkg = require('../package.json')
-const HDWalletProvider = require('truffle-hdwallet-provider')
+const Multispinner = require('multispinner')
 
-const script = async () => {
+const cli = async () => {
   let selectedNetwork
   const { network } = await inquirer.prompt([
     {
@@ -52,11 +53,6 @@ const script = async () => {
     }
   ])
   if (selectedNetwork === NETWORKS.ganache) {
-    try {
-      await deploy(account, selectedNetwork, contractName, contractArgs)
-    } catch (e) {
-      logger.error(c.red(`Error: ${e.message}`))
-    }
     return
   }
   const { privateKey } = await inquirer.prompt([
@@ -79,4 +75,39 @@ const script = async () => {
   return provider.engine.stop()
 }
 
-script()
+cli()
+
+// const deployContract = async contractName => {
+//   const message = `Deploying ${contractName}...`
+//   const opts = {
+//     symbol: {
+//       success: figures.tick,
+//       error: figures.cross
+//     }
+//   }
+//   const multispinner = new Multispinner([message], opts)
+//   try {
+//     await deploy(
+//       account,
+//       selectedNetwork,
+//       contractName,
+//       contractArgs,
+//       false
+//     ).then(res => {
+//       multispinner.success(message)
+//       multispinner.on('done', () => {
+//         logger.info(
+//           c.green(`transactionHash:`),
+//           c.bold(c.white(res._contract.transactionHash))
+//         )
+//         logger.info(
+//           c.green(`Contract successfully deployed at`),
+//           c.bold(c.white(res.address))
+//         )
+//       })
+//     })
+//   } catch (e) {
+//     multispinner.error(message)
+//     logger.error(c.red(`Error: ${e.message}`))
+//   }
+// }
