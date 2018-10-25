@@ -1,16 +1,21 @@
 const path = require('path')
 const Web3 = require('web3')
 const Deployer = require('@rigoblock/deployer').Deployer
-const c = require('chalk')
 const { GAS_ESTIMATE } = require('../constants')
-const logger = require('./logger')
 
-const deploy = async (from, networkUrl, contractName, args = []) => {
+const deploy = async (
+  from,
+  networkUrl,
+  contractName,
+  args = [],
+  verbose = true
+) => {
   const web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
   const networkId = await web3.eth.net.getId()
   const deployerOpts = {
     artifactsDir: path.resolve(__dirname, '..', 'artifacts'),
     jsonrpcUrl: networkUrl,
+    verbose,
     networkId,
     defaults: {
       from,
@@ -18,10 +23,8 @@ const deploy = async (from, networkUrl, contractName, args = []) => {
       gasPrice: 1
     }
   }
-
   const deployer = new Deployer(deployerOpts)
 
-  logger.info(c.bold(`Deploying ${contractName}...`))
   return deployer.deployAndSaveAsync(contractName, args)
 }
 

@@ -1,8 +1,10 @@
-const inquirer = require('inquirer')
 const { NETWORKS } = require('../constants')
-const logger = require('./logger')
 const c = require('chalk')
 const deploy = require('./deploy')
+const figures = require('figures')
+const inquirer = require('inquirer')
+const logger = require('./logger')
+const Multispinner = require('multispinner')
 
 const script = async () => {
   let selectedNetwork
@@ -49,9 +51,36 @@ const script = async () => {
     }
   ])
   if (selectedNetwork === NETWORKS.ganache) {
+    const message = `Deploying ${contractName}...`
+    const opts = {
+      symbol: {
+        success: figures.tick,
+        error: figures.cross
+      }
+    }
+    const multispinner = new Multispinner([message], opts)
     try {
-      await deploy(account, selectedNetwork, contractName, contractArgs)
+      await deploy(
+        account,
+        selectedNetwork,
+        contractName,
+        contractArgs,
+        false
+      ).then(res => {
+        multispinner.success(message)
+        multispinner.on('done', () => {
+          logger.info(
+            c.green(`transactionHash:`),
+            c.bold(c.white(res._contract.transactionHash))
+          )
+          logger.info(
+            c.green(`Contract successfully deployed at`),
+            c.bold(c.white(res.address))
+          )
+        })
+      })
     } catch (e) {
+      multispinner.error(message)
       logger.error(c.red(`Error: ${e.message}`))
     }
     return
