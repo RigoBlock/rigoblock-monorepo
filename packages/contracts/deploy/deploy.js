@@ -5,9 +5,13 @@ const c = require('chalk')
 const { GAS_ESTIMATE } = require('../constants')
 const logger = require('./logger')
 
-const deploy = async (from, networkUrl, contractName, args = []) => {
-  const web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
+const deploy = async (from, networkUrl, contractName, args = [], web3) => {
+  if (!web3) {
+    web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
+  }
+  console.log(networkUrl)
   const networkId = await web3.eth.net.getId()
+  console.log(networkId)
   const deployerOpts = {
     artifactsDir: path.resolve(__dirname, '..', 'artifacts'),
     jsonrpcUrl: networkUrl,

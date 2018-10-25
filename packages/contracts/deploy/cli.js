@@ -1,8 +1,11 @@
-const inquirer = require('inquirer')
 const { NETWORKS } = require('../constants')
-const logger = require('./logger')
 const c = require('chalk')
 const deploy = require('./deploy')
+const inquirer = require('inquirer')
+const logger = require('./logger')
+const Web3 = require('web3')
+const pkg = require('../package.json')
+const HDWalletProvider = require('truffle-hdwallet-provider')
 
 const script = async () => {
   let selectedNetwork
@@ -56,6 +59,24 @@ const script = async () => {
     }
     return
   }
+  const { privateKey } = await inquirer.prompt([
+    {
+      type: 'password',
+      name: 'privateKey',
+      mask: '*',
+      message: 'Insert the mnemonic for the account.'
+    }
+  ])
+  let provider = new HDWalletProvider(privateKey, selectedNetwork)
+  const web3 = new Web3(provider)
+  const accounts = await web3.eth.getAccounts()
+  console.log(accounts)
+  try {
+    await deploy(account, selectedNetwork, contractName, contractArgs, web3)
+  } catch (e) {
+    logger.error(c.red(`Error: ${e.message}`))
+  }
+  return provider.engine.stop()
 }
 
 script()

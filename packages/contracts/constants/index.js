@@ -40,6 +40,7 @@ module.exports = {
     'TokenTransferProxy',
     'UnlimitedAllowanceToken',
     'Vault',
+    'Congress',
     'VaultEventful',
     'VaultFactory',
     'WETH9',
