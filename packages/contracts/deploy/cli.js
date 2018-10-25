@@ -4,6 +4,7 @@ const deploy = require('./deploy')
 const HDWalletProvider = require('truffle-hdwallet-provider')
 const figures = require('figures')
 const inquirer = require('inquirer')
+const Web3 = require('web3')
 const logger = require('./logger')
 const Multispinner = require('multispinner')
 
@@ -23,7 +24,8 @@ const cli = async () => {
       {
         type: 'input',
         name: 'customUrl',
-        message: 'Insert your custom RPC url.'
+        message: 'Insert your custom RPC url.',
+        filter: input => normalize(input)
       }
     ])
     selectedNetwork = customUrl
@@ -33,14 +35,19 @@ const cli = async () => {
       type: 'input',
       name: 'account',
       message: 'Insert the account you wish to deploy with.',
-      filter: input => input.toLowerCase()
+      validate: input =>
+        Web3.utils.isAddress(normalize(input))
+          ? true
+          : c.red('Please insert a valid account.'),
+      filter: input => normalize(input)
     }
   ])
   const { contractName } = await inquirer.prompt([
     {
       type: 'input',
       name: 'contractName',
-      message: 'Insert the name of the contract.'
+      message: 'Insert the name of the contract.',
+      filter: input => normalize(input)
     }
   ])
   let { contractArgs } = await inquirer.prompt([
@@ -49,7 +56,7 @@ const cli = async () => {
       name: 'contractArgs',
       message:
         'Insert any required arguments for the contract, comma separated.',
-      filter: input => (input ? input.split(',').map(el => el.trim()) : [])
+      filter: input => (input ? input.split(',').map(el => normalize(el)) : [])
     }
   ])
   if (selectedNetwork === NETWORKS.ganache) {
@@ -62,7 +69,8 @@ const cli = async () => {
       type: 'password',
       name: 'privateKey',
       mask: '*',
-      message: 'Insert the private key of the account.'
+      message: 'Insert the private key of the account.',
+      filter: input => normalize(input)
     }
   ])
   let provider = new HDWalletProvider(privateKey, selectedNetwork)
@@ -109,5 +117,7 @@ const withSpinner = async promise => {
     })
   }
 }
+
+const normalize = str => str.trim().toLowerCase()
 
 cli()
