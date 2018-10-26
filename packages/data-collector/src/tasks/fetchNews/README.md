@@ -1,4 +1,4 @@
-# fetchInfo
+# fetchNews
 
 ## _initialData_ properties:
 
