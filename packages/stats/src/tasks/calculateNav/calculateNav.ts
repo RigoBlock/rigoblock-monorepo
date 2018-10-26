@@ -11,20 +11,19 @@ const task = async (job, web3: Web3) => {
   const pools = await redis.hgetall(`${key}:${network}`)
   const poolAbi = contractsMap[poolType].abi
 
-  const sharePrices = await Promise.all(
+  const navPrices = await Promise.all(
     Object.keys(pools).map(async address => {
       const contract = new web3.eth.Contract(poolAbi, address)
       const poolData = await contract.methods.getData().call()
-      const { buyPrice, sellPrice } = poolData
+      const { buyPrice } = poolData
       return {
         address,
-        buyPrice,
-        sellPrice
+        buyPrice
       }
     })
   )
 
-  const navPromises = sharePrices.map(
+  const navPromises = navPrices.map(
     pool =>
       new Promise((resolve, reject) => {
         statsD.gauge(
