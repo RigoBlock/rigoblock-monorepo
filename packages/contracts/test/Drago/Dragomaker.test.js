@@ -110,6 +110,12 @@ describeContract(contractName, () => {
       await baseContracts['RigoToken'].approve(GRGtokenWrapper, GRGtoBeWrapped)
       await baseContracts['WrapperLock'].deposit(GRGtoBeWrapped, time)
 
+      // Check wrapped balance is correct
+      const wrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(
+        dragoAddress
+      )
+      expect(wrappedTokensAmount.toString()).toEqual(GRGtoBeWrapped.toString())
+
       const EXCHANGE_ADDRESS = baseContracts['ExchangeEfx'].address
       const maker = dragoAddress
       const taker = accounts[0] // ZeroEx.NULL_ADDRESS
@@ -123,8 +129,8 @@ describeContract(contractName, () => {
       const makerTokenAmount = web3.utils.toWei('0.2')
       const takerTokenAmount = web3.utils.toWei('0.3')
       const expirationUnixTimestampSec = new BigNumber(
-        Date.now() + 3600000
-      ).toString() // Valid for up to an hour
+        Date.now() + 3600000 * 24
+      ).toString() // Valid for up to 24 hours
 
       // Generate order
       const order = {
