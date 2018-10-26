@@ -2,7 +2,6 @@ const { NETWORKS } = require('../constants')
 const c = require('chalk')
 const deploy = require('./deploy')
 const HDWalletProvider = require('truffle-hdwallet-provider')
-const figures = require('figures')
 const inquirer = require('inquirer')
 const Web3 = require('web3')
 const logger = require('./logger')
@@ -89,13 +88,7 @@ const cli = async () => {
 
 const withSpinner = async promise => {
   const message = 'Deploying contract...'
-  const opts = {
-    symbol: {
-      success: figures.tick,
-      error: figures.cross
-    }
-  }
-  const multispinner = new Multispinner([message], opts)
+  const multispinner = new Multispinner([message])
   try {
     await promise.then(res => {
       multispinner.success(message)
