@@ -76,3 +76,22 @@ docker-compose -f ./packages/stats/docker-compose.prod.yml up
 - [fetchDragos](src/tasks/fetchDragos/README.md)
 - [getSharePrice](src/tasks/getSharePrice/README.md)
 - [getTotalSupply](src/tasks/getTotalSupply/README.md)
+
+## Data currently being fetched
+
+- List of all Dragos on mainnet, ropsten and kovan
+
+For each drago, we are fetching:
+
+- ETH balance
+- GNT balance
+- GRG balance
+- MKR balance
+- WETH balance
+- USDT balance
+- ZRX balance
+- ZRXW balance
+- USDTW balance
+- GRGW balance
+- Total supply
+- Buy-Sell prices

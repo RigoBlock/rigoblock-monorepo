@@ -15,7 +15,7 @@ const conf: Config = {
   'kovan-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '* * * * * ', // Every minute
+    cronExpression: '0 */5 * * * *', // Every five minutes
     initialData: {
       network: NETWORKS.KOVAN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
@@ -24,7 +24,7 @@ const conf: Config = {
   'kovan-calculate-balance-ETH': {
     handlerName: 'calculateEthBalance',
     description: 'Calculates ETH balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -35,7 +35,7 @@ const conf: Config = {
   'kovan-calculate-balance-GNT': {
     handlerName: 'calculateBalance',
     description: 'Calculates GNT balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GNT',
@@ -48,7 +48,7 @@ const conf: Config = {
   'kovan-calculate-balance-GRG': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GRG',
@@ -61,7 +61,7 @@ const conf: Config = {
   'kovan-calculate-balance-MKR': {
     handlerName: 'calculateBalance',
     description: 'Calculates MKR balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'MKR',
@@ -74,7 +74,7 @@ const conf: Config = {
   'kovan-calculate-balance-WETH': {
     handlerName: 'calculateBalance',
     description: 'Calculates WETH balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'WETH',
@@ -87,7 +87,7 @@ const conf: Config = {
   'kovan-calculate-balance-USDT': {
     handlerName: 'calculateBalance',
     description: 'Calculates USDT balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'USDT',
@@ -100,7 +100,7 @@ const conf: Config = {
   'kovan-calculate-balance-ZRX': {
     handlerName: 'calculateBalance',
     description: 'Calculates ZRX balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'ZRX',
@@ -113,7 +113,7 @@ const conf: Config = {
   'kovan-calculate-dragos-totalsupply': {
     handlerName: 'getTotalSupply',
     description: 'Gets the total supply',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -124,7 +124,7 @@ const conf: Config = {
   'kovan-calculate-dragos-shareprice': {
     handlerName: 'getSharePrice',
     description: 'Gets the share price',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -135,7 +135,7 @@ const conf: Config = {
   'ropsten-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '* * * * *', // Every minute
+    cronExpression: '0 */5 * * * *', // Every minute
     initialData: {
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
@@ -144,7 +144,7 @@ const conf: Config = {
   'ropsten-calculate-balance-ETH': {
     handlerName: 'calculateEthBalance',
     description: 'Calculates ETH balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -155,7 +155,7 @@ const conf: Config = {
   'ropsten-calculate-balance-GNT': {
     handlerName: 'calculateBalance',
     description: 'Calculates GNT balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GNT',
@@ -168,7 +168,7 @@ const conf: Config = {
   'ropsten-calculate-balance-GRG': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GRG',
@@ -181,7 +181,7 @@ const conf: Config = {
   'ropsten-calculate-balance-MKR': {
     handlerName: 'calculateBalance',
     description: 'Calculates MKR balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'MKR',
@@ -194,7 +194,7 @@ const conf: Config = {
   'ropsten-calculate-balance-USDT': {
     handlerName: 'calculateBalance',
     description: 'Calculates USDT balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'USDT',
@@ -207,7 +207,7 @@ const conf: Config = {
   'ropsten-calculate-balance-WETH': {
     handlerName: 'calculateBalance',
     description: 'Calculates WETH balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'WETH',
@@ -220,7 +220,7 @@ const conf: Config = {
   'ropsten-calculate-balance-ZRX': {
     handlerName: 'calculateBalance',
     description: 'Calculates ZRX balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'ZRX',
@@ -233,7 +233,7 @@ const conf: Config = {
   'ropsten-calculate-balance-ZRXW': {
     handlerName: 'calculateBalance',
     description: 'Calculates ZRXW balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'ZRXW',
@@ -246,7 +246,7 @@ const conf: Config = {
   'ropsten-calculate-balance-ETHW': {
     handlerName: 'calculateBalance',
     description: 'Calculates ETHW balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'ETHW',
@@ -259,7 +259,7 @@ const conf: Config = {
   'ropsten-calculate-balance-USDTW': {
     handlerName: 'calculateBalance',
     description: 'Calculates USDTW balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'USDTW',
@@ -272,7 +272,7 @@ const conf: Config = {
   'ropsten-calculate-balance-GRGW': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRGW balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GRGW',
@@ -285,7 +285,7 @@ const conf: Config = {
   'ropsten-calculate-dragos-totalsupply': {
     handlerName: 'getTotalSupply',
     description: 'Gets the total supply',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -296,7 +296,7 @@ const conf: Config = {
   'ropsten-calculate-dragos-shareprice': {
     handlerName: 'getSharePrice',
     description: 'Gets the share price',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -307,7 +307,7 @@ const conf: Config = {
   'mainnet-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '* * * * *', // Every minute
+    cronExpression: '0 */5 * * * *', // Every minute
     initialData: {
       network: NETWORKS.MAINNET,
       web3Provider: WEBSOCKET_URLS[NETWORKS.MAINNET].INFURA
@@ -316,7 +316,7 @@ const conf: Config = {
   'mainnet-calculate-balance-ETH': {
     handlerName: 'calculateEthBalance',
     description: 'Calculates ETH balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -327,7 +327,7 @@ const conf: Config = {
   'mainnet-calculate-balance-GNT': {
     handlerName: 'calculateBalance',
     description: 'Calculates GNT balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GNT',
@@ -340,7 +340,7 @@ const conf: Config = {
   'mainnet-calculate-balance-GRG': {
     handlerName: 'calculateBalance',
     description: 'Calculates GRG balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'GRG',
@@ -353,7 +353,7 @@ const conf: Config = {
   'mainnet-calculate-balance-MKR': {
     handlerName: 'calculateBalance',
     description: 'Calculates MKR balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'MKR',
@@ -366,7 +366,7 @@ const conf: Config = {
   'mainnet-calculate-balance-USDT': {
     handlerName: 'calculateBalance',
     description: 'Calculates USDT balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'USDT',
@@ -379,7 +379,7 @@ const conf: Config = {
   'mainnet-calculate-balance-WETH': {
     handlerName: 'calculateBalance',
     description: 'Calculates WETH balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'WETH',
@@ -392,7 +392,7 @@ const conf: Config = {
   'mainnet-calculate-balance-ZRX': {
     handlerName: 'calculateBalance',
     description: 'Calculates ZRX balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'ZRX',
@@ -405,7 +405,7 @@ const conf: Config = {
   'mainnet-calculate-balance-ZRXW': {
     handlerName: 'calculateBalance',
     description: 'Calculates ZRXW balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'ZRXW',
@@ -418,7 +418,7 @@ const conf: Config = {
   'mainnet-calculate-balance-ETHW': {
     handlerName: 'calculateBalance',
     description: 'Calculates ETHW balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'ETHW',
@@ -431,7 +431,7 @@ const conf: Config = {
   'mainnet-calculate-balance-USDTW': {
     handlerName: 'calculateBalance',
     description: 'Calculates USDTW balance',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       symbol: 'USDTW',
@@ -444,7 +444,7 @@ const conf: Config = {
   'mainnet-calculate-dragos-totalsupply': {
     handlerName: 'getTotalSupply',
     description: 'Gets the total supply',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
@@ -455,7 +455,7 @@ const conf: Config = {
   'mainnet-calculate-dragos-shareprice': {
     handlerName: 'getSharePrice',
     description: 'Gets the share price',
-    cronExpression: '* * * * *',
+    cronExpression: '0 */5 * * * *',
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
