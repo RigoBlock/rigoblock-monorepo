@@ -2,6 +2,7 @@ import { BigNumber } from 'bignumber.js'
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import { ZeroEx } from '0x.js'
 import dragoArtifact from '../../artifacts/Drago.json'
+import moment from 'moment'
 import web3 from '../web3'
 
 const contractName = 'Drago'
@@ -48,7 +49,7 @@ describeContract(contractName, () => {
       const ETHtokenAddress = '0x0000000000000000000000000000000000000000' //Ether has address 0x0
       const ETHtokenWrapper = await baseContracts['WrapperLockEth'].address
       const toBeWrapped = web3.utils.toWei('1.51') //web3.utils.toWei('1.1') //1e16 is 10 finney
-      const time = 1 // 1 hour lockup (the minimum)
+      const time = 24 // 1 hours lockup (the minimum)
       const isOld = 0 // is a standard ERC20
 
       await baseContracts['ExchangesAuthority'].whitelistWrapper(
@@ -104,17 +105,28 @@ describeContract(contractName, () => {
         .operateOnExchange(ethfinexAddress, [assembledTransaction])
         .send({ ...transactionDefault })
 
+      // Check ETH wrapped balance is correct
+      const wrappedTokensAmount = await baseContracts[
+        'WrapperLockEth'
+      ].balanceOf(dragoAddress)
+      expect(wrappedTokensAmount.toString()).toEqual(toBeWrapped.toString())
+
+      // Check ETH wrapped time is correct
+      let wrappedTokensTime = await baseContracts['WrapperLockEth'].depositLock(
+        dragoAddress
+      )
+      let now = moment()
+      console.log(now)
+      now.add(23, 'hours')
+      expect(Number(wrappedTokensTime.toFixed())).toBeGreaterThan(now.unix())
+      now.add(2, 'hours')
+      expect(Number(wrappedTokensTime.toFixed())).toBeLessThan(now.unix())
+
       // wrap some GRG from the user account, so that the user can sell GRG buy ETH
       const GRGtokenWrapper = await baseContracts['WrapperLock'].address
       const GRGtoBeWrapped = web3.utils.toWei('2')
       await baseContracts['RigoToken'].approve(GRGtokenWrapper, GRGtoBeWrapped)
       await baseContracts['WrapperLock'].deposit(GRGtoBeWrapped, time)
-
-      // Check wrapped balance is correct
-      const wrappedTokensAmount = await baseContracts['WrapperLock'].balanceOf(
-        dragoAddress
-      )
-      expect(wrappedTokensAmount.toString()).toEqual(GRGtoBeWrapped.toString())
 
       const EXCHANGE_ADDRESS = baseContracts['ExchangeEfx'].address
       const maker = dragoAddress
