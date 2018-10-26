@@ -62,6 +62,7 @@ export interface BaseDeployerOptions {
   artifactsDir: string
   networkId: number
   defaults: Partial<TxData>
+  verbose: boolean
 }
 
 export interface ProviderDeployerOptions extends BaseDeployerOptions {

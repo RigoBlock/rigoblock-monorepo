@@ -62,6 +62,7 @@ async function onDeployCommandAsync(argv: CliOptions): Promise<void> {
   const deployerOpts: DeployerOptions = {
     artifactsDir: argv.artifactsDir,
     jsonrpcUrl: argv.jsonrpcUrl,
+    verbose: true,
     networkId,
     defaults
   }

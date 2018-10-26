@@ -1,6 +1,6 @@
 import { GANACHE_NETWORK_ID, GANACHE_PORT, NETWORKS } from '../constants'
+import bootstrap from '@rigoblock/contracts/deploy/bootstrap'
 import c from 'chalk'
-import deploy from '@rigoblock/contracts/deploy'
 import ganache from 'ganache-cli'
 import logger from '../deploy/logger'
 import pkg from '../package.json'
@@ -26,7 +26,7 @@ const setupGanache = async () => {
   global.accounts = rawAccounts.map(acc => acc.toLowerCase())
   const prevLog = console.log
   console.log = () => {}
-  global.baseContracts = await deploy(accounts[0], NETWORKS[0])
+  global.baseContracts = await bootstrap(accounts[0], NETWORKS.ganache)
   console.log = prevLog
 }
 
