@@ -71,6 +71,13 @@
       "prefix": "stats"
     },
     {
+      "name": "kovan-calculate-dragos-nav",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
       "name": "ropsten-fetch-dragos-list",
       "hostId": "redis",
       "host": "redis",
@@ -169,6 +176,13 @@
       "prefix": "stats"
     },
     {
+      "name": "ropsten-calculate-dragos-nav",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
       "name": "mainnet-fetch-dragos-list",
       "hostId": "redis",
       "host": "redis",
@@ -256,6 +270,13 @@
       "name": "mainnet-calculate-dragos-shareprice",
       "hostId": "redis",
       "host": "redis",
+      "port": 6379,
+      "prefix": "stats"
+    },
+    {
+      "name": "mainnet-calculate-dragos-nav",
+      "hostId": "localhost",
+      "host": "docker.for.mac.localhost",
       "port": 6379,
       "prefix": "stats"
     }

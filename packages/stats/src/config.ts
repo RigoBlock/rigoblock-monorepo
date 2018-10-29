@@ -132,6 +132,17 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
     }
   },
+  'kovan-calculate-dragos-nav': {
+    handlerName: 'calculateNav',
+    description: 'Calculates the nav price',
+    cronExpression: '0 */5 * * * *',
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
+    }
+  },
   'ropsten-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
@@ -304,6 +315,17 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
     }
   },
+  'ropsten-calculate-dragos-nav': {
+    handlerName: 'calculateNav',
+    description: 'Calculates the nav price',
+    cronExpression: '0 */5 * * * *',
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
+    }
+  },
   'mainnet-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
@@ -461,6 +483,17 @@ const conf: Config = {
       poolType: 'Drago',
       network: NETWORKS.MAINNET,
       web3Provider: WEBSOCKET_URLS[NETWORKS.MAINNET].INFURA
+    }
+  },
+  'mainnet-calculate-dragos-nav': {
+    handlerName: 'calculateNav',
+    description: 'Calculates the nav price',
+    cronExpression: '0 */5 * * * *',
+    initialData: {
+      key: 'dragos',
+      poolType: 'Drago',
+      network: NETWORKS.KOVAN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
     }
   }
 }
