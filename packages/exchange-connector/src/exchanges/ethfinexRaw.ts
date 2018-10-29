@@ -1,6 +1,7 @@
 import { NETWORKS } from '../constants'
 import { fetchJSON, getQueryParameters } from '../utils'
 import ReconnectingWebSocket from 'reconnecting-websocket'
+import WS from 'ws'
 
 export class EthfinexRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
@@ -64,7 +65,9 @@ export class EthfinexRaw {
 
   public ws = {
     open: () => {
-      this.wsInstance = new ReconnectingWebSocket(this.WS_URL)
+      this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
+        WebSocket: window['WebSocket'] ? window['WebSocket'] : WS
+      })
       return new Promise((resolve, reject) => {
         const rejectError = err => {
           return reject(err)

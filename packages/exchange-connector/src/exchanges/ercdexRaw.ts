@@ -2,6 +2,7 @@ import { NETWORKS } from '../constants'
 import { ZeroExStandardRelayerRaw } from './zeroExStandardRelayerRaw'
 import { fetchJSON, getQueryParameters, postJSON } from '../utils'
 import ReconnectingWebSocket from 'reconnecting-websocket'
+import WS from 'ws'
 
 export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.ROPSTEN]
@@ -101,7 +102,9 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   public ws = {
     ...this.ws,
     open: () => {
-      this.wsInstance = new ReconnectingWebSocket(this.WS_URL)
+      this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
+        WebSocket: window['WebSocket'] ? window['WebSocket'] : WS
+      })
       return new Promise((resolve, reject) => {
         const rejectError = err => {
           return reject(err)
