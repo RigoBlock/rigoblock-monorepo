@@ -48,7 +48,11 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     })
     describe('getCandles', () => {
       it('returns data that provides a way to access charting candle info.', async () => {
-        const options = { timeframe: '15m', symbols: 'BTCUSD', section: 'last' }
+        const options = {
+          timeframe: '15m',
+          symbols: 'BTCUSD',
+          section: 'last'
+        }
         const result: any = await nockBackPromise(
           'ethfinexRaw/http_getCandles.json',
           () => exchange.http.getCandles(options)
@@ -161,6 +165,130 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         expect(emitter._listeners.message.length).toEqual(0)
       })
     })
+
+    describe('getAggregatedOrders', () => {
+      const options = {
+        symbols: 'ETHUSD',
+        precision: 'P2',
+        frequency: 'F1',
+        len: 25
+      }
+      const tickersResponseSnap = [
+        129,
+        [
+          [205, 15, 354.90634331],
+          [204, 139, 2398.86935314],
+          [203, 144, 4025.09358459],
+          [202, 118, 5188.22302028],
+          [201, 90, 3721.25345521],
+          [200, 98, 4107.22346567],
+          [199, 50, 8258.23799491],
+          [198, 59, 916.326922],
+          [197, 65, 1414.88429641],
+          [196, 83, 1573.46496345],
+          [195, 90, 700.63856353],
+          [194, 38, 659.72029935],
+          [193, 37, 423.23965806],
+          [192, 43, 1043.01630891],
+          [191, 43, 314.92083385],
+          [190, 88, 783.58758223],
+          [189, 34, 1144.9840053],
+          [188, 44, 256.21628455],
+          [187, 42, 185.92898829],
+          [186, 32, 738.46471078],
+          [185, 74, 797.63761562],
+          [184, 25, 164.77261576],
+          [183, 31, 167.27293001],
+          [182, 42, 247.30751445],
+          [181, 40, 670.08218759],
+          [206, 195, -3623.63370178],
+          [207, 100, -2506.35586049],
+          [208, 120, -1833.34336131],
+          [209, 102, -4194.861206],
+          [210, 86, -2612.67068061],
+          [211, 69, -4780.53214094],
+          [212, 65, -3428.50073052],
+          [213, 62, -2399.19186737],
+          [214, 66, -145.42705188],
+          [215, 93, -1785.67639935],
+          [216, 69, -1090.77113233],
+          [217, 74, -1360.37685189],
+          [218, 85, -1296.29979625],
+          [219, 58, -840.46975103],
+          [220, 87, -1538.38444008],
+          [221, 46, -2154.7141614],
+          [222, 49, -127.90203322],
+          [223, 32, -673.04243097],
+          [224, 41, -204.15814176],
+          [225, 61, -729.56011563],
+          [226, 33, -257.8090413],
+          [227, 30, -228.30341468],
+          [228, 38, -1051.76000306],
+          [229, 36, -862.21556741],
+          [230, 86, -1766.1524283]
+        ],
+        1
+      ]
+      const tickersResponseSingle = [120333, [204, 140, 2404.96985314], 2]
+      const msg = {
+        event: 'subscribe',
+        channel: 'book',
+        pair: `t${options.symbols}`,
+        prec: `${options.precision}`,
+        freq: `${options.frequency}`,
+        len: options.len
+      }
+
+      const subscribeEvent = {
+        event: 'subscribed',
+        channel: 'book',
+        chanId: 129,
+        symbol: 'tETHUSD',
+        prec: 'P2',
+        freq: 'F1',
+        len: '25',
+        pair: 'ETHUSD'
+      }
+      it('sends a websocket message with the specified options', async () => {
+        await exchange.ws.getAggregatedOrders(options, cbSpy)
+        expect(sendSpy).toHaveBeenCalledWith(JSON.stringify(msg))
+      })
+      it('returns the snapshot messages unfiltered to the callback + an unsubscribe function', async () => {
+        await exchange.ws.getAggregatedOrders(options, cbSpy)
+        emitter.emit('message', {
+          data: JSON.stringify(subscribeEvent)
+        })
+        emitter.emit('message', {
+          data: JSON.stringify(tickersResponseSnap)
+        })
+        expect(cbSpy).toHaveBeenCalledWith(
+          null,
+          tickersResponseSnap,
+          expect.any(Function)
+        )
+      })
+      it('returns the single messages unfiltered to the callback + an unsubscribe function', async () => {
+        await exchange.ws.getAggregatedOrders(options, cbSpy)
+        emitter.emit('message', {
+          data: JSON.stringify(subscribeEvent)
+        })
+        emitter.emit('message', {
+          data: JSON.stringify(tickersResponseSingle)
+        })
+        expect(cbSpy).toHaveBeenCalledWith(
+          null,
+          tickersResponseSingle,
+          expect.any(Function)
+        )
+      })
+      it('returns an unsubscribe function to remove the listener', async () => {
+        const unsub = await exchange.ws.getAggregatedOrders(options, cbSpy)
+        expect(emitter._listeners.message.length).toEqual(1)
+        unsub()
+        expect(emitter._listeners.message.length).toEqual(0)
+      })
+    })
+
     describe('getCandles', () => {
       const options = { timeframe: '15m', symbols: 'BTCUSD' }
       const candlesResponse = [

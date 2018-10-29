@@ -102,6 +102,49 @@ export class EthfinexRaw {
       ws.send(JSON.stringify(msg))
       return unsubscribe
     },
+    getAggregatedOrders: async (
+      options: {
+        symbols: string
+        precision?: EthfinexRaw.OrderPrecisions
+        frequency?: EthfinexRaw.BookFrequency
+        len: number
+        configFlags?: EthfinexRaw.ConfigurationFlags[]
+      },
+      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    ): Promise<Function> => {
+      const defOptions = {
+        symbols: 'ETHUSD',
+        precision: EthfinexRaw.OrderPrecisions.P2,
+        frequency: EthfinexRaw.BookFrequency.F1,
+        len: 25,
+        configFlags: [
+          EthfinexRaw.ConfigurationFlags.SEQ_ALL,
+          EthfinexRaw.ConfigurationFlags.CHECKSUM
+        ]
+      }
+      options = { ...defOptions, ...options }
+      const ws = await this.ws.getConnection()
+      const msg = {
+        event: 'subscribe',
+        channel: 'book',
+        pair: `t${options.symbols}`,
+        prec: `${options.precision}`,
+        freq: `${options.frequency}`,
+        len: options.len
+      }
+      const unsubscribe = this.messagesListener(ws, callback)
+      let flags = options.configFlags.reduce((acc, flag) => {
+        return acc + flag
+      })
+      ws.send(
+        JSON.stringify({
+          event: 'conf',
+          flags
+        })
+      )
+      ws.send(JSON.stringify(msg))
+      return unsubscribe
+    },
     getCandles: async (
       options: {
         timeframe: string
@@ -181,6 +224,19 @@ export namespace EthfinexRaw {
     P3 = 'P3',
     P4 = 'P4',
     R0 = 'R0'
+  }
+
+  export enum ConfigurationFlags {
+    DEC_S = 8, //Enable all decimal as strings.
+    TIME_S = 32, // Enable all times as date strings.
+    TIMESTAMP = 32768, // Timestamp in milliseconds.
+    SEQ_ALL = 65536, // Enable sequencing BETA FEATURE
+    CHECKSUM = 131072 //Enable checksum for every book iteration. Checks the top 25 entries for each side of book. Checksum is a signed int.
+  }
+
+  export enum BookFrequency {
+    F0 = 'F0',
+    F1 = 'F1'
   }
 
   export enum CandlesTimeFrame {
