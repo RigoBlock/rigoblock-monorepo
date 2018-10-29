@@ -4,15 +4,13 @@ import ReconnectingWebSocket from 'reconnecting-websocket'
 import WS from 'ws'
 
 export class EthfinexRaw {
-  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
+  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.ROPSTEN]
   public static API_HTTP_URLS = {
     [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
-    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
     [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
   }
   public static API_WS_URLS = {
     [NETWORKS.MAINNET]: 'wss://api.ethfinex.com/ws/2',
-    [NETWORKS.KOVAN]: 'wss://test.ethfinex.com/ws/2',
     [NETWORKS.ROPSTEN]: 'wss://test.ethfinex.com/ws/2'
   }
   public HTTP_URL: string

@@ -6,6 +6,7 @@ import {
   COUCHDB_PORT,
   COUCHDB_USERNAME
 } from './constants'
+import logger from './logger'
 
 export class Db {
   public conn: Nano.ServerScope
@@ -26,8 +27,14 @@ export class Db {
     return this.conn.auth(this.username, this.password)
   }
 
-  get(dbName: string, key?: string) {
-    return this.conn.use(dbName).get(key)
+  async get(dbName: string, key?: string) {
+    let result
+    try {
+      result = await this.conn.use(dbName).get(key)
+    } catch (e) {
+      return e.message !== 'missing' ? logger.error(e) : null
+    }
+    return result
   }
 
   async createDb(dbName) {
