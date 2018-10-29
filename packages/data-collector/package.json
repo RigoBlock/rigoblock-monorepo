@@ -15,6 +15,7 @@
     "postinstall": "rm -f node_modules/web3/index.d.ts"
   },
   "dependencies": {
+    "@rigoblock/exchange-connector": "^0.0.8",
     "bull": "^3.4.7",
     "bull-arena": "^2.5.0",
     "nano": "^7.1.0",
@@ -34,6 +35,7 @@
     "cheerio": "^1.0.0-rc.2",
     "eslint-plugin-typescript": "^0.12.0",
     "jest": "^23.4.2",
+    "jshashes": "^1.0.7",
     "moment": "^2.22.2",
     "node-fetch": "^2.2.0",
     "puppeteer": "^1.9.0",
