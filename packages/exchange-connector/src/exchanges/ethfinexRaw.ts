@@ -108,7 +108,7 @@ export class EthfinexRaw {
         precision?: EthfinexRaw.OrderPrecisions
         frequency?: EthfinexRaw.BookFrequency
         len: number
-        configFlags: EthfinexRaw.ConfigurationFlags[]
+        configFlags?: EthfinexRaw.ConfigurationFlags[]
       },
       callback: (err: Error, message?: any, unsubscribe?: Function) => any
     ): Promise<Function> => {
