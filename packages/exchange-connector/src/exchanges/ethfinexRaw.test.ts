@@ -249,13 +249,6 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         len: '25',
         pair: 'ETHUSD'
       }
-      // const subscribeEvent = {
-      //   event: "subscribed",
-      //   channel: "ticker",
-      //   chanId: 129,
-      //   symbol: "tBTCUSD",
-      //   pair: "BTCUSD"
-      // };
       it('sends a websocket message with the specified options', async () => {
         await exchange.ws.getAggregatedOrders(options, cbSpy)
         expect(sendSpy).toHaveBeenCalledWith(JSON.stringify(msg))
