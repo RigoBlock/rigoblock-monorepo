@@ -122,7 +122,7 @@ export class EthfinexRaw {
           EthfinexRaw.ConfigurationFlags.CHECKSUM
         ]
       }
-      options = { ...options, ...defOptions }
+      options = { ...defOptions, ...options }
       const ws = await this.ws.getConnection()
       const msg = {
         event: 'subscribe',
