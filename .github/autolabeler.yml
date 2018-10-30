@@ -3,5 +3,6 @@ api: packages/api
 ganache-bootstrap: packages/ganache-bootstrap
 contracts: packages/contracts
 exchange-connector: packages/exchange-connector
+data-collector: packages/data-collector
 deployer: packages/deployer
 stats: packages/stats
