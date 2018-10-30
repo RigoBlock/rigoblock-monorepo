@@ -1,3 +1,4 @@
+import { NETWORKS } from '@rigoblock/exchange-connector'
 import tokensMap from './tokensMap'
 
 export type ConfigEntry = {
@@ -90,6 +91,15 @@ const conf: Config = {
     cronExpression: '50 * * * *',
     initialData: {
       symbol: tokensMap.EDO.symbol
+    }
+  },
+  'fetch-mainnet-prices-ZRX': {
+    handlerName: 'fetchPrice',
+    description: 'Fetches token prices and saves to the DB',
+    cronExpression: '0 * * * *', // every hour
+    initialData: {
+      symbol: tokensMap.ZRX.symbol,
+      networkId: NETWORKS.MAINNET
     }
   }
 }

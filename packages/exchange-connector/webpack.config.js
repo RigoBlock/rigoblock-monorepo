@@ -22,5 +22,10 @@ module.exports = {
     libraryTarget: 'umd',
     globalObject: 'this',
     library: 'bundle'
-  }
+  },
+  externals: [
+    {
+      'node-fetch': 'node-fetch'
+    }
+  ]
 }

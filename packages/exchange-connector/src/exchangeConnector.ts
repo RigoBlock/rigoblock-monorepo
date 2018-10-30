@@ -1,4 +1,5 @@
 import { Ethfinex } from './exchanges/ethfinex'
+import { EthfinexRaw } from './exchanges/ethfinexRaw'
 import { NETWORKS, supportedExchanges } from './constants'
 import ExchangesMap from './exchanges'
 import ZeroExStandardRelayerRaw from './exchanges/zeroExStandardRelayerRaw'
@@ -11,6 +12,10 @@ function exchangeConnector(
   exchangeName: supportedExchanges.ETHFINEX,
   options?: ExchangeOptions
 ): Ethfinex
+function exchangeConnector(
+  exchangeName: supportedExchanges.ETHFINEX_RAW,
+  options?: ExchangeOptions
+): EthfinexRaw
 function exchangeConnector(
   exchangeName: supportedExchanges,
   options = {
