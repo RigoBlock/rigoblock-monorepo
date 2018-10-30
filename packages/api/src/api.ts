@@ -27,6 +27,7 @@ class Api {
       )
     })
     const networkId = await networkPromise
+    const rpcUrl = RPC_URLS[networkId]
 
     this.engine = new ProviderEngine()
     this.engine.addProvider(new SignerSubprovider(<any>web3.currentProvider))
@@ -36,7 +37,6 @@ class Api {
     subscriptionSubprovider.on('data', (err, notification) => {
       return this.engine.emit('data', err, notification)
     })
-    const rpcUrl = RPC_URLS[networkId]
     this.engine.addProvider(
       new WebSocketSubProvider({
         rpcUrl
