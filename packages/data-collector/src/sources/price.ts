@@ -20,6 +20,9 @@ export class TokenPrice {
       section: EthfinexRaw.CandlesSection.HIST,
       limit: '1000'
     })
+    if (<any>rawCandles[0] === 'error') {
+      return rawCandles
+    }
     const candles = rawCandles
       .map(rawCandle => {
         const date = moment(rawCandle[0]).toISOString()
