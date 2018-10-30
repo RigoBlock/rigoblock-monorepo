@@ -1,40 +1,65 @@
 import { Ethfinex } from './exchanges/ethfinex'
+import { EthfinexRaw } from './exchanges/ethfinexRaw'
 import { NETWORKS, supportedExchanges } from './constants'
+import { ZeroExStandardRelayerRaw } from './exchanges/zeroExStandardRelayerRaw'
 import ExchangesMap from './exchanges'
-import ZeroExStandardRelayerRaw from './exchanges/zeroExStandardRelayerRaw'
 
-function exchangeConnector(
-  exchangeName: supportedExchanges.ZEROEXRELAYER,
-  options: ExchangeOptions
-): ZeroExStandardRelayerRaw
-function exchangeConnector(
-  exchangeName: supportedExchanges.ETHFINEX,
-  options?: ExchangeOptions
-): Ethfinex
-function exchangeConnector(
-  exchangeName: supportedExchanges,
-  options = {
-    networkId: NETWORKS.MAINNET,
-    httpUrl: '',
-    wsUrl: ''
+class ExchangeConnector {
+  private exchangesList = {}
+
+  constructor() {}
+
+  public getExchange(
+    exchangeName: supportedExchanges.ZEROEXRELAYER,
+    options: ExchangeOptions
+  ): ZeroExStandardRelayerRaw
+  public getExchange(
+    exchangeName: supportedExchanges.ETHFINEX_RAW,
+    options?: ExchangeOptions
+  ): EthfinexRaw
+  public getExchange(
+    exchangeName: supportedExchanges.ETHFINEX,
+    options?: ExchangeOptions
+  ): Ethfinex
+  public getExchange(
+    exchangeName: supportedExchanges,
+    options = {
+      networkId: NETWORKS.MAINNET,
+      httpUrl: '',
+      wsUrl: ''
+    }
+  ): any {
+    if (!this.exchangesList[exchangeName]) {
+      this.exchangesList[exchangeName] = this.createInstance(
+        exchangeName,
+        options
+      )
+    }
+    return this.exchangesList[exchangeName]
   }
-): any {
-  const selectedExchange = ExchangesMap[exchangeName]
-  if (!selectedExchange) {
-    throw new Error(`Exchange not supported: ${exchangeName}`)
-  }
-  if (!selectedExchange.SUPPORTED_NETWORKS.includes(options.networkId)) {
-    throw new Error(
-      `Network Id not supported for selected network: ${options.networkId}`
+
+  private createInstance(name, options): any {
+    const selectedExchange = ExchangesMap[name]
+    if (!selectedExchange) {
+      throw new Error(`Exchange not supported: ${name}`)
+    }
+    if (!selectedExchange.SUPPORTED_NETWORKS.includes(options.networkId)) {
+      throw new Error(
+        `Network Id not supported for selected network: ${options.networkId}`
+      )
+    }
+    return new selectedExchange(
+      options.networkId,
+      options.httpUrl,
+      options.wsUrl
     )
   }
-  return new selectedExchange(options.networkId, options.httpUrl, options.wsUrl)
 }
-
-export default exchangeConnector
 
 interface ExchangeOptions {
   networkId?: NETWORKS | number
   httpUrl?: string
   wsUrl?: string
 }
+
+export default ExchangeConnector
