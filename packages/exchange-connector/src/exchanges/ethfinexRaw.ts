@@ -184,6 +184,14 @@ export class EthfinexRaw {
   public network(id: number = NETWORKS.MAINNET): EthfinexRaw {
     return new EthfinexRaw(id)
   }
+  public options = {
+    orderPrecisions: EthfinexRaw.OrderPrecisions,
+    configurationFlags: EthfinexRaw.ConfigurationFlags,
+    bookFrequency: EthfinexRaw.BookFrequency,
+    candlesTimeFrame: EthfinexRaw.CandlesTimeFrame,
+    candlesSection: EthfinexRaw.CandlesSection,
+    candlesSort: EthfinexRaw.CandlesSort
+  }
 }
 
 export namespace EthfinexRaw {
