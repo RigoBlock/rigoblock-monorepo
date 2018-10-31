@@ -13,38 +13,45 @@ import exchangeConnector, { supportedExchanges, NETWORKS, exchanges } from '@rig
 You can instantiate a new exchange using the `exchangeConnector` function, passing the exchange name as first parameter and an options object as second parameter.
 The available options are: `networkdId` (defaults to 1), `httpUrl` and `wsUrl`. Supported relayers do not need the API's http url and websocket url to be specified, but they are needed when instantiating a 0x standard relayer.
 
-```javascript
-import exchangeConnector, { supportedExchanges, NETWORKS } from '@rigoblock/exchange-connector'
+To take advantage of the singleton, recommended is to have a separate file exporting a ExchangeConnector instance, and to import the instance in the files where we plan to use it.
 
-const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX, {
+example:
+
+```javascript
+// exchangeConnector.js
+import ExchangeConnector from '@rigoblock/exchange-connector'
+
+export default new ExchangeConnector()
+
+// someOtherFile.js
+import { supportedExchanges, NETWORKS } from '@rigoblock/exchange-connector'
+import connector from './exchangeConnector.js'
+
+const ethfinex = connector.getExchange(supportedExchanges.ETHFINEX, {
   networkId: NETWORKS.KOVAN
 })
 
 const tickersKovan = await ethfinex.http.getTickers({
   symbols: ['ZRXETH']
 })
-
-const tickersMainnet = await ethfinex.network(NETWORKS.MAINNET).http.getTickers({
-  symbols: ['ZRXETH']
-})
 ```
 
-Some methods require specific parameters to be passed, so these are saved under an exchange class namespace.
+Some methods require specific parameters to be passed, these are saved under a public property `options` on the class instance.
 
 ```javascript
-import exchangeConnector, {
+import {
   NETWORKS,
-  exchanges,
   supportedExchanges
 } from '@rigoblock/exchange-connector'
+import connector from './exchangeConnector.js'
 
-const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX, {
+const ethfinex = connector.getExchange(supportedExchanges.ETHFINEX, {
   networkId: NETWORKS.KOVAN
 })
 
 const orders = await ethfinex.http.getOrders({
   symbols: 'ZRXETH',
-  precision: exchanges[supportedExchanges.ETHFINEX_RAW].OrderPrecisions.P4
+  precision: ethfinex.options.OrderPrecisions.P4
 })
 ```
 
