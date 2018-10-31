@@ -3,15 +3,13 @@ import { fetchJSON, getQueryParameters } from '../utils'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 export class EthfinexRaw {
-  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.KOVAN]
+  static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.ROPSTEN]
   public static API_HTTP_URLS = {
     [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
-    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2',
     [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
   }
   public static API_WS_URLS = {
     [NETWORKS.MAINNET]: 'wss://api.ethfinex.com/ws/2',
-    [NETWORKS.KOVAN]: 'wss://test.ethfinex.com/ws/2',
     [NETWORKS.ROPSTEN]: 'wss://test.ethfinex.com/ws/2'
   }
   public HTTP_URL: string
@@ -185,6 +183,14 @@ export class EthfinexRaw {
 
   public network(id: number = NETWORKS.MAINNET): EthfinexRaw {
     return new EthfinexRaw(id)
+  }
+  public options = {
+    orderPrecisions: EthfinexRaw.OrderPrecisions,
+    configurationFlags: EthfinexRaw.ConfigurationFlags,
+    bookFrequency: EthfinexRaw.BookFrequency,
+    candlesTimeFrame: EthfinexRaw.CandlesTimeFrame,
+    candlesSection: EthfinexRaw.CandlesSection,
+    candlesSort: EthfinexRaw.CandlesSort
   }
 }
 
