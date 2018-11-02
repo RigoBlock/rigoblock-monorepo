@@ -112,10 +112,10 @@ describeContract(contractName, () => {
       expect(wrappedTokensAmount.toString()).toEqual(toBeWrapped.toString())
 
       // Check ETH wrapped time is correct
-      let wrappedTokensTime = await baseContracts['WrapperLockEth'].depositLock(
-        dragoAddress
-      )
-      let now = moment()
+      const wrappedTokensTime = await baseContracts[
+        'WrapperLockEth'
+      ].depositLock(dragoAddress)
+      const now = moment()
       now.add(23, 'hours')
       expect(Number(wrappedTokensTime.toFixed())).toBeGreaterThan(now.unix())
       now.add(2, 'hours')
