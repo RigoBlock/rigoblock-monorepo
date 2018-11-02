@@ -1,4 +1,4 @@
-import * as hashes from 'jshashes'
+import * as crypto from 'crypto'
 import * as moment from 'moment'
 import exchangeConnector, {
   exchanges,
@@ -9,7 +9,6 @@ export class TokenPrice {
   constructor() {}
 
   public async fetch(symbol, networkId) {
-    const SHA1 = new hashes.SHA1()
     const { EthfinexRaw } = exchanges
     const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX_RAW, {
       networkId
@@ -26,7 +25,7 @@ export class TokenPrice {
     const candles = rawCandles
       .map(rawCandle => {
         const date = moment(rawCandle[0]).toISOString()
-        const hash = SHA1.hex(rawCandle.join())
+        const hash = crypto.createHmac('sha1', rawCandle.join()).digest('hex')
         return {
           [date]: {
             hash,
