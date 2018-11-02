@@ -16,14 +16,16 @@ const task = async job => {
     .subtract('1', 'day')
     .toISOString()
   let conflicts = []
-  const oldData = await db.get(PRICES_DB, `${symbol}::${prevDay}`)
+  const oldData = await db.get(PRICES_DB, prevDay)
+
   const candles = await tokenPrice.fetch(symbol, networkId)
   if (Array.isArray(candles) && <any>candles[0] === 'error') {
     return logger.error(candles[2])
   }
 
   if (oldData) {
-    const diff = tokenPrice.compareData(oldData, candles)
+    const oldCandles = oldData[networkId].candles
+    const diff = tokenPrice.compareData(oldCandles, candles)
     conflicts = diff.length ? diff : conflicts
   }
   const prices = {

@@ -37,9 +37,9 @@ export class TokenPrice {
     return candles
   }
 
-  public compareData(oldData, newData) {
-    const firstSet = this.values(oldData).slice(0, oldData.length - 1)
-    const secondSet = this.values(newData).slice(1)
+  public compareData(oldCandles, newCandles) {
+    const firstSet = this.values(oldCandles).slice(0, oldCandles.length - 1)
+    const secondSet = this.values(newCandles).slice(1)
     return firstSet
       .map((el, index) => {
         return el.hash === secondSet[index].hash
