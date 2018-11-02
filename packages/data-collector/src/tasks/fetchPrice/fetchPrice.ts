@@ -23,7 +23,7 @@ const task = async job => {
     return logger.error(candles[2])
   }
 
-  if (oldData) {
+  if (oldData && oldData[networkId] && oldData[networkId].candles) {
     const oldCandles = oldData[networkId].candles
     const diff = tokenPrice.compareData(oldCandles, candles)
     conflicts = diff.length ? diff : conflicts
