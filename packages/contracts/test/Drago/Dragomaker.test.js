@@ -49,7 +49,7 @@ describeContract(contractName, () => {
       const ETHtokenAddress = '0x0000000000000000000000000000000000000000' //Ether has address 0x0
       const ETHtokenWrapper = await baseContracts['WrapperLockEth'].address
       const toBeWrapped = web3.utils.toWei('1.51') //web3.utils.toWei('1.1') //1e16 is 10 finney
-      const time = 24 // 24 hours lockup (the minimum)
+      const lockupTime = 24 // 24 hours lockup (the minimum)
       const isOld = 0 // is a standard ERC20
 
       await baseContracts['ExchangesAuthority'].whitelistWrapper(
@@ -89,7 +89,7 @@ describeContract(contractName, () => {
       }
       const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
         methodInterface,
-        [ETHtokenAddress, ETHtokenWrapper, toBeWrapped, time, isOld]
+        [ETHtokenAddress, ETHtokenWrapper, toBeWrapped, lockupTime, isOld]
       )
       const methodSignature = await web3.eth.abi.encodeFunctionSignature(
         methodInterface
@@ -125,7 +125,7 @@ describeContract(contractName, () => {
       const GRGtokenWrapper = await baseContracts['WrapperLock'].address
       const GRGtoBeWrapped = web3.utils.toWei('2')
       await baseContracts['RigoToken'].approve(GRGtokenWrapper, GRGtoBeWrapped)
-      await baseContracts['WrapperLock'].deposit(GRGtoBeWrapped, time)
+      await baseContracts['WrapperLock'].deposit(GRGtoBeWrapped, lockupTime)
 
       const EXCHANGE_ADDRESS = baseContracts['ExchangeEfx'].address
       const maker = dragoAddress
