@@ -1,3 +1,4 @@
+import { NETWORKS } from '@rigoblock/exchange-connector'
 import tokensMap from './tokensMap'
 
 export type ConfigEntry = {
@@ -90,6 +91,51 @@ const conf: Config = {
     cronExpression: '50 * * * *',
     initialData: {
       symbol: tokensMap.EDO.symbol
+    }
+  },
+  'fetch-mainnet-prices-ZRX': {
+    handlerName: 'fetchPrice',
+    description: 'Fetches token prices and saves to the DB',
+    cronExpression: '0 */8 * * *', // every 8 hours
+    initialData: {
+      symbol: tokensMap.ZRX.symbol,
+      networkId: NETWORKS.MAINNET
+    }
+  },
+  'fetch-mainnet-prices-OMG': {
+    handlerName: 'fetchPrice',
+    description: 'Fetches token prices and saves to the DB',
+    cronExpression: '0 */8 * * *', // every 8 hours
+    initialData: {
+      symbol: tokensMap.OMG.symbol,
+      networkId: NETWORKS.MAINNET
+    }
+  },
+  'fetch-mainnet-prices-SAN': {
+    handlerName: 'fetchPrice',
+    description: 'Fetches token prices and saves to the DB',
+    cronExpression: '0 */8 * * *', // every 8 hours
+    initialData: {
+      symbol: tokensMap.SAN.symbol,
+      networkId: NETWORKS.MAINNET
+    }
+  },
+  'fetch-mainnet-prices-EDO': {
+    handlerName: 'fetchPrice',
+    description: 'Fetches token prices and saves to the DB',
+    cronExpression: '0 */8 * * *', // every 8 hours
+    initialData: {
+      symbol: tokensMap.EDO.symbol,
+      networkId: NETWORKS.MAINNET
+    }
+  },
+  'fetch-mainnet-prices-GNT': {
+    handlerName: 'fetchPrice',
+    description: 'Fetches token prices and saves to the DB',
+    cronExpression: '0 */8 * * *', // every 8 hours
+    initialData: {
+      symbol: tokensMap.GNT.symbol,
+      networkId: NETWORKS.MAINNET
     }
   }
 }

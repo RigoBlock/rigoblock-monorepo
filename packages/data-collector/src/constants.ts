@@ -7,6 +7,7 @@ export const COUCHDB_USERNAME = process.env.COUCHDB_USERNAME || 'admin'
 export const COUCHDB_PASSWORD = process.env.COUCHDB_PASSWORD || ''
 export const INFO_DB = 'tokens_info'
 export const NEWS_DB = 'tokens_news'
+export const PRICES_DB = 'tokens_prices'
 
 export const TOKEN_MARKET_URL =
   'https://tokenmarket.net/blockchain/ethereum/assets'

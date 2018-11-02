@@ -1,4 +1,4 @@
-import { INFO_DB, NEWS_DB } from './constants'
+import { INFO_DB, NEWS_DB, PRICES_DB } from './constants'
 import db from './db'
 
 const initDatabase = async () => {
@@ -27,6 +27,7 @@ const initDatabase = async () => {
   await db.init()
   await db.createDb(INFO_DB)
   await db.createDb(NEWS_DB)
+  await db.createDb(PRICES_DB)
   await db.upsert(INFO_DB, '_design/info', { ...view, ...validateFunction })
   await db.upsert(NEWS_DB, '_design/news', validateFunction)
   await db.createIndex(NEWS_DB, indexDef)
