@@ -5,14 +5,9 @@ import * as FilterSubprovider from 'web3-provider-engine/subproviders/filters'
 import * as SubscriptionSubProvider from 'web3-provider-engine/subproviders/subscriptions'
 import * as WebSocketSubProvider from 'web3-provider-engine/subproviders/websocket'
 import { ContractModels } from './contracts'
+import { RPC_URLS } from './constants'
 import { SignerSubprovider } from '@0xproject/subproviders'
 import fetchContracts from '@rigoblock/contracts'
-
-interface Web3Window extends Window {
-  web3: Web3
-}
-
-declare let window: Web3Window
 
 class Api {
   public contract: ContractModels
@@ -25,7 +20,15 @@ class Api {
     })
   }
 
-  async init(web3: Web3 = window.web3, rpcUrl = 'ws://localhost:8545') {
+  async init(web3: Web3 = window['web3']) {
+    const networkPromise: Promise<number> = new Promise((resolve, reject) => {
+      window['web3'].version.getNetwork(
+        (err, res) => (err ? reject(err) : resolve(res))
+      )
+    })
+    const networkId = await networkPromise
+    const rpcUrl = RPC_URLS[networkId]
+
     this.engine = new ProviderEngine()
     this.engine.addProvider(new SignerSubprovider(<any>web3.currentProvider))
     this.engine.addProvider(new FilterSubprovider())
@@ -44,7 +47,6 @@ class Api {
 
     await this.startEngine().catch(err => console.error(err))
 
-    const networkId = await this.web3.eth.net.getId()
     const contractsMap: Contract.ContractsMap = await fetchContracts(networkId)
     const contracts = new Contract()
     await contracts.init(contractsMap)

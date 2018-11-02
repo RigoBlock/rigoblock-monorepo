@@ -11,6 +11,7 @@ import { Scheduler } from 'rxjs/Scheduler'
 import { VAULT } from '../../constants/blockchain'
 import { from } from 'rxjs/observable/from'
 import { fromPromise } from 'rxjs/observable/fromPromise'
+import { merge } from 'rxjs/observable/merge'
 import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
 import { zip } from 'rxjs/observable/zip'
@@ -76,8 +77,7 @@ class BlockChainService {
   init() {
     const return$ = fromPromise(this.api.init(), this.scheduler)
       .mapTo(blockChainActions.blockChainInit())
-      .merge(this.errorListener())
-      .merge(this.connectionListener())
+      .concat(merge(this.errorListener(), this.connectionListener()))
 
     return this.wrapError(return$)
   }
