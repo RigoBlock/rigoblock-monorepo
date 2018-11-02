@@ -7,6 +7,7 @@ export class Ethfinex {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.ROPSTEN]
   private raw: EthfinexRaw
   private wsTimeout = 10000
+  public options
 
   constructor(
     public NETWORK_ID: NETWORKS | number,
@@ -14,6 +15,7 @@ export class Ethfinex {
     public WS_URL?: string
   ) {
     this.raw = new EthfinexRaw(NETWORK_ID, HTTP_URL, WS_URL)
+    this.options = this.raw.options
   }
 
   public http = {

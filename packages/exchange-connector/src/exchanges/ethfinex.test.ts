@@ -38,7 +38,11 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
     })
     describe('getCandles', () => {
       it('returns data which provides a way to access charting candle info', async () => {
-        const options = { timeframe: '15m', symbols: 'BTCUSD', section: 'hist' }
+        const options = {
+          timeframe: exchange.options.candlesTimeFrame.FIFTEEN_MINS,
+          symbols: 'BTCUSD',
+          section: 'hist'
+        }
         const result: any = await nockBackPromise(
           'ethfinex/http_getCandles.json',
           () => exchange.http.getCandles(options)
