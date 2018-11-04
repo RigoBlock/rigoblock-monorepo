@@ -90,17 +90,19 @@ export class EthfinexRaw {
       return this.wsInstance || this.ws.open()
     },
     getTickers: async (
-      options: { symbols: string },
+      options: { symbols: string[] },
       callback: (err: Error, message?: any, unsubscribe?: Function) => any
     ): Promise<Function> => {
       const ws = await this.ws.getConnection()
-      const msg = {
-        event: 'subscribe',
-        channel: 'ticker',
-        symbol: `t${options.symbols}`
-      }
+      options.symbols.forEach(symbols => {
+        const msg = {
+          event: 'subscribe',
+          channel: 'ticker',
+          symbol: `t${symbols}`
+        }
+        ws.send(JSON.stringify(msg))
+      })
       const unsubscribe = this.messagesListener(ws, callback)
-      ws.send(JSON.stringify(msg))
       return unsubscribe
     },
     getAggregatedOrders: async (
