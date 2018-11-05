@@ -147,11 +147,8 @@ jobs:
           name: Cloning git subrepo
           command: git clone https://github.com/ingydotnet/git-subrepo ../git-subrepo
       - run:
-          name: Adding git subrepo to path
-          command: source ../git-subrepo/.rc
-      - run:
           name: Pushing changes to API subrepo
-          command: yarn push-api-subrepo
+          command: source ../git-subrepo/.rc && yarn push-api-subrepo
 
   build-exchange-connector:
     working_directory: *workspace_root
