@@ -135,6 +135,18 @@ jobs:
           paths:
             - packages/api/dist
 
+  push-api-changes:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - run:
+          name: Pushing changes to API subrepo
+          command: yarn push-api-subrepo
+
   build-exchange-connector:
     working_directory: *workspace_root
     environment:
@@ -398,6 +410,12 @@ workflows:
       - test-feature-dapp:
           requires:
             - build-dapp
+      - push-api-changes:
+          requires:
+            - build-api
+          filters:
+            branches:
+              only: master
       - deploy-dapp-staging:
           requires:
             - test-unit-dapp
