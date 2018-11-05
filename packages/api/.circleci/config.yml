@@ -1,0 +1,64 @@
+version: 2.0
+
+references:
+  workspace_root: &workspace_root
+    ~/api
+
+  timezone: &timezone
+    "/usr/share/zoneinfo/Europe/Rome"
+
+  node_image: &node_image
+    circleci/node:8.10.0-stretch
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+jobs:
+  setup:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - restore_cache:
+          key: rigoblock-api-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install lerna and monorepo dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: rigoblock-api-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+            - .cache/yarn
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - node_modules
+            - .cache/yarn
+  build:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: circleci/node:8.10-stretch
+    steps:
+      - checkout
+      - *attach_workspace
+      - run:
+          name: Building the API
+          command: yarn build
+
+workflows:
+  version: 2
+  rigoblock:
+    jobs:
+      - setup
+      - build:
+          requires:
+            - setup
+      # - push-api-changes:
+      #     requires:
+      #       - build
