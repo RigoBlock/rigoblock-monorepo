@@ -389,51 +389,49 @@ workflows:
   rigoblock:
     jobs:
       - setup
-      # - build-exchange-connector:
-      #     requires:
-      #       - setup
-      # - test-exchange-connector:
-      #     requires:
-      #       - build-exchange-connector
-      # - test-unit-dapp:
-      #     requires:
-      #       - setup
-      # - build-contracts:
-      #     requires:
-      #       - test-unit-dapp
-      # - test-contracts:
-      #     requires:
-      #       - build-contracts
-      # - build-api:
-      #     requires:
-      #       - build-contracts
-      - push-api-changes:
+      - build-exchange-connector:
           requires:
             - setup
-          # requires:
-          #   - build-api
-          # filters:
-          #   branches:
-          #     only: master
-      # - build-dapp:
-      #     requires:
-      #       - build-api
-      # - test-feature-dapp:
-      #     requires:
-      #       - build-dapp
-      # - deploy-dapp-staging:
-      #     requires:
-      #       - test-unit-dapp
-      #       - build-dapp
-      #       - test-feature-dapp
-      #     filters:
-      #       branches:
-      #         only: master
-      # - deploy-storybook-staging:
-      #     requires:
-      #       - test-unit-dapp
-      #       - build-dapp
-      #       - test-feature-dapp
-      #     filters:
-      #       branches:
-      #         only: master
+      - test-exchange-connector:
+          requires:
+            - build-exchange-connector
+      - test-unit-dapp:
+          requires:
+            - setup
+      - build-contracts:
+          requires:
+            - test-unit-dapp
+      - test-contracts:
+          requires:
+            - build-contracts
+      - build-api:
+          requires:
+            - build-contracts
+      - build-dapp:
+          requires:
+            - build-api
+      - push-api-changes:
+          requires:
+            - build-api
+          filters:
+            branches:
+              only: master
+      - test-feature-dapp:
+          requires:
+            - build-dapp
+      - deploy-dapp-staging:
+          requires:
+            - test-unit-dapp
+            - build-dapp
+            - test-feature-dapp
+          filters:
+            branches:
+              only: master
+      - deploy-storybook-staging:
+          requires:
+            - test-unit-dapp
+            - build-dapp
+            - test-feature-dapp
+          filters:
+            branches:
+              only: master
