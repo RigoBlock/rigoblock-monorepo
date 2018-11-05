@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:RigoBlock/api.git
+	branch = master
+	commit = 2182ab89d412e05ece07275de7e687a20651428d
+	parent = 57ab78fbdcc29b9ef6202d0675864a0876196a29
+	cmdver = 0.3.1
