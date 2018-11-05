@@ -114,13 +114,13 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       })
     })
     describe('getTickers', () => {
-      const options = { symbols: 'BTCUSD' }
+      const options = { symbols: ['BTCUSD'] }
       const cbSpy = jest.fn()
       const tickersResponse = [129, [6935.3]]
       const msg = {
         event: 'subscribe',
         channel: 'ticker',
-        symbol: `t${options.symbols}`
+        symbol: `t${options.symbols[0]}`
       }
       const subscribeEvent = {
         event: 'subscribed',

@@ -55,13 +55,13 @@ export class Ethfinex {
       return this.raw.ws.getConnection()
     },
     getTickers: async (
-      options: { symbols: string },
+      options: { symbols: string[] },
       callback: (err: Error, message?: any) => any
     ) => {
       return this.raw.ws.getTickers(
         options,
         this.websocketMessagesFilter(
-          m => m['pair'] === options.symbols,
+          m => options.symbols.includes(m['pair']),
           callback
         )
       )
