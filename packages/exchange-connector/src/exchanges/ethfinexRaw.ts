@@ -97,20 +97,23 @@ export class EthfinexRaw {
       callback: (err: Error, message?: any, unsubscribe?: Function) => any
     ): Promise<Function> => {
       const ws = await this.ws.getConnection()
-      options.symbols.forEach(symbols => {
+      const unsubscribeFuncs = options.symbols.map(symbols => {
+        const unsubscribe = this.messagesListener(
+          ws,
+          m => m['pair'] === symbols,
+          callback
+        )
         const msg = {
           event: 'subscribe',
           channel: 'ticker',
           symbol: `t${symbols}`
         }
         ws.send(JSON.stringify(msg))
+
+        return unsubscribe
       })
-      const unsubscribe = this.messagesListener(
-        ws,
-        m => options.symbols.includes(m['pair']),
-        callback
-      )
-      return unsubscribe
+
+      return () => unsubscribeFuncs.map(fn => fn())
     },
     getAggregatedOrders: async (
       options: {
@@ -191,7 +194,6 @@ export class EthfinexRaw {
     let chanId
     const unsubscribe = () => {
       if (msgCallback && chanId) {
-        console.log('inside')
         websocketInstance.send(
           JSON.stringify({
             event: 'unsubscribe',
