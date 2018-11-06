@@ -64,7 +64,10 @@ export class EthfinexRaw {
   public ws = {
     open: () => {
       this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
-        WebSocket: window['WebSocket'] ? window['WebSocket'] : WS
+        WebSocket:
+          typeof window !== 'undefined' && window['WebSocket']
+            ? window['WebSocket']
+            : WS
       })
       return new Promise((resolve, reject) => {
         const rejectError = err => {
@@ -102,7 +105,11 @@ export class EthfinexRaw {
         }
         ws.send(JSON.stringify(msg))
       })
-      const unsubscribe = this.messagesListener(ws, callback)
+      const unsubscribe = this.messagesListener(
+        ws,
+        m => options.symbols.includes(m['pair']),
+        callback
+      )
       return unsubscribe
     },
     getAggregatedOrders: async (
@@ -135,7 +142,11 @@ export class EthfinexRaw {
         freq: `${options.frequency}`,
         len: options.len
       }
-      const unsubscribe = this.messagesListener(ws, callback)
+      const unsubscribe = this.messagesListener(
+        ws,
+        m => m['symbol'] === options.symbols,
+        callback
+      )
       let flags = options.configFlags.reduce((acc, flag) => {
         return acc + flag
       })
@@ -161,7 +172,11 @@ export class EthfinexRaw {
         channel: 'candles',
         key: `trade:${options.timeframe}:t${options.symbols}`
       }
-      const unsubscribe = this.messagesListener(ws, callback)
+      const unsubscribe = this.messagesListener(
+        ws,
+        m => m['key'] === `trade:${options.timeframe}:t${options.symbols}`,
+        callback
+      )
       ws.send(JSON.stringify(msg))
       return unsubscribe
     }
@@ -169,17 +184,32 @@ export class EthfinexRaw {
 
   private messagesListener = (
     websocketInstance,
+    filter,
     callback: (err: Error, message?: any, unsubscribe?: Function) => any
   ) => {
     let msgCallback
-    const unsubscribe = () =>
-      msgCallback
-        ? websocketInstance.removeEventListener('message', msgCallback)
-        : null
+    let chanId
+    const unsubscribe = () => {
+      if (msgCallback && chanId) {
+        console.log('inside')
+        websocketInstance.send(
+          JSON.stringify({
+            event: 'unsubscribe',
+            chanId
+          })
+        )
+        return websocketInstance.removeEventListener('message', msgCallback)
+      }
+    }
 
     msgCallback = message => {
       const msg = JSON.parse(message.data)
-      return callback(null, msg, unsubscribe)
+      if (msg.event === 'subscribed' && filter(msg)) {
+        chanId = msg.chanId
+      }
+      if (Array.isArray(msg) && msg[0] === chanId) {
+        return callback(null, msg, unsubscribe)
+      }
     }
 
     websocketInstance.addEventListener('message', msgCallback)
