@@ -212,6 +212,7 @@ export class EthfinexRaw {
       const msg = JSON.parse(message.data)
       if (msg.event === 'subscribed' && filter(msg)) {
         chanId = msg.chanId
+        return callback(null, msg)
       }
       if (Array.isArray(msg) && msg[0] === chanId) {
         return callback(null, msg)
