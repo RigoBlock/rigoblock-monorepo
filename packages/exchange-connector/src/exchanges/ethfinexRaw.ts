@@ -16,6 +16,7 @@ export class EthfinexRaw {
   public HTTP_URL: string
   public WS_URL: string
   public wsInstance
+  public wsStatus: string = 'closed'
 
   constructor(
     public networkId: NETWORKS | number,
@@ -63,6 +64,7 @@ export class EthfinexRaw {
 
   public ws = {
     open: () => {
+      this.wsStatus = 'connecting'
       this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
         WebSocket:
           typeof window !== 'undefined' && window['WebSocket']
@@ -76,13 +78,16 @@ export class EthfinexRaw {
         this.wsInstance.addEventListener('error', rejectError)
         this.wsInstance.addEventListener('open', () => {
           this.wsInstance.removeEventListener('error', rejectError)
+          this.wsStatus = 'open'
           return resolve(this.wsInstance)
         })
       })
     },
     close: () => {
+      this.wsStatus = 'closing'
       return new Promise(resolve => {
         this.wsInstance.addEventListener('close', () => {
+          this.wsStatus = 'closed'
           this.wsInstance = null
           return resolve()
         })
