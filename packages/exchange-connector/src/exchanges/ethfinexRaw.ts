@@ -1,4 +1,4 @@
-import { NETWORKS } from '../constants'
+import { NETWORKS, WS_STATUS } from '../constants'
 import { fetchJSON, getQueryParameters } from '../utils'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import WS from 'ws'
@@ -16,7 +16,7 @@ export class EthfinexRaw {
   public HTTP_URL: string
   public WS_URL: string
   public wsInstance
-  public wsStatus: string = 'closed'
+  public wsStatus: string = WS_STATUS.CLOSED
 
   constructor(
     public networkId: NETWORKS | number,
@@ -64,7 +64,7 @@ export class EthfinexRaw {
 
   public ws = {
     open: () => {
-      this.wsStatus = 'connecting'
+      this.wsStatus = WS_STATUS.CONNECTING
       this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
         WebSocket:
           typeof window !== 'undefined' && window['WebSocket']
@@ -78,16 +78,16 @@ export class EthfinexRaw {
         this.wsInstance.addEventListener('error', rejectError)
         this.wsInstance.addEventListener('open', () => {
           this.wsInstance.removeEventListener('error', rejectError)
-          this.wsStatus = 'open'
+          this.wsStatus = WS_STATUS.OPEN
           return resolve(this.wsInstance)
         })
       })
     },
     close: () => {
-      this.wsStatus = 'closing'
+      this.wsStatus = WS_STATUS.CLOSING
       return new Promise(resolve => {
         this.wsInstance.addEventListener('close', () => {
-          this.wsStatus = 'closed'
+          this.wsStatus = WS_STATUS.CLOSED
           this.wsInstance = null
           return resolve()
         })
