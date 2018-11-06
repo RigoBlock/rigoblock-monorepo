@@ -1,4 +1,4 @@
-import { NETWORKS } from '../constants'
+import { NETWORKS, WS_STATUS } from '../constants'
 import { ZeroExStandardRelayerRaw } from './zeroExStandardRelayerRaw'
 import { fetchJSON, getQueryParameters, postJSON } from '../utils'
 import ReconnectingWebSocket from 'reconnecting-websocket'
@@ -9,7 +9,8 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   public static API_HTTP_URL = 'https://api.ercdex.com/api'
   public static API_WS_URL = 'wss://api.ercdex.com'
   public API_URL: string
-  private wsInstance
+  public wsInstance
+  public wsStatus: string = WS_STATUS.CLOSED
 
   constructor(
     public NETWORK_ID: NETWORKS | number,
@@ -102,6 +103,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
   public ws = {
     ...this.ws,
     open: () => {
+      this.wsStatus = WS_STATUS.CONNECTING
       this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
         WebSocket: window['WebSocket'] ? window['WebSocket'] : WS
       })
@@ -112,13 +114,16 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
         this.wsInstance.addEventListener('error', rejectError)
         this.wsInstance.addEventListener('open', () => {
           this.wsInstance.removeEventListener('error', rejectError)
+          this.wsStatus = WS_STATUS.OPEN
           return resolve(this.wsInstance)
         })
       })
     },
     close: () => {
+      this.wsStatus = WS_STATUS.CLOSING
       return new Promise(resolve => {
         this.wsInstance.addEventListener('close', () => {
+          this.wsStatus = WS_STATUS.CLOSED
           this.wsInstance = null
           return resolve()
         })

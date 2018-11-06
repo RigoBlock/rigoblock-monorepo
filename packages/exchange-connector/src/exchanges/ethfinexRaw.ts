@@ -1,4 +1,4 @@
-import { NETWORKS } from '../constants'
+import { NETWORKS, WS_STATUS } from '../constants'
 import { fetchJSON, getQueryParameters } from '../utils'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import WS from 'ws'
@@ -15,7 +15,8 @@ export class EthfinexRaw {
   }
   public HTTP_URL: string
   public WS_URL: string
-  private wsInstance
+  public wsInstance
+  public wsStatus: string = WS_STATUS.CLOSED
 
   constructor(
     public networkId: NETWORKS | number,
@@ -63,8 +64,12 @@ export class EthfinexRaw {
 
   public ws = {
     open: () => {
+      this.wsStatus = WS_STATUS.CONNECTING
       this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
-        WebSocket: window['WebSocket'] ? window['WebSocket'] : WS
+        WebSocket:
+          typeof window !== 'undefined' && window['WebSocket']
+            ? window['WebSocket']
+            : WS
       })
       return new Promise((resolve, reject) => {
         const rejectError = err => {
@@ -73,13 +78,16 @@ export class EthfinexRaw {
         this.wsInstance.addEventListener('error', rejectError)
         this.wsInstance.addEventListener('open', () => {
           this.wsInstance.removeEventListener('error', rejectError)
+          this.wsStatus = WS_STATUS.OPEN
           return resolve(this.wsInstance)
         })
       })
     },
     close: () => {
+      this.wsStatus = WS_STATUS.CLOSING
       return new Promise(resolve => {
         this.wsInstance.addEventListener('close', () => {
+          this.wsStatus = WS_STATUS.CLOSED
           this.wsInstance = null
           return resolve()
         })
@@ -91,19 +99,25 @@ export class EthfinexRaw {
     },
     getTickers: async (
       options: { symbols: string[] },
-      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+      callback: (err: Error, message?: any) => any
     ): Promise<Function> => {
       const ws = await this.ws.getConnection()
-      options.symbols.forEach(symbols => {
+      const unsubscribeFuncs = options.symbols.map(symbols => {
+        const unsubscribe = this.messagesListener(
+          ws,
+          m => m['pair'] === symbols,
+          callback
+        )
         const msg = {
           event: 'subscribe',
           channel: 'ticker',
           symbol: `t${symbols}`
         }
         ws.send(JSON.stringify(msg))
+
+        return unsubscribe
       })
-      const unsubscribe = this.messagesListener(ws, callback)
-      return unsubscribe
+      return () => unsubscribeFuncs.map(fn => fn())
     },
     getAggregatedOrders: async (
       options: {
@@ -113,7 +127,7 @@ export class EthfinexRaw {
         len: number
         configFlags?: EthfinexRaw.ConfigurationFlags[]
       },
-      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+      callback: (err: Error, message?: any) => any
     ): Promise<Function> => {
       const defOptions = {
         symbols: 'ETHUSD',
@@ -135,7 +149,11 @@ export class EthfinexRaw {
         freq: `${options.frequency}`,
         len: options.len
       }
-      const unsubscribe = this.messagesListener(ws, callback)
+      const unsubscribe = this.messagesListener(
+        ws,
+        m => m['symbol'] === `t${options.symbols}`,
+        callback
+      )
       let flags = options.configFlags.reduce((acc, flag) => {
         return acc + flag
       })
@@ -153,7 +171,7 @@ export class EthfinexRaw {
         timeframe: string
         symbols: string
       },
-      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+      callback: (err: Error, message?: any) => any
     ): Promise<Function> => {
       const ws = await this.ws.getConnection()
       const msg = {
@@ -161,7 +179,11 @@ export class EthfinexRaw {
         channel: 'candles',
         key: `trade:${options.timeframe}:t${options.symbols}`
       }
-      const unsubscribe = this.messagesListener(ws, callback)
+      const unsubscribe = this.messagesListener(
+        ws,
+        m => m['key'] === `trade:${options.timeframe}:t${options.symbols}`,
+        callback
+      )
       ws.send(JSON.stringify(msg))
       return unsubscribe
     }
@@ -169,17 +191,32 @@ export class EthfinexRaw {
 
   private messagesListener = (
     websocketInstance,
-    callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    filter,
+    callback: (err: Error, message?: any) => any
   ) => {
     let msgCallback
-    const unsubscribe = () =>
-      msgCallback
-        ? websocketInstance.removeEventListener('message', msgCallback)
-        : null
+    let chanId
+    const unsubscribe = () => {
+      if (msgCallback && chanId) {
+        websocketInstance.send(
+          JSON.stringify({
+            event: 'unsubscribe',
+            chanId
+          })
+        )
+        return websocketInstance.removeEventListener('message', msgCallback)
+      }
+    }
 
     msgCallback = message => {
       const msg = JSON.parse(message.data)
-      return callback(null, msg, unsubscribe)
+      if (msg.event === 'subscribed' && filter(msg)) {
+        chanId = msg.chanId
+        return callback(null, msg)
+      }
+      if (Array.isArray(msg) && msg[0] === chanId) {
+        return callback(null, msg)
+      }
     }
 
     websocketInstance.addEventListener('message', msgCallback)

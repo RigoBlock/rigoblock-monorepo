@@ -6,7 +6,6 @@ import EthfinexRaw from './ethfinexRaw'
 export class Ethfinex {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.ROPSTEN]
   private raw: EthfinexRaw
-  private wsTimeout = 10000
   public options
 
   constructor(
@@ -58,13 +57,7 @@ export class Ethfinex {
       options: { symbols: string[] },
       callback: (err: Error, message?: any) => any
     ) => {
-      return this.raw.ws.getTickers(
-        options,
-        this.websocketMessagesFilter(
-          m => options.symbols.includes(m['pair']),
-          callback
-        )
-      )
+      return this.raw.ws.getTickers(options, callback)
     },
     getCandles: async (
       options: {
@@ -73,38 +66,7 @@ export class Ethfinex {
       },
       callback: (err: Error, message?: any) => any
     ) => {
-      return this.raw.ws.getCandles(
-        options,
-        this.websocketMessagesFilter(
-          m => m['key'] === `trade:${options.timeframe}:t${options.symbols}`,
-          callback
-        )
-      )
-    }
-  }
-
-  private websocketMessagesFilter = (filter, callback) => {
-    let chanId
-    let timer
-    return (error: Error, msg: any, unsubscribe: Function) => {
-      if (error) {
-        return callback(error)
-      }
-      if (msg.event === 'subscribed' && filter(msg)) {
-        chanId = msg.chanId
-        timer = setTimeout(() => {
-          unsubscribe()
-          return callback(
-            new Error(
-              `No data received within ${this.wsTimeout / 1000} seconds.`
-            )
-          )
-        }, this.wsTimeout)
-      }
-      if (Array.isArray(msg) && msg[0] === chanId) {
-        timer ? clearTimeout(timer) : null
-        return callback(null, msg.pop())
-      }
+      return this.raw.ws.getCandles(options, callback)
     }
   }
 

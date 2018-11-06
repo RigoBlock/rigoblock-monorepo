@@ -20,3 +20,10 @@ export enum NETWORKS {
   ROPSTEN = 3,
   RINKEBY = 4
 }
+
+export enum WS_STATUS {
+  CLOSED = 'closed',
+  OPEN = 'open',
+  CONNECTING = 'connecting',
+  CLOSING = 'closing'
+}
