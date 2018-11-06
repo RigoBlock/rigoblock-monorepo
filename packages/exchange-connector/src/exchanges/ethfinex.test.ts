@@ -114,7 +114,7 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
       })
     })
     describe('getTickers', () => {
-      const options = { symbols: ['BTCUSD'] }
+      const options = { symbols: ['BTCUSD', 'ZRXETH'] }
       const cbSpy = jest.fn()
       const tickersResponse = [129, [6935.3]]
       const msg = {
@@ -129,6 +129,13 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         symbol: 'tBTCUSD',
         pair: 'BTCUSD'
       }
+      const subscribeEvent2 = {
+        event: 'subscribed',
+        channel: 'ticker',
+        chanId: 129,
+        symbol: 'tZRXETH',
+        pair: 'ZRXETH'
+      }
       it('sends a websocket message with the specified options', async () => {
         await exchange.ws.getTickers(options, cbSpy)
         expect(sendSpy).toHaveBeenCalledWith(JSON.stringify(msg))
@@ -141,21 +148,17 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         emitter.emit('message', {
           data: JSON.stringify(tickersResponse)
         })
-        expect(cbSpy).toHaveBeenCalledWith(null, tickersResponse.pop())
-      })
-      it('calls the callback with an error if no data is returned within 10 seconds', async () => {
-        await exchange.ws.getTickers(options, cbSpy)
-        emitter.emit('message', {
-          data: JSON.stringify(subscribeEvent)
-        })
-        jest.advanceTimersByTime(10000)
-        expect(cbSpy).toHaveBeenCalledWith(
-          new Error(`No data received within 10 seconds.`)
-        )
+        expect(cbSpy).toHaveBeenCalledWith(null, tickersResponse)
       })
       it('returns an unsubscribe function to remove the listener', async () => {
         const unsub = await exchange.ws.getTickers(options, cbSpy)
-        expect(emitter._listeners.message.length).toEqual(1)
+        expect(emitter._listeners.message.length).toEqual(2)
+        emitter.emit('message', {
+          data: JSON.stringify(subscribeEvent)
+        })
+        emitter.emit('message', {
+          data: JSON.stringify(subscribeEvent2)
+        })
         unsub()
         expect(emitter._listeners.message.length).toEqual(0)
       })
@@ -191,22 +194,16 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         emitter.emit('message', {
           data: JSON.stringify(candlesResponse)
         })
-        expect(cbSpy).toHaveBeenCalledWith(null, candlesResponse.pop())
-      })
-      it('calls the callback with an error if no data is returned within 10 seconds', async () => {
-        await exchange.ws.getCandles(options, cbSpy)
-        emitter.emit('message', {
-          data: JSON.stringify(subscribeEvent)
-        })
-        jest.advanceTimersByTime(10000)
-        expect(cbSpy).toHaveBeenCalledWith(
-          new Error(`No data received within 10 seconds.`)
-        )
+        expect(cbSpy).toHaveBeenCalledWith(null, candlesResponse)
       })
       it('returns an unsubscribe function to remove the listener', async () => {
         const unsub = await exchange.ws.getCandles(options, cbSpy)
+        emitter.emit('message', {
+          data: JSON.stringify(subscribeEvent)
+        })
+        expect(emitter._listeners.message.length).toEqual(1)
         unsub()
-        expect(emitter._listeners.message).toEqual([])
+        expect(emitter._listeners.message.length).toEqual(0)
       })
     })
   })

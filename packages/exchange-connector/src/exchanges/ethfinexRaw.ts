@@ -15,7 +15,7 @@ export class EthfinexRaw {
   }
   public HTTP_URL: string
   public WS_URL: string
-  private wsInstance
+  public wsInstance
 
   constructor(
     public networkId: NETWORKS | number,
@@ -94,7 +94,7 @@ export class EthfinexRaw {
     },
     getTickers: async (
       options: { symbols: string[] },
-      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+      callback: (err: Error, message?: any) => any
     ): Promise<Function> => {
       const ws = await this.ws.getConnection()
       const unsubscribeFuncs = options.symbols.map(symbols => {
@@ -112,7 +112,6 @@ export class EthfinexRaw {
 
         return unsubscribe
       })
-
       return () => unsubscribeFuncs.map(fn => fn())
     },
     getAggregatedOrders: async (
@@ -123,7 +122,7 @@ export class EthfinexRaw {
         len: number
         configFlags?: EthfinexRaw.ConfigurationFlags[]
       },
-      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+      callback: (err: Error, message?: any) => any
     ): Promise<Function> => {
       const defOptions = {
         symbols: 'ETHUSD',
@@ -147,7 +146,7 @@ export class EthfinexRaw {
       }
       const unsubscribe = this.messagesListener(
         ws,
-        m => m['symbol'] === options.symbols,
+        m => m['symbol'] === `t${options.symbols}`,
         callback
       )
       let flags = options.configFlags.reduce((acc, flag) => {
@@ -167,7 +166,7 @@ export class EthfinexRaw {
         timeframe: string
         symbols: string
       },
-      callback: (err: Error, message?: any, unsubscribe?: Function) => any
+      callback: (err: Error, message?: any) => any
     ): Promise<Function> => {
       const ws = await this.ws.getConnection()
       const msg = {
@@ -188,7 +187,7 @@ export class EthfinexRaw {
   private messagesListener = (
     websocketInstance,
     filter,
-    callback: (err: Error, message?: any, unsubscribe?: Function) => any
+    callback: (err: Error, message?: any) => any
   ) => {
     let msgCallback
     let chanId
@@ -210,7 +209,7 @@ export class EthfinexRaw {
         chanId = msg.chanId
       }
       if (Array.isArray(msg) && msg[0] === chanId) {
-        return callback(null, msg, unsubscribe)
+        return callback(null, msg)
       }
     }
 
