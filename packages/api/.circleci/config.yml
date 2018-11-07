@@ -51,6 +51,10 @@ jobs:
       - run:
           name: Building the API
           command: yarn build
+      - persist_to_workspace:
+      root: *workspace_root
+      paths:
+        - packages/api/src/contracts/models
 
   test:
     working_directory: *workspace_root

@@ -134,6 +134,7 @@ jobs:
           root: *workspace_root
           paths:
             - packages/api/dist
+            - packages/api/src/contracts/models
 
   test-api:
     working_directory: *workspace_root
