@@ -135,6 +135,20 @@ jobs:
           paths:
             - packages/api/dist
 
+  test-api:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+      NODE_ENV: production
+    docker:
+      - image: *node_image
+    steps:
+      - checkout
+      - *attach_workspace
+      - run:
+          name: Testing API
+          command: npx lerna run --scope @rigoblock/api test --stream
+
   push-api-changes:
     working_directory: *workspace_root
     environment:
@@ -410,9 +424,12 @@ workflows:
       - build-dapp:
           requires:
             - build-api
-      - push-api-changes:
+      - test-api:
           requires:
             - build-api
+      - push-api-changes:
+          requires:
+            - test-api
           filters:
             branches:
               only: master

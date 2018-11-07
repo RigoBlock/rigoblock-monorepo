@@ -38,6 +38,7 @@ jobs:
           paths:
             - node_modules
             - .cache/yarn
+
   build:
     working_directory: *workspace_root
     environment:
@@ -51,6 +52,19 @@ jobs:
           name: Building the API
           command: yarn build
 
+  test:
+    working_directory: *workspace_root
+    environment:
+      TZ: *timezone
+    docker:
+      - image: circleci/node:8.10-stretch
+    steps:
+      - checkout
+      - *attach_workspace
+      - run:
+          name: Testing the API
+          command: yarn test
+
 workflows:
   version: 2
   rigoblock:
@@ -59,6 +73,6 @@ workflows:
       - build:
           requires:
             - setup
-      # - push-api-changes:
-      #     requires:
-      #       - build
+      - test:
+          requires:
+            - build
