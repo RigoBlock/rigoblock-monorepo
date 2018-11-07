@@ -1,5 +1,6 @@
 import Web3 = require('web3')
 import { BigNumber } from 'bignumber.js'
+import { CONTRACT_ADDRESSES } from './constants'
 import { Vault } from '../src/contracts/models/vault'
 import {
   VaultFactory,
@@ -20,7 +21,7 @@ describe('generated contract', () => {
     it('istantiates a smart contract', async () => {
       const vaultFactory = await VaultFactory.createAndValidate(
         web3,
-        '0x7ce6e371085cb611fb46d5065397223ef2f952ff'
+        CONTRACT_ADDRESSES.VaultFactory
       )
       expect(vaultFactory).toBeInstanceOf(VaultFactory)
     })
@@ -33,14 +34,15 @@ describe('generated contract', () => {
       }
       vaultFactory = await VaultFactory.createAndValidate(
         web3,
-        '0x7ce6e371085cb611fb46d5065397223ef2f952ff'
+        CONTRACT_ADDRESSES.VaultFactory
       )
     })
     describe('constant methods', () => {
       it('reads a constant property of the contract from the blockChain ', async () => {
-        const registry = '0xf7cBB0849d4a8ec5aB4650030FA776c00Eb52dA7'
         const res = await vaultFactory.getRegistry()
-        expect(res).toEqual(registry)
+        expect(res.toLowerCase()).toEqual(
+          CONTRACT_ADDRESSES.DragoRegistry.toLowerCase()
+        )
       })
     })
 
@@ -111,7 +113,7 @@ describe('generated contract', () => {
       it('returns past logs for the specified event', async () => {
         const vaultFactory = await VaultFactory.createAndValidate(
           web3,
-          '0x7ce6e371085cb611fb46d5065397223ef2f952ff'
+          CONTRACT_ADDRESSES.VaultFactory
         )
         const eventLog = await vaultFactory.getPastEvents(
           VaultFactoryEvents.VaultCreated,
@@ -153,7 +155,7 @@ describe('generated contract', () => {
 
         mockedVaultFactory = await VaultFactory.createAndValidate(
           Web3Mock,
-          '0x7ce6e371085cb611fb46d5065397223ef2f952ff'
+          CONTRACT_ADDRESSES.VaultFactory
         )
       })
       describe('allEvents', () => {

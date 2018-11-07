@@ -2,8 +2,9 @@ coverage
 .tmp
 src/contracts/models
 dist
-lib
 node_modules
+ganache-db
+
 # misc
 .DS_Store
 .env.local

@@ -1,3 +1,5 @@
+const bootstrapper = require('./bootstrapper').default
+
 expect.extend({
   toBeHash(received) {
     try {
@@ -13,4 +15,12 @@ expect.extend({
       pass: false
     }
   }
+})
+
+beforeAll(async () => {
+  await bootstrapper.start()
+})
+
+afterAll(async () => {
+  await bootstrapper.close()
 })
