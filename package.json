@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "npm run build:deployer && npm run build:contracts && npm run build:api && build:exchange-connector && npm run build:dapp",
+    "build": "npm run build:deployer && npm run build:contracts && npm run build:api && npm run build:exchange-connector && npm run build:stats && npm run build:data-collector && npm run build:dapp",
     "build:contracts": "lerna run --scope @rigoblock/contracts build --stream",
     "build:api": "lerna run --scope @rigoblock/api build --stream",
     "build:dapp": "lerna run --scope @rigoblock/dapp build --stream",
     "build:deployer": "lerna run --scope @rigoblock/deployer build --stream",
     "build:exchange-connector": "lerna run --scope @rigoblock/exchange-connector build --stream",
+    "build:stats": "lerna run --scope @rigoblock/stats build --stream",
+    "build:data-collector": "lerna run --scope @rigoblock/data-collector build --stream",
     "lint": "lerna run lint",
     "test:unit": "lerna run test:unit --stream",
     "push-api-subrepo": "git subrepo push packages/api"
