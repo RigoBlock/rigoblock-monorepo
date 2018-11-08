@@ -36,7 +36,6 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
 
     address public dragoRegistry;
     address public rigoblockDao;
-    uint256 public minimumRigo = 0;
 
     mapping (uint256 => PoolPrice) poolPrice;
     mapping (address => Group) groups;
@@ -51,12 +50,6 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
 
     modifier onlyRigoblockDao() {
         require(msg.sender == rigoblockDao);
-        _;
-    }
-
-    modifier minimumRigoblock() {
-        RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
-        require(rigoToken.balanceOf(msg.sender) >= minimumRigo);
         _;
     }
 
@@ -105,15 +98,6 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
         onlyRigoblockDao
     {
         rigoblockDao = _rigoblockDao;
-    }
-
-    /// @dev Allows RigoBlock Dao to set the GRG minimum requirement.
-    /// @param _amount Number of required tokens.
-    function setMinimumRigo(uint256 _amount)
-        external
-        onlyRigoblockDao
-    {
-        minimumRigo = _amount;
     }
 
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.

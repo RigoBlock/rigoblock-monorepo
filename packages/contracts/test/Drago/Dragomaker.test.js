@@ -94,7 +94,7 @@ describeContract(contractName, () => {
       const methodSignature = await web3.eth.abi.encodeFunctionSignature(
         methodInterface
       )
-      await dragoInstance.methods.findMethod(assembledTransaction).call()
+      //await dragoInstance.methods.findMethod(assembledTransaction).call()
       await baseContracts['ExchangesAuthority'].whitelistMethod(
         methodSignature,
         ethfinexAdapterAddress,
@@ -116,6 +116,7 @@ describeContract(contractName, () => {
         'WrapperLockEth'
       ].depositLock(dragoAddress)
       const now = moment()
+      // first test is mistakenly passing, second test is not passing
       now.add(23, 'hours')
       expect(Number(wrappedTokensTime.toFixed())).toBeGreaterThan(now.unix())
       now.add(2, 'hours')

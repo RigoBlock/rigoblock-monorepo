@@ -33,7 +33,7 @@ contract Inflation is SafeMath, InflationFace {
     address public RIGOTOKENADDRESS;
 
     uint256 public period = 12 weeks; //inflation tokens can be minted every 3 months
-    uint256 public minimumRigo = 0;
+    uint256 public minimumGRG = 0;
     address public proofOfPerformance;
     address public authority;
     address public rigoblockDao;
@@ -54,9 +54,9 @@ contract Inflation is SafeMath, InflationFace {
     }
 
     /// @notice in order to qualify for PoP user has to told minimum rigo token
-    modifier minimumRigoblock(address _ofPool) {
+    modifier minimumRigo(address _ofPool) {
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
-        require(rigoToken.balanceOf(getPoolOwner(_ofPool)) >= minimumRigo);
+        require(rigoToken.balanceOf(getPoolOwner(_ofPool)) >= minimumGRG);
         _;
     }
 
@@ -103,7 +103,7 @@ contract Inflation is SafeMath, InflationFace {
     function mintInflation(address _thePool, uint256 _reward)
         external
         onlyProofOfPerformance
-        minimumRigoblock(_thePool)
+        minimumRigo(_thePool)
         timeAtLeast(_thePool)
         returns (bool)
     {
@@ -135,7 +135,7 @@ contract Inflation is SafeMath, InflationFace {
         external
         onlyRigoblockDao
     {
-        minimumRigo = _minimum;
+        minimumGRG = _minimum;
     }
 
     /// @dev Allows rigoblock dao to upgrade its address

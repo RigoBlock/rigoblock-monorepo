@@ -32,7 +32,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     using LibSanitize for bool;
 
     address public AUTHORITY;
-    uint256 public VERSION = 0;
+    uint256 public VERSION;
 
     uint256 public fee = 0;
 

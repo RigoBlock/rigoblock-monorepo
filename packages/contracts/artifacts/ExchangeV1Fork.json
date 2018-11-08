@@ -2620,8 +2620,8 @@
             "sources": [
                 "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/exchanges/exchangeV1Fork/ExchangeV1Fork/ExchangeV1Fork.sol"
             ],
-            "address": "0x2945f2211d1ea99d66799af35dd3512165d8da6f",
-            "constructor_args": "0x0000000000000000000000001fb4c7f7197ef339ae4125aeec9406a6788bb06500000000000000000000000027fb1d72e1278d8c00fd083327cf87e2659c9c83"
+            "address": "0xa8f4c5fa4164e984e9f224230f9807316d02fcd7",
+            "constructor_args": "0x000000000000000000000000d30d90945550981dac4991875bfc83c4e8ecf2be000000000000000000000000ebf8cab757d79335f0b8f068e6d3b12778a6b509"
         }
     }
 }

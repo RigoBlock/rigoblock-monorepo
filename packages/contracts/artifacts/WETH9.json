@@ -1168,7 +1168,7 @@
             "sources": [
                 "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/tokens/WETH9/WETH9.sol"
             ],
-            "address": "0xff0016a0ddc8d093f0309e927734154cbb55bc22",
+            "address": "0x30808c5a44369ac09a255580c887431e87adb739",
             "constructor_args": "0x"
         }
     }
