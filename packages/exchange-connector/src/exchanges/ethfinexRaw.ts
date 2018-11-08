@@ -1,5 +1,5 @@
 import { NETWORKS, WS_STATUS } from '../constants'
-import { fetchJSON, getQueryParameters } from '../utils'
+import { fetchJSON, getQueryParameters, postJSON } from '../utils'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import WS from 'ws'
 
@@ -13,10 +13,14 @@ export class EthfinexRaw {
     [NETWORKS.MAINNET]: 'wss://api.ethfinex.com/ws/2',
     [NETWORKS.ROPSTEN]: 'wss://test.ethfinex.com/ws/2'
   }
+  public static TRUSTLESS_URLS = {
+    [NETWORKS.MAINNET]: 'https://api.ethfinex.com/trustless/v1'
+  }
   public HTTP_URL: string
   public WS_URL: string
-  public wsInstance
+  public TRUSTLESS_URL: string
   public wsStatus: string = WS_STATUS.CLOSED
+  public wsInstance: any
 
   constructor(
     public networkId: NETWORKS | number,
@@ -25,6 +29,7 @@ export class EthfinexRaw {
   ) {
     this.HTTP_URL = httpUrl || EthfinexRaw.API_HTTP_URLS[networkId]
     this.WS_URL = wsUrl || EthfinexRaw.API_WS_URLS[networkId]
+    this.TRUSTLESS_URL = EthfinexRaw.TRUSTLESS_URLS[networkId]
   }
 
   public http = {
@@ -59,6 +64,63 @@ export class EthfinexRaw {
       const { limit, start, sort, end } = options
       const queryParams = getQueryParameters({ limit, sort, start, end })
       return fetchJSON(url, queryParams)
+    },
+    trustless: {
+      getConfig: () => {
+        const url = `${this.TRUSTLESS_URL}/r/get/conf`
+        return postJSON(url)
+      },
+      submitOrder: (
+        type: string, // eg 'EXCHANGE LIMIT'
+        symbol: string,
+        amount: number,
+        price: number,
+        meta: any, // signed order
+        protocol: string // '0x'
+      ) => {
+        const url = `${this.TRUSTLESS_URL}/w/on`
+        const body = {
+          type,
+          symbol,
+          amount,
+          price,
+          meta,
+          protocol
+        }
+        return postJSON(url, body)
+      },
+      cancelOrder: (orderId: string, protocol: string, signature: string) => {
+        const url = `${this.TRUSTLESS_URL}/w/oc`
+        const body = {
+          orderId,
+          protocol,
+          signature
+        }
+        return postJSON(url, body)
+      },
+      getOpenOrders: (
+        symbol: string,
+        protocol: string,
+        nonce: string,
+        signature: string
+      ) => {
+        const url = `${this.TRUSTLESS_URL}/r/orders/${symbol}`
+        const body = {
+          protocol,
+          nonce,
+          signature
+        }
+        return postJSON(url, body)
+      },
+      getOrderHistory: (protocol: string, nonce: string, signature: string) => {
+        const url = `${this.TRUSTLESS_URL}/r/orders/hist`
+        const body = {
+          protocol,
+          nonce,
+          signature
+        }
+        return postJSON(url, body)
+      }
     }
   }
 
