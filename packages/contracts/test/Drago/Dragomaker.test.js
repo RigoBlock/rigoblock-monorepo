@@ -115,7 +115,9 @@ describeContract(contractName, () => {
       const wrappedTokensTime = await baseContracts[
         'WrapperLockEth'
       ].depositLock(dragoAddress)
+      console.log(wrappedTokensTime.toFixed())
       const now = moment()
+      //console.log(now)
       // first test is mistakenly passing, second test is not passing
       now.add(23, 'hours')
       expect(Number(wrappedTokensTime.toFixed())).toBeGreaterThan(now.unix())

@@ -822,7 +822,7 @@
             "sources": [
                 "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/exchanges/TokenTransferProxy/TokenTransferProxy.sol"
             ],
-            "address": "0xebf8cab757d79335f0b8f068e6d3b12778a6b509",
+            "address": "0xc611036c6be628f495bed877cf7fece4e34b2b38",
             "constructor_args": "0x"
         }
     }

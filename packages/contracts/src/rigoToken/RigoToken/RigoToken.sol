@@ -21,7 +21,6 @@ pragma experimental "v0.5.0";
 
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { UnlimitedAllowanceToken } from "../../tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol";
-import { RigoTokenFace } from "./RigoTokenFace.sol";
 
 /// @title Rigo Token - Rules of the Rigo token.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
