@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 import { Owned } from "../../utils/Owned/Owned.sol";
@@ -32,7 +32,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     using LibSanitize for bool;
 
     address public AUTHORITY;
-    uint256 public VERSION;
+    uint256 public VERSION = 0;
 
     uint256 public fee = 0;
 

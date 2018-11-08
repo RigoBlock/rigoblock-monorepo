@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../utils/Pool/PoolFace.sol";
@@ -36,7 +36,7 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
 
     address public dragoRegistry;
     address public rigoblockDao;
-    uint256 public minimumRigo;
+    uint256 public minimumRigo = 0;
 
     mapping (uint256 => PoolPrice) poolPrice;
     mapping (address => Group) groups;
@@ -220,7 +220,7 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
         returns (address)
     {
         RigoToken token = RigoToken(RIGOTOKENADDRESS);
-        return token.getMinter();
+        return token.minter();
     }
 
     /// @dev Returns the proof of performance reward for a pool.

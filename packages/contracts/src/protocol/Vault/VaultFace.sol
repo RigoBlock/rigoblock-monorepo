@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 /// @title Vault Interface - Allows interaction with the Vault contracts.
@@ -52,5 +52,4 @@ interface VaultFace {
     function calcSharePrice() external view returns (uint256);
     function getAdminData() external view returns (address, address feeCollector, address vaultDao, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
     function totalSupply() external view returns (uint256);
-    function getVersion() external pure returns (string);
 }

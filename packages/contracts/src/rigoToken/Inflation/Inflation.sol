@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 import { Owned } from "../../utils/Owned/Owned.sol";
@@ -33,7 +33,7 @@ contract Inflation is SafeMath, InflationFace {
     address public RIGOTOKENADDRESS;
 
     uint256 public period = 12 weeks; //inflation tokens can be minted every 3 months
-    uint256 public minimumRigo;
+    uint256 public minimumRigo = 0;
     address public proofOfPerformance;
     address public authority;
     address public rigoblockDao;

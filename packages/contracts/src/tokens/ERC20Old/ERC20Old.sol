@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 
 /// @title ERC20Old - An interface for old ERC20.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
