@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "npm run build:deployer && npm run build:contracts && npm run build:api && npm run build:dapp",
+    "build": "npm run build:deployer && npm run build:contracts && npm run build:api && build:exchange-connector && npm run build:dapp",
     "build:contracts": "lerna run --scope @rigoblock/contracts build --stream",
     "build:api": "lerna run --scope @rigoblock/api build --stream",
     "build:dapp": "lerna run --scope @rigoblock/dapp build --stream",
