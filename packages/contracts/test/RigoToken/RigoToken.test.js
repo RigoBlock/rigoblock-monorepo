@@ -120,39 +120,4 @@ describeContract(contractName, () => {
       ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
-
-  describe('getName', () => {
-    it('returns the contract name', async () => {
-      const name = await baseContracts[contractName].name()
-      expect(name).toBe(RIGOTOKEN)
-    })
-  })
-
-  describe('getSymbol', () => {
-    it('returns the contract symbol', async () => {
-      const symbol = await baseContracts[contractName].symbol()
-      expect(symbol).toBe(RIGOTOKEN_SYMBOL)
-    })
-  })
-
-  describe('getDecimals', () => {
-    it("returns Rigo Token's decimals", async () => {
-      const decimals = await baseContracts[contractName].decimals()
-      expect(decimals).toEqual(toBigNumber(RIGOTOKEN_DECIMALS))
-    })
-  })
-
-  describe('getMinter', () => {
-    it('returns the address of the minter', async () => {
-      const minter = await baseContracts[contractName].minter()
-      expect(minter).toBe(inflationAddress)
-    })
-  })
-
-  describe('getRigoblock', () => {
-    it('returns the address of Rigoblock DAO', async () => {
-      const dao = await baseContracts[contractName].rigoblock()
-      expect(dao).toBe(accounts[0])
-    })
-  })
 })
