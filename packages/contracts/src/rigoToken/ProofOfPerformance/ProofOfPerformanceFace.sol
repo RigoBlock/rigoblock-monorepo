@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 /// @title Proof of Performance Interface - Allows interaction with the PoP contract.
@@ -31,7 +31,6 @@ interface ProofOfPerformanceFace {
     function setRegistry(address _dragoRegistry) external;
     function setRigoblockDao(address _rigoblockDao) external;
     function setRatio(address _ofGroup, uint256 _ratio) external;
-    function setMinimumRigo(uint256 _amount) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS

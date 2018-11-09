@@ -114,22 +114,6 @@ describeContract(contractName, () => {
     })
   })
 
-  describe('setMinimumRigo', () => {
-    it('sets the minimum rigo token amount needed to perform certain actions', async () => {
-      await baseContracts[contractName].setMinimumRigo(minimumRigo)
-      const newMinimum = await baseContracts[contractName].minimumRigo()
-      expect(newMinimum).toEqual(toBigNumber(minimumRigo))
-    })
-    it('can only be called by the rigoblock DAO', async () => {
-      await expect(
-        baseContracts[contractName].setMinimumRigo.sendTransactionAsync(
-          minimumRigo,
-          transactionDefault
-        )
-      ).rejects.toThrowErrorMatchingSnapshot()
-    })
-  })
-
   describe('claimPop', () => {
     it("claims the token reward for the fund's wizard", async () => {
       const txHash = await baseContracts[contractName].claimPop(vaultId)
