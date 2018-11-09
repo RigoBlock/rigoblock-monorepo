@@ -28,7 +28,7 @@ export class EthfinexRaw {
   }
 
   public http = {
-    getTickers: async (options: {
+    getTickers: (options: {
       symbols: string[]
     }): Promise<EthfinexRaw.RawTicker[]> => {
       const url = `${this.HTTP_URL}/tickers`
@@ -36,7 +36,7 @@ export class EthfinexRaw {
       const queryParams = getQueryParameters({ symbols })
       return fetchJSON(url, queryParams)
     },
-    getOrders: async (options: {
+    getOrders: (options: {
       symbols: string
       precision?: EthfinexRaw.OrderPrecisions
     }): Promise<EthfinexRaw.RawOrder[]> => {
@@ -44,7 +44,7 @@ export class EthfinexRaw {
       const url = `${this.HTTP_URL}/book/t${options.symbols}/${precision}`
       return fetchJSON(url)
     },
-    getCandles: async (options: {
+    getCandles: (options: {
       timeframe: EthfinexRaw.CandlesTimeFrame
       symbols: string
       section: EthfinexRaw.CandlesSection
