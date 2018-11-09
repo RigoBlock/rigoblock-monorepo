@@ -310,7 +310,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/OwnedUninitialized.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/ReentrancyGuard/ReentrancyGuard.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMathLight.sol"
-            ]
+            ],
+            "address": "0xf912c8a8a9c5465762b7e26123821924b7996971"
         },
         "3": {
             "solc_version": "0.4.25",
@@ -621,7 +622,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/OwnedUninitialized.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/ReentrancyGuard/ReentrancyGuard.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMathLight.sol"
-            ]
+            ],
+            "address": "0x76e20f3e48058fd5c9840b7a163baf2e257a1d28"
         },
         "42": {
             "solc_version": "0.4.25",
@@ -932,7 +934,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/OwnedUninitialized.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/ReentrancyGuard/ReentrancyGuard.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMathLight.sol"
-            ]
+            ],
+            "address": "0xde5b654c6c60487f9a29885bfdda53621a2505a8"
         },
         "5777": {
             "solc_version": "0.4.25",

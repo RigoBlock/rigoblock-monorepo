@@ -500,7 +500,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/VaultEventful/VaultEventful.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/VaultEventful/VaultEventfulFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol"
-            ]
+            ],
+            "address": "0x68bd2b36c836f51009341695be2f71cb287bcf11"
         },
         "3": {
             "solc_version": "0.4.25",
@@ -1001,7 +1002,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/VaultEventful/VaultEventful.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/VaultEventful/VaultEventfulFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol"
-            ]
+            ],
+            "address": "0x9c038df2d94ac29d3dcf8a2fcabad0e0377ff601"
         },
         "42": {
             "solc_version": "0.4.25",
@@ -1502,7 +1504,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/VaultEventful/VaultEventful.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/VaultEventful/VaultEventfulFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol"
-            ]
+            ],
+            "address": "0x719ec542a84b7af4d7cdbb25f9bf58835e967311"
         },
         "5777": {
             "solc_version": "0.4.25",

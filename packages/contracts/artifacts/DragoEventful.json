@@ -988,7 +988,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/DragoEventful/DragoEventfulFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/ExchangesAuthority/ExchangesAuthorityFace.sol"
-            ]
+            ],
+            "address": "0xaedb9a26693146a19bec8e4b9f4c2eb4e6b9237f"
         },
         "3": {
             "solc_version": "0.4.25",
@@ -1977,7 +1978,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/DragoEventful/DragoEventfulFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/ExchangesAuthority/ExchangesAuthorityFace.sol"
-            ]
+            ],
+            "address": "0x200d0735de695853f592648bc5efa50dccd5a154"
         },
         "42": {
             "solc_version": "0.4.25",
@@ -2966,7 +2968,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/DragoEventful/DragoEventfulFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/ExchangesAuthority/ExchangesAuthorityFace.sol"
-            ]
+            ],
+            "address": "0x35d3ab6b7917d03050423f7e43d4d9cff155a685"
         },
         "5777": {
             "solc_version": "0.4.25",

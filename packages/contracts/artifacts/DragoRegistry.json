@@ -581,7 +581,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/LibSanitize/LibSanitize.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
-            ]
+            ],
+            "address": "0x97b44DB885E774F17CAb2Cb99714FE020830065E"
         },
         "3": {
             "solc_version": "0.4.25",
@@ -1163,7 +1164,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/LibSanitize/LibSanitize.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
-            ]
+            ],
+            "address": "0x82f137b817ab61cdb2af5f23d5b96094b5fe5f7d"
         },
         "42": {
             "solc_version": "0.4.25",
@@ -1745,7 +1747,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/LibSanitize/LibSanitize.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
-            ]
+            ],
+            "address": "0x80673d1201c5e61e1efdd4e06bef015d1293ccee"
         },
         "5777": {
             "solc_version": "0.4.25",

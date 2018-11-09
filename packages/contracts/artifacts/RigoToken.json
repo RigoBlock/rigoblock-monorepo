@@ -339,7 +339,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20Face.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
-            ]
+            ],
+            "address": "0xd56b064c185b8e057a9ff3cf022323276441f8df"
         },
         "3": {
             "solc_version": "0.4.25",
@@ -679,7 +680,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20Face.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
-            ]
+            ],
+            "address": "0x6FA8590920c5966713b1a86916f7b0419411e474"
         },
         "42": {
             "solc_version": "0.4.25",
@@ -1019,7 +1021,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20Face.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
-            ]
+            ],
+            "address": "0x9F121AFBc98A7a133fbb31fE975205f39e8f08D2"
         },
         "5777": {
             "solc_version": "0.4.25",
