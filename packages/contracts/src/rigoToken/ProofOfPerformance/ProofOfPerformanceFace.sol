@@ -31,7 +31,6 @@ interface ProofOfPerformanceFace {
     function setRegistry(address _dragoRegistry) external;
     function setRigoblockDao(address _rigoblockDao) external;
     function setRatio(address _ofGroup, uint256 _ratio) external;
-    function setMinimumRigo(uint256 _amount) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS

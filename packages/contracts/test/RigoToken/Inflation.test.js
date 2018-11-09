@@ -88,7 +88,7 @@ describeContract(contractName, async () => {
         minimumRigo
       )
       expect(txHash).toBeHash()
-      const newMinimum = await baseContracts[contractName].minimumRigo()
+      const newMinimum = await baseContracts[contractName].minimumGRG()
       expect(newMinimum).toEqual(toBigNumber(minimumRigo))
     })
 

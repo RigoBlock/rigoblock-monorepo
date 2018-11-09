@@ -151,7 +151,9 @@
             "source_map_runtime": "812:509:0:-;;;;;;;;;;;;;;;;;;;;;;;1076:243;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1076:243:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1262:12;1076:243;;;;;:::o",
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/extensions/SigVerifier/SigVerifier.sol"
-            ]
+            ],
+            "address": "0x25d79d28890d5ae89664b888f563703057b50dee",
+            "constructor_args": "0x"
         }
     }
 }
