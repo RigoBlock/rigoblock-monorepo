@@ -27,7 +27,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
 
   public http = {
     ...this.http,
-    getBestOrders: async (options: {
+    getBestOrders: (options: {
       makerTokenAddress: string // Address of maker token
       takerTokenAddress: string // Address of taker token
       baseTokenAddress: string // Address of base token
@@ -41,7 +41,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       })
       return fetchJSON(url, queryParams)
     },
-    getTickers: async (): Promise<ERCdEXRaw.Ticker[]> => {
+    getTickers: (): Promise<ERCdEXRaw.Ticker[]> => {
       const url = `${this.HTTP_URL}/reports/ticker`
       return fetchJSON(url)
     },
@@ -50,7 +50,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       const url = `${this.HTTP_URL}/trade_history_logs`
       return fetchJSON(url)
     },
-    getHistoricalPrices: async (options: {
+    getHistoricalPrices: (options: {
       baseTokenAddress: string
       quoteTokenAddress: string
       startDate: string
@@ -61,7 +61,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
         networkId: this.NETWORK_ID
       })
     },
-    getAggregatedOrders: async (options: {
+    getAggregatedOrders: (options: {
       baseTokenAddress: string
       quoteTokenAddress: string
     }): Promise<ERCdEXRaw.AggregatedOrders> => {
@@ -73,7 +73,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       return fetchJSON(url, queryParams)
     },
     // TODO: find out how to add a test
-    softCancelOrder: async (options: {
+    softCancelOrder: (options: {
       orderHash: string
       signature?: {
         v: number
@@ -84,7 +84,7 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
       const url = `${this.HTTP_URL}/orders/soft-cancel`
       return postJSON(url, options)
     },
-    getFeesERCdEX: async (options: {
+    getFeesERCdEX: (options: {
       makerTokenAddress: string
       takerTokenAddress: string
       makerTokenAmount: string
