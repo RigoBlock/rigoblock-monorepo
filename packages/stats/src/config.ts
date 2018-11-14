@@ -329,7 +329,7 @@ const conf: Config = {
   'mainnet-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '0 */5 * * * *', // Every minute
+    cronExpression: '*/30 * * * * *', // Every minute
     initialData: {
       network: NETWORKS.MAINNET,
       web3Provider: WEBSOCKET_URLS[NETWORKS.MAINNET].INFURA
