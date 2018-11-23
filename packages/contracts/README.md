@@ -34,7 +34,7 @@ Launches the smart contract deployment CLI.
 - From the `rigoblock-monorepo/packages/contracts` directory, launch `yarn deploy`
 - In the CLI:
   - select the network where you wish to deploy the contract
-  - Insert your account number
+  - Insert your public key (wallet address)
   - Insert the name of the contract to be deployed
   - Insert the arguments required from the contract, if any, separated by a comma
   - Insert your account mnemonic
