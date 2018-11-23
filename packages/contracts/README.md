@@ -24,6 +24,16 @@ Runs tests for the solidity contracts. **Ganache must not be up** when running t
 
 Lints all JS files.
 
+### `yarn deploy`
+
+Launches the smart contract deployment CLI.
+
+## Contract deployment
+
+
+
+Read the [deployment documentation.](docs/DEPLOYMENT.md)
+
 ## Writing Tests
 
 Read the [testing documentation.](docs/TESTING.md)
