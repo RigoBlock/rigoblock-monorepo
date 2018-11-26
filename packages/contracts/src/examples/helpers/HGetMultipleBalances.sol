@@ -26,10 +26,23 @@ import { ERC20Face as Token } from "../../tokens/ERC20/ERC20.sol";
 contract HGetMultipleBalances {
 
     mapping (uint256 => address) private inLine;
+    uint256 public numTokens = 0;
 
     /*
      * CORE FUNCTIONS
      */
+    /// @dev Allows associating a number to an address.
+    /// @param _token Address of the target token.
+    function addTokenAddress(
+        address _token
+        )
+        external
+    {
+        ++numTokens;
+        require (inLine[numTokens] == address(0));
+        inLine[numTokens] = _token;
+    }
+
     /// @dev Allows associating a number to an address.
     /// @param _number Integer associated with the token address.
     /// @param _token Address of the target token.
@@ -65,7 +78,7 @@ contract HGetMultipleBalances {
     /// @param _tokenNumbers Addresses of the target token.
     /// @param _who Address of the target owner.
     /// @return Number of token balances and address of the token.
-    function getMultiBalances(
+    function getMultiBalancesWithNumber(
         uint[] calldata _tokenNumbers,
         address _who
         )
@@ -77,6 +90,30 @@ contract HGetMultipleBalances {
         )
     {
         uint256 length = _tokenNumbers.length;
+        for (uint256 i = 1; i <= length; i++) {
+            address targetToken = getAddressFromNumber(i);
+            Token token = Token(targetToken);
+            uint256 amount = token.balanceOf(_who);
+            if (amount == 0) continue;
+            balances[i] = amount;
+            tokenAddresses[i] = targetToken;
+        }
+    }
+
+    /// @dev Returns positive token balance of an hodler.
+    /// @param _who Address of the target owner.
+    /// @return Number of token balances and address of the token.
+    function getMultiBalances(
+        address _who
+        )
+        external
+        view
+        returns (
+            uint256[] memory balances,
+            address[] memory tokenAddresses
+        )
+    {
+        uint256 length = numTokens;
         for (uint256 i = 0; i < length; i++) {
             address targetToken = getAddressFromNumber(i);
             Token token = Token(targetToken);
