@@ -25,9 +25,9 @@ export const chunkifyEvents = async (method, eventName, web3) => {
   const chunks = await getBlockChunks(0, 'latest', chunkSize, web3)
   const promises = chunks.map(([fromBlock, toBlock]) => {
     const eventPromise: Promise<EventLog[]> = new Promise((resolve, reject) => {
-      method.apply(
-        this,
-        [eventName, { fromBlock, toBlock }],
+      method(
+        eventName,
+        { fromBlock, toBlock },
         (errors, events) => (errors ? reject(errors) : resolve(events))
       )
     })

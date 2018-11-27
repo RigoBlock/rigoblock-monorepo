@@ -10,7 +10,7 @@ const task = async (job, web3: Web3) => {
   const { abi, address } = contractsMap.DragoEventful
   const dragoEventful = new web3.eth.Contract(abi, address)
   const eventsPromises = await chunkifyEvents(
-    dragoEventful.getPastEvents,
+    dragoEventful.getPastEvents.bind(dragoEventful),
     'DragoCreated',
     web3
   )
