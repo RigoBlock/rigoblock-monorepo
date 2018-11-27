@@ -11,3 +11,5 @@ export interface EventLog {
 }
 
 export type BlockType = 'latest' | 'pending' | 'genesis' | number
+
+export type Chunk = [BlockType, BlockType]

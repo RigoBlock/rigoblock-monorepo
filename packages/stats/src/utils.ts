@@ -1,6 +1,6 @@
-import { BlockType } from './types'
+import { Chunk, EventLog } from './types'
 
-export const getBlockChunks = async (
+const getBlockChunks = async (
   start,
   end,
   chunkSize,
@@ -20,4 +20,18 @@ export const getBlockChunks = async (
   return chunks
 }
 
-type Chunk = [BlockType, BlockType]
+export const chunkifyEvents = async (method, eventName, web3) => {
+  const chunkSize = 100000
+  const chunks = await getBlockChunks(0, 'latest', chunkSize, web3)
+  const promises = chunks.map(([fromBlock, toBlock]) => {
+    const eventPromise: Promise<EventLog[]> = new Promise((resolve, reject) => {
+      method.apply(
+        this,
+        [eventName, { fromBlock, toBlock }],
+        (errors, events) => (errors ? reject(errors) : resolve(events))
+      )
+    })
+    return eventPromise
+  })
+  return promises
+}
