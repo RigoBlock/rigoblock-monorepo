@@ -1,4 +1,5 @@
 import Web3 = require('web3')
+import { EventLog } from '../../types'
 import { chunkifyEvents } from '../../utils'
 import fetchContracts from '@rigoblock/contracts'
 import redis from '../../redis'
@@ -14,7 +15,7 @@ const task = async (job, web3: Web3) => {
     'DragoCreated',
     web3
   )
-  const fetchResult = await Promise.all(eventsPromises)
+  const fetchResult: Array<EventLog[]> = await Promise.all(eventsPromises)
   const dragoEvents = fetchResult
     .filter(arr => arr.length)
     .reduce((acc, curr) => [...acc, ...curr], [])

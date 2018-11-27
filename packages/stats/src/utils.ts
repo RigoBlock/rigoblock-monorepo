@@ -1,4 +1,5 @@
-import { Chunk, EventLog } from './types'
+import { Chunk } from './types'
+import { promisify } from 'util'
 
 const getBlockChunks = async (
   start,
@@ -24,14 +25,8 @@ export const chunkifyEvents = async (method, eventName, web3) => {
   const chunkSize = 100000
   const chunks = await getBlockChunks(0, 'latest', chunkSize, web3)
   const promises = chunks.map(([fromBlock, toBlock]) => {
-    const eventPromise: Promise<EventLog[]> = new Promise((resolve, reject) => {
-      method(
-        eventName,
-        { fromBlock, toBlock },
-        (errors, events) => (errors ? reject(errors) : resolve(events))
-      )
-    })
-    return eventPromise
+    const asyncMethod = promisify(method)
+    return asyncMethod(eventName, { fromBlock, toBlock })
   })
   return promises
 }
