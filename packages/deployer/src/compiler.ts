@@ -164,7 +164,8 @@ export class Compiler {
     logUtils.log(`Compiling ${contractName} with Solidity v${solcVersion}...`)
     const source = contractSource.source
     const absoluteFilePath = contractSource.path
-    const standardInput: solc.StandardInput = {
+    // const standardInput: solc.StandardInput = {
+    const standardInput: any = {
       language: 'Solidity',
       sources: {
         [absoluteFilePath]: {
@@ -180,6 +181,7 @@ export class Compiler {
           '*': {
             '*': [
               'abi',
+              'metadata',
               'evm.bytecode.object',
               'evm.bytecode.sourceMap',
               'evm.deployedBytecode.object',
@@ -233,6 +235,9 @@ export class Compiler {
       )
     }
     const abi: ContractAbi = compiledData.abi
+    const metadata = JSON.parse(compiledData.metadata)
+    const devDoc = metadata.output.devdoc
+    const userDoc = metadata.output.userdoc
     const bytecode = `0x${compiledData.evm.bytecode.object}`
     const runtimeBytecode = `0x${compiledData.evm.deployedBytecode.object}`
     const sourceMap = compiledData.evm.bytecode.sourceMap
@@ -248,6 +253,8 @@ export class Compiler {
       source_tree_hash: sourceTreeHashHex,
       optimizer_enabled: this._optimizerEnabled,
       abi,
+      devDoc,
+      userDoc,
       bytecode,
       runtime_bytecode: runtimeBytecode,
       updated_at,

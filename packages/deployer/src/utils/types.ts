@@ -22,6 +22,8 @@ export interface ContractNetworkData {
   solc_version: string
   optimizer_enabled: boolean
   source_tree_hash: string
+  devDoc: any
+  userDoc: any
   abi: ContractAbi
   bytecode: string
   runtime_bytecode: string
