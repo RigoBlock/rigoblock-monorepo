@@ -16,10 +16,10 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
-/// @title Drago Registry Interface - Allows external intaction with Drago Registry.
+/// @title Drago Registry Interface - Allows external interaction with Drago Registry.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 interface DragoRegistryFace {

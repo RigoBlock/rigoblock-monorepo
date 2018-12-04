@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 
 /// @title Nav Verifier Interface - Allows to check if new NAV comes from approved authority.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

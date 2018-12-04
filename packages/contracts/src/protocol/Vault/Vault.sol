@@ -16,12 +16,13 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 import { AuthorityFace as Authority } from "../authorities/Authority/AuthorityFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
 import { ERC20Face as Token } from "../../tokens/ERC20/ERC20Face.sol";
+import { ReentrancyGuard } from "../../utils/ReentrancyGuard//ReentrancyGuard.sol";
 import { VaultFace } from "./VaultFace.sol";
 import { OwnedUninitialized as Owned } from "../../utils/Owned/OwnedUninitialized.sol";
 import { SafeMathLight as SafeMath } from "../../utils/SafeMath/SafeMathLight.sol";
@@ -29,7 +30,7 @@ import { SafeMathLight as SafeMath } from "../../utils/SafeMath/SafeMathLight.so
 /// @title Vault - contract for creating a vault type of pool.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
-contract Vault is Owned, SafeMath, VaultFace {
+contract Vault is Owned, SafeMath, ReentrancyGuard, VaultFace {
 
     string constant VERSION = 'VC 0.5.2';
     uint256 constant BASE = 1000000; //tokens are divisible by 1 million
@@ -154,6 +155,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Bool the function executed correctly
     function sellVault(uint256 _amount)
         external
+        nonReentrant
         hasEnough(_amount)
         positiveAmount(_amount)
         minimumPeriodPast
@@ -214,7 +216,6 @@ contract Vault is Owned, SafeMath, VaultFace {
     function changeVaultDao(address _vaultDao)
         external
         onlyVaultDao
-
     {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
@@ -227,6 +228,7 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev NAV is provided by view functions
     function updatePrice()
         external
+        nonReentrant
     {
         updatePriceInternal();
     }
@@ -250,6 +252,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         uint256 _value,
         uint8 _forTime)
         external
+        nonReentrant
         returns (bool success)
     {
         require(depositTokenInternal(_token, msg.sender, _value, _forTime));
@@ -281,6 +284,7 @@ contract Vault is Owned, SafeMath, VaultFace {
         address _token,
         uint256 _value)
         external
+        nonReentrant
         returns
         (bool success)
     {
@@ -299,7 +303,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @param _from Address of the target account
     /// @return Number of shares
     function balanceOf(address _from)
-        external view
+        external
+        view
         returns (uint256)
     {
         return accounts[_from].balance;
@@ -309,8 +314,11 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @param _token Address of the token
     /// @param _owner Address of the user
     /// @return Number of tokens
-    function tokenBalanceOf(address _token, address _owner)
-        external view
+    function tokenBalanceOf(
+        address _token,
+        address _owner)
+        external
+        view
         returns (uint256)
     {
         return tokenBalances[_token][_owner];
@@ -320,8 +328,11 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @param _token Address of the token
     /// @param _user Address of the user
     /// @return Time in seconds
-    function timeToUnlock(address _token, address _user)
-        external view
+    function timeToUnlock(
+        address _token,
+        address _user)
+        external
+        view
         returns (uint256)
     {
         return depositLock[_token][_user];
@@ -331,7 +342,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @param _token Address of the token
     /// @return _value in custody
     function tokensInVault(address _token)
-        external view
+        external
+        view
         returns (uint256)
     {
         return totalTokens[_token];
@@ -340,7 +352,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Gets the address of the logger contract
     /// @return Address of the logger contrac
     function getEventful()
-        external view
+        external
+        view
         returns (address)
     {
         Authority auth = Authority(admin.authority);
@@ -353,7 +366,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of the share price in wei
     /// @return Value of the share price in wei
     function getData()
-        external view
+        external
+        view
         returns (
             string name,
             string symbol,
@@ -372,7 +386,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Returns the price of a pool
     /// @return Value of the share price in wei
     function calcSharePrice()
-        external view
+        external
+        view
         returns (uint256)
     {
         return getNav();
@@ -385,7 +400,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of the transaction fee in basis points
     /// @return Number of the minimum holding period for shares
     function getAdminData()
-        external view
+        external
+        view
         returns (
             address,
             address feeCollector,
@@ -405,19 +421,11 @@ contract Vault is Owned, SafeMath, VaultFace {
         );
     }
 
-    /// @dev Returns the version of the type of vault
-    /// @return String of the version
-    function getVersion()
-        external pure
-        returns (string)
-    {
-        return VERSION;
-    }
-
     /// @dev Returns the total amount of issued tokens for this vault
     /// @return Number of shares
     function totalSupply()
-        external view
+        external
+        view
         returns (uint256)
     {
         return data.totalSupply;
@@ -429,7 +437,9 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Executes purchase function
     /// @param _hodler Address of the target user
     /// @return Bool the function executed correctly
-    function buyVaultInternal(address _hodler, uint256 _totalEth)
+    function buyVaultInternal(
+        address _hodler,
+        uint256 _totalEth)
         internal
         returns (bool success)
     {
@@ -504,7 +514,9 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Sends a sell log to the eventful contract
     /// @param _amount Number of sold shares
     /// @param _netRevenue Value of sale for hodler
-    function addSaleLog(uint256 _amount, uint256 _netRevenue)
+    function addSaleLog(
+        uint256 _amount,
+        uint256 _netRevenue)
         internal
     {
         bytes memory name = bytes(data.name);
@@ -513,6 +525,29 @@ contract Vault is Owned, SafeMath, VaultFace {
         VaultEventful events = VaultEventful(auth.getVaultEventful());
         require(events.sellVault(msg.sender, this, _amount, _netRevenue, name, symbol));
     }
+    
+    /// @dev Executes a deposit
+    /// @param _token Address of the token to be deposited
+    /// @param _hodler Address of the hodler
+    /// @param _value Amount of tokens
+    /// @param _forTime Time in seconds of lockup
+    /// @return Bool the transaction was successful
+    function depositTokenInternal(
+        address _token,
+        address _hodler,
+        uint256 _value,
+        uint8 _forTime)
+        internal
+        returns (bool success)
+    {
+        require(now + _forTime >= depositLock[_token][_hodler]);
+        require(Token(_token).approve(address(this), _value));
+        require(Token(_token).transferFrom(msg.sender, address(this), _value));
+        tokenBalances[_token][_hodler] = safeAdd(tokenBalances[_token][_hodler], _value);
+        totalTokens[_token] = safeAdd(totalTokens[_token], _value);
+        depositLock[_token][_hodler] = safeAdd(uint(now), _forTime);
+        return true;
+    }
 
     /// @dev Calculates the correct purchase amounts
     /// @return Number of new shares
@@ -520,7 +555,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of fee in shares to dao
     /// @return Value of net purchased shares
     function getPurchaseAmounts(uint256 _totalEth)
-        internal view
+        internal
+        view
         returns (
             uint256 grossAmount,
             uint256 feeVault,
@@ -544,7 +580,8 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @return Value of net sold shares
     /// @return Value of sale amount for hodler
     function getSaleAmounts(uint256 _amount)
-        internal view
+        internal
+        view
         returns (
             uint256 feeVault,
             uint256 feeVaultDao,
@@ -564,26 +601,11 @@ contract Vault is Owned, SafeMath, VaultFace {
     /// @dev Calculates the value of the shares
     /// @return Value of the shares in wei
     function getNav()
-        internal view
+        internal
+        view
         returns (uint256)
     {
         uint256 aum = address(this).balance - msg.value;
         return (data.totalSupply == 0 ? data.price : safeDiv(aum * BASE, data.totalSupply));
-    }
-
-    function depositTokenInternal(
-        address _token,
-        address _hodler,
-        uint256 _value,
-        uint8 _forTime)
-        internal
-        returns (bool success)
-    {
-        require(now + _forTime * 1 hours >= depositLock[_token][_hodler]);
-        require(Token(_token).transferFrom(msg.sender, address(this), _value));
-        tokenBalances[_token][_hodler] = safeAdd(tokenBalances[_token][_hodler], _value);
-        totalTokens[_token] = safeAdd(totalTokens[_token], _value);
-        depositLock[_token][_hodler] = safeAdd(uint(now), _forTime);
-        return true;
     }
 }

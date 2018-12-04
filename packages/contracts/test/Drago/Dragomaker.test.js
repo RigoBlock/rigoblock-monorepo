@@ -94,7 +94,6 @@ describeContract(contractName, () => {
       const methodSignature = await web3.eth.abi.encodeFunctionSignature(
         methodInterface
       )
-      await dragoInstance.methods.findMethod(assembledTransaction).call()
       await baseContracts['ExchangesAuthority'].whitelistMethod(
         methodSignature,
         ethfinexAdapterAddress,

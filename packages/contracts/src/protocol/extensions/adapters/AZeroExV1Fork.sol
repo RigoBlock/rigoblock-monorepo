@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 /// @title ZeroEx V1 Fork adapter - A helper contract for the 0x-manager exchange.

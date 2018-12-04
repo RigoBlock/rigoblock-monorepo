@@ -1,22 +1,19 @@
 import * as crypto from 'crypto'
 import * as moment from 'moment'
-import exchangeConnector, {
-  exchanges,
-  supportedExchanges
-} from '@rigoblock/exchange-connector'
+import { supportedExchanges } from '@rigoblock/exchange-connector'
+import connector from '../connector'
 
 export class TokenPrice {
   constructor() {}
 
   public async fetch(symbol, networkId) {
-    const { EthfinexRaw } = exchanges
-    const ethfinex = exchangeConnector(supportedExchanges.ETHFINEX_RAW, {
+    const ethfinex = connector.getExchange(supportedExchanges.ETHFINEX_RAW, {
       networkId
     })
     const rawCandles = await ethfinex.http.getCandles({
-      timeframe: EthfinexRaw.CandlesTimeFrame.ONE_DAY,
+      timeframe: ethfinex.options.candlesTimeFrame.ONE_DAY,
       symbols: `${symbol}ETH`,
-      section: EthfinexRaw.CandlesSection.HIST,
+      section: ethfinex.options.candlesSection.HIST,
       limit: '1000'
     })
     if (<any>rawCandles[0] === 'error') {
