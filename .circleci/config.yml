@@ -389,21 +389,21 @@ workflows:
   rigoblock:
     jobs:
       - setup
-      # - build-exchange-connector:
-      #     requires:
-      #       - setup
-      # - test-exchange-connector:
-      #     requires:
-      #       - build-exchange-connector
+      - build-exchange-connector:
+          requires:
+            - setup
+      - test-exchange-connector:
+          requires:
+            - build-exchange-connector
       - test-unit-dapp:
           requires:
             - setup
       - build-contracts:
           requires:
             - test-unit-dapp
-      # - test-contracts:
-      #     requires:
-      #       - build-contracts
+      - test-contracts:
+          requires:
+            - build-contracts
       - build-api:
           requires:
             - build-contracts
