@@ -19,6 +19,110 @@
     ethers "3.0.22"
     lodash "4.17.10"
 
+"@0x/assert@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@0x/assert/-/assert-1.0.18.tgz#039a0a93c57bc8c4bf451c5cf67e7750318442af"
+  integrity sha512-HAqy87ByFRO4xFN3AlBP1hr/U0cMFxAR2HoLoK0sFaFo9Hxc/SdmWlHcADPKuPGYqQN5KZHPU6d4cMNxjYFRbA==
+  dependencies:
+    "@0x/json-schemas" "^2.1.2"
+    "@0x/typescript-typings" "^3.0.4"
+    "@0x/utils" "^2.0.6"
+    lodash "^4.17.5"
+    valid-url "^1.0.9"
+
+"@0x/json-schemas@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@0x/json-schemas/-/json-schemas-2.1.2.tgz#f9f03ec7c358ca2652e1094a53a1859de0e635a0"
+  integrity sha512-jJQB6h6c/OYfHuLE41AFHEK+9WnJbMUSiof/vjJJX1ONFSx19OKfzXyVzO28fR7sd/S7Pg5j0KE/LnkncrleIg==
+  dependencies:
+    "@0x/typescript-typings" "^3.0.4"
+    "@types/node" "*"
+    jsonschema "^1.2.0"
+    lodash.values "^4.3.0"
+
+"@0x/subproviders@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@0x/subproviders/-/subproviders-2.1.6.tgz#fb78218b79808210600d94701405dbe54d6f2ce1"
+  integrity sha512-0qDDUIIeSiVIqRYS1474H6AI3srae5TGyOANh+ctHv+3EyMfM7ztV4tlgLDs71bVDTMT8n8OjY+7a+LrybuM1A==
+  dependencies:
+    "@0x/assert" "^1.0.18"
+    "@0x/types" "^1.3.0"
+    "@0x/typescript-typings" "^3.0.4"
+    "@0x/utils" "^2.0.6"
+    "@0x/web3-wrapper" "^3.1.6"
+    "@ledgerhq/hw-app-eth" "^4.3.0"
+    "@ledgerhq/hw-transport-u2f" "4.24.0"
+    "@types/eth-lightwallet" "^3.0.0"
+    "@types/ganache-core" "^2.1.0"
+    "@types/hdkey" "^0.7.0"
+    "@types/web3-provider-engine" "^14.0.0"
+    bip39 "^2.5.0"
+    bn.js "^4.11.8"
+    eth-lightwallet "^3.0.1"
+    ethereum-types "^1.1.2"
+    ethereumjs-tx "^1.3.5"
+    ethereumjs-util "^5.1.1"
+    ganache-core "^2.2.1"
+    hdkey "^0.7.1"
+    json-rpc-error "2.0.0"
+    lodash "^4.17.5"
+    semaphore-async-await "^1.5.1"
+    web3-provider-engine "14.0.6"
+  optionalDependencies:
+    "@ledgerhq/hw-transport-node-hid" "^4.3.0"
+
+"@0x/types@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@0x/types/-/types-1.3.0.tgz#614104f318293698281d5988fc99fcc190a2f076"
+  integrity sha512-ix79oDnTWflta0h/mWWDvtMv/uarK5YCj+5o12RSre7EJpgGycbFn873gqDK6wn1tqeDKM1nXHb9rUAB2OBRfg==
+  dependencies:
+    "@types/node" "*"
+    bignumber.js "~4.1.0"
+    ethereum-types "^1.1.2"
+
+"@0x/typescript-typings@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@0x/typescript-typings/-/typescript-typings-3.0.4.tgz#4325cbb10d91e3b82029c5dc551729a8a09c396a"
+  integrity sha512-3xGkyHVIShjHOKu17IkBTQoAcEUWHTcqr+6YKXzi3tRQXabwJTV/z0RknJF8kYxXO4l1StLEvdBqljCxkvlmWA==
+  dependencies:
+    "@types/bn.js" "^4.11.0"
+    "@types/react" "*"
+    bignumber.js "~4.1.0"
+    ethereum-types "^1.1.2"
+    popper.js "1.14.3"
+
+"@0x/utils@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@0x/utils/-/utils-2.0.6.tgz#c9484b6ce50dfbdb58b4b820d4ec5a356b78ba18"
+  integrity sha512-LPVCw1nbUZ2VPTPMUjgcAsE0cH8u9TxfET/mDMri48A3VqKD/DI9VCfPrKrfsm0dTHZq6UP3RolNSZ55zVOF2w==
+  dependencies:
+    "@0x/types" "^1.3.0"
+    "@0x/typescript-typings" "^3.0.4"
+    "@types/node" "*"
+    abortcontroller-polyfill "^1.1.9"
+    bignumber.js "~4.1.0"
+    detect-node "2.0.3"
+    ethereum-types "^1.1.2"
+    ethereumjs-util "^5.1.1"
+    ethers "~4.0.4"
+    isomorphic-fetch "^2.2.1"
+    js-sha3 "^0.7.0"
+    lodash "^4.17.5"
+
+"@0x/web3-wrapper@^3.1.6":
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/@0x/web3-wrapper/-/web3-wrapper-3.1.6.tgz#51d68b8b2fb0906d0749316863615a93b488daf9"
+  integrity sha512-qGFrNmIzZP7AhRN34/iwTZxGn8fH+gw7+abQ4AU5wJ4pgO9tcQFa/ratOTMfy6eiae19yS2IJPbyJ925qrBLyA==
+  dependencies:
+    "@0x/assert" "^1.0.18"
+    "@0x/json-schemas" "^2.1.2"
+    "@0x/typescript-typings" "^3.0.4"
+    "@0x/utils" "^2.0.6"
+    ethereum-types "^1.1.2"
+    ethereumjs-util "^5.1.1"
+    ethers "~4.0.4"
+    lodash "^4.17.5"
+
 "@0xproject/abi-gen@^1.0.9":
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/@0xproject/abi-gen/-/abi-gen-1.0.13.tgz#b732c0e2735c60bafc905f17610ab7943fdf14d9"
@@ -206,6 +310,7 @@
 "@0xproject/subproviders@^2.0.5":
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/@0xproject/subproviders/-/subproviders-2.0.7.tgz#0b126f6d6df0ad7bd65689fae5a2d109991f019e"
+  integrity sha512-fprDFg6gjOkR/HkNzO/uHE3G5TZ24jYeTC6TsxGZx6lgwrF0EyP6fbjTyoxHU3/iMVpolv4hrVEJeChFnU5jQA==
   dependencies:
     "@0xproject/assert" "^1.0.13"
     "@0xproject/types" "^1.1.4"
@@ -1243,6 +1348,14 @@
     node-hid "^0.7.2"
     usb "^1.3.3"
 
+"@ledgerhq/hw-transport-u2f@4.24.0":
+  version "4.24.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-u2f/-/hw-transport-u2f-4.24.0.tgz#d67cfc4abf6d9a900ed45f2e2df7fe06dfdff5c7"
+  integrity sha512-/gFjhkM0sJfZ7iUf8HoIkGufAWgPacrbb1LW0TvWnZwvsATVJ1BZJBtrr90Wo401PKsjVwYtFt3Ce4gOAUv9jQ==
+  dependencies:
+    "@ledgerhq/hw-transport" "^4.24.0"
+    u2f-api "0.2.7"
+
 "@ledgerhq/hw-transport-u2f@^4.3.0":
   version "4.31.0"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-u2f/-/hw-transport-u2f-4.31.0.tgz#b3c97e7f8e42a3b43372853f33a713cb5c49efdc"
@@ -1694,6 +1807,13 @@
 "@types/underscore@*":
   version "1.8.9"
   resolved "https://registry.yarnpkg.com/@types/underscore/-/underscore-1.8.9.tgz#fef41f800cd23db1b4f262ddefe49cd952d82323"
+
+"@types/web3-provider-engine@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@types/web3-provider-engine/-/web3-provider-engine-14.0.0.tgz#43adc3b39dc9812b82aef8cd2d66577665ad59b0"
+  integrity sha512-yHr8mX2SoX3JNyfqdLXdO1UobsGhfiwSgtekbVxKLQrzD7vtpPkKbkIVsPFOhvekvNbPsCmDyeDCLkpeI9gSmA==
+  dependencies:
+    "@types/ethereum-protocol" "*"
 
 "@types/web3@^1.0.3", "@types/web3@^1.0.6":
   version "1.0.12"
@@ -2484,7 +2604,7 @@ async-eventemitter@^0.2.2:
   dependencies:
     async "^2.4.0"
 
-"async-eventemitter@github:ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c":
+async-eventemitter@ahultgren/async-eventemitter#fa06e39e56786ba541c180061dbf2c0a5bbf951c:
   version "0.2.3"
   resolved "https://codeload.github.com/ahultgren/async-eventemitter/tar.gz/fa06e39e56786ba541c180061dbf2c0a5bbf951c"
   dependencies:
@@ -6644,7 +6764,7 @@ ethereum-types@^0.0.2:
     "@types/node" "^8.0.53"
     bignumber.js "~4.1.0"
 
-ethereum-types@^1.0.11:
+ethereum-types@^1.0.11, ethereum-types@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ethereum-types/-/ethereum-types-1.1.2.tgz#4ebadc361913e884d99b07cd794d96934b61104b"
   dependencies:
@@ -6932,6 +7052,22 @@ ethers@^3.0.15:
     inherits "2.0.1"
     js-sha3 "0.5.7"
     scrypt-js "2.0.3"
+    setimmediate "1.0.4"
+    uuid "2.0.1"
+    xmlhttprequest "1.8.0"
+
+ethers@~4.0.4:
+  version "4.0.15"
+  resolved "https://registry.yarnpkg.com/ethers/-/ethers-4.0.15.tgz#784df851271ec4f7cea46ce3b44e2274f122ff6c"
+  integrity sha512-GO+GVMI0EfS6CJmxJXSUNTyiN8q+QIRTACzEtRMqnUDQrTzTHfIx2VYD7mgPDTjSsu/JLzGdit0hY3ERcE2fHQ==
+  dependencies:
+    "@types/node" "^10.3.2"
+    aes-js "3.0.0"
+    bn.js "^4.4.0"
+    elliptic "6.3.3"
+    hash.js "1.1.3"
+    js-sha3 "0.5.7"
+    scrypt-js "2.0.4"
     setimmediate "1.0.4"
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
@@ -7717,9 +7853,17 @@ fuse.js@^3.0.1, fuse.js@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-3.3.0.tgz#1e4fe172a60687230fb54a5cb247eb96e2e7e885"
 
-ganache-cli@^6.1.0, ganache-cli@^6.1.8:
+ganache-cli@6.1.8:
+  version "6.1.8"
+  resolved "https://registry.yarnpkg.com/ganache-cli/-/ganache-cli-6.1.8.tgz#49a8a331683a9652183f82ef1378d17e1814fcd3"
+  integrity sha512-yXzteu4SIgUL31mnpm9j+x6dpHUw0p/nsRVkcySKq0w+1vDxH9jMErP1QhZAJuTVE6ni4nfvGSNkaQx5cD3jfg==
+  dependencies:
+    source-map-support "^0.5.3"
+
+ganache-cli@^6.1.8:
   version "6.2.3"
   resolved "https://registry.yarnpkg.com/ganache-cli/-/ganache-cli-6.2.3.tgz#8648224e7c54aa86c52125f8fa10fba2f549b149"
+  integrity sha512-+FYzINouw+yHHG6bT8m6O5xCw5NP6rpSL2keChKlcwgRRFz8SrZS6Q26iJ7ixBp6bk+UMMua8IPZgNFizbdZlQ==
   dependencies:
     bn.js "4.11.8"
     ganache-core "^2.3.1"
@@ -7763,7 +7907,7 @@ ganache-core@0xProject/ganache-core#monorepo-dep:
     websocket "^1.0.24"
     yargs "^7.0.2"
 
-ganache-core@^2.3.1:
+ganache-core@^2.2.1, ganache-core@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/ganache-core/-/ganache-core-2.3.1.tgz#c22a22edfec9c990e530c7a9736dbf09599b99bb"
   dependencies:
@@ -13337,7 +13481,21 @@ pupa@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pupa/-/pupa-1.0.0.tgz#9a9568a5af7e657b8462a6e9d5328743560ceff6"
 
-puppeteer@^1.5.0, puppeteer@^1.9.0:
+puppeteer@1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.9.0.tgz#56dba79e7ea4faac807877bee3b23d63291fc59e"
+  integrity sha512-GH4PmhJf9wBRAPvtJkEJLAvdNNOofZortmBZSj8cGWYni98GUFqsf66blOEfJbo5B8l0KG5HR2d/W2MejnUrzg==
+  dependencies:
+    debug "^3.1.0"
+    extract-zip "^1.6.6"
+    https-proxy-agent "^2.2.1"
+    mime "^2.0.3"
+    progress "^2.0.0"
+    proxy-from-env "^1.0.0"
+    rimraf "^2.6.1"
+    ws "^5.1.1"
+
+puppeteer@^1.5.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.11.0.tgz#63cdbe12b07275cd6e0b94bce41f3fcb20305770"
   dependencies:
@@ -14717,6 +14875,11 @@ scrypt-async@^1.2.0:
 scrypt-js@2.0.3:
   version "2.0.3"
   resolved "http://registry.npmjs.org/scrypt-js/-/scrypt-js-2.0.3.tgz#bb0040be03043da9a012a2cea9fc9f852cfc87d4"
+
+scrypt-js@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/scrypt-js/-/scrypt-js-2.0.4.tgz#32f8c5149f0797672e551c07e230f834b6af5f16"
+  integrity sha512-4KsaGcPnuhtCZQCxFxN3GVYIhKFPTdLd8PLC552XwbMndtD0cjRFAhDuuydXQ0h08ZfPgzqe6EKHozpuH74iDw==
 
 scrypt.js@0.2.0, scrypt.js@^0.2.0:
   version "0.2.0"

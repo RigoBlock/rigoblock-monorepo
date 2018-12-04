@@ -34,6 +34,7 @@
     "typescript-eslint-parser": "^18.0.0"
   },
   "dependencies": {
+    "@0x/subproviders": "^2.1.6",
     "@0xproject/subproviders": "^2.0.5",
     "@rigoblock/contracts": "^0.3.8",
     "@types/node": "^10.11.0",
