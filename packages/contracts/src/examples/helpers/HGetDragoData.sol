@@ -16,37 +16,178 @@
 
 */
 
-pragma solidity 0.4.25;
+pragma solidity 0.5.0;
+pragma experimental ABIEncoderV2;
 
 import { DragoFace } from "../../protocol/Drago/DragoFace.sol";
+import { DragoRegistryFace } from "../../protocol/DragoRegistry/DragoRegistryFace.sol";
 
 /// @title Drago Data Helper - Allows to query multiple data of a drago at once.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 contract HGetDragoData {
 
+    struct DragoData {
+        string name;
+        string symbol;
+        uint256 sellPrice;
+        uint256 buyPrice;
+    }
+
+    struct DragoAdminData {
+        address owner;
+        address feeCollector;
+        address dragoDao;
+        uint256 ratio;
+        uint256 transactionFee;
+        uint32 minPeriod;
+    }
+
+    struct DragoExtraInfo {
+        uint256 totalSupply;
+        uint256 ethBalance;
+    }
+
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
+    /// @dev Returns structs of infos on a drago from its address.
+    /// @param _drago Address of the target drago.
+    /// @return Structs of data.
     function queryData(
         address _drago)
         external
         view
         returns (
-            string name,
-            string symbol,
-            uint256 sellPrice,
-            uint256 buyPrice,
-            address owner,
-            address feeCollector,
-            address dragoDao,
-            uint256 transactionFee,
-            uint32 minPeriod,
-            uint256 totalSupply,
-            uint256 ethBalance
+            DragoData memory dragoData,
+            DragoAdminData memory dragoAdminData,
+            DragoExtraInfo memory dragoExtraInfo
+        )
+    {
+        (
+            dragoData,
+            dragoAdminData,
+            dragoExtraInfo
+        ) = queryDataInternal(_drago);
+    }
+
+    /// @dev Returns structs of infos on a drago from its ID.
+    /// @param _dragoRegistry Address of the target drago.
+    /// @param _dragoId Number of the target drago ID.
+    /// @return Structs of data.
+    function queryDataFromId(
+        address _dragoRegistry,
+        uint256 _dragoId)
+        external
+        view
+        returns (
+            DragoData memory dragoData,
+            DragoAdminData memory dragoAdminData,
+            DragoExtraInfo memory dragoExtraInfo,
+            address drago
+        )
+    {
+        address dragoRegistry = _dragoRegistry;
+        DragoRegistryFace dragoRegistryInstance = DragoRegistryFace(dragoRegistry);
+        (drago, , , , , ) = dragoRegistryInstance.fromId(_dragoId);
+        (
+            dragoData,
+            dragoAdminData,
+            dragoExtraInfo
+        ) = queryDataInternal(drago);
+    }
+
+    /// @dev Returns structs of infos on a drago from its ID.
+    /// @param _drago Array of addresses of the target dragos.
+    /// @return Arrays of structs of data.
+    function queryMultiData(
+        address[] calldata _drago)
+        external
+        view
+        returns (
+            DragoData[] memory,
+            DragoAdminData[] memory,
+            DragoExtraInfo[] memory
+        )
+    {
+        uint256 length = _drago.length;
+        DragoData[] memory dragoData = new DragoData[](length);
+        DragoAdminData[] memory dragoAdminData = new DragoAdminData[](length);
+        DragoExtraInfo[] memory dragoExtraInfo = new DragoExtraInfo[](length);
+        for (uint256 i = 0; i < length; i++) {
+            (
+                dragoData[i],
+                dragoAdminData[i],
+                dragoExtraInfo[i]
+            ) = queryDataInternal(_drago[i]);
+        }
+    }
+
+    /// @dev Returns structs of infos on a drago from its ID.
+    /// @param _dragoRegistry Address of the drago registry.
+    /// @param _dragoId Array of IDs of the target dragos.
+    /// @return Arrays of structs of data and related address of a drago.
+    function queryMultiDataFromId(
+        address _dragoRegistry,
+        uint256[] calldata _dragoId)
+        external
+        view
+        returns (
+            DragoData[] memory,
+            DragoAdminData[] memory,
+            DragoExtraInfo[] memory,
+            address drago
+        )
+    {
+        uint256 length = _dragoId.length;
+        DragoData[] memory dragoData = new DragoData[](length);
+        DragoAdminData[] memory dragoAdminData = new DragoAdminData[](length);
+        DragoExtraInfo[] memory dragoExtraInfo = new DragoExtraInfo[](length);
+        address dragoRegistry = _dragoRegistry;
+        DragoRegistryFace dragoRegistryInstance = DragoRegistryFace(dragoRegistry);
+        for (uint256 i = 0; i < length; i++) {
+            uint256 dragoId = _dragoId[i];
+            (drago, , , , , ) = dragoRegistryInstance.fromId(dragoId);
+            (
+                dragoData[i],
+                dragoAdminData[i],
+                dragoExtraInfo[i]
+            ) = queryDataInternal(drago);
+        }
+    }
+
+    /*
+     * INTERNAL FUNCTIONS
+     */
+    /// @dev Returns structs of infos on a drago.
+    /// @param _drago Array of addresses of the target dragos.
+    /// @return Structs of data.
+    function queryDataInternal(
+        address _drago)
+        internal
+        view
+        returns (
+            DragoData memory dragoData,
+            DragoAdminData memory dragoAdminData,
+            DragoExtraInfo memory dragoExtraInfo
         )
     {
         DragoFace dragoInstance = DragoFace(_drago);
-        (name, symbol, sellPrice, buyPrice) = dragoInstance.getData();
-        (owner, feeCollector, dragoDao, , transactionFee, minPeriod) = dragoInstance.getAdminData();
-        totalSupply = dragoInstance.totalSupply();
-        ethBalance = address(this).balance;
+        (
+            dragoData.name,
+            dragoData.symbol,
+            dragoData.sellPrice,
+            dragoData.buyPrice
+        ) = dragoInstance.getData();
+        (
+            dragoAdminData.owner,
+            dragoAdminData.feeCollector,
+            dragoAdminData.dragoDao,
+            dragoAdminData.ratio,
+            dragoAdminData.transactionFee,
+            dragoAdminData.minPeriod
+        ) = dragoInstance.getAdminData();
+        dragoExtraInfo.totalSupply = dragoInstance.totalSupply();
+        dragoExtraInfo.ethBalance = address(_drago).balance;
     }
 }
