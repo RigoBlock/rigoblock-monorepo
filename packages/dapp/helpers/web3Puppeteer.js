@@ -23,12 +23,10 @@ class Web3Puppeteer extends Helper {
       port: 8545,
       network_id: 5777
     })
-    this.ganache.listen(
-      8545,
-      err =>
-        err
-          ? console.error('Error occurred during Ganache startup', err)
-          : console.log('Ganache starting!')
+    this.ganache.listen(8545, err =>
+      err
+        ? console.error('Error occurred during Ganache startup', err)
+        : console.log('Ganache starting!')
     )
     await this.helpers['Puppeteer'].amOnPage('/login')
     await this.inject()
@@ -37,11 +35,10 @@ class Web3Puppeteer extends Helper {
 
   async _after() {
     await new Promise((resolve, reject) => {
-      this.ganache.close(
-        err =>
-          err
-            ? reject(new Error(err))
-            : resolve(console.log('Ganache stopping...'))
+      this.ganache.close(err =>
+        err
+          ? reject(new Error(err))
+          : resolve(console.log('Ganache stopping...'))
       )
     })
     this.ganache = null

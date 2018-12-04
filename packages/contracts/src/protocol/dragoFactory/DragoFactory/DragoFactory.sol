@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 import { DragoRegistryFace as DragoRegistry } from "../../DragoRegistry/DragoRegistryFace.sol";
@@ -33,7 +33,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
 
     DragoFactoryLibrary.NewDrago private libraryData;
 
-    string public constant VERSION = "DF 0.4.2";
+    string public constant VERSION = "DF 0.5.2";
 
     Data private data;
 

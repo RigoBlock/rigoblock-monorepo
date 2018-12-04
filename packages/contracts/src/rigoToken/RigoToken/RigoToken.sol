@@ -16,18 +16,16 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
-import { InflationFace as Inflation } from "../Inflation/InflationFace.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { UnlimitedAllowanceToken } from "../../tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol";
-import { RigoTokenFace } from "./RigoTokenFace.sol";
 
 /// @title Rigo Token - Rules of the Rigo token.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 /// @notice UnlimitedAllowanceToken is ERC20
-contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
+contract RigoToken is UnlimitedAllowanceToken, SafeMath {
 
     string constant public name = "Rigo Token";
     string constant public symbol = "GRG";
@@ -67,7 +65,12 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
     /// @dev Allows minter to create new tokens
     /// @param _recipient Address of who receives new tokens
     /// @param _amount Number of new tokens
-    function mintToken(address _recipient, uint256 _amount) external onlyMinter {
+    function mintToken(
+        address _recipient,
+        uint256 _amount)
+        external
+        onlyMinter
+    {
         balances[_recipient] = safeAdd(balances[_recipient], _amount);
         totalSupply = safeAdd(totalSupply, _amount);
         emit TokenMinted(_recipient, _amount);
@@ -75,54 +78,19 @@ contract RigoToken is UnlimitedAllowanceToken, SafeMath, RigoTokenFace {
 
     /// @dev Allows rigoblock dao to change minter
     /// @param _newAddress Address of the new minter
-    function changeMintingAddress(address _newAddress) external onlyRigoblock {
+    function changeMintingAddress(address _newAddress)
+        external
+        onlyRigoblock
+    {
         minter = _newAddress;
     }
 
     /// @dev Allows rigoblock dao to upgrade dao
     /// @param _newAddress Address of the new rigoblock dao
-    function changeRigoblockAddress(address _newAddress) external onlyRigoblock {
+    function changeRigoblockAddress(address _newAddress)
+        external
+        onlyRigoblock
+    {
         rigoblock = _newAddress;
-    }
-
-    /*
-     * CONSTANT PUBLIC FUNCTIONS
-     */
-    /// @dev Returns name of Rigo token
-    /// @return String with name
-    function getName() external view returns (string) {
-        return name;
-    }
-
-    /// @dev Returns symbol of Rigo token
-    /// @return String with symbol
-    function getSymbol() external view returns (string) {
-        return symbol;
-    }
-
-    /// @dev Returns decimals of Rigo token
-    /// @return Number of decimals
-    function getDecimals() external view returns (uint256) {
-        return decimals;
-    }
-
-    /// @dev Returns the minter
-    /// @return Address of the minter
-    function getMinter() external view returns (address) {
-        return minter;
-    }
-
-    /// @dev Returns the rigoblock dao
-    /// @return Address of the rigoblock dao
-    function getRigoblock() external view returns (address) {
-        return rigoblock;
-    }
-
-    /// @dev Returns the reward/inflation factor for a said group
-    /// @param _group Address of the group/factory
-    /// @return Value of the inflation factor
-    function getInflationFactor(address _group) external view returns (uint256) {
-        Inflation inflation = Inflation(minter);
-        return inflation.getInflationFactor(_group);
     }
 }

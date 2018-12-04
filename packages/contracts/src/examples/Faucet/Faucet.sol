@@ -22,7 +22,7 @@
  * Inspired by https://github.com/AvocadoNetwork
  */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 
 import { ERC20Face as Token } from "../../tokens/ERC20/ERC20Face.sol";
 import { Owned as Owned } from "../../utils/Owned/Owned.sol";

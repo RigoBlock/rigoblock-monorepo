@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 
 /// @title SigVerifier Interface - Allows interaction with the signature verifier contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>

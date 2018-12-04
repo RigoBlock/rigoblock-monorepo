@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental ABIEncoderV2;
 
 import { AuthorityFace as Authority } from "../authorities/Authority/AuthorityFace.sol";
@@ -38,7 +38,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
 
     using LibFindMethod for *;
 
-    string constant VERSION = 'HF 0.4.2';
+    string constant VERSION = 'HF 0.5.2';
     uint256 constant BASE = 1000000; // tokens are divisible by 1 million
 
     mapping (address => Account) accounts;
@@ -233,6 +233,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         bytes32 _hash,
         bytes _signedData)
         external
+        nonReentrant
         onlyOwnerOrAuthority
         buyPriceHigherOrEqual(_newSellPrice, _newBuyPrice)
         notPriceError(_newSellPrice, _newBuyPrice)
@@ -418,7 +419,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @param _who Address of the target account.
     /// @return Number of shares.
     function balanceOf(address _who)
-        external view
+        external
+        view
         returns (uint256)
     {
         return accounts[_who].balance;
@@ -427,7 +429,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @dev Gets the address of the logger contract.
     /// @return Address of the logger contrac.
     function getEventful()
-        external view
+        external
+        view
         returns (address)
     {
         Authority auth = Authority(admin.authority);
@@ -440,7 +443,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @return Value of the share price in wei.
     /// @return Value of the share price in wei.
     function getData()
-        external view
+        external
+        view
         returns (
             string name,
             string symbol,
@@ -457,7 +461,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @dev Returns the price of a pool.
     /// @return Value of the share price in wei.
     function calcSharePrice()
-        external view
+        external
+        view
         returns (uint256)
     {
         return data.sellPrice;
@@ -470,7 +475,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @return Value of the transaction fee in basis points.
     /// @return Number of the minimum holding period for shares.
     function getAdminData()
-        external view
+        external
+        view
         returns (
             address, //owner
             address feeCollector,
@@ -491,7 +497,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     }
 
     function getKycProvider()
-        external view
+        external
+        view
         returns (address)
     {
         if(admin.kycEnforced) {
@@ -507,7 +514,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         bytes32 hash,
         bytes signature
     )
-        external view
+        external
+        view
         returns (bool isValid)
     {
         isValid = SigVerifier(getSigVerifier())
@@ -523,15 +531,6 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         returns (address)
     {
         return getExchangesAuthority();
-    }
-
-    /// @dev Returns the version of the type of vault.
-    /// @return String of the version.
-    function getVersion()
-        external pure
-        returns (string)
-    {
-        return VERSION;
     }
 
     /// @dev Returns the total amount of issued tokens for this drago.
@@ -649,7 +648,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @return Value of fee in shares to dao.
     /// @return Value of net purchased shares.
     function getPurchaseAmounts()
-        internal view
+        internal
+        view
         returns (
             uint256 grossAmount,
             uint256 feeDrago,
@@ -673,7 +673,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @return Value of net sold shares.
     /// @return Value of sale amount for hodler.
     function getSaleAmounts(uint256 _amount)
-        internal view
+        internal
+        view
         returns (
             uint256 feeDrago,
             uint256 feeDragoDao,
@@ -693,7 +694,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @dev Gets the address of the logger contract.
     /// @return Address of the logger contrac.
     function getDragoEventful()
-        internal view
+        internal
+        view
         returns (address)
     {
         Authority auth = Authority(admin.authority);
@@ -703,7 +705,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @dev Returns the address of the signature verifier.
     /// @return Address of the verifier contract.
     function getSigVerifier()
-        internal view
+        internal
+        view
         returns (address)
     {
         return ExchangesAuthority(
@@ -715,7 +718,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @dev Returns the address of the price verifier.
     /// @return Address of the verifier contract.
     function getNavVerifier()
-        internal view
+        internal
+        view
         returns (address)
     {
         return Authority(admin.authority)
@@ -763,7 +767,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @param _exchange Address of the target exchange.
     /// @return Address of the exchange adapter.
     function getExchangeAdapter(address _exchange)
-        public //internal //only for debugging
+        internal
         view
         returns (address)
     {
@@ -777,7 +781,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @param assembledData Bytes of the encoded transaction.
     /// @return Bytes4 function signature.
     function findMethod(bytes assembledData)
-        public //internal
+        internal
         pure
         returns (bytes4 method)
     {

@@ -16,14 +16,14 @@
 
 */
 
-pragma solidity 0.4.24;
+pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 import { PoolFace as Pool } from "../../utils/Pool/PoolFace.sol";
 import { RigoToken } from "../RigoToken/RigoToken.sol";
 import { DragoRegistryFace as DragoRegistry } from "../../protocol/DragoRegistry/DragoRegistry.sol";
 import { InflationFace as Inflation } from "../Inflation/InflationFace.sol";
-import { ReentrancyGuard } from "../../utils/ReentrancyGuard//ReentrancyGuard.sol";
+import { ReentrancyGuard } from "../../utils/ReentrancyGuard/ReentrancyGuard.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
 
@@ -36,7 +36,6 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
 
     address public dragoRegistry;
     address public rigoblockDao;
-    uint256 public minimumRigo;
 
     mapping (uint256 => PoolPrice) poolPrice;
     mapping (address => Group) groups;
@@ -51,12 +50,6 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
 
     modifier onlyRigoblockDao() {
         require(msg.sender == rigoblockDao);
-        _;
-    }
-
-    modifier minimumRigoblock() {
-        RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
-        require(rigoToken.balanceOf(msg.sender) >= minimumRigo);
         _;
     }
 
@@ -105,15 +98,6 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
         onlyRigoblockDao
     {
         rigoblockDao = _rigoblockDao;
-    }
-
-    /// @dev Allows RigoBlock Dao to set the GRG minimum requirement.
-    /// @param _amount Number of required tokens.
-    function setMinimumRigo(uint256 _amount)
-        external
-        onlyRigoblockDao
-    {
-        minimumRigo = _amount;
     }
 
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
@@ -220,7 +204,7 @@ contract ProofOfPerformance is SafeMath, ReentrancyGuard, ProofOfPerformanceFace
         returns (address)
     {
         RigoToken token = RigoToken(RIGOTOKENADDRESS);
-        return token.getMinter();
+        return token.minter();
     }
 
     /// @dev Returns the proof of performance reward for a pool.

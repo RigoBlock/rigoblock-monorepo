@@ -6,13 +6,17 @@ import * as SubscriptionSubProvider from 'web3-provider-engine/subproviders/subs
 import * as WebSocketSubProvider from 'web3-provider-engine/subproviders/websocket'
 import { ContractModels } from './contracts'
 import { RPC_URLS } from './constants'
-import { SignerSubprovider } from '@0xproject/subproviders'
+import { SignerSubprovider } from '@0x/subproviders'
 import fetchContracts from '@rigoblock/contracts'
 
+export interface ProviderEngineFix extends ProviderEngine {
+  start(cb?: Function): void
+  emit?(name: string, err: any, notification: any): void
+}
 class Api {
   public contract: ContractModels
   public web3: Web3
-  public engine: ProviderEngine
+  public engine: ProviderEngineFix
 
   async startEngine() {
     return new Promise((resolve, reject) => {
@@ -22,8 +26,8 @@ class Api {
 
   async init(web3: Web3 = window['web3']) {
     const networkPromise: Promise<number> = new Promise((resolve, reject) => {
-      window['web3'].version.getNetwork(
-        (err, res) => (err ? reject(err) : resolve(res))
+      window['web3'].version.getNetwork((err, res) =>
+        err ? reject(err) : resolve(res)
       )
     })
     const networkId = await networkPromise
