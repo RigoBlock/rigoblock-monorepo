@@ -11,6 +11,7 @@ import fetchContracts from '@rigoblock/contracts'
 
 export interface ProviderEngineFix extends ProviderEngine {
   start(cb?: Function): void
+  emit?(name: string, err: any, notification: any): void
 }
 class Api {
   public contract: ContractModels
@@ -38,7 +39,7 @@ class Api {
     const subscriptionSubprovider = new SubscriptionSubProvider()
     this.engine.addProvider(subscriptionSubprovider)
     subscriptionSubprovider.on('data', (err, notification) => {
-      return this.engine['emit']('data', err, notification)
+      return this.engine.emit('data', err, notification)
     })
     this.engine.addProvider(
       new WebSocketSubProvider({

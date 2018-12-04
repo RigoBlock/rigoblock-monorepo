@@ -5,7 +5,8 @@ const config = {
       url: 'http://localhost:8080',
       show: true,
       chrome: {
-        headless: true
+        headless: true,
+        dumpio: true
       },
       waitForNavigation: 'domcontentloaded',
       waitForAction: 200
