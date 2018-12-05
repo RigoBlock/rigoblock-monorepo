@@ -37,15 +37,16 @@ contract HGetDragoData {
             address owner,
             address feeCollector,
             address dragoDao,
-            uint256 ratio,
             uint256 transactionFee,
             uint32 minPeriod,
-            uint256 totalSupply
+            uint256 totalSupply,
+            uint256 ethBalance
         )
     {
         DragoFace dragoInstance = DragoFace(_drago);
         (name, symbol, sellPrice, buyPrice) = dragoInstance.getData();
-        (owner, feeCollector, dragoDao, ratio, transactionFee, minPeriod) = dragoInstance.getAdminData();
+        (owner, feeCollector, dragoDao, , transactionFee, minPeriod) = dragoInstance.getAdminData();
         totalSupply = dragoInstance.totalSupply();
+        ethBalance = address(this).balance;
     }
 }
