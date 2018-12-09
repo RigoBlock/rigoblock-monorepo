@@ -102,7 +102,7 @@ contract HGetMultipleBalances {
 
     /// @dev Returns positive token balance of an hodler.
     /// @param _who Address of the target owner.
-    /// @return Number of token balances and address of the token.
+    /// @return Array of numbers of token balances and address of the tokens.
     function getMultiBalances(
         address _who
         )
@@ -114,13 +114,34 @@ contract HGetMultipleBalances {
         )
     {
         uint256 length = numTokens;
-        for (uint256 i = 0; i < length; i++) {
+        for (uint256 i = 1; i <= length; i++) {
             address targetToken = getAddressFromNumber(i);
             Token token = Token(targetToken);
             uint256 amount = token.balanceOf(_who);
             if (amount == 0) continue;
             balances[i] = amount;
             tokenAddresses[i] = targetToken;
+        }
+    }
+
+    /// @dev Returns token balances of an hodler.
+    /// @param _tokenAddresses Array of token addresses.
+    /// @param _who Address of the target holder.
+    /// @return Array of numbers of token balances of the tokens.
+    function getMultiBalancesFromAddresses(
+        address[] calldata _tokenAddresses,
+        address _who)
+        external
+        view
+        returns (uint256[] memory balances)
+    {
+        uint256 length = _tokenAddresses.length;
+        for (uint256 i = 0; i < length; i++) {
+            address targetToken = _tokenAddresses[i];
+            Token token = Token(targetToken);
+            uint256 amount = token.balanceOf(_who);
+            if (amount == 0) continue;
+            balances[i] = amount;
         }
     }
 
