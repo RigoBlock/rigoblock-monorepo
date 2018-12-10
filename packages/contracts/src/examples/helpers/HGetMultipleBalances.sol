@@ -90,6 +90,8 @@ contract HGetMultipleBalances {
         )
     {
         uint256 length = _tokenNumbers.length;
+        balances = new uint256[](length);
+        tokenAddresses = new address[](length);
         for (uint256 i = 1; i <= length; i++) {
             address targetToken = getAddressFromNumber(i);
             Token token = Token(targetToken);
@@ -114,6 +116,8 @@ contract HGetMultipleBalances {
         )
     {
         uint256 length = numTokens;
+        balances = new uint256[](length);
+        tokenAddresses = new address[](length);
         for (uint256 i = 1; i <= length; i++) {
             address targetToken = getAddressFromNumber(i);
             Token token = Token(targetToken);
@@ -136,11 +140,11 @@ contract HGetMultipleBalances {
         returns (uint256[] memory balances)
     {
         uint256 length = _tokenAddresses.length;
+        balances = new uint256[](length);
         for (uint256 i = 0; i < length; i++) {
             address targetToken = _tokenAddresses[i];
             Token token = Token(targetToken);
             uint256 amount = token.balanceOf(_who);
-            if (amount == 0) continue;
             balances[i] = amount;
         }
     }
@@ -160,6 +164,34 @@ contract HGetMultipleBalances {
         )
     {
         uint256 length = _tokenAddresses.length;
+        balances = new uint256[](length);
+        tokenAddresses = new address[](length);
+        for (uint256 i = 0; i < length; i++) {
+            address targetToken = _tokenAddresses[i];
+            Token token = Token(targetToken);
+            uint256 amount = token.balanceOf(_who);
+            balances[i] = amount;
+            tokenAddresses[i] = targetToken;
+        }
+    }
+
+    /// @dev Returns only positive token balances of an hodler.
+    /// @param _tokenAddresses Array of token addresses.
+    /// @param _who Address of the target holder.
+    /// @return Array of numbers of token balances and addresses of the tokens.
+    function getPositiveBalancesAndAddressesFromAddresses(
+        address[] calldata _tokenAddresses,
+        address _who)
+        external
+        view
+        returns (
+            uint256[] memory balances,
+            address[] memory tokenAddresses
+        )
+    {
+        uint256 length = _tokenAddresses.length;
+        balances = new uint256[](length);
+        tokenAddresses = new address[](length);
         for (uint256 i = 0; i < length; i++) {
             address targetToken = _tokenAddresses[i];
             Token token = Token(targetToken);
