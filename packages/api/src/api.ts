@@ -3,16 +3,27 @@ import ProviderEngine = require('web3-provider-engine')
 import * as Contract from './contracts/contract'
 import * as FilterSubprovider from 'web3-provider-engine/subproviders/filters'
 import * as SubscriptionSubProvider from 'web3-provider-engine/subproviders/subscriptions'
-import * as WebSocketSubProvider from 'web3-provider-engine/subproviders/websocket'
 import { ContractModels } from './contracts'
 import { RPC_URLS } from './constants'
-import { SignerSubprovider } from '@0xproject/subproviders'
+import { SignerSubprovider } from '@0x/subproviders'
+/*
+ We made a copy of the Websocket subProvider as the original from MetaMask had a
+ breaking bug preventing us to connect to Infura. An issue has been opened on their repo,
+ but we got no response yet: https://github.com/MetaMask/provider-engine/pull/297
+ This is hopefully a temporary fix, if / when they will fix the original subprovider we will revert
+ and import the correct one.
+*/
+import WebSocketSubProvider from './webSocketSubprovider'
 import fetchContracts from '@rigoblock/contracts'
 
+export interface ProviderEngineFix extends ProviderEngine {
+  start(cb?: Function): void
+  emit?(name: string, err: any, notification: any): void
+}
 class Api {
   public contract: ContractModels
   public web3: Web3
-  public engine: ProviderEngine
+  public engine: ProviderEngineFix
 
   async startEngine() {
     return new Promise((resolve, reject) => {
@@ -22,8 +33,8 @@ class Api {
 
   async init(web3: Web3 = window['web3']) {
     const networkPromise: Promise<number> = new Promise((resolve, reject) => {
-      window['web3'].version.getNetwork(
-        (err, res) => (err ? reject(err) : resolve(res))
+      window['web3'].version.getNetwork((err, res) =>
+        err ? reject(err) : resolve(res)
       )
     })
     const networkId = await networkPromise

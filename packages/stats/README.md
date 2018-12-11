@@ -1,5 +1,5 @@
 # Rigoblock Stats
-![](./rigoblockStats.svg)
+![](rigoblockStats.svg)
 
 ## Services
 

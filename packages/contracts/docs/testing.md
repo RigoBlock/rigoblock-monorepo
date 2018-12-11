@@ -1,6 +1,6 @@
 # Developing new contracts
 
-Create a new directory into `solidity-contracts` and name it accordinly.
+Create a new directory into `solidity-contracts` and name it accordingly.
 
 Edit `constants/index.js` and add the contract name to `CONTRACT_NAMES` array.
 

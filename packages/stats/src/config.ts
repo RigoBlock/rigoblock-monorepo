@@ -322,8 +322,8 @@ const conf: Config = {
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
-      network: NETWORKS.KOVAN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
+      network: NETWORKS.ROPSTEN,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
     }
   },
   'mainnet-fetch-dragos-list': {
@@ -492,8 +492,8 @@ const conf: Config = {
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
-      network: NETWORKS.KOVAN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
+      network: NETWORKS.MAINNET,
+      web3Provider: WEBSOCKET_URLS[NETWORKS.MAINNET].INFURA
     }
   }
 }

@@ -51,4 +51,4 @@ Here is a demo of how the script works:
 
 ## Writing Tests
 
-Read the [testing documentation.](docs/TESTING.md)
+Read the [testing documentation.](docs/testing.md)
