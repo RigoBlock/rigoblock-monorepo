@@ -174,9 +174,7 @@ export class EthfinexRaw {
       },
       callback: (err: Error, message?: any) => any
     ): Promise<Function> => {
-      console.time('start')
       const ws = await this.ws.getConnection()
-      console.timeEnd('start')
       const msg = {
         event: 'subscribe',
         channel: 'candles',
