@@ -105,7 +105,10 @@ export class ERCdEXRaw extends ZeroExStandardRelayerRaw {
     open: () => {
       this.wsStatus = WS_STATUS.CONNECTING
       this.wsInstance = new ReconnectingWebSocket(this.WS_URL, [], {
-        WebSocket: window['WebSocket'] ? window['WebSocket'] : WS,
+        WebSocket:
+          typeof window !== 'undefined' && window['WebSocket']
+            ? window['WebSocket']
+            : WS,
         minReconnectionDelay: 1
       })
       return new Promise((resolve, reject) => {
