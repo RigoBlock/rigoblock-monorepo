@@ -69,7 +69,8 @@ export class EthfinexRaw {
         WebSocket:
           typeof window !== 'undefined' && window['WebSocket']
             ? window['WebSocket']
-            : WS
+            : WS,
+        minReconnectionDelay: 1
       })
       return new Promise((resolve, reject) => {
         const rejectError = err => {
