@@ -15,7 +15,7 @@ export const fetchJSON = (url, params?: string) => {
   )
 }
 
-export const postJSON = (url, body?: any) => {
+export const postJSON = (url, body = {}) => {
   const fetch =
     typeof window !== 'undefined' && window.fetch ? window.fetch : nodeFetch
   return fetch(url, {

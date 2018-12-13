@@ -1,5 +1,6 @@
 import { Chunk } from './types'
 import { promisify } from 'util'
+import fetch from 'node-fetch'
 
 const getBlockChunks = (start, end, chunkSize = 100000): Chunk[] => {
   const startBlock = start
@@ -22,3 +23,12 @@ export const chunkifyEvents = async (method, eventName, web3) => {
   })
   return promises
 }
+
+export const postJSON = (url, body = {}) =>
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  }).then(r => r.json())
