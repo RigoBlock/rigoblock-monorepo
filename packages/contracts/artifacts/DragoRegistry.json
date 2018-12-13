@@ -582,7 +582,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/LibSanitize/LibSanitize.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
             ],
-            "address": "0x97b44DB885E774F17CAb2Cb99714FE020830065E"
+            "address": "0xde6445484a8dcd9bf35fc95eb4e3990cc358822e"
         },
         "3": {
             "solc_version": "0.4.25",
@@ -1165,7 +1165,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/LibSanitize/LibSanitize.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
             ],
-            "address": "0x82f137b817ab61cdb2af5f23d5b96094b5fe5f7d"
+            "address": "0x4e868d1ddf940316964ea7673e21be6cbed8b30b"
         },
         "42": {
             "solc_version": "0.4.25",
