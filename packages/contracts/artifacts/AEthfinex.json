@@ -98,7 +98,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/ReentrancyGuard/ReentrancyGuard.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMathLight.sol"
             ],
-            "address": "0xe49aae356a28479904e41e785568fdad1a988178"
+            "address": "0x25f1fea9447a29f98890808836d845ba914b7f25"
         },
         "3": {
             "solc_version": "0.4.25",
@@ -197,7 +197,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/ReentrancyGuard/ReentrancyGuard.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMathLight.sol"
             ],
-            "address": "0x50eca55d5fcf3e0f8ac9968b97c1a1aaa89b6e8a"
+            "address": "0x8124c1a18b172e2d2eba06a2c06189c7a542f9ee"
         },
         "42": {
             "solc_version": "0.4.25",

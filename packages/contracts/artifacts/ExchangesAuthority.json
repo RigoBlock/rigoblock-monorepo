@@ -730,7 +730,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/ExchangesAuthority/ExchangesAuthorityFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
             ],
-            "address": "0x33a6b7a95e022f61ddf3350d1fdae19fc1a853b1"
+            "address": "0x13d3045021c19d8e2480be22e4552b2b527c8966"
         },
         "3": {
             "solc_version": "0.4.25",
@@ -1461,7 +1461,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/ExchangesAuthority/ExchangesAuthorityFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
             ],
-            "address": "0x8aced0c3a65a3f2e93780a2ee071bba52c9f3e12"
+            "address": "0x68b8f6f03a4dae4cd052a7c38ffff20d724673e9"
         },
         "42": {
             "solc_version": "0.4.25",
