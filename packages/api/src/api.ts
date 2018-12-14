@@ -3,7 +3,7 @@ import ProviderEngine = require('web3-provider-engine')
 import * as Contract from './contracts/contract'
 import * as FilterSubprovider from 'web3-provider-engine/subproviders/filters'
 import * as SubscriptionSubProvider from 'web3-provider-engine/subproviders/subscriptions'
-import { ContractModels } from './contracts'
+import { ContractsList } from './contracts/contractsList'
 import { RPC_URLS } from './constants'
 import { SignerSubprovider } from '@0x/subproviders'
 /*
@@ -21,7 +21,7 @@ export interface ProviderEngineFix extends ProviderEngine {
   emit?(name: string, err: any, notification: any): void
 }
 class Api {
-  public contract: ContractModels
+  public contract: ContractsList
   public web3: Web3
   public engine: ProviderEngineFix
 
