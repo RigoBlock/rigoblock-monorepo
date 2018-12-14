@@ -25,12 +25,22 @@ class Api {
   public web3: Web3
   public engine: ProviderEngineFix
 
+  /**
+   * Promisified version of ProviderEngine start method
+   * starts the provider engine connections (e.g. WS)
+   * @returns a promise that fulfils when the engine is started
+   */
   async startEngine() {
     return new Promise((resolve, reject) => {
       this.engine.start(err => (err ? reject(err) : resolve()))
     })
   }
 
+  /**
+   * Initializes the RigoBlock API, starts the websocket connection and wallet integration
+   * @param  {Web3=window['web3']} web3 Web3 instance, if non provided then window.web3 is used
+   * @returns the api instance
+   */
   async init(web3: Web3 = window['web3']) {
     const networkPromise: Promise<number> = new Promise((resolve, reject) => {
       window['web3'].version.getNetwork((err, res) =>
