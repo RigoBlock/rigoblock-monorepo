@@ -49,7 +49,8 @@
             "source_map_runtime": "808:708:0:-;;;;;;;;;;;;;;;;;;;;;;;1182:332;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1182:332:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1503:4;1182:332;;;;;;;;:::o",
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/extensions/NavVerifier/NavVerifier.sol"
-            ]
+            ],
+            "address": "0x3e3ae732343ef5bdac2e43feeb7bf1e43ecd947e"
         },
         "3": {
             "solc_version": "0.4.25",
@@ -99,7 +100,8 @@
             "source_map_runtime": "808:708:0:-;;;;;;;;;;;;;;;;;;;;;;;1182:332;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1182:332:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1503:4;1182:332;;;;;;;;:::o",
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/extensions/NavVerifier/NavVerifier.sol"
-            ]
+            ],
+            "address": "0x77643f5787a3ba83756a4df93697b8f615f5368d"
         },
         "42": {
             "solc_version": "0.4.25",
