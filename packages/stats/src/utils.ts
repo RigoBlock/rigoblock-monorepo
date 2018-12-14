@@ -1,3 +1,4 @@
+import { BigNumber } from 'bignumber.js'
 import { Chunk } from './types'
 import { promisify } from 'util'
 import fetch from 'node-fetch'
@@ -32,3 +33,10 @@ export const postJSON = (url, body = {}) =>
     },
     body: JSON.stringify(body)
   }).then(r => r.json())
+
+export const toUnitAmount = (amount, decimals) => {
+  const aUnit = new BigNumber(10).pow(decimals)
+  return new BigNumber(amount).div(aUnit)
+}
+
+export const toBn = v => new BigNumber(v)
