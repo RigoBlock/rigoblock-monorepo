@@ -35,8 +35,8 @@ export const postJSON = (url, body = {}) =>
   }).then(r => r.json())
 
 export const toUnitAmount = (amount, decimals) => {
-  const aUnit = new BigNumber(10).pow(decimals)
-  return new BigNumber(amount).div(aUnit)
+  const exp = new BigNumber(10).pow(decimals)
+  return new BigNumber(amount).div(exp)
 }
 
 export const toBn = v => new BigNumber(v)

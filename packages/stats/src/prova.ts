@@ -83,27 +83,34 @@ const fetchPrices = async tokens => {
 }
 
 // Balance * prezzo / decimali
-const calculateEthAmount = tokens =>
+const calculateWeiAmount = tokens =>
   tokens.map(token => {
     const { name, priceEth, balances, decimals } = token
     if (name === 'ETH') {
-      token.ethAmount = balances.total
+      token.weiBalance = balances.total
       return token
     }
-    token.ethAmount = toUnitAmount(balances.total, decimals).times(priceEth)
+    token.weiBalance = toUnitAmount(balances.total, decimals)
+      .times(priceEth)
+      .times(1e18)
     return token
   })
 
+const getTotalSupply = async contract => {
+  const totalSupply = await contract.methods.totalSupply().call()
+  return toUnitAmount(totalSupply, 6)
+}
+
 const calculateNav = (tokens, totalSupply) => {
   const totalWeiBalance = tokens.reduce(
-    (acc, curr) => acc.plus(toBn(curr.weiBalance)),
+    (acc, curr) => acc.plus(curr.weiBalance),
     toBn(0)
   )
-  console.log(totalSupply)
-  console.log(totalWeiBalance.toString())
+  console.log('WEI', totalWeiBalance.toString())
+  console.log('ETH', totalWeiBalance.div(1e18).toString())
   const weiNav = totalWeiBalance.div(totalSupply)
-  console.log('WEI', weiNav)
-  console.log('ETH', weiNav.div(1e18).toString())
+  console.log('WEI NAV', weiNav.toString())
+  console.log('ETH NAV', weiNav.div(1e18).toString())
 }
 
 const getData = async () => {
@@ -125,20 +132,10 @@ const getData = async () => {
     efxUrl
   )
   const withPrices = await fetchPrices(tokensWithBalances)
-  const withEthAmount = await calculateEthAmount(withPrices)
+  const withEthAmount = await calculateWeiAmount(withPrices)
 
-  const totalSupply = await poolContract.methods.totalSupply().call()
-  console.log(totalSupply)
-  console.log(
-    withEthAmount.map(token => ({
-      name: token.name,
-      decimals: token.decimals,
-      total: token.balances.total.toString(),
-      price: token.priceEth.toString(),
-      eth: token.ethAmount.toString()
-    }))
-  )
-  // const nav = await calculateNav(withEthAmount, totalSupply)
+  const totalSupply = await getTotalSupply(poolContract)
+  const nav = await calculateNav(withEthAmount, totalSupply)
 }
 
 getData()
