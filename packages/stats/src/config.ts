@@ -135,7 +135,7 @@ const conf: Config = {
   'ropsten-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '0 */5 * * * *', // Every minute
+    cronExpression: '0 */5 * * * *', // Every five minutes
     initialData: {
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
@@ -319,7 +319,7 @@ const conf: Config = {
   'mainnet-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '*/10 * * * * *', // Every minute
+    cronExpression: '0 */5 * * * *', // Every five minutes
     initialData: {
       network: NETWORKS.MAINNET,
       web3Provider: WEBSOCKET_URLS[NETWORKS.MAINNET].INFURA
@@ -478,7 +478,7 @@ const conf: Config = {
   'mainnet-calculate-dragos-nav': {
     handlerName: 'calculateNav',
     description: 'Calculates the nav price',
-    cronExpression: '0 * * * *', // every hour
+    cronExpression: '0 * * * *', // Every hour
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
