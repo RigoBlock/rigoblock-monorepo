@@ -13,9 +13,18 @@ const getTokensAndBalances = async (
 ) => {
   const response = await postJSON(EFX_TOKENS_LIST[networkId])
   const { tokenRegistry } = response['0x']
-  console.log(tokenRegistry)
-  const balancePromises = Object.keys(tokenRegistry).map(async symbol => {
-    const { tokenAddress, wrapperAddress, decimals } = tokenRegistry[symbol]
+  const allTokens = {
+    ...tokenRegistry,
+    ...{
+      WETH: {
+        decimals: 18,
+        tokenAddress: CONTRACT_ADDRESSES[networkId].WETH,
+        wrapperAddress: null
+      }
+    }
+  }
+  const balancePromises = Object.keys(allTokens).map(async symbol => {
+    const { tokenAddress, wrapperAddress, decimals } = allTokens[symbol]
     let tokenBalance
     if (!tokenAddress && symbol === 'ETH') {
       tokenBalance = await web3.eth.getBalance(dragoAddress)
@@ -23,10 +32,13 @@ const getTokensAndBalances = async (
       const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress)
       tokenBalance = await tokenContract.methods.balanceOf(dragoAddress).call()
     }
-    const wrapperContract = new web3.eth.Contract(erc20Abi, wrapperAddress)
-    const wrapperBalance = await wrapperContract.methods
-      .balanceOf(dragoAddress)
-      .call()
+    let wrapperBalance = '0'
+    if (wrapperAddress) {
+      const wrapperContract = new web3.eth.Contract(erc20Abi, wrapperAddress)
+      wrapperBalance = await wrapperContract.methods
+        .balanceOf(dragoAddress)
+        .call()
+    }
     return {
       symbol,
       decimals,
@@ -37,31 +49,13 @@ const getTokensAndBalances = async (
       }
     }
   })
-  const wethContract = new web3.eth.Contract(
-    erc20Abi,
-    CONTRACT_ADDRESSES[networkId].WETH
-  )
-  const wethBalance = await wethContract.methods.balanceOf(dragoAddress).call()
-  let tokenBalances = await Promise.all(balancePromises)
-  tokenBalances = tokenBalances.filter(
-    token => !!token.balances.total.toNumber()
-  )
-  tokenBalances.push({
-    symbol: 'WETH',
-    decimals: 18,
-    balances: {
-      total: toBn(wethBalance),
-      wrapper: toBn(0),
-      token: toBn(wethBalance)
-    }
-  })
-  return tokenBalances
+  return Promise.all(balancePromises)
 }
 
 const getTradingSymbols = tokensArray =>
   tokensArray.map(token => {
     const { symbol } = token
-    if (symbol === 'ETH') {
+    if (symbol === 'ETH' || symbol === 'WETH') {
       token.tradingSymbol = null
     } else if (symbol === 'USD') {
       token.tradingSymbol = 'ETHUSD'
@@ -71,10 +65,10 @@ const getTradingSymbols = tokensArray =>
     return token
   })
 
-const fetchPrices = async tokens => {
+const fetchPrices = async (tokens, networkId) => {
   const exchange = exchangeConnector.getExchange(
     supportedExchanges.ETHFINEX_RAW,
-    { networkId: NETWORKS.MAINNET }
+    { networkId }
   )
   const tokenWithSymbols = getTradingSymbols(tokens)
   const symbols = tokenWithSymbols
@@ -83,8 +77,8 @@ const fetchPrices = async tokens => {
 
   const tickers = await exchange.http.getTickers({ symbols })
   return tokenWithSymbols.map(token => {
-    const { symbol, tradingSymbol } = token
-    if (symbol === 'ETH' || symbol === 'WETH') {
+    const { tradingSymbol } = token
+    if (!tradingSymbol) {
       token.priceEth = 1
       return token
     }
@@ -134,8 +128,8 @@ const calculateNavInWei = (tokens, totalSupply) => {
 const getData = async () => {
   const network = NETWORKS.MAINNET
   const poolType = 'Drago'
-  // const dragoAddress = '0xb528A4b28b4E28C69CAf9769f066682EF2654c13'
-  const dragoAddress = '0x0D9E347bDd380783ead06af6A95A69EC3A460d30'
+  const dragoAddress = '0xb528A4b28b4E28C69CAf9769f066682EF2654c13'
+  // const dragoAddress = '0x0D9E347bDd380783ead06af6A95A69EC3A460d30'
   const web3 = new Web3(
     new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/')
   )
@@ -151,11 +145,13 @@ const getData = async () => {
     dragoAddress,
     network
   )
-  const withPrices = await fetchPrices(tokenBalances)
+  console.log(tokenBalances)
+  const withPrices = await fetchPrices(tokenBalances, network)
   const withEthAmount = await calculateWeiAmount(withPrices)
 
   const totalSupply = await getTotalSupply(poolContract)
   const navInWei = await calculateNavInWei(withEthAmount, totalSupply)
+  console.log(navInWei.div(1e18).toString())
   const allTokensAndBalances = tokenBalances
     .map(({ symbol, balances }) => [
       { symbol: symbol, balance: balances.token.toString() },

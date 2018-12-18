@@ -17,7 +17,7 @@ const getTokensAndBalances = async (
   const response = await postJSON(EFX_TOKENS_LIST[networkId])
   const { tokenRegistry } = response['0x']
   const allTokens = {
-    tokenRegistry,
+    ...tokenRegistry,
     ...{
       WETH: {
         decimals: 18,
@@ -26,7 +26,7 @@ const getTokensAndBalances = async (
       }
     }
   }
-  const balancePromises = Object.keys(tokenRegistry).map(async symbol => {
+  const balancePromises = Object.keys(allTokens).map(async symbol => {
     const { tokenAddress, wrapperAddress, decimals } = tokenRegistry[symbol]
     let tokenBalance
     if (!tokenAddress && symbol === 'ETH') {
@@ -35,10 +35,13 @@ const getTokensAndBalances = async (
       const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress)
       tokenBalance = await tokenContract.methods.balanceOf(dragoAddress).call()
     }
-    const wrapperContract = new web3.eth.Contract(erc20Abi, wrapperAddress)
-    const wrapperBalance = await wrapperContract.methods
-      .balanceOf(dragoAddress)
-      .call()
+    let wrapperBalance = '0'
+    if (wrapperAddress) {
+      const wrapperContract = new web3.eth.Contract(erc20Abi, wrapperAddress)
+      wrapperBalance = await wrapperContract.methods
+        .balanceOf(dragoAddress)
+        .call()
+    }
     return {
       symbol,
       decimals,
@@ -49,31 +52,17 @@ const getTokensAndBalances = async (
       }
     }
   })
-  const wethContract = new web3.eth.Contract(
-    erc20Abi,
-    CONTRACT_ADDRESSES[networkId].WETH
-  )
-  const wethBalance = await wethContract.methods.balanceOf(dragoAddress).call()
   let tokenBalances = await Promise.all(balancePromises)
   tokenBalances = tokenBalances.filter(
     token => !!token.balances.total.toNumber()
   )
-  tokenBalances.push({
-    symbol: 'WETH',
-    decimals: 18,
-    balances: {
-      total: toBn(wethBalance),
-      wrapper: toBn(0),
-      token: toBn(wethBalance)
-    }
-  })
-  return
+  return tokenBalances
 }
 
 const getTradingSymbols = tokensArray =>
   tokensArray.map(token => {
     const { symbol } = token
-    if (symbol === 'ETH') {
+    if (symbol === 'ETH' || symbol === 'WETH') {
       token.tradingSymbol = null
     } else if (symbol === 'USD') {
       token.tradingSymbol = 'ETHUSD'
@@ -95,8 +84,8 @@ const fetchTokenPrices = async (tokens, networkId) => {
 
   const tickers = await exchange.http.getTickers({ symbols })
   return tokenWithSymbols.map(token => {
-    const { symbol, tradingSymbol } = token
-    if (symbol === 'ETH') {
+    const { tradingSymbol } = token
+    if (!tradingSymbol) {
       token.priceEth = 1
       return token
     }
@@ -162,9 +151,10 @@ const task = async (job, web3: Web3) => {
       address,
       network
     )
-    const tokensWithPrices = await fetchTokenPrices(tokensWithBalances, network)
-    const tokensWithWeiAmount = await calculateWeiAmount(tokensWithPrices)
-    const navInWei = await calculateNavInWei(tokensWithWeiAmount, totalSupply)
+    console.log(tokensWithBalances)
+    // const tokensWithPrices = await fetchTokenPrices(tokensWithBalances, network)
+    // const tokensWithWeiAmount = await calculateWeiAmount(tokensWithPrices)
+    // const navInWei = await calculateNavInWei(tokensWithWeiAmount, totalSupply)
   })
 
   // const poolAbi = contractsMap[poolType].abi
