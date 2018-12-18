@@ -10,6 +10,11 @@ export enum NETWORKS {
   ROPSTEN = '3'
 }
 
+export const EFX_TOKENS_LIST = {
+  [NETWORKS.MAINNET]: 'https://api.ethfinex.com/trustless/v1/r/get/conf',
+  [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/trustless/v1/r/get/conf'
+}
+
 export const CONTRACT_ADDRESSES = {
   [NETWORKS.KOVAN]: {
     GNT: '0xef7fff64389b814a946f3e92105513705ca6b990',
