@@ -13,22 +13,10 @@ const getTokensAndBalances = async (
   web3: Web3,
   erc20Abi: any,
   dragoAddress: string,
-  networkId: NETWORKS
+  tokensArray: any
 ) => {
-  const response = await postJSON(EFX_TOKENS_LIST[networkId])
-  const { tokenRegistry } = response['0x']
-  const allTokens = {
-    ...tokenRegistry,
-    ...{
-      WETH: {
-        decimals: 18,
-        tokenAddress: CONTRACT_ADDRESSES[networkId].WETH,
-        wrapperAddress: null
-      }
-    }
-  }
-  const balancePromises = Object.keys(allTokens).map(async symbol => {
-    const { tokenAddress, wrapperAddress, decimals } = allTokens[symbol]
+  const balancePromises = Object.keys(tokensArray).map(async symbol => {
+    const { tokenAddress, wrapperAddress, decimals } = tokensArray[symbol]
     let tokenBalance
     if (!tokenAddress && symbol === 'ETH') {
       tokenBalance = await web3.eth.getBalance(dragoAddress)
@@ -132,6 +120,18 @@ const calculateNav = async (tokens, contract) => {
 const task = async (job, web3: Web3) => {
   const { key, network, poolType } = job.data
   const contractsMap = await fetchContracts(network)
+  const response = await postJSON(EFX_TOKENS_LIST[network])
+  const { tokenRegistry } = response['0x']
+  const tokensArray = {
+    ...tokenRegistry,
+    ...{
+      WETH: {
+        decimals: 18,
+        tokenAddress: CONTRACT_ADDRESSES[network].WETH,
+        wrapperAddress: null
+      }
+    }
+  }
   const pools = await redis.hgetall(`${key}:${network}`)
 
   const erc20Abi = contractsMap.ERC20.abi
@@ -144,7 +144,7 @@ const task = async (job, web3: Web3) => {
       web3,
       erc20Abi,
       address,
-      network
+      tokensArray
     )
     const tokensWithPrices = await fetchTokenPrices(tokensWithBalances, network)
     const nav = await calculateNav(tokensWithPrices, poolContract)
