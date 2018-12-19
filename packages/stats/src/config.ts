@@ -132,21 +132,10 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
     }
   },
-  'kovan-calculate-dragos-nav': {
-    handlerName: 'calculateNav',
-    description: 'Calculates the nav price',
-    cronExpression: '0 */5 * * * *',
-    initialData: {
-      key: 'dragos',
-      poolType: 'Drago',
-      network: NETWORKS.KOVAN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.KOVAN].INFURA
-    }
-  },
   'ropsten-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '0 */5 * * * *', // Every minute
+    cronExpression: '0 */5 * * * *', // Every five minutes
     initialData: {
       network: NETWORKS.ROPSTEN,
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
@@ -315,21 +304,22 @@ const conf: Config = {
       web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
     }
   },
-  'ropsten-calculate-dragos-nav': {
-    handlerName: 'calculateNav',
-    description: 'Calculates the nav price',
-    cronExpression: '0 */5 * * * *',
-    initialData: {
-      key: 'dragos',
-      poolType: 'Drago',
-      network: NETWORKS.ROPSTEN,
-      web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
-    }
-  },
+  // this requires a VPN for the EFX API to work
+  // 'ropsten-calculate-dragos-nav': {
+  //   handlerName: 'calculateNav',
+  //   description: 'Calculates the nav price',
+  //   cronExpression: '*/45 * * * * *',
+  //   initialData: {
+  //     key: 'dragos',
+  //     poolType: 'Drago',
+  //     network: NETWORKS.ROPSTEN,
+  //     web3Provider: WEBSOCKET_URLS[NETWORKS.ROPSTEN].INFURA
+  //   }
+  // }
   'mainnet-fetch-dragos-list': {
     handlerName: 'fetchDragos',
     description: 'Fetches a list of all dragos',
-    cronExpression: '0 */5 * * * *', // Every minute
+    cronExpression: '0 */5 * * * *', // Every five minutes
     initialData: {
       network: NETWORKS.MAINNET,
       web3Provider: WEBSOCKET_URLS[NETWORKS.MAINNET].INFURA
@@ -488,7 +478,7 @@ const conf: Config = {
   'mainnet-calculate-dragos-nav': {
     handlerName: 'calculateNav',
     description: 'Calculates the nav price',
-    cronExpression: '0 */5 * * * *',
+    cronExpression: '0 * * * *', // Every hour
     initialData: {
       key: 'dragos',
       poolType: 'Drago',
