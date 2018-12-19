@@ -8,6 +8,7 @@ import redis from '../../redis'
 import statsD from '../../statsd'
 import web3ErrorWrapper from '../web3ErrorWrapper'
 
+// Fetch tokens and wrappers list and calculate fund's balance of each
 const getTokensAndBalances = async (
   web3: Web3,
   erc20Abi: any,
@@ -68,6 +69,7 @@ const getTradingSymbols = tokensArray =>
     return token
   })
 
+// Map token array and fetch prices
 const fetchTokenPrices = async (tokens, networkId) => {
   const exchange = exchangeConnector.getExchange(
     supportedExchanges.ETHFINEX_RAW,
@@ -105,6 +107,7 @@ const fetchTokenPrices = async (tokens, networkId) => {
   })
 }
 
+// map tokens to calculate WEI amount, sum it all and divide by total supply
 const calculateNav = async (tokens, contract) => {
   const totalWeiAmount = tokens
     .map(token => {
@@ -112,6 +115,8 @@ const calculateNav = async (tokens, contract) => {
       if (priceEth === 1) {
         return balances.total
       }
+      // since tokens have different decimals, divide them by 10^decimals,
+      // multiply by price and then multiply by 1e18 to obtain wei amount
       return toUnitAmount(balances.total, decimals)
         .times(priceEth)
         .times(1e18)
