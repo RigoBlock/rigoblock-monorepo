@@ -76,6 +76,7 @@ docker-compose -f ./packages/stats/docker-compose.prod.yml up
 - [fetchDragos](src/tasks/fetchDragos/README.md)
 - [getSharePrice](src/tasks/getSharePrice/README.md)
 - [getTotalSupply](src/tasks/getTotalSupply/README.md)
+- [calculateNav](src/tasks/calculateNav/README.md)
 
 ## Data currently being fetched
 
