@@ -9,37 +9,34 @@ import statsD from '../../statsd'
 import web3ErrorWrapper from '../web3ErrorWrapper'
 
 // Fetch tokens and wrappers list and calculate fund's balance of each
-const getTokensAndBalances = async (
+const fetchTokenBalances = async (
   web3: Web3,
   erc20Abi: any,
   dragoAddress: string,
-  tokensArray: any
+  tokensList: any
 ) => {
-  const balancePromises = Object.keys(tokensArray).map(async symbol => {
-    const { tokenAddress, wrapperAddress, decimals } = tokensArray[symbol]
+  const balancePromises = tokensList.map(async token => {
+    const { tokenAddress, wrapperAddress, symbol } = token
     let tokenBalance
+    let wrapperBalance = '0'
     if (!tokenAddress && symbol === 'ETH') {
       tokenBalance = await web3.eth.getBalance(dragoAddress)
     } else {
       const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress)
       tokenBalance = await tokenContract.methods.balanceOf(dragoAddress).call()
     }
-    let wrapperBalance = '0'
     if (wrapperAddress) {
       const wrapperContract = new web3.eth.Contract(erc20Abi, wrapperAddress)
       wrapperBalance = await wrapperContract.methods
         .balanceOf(dragoAddress)
         .call()
     }
-    return {
-      symbol,
-      decimals,
-      balances: {
-        token: toBn(tokenBalance),
-        wrapper: toBn(wrapperBalance),
-        total: toBn(tokenBalance).plus(toBn(wrapperBalance))
-      }
+    token.balances = {
+      token: toBn(tokenBalance),
+      wrapper: toBn(wrapperBalance),
+      total: toBn(tokenBalance).plus(toBn(wrapperBalance))
     }
+    return token
   })
   return Promise.all(balancePromises)
 }
@@ -120,35 +117,36 @@ const calculateNav = async (tokens, contract) => {
 const task = async (job, web3: Web3) => {
   const { key, network, poolType } = job.data
   const contractsMap = await fetchContracts(network)
+  const erc20Abi = contractsMap.ERC20.abi
   const response = await postJSON(EFX_TOKENS_LIST[network])
   const { tokenRegistry } = response['0x']
-  const tokensArray = {
-    ...tokenRegistry,
-    ...{
-      WETH: {
-        decimals: 18,
-        tokenAddress: CONTRACT_ADDRESSES[network].WETH,
-        wrapperAddress: null
-      }
-    }
-  }
+  const tokensList = Object.keys(tokenRegistry).map(symbol => ({
+    ...tokenRegistry[symbol],
+    symbol
+  }))
+  tokensList.push({
+    symbol: 'WETH',
+    decimals: 18,
+    tokenAddress: CONTRACT_ADDRESSES[network].WETH,
+    wrapperAddress: null
+  })
+  const tokensWithPrices = await fetchTokenPrices(tokensList, network)
   const pools = await redis.hgetall(`${key}:${network}`)
 
-  const erc20Abi = contractsMap.ERC20.abi
   const navPromises = Object.keys(pools).map(async address => {
     const poolContract = new web3.eth.Contract(
       contractsMap[poolType].abi,
       address
     )
-    const tokensWithBalances = await getTokensAndBalances(
+    const tokensWithBalances = await fetchTokenBalances(
       web3,
       erc20Abi,
       address,
-      tokensArray
+      tokensWithPrices
     )
-    const tokensWithPrices = await fetchTokenPrices(tokensWithBalances, network)
-    const nav = await calculateNav(tokensWithPrices, poolContract)
-    const labels = tokensWithPrices.map(({ symbol, balances, priceEth }) => {
+
+    const nav = await calculateNav(tokensWithBalances, poolContract)
+    const labels = tokensWithBalances.map(({ symbol, balances, priceEth }) => {
       const wrapperLabel =
         symbol === 'WETH'
           ? ''
