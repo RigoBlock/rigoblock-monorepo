@@ -1934,14 +1934,6 @@ Object {
 }
 `;
 
-exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getFeesERCdEX Get fees for an order of described parameters 1`] = `
-Object {
-  "feeRecipient": "0x173a2467cece1f752eb8416e337d0f0b58cad795",
-  "makerFee": "0",
-  "takerFee": "0",
-}
-`;
-
 exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http getHistoricalPrices Gets historical data for order book 1`] = `
 Array [
   Object {
