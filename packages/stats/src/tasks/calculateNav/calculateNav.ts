@@ -8,27 +8,39 @@ import redis from '../../redis'
 import statsD from '../../statsd'
 import web3ErrorWrapper from '../web3ErrorWrapper'
 
+// TODO: change this as soon as we include the utility contract in the rigoblock contracts pkg
+const getMultipleBalancesAbi = require('../../../getMultipleBalances.json')
+
 const fetchTokenBalances = async (
   web3: Web3,
-  erc20Abi: any,
+  utilityContract: any,
   dragoAddress: string,
   tokensList: any
 ) => {
-  const balancePromises = tokensList.map(async token => {
+  const allAddressess = tokensList
+    .map(token => [token.tokenAddress, token.wrapperAddress])
+    .reduce((acc, curr) => [...acc, ...curr], [])
+    .filter(val => !!val)
+  const ethBalance = await web3.eth.getBalance(dragoAddress)
+  const balancesAndAddresses = await utilityContract.methods
+    .getMultiBalancesAndAddressesFromAddresses(allAddressess, dragoAddress)
+    .call()
+  let { tokenAddresses, balances } = balancesAndAddresses
+  tokenAddresses = tokenAddresses.map(val => val.toLowerCase())
+
+  return tokensList.map(token => {
     const { tokenAddress, wrapperAddress, symbol } = token
-    let tokenBalance
-    let wrapperBalance = '0'
-    if (!tokenAddress && symbol === 'ETH') {
-      tokenBalance = await web3.eth.getBalance(dragoAddress)
+    let wrapperBalance: any = '0'
+    let tokenBalance: any = '0'
+    if (symbol === 'ETH') {
+      tokenBalance = ethBalance
     } else {
-      const tokenContract = new web3.eth.Contract(erc20Abi, tokenAddress)
-      tokenBalance = await tokenContract.methods.balanceOf(dragoAddress).call()
+      const tokenIndex = tokenAddresses.indexOf(tokenAddress.toLowerCase())
+      tokenBalance = balances[tokenIndex]
     }
     if (wrapperAddress) {
-      const wrapperContract = new web3.eth.Contract(erc20Abi, wrapperAddress)
-      wrapperBalance = await wrapperContract.methods
-        .balanceOf(dragoAddress)
-        .call()
+      const wrapperIndex = tokenAddresses.indexOf(wrapperAddress.toLowerCase())
+      wrapperBalance = balances[wrapperIndex]
     }
     token.balances = {
       token: toBn(tokenBalance),
@@ -37,7 +49,6 @@ const fetchTokenBalances = async (
     }
     return token
   })
-  return Promise.all(balancePromises)
 }
 
 const getTradingSymbols = tokensArray =>
@@ -116,7 +127,10 @@ const calculateNav = async (tokens, contract) => {
 const task = async (job, web3: Web3) => {
   const { key, network, poolType } = job.data
   const contractsMap = await fetchContracts(network)
-  const erc20Abi = contractsMap.ERC20.abi
+  const utilityContract = new web3.eth.Contract(
+    getMultipleBalancesAbi,
+    CONTRACT_ADDRESSES[network].GET_ALL_BALANCES
+  )
   const response = await postJSON(EFX_TOKENS_LIST[network])
   const { tokenRegistry } = response['0x']
   const tokensList = Object.keys(tokenRegistry).map(symbol => ({
@@ -139,7 +153,7 @@ const task = async (job, web3: Web3) => {
     )
     const tokensWithBalances = await fetchTokenBalances(
       web3,
-      erc20Abi,
+      utilityContract,
       address,
       tokensWithPrices
     )
