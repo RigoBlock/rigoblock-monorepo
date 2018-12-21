@@ -340,7 +340,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
             ],
-            "address": "0xd56b064c185b8e057a9ff3cf022323276441f8df"
+            "address": "0x4FbB350052Bca5417566f188eB2EBCE5b19BC964"
         },
         "3": {
             "solc_version": "0.4.25",
