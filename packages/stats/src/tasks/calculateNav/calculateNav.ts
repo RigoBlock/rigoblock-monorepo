@@ -1,5 +1,10 @@
 import Web3 = require('web3')
-import { CONTRACT_ADDRESSES, EFX_TOKENS_LIST } from '../../constants'
+import {
+  CONTRACT_ADDRESSES,
+  DECIMAL_PLACES,
+  EFX_TOKENS_LIST,
+  POOL_DECIMALS
+} from '../../constants'
 import { NETWORKS, supportedExchanges } from '@rigoblock/exchange-connector'
 import { postJSON, toBn, toUnitAmount } from '../../utils'
 import exchangeConnector from '../../exchangeConnector'
@@ -95,7 +100,7 @@ const fetchTokenPrices = async (tokens, networkId) => {
     if (tradingSymbol === 'ETHUSD') {
       token.priceEth = toBn(1).div(toBn(ticker[7]))
     } else {
-      token.priceEth = toBn(ticker[7]).dp(5)
+      token.priceEth = toBn(ticker[7]).dp(DECIMAL_PLACES)
     }
     return token
   })
@@ -107,9 +112,6 @@ const calculateNav = async (tokens, contract) => {
   const totalWeiAmount = tokens
     .map(token => {
       const { priceEth, balances, decimals } = token
-      if (priceEth === 1) {
-        return balances.total
-      }
       // since tokens have different decimals, divide them by 10^decimals,
       // multiply by price and then multiply by 1e18 to obtain wei amount
       return toUnitAmount(balances.total, decimals)
@@ -121,7 +123,7 @@ const calculateNav = async (tokens, contract) => {
   if (totalSupply === '0') {
     return toBn(0)
   }
-  return totalWeiAmount.div(toUnitAmount(totalSupply, 6))
+  return totalWeiAmount.div(toUnitAmount(totalSupply, POOL_DECIMALS))
 }
 
 const task = async (job, web3: Web3) => {
@@ -163,16 +165,16 @@ const task = async (job, web3: Web3) => {
       const wrapperLabel =
         symbol === 'WETH'
           ? ''
-          : `,${symbol}W_Balance=${balances.wrapper.toFixed(5)}`
+          : `,${symbol}W_balance=${balances.wrapper.toFixed(DECIMAL_PLACES)}`
       return (
-        `${symbol}_Balance=${balances.token.toFixed(
-          5
-        )},${symbol}_Price=${priceEth.toFixed(5)}` + wrapperLabel
+        `${symbol}_balance=${balances.token.toFixed(
+          DECIMAL_PLACES
+        )},${symbol}_price=${priceEth.toFixed(DECIMAL_PLACES)}` + wrapperLabel
       )
     })
     return {
       address,
-      nav: nav.toFixed(5),
+      nav: nav.toFixed(DECIMAL_PLACES),
       labels: labels.join()
     }
   })

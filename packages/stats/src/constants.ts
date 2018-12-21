@@ -7,6 +7,9 @@ export const REDIS_PASSWORD = process.env.REDIS_PASSWORD || ''
 export const TELEGRAF_HOST = process.env.TELEGRAF_HOST || '127.0.0.1'
 export const TELEGRAF_PORT = process.env.TELEGRAF_PORT || 8125
 
+export const DECIMAL_PLACES = 5
+export const POOL_DECIMALS = 6
+
 export const EFX_TOKENS_LIST = {
   [NETWORKS.MAINNET]: 'https://api.ethfinex.com/trustless/v1/r/get/conf',
   [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/trustless/v1/r/get/conf'
