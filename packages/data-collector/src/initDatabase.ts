@@ -32,7 +32,7 @@ const initDatabase = async () => {
   await db.createDb(PRICES_DB)
   await db.upsert(INFO_DB, '_design/info', { ...view, ...validateFunction })
   await db.upsert(NEWS_DB, '_design/news', validateFunction)
-  await db.upsert(PRICES_DB, '_design/news', validateFunction)
+  await db.upsert(PRICES_DB, '_design/prices', validateFunction)
   await db.createIndex(NEWS_DB, indexDef)
 }
 
