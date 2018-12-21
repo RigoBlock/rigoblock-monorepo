@@ -538,3 +538,119 @@ Array [
   ],
 ]
 `;
+
+exports[`it allows us to perform API calls to exchanges following 0x Standard Relayer API http trustless getConfig returns a list of all the tradable tokens and their addresses 1`] = `
+Object {
+  "0x": Object {
+    "ethfinexAddress": "0x61b9898c9b60a159fc91ae8026563cd226b7a0c1",
+    "exchangeAddress": "0xdcdb42c9a256690bd153a7b409751adfc8dd5851",
+    "exchangeSymbols": Array [
+      "tZRXETH",
+      "tOMGETH",
+      "tSANETH",
+      "tSNTETH",
+      "tEDOETH",
+      "tFUNETH",
+      "tREPETH",
+      "tMKRETH",
+      "tBATETH",
+      "tNIOETH",
+      "tSPKETH",
+      "tDAIETH",
+    ],
+    "minOrderTime": 300,
+    "protocol": "0x",
+    "tokenRegistry": Object {
+      "BAT": Object {
+        "decimals": 18,
+        "minOrderSize": 100,
+        "tokenAddress": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+        "wrapperAddress": "0xe82cfc4713598dc7244368cf5aca1b102a04ce33",
+      },
+      "DAI": Object {
+        "decimals": 18,
+        "minOrderSize": 25,
+        "tokenAddress": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+        "wrapperAddress": "0xd9ebebfdab08c643c5f2837632de920c70a56247",
+      },
+      "EDO": Object {
+        "decimals": 18,
+        "minOrderSize": 25,
+        "tokenAddress": "0xced4e93198734ddaff8492d525bd258d49eb388e",
+        "wrapperAddress": "0xab056a8119bb91ca50631bd319ee3df654bebfa2",
+      },
+      "ETH": Object {
+        "decimals": 18,
+        "minOrderSize": 0.1,
+        "wrapperAddress": "0xaa7427d8f17d87a28f5e1ba3adbb270badbe1011",
+      },
+      "FUN": Object {
+        "decimals": 8,
+        "minOrderSize": 1500,
+        "tokenAddress": "0x419d0d8bdd9af5e606ae2232ed285aff190e711b",
+        "wrapperAddress": "0xb33ce6b1e48f450b4c6d4c0a3f281237eeea2dec",
+      },
+      "MKR": Object {
+        "decimals": 18,
+        "minOrderSize": 0.04,
+        "tokenAddress": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+        "wrapperAddress": "0x38ae374ecf4db50b0ff37125b591a04997106a32",
+      },
+      "NEC": Object {
+        "decimals": 18,
+        "minOrderSize": 50,
+        "tokenAddress": "0xcc80c051057b774cd75067dc48f8987c4eb97a5e",
+        "wrapperAddress": "0xc94ec1f80c4423ae0cecb4296b5de530219f0f9d",
+      },
+      "NIO": Object {
+        "decimals": 0,
+        "minOrderSize": 840,
+        "tokenAddress": "0x5554e04e76533e1d14c52f05beef6c9d329e1e30",
+        "wrapperAddress": "0x680bf2eebf0ad9b183ac2ff88d16f5a4e41480e9",
+      },
+      "OMG": Object {
+        "decimals": 18,
+        "minOrderSize": 6,
+        "tokenAddress": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+        "wrapperAddress": "0x60f8526f09caaf0008187945ccd88bc43790042c",
+      },
+      "REP": Object {
+        "decimals": 18,
+        "minOrderSize": 1.5,
+        "tokenAddress": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
+        "wrapperAddress": "0x1488f99d305990694e19b3e72f6f0307cfa1df4e",
+      },
+      "SAN": Object {
+        "decimals": 18,
+        "minOrderSize": 50,
+        "tokenAddress": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098",
+        "wrapperAddress": "0xb0abd4cc5195560209492b6854c666d7cff8c03c",
+      },
+      "SNT": Object {
+        "decimals": 18,
+        "minOrderSize": 600,
+        "tokenAddress": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+        "wrapperAddress": "0x8aa72dd6045505836f643b39b82e70fd705f9686",
+      },
+      "SPK": Object {
+        "decimals": 18,
+        "minOrderSize": 400,
+        "tokenAddress": "0x42d6622dece394b54999fbd73d108123806f6a18",
+        "wrapperAddress": "0x70b04d0684ea9dc0c8e244e0a1453744350f3864",
+      },
+      "USD": Object {
+        "decimals": 6,
+        "minOrderSize": 25,
+        "tokenAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "wrapperAddress": "0x1a9b2d827f26b7d7c18fec4c1b27c1e8deeba26e",
+      },
+      "ZRX": Object {
+        "decimals": 18,
+        "minOrderSize": 40,
+        "tokenAddress": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+        "wrapperAddress": "0xcf67d7a481ceeca0a77f658991a00366fed558f7",
+      },
+    },
+  },
+}
+`;

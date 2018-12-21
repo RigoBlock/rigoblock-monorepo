@@ -60,6 +60,17 @@ describe('it allows us to perform API calls to exchanges following 0x Standard R
         expect(result).toMatchSnapshot()
       })
     })
+    describe('trustless', () => {
+      describe('getConfig', () => {
+        it('returns a list of all the tradable tokens and their addresses', async () => {
+          const result: any = await nockBackPromise(
+            'ethfinexRaw/trustless_getConfig.json',
+            () => exchange.http.trustless.getConfig()
+          )
+          expect(result).toMatchSnapshot()
+        })
+      })
+    })
   })
   describe('websocket', () => {
     let exchange

@@ -1,0 +1,39 @@
+[
+    {
+        "scope": "https://api.ethfinex.com:443",
+        "method": "POST",
+        "path": "/trustless/v1/r/get/conf",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b08000000000000038d565d6b5c470cfd2ffb6c82a4916624bf3989d3861027d80e94963ecc8726318ded601b9a34f8bf5777bb81247b0b0bcbae58eecc9c7bced1d17cddc0e7cdf1d7cda7bbdb87db7efb7173bcfc71b4b9beba797337fceef2eada37c709e068f370fb97df9cfbfbabfb87bb2fcb9ad3cb5f979fe1fdeaba7ebcdf1ca31e6dfebeab9f3ef9ddc918777e7fbfddaed6c254864e8caf5249a738b69aea688d0ab4f87504c4ef8ebdb8fa278e8527f878b47977f1fcc763f2ea2958add1502a93722ba374d4e99d3bc6191d5d877bab947db37b93efd78edab14c131de42e942a11e4f898b158ac4e43137a2f7b084902e09bd7bf1cc44386a9427982f55a2700286a89137a1faaad732a06c0d457115246e43ef2e929a99df4fe422909741dca5aa68fa77a02cf601f610e80bf9fff7610c03e73105759b1bbf70ab5949945cdb002a49ce318119d650da0330e623529381211aa11e75167156fc371729039d9740f2043203c3b7d76184263ef38153a73c8e4d0bd3726cb4d864b02429b306dac21ec3d9681204869a504974520deb7b34e352d9dbd5909b87b0865417871727610c206b50dee5dd0443210181bb5acc23de71cb69c533ba455914b971a6f64948b0f0c3b533c5b3d4b9a68ea294c1cbe59e1f03f8467970721d4e8471a23038b8068ca33736ac99a921798a3804ccb9a5711328fe599e6d42af768194c982967e48a25a711d248b37d0e332c104f9fbf392c311a48ae8ac14133ec35844ad84642738f33b270f3362badcaec83dde2512d8947103635141842d2064587b3794baafb10b7bdfce2dd4f32ff8fca2975cf0d3dccc3022dc40dd1a1a6498a948abb578a4dd60032da80a16d0cab9184197275a2443e4825e0a28117c4b60710654be2f9e9db834844569d662381984596b1079dc90bcd88a004e1c48a63f26a20067b92b2b8cda2492ca235d751327822469a5c99c535d33ec6270b8baf5f9d1f043169f554a2a5278f1634c29ca96028254be4b059c16027adea6c3392886ab504dc3556a408279948becdacde539562751f223c010e8ccf4f5e1e8471845fc26c233ca93d3aa54b689cc2eba1af11f4025532f16a28aa4526d6",
+            "1cf6e80d5b9e350610c9f458b0953f54cf10fcae7bf1e9c9610ded4a7d762e183be9e8859853d63ea5f68a0d8182caee29ad210c2396229100ca29d2d06a01f3d8851af41658214ca9c5e7bed05b2f9ebdfca9a1617df229b419a3b54da8c31a6aaa9da23175600e981cc38315dcd61086a8ecc05e220693e38829283423653c84ee616f32474fb08750b793e5e2edab83488c7b08f080acecd5468fc9eac1a3434596b028c7b09d4933af76348d9c69e9774fc64dc2b836db2869202c71a010195b716df6c16360f4870ff3eac63fff4019368bb1d4a3f30283d8ecd112ae405972ea83964b4e0c8be5d2e49ffb877af3de7f706d1f31177b584c7236680325d5d218ac08d631e3e23044e5fbe5175faedbedc2d01f9b87b8312cb7bb78d7b8dcecaa9880dfaab3cb5d1581beab22387755e4d3ae8a18d85561e55d158ef9b6cbdb57bb2a5a71a9fe7c7cfc17e18a4e148f0a0000"
+        ],
+        "rawHeaders": [
+            "Date",
+            "Fri, 21 Dec 2018 09:21:16 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Transfer-Encoding",
+            "chunked",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "__cfduid=dde76549e65a9c55e87e165e01f905f361545384076; expires=Sat, 21-Dec-19 09:21:16 GMT; path=/; domain=.ethfinex.com; HttpOnly",
+            "Vary",
+            "Accept-Encoding",
+            "ETag",
+            "W/\"a8f-87RWLxzt4hiNKOH54Uop7u5QJVk\"",
+            "X-Frame-Options",
+            "SAMEORIGIN",
+            "Content-Encoding",
+            "gzip",
+            "Expect-CT",
+            "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+            "Server",
+            "cloudflare",
+            "CF-RAY",
+            "48c9470e7c2a4346-MXP"
+        ]
+    }
+]
