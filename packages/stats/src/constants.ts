@@ -1,17 +1,23 @@
+import { NETWORKS } from '@rigoblock/exchange-connector'
+
+export { NETWORKS } from '@rigoblock/exchange-connector'
 export const REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1'
 export const REDIS_PORT = parseInt(process.env.REDIS_PORT) || 6379
 export const REDIS_PASSWORD = process.env.REDIS_PASSWORD || ''
 export const TELEGRAF_HOST = process.env.TELEGRAF_HOST || '127.0.0.1'
 export const TELEGRAF_PORT = process.env.TELEGRAF_PORT || 8125
 
-export enum NETWORKS {
-  MAINNET = '1',
-  KOVAN = '42',
-  ROPSTEN = '3'
+export const DECIMAL_PLACES = 5
+export const POOL_DECIMALS = 6
+
+export const EFX_TOKENS_LIST = {
+  [NETWORKS.MAINNET]: 'https://api.ethfinex.com/trustless/v1/r/get/conf',
+  [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/trustless/v1/r/get/conf'
 }
 
 export const CONTRACT_ADDRESSES = {
   [NETWORKS.KOVAN]: {
+    GET_ALL_BALANCES: '0x5c25ac8f1c5168cc0bd194414d13e761a72cdb9e',
     GNT: '0xef7fff64389b814a946f3e92105513705ca6b990',
     GRG: '0x9F121AFBc98A7a133fbb31fE975205f39e8f08D2',
     MKR: '0x1dad4783cf3fe3085c1426157ab175a6119a04ba',
@@ -20,6 +26,7 @@ export const CONTRACT_ADDRESSES = {
     ZRX: '0x6ff6c0ff1d68b964901f986d4c9fa3ac68346570'
   },
   [NETWORKS.ROPSTEN]: {
+    GET_ALL_BALANCES: '0xd53bebaa2e65753453cb53efcc65ad23268d4dec',
     GNT: '0x534a1efe19dbe8908edec3cd98d3abef28689245', // needs doublecheck
     GRG: '0x6FA8590920c5966713b1a86916f7b0419411e474',
     MKR: '0x9b2dbfcf742a14e00ca684fe891c36046ebb0c13', // needs doublecheck
@@ -32,6 +39,7 @@ export const CONTRACT_ADDRESSES = {
     GRGW: '0x5959f2036608d693B4d085020ACAdBBf664C793E'
   },
   [NETWORKS.MAINNET]: {
+    GET_ALL_BALANCES: '0x768e09703318e8514aaaabcf16d62b6ff6e9d706',
     GNT: '0xa74476443119A942dE498590Fe1f2454d7D4aC0d',
     GRG: '0xD34cf65739954EB99D284fD20aB4f88c64e4d67D',
     MKR: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',

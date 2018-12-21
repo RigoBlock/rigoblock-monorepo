@@ -1380,6 +1380,18 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
 
+"@rigoblock/exchange-connector@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@rigoblock/exchange-connector/-/exchange-connector-0.0.12.tgz#9970c73dbc6278fd327e63bce9280f72f5e2f291"
+  integrity sha512-3ILtZenQ0xpZe/+dOVLAGOhZTxy9tLQwOY0dQPj2b/T+Pyxm6wVkbvd+yDeFNMtu8YMcpHbBWy+wGyp4VHL5ig==
+  dependencies:
+    bignumber.js "^7.2.1"
+    node-fetch "^2.2.0"
+    promise "^8.0.1"
+    reconnecting-websocket "^4.1.5"
+    whatwg-fetch "^2.0.4"
+    ws "^6.1.0"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -3662,6 +3674,11 @@ big.js@^3.1.3:
 bignumber.js@7.2.1, bignumber.js@^7.2.1:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
+
+bignumber.js@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-8.0.1.tgz#5d419191370fb558c64e3e5f70d68e5947138832"
+  integrity sha512-zAySveTJXkgLYCBi0b14xzfnOs+f3G6x36I8w2a1+PFQpWk/dp0mI0F+ZZK2bu+3ELewDcSyP+Cfq++NcHX7sg==
 
 "bignumber.js@git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2":
   version "2.0.7"
@@ -11795,7 +11812,7 @@ node-fetch@^1.0.1, node-fetch@~1.7.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-fetch@^2.1.2, node-fetch@^2.2.0:
+node-fetch@^2.1.2, node-fetch@^2.2.0, node-fetch@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
 
