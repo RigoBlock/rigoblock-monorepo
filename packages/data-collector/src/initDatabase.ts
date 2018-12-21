@@ -4,7 +4,9 @@ import db from './db'
 const initDatabase = async () => {
   const validateFunction = {
     validate_doc_update:
-      "function(newDoc, oldDoc, userCtx) { var IS_DB_ADMIN = false; if (userCtx.roles.indexOf('_admin') !== -1) { IS_DB_ADMIN = true }; if (IS_DB_ADMIN) { return } else { throw { forbidden: 'This database is read-only' }}}"
+      `function(newDoc, oldDoc, userCtx) { var IS_DB_ADMIN = false;` +
+      `if (userCtx.roles.indexOf('_admin') !== -1) { IS_DB_ADMIN = true };` +
+      `if (IS_DB_ADMIN) { return } else { throw { forbidden: 'This database is read-only' }}}`
   }
   const view = {
     views: {
@@ -30,6 +32,7 @@ const initDatabase = async () => {
   await db.createDb(PRICES_DB)
   await db.upsert(INFO_DB, '_design/info', { ...view, ...validateFunction })
   await db.upsert(NEWS_DB, '_design/news', validateFunction)
+  await db.upsert(PRICES_DB, '_design/prices', validateFunction)
   await db.createIndex(NEWS_DB, indexDef)
 }
 
