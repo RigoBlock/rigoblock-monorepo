@@ -15,7 +15,8 @@
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
     "abi-gen": "npm run abi-extract && rm -rf src/contracts/models && node abi-gen.js --abis './.tmp/*.json' -o src/contracts/models --template './templates/smart-contract.handlebars' --partials './templates/partials/*.handlebars'",
     "contracts-list-gen": "rm -rf contracts/contractsList.ts && node contracts-list-gen.js",
-    "abi-extract": "rm -rf .tmp && node abi-extractor.js"
+    "abi-extract": "rm -rf .tmp && node abi-extractor.js",
+    "doc-gen": "rm -rf docs && node doc-gen.js"
   },
   "config": {
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
@@ -45,8 +46,8 @@
     "@rigoblock/contracts": "^0.3.10",
     "@types/node": "^10.11.0",
     "bignumber.js": "^7.2.1",
-    "web3": "1.0.0-beta.36",
     "to-snake-case": "^1.0.0",
+    "web3": "1.0.0-beta.36",
     "web3-provider-engine": "^14.1.0"
   },
   "jest": {
