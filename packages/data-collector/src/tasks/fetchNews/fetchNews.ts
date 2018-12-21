@@ -9,13 +9,16 @@ const task = async job => {
   if (!news.length) {
     return null
   }
-  const upsertPromises = news.filter(el => el.url).map(async el =>
-    db.upsert(NEWS_DB, el.url, {
-      title: el.title,
-      token: symbol,
-      date: el.date
-    })
-  )
+  console.log('NEWS', news)
+  const upsertPromises = news
+    .filter(el => el.url)
+    .map(async el =>
+      db.upsert(NEWS_DB, el.url, {
+        title: el.title,
+        token: symbol,
+        date: el.date
+      })
+    )
   return Promise.all(upsertPromises)
 }
 
