@@ -69,6 +69,16 @@ export class Db {
     return this.conn.use(dbName).insert({ _id: documentId, ...value })
   }
 
+  async delete(dbName: string, dbDocument: any) {
+    const { _id, _rev } = dbDocument
+    const exists = await this.exists(dbName, _id)
+    if (exists) {
+      return this.conn.use(dbName).destroy(_id, _rev)
+    }
+    console.log('Document does not exist')
+    return null
+  }
+
   async createIndex(dbName, indexDef) {
     const db = this.conn.use(dbName)
     return (db as any).createIndex(indexDef)
