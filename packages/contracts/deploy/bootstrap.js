@@ -164,6 +164,27 @@ module.exports = async (baseAccount, network) => {
   ])
   printAddress('Faucet', faucet.address)
 
+  const ERC20Generic1 = await deploy(baseAccount, network, 'ERC20Generic', [
+    'Token 1 18 decimals',
+    'TK1',
+    18
+  ])
+  printAddress('ERC20Generic1', ERC20Generic1.address)
+
+  const ERC20Generic2 = await deploy(baseAccount, network, 'ERC20Generic', [
+    'Token 2 18 decimals',
+    'TK2',
+    18
+  ])
+  printAddress('ERC20Generic2', ERC20Generic2.address)
+
+  const ERC20Generic3 = await deploy(baseAccount, network, 'ERC20Generic', [
+    'Token 3 6 decimals',
+    'TK3',
+    6
+  ])
+  printAddress('ERC20Generic3', ERC20Generic3.address)
+
   return {
     AEthfinex: aEthfinex,
     AWeth: aWeth,
@@ -185,6 +206,9 @@ module.exports = async (baseAccount, network) => {
     TokenTransferProxy: tokenTransferProxy,
     WETH9: wETH9,
     WrapperLockEth: wrapperLockEth,
-    WrapperLock: wrapperLock
+    WrapperLock: wrapperLock,
+    ERC20Generic1,
+    ERC20Generic2,
+    ERC20Generic3
   }
 }
