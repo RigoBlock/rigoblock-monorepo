@@ -18,6 +18,11 @@
 
 ### Install
 
+Ubuntu pre-requisites:
+```
+apt-get install build-essential libusb libudev-dev 
+```
+
 Install nvm and use the correct node version
 ```
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
