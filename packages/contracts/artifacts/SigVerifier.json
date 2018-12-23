@@ -152,7 +152,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/extensions/SigVerifier/SigVerifier.sol"
             ],
-            "address": "0x25d79d28890d5ae89664b888f563703057b50dee",
+            "address": "0x2ce620b4d951117f2411606c0197045413fc4769",
             "constructor_args": "0x"
         }
     }
