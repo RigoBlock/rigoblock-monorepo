@@ -99,7 +99,6 @@ interface DragoRegistryFace {
 contract HGetDragoData {
     
     struct DragoData {
-        address drago;
         string name;
         string symbol;
         uint256 sellPrice;
@@ -112,6 +111,8 @@ contract HGetDragoData {
         uint256 totalSupply;
         uint256 ethBalance;
         uint32 minPeriod;
+        uint256 id;
+        address drago;
     }
 
     /*
@@ -197,10 +198,11 @@ contract HGetDragoData {
         for (uint256 i = 0; i < length; i++) {
             uint256 dragoId = _dragoIds[i];
             (dragos[i], , , , , ) = dragoRegistryInstance.fromId(dragoId);
-            dragoData[i].drago = dragos[i];
             (
                 dragoData[i]
             ) = queryDataInternal(dragos[i]);
+            dragoData[i].id = dragoId;
+            dragoData[i].drago = dragos[i];
         }
         return(dragoData);
     }
@@ -220,10 +222,10 @@ contract HGetDragoData {
         DragoData[] memory dragoData = new DragoData[](length);
         address[] memory dragos = _dragoAddresses;
         for (uint256 i = 0; i < length; i++) {
-            dragoData[i].drago = dragos[i];
             (
                 dragoData[i]
             ) = queryDataInternal(dragos[i]);
+            dragoData[i].drago = dragos[i];
         }
         return(dragoData);
     }
