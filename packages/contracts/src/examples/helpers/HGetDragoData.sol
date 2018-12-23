@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.5.0;
+pragma solidity 0.4.25;
 pragma experimental ABIEncoderV2;
 
 import { DragoFace } from "../../protocol/Drago/DragoFace.sol";
@@ -134,13 +134,16 @@ contract HGetDragoData {
         external
         view
         returns (
-            DragoData[] memory,
-            DragoAdminData[] memory,
-            DragoExtraInfo[] memory,
-            address drago
+            // DragoData[] memory,
+            // DragoAdminData[] memory,
+            // DragoExtraInfo[] memory,
+            // address drago
+            uint256[] dragoArray;
         )
     {
         uint256 length = _dragoIds.length;
+        // DragoArray[] memory dragoArray = new DragoData[](length);
+        // uint256[] dragoArray;
         DragoData[] memory dragoData = new DragoData[](length);
         DragoAdminData[] memory dragoAdminData = new DragoAdminData[](length);
         DragoExtraInfo[] memory dragoExtraInfo = new DragoExtraInfo[](length);
@@ -154,8 +157,9 @@ contract HGetDragoData {
                 dragoAdminData[i],
                 dragoExtraInfo[i]
             ) = queryDataInternal(drago);
+            dragoArray.push(dragoId,drago,dragoData[i], dragoAdminData[i], dragoExtraInfo[i])
         }
-        return(dragoData, dragoAdminData, dragoExtraInfo, drago);
+        return(dragoArray);
     }
 
     /*
