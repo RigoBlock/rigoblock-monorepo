@@ -76,7 +76,7 @@ const docGen = async networkId => {
 
             // Adding parameters description
             const nextMethodIx = tokenizedDoc.findIndex((tkn, ix) =>
-              ix > methodIx + 2 ? tkn.match(new RegExp(`### +(.+)`)) : false
+              ix > methodIx + 2 ? tkn.match(/### +(.+)/) : false
             )
             let paramTableIx = tokenizedDoc.indexOf('| Name | Type |', methodIx)
             if (paramTableIx < nextMethodIx) {
