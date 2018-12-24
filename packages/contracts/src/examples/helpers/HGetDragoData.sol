@@ -118,22 +118,6 @@ contract HGetDragoData {
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    /// @dev Returns structs of infos on a drago from its address.
-    /// @param _drago Address of the target drago.
-    /// @return Structs of data.
-    function queryData(
-        address _drago)
-        external
-        view
-        returns (
-            DragoData memory dragoData
-        )
-    {
-        (
-            dragoData
-        ) = queryDataInternal(_drago);
-    }
-
     /// @dev Returns structs of infos on a drago from its ID.
     /// @param _dragoRegistry Address of the target drago.
     /// @param _dragoId Number of the target drago ID.
@@ -144,37 +128,39 @@ contract HGetDragoData {
         external
         view
         returns (
-            DragoData memory dragoData,
-            address drago
+            DragoData memory dragoData
         )
     {
-        address dragoRegistry = _dragoRegistry;
-        DragoRegistryFace dragoRegistryInstance = DragoRegistryFace(dragoRegistry);
+        address drago;
+        DragoRegistryFace dragoRegistryInstance = DragoRegistryFace(_dragoRegistry);
         (drago, , , , , ) = dragoRegistryInstance.fromId(_dragoId);
         (
             dragoData
         ) = queryDataInternal(drago);
+        dragoData.id = _dragoId;
+        dragoData.drago = drago;
     }
 
-    /// @dev Returns structs of infos on a drago from its ID.
-    /// @param _dragoAddresses Array of addresses of the target dragos.
+    /// @dev Returns structs of infos on a drago from its address.
+    /// @param _dragoAddress Array of addresses of the target dragos.
     /// @return Arrays of structs of data.
-    function queryMultiData(
-        address[] calldata _dragoAddresses)
+    function queryDataFromAddress(
+        address _dragoRegistry,
+        address _dragoAddress)
         external
         view
         returns (
-            DragoData[] memory
+            DragoData memory dragoData
         )
     {
-        uint256 length = _dragoAddresses.length;
-        DragoData[] memory dragoData = new DragoData[](length);
-        for (uint256 i = 0; i < length; i++) {
-            (
-                dragoData[i]
-            ) = queryDataInternal(_dragoAddresses[i]);
-        }
-        return(dragoData);
+        uint256 dragoId;
+        DragoRegistryFace dragoRegistryInstance = DragoRegistryFace(_dragoRegistry);
+        (dragoId, , , , , ) = dragoRegistryInstance.fromAddress(_dragoAddress);
+        (
+            dragoData
+        ) = queryDataInternal(_dragoAddress);
+        dragoData.id = dragoId;
+        dragoData.drago = _dragoAddress;
     }
 
     /// @dev Returns structs of infos on a drago from its ID.
@@ -207,10 +193,11 @@ contract HGetDragoData {
         return(dragoData);
     }
 
-    /// @dev Returns structs of infos on a drago from its ID.
+    /// @dev Returns structs of infos on a drago from its address.
     /// @param _dragoAddresses Array of addresses of the target dragos.
     /// @return Arrays of structs of data and related address of a drago.
     function queryMultiDataFromAddress(
+        address _dragoRegistry,
         address[] calldata _dragoAddresses)
         external
         view
@@ -220,11 +207,17 @@ contract HGetDragoData {
     {
         uint256 length = _dragoAddresses.length;
         DragoData[] memory dragoData = new DragoData[](length);
+        uint256[] memory dragoIds = new uint256[](length);
         address[] memory dragos = _dragoAddresses;
+        address dragoRegistry = _dragoRegistry;
+        DragoRegistryFace dragoRegistryInstance = DragoRegistryFace(dragoRegistry);
         for (uint256 i = 0; i < length; i++) {
+            address dragoAddress = dragos[i];
+            (dragoIds[i], , , , , ) = dragoRegistryInstance.fromAddress(dragoAddress);
             (
                 dragoData[i]
             ) = queryDataInternal(dragos[i]);
+            dragoData[i].id = dragoIds[i];
             dragoData[i].drago = dragos[i];
         }
         return(dragoData);
