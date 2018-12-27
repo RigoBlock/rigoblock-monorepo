@@ -52,7 +52,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [UnlimitedAllowanceToken](_contracts_models_unlimited_allowance_token_.unlimitedallowancetoken.md)
+**Returns:** [UnlimitedAllowanceToken](_contracts_models_unlimited_allowance_token_.unlimitedallowancetoken.md) Success of transfer.
 
 ___
 
@@ -150,7 +150,7 @@ ___
 | Name | Type |
 | ------ | ------ |
 | _spender | `string` |
-| _value | `BigNumber` |
+| _value | `BigNumber` | Amount to transfer. |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -222,7 +222,7 @@ ___
 
 | Name | Type |
 | ------ | ------ |
-| _to | `string` |
+| _to | `string` | Address to transfer to. |
 | _value | `BigNumber` |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
@@ -232,13 +232,15 @@ ___
 
 ###  transferFrom
 
+ERC20 transferFrom, modified such that an allowance of MAX_UINT represents an unlimited allowance.
+
 ▸ **transferFrom**(_from: *`string`*, _to: *`string`*, _value: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _from | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _from | `string` | Address to transfer from. |
 | _to | `string` |
 | _value | `BigNumber` |
 

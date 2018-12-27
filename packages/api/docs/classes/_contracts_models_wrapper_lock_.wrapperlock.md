@@ -382,6 +382,8 @@ ___
 
 ###  totalSupply
 
+Total number of tokens in existence
+
 ▸ **totalSupply**(): `Promise`<`BigNumber`>
 
 **Returns:** `Promise`<`BigNumber`>
@@ -424,13 +426,15 @@ ___
 
 ###  transferOwnership
 
+Allows the current owner to transfer control of the contract to a newOwner.
+
 ▸ **transferOwnership**(newOwner: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| newOwner | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| newOwner | `string` | The address to transfer ownership to. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 

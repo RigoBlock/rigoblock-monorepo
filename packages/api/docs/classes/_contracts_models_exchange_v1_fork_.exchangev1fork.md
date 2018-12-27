@@ -67,7 +67,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [ExchangeV1Fork](_contracts_models_exchange_v1_fork_.exchangev1fork.md)
+**Returns:** [ExchangeV1Fork](_contracts_models_exchange_v1_fork_.exchangev1fork.md) Amount of takerToken cancelled. Total amount of takerToken filled in trade. Total amount of fillTakerTokenAmount filled in orders. Keccak-256 hash of order. Partial value of target. Address of the signer Sum of values already filled and cancelled. Rounding error is present. Validity of order signature.
 
 ___
 
@@ -194,15 +194,17 @@ ___
 
 ###  batchCancelOrders
 
+Synchronously cancels multiple orders in a single transaction.
+
 ▸ **batchCancelOrders**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, cancelTakerTokenAmounts: *`BigNumber`[]*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| orderAddresses | `string`[][] |
-| orderValues | `BigNumber`[][] |
-| cancelTakerTokenAmounts | `BigNumber`[] |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| orderAddresses | `string`[][] | Array of address arrays containing individual order addresses. | Array of address arrays containing individual order addresses. | Array of address arrays containing individual order addresses. | Array of order's maker, taker, makerToken, takerToken, and feeRecipient. | Array of order's maker, taker, makerToken, takerToken, and feeRecipient. | Array of order's maker, taker, makerToken, takerToken, and feeRecipient. | Array of address arrays containing individual order addresses. | Array of order's maker, taker, makerToken, takerToken, and feeRecipient. |
+| orderValues | `BigNumber`[][] | Array of uint arrays containing individual order values. | Array of uint arrays containing individual order values. | Array of uint arrays containing individual order values. | Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt. | Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt. | Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt. | Array of uint arrays containing individual order values. | Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt. |
+| cancelTakerTokenAmounts | `BigNumber`[] | Array of desired amounts of takerToken to cancel in orders. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -211,18 +213,20 @@ ___
 
 ###  batchFillOrKillOrders
 
+Synchronously executes multiple fillOrKill orders in a single transaction.
+
 ▸ **batchFillOrKillOrders**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, fillTakerTokenAmounts: *`BigNumber`[]*, v: *`Array`< `number` &#124; `BigNumber`>*, r: *`string`[]*, s: *`string`[]*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | orderAddresses | `string`[][] |
 | orderValues | `BigNumber`[][] |
-| fillTakerTokenAmounts | `BigNumber`[] |
-| v | `Array`< `number` &#124; `BigNumber`> |
-| r | `string`[] |
-| s | `string`[] |
+| fillTakerTokenAmounts | `BigNumber`[] | Array of desired amounts of takerToken to fill in orders. | Array of desired amounts of takerToken to fill in orders. |
+| v | `Array`< `number` &#124; `BigNumber`> | Array ECDSA signature v parameters. | Array ECDSA signature v parameters. | ECDSA signature parameter v. | ECDSA signature parameter v. | Array ECDSA signature v parameters. | ECDSA signature parameter v. |
+| r | `string`[] | Array of ECDSA signature r parameters. | Array of ECDSA signature r parameters. | ECDSA signature parameters r. | ECDSA signature parameters r. | Array of ECDSA signature r parameters. | ECDSA signature parameters r. |
+| s | `string`[] | Array of ECDSA signature s parameters. | Array of ECDSA signature s parameters. | ECDSA signature parameters s. | ECDSA signature parameters s. | Array of ECDSA signature s parameters. | ECDSA signature parameters s. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -231,16 +235,18 @@ ___
 
 ###  batchFillOrders
 
+Synchronously executes multiple fill orders in a single transaction.
+
 ▸ **batchFillOrders**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, fillTakerTokenAmounts: *`BigNumber`[]*, shouldThrowOnInsufficientBalanceOrAllowance: *`boolean`*, v: *`Array`< `number` &#124; `BigNumber`>*, r: *`string`[]*, s: *`string`[]*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | orderAddresses | `string`[][] |
 | orderValues | `BigNumber`[][] |
 | fillTakerTokenAmounts | `BigNumber`[] |
-| shouldThrowOnInsufficientBalanceOrAllowance | `boolean` |
+| shouldThrowOnInsufficientBalanceOrAllowance | `boolean` | Test if transfers will fail before attempting. | Test if transfer will fail before attempting. | Test if transfers will fail before attempting. |
 | v | `Array`< `number` &#124; `BigNumber`> |
 | r | `string`[] |
 | s | `string`[] |
@@ -252,15 +258,17 @@ ___
 
 ###  cancelOrder
 
+Cancels the input order.
+
 ▸ **cancelOrder**(orderAddresses: *`string`[]*, orderValues: *`BigNumber`[]*, cancelTakerTokenAmount: *`BigNumber`*): `Promise`<`TransactionObject`<`BigNumber`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | orderAddresses | `string`[] |
 | orderValues | `BigNumber`[] |
-| cancelTakerTokenAmount | `BigNumber` |
+| cancelTakerTokenAmount | `BigNumber` | Desired amount of takerToken to cancel in order. |
 
 **Returns:** `Promise`<`TransactionObject`<`BigNumber`>>
 
@@ -284,15 +292,17 @@ ___
 
 ###  fillOrKillOrder
 
+Fills an order with specified parameters and ECDSA signature, throws if specified amount not filled entirely.
+
 ▸ **fillOrKillOrder**(orderAddresses: *`string`[]*, orderValues: *`BigNumber`[]*, fillTakerTokenAmount: *`BigNumber`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | orderAddresses | `string`[] |
 | orderValues | `BigNumber`[] |
-| fillTakerTokenAmount | `BigNumber` |
+| fillTakerTokenAmount | `BigNumber` | Desired amount of takerToken to fill. | Desired amount of takerToken to fill. | Desired total amount of takerToken to fill in orders. |
 | v |  `number` &#124; `BigNumber`|
 | r | `string` |
 | s | `string` |
@@ -304,12 +314,14 @@ ___
 
 ###  fillOrder
 
+Fills the input order.
+
 ▸ **fillOrder**(orderAddresses: *`string`[]*, orderValues: *`BigNumber`[]*, fillTakerTokenAmount: *`BigNumber`*, shouldThrowOnInsufficientBalanceOrAllowance: *`boolean`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`TransactionObject`<`BigNumber`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | orderAddresses | `string`[] |
 | orderValues | `BigNumber`[] |
 | fillTakerTokenAmount | `BigNumber` |
@@ -325,12 +337,14 @@ ___
 
 ###  fillOrdersUpTo
 
+Synchronously executes multiple fill orders in a single transaction until total fillTakerTokenAmount filled.
+
 ▸ **fillOrdersUpTo**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, fillTakerTokenAmount: *`BigNumber`*, shouldThrowOnInsufficientBalanceOrAllowance: *`boolean`*, v: *`Array`< `number` &#124; `BigNumber`>*, r: *`string`[]*, s: *`string`[]*): `Promise`<`TransactionObject`<`BigNumber`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | orderAddresses | `string`[][] |
 | orderValues | `BigNumber`[][] |
 | fillTakerTokenAmount | `BigNumber` |
@@ -361,12 +375,14 @@ ___
 
 ###  getOrderHash
 
+Calculates Keccak-256 hash of order with specified parameters.
+
 ▸ **getOrderHash**(orderAddresses: *`string`[]*, orderValues: *`BigNumber`[]*): `Promise`<`string`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | orderAddresses | `string`[] |
 | orderValues | `BigNumber`[] |
 
@@ -377,15 +393,17 @@ ___
 
 ###  getPartialAmount
 
+Calculates partial value given a numerator and denominator.
+
 ▸ **getPartialAmount**(numerator: *`BigNumber`*, denominator: *`BigNumber`*, target: *`BigNumber`*): `Promise`<`BigNumber`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| numerator | `BigNumber` |
-| denominator | `BigNumber` |
-| target | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| numerator | `BigNumber` | Numerator. | Numerator. |
+| denominator | `BigNumber` | Denominator. | Denominator. |
+| target | `BigNumber` | Value to calculate partial of. | Value to multiply with numerator/denominator. |
 
 **Returns:** `Promise`<`BigNumber`>
 
@@ -410,13 +428,15 @@ ___
 
 ###  getSigner
 
+Get the address of the signer of a transaction, maker or fund manager
+
 ▸ **getSigner**(_target: *`string`*): `Promise`<`string`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _target | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _target | `string` | Address to be inspected |
 
 **Returns:** `Promise`<`string`>
 
@@ -425,13 +445,15 @@ ___
 
 ###  getUnavailableTakerTokenAmount
 
+Calculates the sum of values already filled and cancelled for a given order.
+
 ▸ **getUnavailableTakerTokenAmount**(orderHash: *`string`*): `Promise`<`BigNumber`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| orderHash | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| orderHash | `string` | The Keccak-256 hash of the given order. |
 
 **Returns:** `Promise`<`BigNumber`>
 
@@ -440,12 +462,14 @@ ___
 
 ###  isRoundingError
 
+Checks if rounding error > 0.1%.
+
 ▸ **isRoundingError**(numerator: *`BigNumber`*, denominator: *`BigNumber`*, target: *`BigNumber`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | numerator | `BigNumber` |
 | denominator | `BigNumber` |
 | target | `BigNumber` |
@@ -457,14 +481,16 @@ ___
 
 ###  isValidSignature
 
+Verifies that an order signature is valid.
+
 ▸ **isValidSignature**(signer: *`string`*, hash: *`string`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| signer | `string` |
-| hash | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| signer | `string` | address of signer. |
+| hash | `string` | Signed Keccak-256 hash. |
 | v |  `number` &#124; `BigNumber`|
 | r | `string` |
 | s | `string` |

@@ -61,7 +61,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [RigoToken](_contracts_models_rigo_token_.rigotoken.md)
+**Returns:** [RigoToken](_contracts_models_rigo_token_.rigotoken.md) Success of transfer.
 
 ___
 
@@ -175,7 +175,7 @@ ___
 | Name | Type |
 | ------ | ------ |
 | _spender | `string` |
-| _value | `BigNumber` |
+| _value | `BigNumber` | Amount to transfer. |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -199,13 +199,15 @@ ___
 
 ###  changeMintingAddress
 
+Allows rigoblock dao to change minter
+
 ▸ **changeMintingAddress**(_newAddress: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _newAddress | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _newAddress | `string` | Address of the new minter | Address of the new rigoblock dao |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -214,12 +216,14 @@ ___
 
 ###  changeRigoblockAddress
 
+Allows rigoblock dao to upgrade dao
+
 ▸ **changeRigoblockAddress**(_newAddress: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _newAddress | `string` |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
@@ -254,14 +258,16 @@ ___
 
 ###  mintToken
 
+Allows minter to create new tokens
+
 ▸ **mintToken**(_recipient: *`string`*, _amount: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _recipient | `string` |
-| _amount | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _recipient | `string` | Address of who receives new tokens |
+| _amount | `BigNumber` | Number of new tokens |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -338,7 +344,7 @@ ___
 
 | Name | Type |
 | ------ | ------ |
-| _to | `string` |
+| _to | `string` | Address to transfer to. |
 | _value | `BigNumber` |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
@@ -348,13 +354,15 @@ ___
 
 ###  transferFrom
 
+ERC20 transferFrom, modified such that an allowance of MAX_UINT represents an unlimited allowance.
+
 ▸ **transferFrom**(_from: *`string`*, _to: *`string`*, _value: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _from | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _from | `string` | Address to transfer from. |
 | _to | `string` |
 | _value | `BigNumber` |
 

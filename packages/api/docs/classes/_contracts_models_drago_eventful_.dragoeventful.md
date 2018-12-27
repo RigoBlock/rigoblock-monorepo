@@ -76,7 +76,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [DragoEventful](_contracts_models_drago_eventful_.dragoeventful.md)
+**Returns:** [DragoEventful](_contracts_models_drago_eventful_.dragoeventful.md) Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully
 
 ___
 
@@ -393,18 +393,20 @@ ___
 
 ###  buyDrago
 
+Logs a Buy Drago event.
+
 ▸ **buyDrago**(_who: *`string`*, _targetDrago: *`string`*, _value: *`BigNumber`*, _amount: *`BigNumber`*, _name: *`string`*, _symbol: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _who | `string` |
-| _targetDrago | `string` |
-| _value | `BigNumber` |
-| _amount | `BigNumber` |
-| _name | `string` |
-| _symbol | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _who | `string` | Address of who is buying | Address of the caller | Address of the caller | Address of the caller | Address of the caller | Address of the caller | Address of who is selling | Address of the caller | Address of the caller | Address of the caller |
+| _targetDrago | `string` | Address of the target drago | Address of the drago | Address of the target Drago | Address of the target drago | Address of the target Drago | Address of the target drago | Address of the target Drago | Address of the target Drago | Address of the target Drago |
+| _value | `BigNumber` | Value of the transaction in Ether | Number of deposited tokens | Number of withdrawn tokens |
+| _amount | `BigNumber` | Number of shares purchased | Number of shares purchased |
+| _name | `string` | String of the name of the new drago |
+| _symbol | `string` | String of the symbol of the new drago |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -413,15 +415,17 @@ ___
 
 ###  changeDragoDao
 
+Logs a change in the drago dao of an approved vault
+
 ▸ **changeDragoDao**(_who: *`string`*, _targetDrago: *`string`*, _dragoDao: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetDrago | `string` |
-| _dragoDao | `string` |
+| _dragoDao | `string` | Address of the new drago dao |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -430,15 +434,17 @@ ___
 
 ###  changeFeeCollector
 
+Logs when wizard changes fee collector address
+
 ▸ **changeFeeCollector**(_who: *`string`*, _targetDrago: *`string`*, _feeCollector: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetDrago | `string` |
-| _feeCollector | `string` |
+| _feeCollector | `string` | Address of the new fee collector |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -447,15 +453,17 @@ ___
 
 ###  changeRatio
 
+Logswhen rigoblock dao changes fee split.
+
 ▸ **changeRatio**(_who: *`string`*, _targetDrago: *`string`*, _ratio: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetDrago | `string` |
-| _ratio | `BigNumber` |
+| _ratio | `BigNumber` | Ratio number from 0 to 100 |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -464,17 +472,19 @@ ___
 
 ###  createDrago
 
+Logs a new Drago creation by factory
+
 ▸ **createDrago**(_who: *`string`*, _newDrago: *`string`*, _name: *`string`*, _symbol: *`string`*, _dragoId: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
-| _newDrago | `string` |
+| _newDrago | `string` | Address of the new Drago |
 | _name | `string` |
 | _symbol | `string` |
-| _dragoId | `BigNumber` |
+| _dragoId | `BigNumber` | Number of the new drago Id |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -483,14 +493,16 @@ ___
 
 ###  customDragoLog
 
+Logs an event sent from a drago
+
 ▸ **customDragoLog**(_methodHash: *`string`*, _encodedParams: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _methodHash | `string` |
-| _encodedParams | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _methodHash | `string` | the method of the call | the method of the call | the method of the call | the method of the call |
+| _encodedParams | `string` | the arbitrary data array | the arbitrary data array | the arbitrary data array | the arbitrary data array |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -499,12 +511,14 @@ ___
 
 ###  customDragoLog2
 
+Logs an event sent from a drago
+
 ▸ **customDragoLog2**(_methodHash: *`string`*, topic2: *`string`*, topic3: *`string`*, _encodedParams: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _methodHash | `string` |
 | topic2 | `string` |
 | topic3 | `string` |
@@ -517,12 +531,14 @@ ___
 
 ###  customExchangeLog
 
+Logs an event sent from an approved exchange
+
 ▸ **customExchangeLog**(_methodHash: *`string`*, _encodedParams: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _methodHash | `string` |
 | _encodedParams | `string` |
 
@@ -533,12 +549,14 @@ ___
 
 ###  customExchangeLog2
 
+Logs an event sent from an approved exchange
+
 ▸ **customExchangeLog2**(_methodHash: *`string`*, topic2: *`string`*, topic3: *`string`*, _encodedParams: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _methodHash | `string` |
 | topic2 | `string` |
 | topic3 | `string` |
@@ -551,16 +569,18 @@ ___
 
 ###  depositToExchange
 
+Logs a Drago Deposit To Exchange event
+
 ▸ **depositToExchange**(_who: *`string`*, _targetDrago: *`string`*, _exchange: *`string`*, _token: *`string`*, _value: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetDrago | `string` |
-| _exchange | `string` |
-| _token | `string` |
+| _exchange | `string` | Address of the exchange | Address of the exchange |
+| _token | `string` | Address of the deposited token | Address of the withdrawn token |
 | _value | `BigNumber` |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
@@ -603,16 +623,18 @@ ___
 
 ###  sellDrago
 
+Logs a Sell Drago event.
+
 ▸ **sellDrago**(_who: *`string`*, _targetDrago: *`string`*, _amount: *`BigNumber`*, _revenue: *`BigNumber`*, _name: *`string`*, _symbol: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetDrago | `string` |
 | _amount | `BigNumber` |
-| _revenue | `BigNumber` |
+| _revenue | `BigNumber` | Value of the transaction in Ether |
 | _name | `string` |
 | _symbol | `string` |
 
@@ -623,16 +645,18 @@ ___
 
 ###  setDragoPrice
 
+Logs a Set Drago Price event
+
 ▸ **setDragoPrice**(_who: *`string`*, _targetDrago: *`string`*, _sellPrice: *`BigNumber`*, _buyPrice: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetDrago | `string` |
-| _sellPrice | `BigNumber` |
-| _buyPrice | `BigNumber` |
+| _sellPrice | `BigNumber` | Value of the price of one share in wei |
+| _buyPrice | `BigNumber` | Value of the price of one share in wei |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -641,15 +665,17 @@ ___
 
 ###  setTransactionFee
 
+Logs a modification of the transaction fee event
+
 ▸ **setTransactionFee**(_who: *`string`*, _targetDrago: *`string`*, _transactionFee: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetDrago | `string` |
-| _transactionFee | `BigNumber` |
+| _transactionFee | `BigNumber` | Value of the transaction fee in basis points |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -658,12 +684,14 @@ ___
 
 ###  withdrawFromExchange
 
+Logs a Drago Withdraw From Exchange event
+
 ▸ **withdrawFromExchange**(_who: *`string`*, _targetDrago: *`string`*, _exchange: *`string`*, _token: *`string`*, _value: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetDrago | `string` |
 | _exchange | `string` |

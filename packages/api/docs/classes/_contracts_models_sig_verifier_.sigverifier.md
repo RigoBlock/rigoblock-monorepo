@@ -40,7 +40,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [SigVerifier](_contracts_models_sig_verifier_.sigverifier.md)
+**Returns:** [SigVerifier](_contracts_models_sig_verifier_.sigverifier.md) Validity of order signature.
 
 ___
 
@@ -67,14 +67,16 @@ ___
 
 ###  isValidSignature
 
+Verifies that a signature is valid.
+
 ▸ **isValidSignature**(hash: *`string`*, signature: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| hash | `string` |
-| signature | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| hash | `string` | Message hash that is signed. |
+| signature | `string` | Proof of signing. |
 
 **Returns:** `Promise`<`boolean`>
 

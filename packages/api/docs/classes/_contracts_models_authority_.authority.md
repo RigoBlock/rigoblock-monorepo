@@ -82,7 +82,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [Authority](_contracts_models_authority_.authority.md)
+**Returns:** [Authority](_contracts_models_authority_.authority.md) Bool is whitelisted Bool is whitelisted Bool is whitelisted Bool is whitelisted Bool is whitelisted Bool is whitelisted
 
 ___
 
@@ -341,6 +341,8 @@ ___
 
 ###  getDragoEventful
 
+Provides the address of the drago logs contract
+
 ▸ **getDragoEventful**(): `Promise`<`string`>
 
 **Returns:** `Promise`<`string`>
@@ -350,6 +352,8 @@ ___
 
 ###  getExchangesAuthority
 
+Provides the address of the exchangee authority
+
 ▸ **getExchangesAuthority**(): `Promise`<`string`>
 
 **Returns:** `Promise`<`string`>
@@ -358,6 +362,8 @@ ___
 <a id="getnavverifier"></a>
 
 ###  getNavVerifier
+
+Provides the address of the nav verifier
 
 ▸ **getNavVerifier**(): `Promise`<`string`>
 
@@ -384,6 +390,8 @@ ___
 
 ###  getVaultEventful
 
+Provides the address of the vault logs contract
+
 ▸ **getVaultEventful**(): `Promise`<`string`>
 
 **Returns:** `Promise`<`string`>
@@ -393,13 +401,15 @@ ___
 
 ###  isAuthority
 
+Provides whether an address is an authority
+
 ▸ **isAuthority**(_authority: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _authority | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _authority | `string` | Address of the target authority | Address of the authority |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -408,13 +418,15 @@ ___
 
 ###  isWhitelistedDrago
 
+Provides whether a drago is whitelisted
+
 ▸ **isWhitelistedDrago**(_drago: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _drago | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _drago | `string` | Address of the target drago | Address of the target drago |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -423,13 +435,15 @@ ___
 
 ###  isWhitelistedFactory
 
+Provides whether a factory is whitelisted
+
 ▸ **isWhitelistedFactory**(_factory: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _factory | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _factory | `string` | Address of the target factory | Address of the target factory |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -438,13 +452,15 @@ ___
 
 ###  isWhitelistedRegistry
 
+Provides whether a registry is whitelisted
+
 ▸ **isWhitelistedRegistry**(_registry: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _registry | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _registry | `string` | Address of the target registry | Address of the target registry |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -453,13 +469,15 @@ ___
 
 ###  isWhitelistedUser
 
+Provides whether a user is whitelisted
+
 ▸ **isWhitelistedUser**(_target: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _target | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _target | `string` | Address of the target user | Address of the target user |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -468,13 +486,15 @@ ___
 
 ###  isWhitelistedVault
 
+Provides whether a vault is whitelisted
+
 ▸ **isWhitelistedVault**(_vault: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _vault | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _vault | `string` | Address of the target vault | Address of the target vault |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -509,14 +529,16 @@ ___
 
 ###  setAuthority
 
+Allows the owner to whitelist an authority
+
 ▸ **setAuthority**(_authority: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _authority | `string` |
-| _isWhitelisted | `boolean` |
+| _isWhitelisted | `boolean` | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -525,13 +547,15 @@ ___
 
 ###  setDragoEventful
 
+Allows the owner to set the drago eventful
+
 ▸ **setDragoEventful**(_dragoEventful: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _dragoEventful | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _dragoEventful | `string` | Address of the logs contract |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -540,13 +564,15 @@ ___
 
 ###  setExchangesAuthority
 
+Allows the owner to set the exchanges authority
+
 ▸ **setExchangesAuthority**(_exchangesAuthority: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _exchangesAuthority | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _exchangesAuthority | `string` | Address of the exchanges authority |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -555,13 +581,15 @@ ___
 
 ###  setNavVerifier
 
+Allows the owner to set the nav verifier
+
 ▸ **setNavVerifier**(_navVerifier: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _navVerifier | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _navVerifier | `string` | Address of the verifier |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -585,13 +613,15 @@ ___
 
 ###  setVaultEventful
 
+Allows the owner to set the vault eventful
+
 ▸ **setVaultEventful**(_vaultEventful: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _vaultEventful | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _vaultEventful | `string` | Address of the vault logs contract |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -600,13 +630,15 @@ ___
 
 ###  setWhitelister
 
+Allows the owner to whitelist a whitelister
+
 ▸ **setWhitelister**(_whitelister: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _whitelister | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _whitelister | `string` | Address of the whitelister |
 | _isWhitelisted | `boolean` |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
@@ -625,12 +657,14 @@ ___
 
 ###  whitelistDrago
 
+Allows an admin to whitelist a drago
+
 ▸ **whitelistDrago**(_drago: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _drago | `string` |
 | _isWhitelisted | `boolean` |
 
@@ -641,12 +675,14 @@ ___
 
 ###  whitelistFactory
 
+Allows an admin to whitelist a factory
+
 ▸ **whitelistFactory**(_factory: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _factory | `string` |
 | _isWhitelisted | `boolean` |
 
@@ -657,12 +693,14 @@ ___
 
 ###  whitelistRegistry
 
+Allows an admin to whitelist a registry
+
 ▸ **whitelistRegistry**(_registry: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _registry | `string` |
 | _isWhitelisted | `boolean` |
 
@@ -673,12 +711,14 @@ ___
 
 ###  whitelistUser
 
+Allows a whitelister to whitelist a user
+
 ▸ **whitelistUser**(_target: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _target | `string` |
 | _isWhitelisted | `boolean` |
 
@@ -689,12 +729,14 @@ ___
 
 ###  whitelistVault
 
+Allows an admin to whitelist a vault
+
 ▸ **whitelistVault**(_vault: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _vault | `string` |
 | _isWhitelisted | `boolean` |
 

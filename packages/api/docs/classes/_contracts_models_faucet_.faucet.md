@@ -58,7 +58,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [Faucet](_contracts_models_faucet_.faucet.md)
+**Returns:** [Faucet](_contracts_models_faucet_.faucet.md) bool on success
 
 ___
 
@@ -181,6 +181,8 @@ ___
 
 ###  drip1Token
 
+Send 1000 Token with a minimum time lock of 1 hour
+
 ▸ **drip1Token**(): `Promise`<`TransactionObject`<`boolean`>>
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
@@ -274,6 +276,8 @@ ___
 
 ###  turnFaucetOff
 
+Turn faucet off
+
 ▸ **turnFaucetOff**(): `Promise`<`TransactionObject`<`boolean`>>
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
@@ -282,6 +286,8 @@ ___
 <a id="turnfauceton"></a>
 
 ###  turnFaucetOn
+
+Turn faucet on
 
 ▸ **turnFaucetOn**(): `Promise`<`TransactionObject`<`boolean`>>
 
@@ -292,12 +298,14 @@ ___
 
 ###  withdraw
 
+Allow withdrawal from the owner
+
 ▸ **withdraw**(_value: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _value | `BigNumber` |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>

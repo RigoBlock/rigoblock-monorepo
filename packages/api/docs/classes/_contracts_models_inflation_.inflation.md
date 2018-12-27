@@ -54,7 +54,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [Inflation](_contracts_models_inflation_.inflation.md)
+**Returns:** [Inflation](_contracts_models_inflation_.inflation.md) Bool the wizard can claim Value of the reward factor Bool the transaction executed correctly
 
 ___
 
@@ -99,13 +99,15 @@ ___
 
 ###  canWithdraw
 
+Returns whether a wizard can claim reward tokens
+
 ▸ **canWithdraw**(_thePool: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _thePool | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _thePool | `string` | Address of the target pool | Address of the target pool |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -114,13 +116,15 @@ ___
 
 ###  getInflationFactor
 
+Return the reward factor for a group
+
 ▸ **getInflationFactor**(_group: *`string`*): `Promise`<`BigNumber`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _group | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _group | `string` | Address of the group | Address of the group/factory |
 
 **Returns:** `Promise`<`BigNumber`>
 
@@ -138,14 +142,16 @@ ___
 
 ###  mintInflation
 
+Allows ProofOfPerformance to mint rewards
+
 ▸ **mintInflation**(_thePool: *`string`*, _reward: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _thePool | `string` |
-| _reward | `BigNumber` |
+| _reward | `BigNumber` | Number of reward in Rigo tokens |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -181,13 +187,15 @@ ___
 
 ###  setAuthority
 
+Allows rigoblock dao to update the authority
+
 ▸ **setAuthority**(_authority: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _authority | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _authority | `string` | Address of the authority |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -196,14 +204,16 @@ ___
 
 ###  setInflationFactor
 
+Allows rigoblock dao to set the inflation factor for a group
+
 ▸ **setInflationFactor**(_group: *`string`*, _inflationFactor: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _group | `string` |
-| _inflationFactor | `BigNumber` |
+| _inflationFactor | `BigNumber` | Value of the reward factor |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -212,13 +222,15 @@ ___
 
 ###  setMinimumRigo
 
+Allows rigoblock dao to set the minimum number of required tokens
+
 ▸ **setMinimumRigo**(_minimum: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _minimum | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _minimum | `BigNumber` | Number of minimum tokens |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -227,13 +239,15 @@ ___
 
 ###  setPeriod
 
+Allows rigoblock dao to set the minimum time between reward collection
+
 ▸ **setPeriod**(_newPeriod: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _newPeriod | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _newPeriod | `BigNumber` | Number of blocks from 2 rewards |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -242,13 +256,15 @@ ___
 
 ###  setProofOfPerformance
 
+Allows rigoblock dao to update proof of performance
+
 ▸ **setProofOfPerformance**(_pop: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _pop | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _pop | `string` | Address of the Proof of Performance contract |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -257,13 +273,15 @@ ___
 
 ###  setRigoblock
 
+Allows rigoblock dao to upgrade its address
+
 ▸ **setRigoblock**(_newRigoblock: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _newRigoblock | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _newRigoblock | `string` | Address of the new rigoblock dao |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 

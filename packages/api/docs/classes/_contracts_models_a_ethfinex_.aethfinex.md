@@ -68,19 +68,21 @@ ___
 
 ###  unwrap
 
+Unwraps eth or tokens from the ethfinex wrappers.
+
 ▸ **unwrap**(token: *`string`*, wrapper: *`string`*, value: *`BigNumber`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*, signatureValidUntilBlock: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| token | `string` |
-| wrapper | `string` |
-| value | `BigNumber` |
-| v |  `number` &#124; `BigNumber`|
-| r | `string` |
-| s | `string` |
-| signatureValidUntilBlock | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| token | `string` | Address of the base token. | Address of the base token. |
+| wrapper | `string` | Address of the token wrapper. | Address of the token wrapper. |
+| value | `BigNumber` | Number of tokens to withdraw. |
+| v |  `number` &#124; `BigNumber`| ECDSA signature parameter v. |
+| r | `string` | ECDSA signature parameters r. |
+| s | `string` | ECDSA signature parameters s. |
+| signatureValidUntilBlock | `BigNumber` | Signature for withdrawing before lockup. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -89,17 +91,19 @@ ___
 
 ###  wrapToEfx
 
+Wraps eth or tokens to the ethfinex wrappers.
+
 ▸ **wrapToEfx**(token: *`string`*, wrapper: *`string`*, amount: *`BigNumber`*, forTime: *`BigNumber`*, erc20Old: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | token | `string` |
 | wrapper | `string` |
-| amount | `BigNumber` |
-| forTime | `BigNumber` |
-| erc20Old | `boolean` |
+| amount | `BigNumber` | Number of tokens. |
+| forTime | `BigNumber` | Number of hours for lockup. |
+| erc20Old | `boolean` | Bool is an old ERC20. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 

@@ -85,7 +85,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [ExchangesAuthority](_contracts_models_exchanges_authority_.exchangesauthority.md)
+**Returns:** [ExchangesAuthority](_contracts_models_exchanges_authority_.exchangesauthority.md) Bool the token is whitelisted on the exchange Bool the token is whitelisted on the exchange Address of the adapter Bool is whitelisted Bool the method is allowed Bool is whitelisted Bool is whitelisted Bool is whitelisted Bool is whitelisted
 
 ___
 
@@ -328,14 +328,16 @@ ___
 
 ###  canTradeTokenOnExchange
 
+Checkes whether a token is allowed on an exchange
+
 ▸ **canTradeTokenOnExchange**(_token: *`string`*, _exchange: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _token | `string` |
-| _exchange | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _token | `string` | Address of the token | Address of the token | Address of the token |
+| _exchange | `string` | Address of the exchange | Address of the exchange | Address of the target exchange | Address of the exchange | Address of the exchange | Address of the target exchange |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -344,14 +346,16 @@ ___
 
 ###  canWrapTokenOnWrapper
 
+Checkes whether a token is allowed on a wrapper
+
 ▸ **canWrapTokenOnWrapper**(_token: *`string`*, _wrapper: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _token | `string` |
-| _wrapper | `string` |
+| _wrapper | `string` | Address of the token wrapper | Address of the target exchange | Address of the exchange | Address of the target token wrapper |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -359,6 +363,8 @@ ___
 <a id="getcasper"></a>
 
 ###  getCasper
+
+Provides the address of the casper contract
 
 ▸ **getCasper**(): `Promise`<`string`>
 
@@ -369,12 +375,14 @@ ___
 
 ###  getExchangeAdapter
 
+Provides the address of the exchange adapter
+
 ▸ **getExchangeAdapter**(_exchange: *`string`*): `Promise`<`string`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _exchange | `string` |
 
 **Returns:** `Promise`<`string`>
@@ -400,6 +408,8 @@ ___
 
 ###  getSigVerifier
 
+Provides the address of the signature verifier
+
 ▸ **getSigVerifier**(): `Promise`<`string`>
 
 **Returns:** `Promise`<`string`>
@@ -409,13 +419,15 @@ ___
 
 ###  isAuthority
 
+Provides whether an address is an authority
+
 ▸ **isAuthority**(_authority: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _authority | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _authority | `string` | Address of the target authority | Address of the authority |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -423,6 +435,8 @@ ___
 <a id="iscasperinitialized"></a>
 
 ###  isCasperInitialized
+
+Checkes whether casper has been inizialized
 
 ▸ **isCasperInitialized**(): `Promise`<`boolean`>
 
@@ -433,14 +447,16 @@ ___
 
 ###  isMethodAllowed
 
+Checkes whether a method is allowed on an exchange
+
 ▸ **isMethodAllowed**(_method: *`string`*, _adapter: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _method | `string` |
-| _adapter | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _method | `string` | Bytes of the function signature | Hex of the function ABI |
+| _adapter | `string` | Address of the exchange | Address of the adapter |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -449,13 +465,15 @@ ___
 
 ###  isWhitelistedAsset
 
+Provides whether an asset is whitelisted
+
 ▸ **isWhitelistedAsset**(_asset: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _asset | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _asset | `string` | Address of the target asset | Address of the token | Address of the token |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -464,12 +482,14 @@ ___
 
 ###  isWhitelistedExchange
 
+Provides whether an exchange is whitelisted
+
 ▸ **isWhitelistedExchange**(_exchange: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _exchange | `string` |
 
 **Returns:** `Promise`<`boolean`>
@@ -479,13 +499,15 @@ ___
 
 ###  isWhitelistedProxy
 
+Provides whether a proxy is whitelisted
+
 ▸ **isWhitelistedProxy**(_tokenTransferProxy: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _tokenTransferProxy | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _tokenTransferProxy | `string` | Address of the proxy | Address of the proxy |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -494,12 +516,14 @@ ___
 
 ###  isWhitelistedWrapper
 
+Provides whether a token wrapper is whitelisted
+
 ▸ **isWhitelistedWrapper**(_wrapper: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _wrapper | `string` |
 
 **Returns:** `Promise`<`boolean`>
@@ -535,14 +559,16 @@ ___
 
 ###  setAuthority
 
+Allows the owner to whitelist an authority
+
 ▸ **setAuthority**(_authority: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _authority | `string` |
-| _isWhitelisted | `boolean` |
+| _isWhitelisted | `boolean` | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted | Bool whitelisted |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -551,13 +577,15 @@ ___
 
 ###  setCasper
 
+Allows the owner to set the casper contract
+
 ▸ **setCasper**(_casper: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _casper | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _casper | `string` | Address of the casper contract |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -566,12 +594,14 @@ ___
 
 ###  setExchangeAdapter
 
+Allows the owner to associate an exchange to its adapter
+
 ▸ **setExchangeAdapter**(_exchange: *`string`*, _adapter: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _exchange | `string` |
 | _adapter | `string` |
 
@@ -582,13 +612,15 @@ ___
 
 ###  setExchangeEventful
 
+Allows the owner to set the exchange eventful
+
 ▸ **setExchangeEventful**(_exchangeEventful: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _exchangeEventful | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _exchangeEventful | `string` | Address of the exchange logs contract |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -612,13 +644,15 @@ ___
 
 ###  setSignatureVerifier
 
+Allows the owner to set the signature verifier
+
 ▸ **setSignatureVerifier**(_sigVerifier: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _sigVerifier | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _sigVerifier | `string` | Address of the verifier contract |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -627,13 +661,15 @@ ___
 
 ###  setWhitelister
 
+Allows the owner to whitelist a whitelister
+
 ▸ **setWhitelister**(_whitelister: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _whitelister | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _whitelister | `string` | Address of the whitelister |
 | _isWhitelisted | `boolean` |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
@@ -652,12 +688,14 @@ ___
 
 ###  whitelistAsset
 
+Allows a whitelister to whitelist an asset
+
 ▸ **whitelistAsset**(_asset: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _asset | `string` |
 | _isWhitelisted | `boolean` |
 
@@ -668,12 +706,14 @@ ___
 
 ###  whitelistAssetOnExchange
 
+Allows a whitelister to enable trading on a particular exchange
+
 ▸ **whitelistAssetOnExchange**(_asset: *`string`*, _exchange: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _asset | `string` |
 | _exchange | `string` |
 | _isWhitelisted | `boolean` |
@@ -685,12 +725,14 @@ ___
 
 ###  whitelistExchange
 
+Allows a whitelister to whitelist an exchange
+
 ▸ **whitelistExchange**(_exchange: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _exchange | `string` |
 | _isWhitelisted | `boolean` |
 
@@ -701,12 +743,14 @@ ___
 
 ###  whitelistMethod
 
+Allows an admin to whitelist a factory
+
 ▸ **whitelistMethod**(_method: *`string`*, _adapter: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _method | `string` |
 | _adapter | `string` |
 | _isWhitelisted | `boolean` |
@@ -718,12 +762,14 @@ ___
 
 ###  whitelistTokenOnWrapper
 
+Allows a whitelister to enable assiciate wrappers to a token
+
 ▸ **whitelistTokenOnWrapper**(_token: *`string`*, _wrapper: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _token | `string` |
 | _wrapper | `string` |
 | _isWhitelisted | `boolean` |
@@ -735,12 +781,14 @@ ___
 
 ###  whitelistTokenTransferProxy
 
+Allows a whitelister to whitelist a tokenTransferProxy
+
 ▸ **whitelistTokenTransferProxy**(_tokenTransferProxy: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _tokenTransferProxy | `string` |
 | _isWhitelisted | `boolean` |
 
@@ -751,12 +799,14 @@ ___
 
 ###  whitelistWrapper
 
+Allows a whitelister to whitelist an token wrapper
+
 ▸ **whitelistWrapper**(_wrapper: *`string`*, _isWhitelisted: *`boolean`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _wrapper | `string` |
 | _isWhitelisted | `boolean` |
 

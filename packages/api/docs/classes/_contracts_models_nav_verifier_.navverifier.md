@@ -67,17 +67,19 @@ ___
 
 ###  isValidNav
 
+Verifies that a signature is valid.
+
 ▸ **isValidNav**(sellPrice: *`BigNumber`*, buyPrice: *`BigNumber`*, signaturevaliduntilBlock: *`BigNumber`*, hash: *`string`*, signedData: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| sellPrice | `BigNumber` |
-| buyPrice | `BigNumber` |
-| signaturevaliduntilBlock | `BigNumber` |
-| hash | `string` |
-| signedData | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| sellPrice | `BigNumber` | Price in wei |
+| buyPrice | `BigNumber` | Price in wei |
+| signaturevaliduntilBlock | `BigNumber` | Number of blocks till price expiry |
+| hash | `string` | Message hash that is signed. |
+| signedData | `string` | Proof of nav validity. |
 
 **Returns:** `Promise`<`boolean`>
 

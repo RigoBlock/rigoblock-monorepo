@@ -70,7 +70,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [Drago](_contracts_models_drago_.drago.md)
+**Returns:** [Drago](_contracts_models_drago_.drago.md) Number of shares. Bool the function executed correctly. Validity of order signature. Bool the function executed correctly.
 
 ___
 
@@ -129,13 +129,15 @@ ___
 
 ###  balanceOf
 
+Calculates how many shares a user holds.
+
 ▸ **balanceOf**(_who: *`string`*): `Promise`<`BigNumber`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _who | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _who | `string` | Address of the target account. |
 
 **Returns:** `Promise`<`BigNumber`>
 
@@ -144,14 +146,16 @@ ___
 
 ###  batchOperateOnExchange
 
+Allows owner or approved exchange to send a transaction to exchangeWith data of signed/unsigned transaction
+
 ▸ **batchOperateOnExchange**(_exchange: *`string`*, transactions: *`Array`<`object`>*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _exchange | `string` |
-| transactions | `Array`<`object`> |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _exchange | `string` | Address of the exchange | Address of the target exchange. |
+| transactions | `Array`<`object`> | Array of ABI encoded transactions |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -159,6 +163,8 @@ ___
 <a id="buydrago"></a>
 
 ###  buyDrago
+
+Allows a user to buy into a drago.
 
 ▸ **buyDrago**(): `Promise`<`TransactionObject`<`boolean`>>
 
@@ -169,13 +175,15 @@ ___
 
 ###  buyDragoOnBehalf
 
+Allows a user to buy into a drago on behalf of an address.
+
 ▸ **buyDragoOnBehalf**(_hodler: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _hodler | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _hodler | `string` | Address of the target user. |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -183,6 +191,8 @@ ___
 <a id="calcshareprice"></a>
 
 ###  calcSharePrice
+
+Returns the price of a pool.
 
 ▸ **calcSharePrice**(): `Promise`<`BigNumber`>
 
@@ -193,13 +203,15 @@ ___
 
 ###  changeDragoDao
 
+Allows drago dao/factory to upgrade its address.
+
 ▸ **changeDragoDao**(_dragoDao: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _dragoDao | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _dragoDao | `string` | Address of the new drago dao. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -208,13 +220,15 @@ ___
 
 ###  changeFeeCollector
 
+Allows owner to decide where to receive the fee.
+
 ▸ **changeFeeCollector**(_feeCollector: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _feeCollector | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _feeCollector | `string` | Address of the fee receiver. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -223,13 +237,15 @@ ___
 
 ###  changeMinPeriod
 
+Allows drago dao/factory to change the minimum holding period.
+
 ▸ **changeMinPeriod**(_minPeriod: * `number` &#124; `BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _minPeriod |  `number` &#124; `BigNumber`|
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _minPeriod |  `number` &#124; `BigNumber`| Time in seconds. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -238,13 +254,15 @@ ___
 
 ###  changeRatio
 
+Allows drago dao/factory to change fee split ratio.
+
 ▸ **changeRatio**(_ratio: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _ratio | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _ratio | `BigNumber` | Number of ratio for wizard, from 0 to 100. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -269,6 +287,8 @@ ___
 
 ###  getAdminData
 
+Finds the administrative data of the pool.
+
 ▸ **getAdminData**(): `Promise`<[`string`, `string`, `string`, `BigNumber`, `BigNumber`, `BigNumber`]>
 
 **Returns:** `Promise`<[`string`, `string`, `string`, `BigNumber`, `BigNumber`, `BigNumber`]>
@@ -277,6 +297,8 @@ ___
 <a id="getdata"></a>
 
 ###  getData
+
+Finds details of a drago pool.
 
 ▸ **getData**(): `Promise`<[`string`, `string`, `BigNumber`, `BigNumber`]>
 
@@ -287,6 +309,8 @@ ___
 
 ###  getEventful
 
+Gets the address of the logger contract.
+
 ▸ **getEventful**(): `Promise`<`string`>
 
 **Returns:** `Promise`<`string`>
@@ -295,6 +319,8 @@ ___
 <a id="getexchangesauth"></a>
 
 ###  getExchangesAuth
+
+Finds the exchanges authority.
 
 ▸ **getExchangesAuth**(): `Promise`<`string`>
 
@@ -330,14 +356,16 @@ ___
 
 ###  isValidSignature
 
+Verifies that a signature is valid.
+
 ▸ **isValidSignature**(hash: *`string`*, signature: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| hash | `string` |
-| signature | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| hash | `string` | Message hash that is signed. |
+| signature | `string` | Proof of signing. |
 
 **Returns:** `Promise`<`boolean`>
 
@@ -363,6 +391,8 @@ ___
 
 ###  operateOnExchange
 
+Allows owner to operate on exchange through extension.
+
 ▸ **operateOnExchange**(_exchange: *`string`*, transaction: *`object`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
@@ -371,8 +401,8 @@ ___
 
 **transaction: `object`**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | assembledData | `string` |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
@@ -391,13 +421,15 @@ ___
 
 ###  sellDrago
 
+Allows a user to sell from a drago.
+
 ▸ **sellDrago**(_amount: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _amount | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _amount | `BigNumber` | Number of shares to sell. | Number of tokens approved for spending. |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -406,14 +438,16 @@ ___
 
 ###  setAllowance
 
+Allows owner to set an allowance to an approved token transfer proxy.
+
 ▸ **setAllowance**(_tokenTransferProxy: *`string`*, _token: *`string`*, _amount: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _tokenTransferProxy | `string` |
-| _token | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _tokenTransferProxy | `string` | Address of the proxy to be approved. | Address of the proxy to be approved. |
+| _token | `string` | Address of the token to receive allowance for. |
 | _amount | `BigNumber` |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
@@ -423,15 +457,17 @@ ___
 
 ###  setMultipleAllowances
 
+Allows owner to set allowances to multiple approved tokens with one call.
+
 ▸ **setMultipleAllowances**(_tokenTransferProxy: *`string`*, _tokens: *`string`[]*, _amounts: *`BigNumber`[]*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _tokenTransferProxy | `string` |
-| _tokens | `string`[] |
-| _amounts | `BigNumber`[] |
+| _tokens | `string`[] | Address of the token to receive allowance for. |
+| _amounts | `BigNumber`[] | Array of number of tokens to be approved. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -455,17 +491,19 @@ ___
 
 ###  setPrices
 
+Allows drago owner or authority to set the price for a drago.
+
 ▸ **setPrices**(_newSellPrice: *`BigNumber`*, _newBuyPrice: *`BigNumber`*, _signaturevaliduntilBlock: *`BigNumber`*, _hash: *`string`*, _signedData: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _newSellPrice | `BigNumber` |
-| _newBuyPrice | `BigNumber` |
-| _signaturevaliduntilBlock | `BigNumber` |
-| _hash | `string` |
-| _signedData | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _newSellPrice | `BigNumber` | Price in wei. |
+| _newBuyPrice | `BigNumber` | Price in wei. |
+| _signaturevaliduntilBlock | `BigNumber` | Number of blocks till expiry of new data. |
+| _hash | `string` | Bytes32 of the transaction hash. |
+| _signedData | `string` | Bytes of extradata and signature. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -474,13 +512,15 @@ ___
 
 ###  setTransactionFee
 
+Allows drago owner to set the transaction fee.
+
 ▸ **setTransactionFee**(_transactionFee: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _transactionFee | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _transactionFee | `BigNumber` | Value of the transaction fee in basis points. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -488,6 +528,8 @@ ___
 <a id="totalsupply"></a>
 
 ###  totalSupply
+
+Returns the total amount of issued tokens for this drago.
 
 ▸ **totalSupply**(): `Promise`<`BigNumber`>
 
@@ -520,3 +562,4 @@ ___
 
 ___
 
+undefined ABIencoded transaction. |

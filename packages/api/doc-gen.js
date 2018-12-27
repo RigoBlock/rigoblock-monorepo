@@ -104,6 +104,18 @@ const docGen = async networkId => {
                   }
                 }
               )
+
+              // Adding return description
+              let returnIx = tokenizedDoc.findIndex(tkn =>
+                tkn.match(new RegExp(`\\*\\*Returns.+`))
+              )
+              if (returnIx < nextMethodIx && methodObj.return) {
+                tokenizedDoc.splice(
+                  returnIx,
+                  1,
+                  `${tokenizedDoc[returnIx]} ${methodObj.return}`
+                )
+              }
             }
             return tokenizedDoc.join('\n')
           }),

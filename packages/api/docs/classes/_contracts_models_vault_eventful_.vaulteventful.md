@@ -60,7 +60,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [VaultEventful](_contracts_models_vault_eventful_.vaulteventful.md)
+**Returns:** [VaultEventful](_contracts_models_vault_eventful_.vaulteventful.md) Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully Bool the transaction executed successfully
 
 ___
 
@@ -233,18 +233,20 @@ ___
 
 ###  buyVault
 
+Logs a Buy Vault event.
+
 ▸ **buyVault**(_who: *`string`*, _targetVault: *`string`*, _value: *`BigNumber`*, _amount: *`BigNumber`*, _name: *`string`*, _symbol: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _who | `string` |
-| _targetVault | `string` |
-| _value | `BigNumber` |
-| _amount | `BigNumber` |
-| _name | `string` |
-| _symbol | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _who | `string` | Address of who is buying | Address of the caller | Address of the caller | Address of the caller | Address of the caller | Address of who is selling | Address of the caller |
+| _targetVault | `string` | Address of the target vault | Address of the target Vault | Address of the target vault | Address of the vault | Address of the target vault | Address of the target Vault |
+| _value | `BigNumber` | Value of the transaction in Ether |
+| _amount | `BigNumber` | Number of shares purchased | Number of shares purchased |
+| _name | `string` | String of the name of the new vault |
+| _symbol | `string` | String of the symbol of the new vault |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -253,15 +255,17 @@ ___
 
 ###  changeFeeCollector
 
+Logs when wizard changes fee collector address
+
 ▸ **changeFeeCollector**(_who: *`string`*, _targetVault: *`string`*, _feeCollector: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetVault | `string` |
-| _feeCollector | `string` |
+| _feeCollector | `string` | Address of the new fee collector |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -270,15 +274,17 @@ ___
 
 ###  changeRatio
 
+Logswhen rigoblock dao changes fee split.
+
 ▸ **changeRatio**(_who: *`string`*, _targetVault: *`string`*, _ratio: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetVault | `string` |
-| _ratio | `BigNumber` |
+| _ratio | `BigNumber` | Ratio number from 0 to 100 |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -287,15 +293,17 @@ ___
 
 ###  changeVaultDao
 
+Logs a change in the vault dao of an approved vault
+
 ▸ **changeVaultDao**(_who: *`string`*, _targetVault: *`string`*, _vaultDao: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetVault | `string` |
-| _vaultDao | `string` |
+| _vaultDao | `string` | Address of the new vault dao |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -304,17 +312,19 @@ ___
 
 ###  createVault
 
+Logs a new Vault creation by factory
+
 ▸ **createVault**(_who: *`string`*, _newVault: *`string`*, _name: *`string`*, _symbol: *`string`*, _vaultId: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
-| _newVault | `string` |
+| _newVault | `string` | Address of the new vault |
 | _name | `string` |
 | _symbol | `string` |
-| _vaultId | `BigNumber` |
+| _vaultId | `BigNumber` | Number of the new vault Id |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -356,16 +366,18 @@ ___
 
 ###  sellVault
 
+Logs a Sell Vault event.
+
 ▸ **sellVault**(_who: *`string`*, _targetVault: *`string`*, _amount: *`BigNumber`*, _revenue: *`BigNumber`*, _name: *`string`*, _symbol: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetVault | `string` |
 | _amount | `BigNumber` |
-| _revenue | `BigNumber` |
+| _revenue | `BigNumber` | Value of the transaction in Ether |
 | _name | `string` |
 | _symbol | `string` |
 
@@ -376,15 +388,17 @@ ___
 
 ###  setTransactionFee
 
+Logs a modification of the transaction fee event
+
 ▸ **setTransactionFee**(_who: *`string`*, _targetVault: *`string`*, _transactionFee: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _who | `string` |
 | _targetVault | `string` |
-| _transactionFee | `BigNumber` |
+| _transactionFee | `BigNumber` | Value of the transaction fee in basis points |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 

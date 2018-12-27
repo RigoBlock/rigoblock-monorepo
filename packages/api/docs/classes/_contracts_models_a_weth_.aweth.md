@@ -68,14 +68,16 @@ ___
 
 ###  unwrapEth
 
+Allows a manager to withdraw ETH from WETH9
+
 ▸ **unwrapEth**(wrapper: *`string`*, amount: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| wrapper | `string` |
-| amount | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| wrapper | `string` | Address of the weth9 contract | Address of the target exchange |
+| amount | `BigNumber` | Value of the Eth in wei | Value of the Eth in wei |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -84,12 +86,14 @@ ___
 
 ###  wrapEth
 
+Allows a manager to deposit eth to an approved exchange/wrap eth
+
 ▸ **wrapEth**(wrapper: *`string`*, amount: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | wrapper | `string` |
 | amount | `BigNumber` |
 

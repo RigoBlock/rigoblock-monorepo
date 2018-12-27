@@ -60,7 +60,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [DragoFactory](_contracts_models_drago_factory_.dragofactory.md)
+**Returns:** [DragoFactory](_contracts_models_drago_factory_.dragofactory.md) Bool the transaction executed correctly Array of drago addresses
 
 ___
 
@@ -144,13 +144,15 @@ ___
 
 ###  changeDragoDao
 
+Allows drago dao/factory to update its addressCreates internal record
+
 ▸ **changeDragoDao**(_newDragoDao: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _newDragoDao | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _newDragoDao | `string` | Address of the drago dao |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -159,14 +161,16 @@ ___
 
 ###  createDrago
 
+Allows creation of a new drago
+
 ▸ **createDrago**(_name: *`string`*, _symbol: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _name | `string` |
-| _symbol | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _name | `string` | String of the name |
+| _symbol | `string` | String of the symbol |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -174,6 +178,8 @@ ___
 <a id="drain"></a>
 
 ###  drain
+
+Allows owner to collect fees
 
 ▸ **drain**(): `Promise`<`TransactionObject`<`void`>>
 
@@ -184,13 +190,15 @@ ___
 
 ###  getDragosByAddress
 
+Returns an array of dragos the owner has created
+
 ▸ **getDragosByAddress**(_owner: *`string`*): `Promise`<`string`[]>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _owner | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _owner | `string` | Address of the queried owner |
 
 **Returns:** `Promise`<`string`[]>
 
@@ -198,6 +206,8 @@ ___
 <a id="geteventful"></a>
 
 ###  getEventful
+
+Returns the address of the logger contractQueries from authority contract
 
 ▸ **getEventful**(): `Promise`<`string`>
 
@@ -224,6 +234,8 @@ ___
 
 ###  getRegistry
 
+Returns the address of the pool registry
+
 ▸ **getRegistry**(): `Promise`<`string`>
 
 **Returns:** `Promise`<`string`>
@@ -232,6 +244,8 @@ ___
 <a id="getstorage"></a>
 
 ###  getStorage
+
+Returns administrative data for this factory
 
 ▸ **getStorage**(): `Promise`<[`string`, `string`, `BigNumber`]>
 
@@ -268,13 +282,15 @@ ___
 
 ###  setBeneficiary
 
+Allows owner to set the address which can collect creation fees
+
 ▸ **setBeneficiary**(_dragoDao: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _dragoDao | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _dragoDao | `string` | Address of the new drago dao/factory | Address of the new drago dao |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -283,13 +299,15 @@ ___
 
 ###  setFee
 
+Allows owner to set the drago creation fee
+
 ▸ **setFee**(_fee: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _fee | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _fee | `BigNumber` | Value of the fee in wei |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -313,13 +331,15 @@ ___
 
 ###  setRegistry
 
+Allows owner to update the registry
+
 ▸ **setRegistry**(_newRegistry: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _newRegistry | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _newRegistry | `string` | Address of the new registry |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -328,13 +348,15 @@ ___
 
 ###  setTargetDragoDao
 
+Allows factory owner to update the address of the dao/factoryEnables manual update of dao for single dragos
+
 ▸ **setTargetDragoDao**(_targetDrago: *`string`*, _dragoDao: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _targetDrago | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _targetDrago | `string` | Address of the target drago |
 | _dragoDao | `string` |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>

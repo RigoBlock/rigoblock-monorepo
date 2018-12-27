@@ -55,7 +55,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [TokenTransferProxy](_contracts_models_token_transfer_proxy_.tokentransferproxy.md)
+**Returns:** [TokenTransferProxy](_contracts_models_token_transfer_proxy_.tokentransferproxy.md) Success of transfer.
 
 ___
 
@@ -130,13 +130,15 @@ ___
 
 ###  addAuthorizedAddress
 
+Authorizes an address.
+
 ▸ **addAuthorizedAddress**(target: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| target | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| target | `string` | Address to authorize. | Address to remove authorization from. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -191,6 +193,8 @@ ___
 
 ###  getAuthorizedAddresses
 
+Gets all authorized addresses.
+
 ▸ **getAuthorizedAddresses**(): `Promise`<`string`[]>
 
 **Returns:** `Promise`<`string`[]>
@@ -242,12 +246,14 @@ ___
 
 ###  removeAuthorizedAddress
 
+Removes authorizion of an address.
+
 ▸ **removeAuthorizedAddress**(target: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | target | `string` |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
@@ -272,16 +278,18 @@ ___
 
 ###  transferFrom
 
+Calls into ERC20 Token contract, invoking transferFrom.
+
 ▸ **transferFrom**(token: *`string`*, from: *`string`*, to: *`string`*, value: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| token | `string` |
-| from | `string` |
-| to | `string` |
-| value | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| token | `string` | Address of token to transfer. |
+| from | `string` | Address to transfer token from. |
+| to | `string` | Address to transfer token to. |
+| value | `BigNumber` | Amount of token to transfer. |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 

@@ -70,7 +70,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [Vault](_contracts_models_vault_.vault.md)
+**Returns:** [Vault](_contracts_models_vault_.vault.md) Number of shares Bool the function executed correctly Bool the function executed correctly Time in seconds Number of tokens _value in custody Bool the transaction was successful
 
 ___
 
@@ -129,13 +129,15 @@ ___
 
 ###  balanceOf
 
+Calculates how many shares a user holds
+
 ▸ **balanceOf**(_from: *`string`*): `Promise`<`BigNumber`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _from | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _from | `string` | Address of the target account |
 
 **Returns:** `Promise`<`BigNumber`>
 
@@ -143,6 +145,8 @@ ___
 <a id="buyvault"></a>
 
 ###  buyVault
+
+Allows a user to buy into a vault
 
 ▸ **buyVault**(): `Promise`<`TransactionObject`<`boolean`>>
 
@@ -153,13 +157,15 @@ ___
 
 ###  buyVaultOnBehalf
 
+Allows a user to buy into a vault on behalf of an address
+
 ▸ **buyVaultOnBehalf**(_hodler: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _hodler | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _hodler | `string` | Address of the target user |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -167,6 +173,8 @@ ___
 <a id="calcshareprice"></a>
 
 ###  calcSharePrice
+
+Returns the price of a pool
 
 ▸ **calcSharePrice**(): `Promise`<`BigNumber`>
 
@@ -177,13 +185,15 @@ ___
 
 ###  changeFeeCollector
 
+Allows owner to decide where to receive the fee
+
 ▸ **changeFeeCollector**(_feeCollector: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _feeCollector | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _feeCollector | `string` | Address of the fee receiver |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -192,13 +202,15 @@ ___
 
 ###  changeMinPeriod
 
+Allows vault dao/factory to change the minimum holding period
+
 ▸ **changeMinPeriod**(_minPeriod: * `number` &#124; `BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _minPeriod |  `number` &#124; `BigNumber`|
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _minPeriod |  `number` &#124; `BigNumber`| Lockup time in seconds |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -207,13 +219,15 @@ ___
 
 ###  changeRatio
 
+Allows vault dao/factory to change fee split ratio
+
 ▸ **changeRatio**(_ratio: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _ratio | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _ratio | `BigNumber` | Number of ratio for wizard, from 0 to 100 |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -222,13 +236,15 @@ ___
 
 ###  changeVaultDao
 
+Allows vault dao/factory to upgrade its address
+
 ▸ **changeVaultDao**(_vaultDao: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _vaultDao | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _vaultDao | `string` | Address of the new vault dao |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -253,15 +269,17 @@ ___
 
 ###  depositToken
 
+Allows anyone to deposit tokens to a vault
+
 ▸ **depositToken**(_token: *`string`*, _value: *`BigNumber`*, _forTime: * `number` &#124; `BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _token | `string` |
-| _value | `BigNumber` |
-| _forTime |  `number` &#124; `BigNumber`|
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _token | `string` | Address of the token | Address of the token | Address of the token | Address of the token | Address of the token | Address of the token |
+| _value | `BigNumber` | Amount to deposit | Amount to deposit | Amount to withdraw |
+| _forTime |  `number` &#124; `BigNumber`| Lockup time in seconds | Lockup time in seconds |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -270,12 +288,14 @@ ___
 
 ###  depositTokenOnBehalf
 
+Allows anyone to deposit tokens to a vault on behalf of someone
+
 ▸ **depositTokenOnBehalf**(_token: *`string`*, _hodler: *`string`*, _value: *`BigNumber`*, _forTime: * `number` &#124; `BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _token | `string` |
 | _hodler | `string` |
 | _value | `BigNumber` |
@@ -288,6 +308,8 @@ ___
 
 ###  getAdminData
 
+Finds the administrative data of the pool
+
 ▸ **getAdminData**(): `Promise`<[`string`, `string`, `string`, `BigNumber`, `BigNumber`, `BigNumber`]>
 
 **Returns:** `Promise`<[`string`, `string`, `string`, `BigNumber`, `BigNumber`, `BigNumber`]>
@@ -297,6 +319,8 @@ ___
 
 ###  getData
 
+Finds details of a vault pool
+
 ▸ **getData**(): `Promise`<[`string`, `string`, `BigNumber`, `BigNumber`]>
 
 **Returns:** `Promise`<[`string`, `string`, `BigNumber`, `BigNumber`]>
@@ -305,6 +329,8 @@ ___
 <a id="geteventful"></a>
 
 ###  getEventful
+
+Gets the address of the logger contract
 
 ▸ **getEventful**(): `Promise`<`string`>
 
@@ -357,13 +383,15 @@ ___
 
 ###  sellVault
 
+Allows a user to sell from a vault
+
 ▸ **sellVault**(_amount: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _amount | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _amount | `BigNumber` | Number of shares to sell |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -387,13 +415,15 @@ ___
 
 ###  setTransactionFee
 
+Allows vault owner to set the transaction fee
+
 ▸ **setTransactionFee**(_transactionFee: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _transactionFee | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _transactionFee | `BigNumber` | Value of the transaction fee in basis points |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -402,14 +432,16 @@ ___
 
 ###  timeToUnlock
 
+Returns the time needed to withdraw
+
 ▸ **timeToUnlock**(_token: *`string`*, _user: *`string`*): `Promise`<`BigNumber`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _token | `string` |
-| _user | `string` |
+| _user | `string` | Address of the user |
 
 **Returns:** `Promise`<`BigNumber`>
 
@@ -418,14 +450,16 @@ ___
 
 ###  tokenBalanceOf
 
+Returns a user balance of a certain deposited token
+
 ▸ **tokenBalanceOf**(_token: *`string`*, _owner: *`string`*): `Promise`<`BigNumber`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _token | `string` |
-| _owner | `string` |
+| _owner | `string` | Address of the user |
 
 **Returns:** `Promise`<`BigNumber`>
 
@@ -450,12 +484,14 @@ ___
 
 ###  tokensInVault
 
+Returns the amount of tokens of a certain token in vault
+
 ▸ **tokensInVault**(_token: *`string`*): `Promise`<`BigNumber`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _token | `string` |
 
 **Returns:** `Promise`<`BigNumber`>
@@ -464,6 +500,8 @@ ___
 <a id="totalsupply"></a>
 
 ###  totalSupply
+
+Returns the total amount of issued tokens for this vault
 
 ▸ **totalSupply**(): `Promise`<`BigNumber`>
 
@@ -474,6 +512,8 @@ ___
 
 ###  updatePrice
 
+Allows anyone to pay and update the priceThis function allows to write the new navNAV is provided by view functions
+
 ▸ **updatePrice**(): `Promise`<`TransactionObject`<`void`>>
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
@@ -483,12 +523,14 @@ ___
 
 ###  withdrawToken
 
+Allows anyone to withdraw tokens from a vault
+
 ▸ **withdrawToken**(_token: *`string`*, _value: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _token | `string` |
 | _value | `BigNumber` |
 

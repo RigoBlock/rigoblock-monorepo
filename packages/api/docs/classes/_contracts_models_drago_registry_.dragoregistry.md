@@ -72,7 +72,7 @@
 | web3 | `any` |
 | address | `string` |
 
-**Returns:** [DragoRegistry](_contracts_models_drago_registry_.dragoregistry.md)
+**Returns:** [DragoRegistry](_contracts_models_drago_registry_.dragoregistry.md) Pool struct data Pool struct data Pool struct data Name of the pool Symbol of the pool Pool metadata
 
 ___
 
@@ -181,13 +181,15 @@ ___
 
 ###  addGroup
 
+Allows owner to add a group of pools (a factory)
+
 ▸ **addGroup**(_group: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _group | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _group | `string` | Address of the new group |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -212,6 +214,8 @@ ___
 
 ###  dragoCount
 
+Provides the total number of registered pools
+
 ▸ **dragoCount**(): `Promise`<`BigNumber`>
 
 **Returns:** `Promise`<`BigNumber`>
@@ -220,6 +224,8 @@ ___
 <a id="drain"></a>
 
 ###  drain
+
+Allows owner to collect fees by draining the balance
 
 ▸ **drain**(): `Promise`<`TransactionObject`<`void`>>
 
@@ -239,13 +245,15 @@ ___
 
 ###  fromAddress
 
+Provides a pool's struct data
+
 ▸ **fromAddress**(_drago: *`string`*): `Promise`<[`BigNumber`, `string`, `string`, `BigNumber`, `string`, `string`]>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _drago | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _drago | `string` | Address of the pool | Address of the pool |
 
 **Returns:** `Promise`<[`BigNumber`, `string`, `string`, `BigNumber`, `string`, `string`]>
 
@@ -254,13 +262,15 @@ ___
 
 ###  fromId
 
+Provides a pool's struct data
+
 ▸ **fromId**(_id: *`BigNumber`*): `Promise`<[`string`, `string`, `string`, `BigNumber`, `string`, `string`]>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _id | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _id | `BigNumber` | Registration number of the pool | Id number of the pool | Number corresponding to pool id | Number of the pool | uint256 of the target pool | uint256 of the target pool |
 
 **Returns:** `Promise`<[`string`, `string`, `string`, `BigNumber`, `string`, `string`]>
 
@@ -269,13 +279,15 @@ ___
 
 ###  fromName
 
+Provides a pool's struct data
+
 ▸ **fromName**(_name: *`string`*): `Promise`<[`BigNumber`, `string`, `string`, `BigNumber`, `string`, `string`]>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _name | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _name | `string` | Name of the pool | Name of the pool |
 
 **Returns:** `Promise`<[`BigNumber`, `string`, `string`, `BigNumber`, `string`, `string`]>
 
@@ -283,6 +295,8 @@ ___
 <a id="getfee"></a>
 
 ###  getFee
+
+Provides the fee required to register a pool
 
 ▸ **getFee**(): `Promise`<`BigNumber`>
 
@@ -293,6 +307,8 @@ ___
 
 ###  getGroups
 
+Provides the addresses of the groups/factories
+
 ▸ **getGroups**(): `Promise`<`string`[]>
 
 **Returns:** `Promise`<`string`[]>
@@ -302,13 +318,15 @@ ___
 
 ###  getNameFromAddress
 
+Provides a pool's name from its address
+
 ▸ **getNameFromAddress**(_pool: *`string`*): `Promise`<`string`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _pool | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _pool | `string` | Address of the pool | Address of the pool |
 
 **Returns:** `Promise`<`string`>
 
@@ -333,12 +351,14 @@ ___
 
 ###  getSymbolFromAddress
 
+Provides a pool's symbol from its address
+
 ▸ **getSymbolFromAddress**(_pool: *`string`*): `Promise`<`string`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _pool | `string` |
 
 **Returns:** `Promise`<`string`>
@@ -348,14 +368,16 @@ ___
 
 ###  meta
 
+Provides a pool's metadata
+
 ▸ **meta**(_id: *`BigNumber`*, _key: *`string`*): `Promise`<`string`>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _id | `BigNumber` |
-| _key | `string` |
+| _key | `string` | Bytes32 key | Bytes32 of the key |
 
 **Returns:** `Promise`<`string`>
 
@@ -390,17 +412,19 @@ ___
 
 ###  register
 
+Allows a factory which is an authority to register a pool
+
 ▸ **register**(_drago: *`string`*, _name: *`string`*, _symbol: *`string`*, _dragoId: *`BigNumber`*, _owner: *`string`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _drago | `string` |
 | _name | `string` |
-| _symbol | `string` |
-| _dragoId | `BigNumber` |
-| _owner | `string` |
+| _symbol | `string` | Symbol of the pool |
+| _dragoId | `BigNumber` | Id number of the pool |
+| _owner | `string` | Address of the pool owner |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -409,13 +433,15 @@ ___
 
 ###  setFee
 
+Allows owner to set a fee to register pools
+
 ▸ **setFee**(_fee: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _fee | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _fee | `BigNumber` | Value of the fee in wei |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -424,15 +450,17 @@ ___
 
 ###  setMeta
 
+Allows pool owner to set metadata for a pool
+
 ▸ **setMeta**(_id: *`BigNumber`*, _key: *`string`*, _value: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _id | `BigNumber` |
 | _key | `string` |
-| _value | `string` |
+| _value | `string` | Bytes32 of the value |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -456,13 +484,15 @@ ___
 
 ###  setUpgraded
 
+Allows owner to update version on registry upgrade
+
 ▸ **setUpgraded**(_version: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _version | `BigNumber` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _version | `BigNumber` | Number of the new version |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -471,12 +501,14 @@ ___
 
 ###  unregister
 
+Allows owner to unregister a pool
+
 ▸ **unregister**(_id: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _id | `BigNumber` |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
@@ -486,12 +518,14 @@ ___
 
 ###  updateOwner
 
+Allows anyone to update the owner in the registry
+
 ▸ **updateOwner**(_id: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _id | `BigNumber` |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
@@ -501,12 +535,14 @@ ___
 
 ###  updateOwners
 
+Allows anyone to update many owners if they differ from registered
+
 ▸ **updateOwners**(_id: *`BigNumber`[]*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
+| Name | Type | Description |
+| ------ | ------ | ------ |
 | _id | `BigNumber`[] |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
@@ -516,13 +552,15 @@ ___
 
 ###  upgrade
 
+Allows owner to create a new registry.When the registry gets upgraded, a migration of all funds is required
+
 ▸ **upgrade**(_newAddress: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
-| Name | Type |
-| ------ | ------ |
-| _newAddress | `string` |
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| _newAddress | `string` | Address of new registry. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
