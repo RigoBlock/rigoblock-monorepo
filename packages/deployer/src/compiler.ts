@@ -235,7 +235,6 @@ export class Compiler {
       )
     }
     const abi: ContractAbi = compiledData.abi
-    console.log('compiledData', Object.keys(compiledData))
     // @ts-ignore
     const metadata = JSON.parse(compiledData.metadata)
     const devDoc = metadata.output.devdoc
