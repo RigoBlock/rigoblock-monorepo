@@ -6,9 +6,6 @@ const fetchContracts = require('@rigoblock/contracts').default
 const glob = promisify(require('glob'))
 const exec = promisify(require('child_process').exec)
 
-const unlink = promisify(fs.unlink)
-const symlink = promisify(fs.symlink)
-const copyFile = promisify(fs.copyFile)
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 
@@ -20,10 +17,6 @@ function capitalize(string) {
 }
 
 const docGen = async networkId => {
-  console.log('Renaming readme...')
-  await unlink('./README.md')
-  await copyFile('./README_BASE.md', './README.md')
-
   // TODO: do this call programmatically as soon
   // as there's a clear way for TypeDoc to be run from node
   console.log('Launching TypeDoc...')
@@ -36,18 +29,6 @@ const docGen = async networkId => {
       `--out docs src`
     ].join(' ')
   )
-
-  console.log('Recreating readme...')
-  await unlink('./README.md')
-
-  const linkRegExp = /(?<=\().*\.md(?=\))/g
-  let readmeContent = (await readFile('./docs/README.md')).toString()
-  const links = readmeContent.match(linkRegExp)
-  links.map(
-    link => (readmeContent = readmeContent.replace(link, `docs/${link}`))
-  )
-  await writeFile('./README.md', readmeContent)
-  await unlink('./docs/README.md')
 
   const contractsMap = await fetchContracts(networkId)
   const docsList = await glob('./docs/**/*.md')
