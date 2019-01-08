@@ -16,6 +16,8 @@ class AbiExtractPlugin {
           const json = require(`${result.context}/${filename}`)
           const newJson = {
             contract_name: json.contract_name,
+            devDoc: json.devDoc,
+            userDoc: json.userDoc,
             networks: Object.keys(json.networks)
               .map(network => ({
                 [network]: {

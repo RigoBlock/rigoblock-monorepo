@@ -26,20 +26,16 @@ const docGen = async networkId => {
 
   // TODO: do this call programmatically as soon
   // as there's a clear way for TypeDoc to be run from node
-  try {
-    console.log('Launching TypeDoc...')
-    await exec(
-      [
-        'npx typedoc',
-        `--theme markdown`,
-        `--mdEngine github`,
-        `--mdHideSources`,
-        `--out docs src`
-      ].join(' ')
-    )
-  } catch (error) {
-    return console.error(error.stack)
-  }
+  console.log('Launching TypeDoc...')
+  await exec(
+    [
+      'npx typedoc',
+      `--theme markdown`,
+      `--mdEngine github`,
+      `--mdHideSources`,
+      `--out docs src`
+    ].join(' ')
+  )
 
   console.log('Relinking readme...')
   await unlink('./README.md')
@@ -52,8 +48,8 @@ const docGen = async networkId => {
   await Promise.all(
     toPairs(contractsMap).map(async ([contractName, contractObj]) => {
       console.log(`Filling ${clk.magenta(contractName)}...`)
-      const lowCountractName = contractName.toLowerCase()
-      const contractDoc = docsList.find(doc => doc.includes(lowCountractName))
+      const lowContractName = contractName.toLowerCase()
+      const contractDoc = docsList.find(doc => doc.includes(lowContractName))
       const { methods = {}, title = '' } = contractObj.devDoc
       let docContent = (await readFile(contractDoc)).toString()
       let tokenizedDoc = docContent.split('\n')
@@ -127,6 +123,11 @@ const docGen = async networkId => {
   )
 }
 ;(async () => {
-  await docGen(process.env.NETWORK_ID || 5777)
-  console.log(clk.green('Correctly filled documentation'))
+  try {
+    await docGen(process.env.NETWORK_ID || 5777)
+    console.log(clk.green('Correctly filled documentation'))
+  } catch (e) {
+    console.log(clk.red('Doc generation failed.'))
+    console.error(e.stack)
+  }
 })()
