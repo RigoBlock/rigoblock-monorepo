@@ -17,8 +17,8 @@ module.exports.default = async networkId => {
         .replace('.json', '')]: {
         abi: json['networks'][networkId].abi,
         address: json['networks'][networkId].address,
-        devDoc: json['networks'][networkId].devDoc,
-        userDoc: json['networks'][networkId].userDoc
+        devDoc: json.devDoc,
+        userDoc: json.userDoc
       }
     }
   })
