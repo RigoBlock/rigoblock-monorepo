@@ -1,5 +1,26 @@
 {
     "contract_name": "SigVerifier",
+    "devDoc": {
+        "author": "Gabriele Rigo - <gab@rigoblock.com>",
+        "methods": {
+            "isValidSignature(bytes32,bytes)": {
+                "details": "Verifies that a signature is valid.",
+                "params": {
+                    "hash": "Message hash that is signed.",
+                    "signature": "Proof of signing."
+                },
+                "return": "Validity of order signature."
+            }
+        },
+        "title": "SigVerifier - Allows verify whether a transaction has been signed correctly."
+    },
+    "userDoc": {
+        "methods": {
+            "isValidSignature(bytes32,bytes)": {
+                "notice": "mock function whici returns false"
+            }
+        }
+    },
     "networks": {
         "1": {
             "solc_version": "0.4.25",
@@ -30,30 +51,9 @@
                     "type": "function"
                 }
             ],
-            "devDoc": {
-                "author": "Gabriele Rigo - <gab@rigoblock.com>",
-                "methods": {
-                    "isValidSignature(bytes32,bytes)": {
-                        "details": "Verifies that a signature is valid.",
-                        "params": {
-                            "hash": "Message hash that is signed.",
-                            "signature": "Proof of signing."
-                        },
-                        "return": "Validity of order signature."
-                    }
-                },
-                "title": "SigVerifier - Allows verify whether a transaction has been signed correctly."
-            },
-            "userDoc": {
-                "methods": {
-                    "isValidSignature(bytes32,bytes)": {
-                        "notice": "mock function whici returns false"
-                    }
-                }
-            },
             "bytecode": "0x608060405234801561001057600080fd5b5060ad8061001f6000396000f300608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631626ba7e81146043575b600080fd5b348015604e57600080fd5b5060646004803590602480359081019101356078565b604080519115158252519081900360200190f35b600093925050505600a165627a7a723058202e7e0fd098fed13b7fc87cf2fef3e555953c6703c5730376a30ba2409f21ace90029",
             "runtime_bytecode": "0x608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631626ba7e81146043575b600080fd5b348015604e57600080fd5b5060646004803590602480359081019101356078565b604080519115158252519081900360200190f35b600093925050505600a165627a7a723058202e7e0fd098fed13b7fc87cf2fef3e555953c6703c5730376a30ba2409f21ace90029",
-            "updated_at": 1546949466240,
+            "updated_at": 1546957951440,
             "source_map": "812:509:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;812:509:0;;;;;;;",
             "source_map_runtime": "812:509:0:-;;;;;;;;;;;;;;;;;;;;;;;1076:243;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1076:243:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1262:12;1076:243;;;;;:::o",
             "sources": [
@@ -90,30 +90,9 @@
                     "type": "function"
                 }
             ],
-            "devDoc": {
-                "author": "Gabriele Rigo - <gab@rigoblock.com>",
-                "methods": {
-                    "isValidSignature(bytes32,bytes)": {
-                        "details": "Verifies that a signature is valid.",
-                        "params": {
-                            "hash": "Message hash that is signed.",
-                            "signature": "Proof of signing."
-                        },
-                        "return": "Validity of order signature."
-                    }
-                },
-                "title": "SigVerifier - Allows verify whether a transaction has been signed correctly."
-            },
-            "userDoc": {
-                "methods": {
-                    "isValidSignature(bytes32,bytes)": {
-                        "notice": "mock function whici returns false"
-                    }
-                }
-            },
             "bytecode": "0x608060405234801561001057600080fd5b5060ad8061001f6000396000f300608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631626ba7e81146043575b600080fd5b348015604e57600080fd5b5060646004803590602480359081019101356078565b604080519115158252519081900360200190f35b600093925050505600a165627a7a723058202e7e0fd098fed13b7fc87cf2fef3e555953c6703c5730376a30ba2409f21ace90029",
             "runtime_bytecode": "0x608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631626ba7e81146043575b600080fd5b348015604e57600080fd5b5060646004803590602480359081019101356078565b604080519115158252519081900360200190f35b600093925050505600a165627a7a723058202e7e0fd098fed13b7fc87cf2fef3e555953c6703c5730376a30ba2409f21ace90029",
-            "updated_at": 1546949555330,
+            "updated_at": 1546958046451,
             "source_map": "812:509:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;812:509:0;;;;;;;",
             "source_map_runtime": "812:509:0:-;;;;;;;;;;;;;;;;;;;;;;;1076:243;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1076:243:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1262:12;1076:243;;;;;:::o",
             "sources": [
@@ -150,30 +129,9 @@
                     "type": "function"
                 }
             ],
-            "devDoc": {
-                "author": "Gabriele Rigo - <gab@rigoblock.com>",
-                "methods": {
-                    "isValidSignature(bytes32,bytes)": {
-                        "details": "Verifies that a signature is valid.",
-                        "params": {
-                            "hash": "Message hash that is signed.",
-                            "signature": "Proof of signing."
-                        },
-                        "return": "Validity of order signature."
-                    }
-                },
-                "title": "SigVerifier - Allows verify whether a transaction has been signed correctly."
-            },
-            "userDoc": {
-                "methods": {
-                    "isValidSignature(bytes32,bytes)": {
-                        "notice": "mock function whici returns false"
-                    }
-                }
-            },
             "bytecode": "0x608060405234801561001057600080fd5b5060ad8061001f6000396000f300608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631626ba7e81146043575b600080fd5b348015604e57600080fd5b5060646004803590602480359081019101356078565b604080519115158252519081900360200190f35b600093925050505600a165627a7a723058202e7e0fd098fed13b7fc87cf2fef3e555953c6703c5730376a30ba2409f21ace90029",
             "runtime_bytecode": "0x608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631626ba7e81146043575b600080fd5b348015604e57600080fd5b5060646004803590602480359081019101356078565b604080519115158252519081900360200190f35b600093925050505600a165627a7a723058202e7e0fd098fed13b7fc87cf2fef3e555953c6703c5730376a30ba2409f21ace90029",
-            "updated_at": 1546949645805,
+            "updated_at": 1546958140540,
             "source_map": "812:509:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;812:509:0;;;;;;;",
             "source_map_runtime": "812:509:0:-;;;;;;;;;;;;;;;;;;;;;;;1076:243;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1076:243:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1262:12;1076:243;;;;;:::o",
             "sources": [
@@ -209,30 +167,9 @@
                     "type": "function"
                 }
             ],
-            "devDoc": {
-                "author": "Gabriele Rigo - <gab@rigoblock.com>",
-                "methods": {
-                    "isValidSignature(bytes32,bytes)": {
-                        "details": "Verifies that a signature is valid.",
-                        "params": {
-                            "hash": "Message hash that is signed.",
-                            "signature": "Proof of signing."
-                        },
-                        "return": "Validity of order signature."
-                    }
-                },
-                "title": "SigVerifier - Allows verify whether a transaction has been signed correctly."
-            },
-            "userDoc": {
-                "methods": {
-                    "isValidSignature(bytes32,bytes)": {
-                        "notice": "mock function whici returns false"
-                    }
-                }
-            },
             "bytecode": "0x608060405234801561001057600080fd5b5060ad8061001f6000396000f300608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631626ba7e81146043575b600080fd5b348015604e57600080fd5b5060646004803590602480359081019101356078565b604080519115158252519081900360200190f35b600093925050505600a165627a7a723058202e7e0fd098fed13b7fc87cf2fef3e555953c6703c5730376a30ba2409f21ace90029",
             "runtime_bytecode": "0x608060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631626ba7e81146043575b600080fd5b348015604e57600080fd5b5060646004803590602480359081019101356078565b604080519115158252519081900360200190f35b600093925050505600a165627a7a723058202e7e0fd098fed13b7fc87cf2fef3e555953c6703c5730376a30ba2409f21ace90029",
-            "updated_at": 1546949164831,
+            "updated_at": 1546957857221,
             "source_map": "812:509:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;812:509:0;;;;;;;",
             "source_map_runtime": "812:509:0:-;;;;;;;;;;;;;;;;;;;;;;;1076:243;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1076:243:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1262:12;1076:243;;;;;:::o",
             "sources": [

@@ -254,8 +254,6 @@ export class Compiler {
       source_tree_hash: sourceTreeHashHex,
       optimizer_enabled: this._optimizerEnabled,
       abi,
-      devDoc,
-      userDoc,
       bytecode,
       runtime_bytecode: runtimeBytecode,
       updated_at,
@@ -277,6 +275,8 @@ export class Compiler {
     } else {
       newArtifact = {
         contract_name: contractName,
+        devDoc,
+        userDoc,
         networks: {
           [this._networkId]: contractNetworkData
         }

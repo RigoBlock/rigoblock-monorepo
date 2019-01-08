@@ -1,5 +1,28 @@
 {
     "contract_name": "NavVerifier",
+    "devDoc": {
+        "author": "Gabriele Rigo - <gab@rigoblock.com>",
+        "methods": {
+            "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
+                "details": "Verifies that a signature is valid.",
+                "params": {
+                    "buyPrice": "Price in wei",
+                    "hash": "Message hash that is signed.",
+                    "sellPrice": "Price in wei",
+                    "signaturevaliduntilBlock": "Number of blocks till price expiry",
+                    "signedData": "Proof of nav validity."
+                }
+            }
+        },
+        "title": "Nav Verifier - Allows to check if new NAV comes from approved authority."
+    },
+    "userDoc": {
+        "methods": {
+            "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
+                "notice": "mock function which returns true"
+            }
+        }
+    },
     "networks": {
         "1": {
             "solc_version": "0.4.25",
@@ -42,32 +65,9 @@
                     "type": "function"
                 }
             ],
-            "devDoc": {
-                "author": "Gabriele Rigo - <gab@rigoblock.com>",
-                "methods": {
-                    "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
-                        "details": "Verifies that a signature is valid.",
-                        "params": {
-                            "buyPrice": "Price in wei",
-                            "hash": "Message hash that is signed.",
-                            "sellPrice": "Price in wei",
-                            "signaturevaliduntilBlock": "Number of blocks till price expiry",
-                            "signedData": "Proof of nav validity."
-                        }
-                    }
-                },
-                "title": "Nav Verifier - Allows to check if new NAV comes from approved authority."
-            },
-            "userDoc": {
-                "methods": {
-                    "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
-                        "notice": "mock function which returns true"
-                    }
-                }
-            },
             "bytecode": "0x608060405234801561001057600080fd5b5060bc8061001f6000396000f300608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060706004803590602480359160443591606435916084359182019101356084565b604080519115158252519081900360200190f35b600196955050505050505600a165627a7a72305820ba414a1c48d5f8a95fd8922a671c823973713ebad5abe423ce194da2c582ce340029",
             "runtime_bytecode": "0x608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060706004803590602480359160443591606435916084359182019101356084565b604080519115158252519081900360200190f35b600196955050505050505600a165627a7a72305820ba414a1c48d5f8a95fd8922a671c823973713ebad5abe423ce194da2c582ce340029",
-            "updated_at": 1546949458762,
+            "updated_at": 1546957942088,
             "source_map": "808:708:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;808:708:0;;;;;;;",
             "source_map_runtime": "808:708:0:-;;;;;;;;;;;;;;;;;;;;;;;1182:332;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1182:332:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1503:4;1182:332;;;;;;;;:::o",
             "sources": [
@@ -116,32 +116,9 @@
                     "type": "function"
                 }
             ],
-            "devDoc": {
-                "author": "Gabriele Rigo - <gab@rigoblock.com>",
-                "methods": {
-                    "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
-                        "details": "Verifies that a signature is valid.",
-                        "params": {
-                            "buyPrice": "Price in wei",
-                            "hash": "Message hash that is signed.",
-                            "sellPrice": "Price in wei",
-                            "signaturevaliduntilBlock": "Number of blocks till price expiry",
-                            "signedData": "Proof of nav validity."
-                        }
-                    }
-                },
-                "title": "Nav Verifier - Allows to check if new NAV comes from approved authority."
-            },
-            "userDoc": {
-                "methods": {
-                    "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
-                        "notice": "mock function which returns true"
-                    }
-                }
-            },
             "bytecode": "0x608060405234801561001057600080fd5b5060bc8061001f6000396000f300608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060706004803590602480359160443591606435916084359182019101356084565b604080519115158252519081900360200190f35b600196955050505050505600a165627a7a72305820ba414a1c48d5f8a95fd8922a671c823973713ebad5abe423ce194da2c582ce340029",
             "runtime_bytecode": "0x608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060706004803590602480359160443591606435916084359182019101356084565b604080519115158252519081900360200190f35b600196955050505050505600a165627a7a72305820ba414a1c48d5f8a95fd8922a671c823973713ebad5abe423ce194da2c582ce340029",
-            "updated_at": 1546949547714,
+            "updated_at": 1546958038758,
             "source_map": "808:708:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;808:708:0;;;;;;;",
             "source_map_runtime": "808:708:0:-;;;;;;;;;;;;;;;;;;;;;;;1182:332;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1182:332:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1503:4;1182:332;;;;;;;;:::o",
             "sources": [
@@ -190,32 +167,9 @@
                     "type": "function"
                 }
             ],
-            "devDoc": {
-                "author": "Gabriele Rigo - <gab@rigoblock.com>",
-                "methods": {
-                    "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
-                        "details": "Verifies that a signature is valid.",
-                        "params": {
-                            "buyPrice": "Price in wei",
-                            "hash": "Message hash that is signed.",
-                            "sellPrice": "Price in wei",
-                            "signaturevaliduntilBlock": "Number of blocks till price expiry",
-                            "signedData": "Proof of nav validity."
-                        }
-                    }
-                },
-                "title": "Nav Verifier - Allows to check if new NAV comes from approved authority."
-            },
-            "userDoc": {
-                "methods": {
-                    "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
-                        "notice": "mock function which returns true"
-                    }
-                }
-            },
             "bytecode": "0x608060405234801561001057600080fd5b5060bc8061001f6000396000f300608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060706004803590602480359160443591606435916084359182019101356084565b604080519115158252519081900360200190f35b600196955050505050505600a165627a7a72305820ba414a1c48d5f8a95fd8922a671c823973713ebad5abe423ce194da2c582ce340029",
             "runtime_bytecode": "0x608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060706004803590602480359160443591606435916084359182019101356084565b604080519115158252519081900360200190f35b600196955050505050505600a165627a7a72305820ba414a1c48d5f8a95fd8922a671c823973713ebad5abe423ce194da2c582ce340029",
-            "updated_at": 1546949638470,
+            "updated_at": 1546958132373,
             "source_map": "808:708:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;808:708:0;;;;;;;",
             "source_map_runtime": "808:708:0:-;;;;;;;;;;;;;;;;;;;;;;;1182:332;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1182:332:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1503:4;1182:332;;;;;;;;:::o",
             "sources": [
@@ -263,32 +217,9 @@
                     "type": "function"
                 }
             ],
-            "devDoc": {
-                "author": "Gabriele Rigo - <gab@rigoblock.com>",
-                "methods": {
-                    "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
-                        "details": "Verifies that a signature is valid.",
-                        "params": {
-                            "buyPrice": "Price in wei",
-                            "hash": "Message hash that is signed.",
-                            "sellPrice": "Price in wei",
-                            "signaturevaliduntilBlock": "Number of blocks till price expiry",
-                            "signedData": "Proof of nav validity."
-                        }
-                    }
-                },
-                "title": "Nav Verifier - Allows to check if new NAV comes from approved authority."
-            },
-            "userDoc": {
-                "methods": {
-                    "isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
-                        "notice": "mock function which returns true"
-                    }
-                }
-            },
             "bytecode": "0x608060405234801561001057600080fd5b5060bc8061001f6000396000f300608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060706004803590602480359160443591606435916084359182019101356084565b604080519115158252519081900360200190f35b600196955050505050505600a165627a7a72305820ba414a1c48d5f8a95fd8922a671c823973713ebad5abe423ce194da2c582ce340029",
             "runtime_bytecode": "0x608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060706004803590602480359160443591606435916084359182019101356084565b604080519115158252519081900360200190f35b600196955050505050505600a165627a7a72305820ba414a1c48d5f8a95fd8922a671c823973713ebad5abe423ce194da2c582ce340029",
-            "updated_at": 1546949157419,
+            "updated_at": 1546957849382,
             "source_map": "808:708:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;808:708:0;;;;;;;",
             "source_map_runtime": "808:708:0:-;;;;;;;;;;;;;;;;;;;;;;;1182:332;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1182:332:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1503:4;1182:332;;;;;;;;:::o",
             "sources": [
