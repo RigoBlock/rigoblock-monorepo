@@ -37,9 +37,17 @@ const docGen = async networkId => {
     ].join(' ')
   )
 
-  console.log('Relinking readme...')
+  console.log('Recreating readme...')
   await unlink('./README.md')
-  await symlink('./docs/README.md', './README.md')
+
+  const linkRegExp = /(?<=\().*\.md(?=\))/g
+  let readmeContent = (await readFile('./docs/README.md')).toString()
+  const links = readmeContent.match(linkRegExp)
+  links.map(
+    link => (readmeContent = readmeContent.replace(link, `docs/${link}`))
+  )
+  await writeFile('./README.md', readmeContent)
+  await unlink('./docs/README.md')
 
   const contractsMap = await fetchContracts(networkId)
   const docsList = await glob('./docs/**/*.md')
