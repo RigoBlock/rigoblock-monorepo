@@ -1,0 +1,12 @@
+{{#each contracts}}
+import { {{@key}} } from './models/{{this}}'
+{{/each}}
+
+// typeof Authority & Authority = needed to expose all static methods and
+// instance methods of the Authority contract
+
+export abstract class ContractsList {
+  {{#each contracts}}
+  {{@key}}: typeof {{@key}} & {{@key}}
+  {{/each}}
+}
