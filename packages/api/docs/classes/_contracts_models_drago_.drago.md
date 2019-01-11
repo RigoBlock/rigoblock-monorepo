@@ -239,13 +239,13 @@ ___
 
 Allows drago dao/factory to change the minimum holding period.
 
-▸ **changeMinPeriod**(_minPeriod: * `number` &#124; `BigNumber`*): `Promise`<`TransactionObject`<`void`>>
+▸ **changeMinPeriod**(_minPeriod: *`number` | `BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
 | Name | Type | Description |
 | ------ | ------ | ------ |
-| _minPeriod |  `number` &#124; `BigNumber`| Time in seconds. |
+| _minPeriod | `number` | `BigNumber` | Time in seconds. |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 

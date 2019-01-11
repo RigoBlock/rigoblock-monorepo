@@ -193,7 +193,6 @@ await vaultFactory.allEvents(
 * ["contracts/models/weth9"](modules/_contracts_models_weth9_.md)
 * ["contracts/models/wrapper_lock"](modules/_contracts_models_wrapper_lock_.md)
 * ["contracts/models/wrapper_lock_eth"](modules/_contracts_models_wrapper_lock_eth_.md)
-* ["index"](modules/_index_.md)
 * ["webSocketSubprovider"](modules/_websocketsubprovider_.md)
 
 ---

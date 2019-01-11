@@ -21,8 +21,17 @@ export interface ProviderEngineFix extends ProviderEngine {
   emit?(name: string, err: any, notification: any): void
 }
 class Api {
+  /**
+   * List of contract instances exposed by the API
+   */
   public contract: ContractsList
+  /**
+   * Web3 instance in use
+   */
   public web3: Web3
+  /**
+   * Metamask's provider engine instance
+   */
   public engine: ProviderEngineFix
 
   /**

@@ -283,14 +283,14 @@ ___
 
 ###  isValidSignature
 
-▸ **isValidSignature**(hash: *`string`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`boolean`>
+▸ **isValidSignature**(hash: *`string`*, v: *`number` | `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
 | Name | Type |
 | ------ | ------ |
 | hash | `string` |
-| v |  `number` &#124; `BigNumber`|
+| v | `number` | `BigNumber` |
 | r | `string` |
 | s | `string` |
 
@@ -432,14 +432,14 @@ ___
 
 ###  withdraw
 
-▸ **withdraw**(_value: *`BigNumber`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*, signatureValidUntilBlock: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
+▸ **withdraw**(_value: *`BigNumber`*, v: *`number` | `BigNumber`*, r: *`string`*, s: *`string`*, signatureValidUntilBlock: *`BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
 | Name | Type |
 | ------ | ------ |
 | _value | `BigNumber` |
-| v |  `number` &#124; `BigNumber`|
+| v | `number` | `BigNumber` |
 | r | `string` |
 | s | `string` |
 | signatureValidUntilBlock | `BigNumber` |

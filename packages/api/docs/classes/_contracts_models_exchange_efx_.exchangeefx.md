@@ -227,7 +227,7 @@ ___
 
 Synchronously executes multiple fillOrKill orders in a single transaction.
 
-▸ **batchFillOrKillOrders**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, fillTakerTokenAmounts: *`BigNumber`[]*, v: *`Array`< `number` &#124; `BigNumber`>*, r: *`string`[]*, s: *`string`[]*): `Promise`<`TransactionObject`<`void`>>
+▸ **batchFillOrKillOrders**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, fillTakerTokenAmounts: *`BigNumber`[]*, v: *`Array`<`number` | `BigNumber`>*, r: *`string`[]*, s: *`string`[]*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
@@ -236,7 +236,7 @@ Synchronously executes multiple fillOrKill orders in a single transaction.
 | orderAddresses | `string`[][] | Array of address arrays containing individual order addresses. | Array of address arrays containing individual order addresses. | Array of order's maker, taker, makerToken, takerToken, and feeRecipient. | Array of order's maker, taker, makerToken, takerToken, and feeRecipient. | Array of address arrays containing individual order addresses. | Array of order's maker, taker, makerToken, takerToken, and feeRecipient. |
 | orderValues | `BigNumber`[][] | Array of uint arrays containing individual order values. | Array of uint arrays containing individual order values. | Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt. | Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt. | Array of uint arrays containing individual order values. | Array of order's makerTokenAmount, takerTokenAmount, makerFee, takerFee, expirationTimestampInSec, and salt. |
 | fillTakerTokenAmounts | `BigNumber`[] | Array of desired amounts of takerToken to fill in orders. | Array of desired amounts of takerToken to fill in orders. |
-| v | `Array`< `number` &#124; `BigNumber`> | Array ECDSA signature v parameters. | Array ECDSA signature v parameters. | ECDSA signature parameter v. | ECDSA signature parameter v. | Array ECDSA signature v parameters. | ECDSA signature parameter v. |
+| v | `Array`<`number` | `BigNumber`> | Array ECDSA signature v parameters. | Array ECDSA signature v parameters. | ECDSA signature parameter v. | ECDSA signature parameter v. | Array ECDSA signature v parameters. | ECDSA signature parameter v. |
 | r | `string`[] | Array of ECDSA signature r parameters. | Array of ECDSA signature r parameters. | ECDSA signature parameters r. | ECDSA signature parameters r. | Array of ECDSA signature r parameters. | ECDSA signature parameters r. |
 | s | `string`[] | Array of ECDSA signature s parameters. | Array of ECDSA signature s parameters. | ECDSA signature parameters s. | ECDSA signature parameters s. | Array of ECDSA signature s parameters. | ECDSA signature parameters s. |
 
@@ -249,7 +249,7 @@ ___
 
 Synchronously executes multiple fill orders in a single transaction.
 
-▸ **batchFillOrders**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, fillTakerTokenAmounts: *`BigNumber`[]*, shouldThrowOnInsufficientBalanceOrAllowance: *`boolean`*, v: *`Array`< `number` &#124; `BigNumber`>*, r: *`string`[]*, s: *`string`[]*): `Promise`<`TransactionObject`<`void`>>
+▸ **batchFillOrders**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, fillTakerTokenAmounts: *`BigNumber`[]*, shouldThrowOnInsufficientBalanceOrAllowance: *`boolean`*, v: *`Array`<`number` | `BigNumber`>*, r: *`string`[]*, s: *`string`[]*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
@@ -259,7 +259,7 @@ Synchronously executes multiple fill orders in a single transaction.
 | orderValues | `BigNumber`[][] |
 | fillTakerTokenAmounts | `BigNumber`[] |
 | shouldThrowOnInsufficientBalanceOrAllowance | `boolean` | Test if transfers will fail before attempting. | Test if transfer will fail before attempting. | Test if transfers will fail before attempting. |
-| v | `Array`< `number` &#124; `BigNumber`> |
+| v | `Array`<`number` | `BigNumber`> |
 | r | `string`[] |
 | s | `string`[] |
 
@@ -287,7 +287,7 @@ ___
 
 Fills an order with specified parameters and ECDSA signature, throws if specified amount not filled entirely.
 
-▸ **fillOrKillOrder**(orderAddresses: *`string`[]*, orderValues: *`BigNumber`[]*, fillTakerTokenAmount: *`BigNumber`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`TransactionObject`<`void`>>
+▸ **fillOrKillOrder**(orderAddresses: *`string`[]*, orderValues: *`BigNumber`[]*, fillTakerTokenAmount: *`BigNumber`*, v: *`number` | `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
@@ -296,7 +296,7 @@ Fills an order with specified parameters and ECDSA signature, throws if specifie
 | orderAddresses | `string`[] |
 | orderValues | `BigNumber`[] |
 | fillTakerTokenAmount | `BigNumber` | Desired amount of takerToken to fill. | Desired amount of takerToken to fill. | Desired total amount of takerToken to fill in orders. |
-| v |  `number` &#124; `BigNumber`|
+| v | `number` | `BigNumber` |
 | r | `string` |
 | s | `string` |
 
@@ -309,7 +309,7 @@ ___
 
 Fills the input order.
 
-▸ **fillOrder**(orderAddresses: *`string`[]*, orderValues: *`BigNumber`[]*, fillTakerTokenAmount: *`BigNumber`*, shouldThrowOnInsufficientBalanceOrAllowance: *`boolean`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`TransactionObject`<`BigNumber`>>
+▸ **fillOrder**(orderAddresses: *`string`[]*, orderValues: *`BigNumber`[]*, fillTakerTokenAmount: *`BigNumber`*, shouldThrowOnInsufficientBalanceOrAllowance: *`boolean`*, v: *`number` | `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`TransactionObject`<`BigNumber`>>
 
 **Parameters:**
 
@@ -319,7 +319,7 @@ Fills the input order.
 | orderValues | `BigNumber`[] |
 | fillTakerTokenAmount | `BigNumber` |
 | shouldThrowOnInsufficientBalanceOrAllowance | `boolean` |
-| v |  `number` &#124; `BigNumber`|
+| v | `number` | `BigNumber` |
 | r | `string` |
 | s | `string` |
 
@@ -332,7 +332,7 @@ ___
 
 Synchronously executes multiple fill orders in a single transaction until total fillTakerTokenAmount filled.
 
-▸ **fillOrdersUpTo**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, fillTakerTokenAmount: *`BigNumber`*, shouldThrowOnInsufficientBalanceOrAllowance: *`boolean`*, v: *`Array`< `number` &#124; `BigNumber`>*, r: *`string`[]*, s: *`string`[]*): `Promise`<`TransactionObject`<`BigNumber`>>
+▸ **fillOrdersUpTo**(orderAddresses: *`string`[][]*, orderValues: *`BigNumber`[][]*, fillTakerTokenAmount: *`BigNumber`*, shouldThrowOnInsufficientBalanceOrAllowance: *`boolean`*, v: *`Array`<`number` | `BigNumber`>*, r: *`string`[]*, s: *`string`[]*): `Promise`<`TransactionObject`<`BigNumber`>>
 
 **Parameters:**
 
@@ -342,7 +342,7 @@ Synchronously executes multiple fill orders in a single transaction until total 
 | orderValues | `BigNumber`[][] |
 | fillTakerTokenAmount | `BigNumber` |
 | shouldThrowOnInsufficientBalanceOrAllowance | `boolean` |
-| v | `Array`< `number` &#124; `BigNumber`> |
+| v | `Array`<`number` | `BigNumber`> |
 | r | `string`[] |
 | s | `string`[] |
 
@@ -459,7 +459,7 @@ ___
 
 Verifies that an order signature is valid.
 
-▸ **isValidSignature**(maker: *`string`*, hash: *`string`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`boolean`>
+▸ **isValidSignature**(maker: *`string`*, hash: *`string`*, v: *`number` | `BigNumber`*, r: *`string`*, s: *`string`*): `Promise`<`boolean`>
 
 **Parameters:**
 
@@ -467,7 +467,7 @@ Verifies that an order signature is valid.
 | ------ | ------ | ------ |
 | maker | `string` | address of maker. |
 | hash | `string` | Signed Keccak-256 hash. |
-| v |  `number` &#124; `BigNumber`|
+| v | `number` | `BigNumber` |
 | r | `string` |
 | s | `string` |
 

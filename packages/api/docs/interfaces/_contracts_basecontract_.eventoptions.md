@@ -37,8 +37,7 @@ ___
 
 ### `<Optional>` toBlock
 
-**● toBlock**: * `number` &#124; "latest"
-*
+**● toBlock**: *`number` | "latest"*
 
 ___
 <a id="topics"></a>

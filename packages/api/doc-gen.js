@@ -8,6 +8,7 @@ const exec = promisify(require('child_process').exec)
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
+const unlink = promisify(fs.unlink)
 
 function toPairs(obj) {
   return Object.keys(obj).map(key => [key, obj[key]])
