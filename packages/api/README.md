@@ -2,9 +2,7 @@
 
 ## Building the package
 
-Start [Ganache](https://truffleframework.com/ganache).
-
-Then run the following command:
+Run the following command:
 ```
 yarn build
 ```
