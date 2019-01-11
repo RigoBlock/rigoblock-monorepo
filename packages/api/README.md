@@ -2,10 +2,8 @@
 
 ## Building the package
 
-Start Ganache
-```
-lerna run --scope @rigoblock/dapp ganache --stream
-```
+Start [Ganache](https://truffleframework.com/ganache).
+
 Then run the following command:
 ```
 yarn build
@@ -38,6 +36,10 @@ Compiles on watch mode
 yarn build
 ```
 Extracts abis saving them as JSON files, generates wrappers and compiles .ts files into `dist` folder. Requires Ganache to be running unless abi files have been saved previously.
+```
+yarn doc-gen
+```
+Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
 
 ## Initialising the API
 
