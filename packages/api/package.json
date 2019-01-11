@@ -2,19 +2,21 @@
   "name": "@rigoblock/api",
   "description": "A JS wrapper around RigoBlock Smart Contracts to simplify their consumption.",
   "version": "0.2.15",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/api.js",
+  "types": "dist/api.d.ts",
   "engines": {
     "node": ">=6.4"
   },
   "scripts": {
-    "build": "npm run abi-gen && npm run tsc",
+    "build": "npm run abi-gen && npm run contracts-list-gen && npm run tsc",
     "tsc": "rm -rf dist/* && tsc --outDir './dist'",
     "tsc:watch": "rm -rf dist; tsc -w --outDir './dist'",
     "test": "jest",
     "lint": "eslint src --ext ts --ignore-path .gitignore --fix",
-    "abi-gen": "npm run abi-extract && rm -rf src/contracts/models && node abi-gen.js --abis './.tmp/*.json' -o src/contracts/models --template './template.handlebars' --partials './partials/*.handlebars'",
-    "abi-extract": "rm -rf .tmp && node src/abi-extractor.js"
+    "abi-gen": "npm run abi-extract && rm -rf src/contracts/models && node abi-gen.js --abis './.tmp/*.json' -o src/contracts/models --template './templates/smart-contract.handlebars' --partials './templates/partials/*.handlebars'",
+    "contracts-list-gen": "rm -rf contracts/contractsList.ts && node contracts-list-gen.js",
+    "abi-extract": "rm -rf .tmp && node abi-extractor.js",
+    "doc-gen": "rm -rf docs && node doc-gen.js"
   },
   "config": {
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
@@ -28,8 +30,13 @@
     "@types/web3": "^1.0.6",
     "chalk": "^2.4.1",
     "eslint-plugin-typescript": "^0.12.0",
+    "glob": "^7.1.3",
+    "handlebars": "^4.0.12",
     "jest": "^23.6.0",
+    "to-pascal-case": "^1.0.0",
     "ts-jest": "^23.10.1",
+    "typedoc": "^0.14.1",
+    "typedoc-plugin-markdown": "^1.1.21",
     "typescript": "^3.0.1",
     "typescript-eslint-parser": "^18.0.0"
   },
@@ -39,7 +46,6 @@
     "@rigoblock/contracts": "^0.3.10",
     "@types/node": "^10.11.0",
     "bignumber.js": "^7.2.1",
-    "handlebars": "^4.0.12",
     "to-snake-case": "^1.0.0",
     "web3": "1.0.0-beta.36",
     "web3-provider-engine": "^14.1.0"

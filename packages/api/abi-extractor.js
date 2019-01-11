@@ -9,7 +9,7 @@ const writeFilePromise = (name, content) =>
   )
 
 const extractor = async networkId => {
-  const tmpFolder = path.join(__dirname, '..', '.tmp/')
+  const tmpFolder = path.join(__dirname, '.tmp/')
   if (!fs.existsSync(tmpFolder)) {
     fs.mkdirSync(tmpFolder)
   }

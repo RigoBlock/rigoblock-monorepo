@@ -22,7 +22,6 @@
 "@0x/assert@^1.0.18":
   version "1.0.18"
   resolved "https://registry.yarnpkg.com/@0x/assert/-/assert-1.0.18.tgz#039a0a93c57bc8c4bf451c5cf67e7750318442af"
-  integrity sha512-HAqy87ByFRO4xFN3AlBP1hr/U0cMFxAR2HoLoK0sFaFo9Hxc/SdmWlHcADPKuPGYqQN5KZHPU6d4cMNxjYFRbA==
   dependencies:
     "@0x/json-schemas" "^2.1.2"
     "@0x/typescript-typings" "^3.0.4"
@@ -33,7 +32,6 @@
 "@0x/json-schemas@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@0x/json-schemas/-/json-schemas-2.1.2.tgz#f9f03ec7c358ca2652e1094a53a1859de0e635a0"
-  integrity sha512-jJQB6h6c/OYfHuLE41AFHEK+9WnJbMUSiof/vjJJX1ONFSx19OKfzXyVzO28fR7sd/S7Pg5j0KE/LnkncrleIg==
   dependencies:
     "@0x/typescript-typings" "^3.0.4"
     "@types/node" "*"
@@ -43,7 +41,6 @@
 "@0x/subproviders@^2.1.6":
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/@0x/subproviders/-/subproviders-2.1.6.tgz#fb78218b79808210600d94701405dbe54d6f2ce1"
-  integrity sha512-0qDDUIIeSiVIqRYS1474H6AI3srae5TGyOANh+ctHv+3EyMfM7ztV4tlgLDs71bVDTMT8n8OjY+7a+LrybuM1A==
   dependencies:
     "@0x/assert" "^1.0.18"
     "@0x/types" "^1.3.0"
@@ -74,7 +71,6 @@
 "@0x/types@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@0x/types/-/types-1.3.0.tgz#614104f318293698281d5988fc99fcc190a2f076"
-  integrity sha512-ix79oDnTWflta0h/mWWDvtMv/uarK5YCj+5o12RSre7EJpgGycbFn873gqDK6wn1tqeDKM1nXHb9rUAB2OBRfg==
   dependencies:
     "@types/node" "*"
     bignumber.js "~4.1.0"
@@ -83,7 +79,6 @@
 "@0x/typescript-typings@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@0x/typescript-typings/-/typescript-typings-3.0.4.tgz#4325cbb10d91e3b82029c5dc551729a8a09c396a"
-  integrity sha512-3xGkyHVIShjHOKu17IkBTQoAcEUWHTcqr+6YKXzi3tRQXabwJTV/z0RknJF8kYxXO4l1StLEvdBqljCxkvlmWA==
   dependencies:
     "@types/bn.js" "^4.11.0"
     "@types/react" "*"
@@ -94,7 +89,6 @@
 "@0x/utils@^2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@0x/utils/-/utils-2.0.6.tgz#c9484b6ce50dfbdb58b4b820d4ec5a356b78ba18"
-  integrity sha512-LPVCw1nbUZ2VPTPMUjgcAsE0cH8u9TxfET/mDMri48A3VqKD/DI9VCfPrKrfsm0dTHZq6UP3RolNSZ55zVOF2w==
   dependencies:
     "@0x/types" "^1.3.0"
     "@0x/typescript-typings" "^3.0.4"
@@ -112,7 +106,6 @@
 "@0x/web3-wrapper@^3.1.6":
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/@0x/web3-wrapper/-/web3-wrapper-3.1.6.tgz#51d68b8b2fb0906d0749316863615a93b488daf9"
-  integrity sha512-qGFrNmIzZP7AhRN34/iwTZxGn8fH+gw7+abQ4AU5wJ4pgO9tcQFa/ratOTMfy6eiae19yS2IJPbyJ925qrBLyA==
   dependencies:
     "@0x/assert" "^1.0.18"
     "@0x/json-schemas" "^2.1.2"
@@ -310,7 +303,6 @@
 "@0xproject/subproviders@^2.0.5":
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/@0xproject/subproviders/-/subproviders-2.0.7.tgz#0b126f6d6df0ad7bd65689fae5a2d109991f019e"
-  integrity sha512-fprDFg6gjOkR/HkNzO/uHE3G5TZ24jYeTC6TsxGZx6lgwrF0EyP6fbjTyoxHU3/iMVpolv4hrVEJeChFnU5jQA==
   dependencies:
     "@0xproject/assert" "^1.0.13"
     "@0xproject/types" "^1.1.4"
@@ -1351,7 +1343,6 @@
 "@ledgerhq/hw-transport-u2f@4.24.0":
   version "4.24.0"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-u2f/-/hw-transport-u2f-4.24.0.tgz#d67cfc4abf6d9a900ed45f2e2df7fe06dfdff5c7"
-  integrity sha512-/gFjhkM0sJfZ7iUf8HoIkGufAWgPacrbb1LW0TvWnZwvsATVJ1BZJBtrr90Wo401PKsjVwYtFt3Ce4gOAUv9jQ==
   dependencies:
     "@ledgerhq/hw-transport" "^4.24.0"
     u2f-api "0.2.7"
@@ -1727,17 +1718,39 @@
   dependencies:
     "@types/node" "*"
 
+"@types/fs-extra@^5.0.3":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-5.0.4.tgz#b971134d162cc0497d221adde3dbb67502225599"
+  dependencies:
+    "@types/node" "*"
+
 "@types/ganache-core@^2.1.0":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@types/ganache-core/-/ganache-core-2.1.1.tgz#a7b9040bfe4427aca732e0b342fd7447510c70b0"
   dependencies:
     "@types/ethereum-protocol" "*"
 
+"@types/glob@*":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
+  dependencies:
+    "@types/events" "*"
+    "@types/minimatch" "*"
+    "@types/node" "*"
+
+"@types/handlebars@^4.0.38":
+  version "4.0.39"
+  resolved "https://registry.yarnpkg.com/@types/handlebars/-/handlebars-4.0.39.tgz#961fb54db68030890942e6aeffe9f93a957807bd"
+
 "@types/hdkey@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@types/hdkey/-/hdkey-0.7.0.tgz#6734d138e3c597f241be8fae2e60c2949bc3af87"
   dependencies:
     "@types/node" "*"
+
+"@types/highlight.js@^9.12.3":
+  version "9.12.3"
+  resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.12.3.tgz#b672cfaac25cbbc634a0fd92c515f66faa18dbca"
 
 "@types/ioredis@*":
   version "4.0.4"
@@ -1748,6 +1761,18 @@
 "@types/jest@^23.3.1", "@types/jest@^23.3.2":
   version "23.3.10"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.10.tgz#4897974cc317bf99d4fe6af1efa15957fa9c94de"
+
+"@types/lodash@^4.14.110":
+  version "4.14.119"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.119.tgz#be847e5f4bc3e35e46d041c394ead8b603ad8b39"
+
+"@types/marked@^0.4.0":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.4.2.tgz#64a89e53ea37f61cc0f3ee1732c555c2dbf6452f"
+
+"@types/minimatch@*", "@types/minimatch@3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
 "@types/nock@^9.3.0":
   version "9.3.0"
@@ -1812,6 +1837,13 @@
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-5.5.0.tgz#146c2a29ee7d3bae4bf2fcb274636e264c813c45"
 
+"@types/shelljs@^0.8.0":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.8.1.tgz#133e874b5fb816a2e1c8647839c82d76760b1191"
+  dependencies:
+    "@types/glob" "*"
+    "@types/node" "*"
+
 "@types/tough-cookie@*":
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.4.tgz#821878b81bfab971b93a265a561d54ea61f9059f"
@@ -1823,7 +1855,6 @@
 "@types/web3-provider-engine@^14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@types/web3-provider-engine/-/web3-provider-engine-14.0.0.tgz#43adc3b39dc9812b82aef8cd2d66577665ad59b0"
-  integrity sha512-yHr8mX2SoX3JNyfqdLXdO1UobsGhfiwSgtekbVxKLQrzD7vtpPkKbkIVsPFOhvekvNbPsCmDyeDCLkpeI9gSmA==
   dependencies:
     "@types/ethereum-protocol" "*"
 
@@ -7076,7 +7107,6 @@ ethers@^3.0.15:
 ethers@~4.0.4:
   version "4.0.15"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-4.0.15.tgz#784df851271ec4f7cea46ce3b44e2274f122ff6c"
-  integrity sha512-GO+GVMI0EfS6CJmxJXSUNTyiN8q+QIRTACzEtRMqnUDQrTzTHfIx2VYD7mgPDTjSsu/JLzGdit0hY3ERcE2fHQ==
   dependencies:
     "@types/node" "^10.3.2"
     aes-js "3.0.0"
@@ -7873,14 +7903,12 @@ fuse.js@^3.0.1, fuse.js@^3.3.0:
 ganache-cli@6.1.8:
   version "6.1.8"
   resolved "https://registry.yarnpkg.com/ganache-cli/-/ganache-cli-6.1.8.tgz#49a8a331683a9652183f82ef1378d17e1814fcd3"
-  integrity sha512-yXzteu4SIgUL31mnpm9j+x6dpHUw0p/nsRVkcySKq0w+1vDxH9jMErP1QhZAJuTVE6ni4nfvGSNkaQx5cD3jfg==
   dependencies:
     source-map-support "^0.5.3"
 
 ganache-cli@^6.1.8:
   version "6.2.3"
   resolved "https://registry.yarnpkg.com/ganache-cli/-/ganache-cli-6.2.3.tgz#8648224e7c54aa86c52125f8fa10fba2f549b149"
-  integrity sha512-+FYzINouw+yHHG6bT8m6O5xCw5NP6rpSL2keChKlcwgRRFz8SrZS6Q26iJ7ixBp6bk+UMMua8IPZgNFizbdZlQ==
   dependencies:
     bn.js "4.11.8"
     ganache-core "^2.3.1"
@@ -8138,7 +8166,7 @@ glob@7.1.2:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@7.1.3, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@~7.1.1, glob@~7.1.2:
+glob@7.1.3, glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@~7.1.1, glob@~7.1.2:
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.3.tgz#3960832d3f1574108342dafd3a67b332c0969df1"
   dependencies:
@@ -8574,6 +8602,10 @@ helper-md@^0.2.2:
     extend-shallow "^2.0.1"
     fs-exists-sync "^0.1.0"
     remarkable "^1.6.2"
+
+highlight.js@^9.0.0:
+  version "9.13.1"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.13.1.tgz#054586d53a6863311168488a0f58d6c505ce641e"
 
 history@^4.7.2:
   version "4.7.2"
@@ -10051,7 +10083,7 @@ jscodeshift@^0.5.0:
     temp "^0.8.1"
     write-file-atomic "^1.2.0"
 
-jsdom@^11.5.1:
+jsdom@^11.5.1, jsdom@^11.9.0:
   version "11.12.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.12.0.tgz#1a80d40ddd378a1de59656e9e6dc5a3ba8657bc8"
   dependencies:
@@ -11134,6 +11166,10 @@ markdown-table@^1.1.0:
 marked@^0.3.12:
   version "0.3.19"
   resolved "http://registry.npmjs.org/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
+
+marked@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.4.0.tgz#9ad2c2a7a1791f10a852e0112f77b571dce10c66"
 
 marksy@^6.1.0:
   version "6.1.0"
@@ -13501,7 +13537,6 @@ pupa@^1.0.0:
 puppeteer@1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.9.0.tgz#56dba79e7ea4faac807877bee3b23d63291fc59e"
-  integrity sha512-GH4PmhJf9wBRAPvtJkEJLAvdNNOofZortmBZSj8cGWYni98GUFqsf66blOEfJbo5B8l0KG5HR2d/W2MejnUrzg==
   dependencies:
     debug "^3.1.0"
     extract-zip "^1.6.6"
@@ -14896,7 +14931,6 @@ scrypt-js@2.0.3:
 scrypt-js@2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/scrypt-js/-/scrypt-js-2.0.4.tgz#32f8c5149f0797672e551c07e230f834b6af5f16"
-  integrity sha512-4KsaGcPnuhtCZQCxFxN3GVYIhKFPTdLd8PLC552XwbMndtD0cjRFAhDuuydXQ0h08ZfPgzqe6EKHozpuH74iDw==
 
 scrypt.js@0.2.0, scrypt.js@^0.2.0:
   version "0.2.0"
@@ -16331,6 +16365,12 @@ to-object-path@^0.3.0:
   dependencies:
     kind-of "^3.0.2"
 
+to-pascal-case@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/to-pascal-case/-/to-pascal-case-1.0.0.tgz#0bbdc8df448886ba01535e543327048d0aa1ce78"
+  dependencies:
+    to-space-case "^1.0.0"
+
 to-regex-range@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/to-regex-range/-/to-regex-range-2.1.1.tgz#7c80c17b9dfebe599e27367e0d4dd5590141db38"
@@ -16495,6 +16535,12 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
+turndown@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/turndown/-/turndown-5.0.1.tgz#ba92dec646a1db5ea4d8fba162d2f2b62a8d8536"
+  dependencies:
+    jsdom "^11.9.0"
+
 tweetnacl@0.13.2:
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.13.2.tgz#453161770469d45cd266c36404e2bc99a8fa9944"
@@ -16538,6 +16584,38 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
+typedoc-default-themes@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.5.0.tgz#6dc2433e78ed8bea8e887a3acde2f31785bd6227"
+
+typedoc-plugin-markdown@^1.1.19:
+  version "1.1.19"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-1.1.19.tgz#f0c2e0a390932f80e85a393961849d0e9d372561"
+  dependencies:
+    turndown "^5.0.1"
+
+typedoc@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.13.0.tgz#9efdf352bd54873955cd161bd4b75f24a8c59dde"
+  dependencies:
+    "@types/fs-extra" "^5.0.3"
+    "@types/handlebars" "^4.0.38"
+    "@types/highlight.js" "^9.12.3"
+    "@types/lodash" "^4.14.110"
+    "@types/marked" "^0.4.0"
+    "@types/minimatch" "3.0.3"
+    "@types/shelljs" "^0.8.0"
+    fs-extra "^7.0.0"
+    handlebars "^4.0.6"
+    highlight.js "^9.0.0"
+    lodash "^4.17.10"
+    marked "^0.4.0"
+    minimatch "^3.0.0"
+    progress "^2.0.0"
+    shelljs "^0.8.2"
+    typedoc-default-themes "^0.5.0"
+    typescript "3.1.x"
+
 types-bn@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/types-bn/-/types-bn-0.0.1.tgz#4253c7c7251b14e1d77cdca6f58800e5e2b82c4b"
@@ -16561,6 +16639,10 @@ typescript-eslint-parser@^18.0.0:
 typescript@2.9.2:
   version "2.9.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+
+typescript@3.1.x:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.1.6.tgz#b6543a83cfc8c2befb3f4c8fba6896f5b0c9be68"
 
 typescript@^3.0.1, typescript@^3.0.3:
   version "3.2.1"

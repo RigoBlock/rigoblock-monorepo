@@ -1,8 +1,12 @@
 import toSnakeCase = require('to-snake-case')
-import { ContractModels } from './'
+import { ContractsList } from './contractsList'
 import Web3Contract from 'web3/eth/contract'
 
-class Contract extends ContractModels {
+/*
+ * Wrapper class to initialize and instantiate contracts
+ * with their address pre-configured
+ */
+class Contract extends ContractsList {
   async init(contractsMap: Contract.ContractsMap) {
     const contractNames: string[] = Object.keys(contractsMap)
     const contractsPromises: Promise<

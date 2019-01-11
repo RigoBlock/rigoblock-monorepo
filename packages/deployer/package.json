@@ -5,7 +5,7 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build:watch": "tsc -w",
+        "build:watch": "rm -rf dist/* && tsc --outDir './dist' --watch",
         "build": "rm -rf dist/* && tsc --outDir './dist'",
         "test": "run-s build run_mocha",
         "run_mocha": "mocha lib/test/*_test.js --bail --exit",

@@ -11,6 +11,8 @@ export enum AbiType {
 
 export interface ContractArtifact {
   contract_name: string
+  devDoc: any
+  userDoc: any
   networks: ContractNetworks
 }
 
