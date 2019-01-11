@@ -204,13 +204,13 @@ ___
 
 Allows vault dao/factory to change the minimum holding period
 
-▸ **changeMinPeriod**(_minPeriod: * `number` &#124; `BigNumber`*): `Promise`<`TransactionObject`<`void`>>
+▸ **changeMinPeriod**(_minPeriod: *`number` | `BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
 | Name | Type | Description |
 | ------ | ------ | ------ |
-| _minPeriod |  `number` &#124; `BigNumber`| Lockup time in seconds |
+| _minPeriod | `number` | `BigNumber` | Lockup time in seconds |
 
 **Returns:** `Promise`<`TransactionObject`<`void`>>
 
@@ -271,7 +271,7 @@ ___
 
 Allows anyone to deposit tokens to a vault
 
-▸ **depositToken**(_token: *`string`*, _value: *`BigNumber`*, _forTime: * `number` &#124; `BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
+▸ **depositToken**(_token: *`string`*, _value: *`BigNumber`*, _forTime: *`number` | `BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
@@ -279,7 +279,7 @@ Allows anyone to deposit tokens to a vault
 | ------ | ------ | ------ |
 | _token | `string` | Address of the token | Address of the token | Address of the token | Address of the token | Address of the token | Address of the token |
 | _value | `BigNumber` | Amount to deposit | Amount to deposit | Amount to withdraw |
-| _forTime |  `number` &#124; `BigNumber`| Lockup time in seconds | Lockup time in seconds |
+| _forTime | `number` | `BigNumber` | Lockup time in seconds | Lockup time in seconds |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 
@@ -290,7 +290,7 @@ ___
 
 Allows anyone to deposit tokens to a vault on behalf of someone
 
-▸ **depositTokenOnBehalf**(_token: *`string`*, _hodler: *`string`*, _value: *`BigNumber`*, _forTime: * `number` &#124; `BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
+▸ **depositTokenOnBehalf**(_token: *`string`*, _hodler: *`string`*, _value: *`BigNumber`*, _forTime: *`number` | `BigNumber`*): `Promise`<`TransactionObject`<`boolean`>>
 
 **Parameters:**
 
@@ -299,7 +299,7 @@ Allows anyone to deposit tokens to a vault on behalf of someone
 | _token | `string` |
 | _hodler | `string` |
 | _value | `BigNumber` |
-| _forTime |  `number` &#124; `BigNumber`|
+| _forTime | `number` | `BigNumber` |
 
 **Returns:** `Promise`<`TransactionObject`<`boolean`>>
 

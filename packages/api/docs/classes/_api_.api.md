@@ -29,6 +29,8 @@
 
 **● contract**: *[ContractsList](_contracts_contractslist_.contractslist.md)*
 
+List of contract instances exposed by the API
+
 ___
 <a id="engine"></a>
 
@@ -36,12 +38,16 @@ ___
 
 **● engine**: *[ProviderEngineFix](../interfaces/_api_.providerenginefix.md)*
 
+Metamask's provider engine instance
+
 ___
 <a id="web3"></a>
 
 ###  web3
 
 **● web3**: *`Web3`*
+
+Web3 instance in use
 
 ___
 

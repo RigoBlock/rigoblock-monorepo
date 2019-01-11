@@ -2,8 +2,8 @@
   "name": "@rigoblock/api",
   "description": "A JS wrapper around RigoBlock Smart Contracts to simplify their consumption.",
   "version": "0.2.15",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/api.js",
+  "types": "dist/api.d.ts",
   "engines": {
     "node": ">=6.4"
   },
@@ -35,8 +35,8 @@
     "jest": "^23.6.0",
     "to-pascal-case": "^1.0.0",
     "ts-jest": "^23.10.1",
-    "typedoc": "^0.13.0",
-    "typedoc-plugin-markdown": "^1.1.19",
+    "typedoc": "^0.14.1",
+    "typedoc-plugin-markdown": "^1.1.21",
     "typescript": "^3.0.1",
     "typescript-eslint-parser": "^18.0.0"
   },

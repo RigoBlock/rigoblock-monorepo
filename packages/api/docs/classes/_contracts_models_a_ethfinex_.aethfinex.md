@@ -70,7 +70,7 @@ ___
 
 Unwraps eth or tokens from the ethfinex wrappers.
 
-▸ **unwrap**(token: *`string`*, wrapper: *`string`*, value: *`BigNumber`*, v: * `number` &#124; `BigNumber`*, r: *`string`*, s: *`string`*, signatureValidUntilBlock: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
+▸ **unwrap**(token: *`string`*, wrapper: *`string`*, value: *`BigNumber`*, v: *`number` | `BigNumber`*, r: *`string`*, s: *`string`*, signatureValidUntilBlock: *`BigNumber`*): `Promise`<`TransactionObject`<`void`>>
 
 **Parameters:**
 
@@ -79,7 +79,7 @@ Unwraps eth or tokens from the ethfinex wrappers.
 | token | `string` | Address of the base token. | Address of the base token. |
 | wrapper | `string` | Address of the token wrapper. | Address of the token wrapper. |
 | value | `BigNumber` | Number of tokens to withdraw. |
-| v |  `number` &#124; `BigNumber`| ECDSA signature parameter v. |
+| v | `number` | `BigNumber` | ECDSA signature parameter v. |
 | r | `string` | ECDSA signature parameters r. |
 | s | `string` | ECDSA signature parameters s. |
 | signatureValidUntilBlock | `BigNumber` | Signature for withdrawing before lockup. |
