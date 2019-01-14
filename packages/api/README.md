@@ -129,6 +129,6 @@ await vaultFactory.allEvents(
 
 ## Guides
 
-["Guide 1"](./guides/guide1.md)
+["Guide 1"](./docs/guides/guide1.md)
 
-["Guide 2"](./guides/guide2.md)
+["Guide 2"](./docs/guides/guide2.md)
