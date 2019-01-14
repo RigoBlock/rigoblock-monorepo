@@ -5,13 +5,7 @@ API
 Building the package
 --------------------
 
-Start Ganache
-
-```
-lerna run --scope @rigoblock/dapp ganache --stream
-```
-
-Then run the following command:
+Run the following command:
 
 ```
 yarn build
@@ -57,6 +51,12 @@ yarn build
 ```
 
 Extracts abis saving them as JSON files, generates wrappers and compiles .ts files into `dist` folder. Requires Ganache to be running unless abi files have been saved previously.
+
+```
+yarn doc-gen
+```
+
+Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
 
 Initialising the API
 --------------------
@@ -154,6 +154,13 @@ await vaultFactory.allEvents(
   (err, events) => (err ? console.error(err) : console.log(events))
 )
 ```
+
+Guides
+------
+
+["Guide 1"](../guides/guide1.md)
+
+["Guide 2"](../guides/guide2.md)
 
 ## Index
 

@@ -126,3 +126,9 @@ await vaultFactory.allEvents(
   (err, events) => (err ? console.error(err) : console.log(events))
 )
 ```
+
+## Guides
+
+["Guide 1"](./guides/guide1.md)
+
+["Guide 2"](./guides/guide2.md)

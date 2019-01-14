@@ -29,6 +29,10 @@ const docGen = async networkId => {
       `--out docs src`
     ].join(' ')
   )
+  const README_PATH = './docs/README.md'
+  let readmeContent = (await readFile(README_PATH)).toString()
+  readmeContent = readmeContent.replace(/(\.\/guides\/)/g, '../guides/')
+  await writeFile(README_PATH, readmeContent)
 
   const contractsMap = await fetchContracts(networkId)
   const docsList = await glob('./docs/**/*.md')
