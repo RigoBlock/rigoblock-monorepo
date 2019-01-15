@@ -52,9 +52,13 @@ class Api {
    */
   async init(web3: Web3 = window['web3']) {
     const networkPromise: Promise<number> = new Promise((resolve, reject) => {
-      window['web3'].version.getNetwork((err, res) =>
-        err ? reject(err) : resolve(res)
-      )
+      if (web3.version['getNetwork']) {
+        web3.version['getNetwork']((err, res) =>
+          err ? reject(err) : resolve(res)
+        )
+      } else {
+        web3.eth.net.getId((err, id) => (err ? reject(err) : resolve(id)))
+      }
     })
     const networkId = await networkPromise
     const rpcUrl = RPC_URLS[networkId]
