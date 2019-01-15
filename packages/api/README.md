@@ -1,59 +1,35 @@
 # API
 
-## Building the package
+## Installation
 
-Run the following command:
 ```
-yarn build
+npm install --save @rigoblock/api
 ```
 
-## Available Scripts
+Or with Yarn:
 
-### From the project root you can run:
 ```
-yarn lint
+yarn add -D @rigoblock/api
 ```
-Lints all files.
-```
-yarn abi-extract
-```
-Extracts all abis of the deployed contracts, then copies them over to the .tmp folder in json format. Requires Ganache to be running.
-```
-yarn abi-gen
-```
-Generates contract wrappers from the abi JSON files.
-```
-yarn tsc
-```
-Compiles all .ts files to Javascript, including map and declaration files into the `dist` folder.
-```
-yarn tsc:watch
-```
-Compiles on watch mode
-```
-yarn build
-```
-Extracts abis saving them as JSON files, generates wrappers and compiles .ts files into `dist` folder. Requires Ganache to be running unless abi files have been saved previously.
-```
-yarn doc-gen
-```
-Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
 
-## Initialising the API
+## Usage
+
+### Initialising the API
 
 ```javascript
 import Api from '@rigoblock/api'
 
 const api = new Api()
-await api.init(web3, rpcUrl)
+await api.init(web3)
 ```
-`rpcUrl` is optional and defaults to `ws://localhost:8545` to work with Ganache.
 
-## Instantiating contracts
+*web3* parameter is optional and defaults to `window.web3`. The API class will then make a call to get the *Network Id* and set the correct RPC url.
 
-To instantiate a contract we use the `createAndValidate()` function, which will check if the contract is deployed on the blockChain, throwing an error if it isn't. The function accepts two parameters: a web3 instance and the contract's address.
+### Instantiating contracts
 
-Some contracts are already deployed when the API is initialised, their address is saved under a `address` property. To check if a contract is deployed we can use the custom `isDeployed()` function.
+To instantiate a contract we use the `createAndValidate()` function, which first checks if the contract is deployed on the blockChain, throwing an error if it isn't. The function accepts two parameters: a web3 instance and the contract's address.
+
+Some contracts are already deployed when the API is initialised, their address is saved under a `address` property. To check if a contract is deployed we can use the `isDeployed()` method.
 
 ```javascript
 api.contract.Authority.isDeployed() // true
@@ -64,9 +40,8 @@ const authority = await api.contract.Authority.createAndValidate(
 )
 ```
 
-## Calling methods
+### Calling methods
 
-### Example
 Creating a Vault from the VaultFactory contract
 
 ```javascript
@@ -92,15 +67,9 @@ const vaultAddress = receipt.events.VaultCreated.returnValues.vault
 ```
 We add some more gas to the estimate as it can be incorrect in case new blocks are added between the estimate and the actual transaction taking place.
 
-## Adding custom methods
-
-Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
-
-## Events
+### Contract Events
 
 To get past events of a contract, use the `getPastEvents` function. To create a subscription to a single event, use the relative method and pass it a callback to retrieve the data.
-
-### Example
 
 Listening for the `VaultCreated` event
 
@@ -116,7 +85,6 @@ await vaultFactory.VaultCreatedEvent(
 
 If we wish to listen for all events, use the `allEvents` method.
 
-### Example
 ```javascript
 await vaultFactory.allEvents(
   {
@@ -127,8 +95,45 @@ await vaultFactory.allEvents(
 )
 ```
 
-## Guides
+## Additional Resources
 
-["Guide 1"](./docs/guides/guide1.md)
+For a complete reference of the API, check our [documentation website](https://docs.rigoblock.com).
 
-["Guide 2"](./docs/guides/guide2.md)
+Additional examples of API usage can be found [here](./docs/guides/api_usage.md).
+
+## Contributing
+
+### Available Scripts
+
+```
+yarn lint
+```
+Lints all files.
+```
+yarn abi-extract
+```
+Extracts all abis of the deployed contracts, then copies them over to the .tmp folder in json format.
+```
+yarn abi-gen
+```
+Generates contract wrappers from the abi JSON files.
+```
+yarn tsc
+```
+Compiles all .ts files to Javascript, including map and declaration files into the `dist` folder.
+```
+yarn tsc:watch
+```
+Compiles on watch mode
+```
+yarn build
+```
+Extracts abis saving them as JSON files, generates wrappers and compiles .ts files into `dist` folder.
+```
+yarn doc-gen
+```
+Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
+
+## Adding custom methods
+
+Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
