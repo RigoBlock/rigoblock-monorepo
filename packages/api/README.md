@@ -9,7 +9,7 @@ npm install --save @rigoblock/api
 Or with Yarn:
 
 ```
-yarn add -D @rigoblock/api
+yarn add @rigoblock/api
 ```
 
 ## Usage
@@ -69,7 +69,16 @@ We add some more gas to the estimate as it can be incorrect in case new blocks a
 
 ### Contract Events
 
-To get past events of a contract, use the `getPastEvents` function. To create a subscription to a single event, use the relative method and pass it a callback to retrieve the data.
+To get past events of a contract, use the `getPastEvents` function:
+
+```javascript
+const pastEvents = await api.contract.vaultEventful.getPastEvents('allEvents', {
+  fromBlock,
+  toBlock
+})
+```
+
+To create a subscription to a single event, use the relative method and pass it a callback to retrieve the data:
 
 Listening for the `VaultCreated` event
 
