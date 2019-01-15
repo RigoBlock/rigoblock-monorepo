@@ -75,7 +75,6 @@ class BlockChainService {
   }
 
   init() {
-    console.log(this.api)
     const return$ = fromPromise(this.api.init(), this.scheduler)
       .mapTo(blockChainActions.blockChainInit())
       .concat(merge(this.errorListener(), this.connectionListener()))
