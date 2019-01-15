@@ -108,7 +108,7 @@ await vaultFactory.allEvents(
 
 For a complete reference of the API, check our [documentation website](https://docs.rigoblock.com).
 
-Additional examples of API usage can be found [here](./docs/guides/api_usage.md).
+Additional examples of API usage can be found [here](./docs/guides/usage_example.md).
 
 ## Contributing
 
