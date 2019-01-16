@@ -1,3 +1,5 @@
+require('jest-extended')
+
 import { GANACHE_NETWORK_ID, GANACHE_PORT, NETWORKS } from '../constants'
 import bootstrap from '@rigoblock/contracts/deploy/bootstrap'
 import c from 'chalk'
@@ -17,10 +19,8 @@ const setupGanache = async () => {
     network_id: GANACHE_NETWORK_ID
   }
   server = ganache.server(ganacheOptions)
-  server.listen(
-    GANACHE_PORT,
-    err =>
-      err ? logger.error(err) : logger.info(c.bold.green('Ganache starting!'))
+  server.listen(GANACHE_PORT, err =>
+    err ? logger.error(err) : logger.info(c.bold.green('Ganache starting!'))
   )
   const rawAccounts = await web3.eth.getAccounts()
   global.accounts = rawAccounts.map(acc => acc.toLowerCase())
@@ -36,11 +36,10 @@ global.describeContract = (name, f) => {
     describe(name, f)
     afterAll(async () => {
       const closeGanachePromise = new Promise((resolve, reject) => {
-        server.close(
-          err =>
-            err
-              ? reject(new Error(err))
-              : resolve(logger.info(c.bold.yellow('Ganache stopping...')))
+        server.close(err =>
+          err
+            ? reject(new Error(err))
+            : resolve(logger.info(c.bold.yellow('Ganache stopping...')))
         )
       })
       return await closeGanachePromise

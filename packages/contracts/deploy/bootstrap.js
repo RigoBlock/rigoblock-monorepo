@@ -164,6 +164,9 @@ module.exports = async (baseAccount, network) => {
   ])
   printAddress('Faucet', faucet.address)
 
+  const HGetDragoData = await deploy(baseAccount, network, 'HGetDragoData')
+  printAddress('HGetDragoData', HGetDragoData.address)
+
   return {
     AEthfinex: aEthfinex,
     AWeth: aWeth,
@@ -185,6 +188,7 @@ module.exports = async (baseAccount, network) => {
     TokenTransferProxy: tokenTransferProxy,
     WETH9: wETH9,
     WrapperLockEth: wrapperLockEth,
-    WrapperLock: wrapperLock
+    WrapperLock: wrapperLock,
+    HGetDragoData
   }
 }

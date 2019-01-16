@@ -2,15 +2,11 @@
 
 ## Installation
 
-```
-npm install --save @rigoblock/api
-```
+    npm install --save @rigoblock/api
 
 Or with Yarn:
 
-```
-yarn add @rigoblock/api
-```
+    yarn add @rigoblock/api
 
 ## Usage
 
@@ -23,7 +19,7 @@ const api = new Api()
 await api.init(web3)
 ```
 
-*web3* parameter is optional and defaults to `window.web3`. The API class will then make a call to get the *Network Id* and set the correct RPC url.
+_web3_ parameter is optional and defaults to `window.web3`. The API class will then make a call to get the _Network Id_ and set the correct RPC url.
 
 ### Instantiating contracts
 
@@ -65,6 +61,7 @@ const receipt = await txObject.send({
 
 const vaultAddress = receipt.events.VaultCreated.returnValues.vault
 ```
+
 We add some more gas to the estimate as it can be incorrect in case new blocks are added between the estimate and the actual transaction taking place.
 
 ### Contract Events
@@ -114,33 +111,32 @@ Additional examples of API usage can be found [here](./docs/guides/usage_example
 
 ### Available Scripts
 
-```
-yarn lint
-```
+    yarn lint
+
 Lints all files.
-```
-yarn abi-extract
-```
+
+    yarn abi-extract
+
 Extracts all abis of the deployed contracts, then copies them over to the .tmp folder in json format.
-```
-yarn abi-gen
-```
+
+    yarn abi-gen
+
 Generates contract wrappers from the abi JSON files.
-```
-yarn tsc
-```
+
+    yarn tsc
+
 Compiles all .ts files to Javascript, including map and declaration files into the `dist` folder.
-```
-yarn tsc:watch
-```
+
+    yarn tsc:watch
+
 Compiles on watch mode
-```
-yarn build
-```
+
+    yarn build
+
 Extracts abis saving them as JSON files, generates wrappers and compiles .ts files into `dist` folder.
-```
-yarn doc-gen
-```
+
+    yarn doc-gen
+
 Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
 
 ## Adding custom methods
