@@ -44,6 +44,7 @@ module.exports = {
     'VaultFactory',
     'WETH9',
     'WrapperLock',
-    'WrapperLockEth'
+    'WrapperLockEth',
+    'HGetDragoData'
   ]
 }
