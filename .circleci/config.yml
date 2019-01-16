@@ -135,21 +135,6 @@ jobs:
           paths:
             - packages/api/dist
 
-  push-api-changes:
-    working_directory: *workspace_root
-    environment:
-      TZ: *timezone
-    docker:
-      - image: *node_image
-    steps:
-      - checkout
-      - run:
-          name: Cloning git subrepo
-          command: git clone https://github.com/ingydotnet/git-subrepo ../git-subrepo
-      - run:
-          name: Pushing changes to API subrepo
-          command: source ../git-subrepo/.rc && yarn push-api-subrepo
-
   build-exchange-connector:
     working_directory: *workspace_root
     environment:
@@ -410,28 +395,22 @@ workflows:
       - build-dapp:
           requires:
             - build-api
-      # - push-api-changes:
-      #     requires:
-      #       - build-api
-      #     filters:
-      #       branches:
-      #         only: master
       - test-feature-dapp:
           requires:
             - build-dapp
-      - deploy-dapp-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
-      - deploy-storybook-staging:
-          requires:
-            - test-unit-dapp
-            - build-dapp
-            - test-feature-dapp
-          filters:
-            branches:
-              only: master
+      # - deploy-dapp-staging:
+      #     requires:
+      #       - test-unit-dapp
+      #       - build-dapp
+      #       - test-feature-dapp
+      #     filters:
+      #       branches:
+      #         only: master
+      # - deploy-storybook-staging:
+      #     requires:
+      #       - test-unit-dapp
+      #       - build-dapp
+      #       - test-feature-dapp
+      #     filters:
+      #       branches:
+      #         only: master
