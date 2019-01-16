@@ -1,5 +1,7 @@
 # API
 
+RigoBlock TypeScript API to interact with smart contracts.
+
 ## Installation
 
     npm install --save @rigoblock/api
