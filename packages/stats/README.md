@@ -1,4 +1,7 @@
-# Rigoblock Stats
+# Stats
+
+A utility package built with [bull](https://github.com/OptimalBits/bull) to gather statistics on our pools.
+
 ![](rigoblockStats.svg)
 
 ## Services

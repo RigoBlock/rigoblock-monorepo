@@ -1,4 +1,6 @@
-# Rigoblock Data Collector
+# Data Collector
+
+A utility package to gather and save an overview and pricing information about the top traded tokens on Ethereum.
 
 ## Services
 

@@ -1,4 +1,6 @@
-# RigoBlock DApp
+# DApp
+
+RigoBlock DApp v2 (frozen)
 
 ## Folder Structure
 

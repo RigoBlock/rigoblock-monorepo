@@ -1,5 +1,7 @@
 # API
 
+RigoBlock TypeScript API to interact with smart contracts.
+
 ## Building the package
 
 Run the following command:

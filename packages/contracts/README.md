@@ -1,4 +1,6 @@
-# RigoBlock Contracts
+# Contracts
+
+Collection of RigoBlock's smart contracts and deployment/compilation scripts.
 
 ## Available Scripts
 
