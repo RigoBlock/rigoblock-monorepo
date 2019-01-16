@@ -1,4 +1,4 @@
-# Rigoblock
+# RigoBlock
 [![CircleCI](https://circleci.com/gh/RigoBlock/rigoblock-monorepo/tree/master.svg?style=shield&circle-token=8a3a97d8673b72dacc5efb04a10492ce473e9afb)](https://circleci.com/gh/RigoBlock/rigoblock-monorepo/tree/master)
 [![Standard JS](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
@@ -8,19 +8,21 @@
 
 | Package| Description|
 | - | - |
-| [`Rigoblock ĐApp`](/packages/dapp)                  | Rigoblock ĐApp                                                     |
+| [`ĐApp`](/packages/dapp)                  | Rigoblock ĐApp                                                     |
 | [`API`](/packages/api)                    | Rigoblock API               |
-| [`Rigoblock Contracts`](/packages/contracts)          | Rigoblock Contracts                                                 |
-| [`Deployer`](/packages/deployer)          | A package to compile and deploy our smart contracts                                       |
-| [`Ganache Bootstrap`](/packages/ganache-bootstrap)  | A bootstrapping package to deploy smart contracts and seed Ganache |
-| [`Stats`](/packages/stats)  | Data collection system |
+| [`Contracts`](/packages/contracts)          | Rigoblock Contracts                                                 |
+| [`Deployer`](/packages/deployer)          | Tool for smart contracts compilation and deployment                                       |
+| [`Ganache Bootstrap`](/packages/ganache-bootstrap)  | Bootstrapping package to deploy smart contracts and seed Ganache |
+| [`Exchange Connector`](/packages/stats)  | API to interact with token exchanges |
+| [`Stats`](/packages/stats)  | RigoBlock pools statistics collection |
+| [`Data Collector`](/packages/stats)  | Ethereum tokens data collection system |
 
 
 ### Install
 
 Ubuntu pre-requisites:
 ```
-apt-get install build-essential libusb libudev-dev 
+apt-get install build-essential libusb libudev-dev
 ```
 
 Install nvm and use the correct node version
