@@ -77,15 +77,19 @@ await ethfinex.ws.close()
 In the project directory, you can run:
 
 ### `yarn build`
+
 Builds the app for production to the `dist` folder.
 
 ### `yarn test:unit`
+
 Runs tests with Jest.
 
 ### `yarn test:unit:watch`
+
 Runs tests with Jest watching for changes.
 
 ### `yarn lint`
+
 Lints all typescript files.
 
 ### Note

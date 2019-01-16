@@ -16,7 +16,7 @@ Compiles all solidity contracts and generates the JSON artifacts. The contract's
 
 ### `yarn build`
 
-In order: compiles all contracts, deleted *dist* folder, bootstraps contract on ganache, builds with webpack. **Requires Ganache to be up prior to running the command.**
+In order: compiles all contracts, deleted _dist_ folder, bootstraps contract on ganache, builds with webpack. **Requires Ganache to be up prior to running the command.**
 
 ### `yarn test`
 
@@ -32,20 +32,19 @@ Launches the smart contract deployment CLI.
 
 ## Contract deployment
 
-- Create a new branch (eg. `git checkout -b feature/kovan-contracts-deployment`)
-- From the `rigoblock-monorepo/packages/contracts` directory, launch `yarn deploy`
-- In the CLI:
-  - select the network where you wish to deploy the contract
-  - Insert your public key (wallet address)
-  - Insert the name of the contract to be deployed
-  - Insert the arguments required from the contract, if any, separated by a comma
-  - Insert your account mnemonic
-- The `contracts/artifacts` folder will now have uncommitted changes, commit them.
-- Push the changes to Github (`git push --set-upstream origin your-branch-name`)
-- Open a pull request with your changes and await approval.
+-   Create a new branch (eg. `git checkout -b feature/kovan-contracts-deployment`)
+-   From the `rigoblock-monorepo/packages/contracts` directory, launch `yarn deploy`
+-   In the CLI:
+    -   select the network where you wish to deploy the contract
+    -   Insert your public key (wallet address)
+    -   Insert the name of the contract to be deployed
+    -   Insert the arguments required from the contract, if any, separated by a comma
+    -   Insert your account mnemonic
+-   The `contracts/artifacts` folder will now have uncommitted changes, commit them.
+-   Push the changes to Github (`git push --set-upstream origin your-branch-name`)
+-   Open a pull request with your changes and await approval.
 
->Note: At the current time it is necessary to pass the account MNEMONIC rather than the private key.
-
+> Note: At the current time it is necessary to pass the account MNEMONIC rather than the private key.
 
 Here is a demo of how the script works:
 
