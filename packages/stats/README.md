@@ -1,4 +1,7 @@
-# Rigoblock Stats
+# Stats
+
+A utility package built with [bull](https://github.com/OptimalBits/bull) to gather statistics on our pools.
+
 ![](rigoblockStats.svg)
 
 ## Services
@@ -46,22 +49,16 @@ chmod u+x *.sh
 
 Create data diretory:
 
-```
-mkdir data
-```
+    mkdir data
 
 Create `acme.json` file. This file contains private keys. Protect it.
 
-```
-touch rigoblock-monorepo/packages/stats/config/traefik/acme.json
-chmod 600 rigoblock-monorepo/packages/stats/config/traefik/acme.json
-```
+    touch rigoblock-monorepo/packages/stats/config/traefik/acme.json
+    chmod 600 rigoblock-monorepo/packages/stats/config/traefik/acme.json
 
 Build the docker image (from the monorepo root).
 
-```
-docker-compose -f ./packages/stats/docker-compose.prod.yml build --build-arg NPM_KEY=<insert npm key> bull
-```
+    docker-compose -f ./packages/stats/docker-compose.prod.yml build --build-arg NPM_KEY=<insert npm key> bull
 
 ## Run the whole stack (from the monorepo root).
 
@@ -71,28 +68,28 @@ docker-compose -f ./packages/stats/docker-compose.prod.yml up
 
 ## Tasks
 
-- [calculateBalance](src/tasks/calculateBalance/README.md)
-- [calculateEthBalance](src/tasks/calculateEthBalance/README.md)
-- [fetchDragos](src/tasks/fetchDragos/README.md)
-- [getSharePrice](src/tasks/getSharePrice/README.md)
-- [getTotalSupply](src/tasks/getTotalSupply/README.md)
-- [calculateNav](src/tasks/calculateNav/README.md)
+-   [calculateBalance](src/tasks/calculateBalance/README.md)
+-   [calculateEthBalance](src/tasks/calculateEthBalance/README.md)
+-   [fetchDragos](src/tasks/fetchDragos/README.md)
+-   [getSharePrice](src/tasks/getSharePrice/README.md)
+-   [getTotalSupply](src/tasks/getTotalSupply/README.md)
+-   [calculateNav](src/tasks/calculateNav/README.md)
 
 ## Data currently being fetched
 
-- List of all Dragos on mainnet, ropsten and kovan
+-   List of all Dragos on mainnet, ropsten and kovan
 
 For each drago, we are fetching:
 
-- ETH balance
-- GNT balance
-- GRG balance
-- MKR balance
-- WETH balance
-- USDT balance
-- ZRX balance
-- ZRXW balance
-- USDTW balance
-- GRGW balance
-- Total supply
-- Buy-Sell prices
+-   ETH balance
+-   GNT balance
+-   GRG balance
+-   MKR balance
+-   WETH balance
+-   USDT balance
+-   ZRX balance
+-   ZRXW balance
+-   USDTW balance
+-   GRGW balance
+-   Total supply
+-   Buy-Sell prices
