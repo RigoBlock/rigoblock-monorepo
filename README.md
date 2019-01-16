@@ -8,9 +8,9 @@
 
 | Package                                            | Description                                                      |
 | -------------------------------------------------- | ---------------------------------------------------------------- |
-| [`ĐApp`](/packages/dapp)                           | Rigoblock ĐApp                                                   |
-| [`API`](/packages/api)                             | Rigoblock API                                                    |
-| [`Contracts`](/packages/contracts)                 | Rigoblock Contracts                                              |
+| [`ĐApp`](/packages/dapp)                           | RigoBlock ĐApp                                                   |
+| [`API`](/packages/api)                             | RigoBlock API                                                    |
+| [`Contracts`](/packages/contracts)                 | RigoBlock Contracts                                              |
 | [`Deployer`](/packages/deployer)                   | Tool for smart contracts compilation and deployment              |
 | [`Ganache Bootstrap`](/packages/ganache-bootstrap) | Bootstrapping package to deploy smart contracts and seed Ganache |
 | [`Exchange Connector`](/packages/stats)            | API to interact with token exchanges                             |
