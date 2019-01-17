@@ -1,0 +1,18 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "package.json",
+        "packages/api/package.json",
+        "packages/contracts/package.json",
+        "packages/dapp/package.json",
+        "packages/data-collector/package.json",
+        "packages/deployer/package.json",
+        "packages/exchange-connector/package.json",
+        "packages/ganache-bootstrap/package.json",
+        "packages/stats/examples/package.json",
+        "packages/stats/package.json"
+      ]
+    }
+  }
+}
