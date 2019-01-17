@@ -8,16 +8,18 @@
 
 | Package                                            | Description                                                      |
 | -------------------------------------------------- | ---------------------------------------------------------------- |
-| [`ĐApp`](/packages/dapp)                           | RigoBlock ĐApp                                                   |
-| [`API`](/packages/api)                             | RigoBlock API                                                    |
-| [`Contracts`](/packages/contracts)                 | RigoBlock Contracts                                              |
+| [`ĐApp`](/packages/dapp)                           | RigoBlock Decentralized App v2 (currently frozen)                |
+| [`API`](/packages/api)                             | TypeScript API to interact with our smart contracts              |
+| [`Contracts`](/packages/contracts)                 | RigoBlock solidity smart contracts & tests                       |
 | [`Deployer`](/packages/deployer)                   | Tool for smart contracts compilation and deployment              |
 | [`Ganache Bootstrap`](/packages/ganache-bootstrap) | Bootstrapping package to deploy smart contracts and seed Ganache |
 | [`Exchange Connector`](/packages/stats)            | API to interact with token exchanges                             |
 | [`Stats`](/packages/stats)                         | RigoBlock pools statistics collection                            |
 | [`Data Collector`](/packages/stats)                | Ethereum tokens data collection system                           |
 
-### Install
+## Contributing
+
+### Installation
 
 Ubuntu pre-requisites:
 
@@ -49,7 +51,7 @@ Build all packages in order. Ganache needs to be launched first as it is require
     yarn build
     kill %1
 
-### Lint
+### Linting
 
 Lint all packages
 
