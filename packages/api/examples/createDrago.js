@@ -1,7 +1,7 @@
 const Api = require('../dist/api').default
 const Web3 = require('web3')
 const BigNumber = require('bignumber.js').BigNumber
-const c = require('chalk')
+const clk = require('chalk')
 
 const createDrago = async () => {
   const api = new Api()
@@ -30,8 +30,8 @@ const createDrago = async () => {
   })
 
   const dragoAddress = receipt.events.DragoCreated.returnValues.drago
-  console.log(c.green('Drago created!'))
-  console.log(c.green('Address: ' + dragoAddress))
+  console.log(clk.green('Drago created!'))
+  console.log(clk.green('Address: ' + dragoAddress))
   await web3.currentProvider.connection.close()
   await api.stopEngine()
 }
