@@ -17,7 +17,9 @@
 | [`Stats`](/packages/stats)                         | RigoBlock pools statistics collection                            |
 | [`Data Collector`](/packages/stats)                | Ethereum tokens data collection system                           |
 
-### Install
+## Contributing
+
+### Installation
 
 Ubuntu pre-requisites:
 
@@ -49,7 +51,7 @@ Build all packages in order. Ganache needs to be launched first as it is require
     yarn build
     kill %1
 
-### Lint
+### Linting
 
 Lint all packages
 
