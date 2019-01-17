@@ -88,20 +88,50 @@ const sellDragoUnits = async (api, dragoAddress, accountAddress) => {
 }
 ```
 
+### Setting the Drago prices
+
+```javascript
+const setDragoPrices = async (api, dragoAddress, accountAddress) => {
+  const { Drago } = api.contract
+  const drago = await Drago.createAndValidate(api.web3, dragoAddress)
+  const txOptions = { from: accountAddress }
+  const buyPrice = api.web3.utils.toWei('0.50')
+  const sellPrice = api.web3.utils.toWei('0.49')
+
+  const txObject = await drago.setPrices(
+    sellPrice,
+    buyPrice,
+    1,
+    api.web3.utils.fromAscii('random'),
+    api.web3.utils.fromAscii('random')
+  )
+
+  const gasEstimate = await txObject.estimateGas(txOptions)
+  await txObject.send({
+    ...txOptions,
+    gas: new BigNumber(gasEstimate).times(1.2).toFixed(0),
+    gasPrice
+  })
+}
+```
+
+- The new **buyPrice** must always be higher than the new **sellPrice**
+- Currently the last 3 parameters of the `setPrices` method are unused, they have been predisposed to easily upgrade the contract in the future and have an approved fronted platform check that the value is correct.
+
 ### Setting the transaction fee
 
 ```javascript
 const setDragoFee = async (api, dragoAddress, accountAddress) => {
   const { Drago } = api.contract
   const drago = await Drago.createAndValidate(api.web3, dragoAddress)
-  const txOptions = { from: accounts[0] }
+  const txOptions = { from: accountAddress }
   // transaction fee in basis points
   const transactionFee = '50'
   const txObject = await drago.setTransactionFee(transactionFee)
   const gasPrice = await api.web3.eth.getGasPrice()
   const gasEstimate = await txObject.estimateGas(txOptions)
 
-  const receipt = await txObject.send({
+  await txObject.send({
     ...txOptions,
     gas: new BigNumber(gasEstimate).times(1.2).toFixed(0),
     gasPrice
