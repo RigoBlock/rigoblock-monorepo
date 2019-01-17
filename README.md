@@ -8,7 +8,7 @@
 
 | Package                                            | Description                                                      |
 | -------------------------------------------------- | ---------------------------------------------------------------- |
-| [`ĐApp`](/packages/dapp)                           | Decentralized App version 2 (currently frozen)                   |
+| [`ĐApp`](/packages/dapp)                           | RigoBlock Decentralized App v2 (currently frozen)                |
 | [`API`](/packages/api)                             | TypeScript API to interact with our smart contracts              |
 | [`Contracts`](/packages/contracts)                 | RigoBlock solidity smart contracts & tests                       |
 | [`Deployer`](/packages/deployer)                   | Tool for smart contracts compilation and deployment              |
