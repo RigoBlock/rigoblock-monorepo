@@ -88,6 +88,14 @@ class Api {
 
     return this
   }
+
+  async stopEngine() {
+    const rpcSubprovider = this.engine['_providers']
+      .filter(obj => obj.constructor.name === 'WebsocketSubprovider')
+      .pop()
+    await this.engine.stop()
+    await rpcSubprovider.closeSocket()
+  }
 }
 
 export default Api
