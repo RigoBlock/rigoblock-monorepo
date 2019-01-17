@@ -14,7 +14,8 @@
   "files": [
     "artifacts",
     "deploy",
-    "dist"
+    "dist",
+    "constants"
   ],
   "config": {
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
@@ -58,6 +59,16 @@
       }
     }
   },
+  "dependencies": {
+    "@rigoblock/deployer": "^0.1.13",
+    "chalk": "^2.4.1",
+    "inquirer": "^6.2.1",
+    "multispinner": "^0.2.1",
+    "path": "^0.12.7",
+    "pino": "^4.17.3",
+    "truffle-hdwallet-provider": "^0.0.6",
+    "web3": "1.0.0-beta.36"
+  },
   "devDependencies": {
     "0x.js": "^0.38.6",
     "@babel/core": "^7.0.0-beta.54",
@@ -65,22 +76,16 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.54",
     "@babel/polyfill": "^7.0.0-beta.54",
     "@babel/preset-env": "^7.0.0-beta.54",
-    "@rigoblock/deployer": "^0.1.13",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "23.4.2",
     "babel-loader": "^8.0.0-beta",
     "bignumber.js": "^7.2.1",
-    "chalk": "^2.4.1",
     "eslint": "^5.6.0",
     "fs-extra": "^7.0.0",
     "ganache-cli": "^6.1.8",
     "jest": "23.4.1",
     "jest-extended": "^0.11.0",
-    "multispinner": "^0.2.1",
-    "pino": "^4.17.3",
     "solhint": "^1.2.1",
-    "truffle-hdwallet-provider": "^0.0.6",
-    "web3": "1.0.0-beta.36",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0"
   }
