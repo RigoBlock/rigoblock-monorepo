@@ -52,10 +52,10 @@ const createDrago = async () => {
 
 - Only the Drago name must be unique, the symbol doesn't.
 
-### Buying pool units
+### Buying pool shares
 
 ```javascript
-const buyDragoUnits = async (api, dragoAddress, accountAddress) => {
+const buyDragoShares = async (api, dragoAddress, accountAddress) => {
   const { Drago } = api.contract
   const drago = await Drago.createAndValidate(api.web3, dragoAddress)
   const txObject = await drago.buyDrago()
@@ -71,13 +71,13 @@ const buyDragoUnits = async (api, dragoAddress, accountAddress) => {
 }
 ```
 
--   default buy price for a drago is 1 ETH
+-   default buy price for a share is 1 ETH
 -   the amount that the user wants to spend to buy shares must be expressed in Wei
 
-### Selling pool units
+### Selling pool shares
 
 ```javascript
-const sellDragoUnits = async (api, dragoAddress, accountAddress) => {
+const sellDragoShares = async (api, dragoAddress, accountAddress) => {
   const { Drago } = api.contract
   const drago = await Drago.createAndValidate(api.web3, dragoAddress)
   const sellAmount = new BigNumber('2').times(1e6)
@@ -96,7 +96,7 @@ const sellDragoUnits = async (api, dragoAddress, accountAddress) => {
 
 -   the pool has 6 decimals, so the amount of shares to be sold needs to be multiplied by `1e6`
 
-### Setting the Drago prices
+### Setting pool prices
 
 ```javascript
 const setDragoPrices = async (api, dragoAddress, accountAddress) => {
@@ -148,5 +148,5 @@ const setDragoFee = async (api, dragoAddress, accountAddress) => {
 ```
 
 -   the transactionFee is in **basis points**, where each basis point represents 0.01%. The maximum value is **100** as the transaction fee cannot be higher than 1%.
--   by default, the transaction fee is 0 when a new Drago is created
+-   by default, the transaction fee is 0 when a new pool is created
 -   20% of the transaction fee goes to the DAO, while the rest is for the pool's wizard

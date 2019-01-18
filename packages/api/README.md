@@ -1,6 +1,6 @@
 # API
 
-RigoBlock TypeScript API to interact with smart contracts.
+RigoBlock TypeScript API to interact with the [RigoBlock Protocol](../contracts) smart contracts.
 
 ## Installation
 

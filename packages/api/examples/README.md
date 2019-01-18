@@ -20,12 +20,14 @@ or using yarn:
 
 From the examples directory:
 
-```bash
-  node bootstrapContracts.js
-```
+      node bootstrapContracts.js
 
 This will deploy all the smart contracts in order on the Ganache local blockChain.
 
 ### Run the example files
 
 Each example file can be run with node.
+
+eg.
+
+      node createDrago.js
