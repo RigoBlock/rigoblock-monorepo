@@ -4,17 +4,17 @@
 
 ### Install all dependencies
 
-From the examples directory, run
+From the examples directory, run:
 
     npm i
 
-or using yarn
+or using yarn:
 
     yarn
 
 ### Start up Ganache
 
-[Ganache](https://truffleframework.com/ganache) is required and must be up to run the examples locally. A [cli version](https://github.com/trufflesuite/ganache-cli) is also available
+[Ganache](https://truffleframework.com/ganache) is required and must be up to run the examples locally. A [cli version](https://github.com/trufflesuite/ganache-cli) is also available.
 
 ### Bootstrap contracts onto Ganache
 
@@ -25,7 +25,6 @@ From the examples directory:
 ```
 
 This will deploy all the smart contracts in order on the Ganache local blockChain.
-
 
 ### Run the example files
 
