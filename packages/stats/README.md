@@ -66,14 +66,20 @@ Build the docker image (from the monorepo root).
 docker-compose -f ./packages/stats/docker-compose.prod.yml up
 ```
 
-## Tasks
+## Additional resources
 
--   [calculateBalance](docs/tasks/calculateBalance.md)
--   [calculateEthBalance](docs/tasks/calculateEthBalance.md)
--   [fetchDragos](docs/tasks/fetchDragos.md)
--   [getSharePrice](docs/tasks/getSharePrice.md)
--   [getTotalSupply](docs/tasks/getTotalSupply.md)
--   [calculateNav](docs/tasks/calculateNav.md)
+### Data retention
+
+Check the [data retention](docs/data_retention) readme.
+
+### Task descriptions
+
+-   [calculateBalance](docs/tasks/calculate_balance.md)
+-   [calculateEthBalance](docs/tasks/calculate_eth_balance.md)
+-   [fetchDragos](docs/tasks/fetch_dragos.md)
+-   [getSharePrice](docs/tasks/get_share_prices.md)
+-   [getTotalSupply](docs/tasks/get_totalsupply.md)
+-   [calculateNav](docs/tasks/calculate_nav.md)
 
 ## Data currently being fetched
 
