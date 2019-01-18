@@ -1,13 +1,10 @@
 const clk = require('chalk')
-const fs = require('fs')
 const { promisify } = require('util')
 const fetchContracts = require('@rigoblock/contracts').default
+const fs = require('fs-extra')
 
 const glob = promisify(require('glob'))
 const exec = promisify(require('child_process').exec)
-
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
 
 function toPairs(obj) {
   return Object.keys(obj).map(key => [key, obj[key]])
@@ -17,6 +14,10 @@ function capitalize(string) {
 }
 
 const docGen = async networkId => {
+  await fs.ensureDir('./docs/guides')
+  await fs.move('./docs/guides', './guides')
+  await fs.emptyDir('./docs')
+
   // TODO: do this call programmatically as soon
   // as there's a clear way for TypeDoc to be run from node
   console.log('Launching TypeDoc...')
@@ -29,6 +30,12 @@ const docGen = async networkId => {
       `--out docs src`
     ].join(' ')
   )
+  await fs.move('./guides', './docs/guides')
+
+  const README_PATH = './docs/README.md'
+  let readmeContent = (await fs.readFile(README_PATH)).toString()
+  readmeContent = readmeContent.replace(/(\.\/docs\/)/g, './')
+  await fs.writeFile(README_PATH, readmeContent)
 
   const contractsMap = await fetchContracts(networkId)
   const docsList = await glob('./docs/**/*.md')
@@ -40,7 +47,7 @@ const docGen = async networkId => {
       const lowContractName = contractName.toLowerCase()
       const contractDoc = docsList.find(doc => doc.includes(lowContractName))
       const { methods = {}, title = '' } = contractObj.devDoc
-      let docContent = (await readFile(contractDoc)).toString()
+      let docContent = (await fs.readFile(contractDoc)).toString()
       let tokenizedDoc = docContent.split('\n')
 
       const indexIx = tokenizedDoc.findIndex(tkn => tkn.match(/## +Index/))
@@ -107,7 +114,7 @@ const docGen = async networkId => {
         Promise.resolve(docContent)
       )
 
-      await writeFile(contractDoc, docContent)
+      await fs.writeFile(contractDoc, docContent)
     })
   )
 }

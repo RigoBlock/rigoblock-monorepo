@@ -1,6 +1,5 @@
 const Backoff = require('backoff')
 const EventEmitter = require('events')
-const inherits = require('util').inherits
 const WS = typeof window !== 'undefined' ? window['WebSocket'] : require('ws')
 const Subprovider = require('web3-provider-engine/subproviders/subprovider')
 const createPayload = require('web3-provider-engine/util/create-payload')
@@ -74,7 +73,7 @@ class WebsocketSubprovider extends Subprovider {
     this._log(`Sent: ${newPayload.method} #${newPayload.id}`)
   }
 
-  _handleSocketClose({ reason, code }) {
+  _handleSocketClose({ reason, code }, { keepClosed }) {
     this._log(`Socket closed, code ${code} (${reason || 'no reason'})`)
     // If the socket has been open for longer than 5 seconds, reset the backoff
     if (this._connectTime && Date.now() - this._connectTime > 5000) {
@@ -86,7 +85,9 @@ class WebsocketSubprovider extends Subprovider {
     this._socket.removeEventListener('open', this._handleSocketOpen)
 
     this._socket = null
-    this._backoff.backoff()
+    if (!keepClosed) {
+      this._backoff.backoff()
+    }
   }
 
   _handleSocketMessage(message) {
@@ -148,6 +149,15 @@ class WebsocketSubprovider extends Subprovider {
     this._socket.addEventListener('close', this._handleSocketClose)
     this._socket.addEventListener('message', this._handleSocketMessage)
     this._socket.addEventListener('open', this._handleSocketOpen)
+  }
+
+  closeSocket() {
+    this._log('Closing socket...')
+    this._socket.removeEventListener('close', this._handleSocketClose)
+    this._socket.addEventListener('close', e =>
+      this._handleSocketClose(e, { keepClosed: true })
+    )
+    this._socket.close(1000)
   }
 }
 
