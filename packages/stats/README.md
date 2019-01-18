@@ -70,7 +70,7 @@ docker-compose -f ./packages/stats/docker-compose.prod.yml up
 
 ### Data retention
 
-Check the [data retention](docs/data_retention) readme.
+Check the [data retention](docs/data_retention.md) readme.
 
 ### Task descriptions
 
