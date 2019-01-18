@@ -52,5 +52,5 @@ COUCHDB_HOST=nameofthehost COUCHDB_PORT=portnumber COUCHDB_PASSWORD=password nod
 
 ## Tasks
 
--   [fetchInfo](docs/tasks/fetchInfo.md)
--   [fetchNews](docs/tasks/fetchNews.md)
+-   [fetchInfo](docs/tasks/fetch_info.md)
+-   [fetchNews](docs/tasks/fetch_news.md)
