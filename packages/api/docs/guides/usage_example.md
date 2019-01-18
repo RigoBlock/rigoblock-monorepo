@@ -50,6 +50,8 @@ const createDrago = async () => {
 
 -   always use libraries such as [BigNumber.js](https://github.com/MikeMcl/bignumber.js/) when working with numbers, to avoid imprecisions.
 
+- Only the Drago name must be unique, the symbol doesn't.
+
 ### Buying pool units
 
 ```javascript
@@ -69,15 +71,19 @@ const buyDragoUnits = async (api, dragoAddress, accountAddress) => {
 }
 ```
 
+-   default buy price for a drago is 1 ETH
+-   the amount that the user wants to spend to buy shares must be expressed in Wei
+
 ### Selling pool units
 
 ```javascript
 const sellDragoUnits = async (api, dragoAddress, accountAddress) => {
   const { Drago } = api.contract
   const drago = await Drago.createAndValidate(api.web3, dragoAddress)
-  const txObject = await drago.sellDrago()
+  const sellAmount = new BigNumber('2').times(1e6)
+  const txObject = await drago.sellDrago(sellAmount)
   const gasPrice = await api.web3.eth.getGasPrice()
-  const txOptions = { from: accountAddress, value: api.web3.utils.toWei('3') }
+  const txOptions = { from: accountAddress }
   const gasEstimate = await txObject.estimateGas(txOptions)
 
   return txObject.send({
@@ -87,6 +93,8 @@ const sellDragoUnits = async (api, dragoAddress, accountAddress) => {
   })
 }
 ```
+
+-   the pool has 6 decimals, so the amount of shares to be sold needs to be multiplied by `1e6`
 
 ### Setting the Drago prices
 
@@ -115,8 +123,8 @@ const setDragoPrices = async (api, dragoAddress, accountAddress) => {
 }
 ```
 
--   The new **buyPrice** must always be higher than the new **sellPrice**
--   Currently the last 3 parameters of the `setPrices` method are unused, they have been predisposed to easily upgrade the contract in the future and have an approved fronted platform check that the value is correct.
+-   the new **buyPrice** must always be higher than the new **sellPrice**
+-   currently the last 3 parameters of the `setPrices` method are unused, they have been predisposed to easily upgrade the contract in the future and have an approved fronted platform check that the value is correct.
 
 ### Setting the transaction fee
 
@@ -139,6 +147,6 @@ const setDragoFee = async (api, dragoAddress, accountAddress) => {
 }
 ```
 
--   The transactionFee is in **basis points**, where each basis point represents 0.01%. The maximum value is **100** as the transaction fee cannot be higher than 1%.
--   By default, the transaction fee is 0 when a new Drago is created
+-   the transactionFee is in **basis points**, where each basis point represents 0.01%. The maximum value is **100** as the transaction fee cannot be higher than 1%.
+-   by default, the transaction fee is 0 when a new Drago is created
 -   20% of the transaction fee goes to the DAO, while the rest is for the pool's wizard

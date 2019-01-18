@@ -6,7 +6,7 @@ const clk = require('chalk')
 const createDrago = async () => {
   const api = new Api()
   const web3 = new Web3(
-    new Web3.providers.WebsocketProvider('ws://localhost:8545')
+    new Web3.providers.HttpProvider('http://localhost:8545')
   )
   await api.init(web3)
 
@@ -19,7 +19,11 @@ const createDrago = async () => {
   const txOptions = { from: accounts[0] }
   const gasPrice = await api.web3.eth.getGasPrice()
 
-  const txObject = await dragoFactory.createDrago('New Drago', 'DRG')
+  const randomDragoName = Math.random()
+    .toString(36)
+    .substring(7)
+
+  const txObject = await dragoFactory.createDrago(randomDragoName, 'DRG')
   const gasEstimate = await txObject.estimateGas(txOptions)
 
   // this will open the transaction window on metamask
@@ -32,7 +36,6 @@ const createDrago = async () => {
   const dragoAddress = receipt.events.DragoCreated.returnValues.drago
   console.log(clk.green('Drago created!'))
   console.log(clk.green('Address: ' + dragoAddress))
-  await web3.currentProvider.connection.close()
   await api.stopEngine()
 }
 
