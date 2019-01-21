@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/erc20"](../modules/_contracts_models_erc20_.md) > [ERC20Events](../enums/_contracts_models_erc20_.erc20events.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/erc20"](../modules/_contracts_models_erc20_.md) > [ERC20Events](../enums/_contracts_models_erc20_.erc20events.md)
 
 # Enumeration: ERC20Events
 

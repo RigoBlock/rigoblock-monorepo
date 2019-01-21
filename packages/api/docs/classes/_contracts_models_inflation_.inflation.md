@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/inflation"](../modules/_contracts_models_inflation_.md) > [Inflation](../classes/_contracts_models_inflation_.inflation.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/inflation"](../modules/_contracts_models_inflation_.md) > [Inflation](../classes/_contracts_models_inflation_.inflation.md)
 
 # Class: Inflation
 

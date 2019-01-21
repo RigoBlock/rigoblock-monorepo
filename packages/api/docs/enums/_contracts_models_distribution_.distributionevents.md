@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/distribution"](../modules/_contracts_models_distribution_.md) > [DistributionEvents](../enums/_contracts_models_distribution_.distributionevents.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/distribution"](../modules/_contracts_models_distribution_.md) > [DistributionEvents](../enums/_contracts_models_distribution_.distributionevents.md)
 
 # Enumeration: DistributionEvents
 

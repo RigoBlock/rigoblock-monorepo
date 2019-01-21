@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/vault_factory"](../modules/_contracts_models_vault_factory_.md) > [VaultFactoryEvents](../enums/_contracts_models_vault_factory_.vaultfactoryevents.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/vault_factory"](../modules/_contracts_models_vault_factory_.md) > [VaultFactoryEvents](../enums/_contracts_models_vault_factory_.vaultfactoryevents.md)
 
 # Enumeration: VaultFactoryEvents
 

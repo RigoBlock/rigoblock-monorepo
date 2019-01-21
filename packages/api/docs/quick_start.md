@@ -1,6 +1,11 @@
+---
+category: "API reference"
+---
 
-API
-===
+
+
+API Quick Start
+===============
 
 RigoBlock TypeScript API to interact with the [RigoBlock Protocol](../contracts) smart contracts.
 
@@ -169,6 +174,8 @@ Adding custom methods
 ---------------------
 
 Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
+
+* * *
 
 ## Index
 

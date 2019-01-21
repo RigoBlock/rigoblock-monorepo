@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/unlimited_allowance_token"](../modules/_contracts_models_unlimited_allowance_token_.md) > [UnlimitedAllowanceTokenEvents](../enums/_contracts_models_unlimited_allowance_token_.unlimitedallowancetokenevents.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/unlimited_allowance_token"](../modules/_contracts_models_unlimited_allowance_token_.md) > [UnlimitedAllowanceTokenEvents](../enums/_contracts_models_unlimited_allowance_token_.unlimitedallowancetokenevents.md)
 
 # Enumeration: UnlimitedAllowanceTokenEvents
 

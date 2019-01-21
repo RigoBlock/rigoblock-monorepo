@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/owned_uninitialized"](../modules/_contracts_models_owned_uninitialized_.md) > [OwnedUninitializedEvents](../enums/_contracts_models_owned_uninitialized_.owneduninitializedevents.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/owned_uninitialized"](../modules/_contracts_models_owned_uninitialized_.md) > [OwnedUninitializedEvents](../enums/_contracts_models_owned_uninitialized_.owneduninitializedevents.md)
 
 # Enumeration: OwnedUninitializedEvents
 

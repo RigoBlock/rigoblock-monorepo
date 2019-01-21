@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/weth9"](../modules/_contracts_models_weth9_.md) > [WETH9Events](../enums/_contracts_models_weth9_.weth9events.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/weth9"](../modules/_contracts_models_weth9_.md) > [WETH9Events](../enums/_contracts_models_weth9_.weth9events.md)
 
 # Enumeration: WETH9Events
 

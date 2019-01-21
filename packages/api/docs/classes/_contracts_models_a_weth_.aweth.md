@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/a_weth"](../modules/_contracts_models_a_weth_.md) > [AWeth](../classes/_contracts_models_a_weth_.aweth.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/a_weth"](../modules/_contracts_models_a_weth_.md) > [AWeth](../classes/_contracts_models_a_weth_.aweth.md)
 
 # Class: AWeth
 

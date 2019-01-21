@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/drago_eventful"](../modules/_contracts_models_drago_eventful_.md) > [DragoEventful](../classes/_contracts_models_drago_eventful_.dragoeventful.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/drago_eventful"](../modules/_contracts_models_drago_eventful_.md) > [DragoEventful](../classes/_contracts_models_drago_eventful_.dragoeventful.md)
 
 # Class: DragoEventful
 

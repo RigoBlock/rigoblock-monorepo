@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/token_transfer_proxy"](../modules/_contracts_models_token_transfer_proxy_.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/token_transfer_proxy"](../modules/_contracts_models_token_transfer_proxy_.md)
 
 # External module: "contracts/models/token_transfer_proxy"
 

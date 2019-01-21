@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/wrapper_lock"](../modules/_contracts_models_wrapper_lock_.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/wrapper_lock"](../modules/_contracts_models_wrapper_lock_.md)
 
 # External module: "contracts/models/wrapper_lock"
 

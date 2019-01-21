@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/rigo_token"](../modules/_contracts_models_rigo_token_.md) > [RigoToken](../classes/_contracts_models_rigo_token_.rigotoken.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/rigo_token"](../modules/_contracts_models_rigo_token_.md) > [RigoToken](../classes/_contracts_models_rigo_token_.rigotoken.md)
 
 # Class: RigoToken
 

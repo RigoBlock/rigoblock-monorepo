@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/wrapper_lock"](../modules/_contracts_models_wrapper_lock_.md) > [WrapperLock](../classes/_contracts_models_wrapper_lock_.wrapperlock.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/wrapper_lock"](../modules/_contracts_models_wrapper_lock_.md) > [WrapperLock](../classes/_contracts_models_wrapper_lock_.wrapperlock.md)
 
 # Class: WrapperLock
 

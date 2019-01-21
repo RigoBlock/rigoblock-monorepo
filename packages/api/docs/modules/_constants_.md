@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["constants"](../modules/_constants_.md)
+[@rigoblock/api](../quick_start.md) > ["constants"](../modules/_constants_.md)
 
 # External module: "constants"
 

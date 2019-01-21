@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["api"](../modules/_api_.md) > [ProviderEngineFix](../interfaces/_api_.providerenginefix.md)
+[@rigoblock/api](../quick_start.md) > ["api"](../modules/_api_.md) > [ProviderEngineFix](../interfaces/_api_.providerenginefix.md)
 
 # Interface: ProviderEngineFix
 

@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/vault"](../modules/_contracts_models_vault_.md) > [Vault](../classes/_contracts_models_vault_.vault.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/vault"](../modules/_contracts_models_vault_.md) > [Vault](../classes/_contracts_models_vault_.vault.md)
 
 # Class: Vault
 

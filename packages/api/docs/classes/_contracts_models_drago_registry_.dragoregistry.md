@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/drago_registry"](../modules/_contracts_models_drago_registry_.md) > [DragoRegistry](../classes/_contracts_models_drago_registry_.dragoregistry.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/drago_registry"](../modules/_contracts_models_drago_registry_.md) > [DragoRegistry](../classes/_contracts_models_drago_registry_.dragoregistry.md)
 
 # Class: DragoRegistry
 

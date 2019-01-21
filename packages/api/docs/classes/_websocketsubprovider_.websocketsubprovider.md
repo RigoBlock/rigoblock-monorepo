@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["webSocketSubprovider"](../modules/_websocketsubprovider_.md) > [WebsocketSubprovider](../classes/_websocketsubprovider_.websocketsubprovider.md)
+[@rigoblock/api](../quick_start.md) > ["webSocketSubprovider"](../modules/_websocketsubprovider_.md) > [WebsocketSubprovider](../classes/_websocketsubprovider_.websocketsubprovider.md)
 
 # Class: WebsocketSubprovider
 

@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/contractsList"](../modules/_contracts_contractslist_.md) > [ContractsList](../classes/_contracts_contractslist_.contractslist.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/contractsList"](../modules/_contracts_contractslist_.md) > [ContractsList](../classes/_contracts_contractslist_.contractslist.md)
 
 # Class: ContractsList
 

@@ -16,7 +16,7 @@
     "abi-gen": "npm run abi-extract && rm -rf src/contracts/models && node abi-gen.js --abis './.tmp/*.json' -o src/contracts/models --template './templates/smart-contract.handlebars' --partials './templates/partials/*.handlebars'",
     "contracts-list-gen": "rm -rf contracts/contractsList.ts && node contracts-list-gen.js",
     "abi-extract": "rm -rf .tmp && node abi-extractor.js",
-    "doc-gen": "node doc-gen.js"
+    "doc-gen": "rm -rf docs && node doc-gen.js"
   },
   "config": {
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"

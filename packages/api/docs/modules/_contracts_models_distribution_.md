@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/distribution"](../modules/_contracts_models_distribution_.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/distribution"](../modules/_contracts_models_distribution_.md)
 
 # External module: "contracts/models/distribution"
 

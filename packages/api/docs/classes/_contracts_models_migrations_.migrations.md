@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/migrations"](../modules/_contracts_models_migrations_.md) > [Migrations](../classes/_contracts_models_migrations_.migrations.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/migrations"](../modules/_contracts_models_migrations_.md) > [Migrations](../classes/_contracts_models_migrations_.migrations.md)
 
 # Class: Migrations
 

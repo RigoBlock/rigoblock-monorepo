@@ -8,6 +8,7 @@ const exec = promisify(require('child_process').exec)
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
+const unlink = promisify(fs.unlink)
 
 function toPairs(obj) {
   return Object.keys(obj).map(key => [key, obj[key]])
@@ -113,15 +114,18 @@ const docGen = async networkId => {
     })
   )
   console.log('Adding frontmatter...')
+
   await Promise.all(
     docsList.map(async path => {
+      let fileContent = (await readFile(path)).toString()
       if (path === './docs/README.md') {
-        return null
+        await unlink(path)
+        path = './docs/quick_start.md'
       }
-      const fileContent = (await readFile(path)).toString()
+      fileContent = fileContent.replace('../README', `../quick_start`)
       const withFrontmatter = [
         '---',
-        `category: "reference"`,
+        `category: "API reference"`,
         '---',
         '',
         '',

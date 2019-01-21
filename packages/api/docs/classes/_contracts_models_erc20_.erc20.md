@@ -1,9 +1,9 @@
 ---
-category: "reference"
+category: "API reference"
 ---
 
 
-[@rigoblock/api](../README.md) > ["contracts/models/erc20"](../modules/_contracts_models_erc20_.md) > [ERC20](../classes/_contracts_models_erc20_.erc20.md)
+[@rigoblock/api](../quick_start.md) > ["contracts/models/erc20"](../modules/_contracts_models_erc20_.md) > [ERC20](../classes/_contracts_models_erc20_.erc20.md)
 
 # Class: ERC20
 
