@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/owned"](../modules/_contracts_models_owned_.md) > [Owned](../classes/_contracts_models_owned_.owned.md)
 
 # Class: Owned

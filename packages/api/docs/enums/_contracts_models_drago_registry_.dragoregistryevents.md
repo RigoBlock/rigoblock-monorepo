@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/drago_registry"](../modules/_contracts_models_drago_registry_.md) > [DragoRegistryEvents](../enums/_contracts_models_drago_registry_.dragoregistryevents.md)
 
 # Enumeration: DragoRegistryEvents

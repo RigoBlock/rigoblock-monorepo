@@ -2,6 +2,8 @@
 API
 ===
 
+RigoBlock TypeScript API to interact with the [RigoBlock Protocol](../contracts) smart contracts.
+
 Installation
 ------------
 
@@ -114,7 +116,7 @@ Additional Resources
 
 For a complete reference of the API, check our [documentation website](https://docs.rigoblock.com).
 
-Additional examples of API usage can be found [here](./guides/usage_example.md).
+Additional examples of API usage can be found [here](./docs/guides/usage_example.md).
 
 Contributing
 ------------
@@ -190,6 +192,7 @@ Custom methods can be added to our contracts using the [Handlebars template](tem
 * ["contracts/models/exchange_v1_fork"](modules/_contracts_models_exchange_v1_fork_.md)
 * ["contracts/models/exchanges_authority"](modules/_contracts_models_exchanges_authority_.md)
 * ["contracts/models/faucet"](modules/_contracts_models_faucet_.md)
+* ["contracts/models/h_get_drago_data"](modules/_contracts_models_h_get_drago_data_.md)
 * ["contracts/models/inflation"](modules/_contracts_models_inflation_.md)
 * ["contracts/models/migrations"](modules/_contracts_models_migrations_.md)
 * ["contracts/models/nav_verifier"](modules/_contracts_models_nav_verifier_.md)

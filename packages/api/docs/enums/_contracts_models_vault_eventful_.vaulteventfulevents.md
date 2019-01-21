@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/vault_eventful"](../modules/_contracts_models_vault_eventful_.md) > [VaultEventfulEvents](../enums/_contracts_models_vault_eventful_.vaulteventfulevents.md)
 
 # Enumeration: VaultEventfulEvents

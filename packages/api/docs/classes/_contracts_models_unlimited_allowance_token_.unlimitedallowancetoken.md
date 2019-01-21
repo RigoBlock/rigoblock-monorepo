@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/unlimited_allowance_token"](../modules/_contracts_models_unlimited_allowance_token_.md) > [UnlimitedAllowanceToken](../classes/_contracts_models_unlimited_allowance_token_.unlimitedallowancetoken.md)
 
 # Class: UnlimitedAllowanceToken

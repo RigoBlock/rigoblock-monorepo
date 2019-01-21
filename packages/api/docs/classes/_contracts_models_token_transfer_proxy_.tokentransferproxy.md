@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/token_transfer_proxy"](../modules/_contracts_models_token_transfer_proxy_.md) > [TokenTransferProxy](../classes/_contracts_models_token_transfer_proxy_.tokentransferproxy.md)
 
 # Class: TokenTransferProxy

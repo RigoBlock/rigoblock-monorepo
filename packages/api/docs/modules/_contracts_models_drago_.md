@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/drago"](../modules/_contracts_models_drago_.md)
 
 # External module: "contracts/models/drago"

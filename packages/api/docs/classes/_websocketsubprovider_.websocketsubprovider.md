@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["webSocketSubprovider"](../modules/_websocketsubprovider_.md) > [WebsocketSubprovider](../classes/_websocketsubprovider_.websocketsubprovider.md)
 
 # Class: WebsocketSubprovider
@@ -20,6 +25,7 @@
 * [_handleSocketMessage](_websocketsubprovider_.websocketsubprovider.md#_handlesocketmessage)
 * [_handleSocketOpen](_websocketsubprovider_.websocketsubprovider.md#_handlesocketopen)
 * [_openSocket](_websocketsubprovider_.websocketsubprovider.md#_opensocket)
+* [closeSocket](_websocketsubprovider_.websocketsubprovider.md#closesocket)
 * [handleRequest](_websocketsubprovider_.websocketsubprovider.md#handlerequest)
 
 ---
@@ -52,7 +58,7 @@ ___
 
 ###  _handleSocketClose
 
-▸ **_handleSocketClose**(__namedParameters: *`object`*): `void`
+▸ **_handleSocketClose**(__namedParameters: *`object`*, __namedParameters: *`object`*): `void`
 
 **Parameters:**
 
@@ -62,6 +68,12 @@ ___
 | ------ | ------ |
 | code | `any` |
 | reason | `any` |
+
+**__namedParameters: `object`**
+
+| Name | Type |
+| ------ | ------ |
+| keepClosed | `any` |
 
 **Returns:** `void`
 
@@ -95,6 +107,15 @@ ___
 ###  _openSocket
 
 ▸ **_openSocket**(): `void`
+
+**Returns:** `void`
+
+___
+<a id="closesocket"></a>
+
+###  closeSocket
+
+▸ **closeSocket**(): `void`
 
 **Returns:** `void`
 

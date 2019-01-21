@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/exchanges_authority"](../modules/_contracts_models_exchanges_authority_.md) > [ExchangesAuthorityEvents](../enums/_contracts_models_exchanges_authority_.exchangesauthorityevents.md)
 
 # Enumeration: ExchangesAuthorityEvents

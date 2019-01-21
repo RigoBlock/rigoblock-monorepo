@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/weth9"](../modules/_contracts_models_weth9_.md) > [WETH9](../classes/_contracts_models_weth9_.weth9.md)
 
 # Class: WETH9

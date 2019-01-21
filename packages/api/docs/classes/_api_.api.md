@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["api"](../modules/_api_.md) > [Api](../classes/_api_.api.md)
 
 # Class: Api
@@ -18,6 +23,7 @@
 
 * [init](_api_.api.md#init)
 * [startEngine](_api_.api.md#startengine)
+* [stopEngine](_api_.api.md#stopengine)
 
 ---
 
@@ -81,6 +87,15 @@ Promisified version of ProviderEngine start method starts the provider engine co
 
 **Returns:** `Promise`<`Object`>
 a promise that fulfils when the engine is started
+
+___
+<a id="stopengine"></a>
+
+###  stopEngine
+
+▸ **stopEngine**(): `Promise`<`void`>
+
+**Returns:** `Promise`<`void`>
 
 ___
 

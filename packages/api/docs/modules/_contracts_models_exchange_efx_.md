@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/exchange_efx"](../modules/_contracts_models_exchange_efx_.md)
 
 # External module: "contracts/models/exchange_efx"

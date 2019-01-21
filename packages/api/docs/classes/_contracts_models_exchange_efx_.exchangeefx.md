@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/exchange_efx"](../modules/_contracts_models_exchange_efx_.md) > [ExchangeEfx](../classes/_contracts_models_exchange_efx_.exchangeefx.md)
 
 # Class: ExchangeEfx

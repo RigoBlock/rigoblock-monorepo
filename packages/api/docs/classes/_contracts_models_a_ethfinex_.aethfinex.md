@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/a_ethfinex"](../modules/_contracts_models_a_ethfinex_.md) > [AEthfinex](../classes/_contracts_models_a_ethfinex_.aethfinex.md)
 
 # Class: AEthfinex

@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/sig_verifier"](../modules/_contracts_models_sig_verifier_.md) > [SigVerifier](../classes/_contracts_models_sig_verifier_.sigverifier.md)
 
 # Class: SigVerifier

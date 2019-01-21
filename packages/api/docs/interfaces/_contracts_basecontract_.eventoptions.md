@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/baseContract"](../modules/_contracts_basecontract_.md) > [EventOptions](../interfaces/_contracts_basecontract_.eventoptions.md)
 
 # Interface: EventOptions

@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/owned_uninitialized"](../modules/_contracts_models_owned_uninitialized_.md) > [OwnedUninitialized](../classes/_contracts_models_owned_uninitialized_.owneduninitialized.md)
 
 # Class: OwnedUninitialized

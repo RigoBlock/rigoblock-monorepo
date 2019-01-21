@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/faucet"](../modules/_contracts_models_faucet_.md) > [Faucet](../classes/_contracts_models_faucet_.faucet.md)
 
 # Class: Faucet

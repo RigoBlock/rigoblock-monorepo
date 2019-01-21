@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["api"](../modules/_api_.md)
 
 # External module: "api"

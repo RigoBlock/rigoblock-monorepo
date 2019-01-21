@@ -39,8 +39,11 @@ const docGen = async networkId => {
       console.log(`Filling ${clk.magenta(contractName)}...`)
       const lowContractName = contractName.toLowerCase()
       const contractDoc = docsList.find(doc => doc.includes(lowContractName))
-      const { methods = {}, title = '' } = contractObj.devDoc
       let docContent = (await readFile(contractDoc)).toString()
+      if (!contractObj.devDoc) {
+        return writeFile(contractDoc, docContent)
+      }
+      const { methods = {}, title = '' } = contractObj.devDoc
       let tokenizedDoc = docContent.split('\n')
 
       const indexIx = tokenizedDoc.findIndex(tkn => tkn.match(/## +Index/))
@@ -106,8 +109,25 @@ const docGen = async networkId => {
           }),
         Promise.resolve(docContent)
       )
-
       await writeFile(contractDoc, docContent)
+    })
+  )
+  console.log('Adding frontmatter...')
+  await Promise.all(
+    docsList.map(async path => {
+      if (path === './docs/README.md') {
+        return null
+      }
+      const fileContent = (await readFile(path)).toString()
+      const withFrontmatter = [
+        '---',
+        `category: "reference"`,
+        '---',
+        '',
+        '',
+        fileContent
+      ].join('\n')
+      return writeFile(path, withFrontmatter)
     })
   )
 }

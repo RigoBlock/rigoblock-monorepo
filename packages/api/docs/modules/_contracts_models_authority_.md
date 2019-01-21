@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/authority"](../modules/_contracts_models_authority_.md)
 
 # External module: "contracts/models/authority"

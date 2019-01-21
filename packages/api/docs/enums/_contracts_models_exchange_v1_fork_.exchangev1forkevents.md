@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/exchange_v1_fork"](../modules/_contracts_models_exchange_v1_fork_.md) > [ExchangeV1ForkEvents](../enums/_contracts_models_exchange_v1_fork_.exchangev1forkevents.md)
 
 # Enumeration: ExchangeV1ForkEvents

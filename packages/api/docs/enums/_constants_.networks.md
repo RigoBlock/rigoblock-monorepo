@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["constants"](../modules/_constants_.md) > [NETWORKS](../enums/_constants_.networks.md)
 
 # Enumeration: NETWORKS

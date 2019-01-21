@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/baseContract"](../modules/_contracts_basecontract_.md)
 
 # External module: "contracts/baseContract"

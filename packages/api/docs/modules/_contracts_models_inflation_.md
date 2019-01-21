@@ -1,3 +1,8 @@
+---
+category: "reference"
+---
+
+
 [@rigoblock/api](../README.md) > ["contracts/models/inflation"](../modules/_contracts_models_inflation_.md)
 
 # External module: "contracts/models/inflation"
