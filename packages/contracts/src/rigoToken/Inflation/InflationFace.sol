@@ -1,6 +1,6 @@
 /*
 
- Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.
+ Copyright 2017-2019 RigoBlock, Rigo Investment Sagl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity >=0.4.22 <0.6.0;
 
 /// @title Inflation Interface - Allows interaction with the Inflation contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -39,5 +38,6 @@ interface InflationFace {
      * CONSTANT PUBLIC FUNCTIONS
      */
     function canWithdraw(address _thePool) external view returns (bool);
+    function timeUntilClaim(address _thePool) external view returns (uint256);
     function getInflationFactor(address _group) external view returns (uint256);
 }

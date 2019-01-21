@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` Inflation mintInflation fails if called again before the period is over 1`] = `"VM Exception while processing transaction: revert"`;
+exports[` Inflation mintInflation fails if called again before the period is over 1`] = `"VM Exception while processing transaction: revert TIME_NOT_ENOUGH"`;
 
-exports[` Inflation setAuthority can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+exports[` Inflation setAuthority can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert ONLY_RIGOBLOCK_DAO"`;
 
-exports[` Inflation setInflationFactor can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+exports[` Inflation setInflationFactor can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert ONLY_RIGOBLOCK_DAO"`;
 
-exports[` Inflation setInflationFactor throws if we don't pass a whitelisted factory 1`] = `"VM Exception while processing transaction: revert"`;
+exports[` Inflation setInflationFactor throws if we don't pass a whitelisted factory 1`] = `"VM Exception while processing transaction: revert NOT_APPROVED_AUTHORITY"`;
 
-exports[` Inflation setMinimumRigo can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+exports[` Inflation setMinimumRigo can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert ONLY_RIGOBLOCK_DAO"`;
 
-exports[` Inflation setPeriod can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+exports[` Inflation setPeriod can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert ONLY_RIGOBLOCK_DAO"`;
 
-exports[` Inflation setProofOfPerformance can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+exports[` Inflation setProofOfPerformance can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert ONLY_RIGOBLOCK_DAO"`;
 
-exports[` Inflation setRigoblock can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert"`;
+exports[` Inflation setRigoblock can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert ONLY_RIGOBLOCK_DAO"`;
