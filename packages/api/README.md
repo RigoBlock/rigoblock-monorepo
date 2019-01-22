@@ -1,4 +1,3 @@
-
 API Quick Start
 ===============
 
@@ -169,6 +168,4 @@ Adding custom methods
 ---------------------
 
 Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
-
----
 
