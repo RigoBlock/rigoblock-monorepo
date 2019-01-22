@@ -28,7 +28,7 @@ docker-compose -f ./packages/stats/docker-compose.prod.yml up
 
 ## Security and Authorizations
 
-The [env file](./env.couchdb) contains the username and password to access CouchDB. This is where we set the password for the database. The password stored in this file must be HASHED, however its non-hashed version will be the one used by the CouchDB client and when accessing `localhost:5984/_utils`.
+The [env file](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/packages/data-collector/env.couchdb) contains the username and password to access CouchDB. This is where we set the password for the database. The password stored in this file must be HASHED, however its non-hashed version will be the one used by the CouchDB client and when accessing `localhost:5984/_utils`.
 
 > CouchDB requires the hashed password specified in the env.couchdb file.
 >
@@ -42,7 +42,7 @@ This way the file is stored on git, but any changes to the local file will not b
 
 ### Permissions
 
-The databases are read-only for non-admins, thanks to the validation function in [initDatabase.ts](./src/initDatabase.ts). This file creates the databases if they do not exist, creates an index and sets the validation function.
+The databases are read-only for non-admins, thanks to the validation function in [initDatabase.ts](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/packages/data-collector/src/initDatabase.ts). This file creates the databases if they do not exist, creates an index and sets the validation function.
 
 In case we need to update the validation function on any of the DBs on staging, we can execute the file like this:
 

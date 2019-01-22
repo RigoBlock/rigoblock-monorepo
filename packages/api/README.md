@@ -2,7 +2,7 @@
 API Quick Start
 ===============
 
-RigoBlock TypeScript API to interact with the [RigoBlock Protocol](../contracts) smart contracts.
+RigoBlock TypeScript API to interact with the [RigoBlock Protocol](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/contracts) smart contracts.
 
 Installation
 ------------
@@ -116,7 +116,7 @@ Additional Resources
 
 For a complete reference of the API, check our [documentation website](https://docs.rigoblock.com).
 
-Additional examples of API usage can be found [here](./docs/guides/usage_example.md).
+Additional examples of API usage can be found [here](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/api/examples).
 
 Contributing
 ------------
