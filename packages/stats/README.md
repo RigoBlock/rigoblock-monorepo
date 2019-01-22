@@ -99,3 +99,7 @@ For each drago, we are fetching:
 -   GRGW balance
 -   Total supply
 -   Buy-Sell prices
+
+## Contributing
+
+Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/CONTRIBUTING.md).

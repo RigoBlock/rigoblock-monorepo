@@ -1,23 +1,16 @@
-API Quick Start
-===============
+# API Quick Start
 
 RigoBlock TypeScript API to interact with the [RigoBlock Protocol](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/contracts) smart contracts.
 
-Installation
-------------
+## Installation
 
-```
-npm install --save @rigoblock/api
-```
+    npm install --save @rigoblock/api
 
 Or with Yarn:
 
-```
-yarn add @rigoblock/api
-```
+    yarn add @rigoblock/api
 
-Usage
------
+## Usage
 
 ### Initialising the API
 
@@ -110,65 +103,48 @@ await vaultFactory.allEvents(
 )
 ```
 
-Additional Resources
---------------------
+## Additional Resources
 
 For a complete reference of the API, check our [documentation website](https://docs.rigoblock.com).
 
 Additional examples of API usage can be found [here](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/api/examples).
 
-Adding custom methods
----------------------
+## Adding custom methods
 
 Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
 
-Setting up the package
-------------
+## Setup
 
 ### Available Scripts
 
-```
-yarn lint
-```
+    yarn lint
 
 Lints all files.
 
-```
-yarn abi-extract
-```
+    yarn abi-extract
 
 Extracts all abis of the deployed contracts, then copies them over to the .tmp folder in json format.
 
-```
-yarn abi-gen
-```
+    yarn abi-gen
 
 Generates contract wrappers from the abi JSON files.
 
-```
-yarn tsc
-```
+    yarn tsc
 
 Compiles all .ts files to Javascript, including map and declaration files into the `dist` folder.
 
-```
-yarn tsc:watch
-```
+    yarn tsc:watch
 
 Compiles on watch mode
 
-```
-yarn build
-```
+    yarn build
 
 Extracts abis saving them as JSON files, generates wrappers and compiles .ts files into `dist` folder.
 
-```
-yarn doc-gen
-```
+    yarn doc-gen
 
 Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
 
 ## Contributing
 
-Read our [contribution guidelines]().
+Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/CONTRIBUTING.md).

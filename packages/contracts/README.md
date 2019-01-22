@@ -2,7 +2,9 @@
 
 Collection of RigoBlock's smart contracts and deployment/compilation scripts.
 
-## Available Scripts
+## Setup
+
+### Available Scripts
 
 In the project directory, you can run:
 
@@ -53,3 +55,7 @@ Here is a demo of how the script works:
 ## Writing Tests
 
 Read the [testing documentation.](docs/testing.md)
+
+## Contributing
+
+Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/CONTRIBUTING.md).

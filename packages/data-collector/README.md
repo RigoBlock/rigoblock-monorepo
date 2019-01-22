@@ -54,3 +54,7 @@ COUCHDB_HOST=nameofthehost COUCHDB_PORT=portnumber COUCHDB_PASSWORD=password nod
 
 -   [fetchInfo](docs/tasks/fetch_info.md)
 -   [fetchNews](docs/tasks/fetch_news.md)
+
+## Contributing
+
+Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/CONTRIBUTING.md).

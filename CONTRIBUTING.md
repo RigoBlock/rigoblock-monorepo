@@ -4,15 +4,16 @@ This document will help you to start contributing to RigoBlock projects.
 
 ### Getting started
 
-1.  Fork `RigoBlock/rigoblock-monorepo`
-2.  Clone your fork
+1.  Fork `RigoBlock/rigoblock-monorepo`.
+2.  Clone your fork.
 3.  Follow the [installation & build steps](https://github.com/RigoBlock/rigoblock-monorepo#installation) in the repo's top-level README.
-5.  Open a PR against the `master` branch and describe the change you are intending to undertake in the PR description. Also add the `in progress` label.
+4.  Open a PR against the `master` branch and describe the change you are intending to undertake in the PR description. Also add the `in progress` label.
 
 Before submitting the PR for review, make sure:
 
--   It passes our linter checks (`yarn lint`)
--   It doesn't break any unit test (`yarn test:unit`)
+-   It passes our linter checks. (`yarn lint`)
+-   It doesn't break any unit test. (`yarn test:unit`)
+-   If you are contributing to the [contracts](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/contracts#contracts) package, pull requests without unit tests will not be accepted.
 
 Branch names should be prefixed with `fix`, `feature` or `refactor`.
 

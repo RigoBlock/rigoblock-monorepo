@@ -123,8 +123,13 @@ For a complete reference of the API, check our [documentation website](https://d
 
 Additional examples of API usage can be found [here](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/api/examples).
 
-Contributing
-------------
+Adding custom methods
+---------------------
+
+Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
+
+Setup
+-----
 
 ### Available Scripts
 
@@ -170,10 +175,10 @@ yarn doc-gen
 
 Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
 
-Adding custom methods
----------------------
+Contributing
+------------
 
-Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
+Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/CONTRIBUTING.md).
 
 ## Index
 
