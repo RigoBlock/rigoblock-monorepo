@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/exchange_efx"](../modules/_contracts_models_exchange_efx_.md) > [ExchangeEfxEvents](../enums/_contracts_models_exchange_efx_.exchangeefxevents.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/exchange_efx"](../modules/_contracts_models_exchange_efx_.md) > [ExchangeEfxEvents](../enums/_contracts_models_exchange_efx_.exchangeefxevents.md)
 
 # Enumeration: ExchangeEfxEvents
 

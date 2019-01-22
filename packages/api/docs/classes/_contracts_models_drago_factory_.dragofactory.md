@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/drago_factory"](../modules/_contracts_models_drago_factory_.md) > [DragoFactory](../classes/_contracts_models_drago_factory_.dragofactory.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/drago_factory"](../modules/_contracts_models_drago_factory_.md) > [DragoFactory](../classes/_contracts_models_drago_factory_.dragofactory.md)
 
 # Class: DragoFactory
 

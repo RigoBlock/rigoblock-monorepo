@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["webSocketSubprovider"](../modules/_websocketsubprovider_.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["webSocketSubprovider"](../modules/_websocketsubprovider_.md)
 
 # External module: "webSocketSubprovider"
 
@@ -15,7 +20,6 @@
 * [Subprovider](_websocketsubprovider_.md#subprovider)
 * [WS](_websocketsubprovider_.md#ws)
 * [createPayload](_websocketsubprovider_.md#createpayload)
-* [inherits](_websocketsubprovider_.md#inherits)
 
 ---
 
@@ -54,13 +58,6 @@ ___
 ### `<Const>` createPayload
 
 **● createPayload**: *`any`* =  require('web3-provider-engine/util/create-payload')
-
-___
-<a id="inherits"></a>
-
-### `<Const>` inherits
-
-**● inherits**: *`any`* =  require('util').inherits
 
 ___
 

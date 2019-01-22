@@ -16,7 +16,7 @@
     "abi-gen": "npm run abi-extract && rm -rf src/contracts/models && node abi-gen.js --abis './.tmp/*.json' -o src/contracts/models --template './templates/smart-contract.handlebars' --partials './templates/partials/*.handlebars'",
     "contracts-list-gen": "rm -rf contracts/contractsList.ts && node contracts-list-gen.js",
     "abi-extract": "rm -rf .tmp && node abi-extractor.js",
-    "doc-gen": "node doc-gen.js"
+    "doc-gen": "rm -rf docs && node doc-gen.js"
   },
   "config": {
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
@@ -30,7 +30,6 @@
     "@types/web3": "^1.0.6",
     "chalk": "^2.4.1",
     "eslint-plugin-typescript": "^0.12.0",
-    "fs-extra": "^7.0.1",
     "glob": "^7.1.3",
     "handlebars": "^4.0.12",
     "jest": "^23.6.0",

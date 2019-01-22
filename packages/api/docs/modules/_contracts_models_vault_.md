@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/vault"](../modules/_contracts_models_vault_.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/vault"](../modules/_contracts_models_vault_.md)
 
 # External module: "contracts/models/vault"
 

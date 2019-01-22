@@ -1,6 +1,6 @@
-# API
+# API Quick Start
 
-RigoBlock TypeScript API to interact with the [RigoBlock Protocol](../contracts) smart contracts.
+RigoBlock TypeScript API to interact with the [RigoBlock Protocol](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/contracts) smart contracts.
 
 ## Installation
 
@@ -107,9 +107,13 @@ await vaultFactory.allEvents(
 
 For a complete reference of the API, check our [documentation website](https://docs.rigoblock.com).
 
-Additional examples of API usage can be found [here](./docs/guides/usage_example.md).
+Additional examples of API usage can be found [here](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/api/examples).
 
-## Contributing
+## Adding custom methods
+
+Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
+
+## Setup
 
 ### Available Scripts
 
@@ -141,6 +145,6 @@ Extracts abis saving them as JSON files, generates wrappers and compiles .ts fil
 
 Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
 
-## Adding custom methods
+## Contributing
 
-Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
+Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/CONTRIBUTING.md).

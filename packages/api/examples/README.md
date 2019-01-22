@@ -1,4 +1,4 @@
-# Working API examples
+# API examples
 
 ## Setup
 

@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/wrapper_lock"](../modules/_contracts_models_wrapper_lock_.md) > [WrapperLockEvents](../enums/_contracts_models_wrapper_lock_.wrapperlockevents.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/wrapper_lock"](../modules/_contracts_models_wrapper_lock_.md) > [WrapperLockEvents](../enums/_contracts_models_wrapper_lock_.wrapperlockevents.md)
 
 # Enumeration: WrapperLockEvents
 
