@@ -72,7 +72,9 @@ await ethfinex.ws.close()
 
 'RAW' exchange classes will return data unfiltered and unformatted from the API, while non RAW ones will return the data formatted.
 
-## Available Scripts
+## Setup
+
+### Available Scripts
 
 In the project directory, you can run:
 
@@ -95,3 +97,7 @@ Lints all typescript files.
 ### Note
 
 When developing the package locally, make sure to run `yarn bootstrap` in the root directory of the monorepo, and build the package before running it in other packages.
+
+## Contributing
+
+Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/CONTRIBUTING.md).

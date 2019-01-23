@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/exchange_v1_fork"](../modules/_contracts_models_exchange_v1_fork_.md) > [ExchangeV1Fork](../classes/_contracts_models_exchange_v1_fork_.exchangev1fork.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/exchange_v1_fork"](../modules/_contracts_models_exchange_v1_fork_.md) > [ExchangeV1Fork](../classes/_contracts_models_exchange_v1_fork_.exchangev1fork.md)
 
 # Class: ExchangeV1Fork
 

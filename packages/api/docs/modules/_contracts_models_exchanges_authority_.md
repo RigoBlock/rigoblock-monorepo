@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/exchanges_authority"](../modules/_contracts_models_exchanges_authority_.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/exchanges_authority"](../modules/_contracts_models_exchanges_authority_.md)
 
 # External module: "contracts/models/exchanges_authority"
 

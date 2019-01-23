@@ -66,14 +66,20 @@ Build the docker image (from the monorepo root).
 docker-compose -f ./packages/stats/docker-compose.prod.yml up
 ```
 
-## Tasks
+## Additional resources
 
--   [calculateBalance](src/tasks/calculateBalance/README.md)
--   [calculateEthBalance](src/tasks/calculateEthBalance/README.md)
--   [fetchDragos](src/tasks/fetchDragos/README.md)
--   [getSharePrice](src/tasks/getSharePrice/README.md)
--   [getTotalSupply](src/tasks/getTotalSupply/README.md)
--   [calculateNav](src/tasks/calculateNav/README.md)
+### Data retention
+
+Check the [data retention](docs/data_retention.md) readme.
+
+### Task descriptions
+
+-   [calculateBalance](docs/tasks/calculate_balance.md)
+-   [calculateEthBalance](docs/tasks/calculate_eth_balance.md)
+-   [fetchDragos](docs/tasks/fetch_dragos.md)
+-   [getSharePrice](docs/tasks/get_share_prices.md)
+-   [getTotalSupply](docs/tasks/get_totalsupply.md)
+-   [calculateNav](docs/tasks/calculate_nav.md)
 
 ## Data currently being fetched
 
@@ -93,3 +99,7 @@ For each drago, we are fetching:
 -   GRGW balance
 -   Total supply
 -   Buy-Sell prices
+
+## Contributing
+
+Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/CONTRIBUTING.md).

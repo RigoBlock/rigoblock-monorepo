@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/rigo_token"](../modules/_contracts_models_rigo_token_.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/rigo_token"](../modules/_contracts_models_rigo_token_.md)
 
 # External module: "contracts/models/rigo_token"
 

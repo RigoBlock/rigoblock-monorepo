@@ -52,9 +52,13 @@ class Api {
    */
   async init(web3: Web3 = window['web3']) {
     const networkPromise: Promise<number> = new Promise((resolve, reject) => {
-      window['web3'].version.getNetwork((err, res) =>
-        err ? reject(err) : resolve(res)
-      )
+      if (web3.version['getNetwork']) {
+        web3.version['getNetwork']((err, res) =>
+          err ? reject(err) : resolve(res)
+        )
+      } else {
+        web3.eth.net.getId((err, res) => (err ? reject(err) : resolve(res)))
+      }
     })
     const networkId = await networkPromise
     const rpcUrl = RPC_URLS[networkId]
@@ -83,6 +87,18 @@ class Api {
     this.contract = contracts
 
     return this
+  }
+
+  /**
+   * Closes connection of the WebSocketSubprovider
+   * and stops block polling
+   */
+  async stopEngine() {
+    const rpcSubprovider = this.engine['_providers']
+      .filter(obj => obj.constructor.name === 'WebsocketSubprovider')
+      .pop()
+    await this.engine.stop()
+    await rpcSubprovider.closeSocket()
   }
 }
 

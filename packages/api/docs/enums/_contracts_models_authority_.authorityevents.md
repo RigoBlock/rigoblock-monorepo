@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/authority"](../modules/_contracts_models_authority_.md) > [AuthorityEvents](../enums/_contracts_models_authority_.authorityevents.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/authority"](../modules/_contracts_models_authority_.md) > [AuthorityEvents](../enums/_contracts_models_authority_.authorityevents.md)
 
 # Enumeration: AuthorityEvents
 

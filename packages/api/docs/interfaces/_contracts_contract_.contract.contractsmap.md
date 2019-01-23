@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/contract"](../modules/_contracts_contract_.md) > [Contract](../classes/_contracts_contract_.contract.md) > [ContractsMap](../interfaces/_contracts_contract_.contract.contractsmap.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/contract"](../modules/_contracts_contract_.md) > [Contract](../classes/_contracts_contract_.contract.md) > [ContractsMap](../interfaces/_contracts_contract_.contract.contractsmap.md)
 
 # Interface: ContractsMap
 
