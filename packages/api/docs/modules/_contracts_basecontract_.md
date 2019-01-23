@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/baseContract"](../modules/_contracts_basecontract_.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/baseContract"](../modules/_contracts_basecontract_.md)
 
 # External module: "contracts/baseContract"
 

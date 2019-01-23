@@ -35,7 +35,7 @@ Tests do not require Ganache to be up to run correctly.
 
 ## Writing new tests
 
-The [_setupTests.js_](../test/setupTests.js) file contains a `beforeAll()` and an `afterAll()` hooks which will programmatically start and close _ganache-cli_ between each test suite.
+The [_setupTests.js_](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/packages/contracts/test/setupTests.js) file contains a `beforeAll()` and an `afterAll()` hooks which will programmatically start and close _ganache-cli_ between each test suite.
 
 To make sure it works correctly, when creating a new test file we need to wrap all our tests with `describeContract`
 
@@ -67,9 +67,9 @@ This will result in the following output.
 
 We wrap each contract function with `describe`, and each test within a `it` function. Functions may have several `it` tests, depending on the complexity of the function.
 
-The `baseContracts` object is returned from the [deploy function](../deploy/index.js), and contains all the deployed contracts.
+The `baseContracts` object is returned from the [deploy](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/packages/contracts/deploy/deploy.js) function, and contains all the deployed contracts.
 
-By default if we call a method such as in the example above, `baseContracts[contractName].contractMethod()`, if the method requires a transaction to be made it will send the transaction with the default parameters set in [deploy](../deploy/index.js).
+By default if we call a method such as in the example above, `baseContracts[contractName].contractMethod()`, if the method requires a transaction to be made it will send the transaction with the default parameters set in [deploy](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/packages/contracts/deploy/deploy.js).
 
 If we wish to call a method with different parameters, for example from another account, we can call it like so:
 ```
