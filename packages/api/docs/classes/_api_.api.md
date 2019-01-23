@@ -95,6 +95,8 @@ ___
 
 ▸ **stopEngine**(): `Promise`<`void`>
 
+Closes connection of the WebSocketSubprovider and stops block polling
+
 **Returns:** `Promise`<`void`>
 
 ___

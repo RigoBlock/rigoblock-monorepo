@@ -89,6 +89,10 @@ class Api {
     return this
   }
 
+  /**
+   * Closes connection of the WebSocketSubprovider
+   * and stops block polling
+   */
   async stopEngine() {
     const rpcSubprovider = this.engine['_providers']
       .filter(obj => obj.constructor.name === 'WebsocketSubprovider')
