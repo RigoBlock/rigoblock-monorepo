@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/drago_factory"](../modules/_contracts_models_drago_factory_.md) > [DragoFactoryEvents](../enums/_contracts_models_drago_factory_.dragofactoryevents.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/drago_factory"](../modules/_contracts_models_drago_factory_.md) > [DragoFactoryEvents](../enums/_contracts_models_drago_factory_.dragofactoryevents.md)
 
 # Enumeration: DragoFactoryEvents
 

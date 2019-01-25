@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["api"](../modules/_api_.md)
+[@rigoblock/api](../1.quick_start.md) > ["api"](../modules/_api_.md)
 
 # External module: "api"
 

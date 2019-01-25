@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/owned"](../modules/_contracts_models_owned_.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/owned"](../modules/_contracts_models_owned_.md)
 
 # External module: "contracts/models/owned"
 

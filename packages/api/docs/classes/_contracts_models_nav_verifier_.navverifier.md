@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/nav_verifier"](../modules/_contracts_models_nav_verifier_.md) > [NavVerifier](../classes/_contracts_models_nav_verifier_.navverifier.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/nav_verifier"](../modules/_contracts_models_nav_verifier_.md) > [NavVerifier](../classes/_contracts_models_nav_verifier_.navverifier.md)
 
 # Class: NavVerifier
 

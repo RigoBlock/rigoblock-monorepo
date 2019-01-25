@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/erc20"](../modules/_contracts_models_erc20_.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/erc20"](../modules/_contracts_models_erc20_.md)
 
 # External module: "contracts/models/erc20"
 

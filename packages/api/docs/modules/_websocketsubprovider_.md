@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["webSocketSubprovider"](../modules/_websocketsubprovider_.md)
+[@rigoblock/api](../1.quick_start.md) > ["webSocketSubprovider"](../modules/_websocketsubprovider_.md)
 
 # External module: "webSocketSubprovider"
 

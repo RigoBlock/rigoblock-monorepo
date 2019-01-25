@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/wrapper_lock_eth"](../modules/_contracts_models_wrapper_lock_eth_.md) > [WrapperLockEth](../classes/_contracts_models_wrapper_lock_eth_.wrapperlocketh.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/wrapper_lock_eth"](../modules/_contracts_models_wrapper_lock_eth_.md) > [WrapperLockEth](../classes/_contracts_models_wrapper_lock_eth_.wrapperlocketh.md)
 
 # Class: WrapperLockEth
 

@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/faucet"](../modules/_contracts_models_faucet_.md) > [FaucetEvents](../enums/_contracts_models_faucet_.faucetevents.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/faucet"](../modules/_contracts_models_faucet_.md) > [FaucetEvents](../enums/_contracts_models_faucet_.faucetevents.md)
 
 # Enumeration: FaucetEvents
 

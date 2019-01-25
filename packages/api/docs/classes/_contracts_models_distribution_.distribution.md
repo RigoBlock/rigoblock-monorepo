@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/distribution"](../modules/_contracts_models_distribution_.md) > [Distribution](../classes/_contracts_models_distribution_.distribution.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/distribution"](../modules/_contracts_models_distribution_.md) > [Distribution](../classes/_contracts_models_distribution_.distribution.md)
 
 # Class: Distribution
 

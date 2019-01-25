@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/weth9"](../modules/_contracts_models_weth9_.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/weth9"](../modules/_contracts_models_weth9_.md)
 
 # External module: "contracts/models/weth9"
 

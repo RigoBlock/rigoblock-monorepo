@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/drago_eventful"](../modules/_contracts_models_drago_eventful_.md) > [DragoEventfulEvents](../enums/_contracts_models_drago_eventful_.dragoeventfulevents.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/drago_eventful"](../modules/_contracts_models_drago_eventful_.md) > [DragoEventfulEvents](../enums/_contracts_models_drago_eventful_.dragoeventfulevents.md)
 
 # Enumeration: DragoEventfulEvents
 

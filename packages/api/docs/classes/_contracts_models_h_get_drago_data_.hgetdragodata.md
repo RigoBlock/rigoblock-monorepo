@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/h_get_drago_data"](../modules/_contracts_models_h_get_drago_data_.md) > [HGetDragoData](../classes/_contracts_models_h_get_drago_data_.hgetdragodata.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/h_get_drago_data"](../modules/_contracts_models_h_get_drago_data_.md) > [HGetDragoData](../classes/_contracts_models_h_get_drago_data_.hgetdragodata.md)
 
 # Class: HGetDragoData
 

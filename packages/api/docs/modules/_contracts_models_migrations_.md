@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/migrations"](../modules/_contracts_models_migrations_.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/migrations"](../modules/_contracts_models_migrations_.md)
 
 # External module: "contracts/models/migrations"
 

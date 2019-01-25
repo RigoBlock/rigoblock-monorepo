@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/vault_eventful"](../modules/_contracts_models_vault_eventful_.md) > [VaultEventful](../classes/_contracts_models_vault_eventful_.vaulteventful.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/vault_eventful"](../modules/_contracts_models_vault_eventful_.md) > [VaultEventful](../classes/_contracts_models_vault_eventful_.vaulteventful.md)
 
 # Class: VaultEventful
 

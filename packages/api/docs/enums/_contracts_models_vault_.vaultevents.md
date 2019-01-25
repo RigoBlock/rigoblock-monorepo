@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/vault"](../modules/_contracts_models_vault_.md) > [VaultEvents](../enums/_contracts_models_vault_.vaultevents.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/vault"](../modules/_contracts_models_vault_.md) > [VaultEvents](../enums/_contracts_models_vault_.vaultevents.md)
 
 # Enumeration: VaultEvents
 

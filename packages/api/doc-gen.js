@@ -120,9 +120,9 @@ const docGen = async networkId => {
       let fileContent = (await readFile(path)).toString()
       if (path === './docs/README.md') {
         await unlink(path)
-        path = './docs/quick_start.md'
+        path = './docs/1.quick_start.md'
       }
-      fileContent = fileContent.replace('../README', `../quick_start`)
+      fileContent = fileContent.replace('../README', `../1.quick_start`)
       const withFrontmatter = [
         '---',
         `category: "API reference"`,

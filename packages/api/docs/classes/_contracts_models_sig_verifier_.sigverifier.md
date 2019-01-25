@@ -3,7 +3,7 @@ category: "API reference"
 ---
 
 
-[@rigoblock/api](../quick_start.md) > ["contracts/models/sig_verifier"](../modules/_contracts_models_sig_verifier_.md) > [SigVerifier](../classes/_contracts_models_sig_verifier_.sigverifier.md)
+[@rigoblock/api](../1.quick_start.md) > ["contracts/models/sig_verifier"](../modules/_contracts_models_sig_verifier_.md) > [SigVerifier](../classes/_contracts_models_sig_verifier_.sigverifier.md)
 
 # Class: SigVerifier
 
