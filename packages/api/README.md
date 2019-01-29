@@ -1,61 +1,33 @@
-# API
+# API Quick Start
 
-RigoBlock TypeScript API to interact with smart contracts.
+RigoBlock TypeScript API to interact with the [RigoBlock Protocol](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/contracts) smart contracts.
 
-## Building the package
+## Installation
 
-Run the following command:
+    npm install --save @rigoblock/api
 
-    yarn build
+Or with Yarn:
 
-## Available Scripts
+    yarn add @rigoblock/api
 
-### From the project root you can run:
+## Usage
 
-    yarn lint
-
-Lints all files.
-
-    yarn abi-extract
-
-Extracts all abis of the deployed contracts, then copies them over to the .tmp folder in json format. Requires Ganache to be running.
-
-    yarn abi-gen
-
-Generates contract wrappers from the abi JSON files.
-
-    yarn tsc
-
-Compiles all .ts files to Javascript, including map and declaration files into the `dist` folder.
-
-    yarn tsc:watch
-
-Compiles on watch mode
-
-    yarn build
-
-Extracts abis saving them as JSON files, generates wrappers and compiles .ts files into `dist` folder. Requires Ganache to be running unless abi files have been saved previously.
-
-    yarn doc-gen
-
-Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
-
-## Initialising the API
+### Initialising the API
 
 ```javascript
 import Api from '@rigoblock/api'
 
 const api = new Api()
-await api.init(web3, rpcUrl)
+await api.init(web3)
 ```
 
-`rpcUrl` is optional and defaults to `ws://localhost:8545` to work with Ganache.
+_web3_ parameter is optional and defaults to `window.web3`. The API class will then make a call to get the _Network Id_ and set the correct RPC url.
 
-## Instantiating contracts
+### Instantiating contracts
 
-To instantiate a contract we use the `createAndValidate()` function, which will check if the contract is deployed on the blockChain, throwing an error if it isn't. The function accepts two parameters: a web3 instance and the contract's address.
+To instantiate a contract we use the `createAndValidate()` function, which first checks if the contract is deployed on the blockChain, throwing an error if it isn't. The function accepts two parameters: a web3 instance and the contract's address.
 
-Some contracts are already deployed when the API is initialised, their address is saved under a `address` property. To check if a contract is deployed we can use the custom `isDeployed()` function.
+Some contracts are already deployed when the API is initialised, their address is saved under a `address` property. To check if a contract is deployed we can use the `isDeployed()` method.
 
 ```javascript
 api.contract.Authority.isDeployed() // true
@@ -66,9 +38,7 @@ const authority = await api.contract.Authority.createAndValidate(
 )
 ```
 
-## Calling methods
-
-### Example
+### Calling methods
 
 Creating a Vault from the VaultFactory contract
 
@@ -96,15 +66,18 @@ const vaultAddress = receipt.events.VaultCreated.returnValues.vault
 
 We add some more gas to the estimate as it can be incorrect in case new blocks are added between the estimate and the actual transaction taking place.
 
-## Adding custom methods
+### Contract Events
 
-Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
+To get past events of a contract, use the `getPastEvents` function:
 
-## Events
+```javascript
+const pastEvents = await api.contract.vaultEventful.getPastEvents('allEvents', {
+  fromBlock,
+  toBlock
+})
+```
 
-To get past events of a contract, use the `getPastEvents` function. To create a subscription to a single event, use the relative method and pass it a callback to retrieve the data.
-
-### Example
+To create a subscription to a single event, use the relative method and pass it a callback to retrieve the data:
 
 Listening for the `VaultCreated` event
 
@@ -120,8 +93,6 @@ await vaultFactory.VaultCreatedEvent(
 
 If we wish to listen for all events, use the `allEvents` method.
 
-### Example
-
 ```javascript
 await vaultFactory.allEvents(
   {
@@ -131,3 +102,49 @@ await vaultFactory.allEvents(
   (err, events) => (err ? console.error(err) : console.log(events))
 )
 ```
+
+## Additional Resources
+
+For a complete reference of the API, check our [documentation website](https://docs.rigoblock.com).
+
+Additional examples of API usage can be found [here](https://github.com/RigoBlock/rigoblock-monorepo/tree/master/packages/api/examples).
+
+## Adding custom methods
+
+Custom methods can be added to our contracts using the [Handlebars template](template.handlebars).
+
+## Setup
+
+### Available Scripts
+
+    yarn lint
+
+Lints all files.
+
+    yarn abi-extract
+
+Extracts all abis of the deployed contracts, then copies them over to the .tmp folder in json format.
+
+    yarn abi-gen
+
+Generates contract wrappers from the abi JSON files.
+
+    yarn tsc
+
+Compiles all .ts files to Javascript, including map and declaration files into the `dist` folder.
+
+    yarn tsc:watch
+
+Compiles on watch mode
+
+    yarn build
+
+Extracts abis saving them as JSON files, generates wrappers and compiles .ts files into `dist` folder.
+
+    yarn doc-gen
+
+Generates the documentation using [Typedoc](http://typedoc.org/) and further scripts to clean it up.
+
+## Contributing
+
+Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monorepo/blob/master/CONTRIBUTING.md).

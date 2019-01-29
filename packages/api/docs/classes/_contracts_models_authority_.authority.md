@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/authority"](../modules/_contracts_models_authority_.md) > [Authority](../classes/_contracts_models_authority_.authority.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/authority"](../modules/_contracts_models_authority_.md) > [Authority](../classes/_contracts_models_authority_.authority.md)
 
 # Class: Authority
 

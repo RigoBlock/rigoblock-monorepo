@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/exchanges_authority"](../modules/_contracts_models_exchanges_authority_.md) > [ExchangesAuthority](../classes/_contracts_models_exchanges_authority_.exchangesauthority.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/exchanges_authority"](../modules/_contracts_models_exchanges_authority_.md) > [ExchangesAuthority](../classes/_contracts_models_exchanges_authority_.exchangesauthority.md)
 
 # Class: ExchangesAuthority
 

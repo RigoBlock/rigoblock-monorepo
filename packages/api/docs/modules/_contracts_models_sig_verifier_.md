@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/sig_verifier"](../modules/_contracts_models_sig_verifier_.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/sig_verifier"](../modules/_contracts_models_sig_verifier_.md)
 
 # External module: "contracts/models/sig_verifier"
 

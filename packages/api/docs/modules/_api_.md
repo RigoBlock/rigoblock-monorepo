@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["api"](../modules/_api_.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["api"](../modules/_api_.md)
 
 # External module: "api"
 

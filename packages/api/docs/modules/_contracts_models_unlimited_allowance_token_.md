@@ -1,4 +1,9 @@
-[@rigoblock/api](../README.md) > ["contracts/models/unlimited_allowance_token"](../modules/_contracts_models_unlimited_allowance_token_.md)
+---
+category: "API reference"
+---
+
+
+[@rigoblock/api](../quick_start.md) > ["contracts/models/unlimited_allowance_token"](../modules/_contracts_models_unlimited_allowance_token_.md)
 
 # External module: "contracts/models/unlimited_allowance_token"
 

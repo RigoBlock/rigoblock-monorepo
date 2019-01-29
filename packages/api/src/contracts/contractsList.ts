@@ -11,6 +11,7 @@ import { ExchangeEfx } from './models/exchange_efx'
 import { ExchangeV1Fork } from './models/exchange_v1_fork'
 import { ExchangesAuthority } from './models/exchanges_authority'
 import { Faucet } from './models/faucet'
+import { HGetDragoData } from './models/h_get_drago_data'
 import { Inflation } from './models/inflation'
 import { Migrations } from './models/migrations'
 import { NavVerifier } from './models/nav_verifier'
@@ -45,6 +46,7 @@ export abstract class ContractsList {
   ExchangeV1Fork: typeof ExchangeV1Fork & ExchangeV1Fork
   ExchangesAuthority: typeof ExchangesAuthority & ExchangesAuthority
   Faucet: typeof Faucet & Faucet
+  HGetDragoData: typeof HGetDragoData & HGetDragoData
   Inflation: typeof Inflation & Inflation
   Migrations: typeof Migrations & Migrations
   NavVerifier: typeof NavVerifier & NavVerifier

@@ -1,6 +1,6 @@
 /*
 
- Copyright 2017-2018 RigoBlock, Rigo Investment Sagl.
+ Copyright 2017-2019 RigoBlock, Rigo Investment Sagl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,23 +16,32 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.2;
 
 import { Owned } from "../../utils/Owned/Owned.sol";
-import { RigoToken } from "../RigoToken/RigoToken.sol";
 import { AuthorityFace as Authority } from "../../protocol/authorities/Authority/AuthorityFace.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { InflationFace } from "./InflationFace.sol";
 
+interface RigoToken {
+
+    function mintToken(address _recipient, uint256 _amount) external;
+    function changeMintingAddress(address _newAddress) external;
+    function changeRigoblockAddress(address _newAddress) external;
+
+    function balanceOf(address _who) external view returns (uint256);
+}
+
 /// @title Inflation - Allows ProofOfPerformance to mint tokens.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
-contract Inflation is SafeMath, InflationFace {
-
+contract Inflation is
+    SafeMath,
+    InflationFace
+{
     address public RIGOTOKENADDRESS;
 
-    uint256 public period = 12 weeks; //inflation tokens can be minted every 3 months
+    uint256 public period = 1 days;
     uint256 public minimumGRG = 0;
     address public proofOfPerformance;
     address public authority;
@@ -56,28 +65,43 @@ contract Inflation is SafeMath, InflationFace {
     /// @notice in order to qualify for PoP user has to told minimum rigo token
     modifier minimumRigo(address _ofPool) {
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
-        require(rigoToken.balanceOf(getPoolOwner(_ofPool)) >= minimumGRG);
+        require(
+            rigoToken.balanceOf(getPoolOwner(_ofPool)) >= minimumGRG,
+            "BELOW_MINIMUM_GRG"
+        );
         _;
     }
 
     modifier onlyRigoblockDao {
-        require(msg.sender == rigoblockDao);
+        require(
+            msg.sender == rigoblockDao,
+            "ONLY_RIGOBLOCK_DAO"
+        );
         _;
     }
 
     modifier onlyProofOfPerformance {
-        require(msg.sender == proofOfPerformance);
+        require(
+            msg.sender == proofOfPerformance,
+            "ONLY_POP_CONTRACT"
+        );
         _;
     }
 
     modifier isApprovedFactory(address _factory) {
         Authority auth = Authority(authority);
-        require(auth.isWhitelistedFactory(_factory));
+        require(
+            auth.isWhitelistedFactory(_factory),
+            "NOT_APPROVED_AUTHORITY"
+        );
         _;
     }
 
     modifier timeAtLeast(address _thePool) {
-        require(now >= performers[_thePool].endTime);
+        require(
+            now >= performers[_thePool].endTime,
+            "TIME_NOT_ENOUGH"
+        );
         _;
     }
 
@@ -166,7 +190,7 @@ contract Inflation is SafeMath, InflationFace {
     }
 
     /// @dev Allows rigoblock dao to set the minimum time between reward collection
-    /// @param _newPeriod Number of blocks from 2 rewards
+    /// @param _newPeriod Number of seconds between 2 rewards
     /// @notice set period on shorter subsets of time for testing
     function setPeriod(uint256 _newPeriod)
         external
@@ -182,7 +206,8 @@ contract Inflation is SafeMath, InflationFace {
     /// @param _thePool Address of the target pool
     /// @return Bool the wizard can claim
     function canWithdraw(address _thePool)
-        external view
+        external
+        view
         returns (bool)
     {
         if (now >= performers[_thePool].endTime) {
@@ -190,11 +215,25 @@ contract Inflation is SafeMath, InflationFace {
         }
     }
 
+    /// @dev Returns how much time needed until next claim
+    /// @param _thePool Address of the target pool
+    /// @return Number in seconds
+    function timeUntilClaim(address _thePool)
+        external
+        view
+        returns (uint256)
+    {
+        if (now < performers[_thePool].endTime) {
+            return (performers[_thePool].endTime);
+        }
+    }
+
     /// @dev Return the reward factor for a group
     /// @param _group Address of the group
     /// @return Value of the reward factor
     function getInflationFactor(address _group)
-        external view
+        external
+        view
         returns (uint256)
     {
         return groups[_group].epochReward;
@@ -207,7 +246,8 @@ contract Inflation is SafeMath, InflationFace {
     /// @param _ofPool Number of the registered pool
     /// @return Address of the pool owner
     function getPoolOwner(address _ofPool)
-        internal view
+        internal
+        view
         returns (address)
     {
         return Owned(_ofPool).owner();
