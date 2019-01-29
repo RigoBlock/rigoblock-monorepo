@@ -56,7 +56,8 @@ export abstract class ContractsList {
   RigoToken: typeof RigoToken & RigoToken
   SigVerifier: typeof SigVerifier & SigVerifier
   TokenTransferProxy: typeof TokenTransferProxy & TokenTransferProxy
-  UnlimitedAllowanceToken: typeof UnlimitedAllowanceToken & UnlimitedAllowanceToken
+  UnlimitedAllowanceToken: typeof UnlimitedAllowanceToken &
+    UnlimitedAllowanceToken
   Vault: typeof Vault & Vault
   VaultEventful: typeof VaultEventful & VaultEventful
   VaultFactory: typeof VaultFactory & VaultFactory

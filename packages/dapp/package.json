@@ -93,7 +93,7 @@
     "redux-persist": "^5.9.1",
     "rxjs": "5",
     "sass-loader": "^6.0.7",
-    "serve": "^6.5.5",
+    "serve": "10.1.1",
     "style-loader": "0.20.3",
     "svg-react-loader": "^0.4.5",
     "sw-precache-webpack-plugin": "0.11.5",
@@ -102,7 +102,7 @@
     "web3": "^1.0.0-beta.36",
     "webpack": "4.16.1",
     "webpack-cli": "^2.0.12",
-    "webpack-dev-server": "3.1.1",
+    "webpack-dev-server": "3.1.11",
     "webpack-manifest-plugin": "2.0.0-rc.2",
     "whatwg-fetch": "2.0.3"
   },
@@ -162,6 +162,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.1.0",
     "@rigoblock/contracts": "^0.3.10",
-    "core-js": "3.0.0-beta.3"
+    "core-js": "3.0.0-beta.3",
+    "serve": "10.1.1"
   }
 }
