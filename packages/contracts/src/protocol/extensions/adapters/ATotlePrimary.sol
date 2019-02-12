@@ -18,6 +18,30 @@
 
 import { ITotlePrimary } from "../../../utils/exchanges/totle/ITotlePrimary.sol";
 
+// https://github.com/ethereum/EIPs/issues/20
+interface ERC20 {
+    function totalSupply() external view returns (uint supply);
+    function balanceOf(address _owner) external view returns (uint balance);
+    function transfer(address _to, uint _value) external returns (bool success);
+    function transferFrom(address _from, address _to, uint _value) external returns (bool success);
+    function approve(address _spender, uint _value) external returns (bool success);
+    function allowance(address _owner, address _spender) external view returns (uint remaining);
+    function decimals() external view returns(uint digits);
+    event Approval(address indexed _owner, address indexed _spender, uint _value);
+}
+
+interface Oracle {
+
+    function getExpectedRate(
+        ERC20 src,
+        ERC20 dest,
+        uint srcQty,
+        bool usePermissionless)
+        external
+        view
+        returns (uint expectedRate, uint slippageRate);
+}
+
 //import { Drago } from "../../Drago/Drago.sol";
 //import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
 //import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/ExchangesAuthority/ExchangesAuthorityFace.sol";
