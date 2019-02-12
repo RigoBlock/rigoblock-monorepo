@@ -50,14 +50,40 @@ contract ATotlePrimary {
         bool[] ignoreOrder;
     }
 
+    /// @dev Sends transactions to the Totle contract.
+    /// @param trades Array of Structs of parameters and orders.
+    /// @param id Number of the trasactions id.
     function performRebalance(
         Trade[] memory trades,
         bytes32 id
     )
         public
     {
+        Trade[] memory checkedTrades = new Trade[](trades.length);
+        for (uint256 i = 1; i <= trades.length; i++) {
+            address ETH_TOKEN_ADDRESS = address(0);
+            address targetTokenAddress = trades[i].tokenAddress;
+            address oracleAddress = address(0);
+            Oracle oracle = Oracle(oracleAddress);
+
+            (uint expectedRate, ) = (oracle.getExpectedRate(
+                ERC20(ETH_TOKEN_ADDRESS),
+                ERC20(targetTokenAddress),
+                uint256(0),
+                false
+                )
+            );
+
+            if (expectedRate < trades[i].minimumExchangeRate * 95 / 100)
+                continue;
+
+            if (expectedRate > trades[i].minimumExchangeRate * 105 / 100)
+                continue;
+
+            checkedTrades[i] = trades[i];
+        }
         address totleAddress = address(0);
-        (bool success, ) = totleAddress.call(abi.encodeWithSignature("performRebalance(Trade[] calldata, bytes32)", trades, id));
+        (bool success, ) = totleAddress.call(abi.encodeWithSignature("performRebalance(Trade[] calldata, bytes32)", checkedTrades, id));
         require(
             success,
             "CALL_FAILED"
