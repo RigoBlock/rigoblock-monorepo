@@ -57,7 +57,10 @@ contract ATotlePrimary {
         public
     {
         address totleAddress = address(0);
-        //ITotlePrimary(totleAddress).performRebalance(trades, id);
-        totleAddress.call(abi.encodeWithSignature("performRebalance(Trade[] calldata, bytes32)", trades, id));
+        (bool success, ) = totleAddress.call(abi.encodeWithSignature("performRebalance(Trade[] calldata, bytes32)", trades, id));
+        require(
+            success,
+            "CALL_FAILED"
+        );
     }
 }
