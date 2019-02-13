@@ -16,7 +16,7 @@
 
 */
 
-import { ITotlePrimary } from "../../../utils/exchanges/totle/ITotlePrimary.sol";
+import { ITotlePrimary } from "../../../utils/exchanges/totle/ITotlePrimary/ITotlePrimary.sol";
 
 // https://github.com/ethereum/EIPs/issues/20
 interface ERC20 {
