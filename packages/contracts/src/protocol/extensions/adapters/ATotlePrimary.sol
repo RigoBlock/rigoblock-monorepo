@@ -105,12 +105,52 @@ contract ATotlePrimary {
                 continue;
 
             checkedTrades[i] = trades[i];
+            
+            // set allowances
+            address tokenTransferProxy = address(0); // query from external contract
+            require(setAllowances(tokenTransferProxy, targetTokenAddress, 2**256 -1));
         }
         address totleAddress = address(0);
         (bool success, ) = totleAddress.call(abi.encodeWithSignature("performRebalance(Trade[] calldata, bytes32)", checkedTrades, id));
+
+        // set allowances
+        for (uint256 i = 1; i <= trades.length; i++) {
+            address targetTokenAddress = trades[i].tokenAddress;
+
+            address tokenTransferProxy = address(0);
+            require(setAllowances(tokenTransferProxy, targetTokenAddress, 2**256 -1));
+        }
         require(
             success,
             "CALL_FAILED"
         );
+    }
+
+    /*
+     * INTERNAL FUNCTIONS
+     */
+    /// @dev Allows owner to set an infinite allowance to an approved exchange.
+    /// @param tokenTransferProxy Address of the proxy to be approved.
+    /// @param token Address of the token to receive allowance for.
+    /// @param amount Amount to be approved.
+    function setAllowances(
+        address tokenTransferProxy,
+        address token,
+        uint256 amount)
+        internal
+        returns (bool success)
+    {
+        success = false;
+
+        require(
+            ERC20(token)
+            .approve(
+                tokenTransferProxy,
+                amount
+            ),
+            "ALLOWANCE_SET_UNSUCCESSFUL"
+        );
+
+        return (success = true);
     }
 }
