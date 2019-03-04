@@ -70,7 +70,7 @@ contract SigVerifier {
         v = uint8(signature[0]);
         r = signature.readBytes32(1);
         s = signature.readBytes32(33);
-            
+
         if (recovered == ecrecover(
                 hash,
                 v,
