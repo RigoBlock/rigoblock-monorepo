@@ -19,10 +19,16 @@
 pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
+import { LibBytes } from "../../../utils/LibBytes/LibBytes.sol";
+import { Drago } from "../../Drago/Drago.sol";
+import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/ExchangesAuthority/ExchangesAuthorityFace.sol";
+
 /// @title SigVerifier - Allows verify whether a transaction has been signed correctly.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 contract SigVerifier {
+    
+    using LibBytes for bytes;
 
     /// @dev Verifies that a signature is valid.
     /// @param hash Message hash that is signed.
@@ -39,6 +45,58 @@ contract SigVerifier {
         view
         returns (bool isValid)
     {
-        return isValid = false;
+        
+        uint8 v;
+        bytes32 r;
+        bytes32 s;
+        address recovered;
+
+        address adapter = 
+            ExchangesAuthority(
+                Drago(
+                    address(msg.sender)
+                )
+                .getExchangesAuth()
+            )
+            .getExchangeAdapter(tx.origin); // check for attack vectors
+        require(
+            adapter != address(0),
+            "ORIGIN_NOT_WHITELISTED"
+        );
+        require(
+            signature.length == 65,
+            "LENGTH_65_REQUIRED"
+        );
+        v = uint8(signature[0]);
+        r = signature.readBytes32(1);
+        s = signature.readBytes32(33);
+
+        if (recovered == ecrecover(
+                hash,
+                v,
+                r,
+                s
+            )
+        ) {
+            isValid = Drago(
+                address(msg.sender)
+                ).owner() == recovered;
+            return isValid;
+
+        } else if (recovered == ecrecover(
+                keccak256(abi.encodePacked(
+                    "\x19Ethereum Signed Message:\n32",
+                    hash
+                )),
+                v,
+                r,
+                s
+            )
+        ) {
+            isValid = Drago(
+                address(msg.sender)
+                ).owner() == recovered;
+            return isValid;  
+        } else return isValid = false;
     }
 }
