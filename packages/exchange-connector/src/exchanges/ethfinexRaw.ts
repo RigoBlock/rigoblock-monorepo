@@ -7,11 +7,13 @@ export class EthfinexRaw {
   static SUPPORTED_NETWORKS: NETWORKS[] = [NETWORKS.MAINNET, NETWORKS.ROPSTEN, NETWORKS.KOVAN]
   public static API_HTTP_URLS = {
     [NETWORKS.MAINNET]: 'https://api.ethfinex.com/v2',
-    [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2'
+    [NETWORKS.ROPSTEN]: 'https://test.ethfinex.com/v2',
+    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/v2'
   }
   public static API_WS_URLS = {
     [NETWORKS.MAINNET]: 'wss://api.ethfinex.com/ws/2',
-    [NETWORKS.ROPSTEN]: 'wss://test.ethfinex.com/ws/2'
+    [NETWORKS.ROPSTEN]: 'wss://test.ethfinex.com/ws/2',
+    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/ws/2'
   }
   public static TRUSTLESS_URLS = {
     [NETWORKS.MAINNET]: 'https://api.ethfinex.com/trustless/v1'
