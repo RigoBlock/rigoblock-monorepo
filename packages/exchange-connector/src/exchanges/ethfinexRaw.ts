@@ -13,7 +13,7 @@ export class EthfinexRaw {
   public static API_WS_URLS = {
     [NETWORKS.MAINNET]: 'wss://api.ethfinex.com/ws/2',
     [NETWORKS.ROPSTEN]: 'wss://test.ethfinex.com/ws/2',
-    [NETWORKS.KOVAN]: 'https://test.ethfinex.com/ws/2'
+    [NETWORKS.KOVAN]: 'wss://test.ethfinex.com/ws/2'
   }
   public static TRUSTLESS_URLS = {
     [NETWORKS.MAINNET]: 'https://api.ethfinex.com/trustless/v1'
