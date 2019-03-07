@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` Drago operateOnExchange logs an order signature for input data 1`] = `"VM Exception while processing transaction: revert ORIGIN_NOT_WHITELISTED"`;
+exports[` Drago isValidSignature rejects order signature for wallet input data if caller not whitelisted 1`] = `"VM Exception while processing transaction: revert ORIGIN_NOT_WHITELISTED"`;
