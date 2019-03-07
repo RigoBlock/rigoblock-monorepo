@@ -27,7 +27,7 @@ import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 contract SigVerifier {
-    
+
     using LibBytes for bytes;
 
     /// @dev Verifies that a signature is valid.
@@ -45,58 +45,58 @@ contract SigVerifier {
         view
         returns (bool isValid)
     {
-        
+
         uint8 v;
         bytes32 r;
         bytes32 s;
         address recovered;
+        address recoveredEIP712;
 
-        address adapter = 
+        require(
             ExchangesAuthority(
                 Drago(
                     address(msg.sender)
                 )
                 .getExchangesAuth()
             )
-            .getExchangeAdapter(tx.origin); // check for attack vectors
-        require(
-            adapter != address(0),
+            .getExchangeAdapter(tx.origin) != address(0), // check for attack vectors
             "ORIGIN_NOT_WHITELISTED"
         );
-        require(
+        /*require(
             signature.length == 65,
             "LENGTH_65_REQUIRED"
-        );
+        );*/
         v = uint8(signature[0]);
         r = signature.readBytes32(1);
         s = signature.readBytes32(33);
 
-        if (recovered == ecrecover(
-                hash,
-                v,
-                r,
-                s
-            )
-        ) {
+        recovered == ecrecover(
+            hash,
+            v,
+            r,
+            s
+        );
+
+        recoveredEIP712 == ecrecover(
+            keccak256(abi.encodePacked(
+                "\x19Ethereum Signed Message:\n32",
+                hash
+            )),
+            v,
+            r,
+            s
+        );
+
+        if (recovered != address(0) || recoveredEIP712 != address(0)) {
             isValid = Drago(
                 address(msg.sender)
                 ).owner() == recovered;
+            isValid = true;
             return isValid;
 
-        } else if (recovered == ecrecover(
-                keccak256(abi.encodePacked(
-                    "\x19Ethereum Signed Message:\n32",
-                    hash
-                )),
-                v,
-                r,
-                s
-            )
-        ) {
-            isValid = Drago(
-                address(msg.sender)
-                ).owner() == recovered;
-            return isValid;  
-        } else return isValid = false;
+        } else {
+            isValid = false;
+            return isValid;
+        }
     }
 }
