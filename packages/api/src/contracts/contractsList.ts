@@ -7,6 +7,7 @@ import { DragoEventful } from './models/drago_eventful'
 import { DragoFactory } from './models/drago_factory'
 import { DragoRegistry } from './models/drago_registry'
 import { ERC20 } from './models/erc20'
+import { Exchange } from './models/exchange'
 import { ExchangeEfx } from './models/exchange_efx'
 import { ExchangeV1Fork } from './models/exchange_v1_fork'
 import { ExchangesAuthority } from './models/exchanges_authority'
@@ -42,6 +43,7 @@ export abstract class ContractsList {
   DragoFactory: typeof DragoFactory & DragoFactory
   DragoRegistry: typeof DragoRegistry & DragoRegistry
   ERC20: typeof ERC20 & ERC20
+  Exchange: typeof Exchange & Exchange
   ExchangeEfx: typeof ExchangeEfx & ExchangeEfx
   ExchangeV1Fork: typeof ExchangeV1Fork & ExchangeV1Fork
   ExchangesAuthority: typeof ExchangesAuthority & ExchangesAuthority

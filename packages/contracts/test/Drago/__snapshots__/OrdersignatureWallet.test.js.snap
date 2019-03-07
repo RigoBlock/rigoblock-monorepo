@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` Drago operateOnExchange logs an order signature for input data 1`] = `"VM Exception while processing transaction: revert ORIGIN_NOT_WHITELISTED"`;

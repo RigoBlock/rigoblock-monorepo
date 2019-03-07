@@ -140,6 +140,10 @@ module.exports = async (baseAccount, network) => {
   await tokenTransferProxy.addAuthorizedAddress(exchangeV1Fork.address)
   await exchangesAuthority.whitelistExchange(exchangeV1Fork.address, true)
 
+  // 0x V2 exchange
+  const exchange = await deploy(baseAccount, network, 'Exchange')
+  printAddress('Exchange', exchange.address)
+
   const navVerifier = await deploy(baseAccount, network, 'NavVerifier')
   printAddress('NavVerifier', navVerifier.address)
 
@@ -176,6 +180,7 @@ module.exports = async (baseAccount, network) => {
     VaultFactory: vaultFactory,
     DragoEventful: dragoEventful,
     DragoFactory: dragoFactory,
+    Exchange: exchange,
     ExchangeEfx: exchangeEfx,
     ExchangeV1Fork: exchangeV1Fork,
     Faucet: faucet,

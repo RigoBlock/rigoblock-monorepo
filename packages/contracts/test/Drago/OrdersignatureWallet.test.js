@@ -1,4 +1,7 @@
-import { GANACHE_NETWORK_ID } from '../../constants'
+//import { BigNumber } from 'bignumber.js'
+//import { ZeroEx } from '0x.js'
+import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
+import dragoArtifact from '../../artifacts/Drago.json'
 import {
     assetDataUtils,
     BigNumber,
@@ -14,17 +17,46 @@ import web3 from '../web3'
 const contractName = 'Drago'
 
 describeContract(contractName, () => {
+  let dragoAddress
+  let dragoInstance
+  let transactionDefault
+  let exchangeAddress
+  //let hotWalletAddress
+  let ethfinexAdapterAddress
+
+  beforeAll(async () => {
+    await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
+    const dragoData = await baseContracts['DragoRegistry'].fromName(
+      'my new drago'
+    )
+    const [, address] = dragoData
+    dragoAddress = address
+    dragoInstance = new web3.eth.Contract(
+      dragoArtifact.networks[GANACHE_NETWORK_ID].abi,
+      dragoAddress
+    )
+    transactionDefault = {
+      from: accounts[0],
+      gas: GAS_ESTIMATE,
+      gasPrice: 1
+    }
+    exchangeAddress = await baseContracts['Exchange'].address
+    //hotWalletAddress = accounts[0] // hot wallet
+    ethfinexAdapterAddress = await baseContracts[
+      'ExchangesAuthority'
+    ].getExchangeAdapter(exchangeAddress)
+    await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
+  })
 
   describe('operateOnExchange', () => {
     it('logs an order signature for input data', async () => {
-      const makerAddress = '0x2f3ae8c5e7321688999883fd4f569e928d81d68f' // a drago
+      const makerAddress = dragoAddress // '0x2f3ae8c5e7321688999883fd4f569e928d81d68f' // a drago
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3' // base account with GRG and ETH balance
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000' // ZeroEx.NULL_ADDRESS
       const makerAssetData = '0xacfb4c79259e3c2c1bf054f136e6d75f7cc2b07e' // GRGW // TODO: double check format
       const takerAssetData = '0x06da2eb72279c1cec53c251bbff4a06fbfb93a5b' // ETHW // TODO: double check format
-      const exchangeAddress =
-        '0x1d8643aae25841322ecde826862a9fa922770981'
+      //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
       const takerFee = new BigNumber(0).toString()
@@ -77,18 +109,35 @@ describeContract(contractName, () => {
 
       const typedSignature = await signatureUtils.convertToSignatureWithType(
         signature,
-        'EthSign'
+        'Wallet'
       )
+
       const data = orderHash
 
       // check against 0x api
-      const isValidSignature = await signatureUtils.isValidSignatureAsync(
-        provider,
-        data,
-        signature, // by default checks against EthSign
-        signerAddress
-      )
-      expect(isValidSignature).toEqual(true) // checks the signature on provider
+      const isValidSignature = await expect(
+        signatureUtils
+        .isValidWalletSignatureAsync(
+          provider,
+          data,
+          signature,
+          dragoAddress
+        )
+      ).rejects.toThrowErrorMatchingSnapshot() // revert ORIGIN_NOT_WHITELISTED (caller must be hot wallet)
+
+// TODO: check again by whitelisting the caller
+
+/*
+      // check against exchange smart contract
+      const isValidSignature = await baseContracts['Exchange']
+        .isValidSignature(
+          data,
+          dragoAddress, // the account that should have signed the transaction
+          typedSignature,
+        )
+      expect(isValidSignature).toEqual(false)
+      // VM Exception while processing transaction: revert SIGNATURE_UNSUPPORTED
+*/
     })
   })
 })

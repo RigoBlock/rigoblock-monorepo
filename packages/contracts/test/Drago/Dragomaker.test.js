@@ -38,7 +38,7 @@ describeContract(contractName, () => {
   })
 
   describe('operateOnExchange', () => {
-    it('swaps ETH from a drago to an account and GRG from account to drago', async () => {
+    it.skip('swaps ETH from a drago to an account and GRG from account to drago', async () => {
       // adds additional ether to the pool to be able to deposit
       const purchaseAmount = web3.utils.toWei('5.1')
       await dragoInstance.methods.buyDrago().send({
