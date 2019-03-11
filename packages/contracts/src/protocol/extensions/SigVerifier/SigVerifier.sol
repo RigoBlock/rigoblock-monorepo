@@ -29,6 +29,15 @@ import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/
 contract SigVerifier {
 
     using LibBytes for bytes;
+    
+    address public exchangesAuthorityAddress;
+    
+    constructor(
+        address _exchangesAuthorityAddress)
+        public
+    {
+        exchangesAuthorityAddress = _exchangesAuthorityAddress;
+    }
 
     /// @dev Verifies that a signature is valid.
     /// @param hash Message hash that is signed.
@@ -45,58 +54,97 @@ contract SigVerifier {
         view
         returns (bool isValid)
     {
+        require(
+            ExchangesAuthority(
+                /*Drago(
+                    address(msg.sender)
+                )
+                .getExchangesAuth()*/
+                exchangesAuthorityAddress
+            )
+            .getExchangeAdapter(address(tx.origin)) != address(0), // check for attack vectors
+            "ORIGIN_NOT_WHITELISTED"
+        );
+        
 
+        address recoveredEIP712 = returnRecoveredEIP712Internal(hash, signature);
+
+        if (recoveredEIP712 != address(0)) {
+            isValid = recoveredEIP712 == Drago(address(msg.sender)).owner();
+            return isValid;
+        }
+    }
+
+    function returnRecovered(
+        bytes32 hash,
+        bytes signature)
+        external
+        pure
+        returns (address recovered)
+    {
+        return returnRecoveredInternal(hash, signature);
+    }
+    
+    function returnRecoveredEIP712(
+        bytes32 hash,
+        bytes signature)
+        external
+        pure
+        returns (address recovered)
+    {
+        return returnRecoveredEIP712Internal(hash, signature);
+    }
+
+    // INTERNAL FUNCTIONS
+
+    function returnRecoveredInternal(
+        bytes32 hash,
+        bytes signature)
+        internal
+        pure
+        returns (address recovered)
+    {
         uint8 v;
         bytes32 r;
         bytes32 s;
-        address recovered;
-        address recoveredEIP712;
 
-        require(
-            ExchangesAuthority(
-                Drago(
-                    address(msg.sender)
-                )
-                .getExchangesAuth()
-            )
-            .getExchangeAdapter(tx.origin) != address(0), // check for attack vectors
-            "ORIGIN_NOT_WHITELISTED"
-        );
-        /*require(
-            signature.length == 65,
-            "LENGTH_65_REQUIRED"
-        );*/
         v = uint8(signature[0]);
         r = signature.readBytes32(1);
         s = signature.readBytes32(33);
 
-        recovered == ecrecover(
-            hash,
-            v,
-            r,
-            s
-        );
+        recovered = ecrecover(
+                hash,
+                v,
+                r,
+                s
+            );
+        return recovered;
+    }
 
-        recoveredEIP712 == ecrecover(
-            keccak256(abi.encodePacked(
-                "\x19Ethereum Signed Message:\n32",
-                hash
-            )),
-            v,
-            r,
-            s
-        );
+    function returnRecoveredEIP712Internal(
+        bytes32 hash,
+        bytes signature)
+        internal
+        pure
+        returns (address recovered)
+    {
+        uint8 v;
+        bytes32 r;
+        bytes32 s;
 
-        if (recovered != address(0) || recoveredEIP712 != address(0)) {
-            isValid = Drago(
-                address(msg.sender)
-                ).owner() == recovered;
-            isValid = true;
-            return isValid;
+        v = uint8(signature[0]);
+        r = signature.readBytes32(1);
+        s = signature.readBytes32(33);
 
-        } else {
-            isValid = false;
-            return isValid;
-        }
+        recovered = ecrecover(
+                keccak256(abi.encodePacked(
+                    "\x19Ethereum Signed Message:\n32",
+                    hash
+                )),
+                v,
+                r,
+                s
+            );
+        return recovered;
     }
 }

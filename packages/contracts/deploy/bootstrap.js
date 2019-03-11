@@ -149,7 +149,9 @@ module.exports = async (baseAccount, network) => {
 
   await authority.setNavVerifier(navVerifier.address)
 
-  const sigVerifier = await deploy(baseAccount, network, 'SigVerifier')
+  const sigVerifier = await deploy(baseAccount, network, 'SigVerifier', [
+    exchangesAuthority.address
+  ])
   printAddress('SigVerifier', sigVerifier.address)
 
   await exchangesAuthority.setSignatureVerifier(sigVerifier.address)
