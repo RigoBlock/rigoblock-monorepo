@@ -16,7 +16,7 @@ const contractName = 'Drago'
 describeContract(contractName, () => {
 
   describe('operateOnExchange', () => {
-    it.skip('logs an order signature for input data', async () => {
+    it('logs an order signature for input data', async () => {
       const makerAddress = '0x2f3ae8c5e7321688999883fd4f569e928d81d68f' // a drago
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3' // base account with GRG and ETH balance
