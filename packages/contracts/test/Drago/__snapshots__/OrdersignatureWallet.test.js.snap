@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` Drago isValidSignature rejects order signature for wallet input data if caller not whitelisted 1`] = `"VM Exception while processing transaction: revert ORIGIN_NOT_WHITELISTED"`;

@@ -26,6 +26,7 @@ module.exports = {
     'DragoRegistry',
     'Faucet',
     'ERC20',
+    'Exchange',
     'ExchangeEfx',
     'ExchangeV1Fork',
     'ExchangesAuthority',

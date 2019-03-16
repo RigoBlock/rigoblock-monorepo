@@ -225,7 +225,7 @@
             "sources": [
                 "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/protocol/extensions/NavVerifier/NavVerifier.sol"
             ],
-            "address": "0xb611eb75e36221b78f5b374ee9b2c9de2b9cc23a",
+            "address": "0x7a3197c44c9866ca82a1c6c9f1ae94d244da2e02",
             "constructor_args": "0x"
         }
     }
