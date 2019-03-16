@@ -1356,7 +1356,7 @@
             "sources": [
                 "/home/whitenoise/Desktop/Development/rigoblock-monorepo/packages/contracts/src/examples/helpers/HGetDragoData.sol"
             ],
-            "address": "0x93d68ee9d3be5ada8aabf51846fd9f122e087422",
+            "address": "0xaa5ce5dcd31220df52c698596939ce444b8ea6a4",
             "constructor_args": "0x"
         }
     }

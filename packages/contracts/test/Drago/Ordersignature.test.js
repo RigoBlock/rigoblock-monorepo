@@ -1,71 +1,96 @@
-import { BigNumber } from 'bignumber.js'
-import { ZeroEx } from '0x.js'
+import { GANACHE_NETWORK_ID } from '../../constants'
+import {
+    assetDataUtils,
+    BigNumber,
+    ContractWrappers,
+    generatePseudoRandomSalt,
+    Order,
+    orderHashUtils,
+    signatureUtils,
+    SignerType,
+} from '0x.js'
 import web3 from '../web3'
 
 const contractName = 'Drago'
 
 describeContract(contractName, () => {
+
   describe('operateOnExchange', () => {
     it('logs an order signature for input data', async () => {
-      const maker = '0x2f3ae8c5e7321688999883fd4f569e928d81d68f' // a drago
-      const taker = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3' // base account with GRG and ETH balance
-      const feeRecipient = ZeroEx.NULL_ADDRESS
-      const makerTokenAddress = '0xacfb4c79259e3c2c1bf054f136e6d75f7cc2b07e' // GRGW
-      const takerTokenAddress = '0x06da2eb72279c1cec53c251bbff4a06fbfb93a5b' // ETHW
-      const exchangeContractAddress =
+      const makerAddress = '0x2f3ae8c5e7321688999883fd4f569e928d81d68f' // a drago
+      const takerAddress = '0x0000000000000000000000000000000000000000'
+      const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3' // base account with GRG and ETH balance
+      const feeRecipientAddress = '0x0000000000000000000000000000000000000000' // ZeroEx.NULL_ADDRESS
+      const makerAssetData = '0xacfb4c79259e3c2c1bf054f136e6d75f7cc2b07e' // GRGW // TODO: double check format
+      const takerAssetData = '0x06da2eb72279c1cec53c251bbff4a06fbfb93a5b' // ETHW // TODO: double check format
+      const exchangeAddress =
         '0x1d8643aae25841322ecde826862a9fa922770981'
-      const salt = ZeroEx.generatePseudoRandomSalt().toString()
+      const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
       const takerFee = new BigNumber(0).toString()
-      const makerTokenAmount = web3.utils.toWei('0.2')
-      const takerTokenAmount = web3.utils.toWei('0.3')
-      const expirationUnixTimestampSec = new BigNumber(
+      const makerAssetAmount = web3.utils.toWei('0.2').toString()
+      const takerAssetAmount = web3.utils.toWei('0.3').toString()
+      const expirationTimeSeconds = new BigNumber(
         Date.now() + 3600000
       ).toString() // Valid for up to an hour
 
       // Generate order
       const order = {
-        maker,
-        taker,
-        feeRecipient,
-        makerTokenAddress,
-        takerTokenAddress,
-        exchangeContractAddress,
-        salt,
-        makerFee,
-        takerFee,
-        makerTokenAmount,
-        takerTokenAmount,
-        expirationUnixTimestampSec
+        exchangeAddress,
+	      expirationTimeSeconds,
+	      feeRecipientAddress,
+	      makerAddress,
+	      makerAssetAmount,
+	      makerAssetData,
+	      makerFee,
+	      salt,
+	      senderAddress,
+	      takerAddress,
+	      takerAssetAmount,
+	      takerAssetData,
+	      takerFee,
       }
 
-      const orderHash = await ZeroEx.getOrderHashHex(order)
+      const orderHash = await orderHashUtils.getOrderHashHex(order)
       const provider = web3.currentProvider
 
       // Instantiate 0x.js instance
+      /*
       const configs = {
-        networkId: 3 // (1-mainnet, 3-ropsten, 4-rinkeby, 42-kovan, 50-testrpc)
+        networkId: 50 // (1-mainnet, 3-ropsten, 4-rinkeby, 42-kovan, 50-testrpc)
       }
       const zeroEx = new ZeroEx(provider, configs)
+      */
 
       // Signing orderHash -> ecSignature
       const signerAddress = accounts[0] //'0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3' must include pkey
 
-      const shouldAddPersonalMessagePrefix = false
-      const ecSignature = await zeroEx.signOrderHashAsync(
+      const ecSignature = await signatureUtils.ecSignHashAsync(
+        provider,
         orderHash,
-        signerAddress,
-        shouldAddPersonalMessagePrefix
+        signerAddress
       )
 
       const v = new BigNumber(ecSignature.v).toString()
       const r = ecSignature.r
       const s = ecSignature.s
 
-      const isValidSignature = await baseContracts[
-        'ExchangeEfx'
-      ].isValidSignature(maker, orderHash, v, r, s)
-      expect(isValidSignature).toEqual(false) // it is signed on a different network then ganace local instance
+      const signature = ecSignature
+
+      const typedSignature = await signatureUtils.convertToSignatureWithType(
+        signature,
+        'EthSign'
+      )
+      const data = orderHash
+
+      // check against 0x api
+      const isValidSignature = await signatureUtils.isValidSignatureAsync(
+        provider,
+        data,
+        signature, // by default checks against EthSign
+        signerAddress
+      )
+      expect(isValidSignature).toEqual(true) // checks the signature on provider
     })
   })
 })
