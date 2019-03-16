@@ -509,8 +509,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/ReentrancyGuard/ReentrancyGuard.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMathLight.sol"
             ],
-            "address": "0x67579b5e27e8c223aacbd5a44eec7e2a517412af",
-            "constructor_args": "0x000000000000000000000000754001d2327df076e80352962e38d1f4efe8bdaa"
+            "address": "0x46fc972c18e71560299f344ccce4f2d9d6929496",
+            "constructor_args": "0x00000000000000000000000014fe122d979c7b34b6b4f0cec7b24b738c61692f"
         }
     }
 }

@@ -2630,7 +2630,7 @@
             "sources": [
                 "/Users/federico/workspace/rigoblock/rigoblock-monorepo/packages/contracts/src/utils/exchanges/ethfinex/ExchangeEfx/ExchangeEfx.sol"
             ],
-            "address": "0x5bc5056bade3a5273ced6fb8c5a9cdf92c3f7231",
+            "address": "0xb4a3c3fed3da52f06e491703aee9c7b4e89a1f0a",
             "constructor_args": "0x"
         }
     }

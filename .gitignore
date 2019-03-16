@@ -11,3 +11,7 @@ rigoblock-monorepo.code-workspace
 
 # testing
 coverage
+
+packages/deployer/package-lock\.json
+
+packages/exchange-connector/package-lock\.json
