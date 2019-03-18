@@ -87,6 +87,8 @@ contract ATotlePrimary {
         for (uint256 i = 1; i <= trades.length; i++) {
             address ETH_TOKEN_ADDRESS = address(0);
             address targetTokenAddress = trades[i].tokenAddress;
+
+/*
             address oracleAddress = address(0);
             Oracle oracle = Oracle(oracleAddress);
 
@@ -103,15 +105,22 @@ contract ATotlePrimary {
 
             if (expectedRate > trades[i].minimumExchangeRate * 105 / 100)
                 continue;
+*/
 
             checkedTrades[i] = trades[i];
-            
+
             // set allowances
             address tokenTransferProxy = address(0); // query from external contract
             require(setAllowances(tokenTransferProxy, targetTokenAddress, 2**256 -1));
         }
         address totleAddress = address(0);
-        (bool success, ) = totleAddress.call(abi.encodeWithSignature("performRebalance(Trade[] calldata, bytes32)", checkedTrades, id));
+        (bool success, ) = totleAddress.call(
+            abi.encodeWithSignature(
+                "performRebalance(Trade[] calldata, bytes32)",
+                checkedTrades,
+                id
+            )
+        );
 
         // set allowances
         for (uint256 i = 1; i <= trades.length; i++) {

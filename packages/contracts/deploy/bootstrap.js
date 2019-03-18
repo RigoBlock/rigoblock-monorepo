@@ -164,38 +164,64 @@ module.exports = async (baseAccount, network) => {
     aEthfinex.address
   )
 
+  const errorReporter = await deploy(baseAccount, network, 'ErrorReporter')
+  printAddress('ErrorReporter', errorReporter.address)
+
+  const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
+    tokenTransferProxy.address,
+    errorReporter.address
+  ])
+  printAddress('TotlePrimary', totlePrimary.address)
+
+  const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary')
+  printAddress('ATotlePrimary', aTotlePrimary.address)
+
+  const exchangeHandler = await deploy(baseAccount, network, 'ExchangeHandler', [
+    totlePrimary.address,
+    errorReporter.address
+  ])
+  printAddress('ExchangeHandler', exchangeHandler.address)
+
+  await exchangesAuthority.setExchangeAdapter(
+    totlePrimary.address,
+    aTotlePrimary.address
+  )
+
   const faucet = await deploy(baseAccount, network, 'Faucet', [
     rigoToken.address,
     'GRGFaucet'
   ])
   printAddress('Faucet', faucet.address)
 
-  const HGetDragoData = await deploy(baseAccount, network, 'HGetDragoData')
-  printAddress('HGetDragoData', HGetDragoData.address)
+  const hGetDragoData = await deploy(baseAccount, network, 'HGetDragoData')
+  printAddress('HGetDragoData', hGetDragoData.address)
 
   return {
     AEthfinex: aEthfinex,
+    ATotlePrimary: aTotlePrimary,
     AWeth: aWeth,
     Authority: authority,
     DragoRegistry: dragoRegistry,
-    VaultEventful: vaultEventful,
-    VaultFactory: vaultFactory,
     DragoEventful: dragoEventful,
     DragoFactory: dragoFactory,
     Exchange: exchange,
     ExchangeEfx: exchangeEfx,
     ExchangeV1Fork: exchangeV1Fork,
-    Faucet: faucet,
+    ExchangeHandler: exchangeHandler,
     ExchangesAuthority: exchangesAuthority,
+    Faucet: faucet,
+    HGetDragoData: hGetDragoData,
     NavVerifier: navVerifier,
     RigoToken: rigoToken,
     ProofOfPerformance: proofOfPerformance,
     Inflation: inflation,
     SigVerifier: sigVerifier,
+    TotlePrimary: totlePrimary,
     TokenTransferProxy: tokenTransferProxy,
+    VaultEventful: vaultEventful,
+    VaultFactory: vaultFactory,
     WETH9: wETH9,
     WrapperLockEth: wrapperLockEth,
-    WrapperLock: wrapperLock,
-    HGetDragoData
+    WrapperLock: wrapperLock
   }
 }

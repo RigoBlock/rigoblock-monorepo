@@ -1,16 +1,810 @@
 pragma solidity 0.4.25;
 pragma experimental ABIEncoderV2;
 
-import "./lib/Withdrawable.sol";
-import "./lib/TokenTransferProxy.sol";
-import "./lib/Pausable.sol";
-import "./lib/SafeMath.sol";
-import "./lib/Utils.sol";
-import "./lib/ErrorReporter.sol";
-/* import "./lib/Logger.sol"; */
-import "./lib/ERC20SafeTransfer.sol";
-import "./lib/AffiliateRegistry.sol";
-import "./exchange_handlers/ExchangeHandler.sol";
+/**
+ * @title Ownable
+ * @dev The Ownable contract has an owner address, and provides basic authorization control
+ * functions, this simplifies the implementation of "user permissions".
+ */
+contract Ownable {
+  address public owner;
+
+  event OwnershipRenounced(address indexed previousOwner);
+  event OwnershipTransferred(
+    address indexed previousOwner,
+    address indexed newOwner
+  );
+
+  /**
+   * @dev The Ownable constructor sets the original `owner` of the contract to the sender
+   * account.
+   */
+  constructor() public {
+    owner = msg.sender;
+  }
+
+  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
+  }
+
+  /**
+   * @dev Allows the current owner to relinquish control of the contract.
+   * @notice Renouncing to ownership will leave the contract without an owner.
+   * It will not be possible to call the functions with the `onlyOwner`
+   * modifier anymore.
+   */
+  function renounceOwnership() public onlyOwner {
+    emit OwnershipRenounced(owner);
+    owner = address(0);
+  }
+
+  /**
+   * @dev Allows the current owner to transfer control of the contract to a newOwner.
+   * @param _newOwner The address to transfer ownership to.
+   */
+  function transferOwnership(address _newOwner) public onlyOwner {
+    _transferOwnership(_newOwner);
+  }
+
+  /**
+   * @dev Transfers control of the contract to a newOwner.
+   * @param _newOwner The address to transfer ownership to.
+   */
+  function _transferOwnership(address _newOwner) internal {
+    require(_newOwner != address(0));
+    emit OwnershipTransferred(owner, _newOwner);
+    owner = _newOwner;
+  }
+}
+
+library ERC20SafeTransfer {
+    function safeTransfer(address _tokenAddress, address _to, uint256 _value) internal returns (bool success) {
+
+        require(_tokenAddress.call(bytes4(keccak256("transfer(address,uint256)")), _to, _value));
+
+        return fetchReturnData();
+    }
+
+    function safeTransferFrom(address _tokenAddress, address _from, address _to, uint256 _value) internal returns (bool success) {
+
+        require(_tokenAddress.call(bytes4(keccak256("transferFrom(address,address,uint256)")), _from, _to, _value));
+
+        return fetchReturnData();
+    }
+
+    function safeApprove(address _tokenAddress, address _spender, uint256 _value) internal returns (bool success) {
+
+        require(_tokenAddress.call(bytes4(keccak256("approve(address,uint256)")), _spender, _value));
+
+        return fetchReturnData();
+    }
+
+    function fetchReturnData() internal returns (bool success){
+        assembly {
+            switch returndatasize()
+            case 0 {
+                success := 1
+            }
+            case 32 {
+                returndatacopy(0, 0, 32)
+                success := mload(0)
+            }
+            default {
+                revert(0, 0)
+            }
+        }
+    }
+
+}
+
+/// @title A contract which allows its owner to withdraw any ether which is contained inside
+contract Withdrawable is Ownable {
+
+    /// @notice Withdraw ether contained in this contract and send it back to owner
+    /// @dev onlyOwner modifier only allows the contract owner to run the code
+    /// @param _token The address of the token that the user wants to withdraw
+    /// @param _amount The amount of tokens that the caller wants to withdraw
+    /// @return bool value indicating whether the transfer was successful
+    function withdrawToken(address _token, uint256 _amount) external onlyOwner returns (bool) {
+        return ERC20SafeTransfer.safeTransfer(_token, owner, _amount);
+    }
+
+    /// @notice Withdraw ether contained in this contract and send it back to owner
+    /// @dev onlyOwner modifier only allows the contract owner to run the code
+    /// @param _amount The amount of ether that the caller wants to withdraw
+    function withdrawETH(uint256 _amount) external onlyOwner {
+        owner.transfer(_amount);
+    }
+}
+
+/**
+ * @title ERC20 interface
+ * @dev see https://github.com/ethereum/EIPs/issues/20
+ */
+contract ERC20 {
+  function totalSupply() public view returns (uint256);
+
+  function balanceOf(address _who) public view returns (uint256);
+
+  function allowance(address _owner, address _spender)
+    public view returns (uint256);
+
+  function transfer(address _to, uint256 _value) public returns (bool);
+
+  function approve(address _spender, uint256 _value)
+    public returns (bool);
+
+  function transferFrom(address _from, address _to, uint256 _value)
+    public returns (bool);
+
+  function decimals() public view returns (uint256);
+
+  event Transfer(
+    address indexed from,
+    address indexed to,
+    uint256 value
+  );
+
+  event Approval(
+    address indexed owner,
+    address indexed spender,
+    uint256 value
+  );
+}
+
+/*
+
+  Copyright 2018 ZeroEx Intl.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+*/
+
+/// @title TokenTransferProxy - Transfers tokens on behalf of contracts that have been approved via decentralized governance.
+/// @author Amir Bandeali - <amir@0xProject.com>, Will Warren - <will@0xProject.com>
+contract TokenTransferProxy is Ownable {
+
+    /// @dev Only authorized addresses can invoke functions with this modifier.
+    modifier onlyAuthorized {
+        require(authorized[msg.sender]);
+        _;
+    }
+
+    modifier targetAuthorized(address target) {
+        require(authorized[target]);
+        _;
+    }
+
+    modifier targetNotAuthorized(address target) {
+        require(!authorized[target]);
+        _;
+    }
+
+    mapping (address => bool) public authorized;
+    address[] public authorities;
+
+    event LogAuthorizedAddressAdded(address indexed target, address indexed caller);
+    event LogAuthorizedAddressRemoved(address indexed target, address indexed caller);
+
+    /*
+     * Public functions
+     */
+
+    /// @dev Authorizes an address.
+    /// @param target Address to authorize.
+    function addAuthorizedAddress(address target)
+        public
+        onlyOwner
+        targetNotAuthorized(target)
+    {
+        authorized[target] = true;
+        authorities.push(target);
+        emit LogAuthorizedAddressAdded(target, msg.sender);
+    }
+
+    /// @dev Removes authorizion of an address.
+    /// @param target Address to remove authorization from.
+    function removeAuthorizedAddress(address target)
+        public
+        onlyOwner
+        targetAuthorized(target)
+    {
+        delete authorized[target];
+        for (uint i = 0; i < authorities.length; i++) {
+            if (authorities[i] == target) {
+                authorities[i] = authorities[authorities.length - 1];
+                authorities.length -= 1;
+                break;
+            }
+        }
+        emit LogAuthorizedAddressRemoved(target, msg.sender);
+    }
+
+    /// @dev Calls into ERC20 Token contract, invoking transferFrom.
+    /// @param token Address of token to transfer.
+    /// @param from Address to transfer token from.
+    /// @param to Address to transfer token to.
+    /// @param value Amount of token to transfer.
+    /// @return Success of transfer.
+    function transferFrom(
+        address token,
+        address from,
+        address to,
+        uint value)
+        public
+        onlyAuthorized
+        returns (bool)
+    {
+        require(ERC20SafeTransfer.safeTransferFrom(token, from, to, value));
+        return true;
+    }
+
+    /*
+     * Public constant functions
+     */
+
+    /// @dev Gets all authorized addresses.
+    /// @return Array of authorized addresses.
+    function getAuthorizedAddresses()
+        public
+        view
+        returns (address[])
+    {
+        return authorities;
+    }
+}
+
+/**
+ * @title Pausable
+ * @dev Base contract which allows children to implement an emergency stop mechanism.
+ */
+contract Pausable is Ownable {
+  event Paused();
+  event Unpaused();
+
+  bool private _paused = false;
+
+  /**
+   * @return true if the contract is paused, false otherwise.
+   */
+  function paused() public view returns (bool) {
+    return _paused;
+  }
+
+  /**
+   * @dev Modifier to make a function callable only when the contract is not paused.
+   */
+  modifier whenNotPaused() {
+    require(!_paused, "Contract is paused.");
+    _;
+  }
+
+  /**
+   * @dev Modifier to make a function callable only when the contract is paused.
+   */
+  modifier whenPaused() {
+    require(_paused, "Contract not paused.");
+    _;
+  }
+
+  /**
+   * @dev called by the owner to pause, triggers stopped state
+   */
+  function pause() public onlyOwner whenNotPaused {
+    _paused = true;
+    emit Paused();
+  }
+
+  /**
+   * @dev called by the owner to unpause, returns to normal state
+   */
+  function unpause() public onlyOwner whenPaused {
+    _paused = false;
+    emit Unpaused();
+  }
+}
+
+/**
+ * @title SafeMath
+ * @dev Math operations with safety checks that revert on error
+ */
+library SafeMath {
+
+  /**
+  * @dev Multiplies two numbers, reverts on overflow.
+  */
+  function mul(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+    // benefit is lost if 'b' is also tested.
+    // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522
+    if (_a == 0) {
+      return 0;
+    }
+
+    uint256 c = _a * _b;
+    require(c / _a == _b);
+
+    return c;
+  }
+
+  /**
+  * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.
+  */
+  function div(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    require(_b > 0); // Solidity only automatically asserts when dividing by 0
+    uint256 c = _a / _b;
+    // assert(_a == _b * c + _a % _b); // There is no case in which this doesn't hold
+
+    return c;
+  }
+
+  /**
+  * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).
+  */
+  function sub(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    require(_b <= _a);
+    uint256 c = _a - _b;
+
+    return c;
+  }
+
+  /**
+  * @dev Adds two numbers, reverts on overflow.
+  */
+  function add(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    uint256 c = _a + _b;
+    require(c >= _a);
+
+    return c;
+  }
+
+  /**
+  * @dev Divides two numbers and returns the remainder (unsigned integer modulo),
+  * reverts when dividing by zero.
+  */
+  function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+    require(b != 0);
+    return a % b;
+  }
+}
+
+/*
+    Modified Util contract as used by Kyber Network
+*/
+
+library Utils {
+
+    uint256 constant internal PRECISION = (10**18);
+    uint256 constant internal MAX_QTY   = (10**28); // 10B tokens
+    uint256 constant internal MAX_RATE  = (PRECISION * 10**6); // up to 1M tokens per ETH
+    uint256 constant internal MAX_DECIMALS = 18;
+    uint256 constant internal ETH_DECIMALS = 18;
+    uint256 constant internal MAX_UINT = 2**256-1;
+
+    // Currently constants can't be accessed from other contracts, so providing functions to do that here
+    function precision() internal pure returns (uint256) { return PRECISION; }
+    function max_qty() internal pure returns (uint256) { return MAX_QTY; }
+    function max_rate() internal pure returns (uint256) { return MAX_RATE; }
+    function max_decimals() internal pure returns (uint256) { return MAX_DECIMALS; }
+    function eth_decimals() internal pure returns (uint256) { return ETH_DECIMALS; }
+    function max_uint() internal pure returns (uint256) { return MAX_UINT; }
+
+    /// @notice Retrieve the number of decimals used for a given ERC20 token
+    /// @dev As decimals are an optional feature in ERC20, this contract uses `call` to
+    /// ensure that an exception doesn't cause transaction failure
+    /// @param token the token for which we should retrieve the decimals
+    /// @return decimals the number of decimals in the given token
+    function getDecimals(address token)
+        internal
+        view
+        returns (uint256 decimals)
+    {
+        bytes4 functionSig = bytes4(keccak256("decimals()"));
+
+        /// @dev Using assembly due to issues with current solidity `address.call()`
+        /// implementation: https://github.com/ethereum/solidity/issues/2884
+        assembly {
+            // Pointer to next free memory slot
+            let ptr := mload(0x40)
+            // Store functionSig variable at ptr
+            mstore(ptr,functionSig)
+            let functionSigLength := 0x04
+            let wordLength := 0x20
+
+            let success := call(
+                                5000, // Amount of gas
+                                token, // Address to call
+                                0, // ether to send
+                                ptr, // ptr to input data
+                                functionSigLength, // size of data
+                                ptr, // where to store output data (overwrite input)
+                                wordLength // size of output data (32 bytes)
+                               )
+
+            switch success
+            case 0 {
+                decimals := 18 // If the token doesn't implement `decimals()`, return 18 as default
+            }
+            case 1 {
+                decimals := mload(ptr) // Set decimals to return data from call
+            }
+            mstore(0x40,add(ptr,0x04)) // Reset the free memory pointer to the next known free location
+        }
+    }
+
+    /// @dev Checks that a given address has its token allowance and balance set above the given amount
+    /// @param tokenOwner the address which should have custody of the token
+    /// @param tokenAddress the address of the token to check
+    /// @param tokenAmount the amount of the token which should be set
+    /// @param addressToAllow the address which should be allowed to transfer the token
+    /// @return bool true if the allowance and balance is set, false if not
+    function tokenAllowanceAndBalanceSet(
+        address tokenOwner,
+        address tokenAddress,
+        uint256 tokenAmount,
+        address addressToAllow
+    )
+        internal
+        view
+        returns (bool)
+    {
+        return (
+            ERC20(tokenAddress).allowance(tokenOwner, addressToAllow) >= tokenAmount &&
+            ERC20(tokenAddress).balanceOf(tokenOwner) >= tokenAmount
+        );
+    }
+
+    function calcDstQty(uint srcQty, uint srcDecimals, uint dstDecimals, uint rate) internal pure returns (uint) {
+        if (dstDecimals >= srcDecimals) {
+            require((dstDecimals - srcDecimals) <= MAX_DECIMALS);
+            return (srcQty * rate * (10**(dstDecimals - srcDecimals))) / PRECISION;
+        } else {
+            require((srcDecimals - dstDecimals) <= MAX_DECIMALS);
+            return (srcQty * rate) / (PRECISION * (10**(srcDecimals - dstDecimals)));
+        }
+    }
+
+    function calcSrcQty(uint dstQty, uint srcDecimals, uint dstDecimals, uint rate) internal pure returns (uint) {
+
+        //source quantity is rounded up. to avoid dest quantity being too low.
+        uint numerator;
+        uint denominator;
+        if (srcDecimals >= dstDecimals) {
+            require((srcDecimals - dstDecimals) <= MAX_DECIMALS);
+            numerator = (PRECISION * dstQty * (10**(srcDecimals - dstDecimals)));
+            denominator = rate;
+        } else {
+            require((dstDecimals - srcDecimals) <= MAX_DECIMALS);
+            numerator = (PRECISION * dstQty);
+            denominator = (rate * (10**(dstDecimals - srcDecimals)));
+        }
+        return (numerator + denominator - 1) / denominator; //avoid rounding down errors
+    }
+
+    function calcDestAmount(ERC20 src, ERC20 dest, uint srcAmount, uint rate) internal view returns (uint) {
+        return calcDstQty(srcAmount, getDecimals(src), getDecimals(dest), rate);
+    }
+
+    function calcSrcAmount(ERC20 src, ERC20 dest, uint destAmount, uint rate) internal view returns (uint) {
+        return calcSrcQty(destAmount, getDecimals(src), getDecimals(dest), rate);
+    }
+
+    function calcRateFromQty(uint srcAmount, uint destAmount, uint srcDecimals, uint dstDecimals)
+        internal pure returns (uint)
+    {
+        require(srcAmount <= MAX_QTY);
+        require(destAmount <= MAX_QTY);
+
+        if (dstDecimals >= srcDecimals) {
+            require((dstDecimals - srcDecimals) <= MAX_DECIMALS);
+            return (destAmount * PRECISION / ((10 ** (dstDecimals - srcDecimals)) * srcAmount));
+        } else {
+            require((srcDecimals - dstDecimals) <= MAX_DECIMALS);
+            return (destAmount * PRECISION * (10 ** (srcDecimals - dstDecimals)) / srcAmount);
+        }
+    }
+
+    /// @notice Bringing this in from the Math library as we've run out of space in TotlePrimary (see EIP-170)
+    function min(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a < b ? a : b;
+    }
+}
+
+contract ErrorReporter {
+    function revertTx(string reason) public pure {
+        revert(reason);
+    }
+}
+
+/// @title A contract which can be used to ensure only the TotlePrimary contract can call
+/// some functions
+/// @dev Defines a modifier which should be used when only the totle contract should
+/// able able to call a function
+contract TotleControl is Ownable {
+    address public totlePrimary;
+
+    /// @dev A modifier which only allows code execution if msg.sender equals totlePrimary address
+    modifier onlyTotle() {
+        require(msg.sender == totlePrimary);
+        _;
+    }
+
+    /// @notice Contract constructor
+    /// @dev As this contract inherits ownable, msg.sender will become the contract owner
+    /// @param _totlePrimary the address of the contract to be set as totlePrimary
+    constructor(address _totlePrimary) public {
+        require(_totlePrimary != address(0x0));
+        totlePrimary = _totlePrimary;
+    }
+
+    /// @notice A function which allows only the owner to change the address of totlePrimary
+    /// @dev onlyOwner modifier only allows the contract owner to run the code
+    /// @param _totlePrimary the address of the contract to be set as totlePrimary
+    function setTotle(
+        address _totlePrimary
+    ) external onlyOwner {
+        require(_totlePrimary != address(0x0));
+        totlePrimary = _totlePrimary;
+    }
+}
+
+
+contract SelectorProvider {
+    bytes4 constant getAmountToGive = bytes4(keccak256("getAmountToGive(bytes)"));
+    bytes4 constant staticExchangeChecks = bytes4(keccak256("staticExchangeChecks(bytes)"));
+    bytes4 constant performBuyOrder = bytes4(keccak256("performBuyOrder(bytes,uint256)"));
+    bytes4 constant performSellOrder = bytes4(keccak256("performSellOrder(bytes,uint256)"));
+
+    function getSelector(bytes4 genericSelector) public pure returns (bytes4);
+}
+
+/// @title Interface for all exchange handler contracts
+contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
+
+    /*
+    *   State Variables
+    */
+
+    SelectorProvider public selectorProvider;
+    ErrorReporter public errorReporter;
+    /* Logger public logger; */
+    /*
+    *   Modifiers
+    */
+
+    modifier onlySelf() {
+        require(msg.sender == address(this));
+        _;
+    }
+
+    /// @notice Constructor
+    /// @dev Calls the constructor of the inherited TotleControl
+    /// @param _selectorProvider the provider for this exchanges function selectors
+    /// @param totlePrimary the address of the totlePrimary contract
+    constructor(
+        address _selectorProvider,
+        address totlePrimary,
+        address _errorReporter
+        /* ,address _logger */
+    )
+        TotleControl(totlePrimary)
+        public
+    {
+        require(_selectorProvider != address(0x0));
+        require(_errorReporter != address(0x0));
+        /* require(_logger != address(0x0)); */
+        selectorProvider = SelectorProvider(_selectorProvider);
+        errorReporter = ErrorReporter(_errorReporter);
+        /* logger = Logger(_logger); */
+    }
+
+    /// @notice Gets the amount that Totle needs to give for this order
+    /// @param genericPayload the data for this order in a generic format
+    /// @return amountToGive amount taker needs to give in order to fill the order
+    function getAmountToGive(
+        bytes genericPayload
+    )
+        public
+        view
+        onlyTotle
+        whenNotPaused
+        returns (uint256 amountToGive)
+    {
+        bool success;
+        bytes4 functionSelector = selectorProvider.getSelector(this.getAmountToGive.selector);
+
+        assembly {
+            let functionSelectorLength := 0x04
+            let functionSelectorOffset := 0x1C
+            let scratchSpace := 0x0
+            let wordLength := 0x20
+            let bytesLength := mload(genericPayload)
+            let totalLength := add(functionSelectorLength, bytesLength)
+            let startOfNewData := add(genericPayload, functionSelectorOffset)
+
+            mstore(add(scratchSpace, functionSelectorOffset), functionSelector)
+            let functionSelectorCorrect := mload(scratchSpace)
+            mstore(genericPayload, functionSelectorCorrect)
+
+            success := call(
+                            gas,
+                            address, // This address of the current contract
+                            callvalue,
+                            startOfNewData, // Start data at the beginning of the functionSelector
+                            totalLength, // Total length of all data, including functionSelector
+                            scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
+                            wordLength // Length of return variable is one word
+                           )
+            amountToGive := mload(scratchSpace)
+            if eq(success, 0) { revert(0, 0) }
+        }
+    }
+
+    /// @notice Perform exchange-specific checks on the given order
+    /// @dev this should be called to check for payload errors
+    /// @param genericPayload the data for this order in a generic format
+    /// @return checksPassed value representing pass or fail
+    function staticExchangeChecks(
+        bytes genericPayload
+    )
+        public
+        view
+        onlyTotle
+        whenNotPaused
+        returns (bool checksPassed)
+    {
+        bool success;
+        bytes4 functionSelector = selectorProvider.getSelector(this.staticExchangeChecks.selector);
+        assembly {
+            let functionSelectorLength := 0x04
+            let functionSelectorOffset := 0x1C
+            let scratchSpace := 0x0
+            let wordLength := 0x20
+            let bytesLength := mload(genericPayload)
+            let totalLength := add(functionSelectorLength, bytesLength)
+            let startOfNewData := add(genericPayload, functionSelectorOffset)
+
+            mstore(add(scratchSpace, functionSelectorOffset), functionSelector)
+            let functionSelectorCorrect := mload(scratchSpace)
+            mstore(genericPayload, functionSelectorCorrect)
+
+            success := call(
+                            gas,
+                            address, // This address of the current contract
+                            callvalue,
+                            startOfNewData, // Start data at the beginning of the functionSelector
+                            totalLength, // Total length of all data, including functionSelector
+                            scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
+                            wordLength // Length of return variable is one word
+                           )
+            checksPassed := mload(scratchSpace)
+            if eq(success, 0) { revert(0, 0) }
+        }
+    }
+
+    /// @notice Perform a buy order at the exchange
+    /// @param genericPayload the data for this order in a generic format
+    /// @param  amountToGiveForOrder amount that should be spent on this order
+    /// @return amountSpentOnOrder the amount that would be spent on the order
+    /// @return amountReceivedFromOrder the amount that was received from this order
+    function performBuyOrder(
+        bytes genericPayload,
+        uint256 amountToGiveForOrder
+    )
+        public
+        payable
+        onlyTotle
+        whenNotPaused
+        returns (uint256 amountSpentOnOrder, uint256 amountReceivedFromOrder)
+    {
+        bool success;
+        bytes4 functionSelector = selectorProvider.getSelector(this.performBuyOrder.selector);
+        assembly {
+            let callDataOffset := 0x44
+            let functionSelectorOffset := 0x1C
+            let functionSelectorLength := 0x04
+            let scratchSpace := 0x0
+            let wordLength := 0x20
+            let startOfFreeMemory := mload(0x40)
+
+            calldatacopy(startOfFreeMemory, callDataOffset, calldatasize)
+
+            let bytesLength := mload(startOfFreeMemory)
+            let totalLength := add(add(functionSelectorLength, bytesLength), wordLength)
+
+            mstore(add(scratchSpace, functionSelectorOffset), functionSelector)
+
+            let functionSelectorCorrect := mload(scratchSpace)
+
+            mstore(startOfFreeMemory, functionSelectorCorrect)
+
+            mstore(add(startOfFreeMemory, add(wordLength, bytesLength)), amountToGiveForOrder)
+
+            let startOfNewData := add(startOfFreeMemory,functionSelectorOffset)
+
+            success := call(
+                            gas,
+                            address, // This address of the current contract
+                            callvalue,
+                            startOfNewData, // Start data at the beginning of the functionSelector
+                            totalLength, // Total length of all data, including functionSelector
+                            scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
+                            mul(wordLength, 0x02) // Length of return variables is two words
+                          )
+            amountSpentOnOrder := mload(scratchSpace)
+            amountReceivedFromOrder := mload(add(scratchSpace, wordLength))
+            if eq(success, 0) { revert(0, 0) }
+        }
+    }
+
+    /// @notice Perform a sell order at the exchange
+    /// @param genericPayload the data for this order in a generic format
+    /// @param  amountToGiveForOrder amount that should be spent on this order
+    /// @return amountSpentOnOrder the amount that would be spent on the order
+    /// @return amountReceivedFromOrder the amount that was received from this order
+    function performSellOrder(
+        bytes genericPayload,
+        uint256 amountToGiveForOrder
+    )
+        public
+        onlyTotle
+        whenNotPaused
+        returns (uint256 amountSpentOnOrder, uint256 amountReceivedFromOrder)
+    {
+        bool success;
+        bytes4 functionSelector = selectorProvider.getSelector(this.performSellOrder.selector);
+        assembly {
+            let callDataOffset := 0x44
+            let functionSelectorOffset := 0x1C
+            let functionSelectorLength := 0x04
+            let scratchSpace := 0x0
+            let wordLength := 0x20
+            let startOfFreeMemory := mload(0x40)
+
+            calldatacopy(startOfFreeMemory, callDataOffset, calldatasize)
+
+            let bytesLength := mload(startOfFreeMemory)
+            let totalLength := add(add(functionSelectorLength, bytesLength), wordLength)
+
+            mstore(add(scratchSpace, functionSelectorOffset), functionSelector)
+
+            let functionSelectorCorrect := mload(scratchSpace)
+
+            mstore(startOfFreeMemory, functionSelectorCorrect)
+
+            mstore(add(startOfFreeMemory, add(wordLength, bytesLength)), amountToGiveForOrder)
+
+            let startOfNewData := add(startOfFreeMemory,functionSelectorOffset)
+
+            success := call(
+                            gas,
+                            address, // This address of the current contract
+                            callvalue,
+                            startOfNewData, // Start data at the beginning of the functionSelector
+                            totalLength, // Total length of all data, including functionSelector
+                            scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
+                            mul(wordLength, 0x02) // Length of return variables is two words
+                          )
+            amountSpentOnOrder := mload(scratchSpace)
+            amountReceivedFromOrder := mload(add(scratchSpace, wordLength))
+            if eq(success, 0) { revert(0, 0) }
+        }
+    }
+}
 
 /// @title The primary contract for Totle
 contract TotlePrimary is Withdrawable, Pausable {
@@ -21,10 +815,8 @@ contract TotlePrimary is Withdrawable, Pausable {
 
     mapping(address => bool) public handlerWhitelistMap;
     address[] public handlerWhitelistArray;
-    AffiliateRegistry affiliateRegistry;
-    address public defaultFeeAccount;
 
-    TokenTransferProxy public tokenTransferProxy;
+    address public tokenTransferProxy;
     ErrorReporter public errorReporter;
     /* Logger public logger; */
 
@@ -64,16 +856,7 @@ contract TotlePrimary is Withdrawable, Pausable {
     */
 
     event LogRebalance(
-        bytes32 id,
-        uint256 totalEthTraded,
-        uint256 totalFee
-    );
-
-    event LogTrade(
-        bool isSell,
-        address token,
-        uint256 ethAmount,
-        uint256 tokenAmount
+        bytes32 id
     );
 
     /*
@@ -97,25 +880,18 @@ contract TotlePrimary is Withdrawable, Pausable {
     /// @notice Constructor
     /// @param _tokenTransferProxy address of the TokenTransferProxy
     /// @param _errorReporter the address of the error reporter contract
-    constructor (address _tokenTransferProxy, address _affiliateRegistry, address _errorReporter, address _defaultFeeAccount/*, address _logger*/) public {
+    constructor (address _tokenTransferProxy, address _errorReporter/*, address _logger*/) public {
+        require(_tokenTransferProxy != address(0x0));
+        require(_errorReporter != address(0x0));
         /* require(_logger != address(0x0)); */
-        tokenTransferProxy = TokenTransferProxy(_tokenTransferProxy);
-        affiliateRegistry = AffiliateRegistry(_affiliateRegistry);
+        tokenTransferProxy = _tokenTransferProxy;
         errorReporter = ErrorReporter(_errorReporter);
-        defaultFeeAccount = _defaultFeeAccount;
         /* logger = Logger(_logger); */
     }
 
     /*
     *   Public functions
     */
-
-    /// @notice Update the default fee account
-    /// @dev onlyOwner modifier only allows the contract owner to run the code
-    /// @param newDefaultFeeAccount new default fee account
-    function updateDefaultFeeAccount(address newDefaultFeeAccount) public onlyOwner {
-        defaultFeeAccount = newDefaultFeeAccount;
-    }
 
     /// @notice Add an exchangeHandler address to the whitelist
     /// @dev onlyOwner modifier only allows the contract owner to run the code
@@ -150,20 +926,14 @@ contract TotlePrimary is Withdrawable, Pausable {
     /// @notice Performs the requested portfolio rebalance
     /// @param trades A dynamic array of trade structs
     function performRebalance(
-        Trade[] memory trades,
-        address feeAccount,
+        Trade[] trades,
         bytes32 id
     )
         public
         payable
         whenNotPaused
     {
-        if(!affiliateRegistry.isValidAffiliate(feeAccount)){
-            feeAccount = defaultFeeAccount;
-        }
-        Affiliate affiliate = Affiliate(feeAccount);
-        uint256 feePercentage = affiliate.getTotalFeePercentage();
-
+        emit LogRebalance(id);
         /* logger.log("Starting Rebalance..."); */
 
         TradeFlag[] memory tradeFlags = initialiseTradeFlags(trades);
@@ -177,9 +947,9 @@ contract TotlePrimary is Withdrawable, Pausable {
         /* logger.log("Tokens transferred."); */
 
         uint256 etherBalance = msg.value;
-        uint256 totalFee = 0;
+
         /* logger.log("Ether balance arg2: etherBalance.", etherBalance); */
-        uint256 totalTraded = 0;
+
         for (uint256 i; i < trades.length; i++) {
             Trade memory thisTrade = trades[i];
             TradeFlag memory thisTradeFlag = tradeFlags[i];
@@ -187,7 +957,7 @@ contract TotlePrimary is Withdrawable, Pausable {
             CurrentAmounts memory amounts = CurrentAmounts({
                 amountSpentOnTrade: 0,
                 amountReceivedFromTrade: 0,
-                amountLeftToSpendOnTrade: thisTrade.isSell ? thisTrade.tokenAmount : calculateMaxEtherSpend(thisTrade, etherBalance, feePercentage)
+                amountLeftToSpendOnTrade: thisTrade.isSell ? thisTrade.tokenAmount : calculateMaxEtherSpend(thisTrade, etherBalance)
             });
             /* logger.log("Going to perform trade. arg2: amountLeftToSpendOnTrade", amounts.amountLeftToSpendOnTrade); */
 
@@ -196,18 +966,7 @@ contract TotlePrimary is Withdrawable, Pausable {
                 thisTradeFlag,
                 amounts
             );
-            emit LogTrade(thisTrade.isSell, thisTrade.tokenAddress, thisTrade.isSell ? amounts.amountReceivedFromTrade:amounts.amountSpentOnTrade, thisTrade.isSell?amounts.amountSpentOnTrade:amounts.amountReceivedFromTrade);
 
-            uint256 ethTraded;
-            uint256 ethFee;
-            if(thisTrade.isSell){
-                ethTraded = amounts.amountReceivedFromTrade;
-            } else {
-                ethTraded = amounts.amountSpentOnTrade;
-            }
-            totalTraded += ethTraded;
-            ethFee = calculateFee(ethTraded, feePercentage);
-            totalFee = SafeMath.add(totalFee, ethFee);
             /* logger.log("Finished performing trade arg2: amountReceivedFromTrade, arg3: amountSpentOnTrade.", amounts.amountReceivedFromTrade, amounts.amountSpentOnTrade); */
 
             if (amounts.amountReceivedFromTrade == 0 && thisTrade.optionalTrade) {
@@ -233,14 +992,14 @@ contract TotlePrimary is Withdrawable, Pausable {
                     etherBalance,
                     amounts.amountReceivedFromTrade
                 ); */
-                etherBalance = SafeMath.sub(SafeMath.add(etherBalance, ethTraded), ethFee);
+                etherBalance = SafeMath.add(etherBalance, amounts.amountReceivedFromTrade);
             } else {
                 /* logger.log(
                     "This is a buy trade, deducting ether from our balance arg2: etherBalance, arg3: amountSpentOnTrade",
                     etherBalance,
                     amounts.amountSpentOnTrade
                 ); */
-                etherBalance = SafeMath.sub(SafeMath.sub(etherBalance, ethTraded), ethFee);
+                etherBalance = SafeMath.sub(etherBalance, amounts.amountSpentOnTrade);
             }
 
             /* logger.log("Transferring tokens to the user arg:6 tokenAddress.", 0,0,0,0, thisTrade.tokenAddress); */
@@ -251,10 +1010,7 @@ contract TotlePrimary is Withdrawable, Pausable {
             );
 
         }
-        emit LogRebalance(id, totalTraded, totalFee);
-        if(totalFee > 0){
-            feeAccount.transfer(totalFee);
-        }
+
         if(etherBalance > 0) {
             /* logger.log("Got a positive ether balance, sending to the user arg2: etherBalance.", etherBalance); */
             msg.sender.transfer(etherBalance);
@@ -282,7 +1038,7 @@ contract TotlePrimary is Withdrawable, Pausable {
                     errorReporter.revertTx("A buy has occured before this sell");
                 }
 
-                if (!Utils.tokenAllowanceAndBalanceSet(msg.sender, thisTrade.tokenAddress, thisTrade.tokenAmount, address(tokenTransferProxy))) {
+                if (!Utils.tokenAllowanceAndBalanceSet(msg.sender, thisTrade.tokenAddress, thisTrade.tokenAmount, tokenTransferProxy)) {
                     if (!thisTrade.optionalTrade) {
                         errorReporter.revertTx("Taker has not sent allowance/balance on a non-optional trade");
                     }
@@ -362,8 +1118,8 @@ contract TotlePrimary is Withdrawable, Pausable {
     /// @param amounts a struct containing information about amounts spent
     /// and received in the rebalance
     function performTrade(
-        Trade memory trade,
-        TradeFlag memory tradeFlag,
+        Trade trade,
+        TradeFlag tradeFlag,
         CurrentAmounts amounts
     )
         internal
@@ -372,11 +1128,15 @@ contract TotlePrimary is Withdrawable, Pausable {
 
         for (uint256 j; j < trade.orders.length; j++) {
 
-            if(amounts.amountLeftToSpendOnTrade * 10000 < (amounts.amountSpentOnTrade + amounts.amountLeftToSpendOnTrade)){
-                return;
-            }
+            /* logger.log("Processing order arg2: orderIndex", j); */
 
-            if((trade.isSell ? amounts.amountSpentOnTrade : amounts.amountReceivedFromTrade) >= trade.tokenAmount ) {
+            //TODO: Change to the amount of tokens that we are trying to get
+            if( amounts.amountReceivedFromTrade >= trade.minimumAcceptableTokenAmount ) {
+                /* logger.log(
+                    "Got the desired amount from the trade arg2: amountReceivedFromTrade, arg3: minimumAcceptableTokenAmount",
+                    amounts.amountReceivedFromTrade,
+                    trade.minimumAcceptableTokenAmount
+                ); */
                 return;
             }
 
@@ -438,7 +1198,6 @@ contract TotlePrimary is Withdrawable, Pausable {
                 /* logger.log("Buy order performed arg2: amountSpentOnOrder, arg3: amountReceivedFromOrder", amountSpentOnOrder, amountReceivedFromOrder); */
             }
 
-
             if (amountReceivedFromOrder > 0) {
                 amounts.amountLeftToSpendOnTrade = SafeMath.sub(amounts.amountLeftToSpendOnTrade, amountSpentOnOrder);
                 amounts.amountSpentOnTrade = SafeMath.add(amounts.amountSpentOnTrade, amountSpentOnOrder);
@@ -474,13 +1233,13 @@ contract TotlePrimary is Withdrawable, Pausable {
         uint256 tokenAmount = trade.isSell ? amountSpentOnTrade : amountReceivedFromTrade;
         passed = tokenAmount >= trade.minimumAcceptableTokenAmount;
 
-        /*if( !passed ) {
-             logger.log(
+        if( !passed ) {
+            /* logger.log(
                 "Received less than minimum acceptable tokens arg2: tokenAmount , arg3: minimumAcceptableTokenAmount.",
                 tokenAmount,
                 trade.minimumAcceptableTokenAmount
-            );
-        }*/
+            ); */
+        }
 
         if (passed) {
             uint256 tokenDecimals = Utils.getDecimals(ERC20(trade.tokenAddress));
@@ -490,13 +1249,13 @@ contract TotlePrimary is Withdrawable, Pausable {
             passed = actualRate >= trade.minimumExchangeRate;
         }
 
-        /*if( !passed ) {
-             logger.log(
+        if( !passed ) {
+            /* logger.log(
                 "Order rate was lower than minimum acceptable,  rate arg2: actualRate, arg3: minimumExchangeRate.",
                 actualRate,
                 trade.minimumExchangeRate
-            );
-        }*/
+            ); */
+        }
     }
 
     /// @notice Iterates through a list of token orders, transfer the SELL orders to this contract & calculates if we have the ether needed
@@ -515,7 +1274,7 @@ contract TotlePrimary is Withdrawable, Pausable {
                     trades[i].tokenAddress
                 ); */
                 if (
-                    !tokenTransferProxy.transferFrom(
+                    !TokenTransferProxy(tokenTransferProxy).transferFrom(
                         trades[i].tokenAddress,
                         msg.sender,
                         address(this),
@@ -532,7 +1291,7 @@ contract TotlePrimary is Withdrawable, Pausable {
     /// @param trade the buy trade to return the spend amount for
     /// @param etherBalance the amount of ether that we currently have to spend
     /// @return uint256 the maximum amount of ether we should spend on this trade
-    function calculateMaxEtherSpend(Trade trade, uint256 etherBalance, uint256 feePercentage) internal view returns (uint256) {
+    function calculateMaxEtherSpend(Trade trade, uint256 etherBalance) internal view returns (uint256) {
         /// @dev This function should never be called for a sell
         assert(!trade.isSell);
 
@@ -541,22 +1300,9 @@ contract TotlePrimary is Withdrawable, Pausable {
         uint256 destDecimals = trade.isSell ? Utils.eth_decimals() : tokenDecimals;
         uint256 maxSpendAtMinRate = Utils.calcSrcQty(trade.tokenAmount, srcDecimals, destDecimals, trade.minimumExchangeRate);
 
-        return Utils.min(removeFee(etherBalance, feePercentage), maxSpendAtMinRate);
+        return Utils.min(etherBalance, maxSpendAtMinRate);
     }
 
-    // @notice Calculates the fee amount given a fee percentage and amount
-    // @param amount the amount to calculate the fee based on
-    // @param fee the percentage, out of 1 eth (e.g. 0.01 ETH would be 1%)
-    function calculateFee(uint256 amount, uint256 fee) internal view returns (uint256){
-        return SafeMath.div(SafeMath.mul(amount, fee), 1 ether);
-    }
-
-    // @notice Calculates the cost if amount=cost+fee
-    // @param amount the amount to calculate the base on
-    // @param fee the percentage, out of 1 eth (e.g. 0.01 ETH would be 1%)
-    function removeFee(uint256 amount, uint256 fee) internal view returns (uint256){
-        return SafeMath.div(SafeMath.mul(amount, 1 ether), SafeMath.add(fee, 1 ether));
-    }
     /*
     *   Payable fallback function
     */
