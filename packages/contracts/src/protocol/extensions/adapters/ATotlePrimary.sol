@@ -83,16 +83,16 @@ contract ATotlePrimary {
     /// @param id Number of the trasactions id.
     function performRebalance(
         address totlePrimaryAddress,
-        Trade[] memory trades,
+        Trade memory trades,
         bytes32 id
     )
         public
     {
-        address tokenTransferProxy = TotlePrimary(totlePrimaryAddress).tokenTransferProxy();
-        Trade[] memory checkedTrades = new Trade[](trades.length);
-        for (uint256 i = 1; i <= trades.length; i++) {
-            address ETH_TOKEN_ADDRESS = address(0);
-            address targetTokenAddress = trades[i].tokenAddress;
+        //Trade[] memory checkedTrades = new Trade[](trades.length);
+        //for (uint256 i = 1; i <= trades.length; i++) {
+            //address ETH_TOKEN_ADDRESS = address(0);
+            //address targetTokenAddress = trades[i].tokenAddress;
+            address targetTokenAddress = trades.tokenAddress;
 
 /*
             address oracleAddress = address(0);
@@ -113,11 +113,22 @@ contract ATotlePrimary {
                 continue;
 */
 
-            checkedTrades[i] = trades[i];
+            //checkedTrades[i] = trades[i];
+            Trade memory checkedTrades = trades;
 
             // set allowances
+            address tokenTransferProxy = TotlePrimary(totlePrimaryAddress)
+                .tokenTransferProxy();
+            require(
+                setAllowances(
+                    tokenTransferProxy,
+                    targetTokenAddress,
+                    2**256 -1
+                ),
+                "ALLOWANCE_NOT_SET"
+            );
             require(setAllowances(tokenTransferProxy, targetTokenAddress, 2**256 -1));
-        }
+        //}
         address totleAddress = totlePrimaryAddress;
         (bool success, ) = totleAddress.call(
             abi.encodeWithSignature(
@@ -127,13 +138,19 @@ contract ATotlePrimary {
             )
         );
 
-        // set allowances
-        for (uint256 i = 1; i <= trades.length; i++) {
-            address targetTokenAddress = trades[i].tokenAddress;
-
-            address tokenTransferProxy = address(0);
-            require(setAllowances(tokenTransferProxy, targetTokenAddress, 2**256 -1));
-        }
+        // set allowances back to 0
+        //for (uint256 i = 1; i <= trades.length; i++) {
+            //address targetTokenAddress = trades[i].tokenAddress;
+            //addreess tokenTransferProxy = ... // already defined
+            require(
+                setAllowances(
+                    tokenTransferProxy,
+                    targetTokenAddress,
+                    0
+                ),
+                "ALLOWANCE_NOT_REVOKED"
+            );
+        //}
         require(
             success,
             "CALL_FAILED"
