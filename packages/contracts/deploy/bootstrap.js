@@ -176,11 +176,13 @@ module.exports = async (baseAccount, network) => {
   const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary')
   printAddress('ATotlePrimary', aTotlePrimary.address)
 
-  const exchangeHandler = await deploy(baseAccount, network, 'ExchangeHandler', [
+  const zeroExExchangeHandler = await deploy(baseAccount, network, 'ZeroExExchangeHandler', [
+    exchange.address
     totlePrimary.address,
+    wETH9.address,
     errorReporter.address
   ])
-  printAddress('ExchangeHandler', exchangeHandler.address)
+  printAddress('ZeroExExchangeHandler', zeroExExchangeHandler.address)
 
   await exchangesAuthority.setExchangeAdapter(
     totlePrimary.address,
@@ -207,7 +209,6 @@ module.exports = async (baseAccount, network) => {
     Exchange: exchange,
     ExchangeEfx: exchangeEfx,
     ExchangeV1Fork: exchangeV1Fork,
-    ExchangeHandler: exchangeHandler,
     ExchangesAuthority: exchangesAuthority,
     Faucet: faucet,
     HGetDragoData: hGetDragoData,
@@ -222,6 +223,7 @@ module.exports = async (baseAccount, network) => {
     VaultFactory: vaultFactory,
     WETH9: wETH9,
     WrapperLockEth: wrapperLockEth,
-    WrapperLock: wrapperLock
+    WrapperLock: wrapperLock,
+    ZeroExExchangeHandler: zeroExExchangeHandler,
   }
 }

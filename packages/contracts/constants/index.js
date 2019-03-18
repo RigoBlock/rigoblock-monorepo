@@ -29,7 +29,6 @@ module.exports = {
     'Exchange',
     'ExchangeEfx',
     'ExchangeV1Fork',
-    'ExchangeHandler',
     'ExchangesAuthority',
     'Faucet',
     'HGetDragoData',
@@ -49,6 +48,7 @@ module.exports = {
     'VaultFactory',
     'WETH9',
     'WrapperLock',
-    'WrapperLockEth'
+    'WrapperLockEth',
+    'ZeroExExchangeHandler'
   ]
 }
