@@ -111,12 +111,12 @@ describeContract(contractName, () => {
       const takeOrder = await baseContracts['ATotlePrimary']
         .performRebalance(
           [
-              1.toString(), // bool isSell
+              true, // bool isSell
               baseContracts['RigoToken'].address,
-              10000.toString(),
-              0.toString(), // false
-              1.toString(),
-              10000.toString(),
+              new BigNumber(10000).toString(),
+              false, // bool optionalTrade
+              1, // uint256 minimumExchangeRate
+              new BigNumber(10000).toString(),
               [
                   [
                     baseContracts['exchangeHandler'].address,
