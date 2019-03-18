@@ -177,7 +177,7 @@ module.exports = async (baseAccount, network) => {
   printAddress('ATotlePrimary', aTotlePrimary.address)
 
   const zeroExExchangeHandler = await deploy(baseAccount, network, 'ZeroExExchangeHandler', [
-    exchange.address
+    exchange.address,
     totlePrimary.address,
     wETH9.address,
     errorReporter.address
