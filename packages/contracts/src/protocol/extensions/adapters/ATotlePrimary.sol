@@ -49,6 +49,10 @@ interface Oracle {
 pragma solidity 0.5.4;
 pragma experimental ABIEncoderV2;
 
+contract TotlePrimary {
+    address public tokenTransferProxy;
+}
+
 /// @title Totle Primary adapter - A helper contract for the Totle exchange aggregator.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
@@ -78,11 +82,13 @@ contract ATotlePrimary {
     /// @param trades Array of Structs of parameters and orders.
     /// @param id Number of the trasactions id.
     function performRebalance(
+        address totlePrimaryAddress,
         Trade[] memory trades,
         bytes32 id
     )
         public
     {
+        address tokenTransferProxy = TotlePrimary(totlePrimaryAddress).tokenTransferProxy();
         Trade[] memory checkedTrades = new Trade[](trades.length);
         for (uint256 i = 1; i <= trades.length; i++) {
             address ETH_TOKEN_ADDRESS = address(0);
@@ -110,10 +116,9 @@ contract ATotlePrimary {
             checkedTrades[i] = trades[i];
 
             // set allowances
-            address tokenTransferProxy = address(0); // query from external contract
             require(setAllowances(tokenTransferProxy, targetTokenAddress, 2**256 -1));
         }
-        address totleAddress = address(0);
+        address totleAddress = totlePrimaryAddress;
         (bool success, ) = totleAddress.call(
             abi.encodeWithSignature(
                 "performRebalance(Trade[] calldata, bytes32)",

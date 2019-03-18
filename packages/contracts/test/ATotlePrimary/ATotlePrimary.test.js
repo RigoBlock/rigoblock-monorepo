@@ -99,7 +99,7 @@ describeContract(contractName, () => {
 
       const signedOrder = { ...order, typedSignature }
 
-      totlePrimaryAddress = await baseContracts[
+      const totlePrimaryAddress = await baseContracts[
         'TotlePrimary'
       ].address
 
@@ -110,6 +110,7 @@ describeContract(contractName, () => {
 
       const takeOrder = await baseContracts['ATotlePrimary']
         .performRebalance(
+          totlePrimaryAddress, // add totle primary address input
           [
               true, // bool isSell
               baseContracts['RigoToken'].address,
@@ -126,8 +127,14 @@ describeContract(contractName, () => {
           ],
           accounts[0], // fee account
           '0x1111111111111111111111111111111111111111111111111111111111111111'// mock id
-        )
-      expect(takeOrder).toBeHash()
+        ).encodeABI()
+
+      const txHash = await dragoInstance.methods
+        .operateOnExchange(
+          totlePrimaryAddress,
+          [takeOrder]
+        ).send({ ...transactionDefault })
+      expect(txHash).toBeHash()
     })
   })
 })
