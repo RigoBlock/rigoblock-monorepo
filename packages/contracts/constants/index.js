@@ -26,6 +26,7 @@ module.exports = {
     'DragoFactory',
     'DragoRegistry',
     'ERC20',
+    'ErrorReporter',
     'Exchange',
     'ExchangeEfx',
     'ExchangeV1Fork',
