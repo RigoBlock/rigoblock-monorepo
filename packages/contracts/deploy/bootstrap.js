@@ -168,7 +168,7 @@ module.exports = async (baseAccount, network) => {
   printAddress('ErrorReporter', errorReporter.address)
 
   const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
-    tokenTransferProxy.address,
+    tokenTransferProxy.address, // we use the same tokentransferproxy for testing
     errorReporter.address
   ])
   printAddress('TotlePrimary', totlePrimary.address)
