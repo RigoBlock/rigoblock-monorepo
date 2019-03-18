@@ -123,8 +123,7 @@ describeContract(contractName, () => {
                     signedOrder
                   ]
               ]
-          ]
-          signedOrder,
+          ],
           accounts[0], // fee account
           '0x1111111111111111111111111111111111111111111111111111111111111111'// mock id
         )
