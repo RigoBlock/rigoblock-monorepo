@@ -32,7 +32,7 @@ module.exports = {
     'ExchangeHandler',
     'ExchangesAuthority',
     'Faucet',
-    'HGetDragoData'
+    'HGetDragoData',
     'Inflation',
     'Migrations',
     'NavVerifier',
