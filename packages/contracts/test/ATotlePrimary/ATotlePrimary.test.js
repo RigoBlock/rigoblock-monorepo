@@ -108,14 +108,6 @@ describeContract(contractName, () => {
         totleAdapterAddress
       )
 
-      const methodSignature = '68890123' // "performRebalance(address,(bool,address,uint256,bool,uint256,uint256,(address,bytes)[]),bytes32)"
-
-      await baseContracts['ExchangesAuthority'].whitelistMethod(
-        methodSignature,
-        totleAdapterAddress,
-        true
-      ) // byte4(keccak256(method))
-
       const takeOrder = await baseContracts['ATotlePrimary']
         .performRebalance(
           totlePrimaryAddress, // totle primary address input
@@ -137,6 +129,14 @@ describeContract(contractName, () => {
           '0x1111111111111111111111111111111111111111111111111111111111111111'// mock id
         )//.encodeABI()
 /*
+      const methodSignature = 0x68890123 // "performRebalance(address,(bool,address,uint256,bool,uint256,uint256,(address,bytes)[]),bytes32)"
+
+      await baseContracts['ExchangesAuthority'].whitelistMethod(
+        methodSignature,
+        totleAdapterAddress,
+        true
+      ) // byte4(keccak256(method))
+
       const txHash = await dragoInstance.methods
         .operateOnExchange(
           totlePrimaryAddress,
