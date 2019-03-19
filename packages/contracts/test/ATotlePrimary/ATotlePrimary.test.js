@@ -109,59 +109,83 @@ describeContract(contractName, () => {
       )
 
       const totlePrimary = baseContracts['TotlePrimary']
-      const grgTokenAddress = baseContracts['RigoToken']
-      const handlerMock = baseContracts['ZeroExExchangeHandler']
+      const grgTokenAddress = baseContracts['RigoToken'].address
+      const zeroExHandlerAddress = baseContracts['ZeroExExchangeHandler'].address
+      const tradeId = '0x1111111111111111111111111111111111111111111111111111111111111111'
+      const isSell = true
+      const optionalTrade = false
+      const tokenAmount = 10000
+      const minimumExchangeRate = 1
+      const minimumAcceptableTokenAmount = 10000
 
-      await totlePrimary.performRebalance([
+      const encodedSignedOrder = await web3.eth.abi.encodeParameters(
+        ['address[]','uint256[]','bytes[]','bytes'],
         [
-            true,
-            grgTokenAddress.address,
-            10000,
-            false,
-            1,
-            10000,
-            [
-                [handlerMock.address, signedOrder]
-            ]
+          [makerAddress,takerAddress,feeRecipientAddress,senderAddress],
+          [makerAssetAmount,takerAssetAmount,makerFee, takerFee, expirationTimeSeconds, salt],
+          [makerAssetData,takerAssetData],
+          signature
         ]
-    ], "0x1111111111111111111111111111111111111111111111111111111111111111")
+      )
 
-/*
-      const takeOrder = await baseContracts['ATotlePrimary']
-        .performRebalance(
-          totlePrimaryAddress, // totle primary address input
-          [
-              true, // bool isSell
-              baseContracts['RigoToken'].address,
-              new BigNumber(10000).toString(),
-              false, // bool optionalTrade
-              1, // uint256 minimumExchangeRate
-              new BigNumber(10000).toString(),
-              [
-                  [
-                    baseContracts['ZeroExExchangeHandler'].address,
-                    [signedOrder]
-                  ]
-              ]
-          ],
-          //accounts[0], // fee account // this is an totle upgrade
-          '0x1111111111111111111111111111111111111111111111111111111111111111'// mock id
-        )//.encodeABI()
+      const totleOrder = await web3.eth.abi.encodeParameters(
+        ['address','bytes'],
+        [zeroExHandlerAddress,encodedSignedOrder]
+      )
 
-      const methodSignature = 0x68890123 // "performRebalance(address,(bool,address,uint256,bool,uint256,uint256,(address,bytes)[]),bytes32)"
+      const totleTrade = await web3.eth.abi.encodeParameters(
+        ['bool','address','uint256','bool','uint256','uint256','bytes'],
+        [
+          isSell,
+          grgTokenAddress,
+          tokenAmount,
+          optionalTrade,
+          minimumExchangeRate,
+          minimumAcceptableTokenAmount,
+          totleOrder
+        ]
+      )
 
+      const methodInterface = {
+        name: 'performRebalance',
+        type: 'function',
+        inputs: [
+          {
+            type: 'address',
+            name: 'totlePrimaryAddress'
+          },
+          {
+            type: 'bytes',
+            name: 'trades'
+          },
+          {
+            type: 'bytes32',
+            name: 'id'
+          }
+        ]
+      }
+
+      // defined trades as bytes type
+      const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
+        methodInterface,
+        [totlePrimaryAddress, totleTrade, tradeId]
+      )
+
+      const methodSignature = await web3.eth.abi.encodeFunctionSignature(
+        methodInterface
+      )
       await baseContracts['ExchangesAuthority'].whitelistMethod(
         methodSignature,
         totleAdapterAddress,
         true
       ) // byte4(keccak256(method))
 
-      const txHash = await dragoInstance.methods
-        .operateOnExchange(
-          totlePrimaryAddress,
-          [takeOrder]
-        ).send({ ...transactionDefault })
-      expect(txHash).toBeHash()*/
+      //const txHash = await dragoInstance.methods
+      await expect(dragoInstance.methods
+        .operateOnExchange(totlePrimaryAddress, [assembledTransaction])
+        .send({ ...transactionDefault })
+      //expect(txHash).toBeHash()
+    ).toThrowErrorMatchingSnapshot() // temporary until check
     })
   })
 })
