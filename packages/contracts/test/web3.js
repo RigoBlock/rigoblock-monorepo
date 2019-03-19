@@ -3,7 +3,6 @@ import Web3 from 'web3'
 
 let web3 = new Web3(new Web3.providers.HttpProvider(NETWORKS.localhost))
 
-/*
 web3.extend({
   property: 'evm',
   methods: [
@@ -14,6 +13,5 @@ web3.extend({
     }
   ]
 })
-*/
 
 export default web3

@@ -2,8 +2,8 @@ import { latestTime } from './latestTime'
 import web3 from '../web3'
 
 export const increaseTime = async duration => {
-  //return await web3.evm.evmIncreaseTime(duration)
-  return await web3.make_request("evm_increaseTime", [duration])
+  return await web3.evm.evmIncreaseTime(duration)
+  //return await web3.make_request("evm_increaseTime", [duration]) // new web3 function
 }
 
 // Beware that due to the need of calling two separate ganache methods and rpc calls overhead

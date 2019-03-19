@@ -108,6 +108,25 @@ describeContract(contractName, () => {
         totleAdapterAddress
       )
 
+      const totlePrimary = baseContracts['TotlePrimary']
+      const grgTokenAddress = baseContracts['RigoToken']
+      const handlerMock = baseContracts['ZeroExExchangeHandler']
+
+      await totlePrimary.performRebalance([
+        [
+            true,
+            grgTokenAddress.address,
+            10000,
+            false,
+            1,
+            10000,
+            [
+                [handlerMock.address, signedOrder]
+            ]
+        ]
+    ], "0x1111111111111111111111111111111111111111111111111111111111111111")
+
+/*
       const takeOrder = await baseContracts['ATotlePrimary']
         .performRebalance(
           totlePrimaryAddress, // totle primary address input
@@ -128,7 +147,7 @@ describeContract(contractName, () => {
           //accounts[0], // fee account // this is an totle upgrade
           '0x1111111111111111111111111111111111111111111111111111111111111111'// mock id
         )//.encodeABI()
-/*
+
       const methodSignature = 0x68890123 // "performRebalance(address,(bool,address,uint256,bool,uint256,uint256,(address,bytes)[]),bytes32)"
 
       await baseContracts['ExchangesAuthority'].whitelistMethod(
