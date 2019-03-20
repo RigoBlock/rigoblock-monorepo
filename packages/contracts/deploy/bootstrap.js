@@ -175,7 +175,9 @@ module.exports = async (baseAccount, network) => {
 
   await exchangesAuthority.whitelistExchange(totlePrimary.address, true)
 
-  const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary')
+  const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary', [
+    wETH9.address // TODO: add totle primary as constructor input
+  ])
   printAddress('ATotlePrimary', aTotlePrimary.address)
 
   const zeroExExchangeHandler = await deploy(baseAccount, network, 'ZeroExExchangeHandler', [

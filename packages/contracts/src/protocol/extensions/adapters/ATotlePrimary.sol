@@ -30,6 +30,11 @@ interface ERC20 {
     event Approval(address indexed _owner, address indexed _spender, uint _value);
 }
 
+interface WETH {
+    function deposit() external payable;
+    function withdraw(uint256 amount) external;
+}
+
 interface Oracle {
 
     function getExpectedRate(
@@ -58,6 +63,8 @@ contract TotlePrimary {
 // solhint-disable-next-line
 contract ATotlePrimary {
 
+    WETH weth;
+
     struct Trade {
         bool isSell;
         address tokenAddress;
@@ -76,6 +83,14 @@ contract ATotlePrimary {
     struct TradeFlag {
         bool ignoreTrade;
         bool[] ignoreOrder;
+    }
+
+    constructor(
+        address _weth
+    )
+        public
+    {
+        weth = WETH(_weth);
     }
 
     /// @dev Sends transactions to the Totle contract.
@@ -127,7 +142,8 @@ contract ATotlePrimary {
                 ),
                 "ALLOWANCE_NOT_SET"
             );
-            require(setAllowances(tokenTransferProxy, targetTokenAddress, 2**256 -1));
+            // TODO: differentiate between buy and sell order
+            weth.deposit.value(trades.tokenAmount)(); // TODO: check exact amount
         //}
         address totleAddress = totlePrimaryAddress;
         (bool success, ) = totleAddress.call(
@@ -156,6 +172,8 @@ contract ATotlePrimary {
             "CALL_FAILED"
         );
     }
+
+    // TODO: add withdraw residual WETH function
 
     /*
      * INTERNAL FUNCTIONS

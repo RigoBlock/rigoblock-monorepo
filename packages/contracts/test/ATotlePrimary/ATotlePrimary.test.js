@@ -122,7 +122,7 @@ describeContract(contractName, () => {
         ['address[]','uint256[]','bytes[]','bytes'],
         [
           [makerAddress,takerAddress,feeRecipientAddress,senderAddress],
-          [makerAssetAmount,takerAssetAmount,makerFee, takerFee, expirationTimeSeconds, salt],
+          [makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt],
           [makerAssetData,takerAssetData],
           signature
         ]
