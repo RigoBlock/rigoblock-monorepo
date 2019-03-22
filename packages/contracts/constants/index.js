@@ -17,6 +17,7 @@ module.exports = {
   GAS_ESTIMATE: 5e6,
   CONTRACT_NAMES: [
     'AEthfinex',
+    'ATotlePrimary',
     'AWeth',
     'Authority',
     'Distribution',
@@ -24,12 +25,14 @@ module.exports = {
     'DragoEventful',
     'DragoFactory',
     'DragoRegistry',
-    'Faucet',
     'ERC20',
+    'ErrorReporter',
     'Exchange',
     'ExchangeEfx',
     'ExchangeV1Fork',
     'ExchangesAuthority',
+    'Faucet',
+    'HGetDragoData',
     'Inflation',
     'Migrations',
     'NavVerifier',
@@ -39,6 +42,7 @@ module.exports = {
     'RigoToken',
     'SigVerifier',
     'TokenTransferProxy',
+    'TotlePrimary',
     'UnlimitedAllowanceToken',
     'Vault',
     'VaultEventful',
@@ -46,6 +50,6 @@ module.exports = {
     'WETH9',
     'WrapperLock',
     'WrapperLockEth',
-    'HGetDragoData'
+    'ZeroExExchangeHandler'
   ]
 }

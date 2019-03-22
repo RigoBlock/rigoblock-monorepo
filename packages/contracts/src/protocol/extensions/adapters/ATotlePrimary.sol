@@ -16,7 +16,7 @@
 
 */
 
-import { ITotlePrimary } from "../../../utils/exchanges/totle/ITotlePrimary/ITotlePrimary.sol";
+//import { ITotlePrimary } from "../../../utils/exchanges/totle/ITotlePrimary/ITotlePrimary.sol";
 
 // https://github.com/ethereum/EIPs/issues/20
 interface ERC20 {
@@ -28,6 +28,11 @@ interface ERC20 {
     function allowance(address _owner, address _spender) external view returns (uint remaining);
     function decimals() external view returns(uint digits);
     event Approval(address indexed _owner, address indexed _spender, uint _value);
+}
+
+interface WETH {
+    function deposit() external payable;
+    function withdraw(uint256 amount) external;
 }
 
 interface Oracle {
@@ -49,10 +54,16 @@ interface Oracle {
 pragma solidity 0.5.4;
 pragma experimental ABIEncoderV2;
 
+contract TotlePrimary {
+    address public tokenTransferProxy;
+}
+
 /// @title Totle Primary adapter - A helper contract for the Totle exchange aggregator.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 contract ATotlePrimary {
+
+    WETH weth;
 
     struct Trade {
         bool isSell;
@@ -74,19 +85,31 @@ contract ATotlePrimary {
         bool[] ignoreOrder;
     }
 
+    constructor(
+        address _weth
+    )
+        public
+    {
+        weth = WETH(_weth);
+    }
+
     /// @dev Sends transactions to the Totle contract.
     /// @param trades Array of Structs of parameters and orders.
     /// @param id Number of the trasactions id.
     function performRebalance(
-        Trade[] memory trades,
+        address totlePrimaryAddress,
+        Trade memory trades,
         bytes32 id
     )
         public
     {
-        Trade[] memory checkedTrades = new Trade[](trades.length);
-        for (uint256 i = 1; i <= trades.length; i++) {
-            address ETH_TOKEN_ADDRESS = address(0);
-            address targetTokenAddress = trades[i].tokenAddress;
+        //Trade[] memory checkedTrades = new Trade[](trades.length);
+        //for (uint256 i = 1; i <= trades.length; i++) {
+            //address ETH_TOKEN_ADDRESS = address(0);
+            //address targetTokenAddress = trades[i].tokenAddress;
+            address targetTokenAddress = trades.tokenAddress;
+
+/*
             address oracleAddress = address(0);
             Oracle oracle = Oracle(oracleAddress);
 
@@ -103,28 +126,54 @@ contract ATotlePrimary {
 
             if (expectedRate > trades[i].minimumExchangeRate * 105 / 100)
                 continue;
+*/
 
-            checkedTrades[i] = trades[i];
-            
+            //checkedTrades[i] = trades[i];
+            Trade memory checkedTrades = trades;
+
             // set allowances
-            address tokenTransferProxy = address(0); // query from external contract
-            require(setAllowances(tokenTransferProxy, targetTokenAddress, 2**256 -1));
-        }
-        address totleAddress = address(0);
-        (bool success, ) = totleAddress.call(abi.encodeWithSignature("performRebalance(Trade[] calldata, bytes32)", checkedTrades, id));
+            address tokenTransferProxy = TotlePrimary(totlePrimaryAddress)
+                .tokenTransferProxy();
+            require(
+                setAllowances(
+                    tokenTransferProxy,
+                    targetTokenAddress,
+                    2**256 -1
+                ),
+                "ALLOWANCE_NOT_SET"
+            );
+            // TODO: differentiate between buy and sell order
+            weth.deposit.value(trades.tokenAmount)(); // TODO: check exact amount
+        //}
+        address totleAddress = totlePrimaryAddress;
+        (bool success, ) = totleAddress.call(
+            abi.encodeWithSignature(
+                "performRebalance(Trade[] calldata, bytes32)",
+                checkedTrades,
+                id
+            )
+        );
 
-        // set allowances
-        for (uint256 i = 1; i <= trades.length; i++) {
-            address targetTokenAddress = trades[i].tokenAddress;
-
-            address tokenTransferProxy = address(0);
-            require(setAllowances(tokenTransferProxy, targetTokenAddress, 2**256 -1));
-        }
+        // set allowances back to 0
+        //for (uint256 i = 1; i <= trades.length; i++) {
+            //address targetTokenAddress = trades[i].tokenAddress;
+            //addreess tokenTransferProxy = ... // already defined
+            require(
+                setAllowances(
+                    tokenTransferProxy,
+                    targetTokenAddress,
+                    0
+                ),
+                "ALLOWANCE_NOT_REVOKED"
+            );
+        //}
         require(
             success,
             "CALL_FAILED"
         );
     }
+
+    // TODO: add withdraw residual WETH function
 
     /*
      * INTERNAL FUNCTIONS
