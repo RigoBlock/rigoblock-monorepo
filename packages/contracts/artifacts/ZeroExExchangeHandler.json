@@ -2839,7 +2839,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/totle/handlers/ZeroExExchangeHandler.sol"
             ],
-            "address": "0xac03f6bebfbd485ff3491ace4340633405a3bc9d",
+            "address": "0x3e4bf17526ca7fe9f780a2c67f57393e0a489ee1",
             "constructor_args": "0x000000000000000000000000b611eb75e36221b78f5b374ee9b2c9de2b9cc23a000000000000000000000000aa5ce5dcd31220df52c698596939ce444b8ea6a4000000000000000000000000ff0016a0ddc8d093f0309e927734154cbb55bc2200000000000000000000000093d68ee9d3be5ada8aabf51846fd9f122e087422"
         }
     }
