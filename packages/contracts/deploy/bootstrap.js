@@ -164,38 +164,73 @@ module.exports = async (baseAccount, network) => {
     aEthfinex.address
   )
 
+  const errorReporter = await deploy(baseAccount, network, 'ErrorReporter')
+  printAddress('ErrorReporter', errorReporter.address)
+
+  const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
+    tokenTransferProxy.address, // we use the same tokentransferproxy for testing
+    errorReporter.address
+  ])
+  printAddress('TotlePrimary', totlePrimary.address)
+
+  await exchangesAuthority.whitelistExchange(totlePrimary.address, true)
+
+  const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary', [
+    wETH9.address // TODO: add totle primary as constructor input
+  ])
+  printAddress('ATotlePrimary', aTotlePrimary.address)
+
+  const zeroExExchangeHandler = await deploy(baseAccount, network, 'ZeroExExchangeHandler', [
+    exchange.address,
+    totlePrimary.address,
+    wETH9.address,
+    errorReporter.address
+  ])
+  printAddress('ZeroExExchangeHandler', zeroExExchangeHandler.address)
+
+  await totlePrimary.addHandlerToWhitelist(zeroExExchangeHandler.address)
+
+  await exchangesAuthority.setExchangeAdapter(
+    totlePrimary.address,
+    aTotlePrimary.address
+  )
+
   const faucet = await deploy(baseAccount, network, 'Faucet', [
     rigoToken.address,
     'GRGFaucet'
   ])
   printAddress('Faucet', faucet.address)
 
-  const HGetDragoData = await deploy(baseAccount, network, 'HGetDragoData')
-  printAddress('HGetDragoData', HGetDragoData.address)
+  const hGetDragoData = await deploy(baseAccount, network, 'HGetDragoData')
+  printAddress('HGetDragoData', hGetDragoData.address)
 
   return {
     AEthfinex: aEthfinex,
+    ATotlePrimary: aTotlePrimary,
     AWeth: aWeth,
     Authority: authority,
     DragoRegistry: dragoRegistry,
-    VaultEventful: vaultEventful,
-    VaultFactory: vaultFactory,
     DragoEventful: dragoEventful,
     DragoFactory: dragoFactory,
+    ErrorReporter: errorReporter,
     Exchange: exchange,
     ExchangeEfx: exchangeEfx,
     ExchangeV1Fork: exchangeV1Fork,
-    Faucet: faucet,
     ExchangesAuthority: exchangesAuthority,
+    Faucet: faucet,
+    HGetDragoData: hGetDragoData,
     NavVerifier: navVerifier,
     RigoToken: rigoToken,
     ProofOfPerformance: proofOfPerformance,
     Inflation: inflation,
     SigVerifier: sigVerifier,
+    TotlePrimary: totlePrimary,
     TokenTransferProxy: tokenTransferProxy,
+    VaultEventful: vaultEventful,
+    VaultFactory: vaultFactory,
     WETH9: wETH9,
     WrapperLockEth: wrapperLockEth,
     WrapperLock: wrapperLock,
-    HGetDragoData
+    ZeroExExchangeHandler: zeroExExchangeHandler,
   }
 }
