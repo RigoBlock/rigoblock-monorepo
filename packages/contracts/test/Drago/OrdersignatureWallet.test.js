@@ -1,18 +1,23 @@
 //import { BigNumber } from 'bignumber.js'
 //import { ZeroEx } from '0x.js'
+import {
+  BigNumber,
+  ContractWrappers,
+  Order,
+  SignerType,
+  assetDataUtils,
+  generatePseudoRandomSalt,
+  orderHashUtils,
+  signatureUtils
+} from '0x.js'
+import {
+  ECSignature,
+  SignatureType,
+  SignedOrder,
+  ValidatorSignature
+} from '@0x/types'
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import dragoArtifact from '../../artifacts/Drago.json'
-import {
-    assetDataUtils,
-    BigNumber,
-    ContractWrappers,
-    generatePseudoRandomSalt,
-    Order,
-    orderHashUtils,
-    signatureUtils,
-    SignerType,
-} from '0x.js'
-import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types';
 import web3 from '../web3'
 
 const contractName = 'Drago'
@@ -43,9 +48,7 @@ describeContract(contractName, () => {
     }
     exchangeAddress = await baseContracts['Exchange'].address
     //hotWalletAddress = accounts[0] // hot wallet
-    ethfinexAdapterAddress = await baseContracts[
-      'AEthfinex'
-    ].address
+    ethfinexAdapterAddress = await baseContracts['AEthfinex'].address
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
   })
 
@@ -55,8 +58,10 @@ describeContract(contractName, () => {
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
-      const takerAssetData = '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
+      const makerAssetData =
+        '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
+      const takerAssetData =
+        '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -81,7 +86,7 @@ describeContract(contractName, () => {
         takerAddress,
         takerAssetAmount,
         takerAssetData,
-        takerFee,
+        takerFee
       }
       const providerEngine = web3.currentProvider
 
@@ -102,8 +107,7 @@ describeContract(contractName, () => {
 
       // check against 0x api
       const isValidSignature = await expect(
-        signatureUtils
-        .isValidWalletSignatureAsync(
+        signatureUtils.isValidWalletSignatureAsync(
           providerEngine,
           orderHashHex,
           typedSignature,
@@ -116,8 +120,10 @@ describeContract(contractName, () => {
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
-      const takerAssetData = '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
+      const makerAssetData =
+        '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
+      const takerAssetData =
+        '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -142,7 +148,7 @@ describeContract(contractName, () => {
         takerAddress,
         takerAssetAmount,
         takerAssetData,
-        takerFee,
+        takerFee
       }
       const providerEngine = web3.currentProvider
 
@@ -168,12 +174,9 @@ describeContract(contractName, () => {
         ethfinexAdapterAddress
       )
 
-      const isValidWalletSignature = await baseContracts['Exchange']
-        .isValidSignature(
-          orderHashHex,
-          dragoAddress,
-          typedSignature
-        )
+      const isValidWalletSignature = await baseContracts[
+        'Exchange'
+      ].isValidSignature(orderHashHex, dragoAddress, typedSignature)
       expect(isValidWalletSignature).toEqual(true)
     })
     it('checks an order signature against 0x api', async () => {
@@ -181,8 +184,10 @@ describeContract(contractName, () => {
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
-      const takerAssetData = '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
+      const makerAssetData =
+        '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
+      const takerAssetData =
+        '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -207,7 +212,7 @@ describeContract(contractName, () => {
         takerAddress,
         takerAssetAmount,
         takerAssetData,
-        takerFee,
+        takerFee
       }
       const providerEngine = web3.currentProvider
 
@@ -237,13 +242,12 @@ describeContract(contractName, () => {
         signature,
         SignatureType.PreSigned
       )
-      const isValidSignature = await signatureUtils
-        .isValidWalletSignatureAsync(
-          providerEngine,
-          orderHashHex,
-          schemaSignature,
-          dragoAddress
-        )
+      const isValidSignature = await signatureUtils.isValidWalletSignatureAsync(
+        providerEngine,
+        orderHashHex,
+        schemaSignature,
+        dragoAddress
+      )
       expect(isValidSignature).toBe(true)
     })
   })

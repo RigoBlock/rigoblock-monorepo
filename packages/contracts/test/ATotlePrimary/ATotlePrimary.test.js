@@ -1,16 +1,21 @@
+import {
+  BigNumber,
+  ContractWrappers,
+  Order,
+  SignerType,
+  assetDataUtils,
+  generatePseudoRandomSalt,
+  orderHashUtils,
+  signatureUtils
+} from '0x.js'
+import {
+  ECSignature,
+  SignatureType,
+  SignedOrder,
+  ValidatorSignature
+} from '@0x/types'
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import dragoArtifact from '../../artifacts/Drago.json'
-import {
-    assetDataUtils,
-    BigNumber,
-    ContractWrappers,
-    generatePseudoRandomSalt,
-    Order,
-    orderHashUtils,
-    signatureUtils,
-    SignerType,
-} from '0x.js'
-import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types';
 import web3 from '../web3'
 
 const contractName = 'Drago'
@@ -40,9 +45,7 @@ describeContract(contractName, () => {
       gasPrice: 1
     }
     exchangeAddress = await baseContracts['Exchange'].address
-    totleAdapterAddress = await baseContracts[
-      'ATotlePrimary'
-    ].address
+    totleAdapterAddress = await baseContracts['ATotlePrimary'].address
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
   })
 
@@ -52,8 +55,12 @@ describeContract(contractName, () => {
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0x0000000000000000000000000000000000000000'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = assetDataUtils.encodeERC20AssetData(baseContracts['RigoToken'].address)
-      const takerAssetData = assetDataUtils.encodeERC20AssetData(baseContracts['WETH9'].address)
+      const makerAssetData = assetDataUtils.encodeERC20AssetData(
+        baseContracts['RigoToken'].address
+      )
+      const takerAssetData = assetDataUtils.encodeERC20AssetData(
+        baseContracts['WETH9'].address
+      )
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -78,7 +85,7 @@ describeContract(contractName, () => {
         takerAddress,
         takerAssetAmount,
         takerAssetData,
-        takerFee,
+        takerFee
       }
       const providerEngine = web3.currentProvider
 
@@ -99,9 +106,7 @@ describeContract(contractName, () => {
 
       const signedOrder = { ...order, typedSignature }
 
-      const totlePrimaryAddress = await baseContracts[
-        'TotlePrimary'
-      ].address
+      const totlePrimaryAddress = await baseContracts['TotlePrimary'].address
 
       await baseContracts['ExchangesAuthority'].setExchangeAdapter(
         totlePrimaryAddress,
@@ -110,8 +115,10 @@ describeContract(contractName, () => {
 
       const totlePrimary = baseContracts['TotlePrimary']
       const grgTokenAddress = baseContracts['RigoToken'].address
-      const zeroExHandlerAddress = baseContracts['ZeroExExchangeHandler'].address
-      const tradeId = '0x1111111111111111111111111111111111111111111111111111111111111111'
+      const zeroExHandlerAddress =
+        baseContracts['ZeroExExchangeHandler'].address
+      const tradeId =
+        '0x1111111111111111111111111111111111111111111111111111111111111111'
       const isSell = false // buying a token -> isSell = false
       const optionalTrade = false
       const tokenAmount = 10000
@@ -119,22 +126,29 @@ describeContract(contractName, () => {
       const minimumAcceptableTokenAmount = 10000
 
       const encodedSignedOrder = await web3.eth.abi.encodeParameters(
-        ['address[]','uint256[]','bytes[]','bytes'],
+        ['address[]', 'uint256[]', 'bytes[]', 'bytes'],
         [
-          [makerAddress,takerAddress,feeRecipientAddress,senderAddress],
-          [makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt],
-          [makerAssetData,takerAssetData],
+          [makerAddress, takerAddress, feeRecipientAddress, senderAddress],
+          [
+            makerAssetAmount,
+            takerAssetAmount,
+            makerFee,
+            takerFee,
+            expirationTimeSeconds,
+            salt
+          ],
+          [makerAssetData, takerAssetData],
           signature
         ]
       )
 
       const totleOrder = await web3.eth.abi.encodeParameters(
-        ['address','bytes'],
-        [zeroExHandlerAddress,encodedSignedOrder]
+        ['address', 'bytes'],
+        [zeroExHandlerAddress, encodedSignedOrder]
       )
 
       const totleTrade = await web3.eth.abi.encodeParameters(
-        ['bool','address','uint256','bool','uint256','uint256','bytes'],
+        ['bool', 'address', 'uint256', 'bool', 'uint256', 'uint256', 'bytes'],
         [
           isSell,
           grgTokenAddress,
@@ -181,7 +195,7 @@ describeContract(contractName, () => {
       ) // byte4(keccak256(method))
 
       //const txHash = await dragoInstance.methods
-/*
+      /*
       await expect(dragoInstance.methods
         .operateOnExchange(totlePrimaryAddress, [assembledTransaction])
         .send({ ...transactionDefault })

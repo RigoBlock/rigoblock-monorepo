@@ -180,12 +180,17 @@ module.exports = async (baseAccount, network) => {
   ])
   printAddress('ATotlePrimary', aTotlePrimary.address)
 
-  const zeroExExchangeHandler = await deploy(baseAccount, network, 'ZeroExExchangeHandler', [
-    exchange.address,
-    totlePrimary.address,
-    wETH9.address,
-    errorReporter.address
-  ])
+  const zeroExExchangeHandler = await deploy(
+    baseAccount,
+    network,
+    'ZeroExExchangeHandler',
+    [
+      exchange.address,
+      totlePrimary.address,
+      wETH9.address,
+      errorReporter.address
+    ]
+  )
   printAddress('ZeroExExchangeHandler', zeroExExchangeHandler.address)
 
   await totlePrimary.addHandlerToWhitelist(zeroExExchangeHandler.address)
@@ -231,6 +236,6 @@ module.exports = async (baseAccount, network) => {
     WETH9: wETH9,
     WrapperLockEth: wrapperLockEth,
     WrapperLock: wrapperLock,
-    ZeroExExchangeHandler: zeroExExchangeHandler,
+    ZeroExExchangeHandler: zeroExExchangeHandler
   }
 }

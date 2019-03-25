@@ -123,8 +123,8 @@ describeContract(contractName, () => {
       // and one for the fund wizard
       const mintEvent = baseContracts['RigoToken'].TokenMinted()
       const eventsPromise = new Promise((resolve, reject) => {
-        mintEvent.get(
-          (err, data) => (err ? reject(new Error(err)) : resolve(data))
+        mintEvent.get((err, data) =>
+          err ? reject(new Error(err)) : resolve(data)
         )
       })
       const events = await eventsPromise
