@@ -98,14 +98,11 @@ describeContract(contractName, () => {
         signerAddress
       )
 
-      const encodedOrder = await web3.eth.abi.encodeParameters(
-        ['address[]','uint256[]','bytes[]'],
-        [
-          [makerAddress,takerAddress,feeRecipientAddress,senderAddress],
-          [makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt],
-          [makerAssetData,takerAssetData]
-        ]
-      )
+      const aggregatedOrder = [
+        makerAddress,takerAddress,feeRecipientAddress,senderAddress,
+        makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
+        makerAssetData,takerAssetData
+      ]
 
       // accounts[1] takes the order, purchases GRG
       const transactionDetails = {
@@ -115,14 +112,12 @@ describeContract(contractName, () => {
       }
       const takerAssetFillAmount = takerAssetAmount
       const fillOrder = await exchangeInstance.methods.fillOrder(
-        [
-          makerAddress,takerAddress,feeRecipientAddress,senderAddress,
-          makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
-          makerAssetData,takerAssetData
-        ],
+        aggregatedOrder,
         takerAssetFillAmount, // fill order
         signedOrder.signature // SignatureType.EthSign
       ).send({ ...transactionDetails })
+      const secondaryGRGbalance = await baseContracts['RigoToken'].balanceOf(accounts[1])
+      expect(secondaryGRGbalance.toString()).toEqual(takerAssetFillAmount)
     })
   })
 })

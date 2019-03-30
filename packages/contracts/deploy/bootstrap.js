@@ -178,11 +178,12 @@ module.exports = async (baseAccount, network) => {
   printAddress('ErrorReporter', errorReporter.address)
 
   const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
-    tokenTransferProxy.address, // we use the same tokentransferproxy for testing
+    tokenTransferProxy.address, // same tokentransferproxy unless required
     errorReporter.address
   ])
   printAddress('TotlePrimary', totlePrimary.address)
 
+  await tokenTransferProxy.addAuthorizedAddress(totlePrimary.address)
   await exchangesAuthority.whitelistExchange(totlePrimary.address, true)
 
   const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary', [

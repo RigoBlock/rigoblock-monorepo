@@ -191,3 +191,80 @@ describeContract(contractName, () => {
     })
   })
 })
+
+/*
+      // alternative with encoded parameters
+      const methodInterface = {
+        name: 'performRebalance',
+        type: 'function',
+        inputs: [
+    			{
+    				components: [
+    					{
+    						name: "isSell",
+    						type: "bool"
+    					},
+    					{
+    						name: "tokenAddress",
+    						type: "address"
+    					},
+    					{
+    						name: "tokenAmount",
+    						type: "uint256"
+    					},
+    					{
+    						name: "optionalTrade",
+    						type: "bool"
+    					},
+    					{
+    						name: "minimumExchangeRate",
+    						type: "uint256"
+    					},
+    					{
+    						name: "minimumAcceptableTokenAmount",
+    						type: "uint256"
+    					},
+    					{
+    						"components": [
+    							{
+    								name: "exchangeHandler",
+    								type: "address"
+    							},
+    							{
+    								name: "genericPayload",
+    								type: "bytes"
+    							}
+    						],
+    						name: "orders",
+    						type: "tuple[]"
+    					}
+    				],
+    				name: "trades",
+    				type: "tuple[]"
+    			},
+    			{
+    				name: "id",
+    				type: "bytes32"
+    			}
+    		]
+      }
+
+      const generateRebalance = await web3.eth.abi.encodeFunctionCall(
+        methodInterface,
+        [
+          [
+            [
+              isSell,
+              grgTokenAddress,
+              tokenAmount,
+              optionalTrade,
+              minimumExchangeRate, // check on value
+              minimumAcceptableTokenAmount,
+              [
+                [zeroExHandlerAddress, encodedSignedOrder] // SignatureType.EthSign
+              ]
+            ]
+          ],
+          tradeId
+          ]
+        )*/

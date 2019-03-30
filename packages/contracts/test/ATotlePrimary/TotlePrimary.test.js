@@ -1,5 +1,6 @@
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
-import dragoArtifact from '../../artifacts/Drago.json'
+import totlePrimaryArtifact from '../../artifacts/TotlePrimary.json'
+import exchangeArtifact from '../../artifacts/Exchange.json'
 import {
     assetDataUtils,
     BigNumber,
@@ -16,28 +17,37 @@ import web3 from '../web3'
 const contractName = 'TotlePrimary'
 
 describeContract(contractName, () => {
-  let dragoAddress
-  let dragoInstance
+  let totlePrimaryAddress
+  let totlePrimaryInstance
   let transactionDefault
   let exchangeAddress
-  //let hotWalletAddress
-  let totlePrimaryAddress
+  let exchangeInstance
 
   beforeAll(async () => {
+    totlePrimaryAddress = await baseContracts[
+      'TotlePrimary'
+    ].address
+    totlePrimaryInstance = new web3.eth.Contract(
+      totlePrimaryArtifact.networks[GANACHE_NETWORK_ID].abi,
+      totlePrimaryAddress
+    )
+    exchangeAddress = await baseContracts[
+      'Exchange'
+    ].address
+    exchangeInstance = new web3.eth.Contract(
+      exchangeArtifact.networks[GANACHE_NETWORK_ID].abi,
+      exchangeAddress
+    )
     transactionDefault = {
       from: accounts[0],
       gas: GAS_ESTIMATE,
       gasPrice: 1
     }
-    exchangeAddress = await baseContracts['Exchange'].address
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
-    totlePrimaryAddress = await baseContracts[
-      'TotlePrimary'
-    ].address
   })
 
   describe('performRebalance', () => {
-    it.skip('performs a totle rebalance', async () => {
+    it('performs a totle rebalance', async () => {
       const makerAddress = accounts[0]
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0x0000000000000000000000000000000000000000'
@@ -48,26 +58,16 @@ describeContract(contractName, () => {
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
       const takerFee = new BigNumber(0).toString()
-      const makerAssetAmount = web3.utils.toWei('0.2').toString()
+      const makerAssetAmount = web3.utils.toWei('0.3').toString() // test with equal amounts (prev 0.2)
       const takerAssetAmount = web3.utils.toWei('0.3').toString()
       const expirationTimeSeconds = new BigNumber(
         Date.now() + 3600000
       ).toString() // Valid for up to an hour
 
-      // wrap ether from a secondary account
-      await baseContracts['WETH9'].deposit.sendTransactionAsync(
-        {
-          value: takerAssetAmount,
-          from: accounts[1]
-        }
-      )
-
-      // set allowances
-      await baseContracts['WETH9'].approve.sendTransactionAsync(
-        totlePrimaryAddress, takerAssetAmount, { from: accounts[1] }
-      )
+      // set allowance to tokenTransferProxy
+      const tokenTransferProxy = baseContracts['TokenTransferProxy'].address
       await baseContracts['RigoToken'].approve.sendTransactionAsync(
-        totlePrimaryAddress, takerAssetAmount, { from: accounts[0] }
+        tokenTransferProxy, takerAssetAmount, { from: accounts[0] }
       )
 
       // Generate order
@@ -96,25 +96,50 @@ describeContract(contractName, () => {
         signerAddress
       )
 
-      const totlePrimary = baseContracts['TotlePrimary']
       const grgTokenAddress = baseContracts['RigoToken'].address
       const zeroExHandlerAddress = baseContracts['ZeroExExchangeHandler'].address
       const tradeId = '0x1111111111111111111111111111111111111111111111111111111111111111'
       const isSell = false // buying a token from the secondary account -> isSell = false
       const optionalTrade = false
-      const tokenAmount = 10000
+      const tokenAmount = 10000 //alt: web3.utils.toWei('0.2').toString()
       const minimumExchangeRate = 1
-      const minimumAcceptableTokenAmount = 10000
+      const minimumAcceptableTokenAmount = 2000 // alt: web3.utils.toWei('0.3').toString()
 
+/*
+      // must understand how to pass the parameters to the following struct
+      const encodedSignedOrder = await web3.eth.abi.encodeParameters(
+        ['address[]','uint256[]','bytes[]','uint256','bytes'],
+        [
+          [makerAddress,takerAddress,feeRecipientAddress,senderAddress],
+          [makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt],
+          [makerAssetData,takerAssetData],
+          tokenAmount,
+          signedOrder.signature
+        ]
+      )
+*/
+
+      const aggregatedOrder = [
+        makerAddress,takerAddress,feeRecipientAddress,senderAddress,
+        makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
+        makerAssetData,takerAssetData
+      ]
+
+      const takerAssetFillAmount = takerAssetAmount // in case of totle, should be tokenAmount
+      const fillOrder = await exchangeInstance.methods.fillOrder(
+        aggregatedOrder,
+        takerAssetFillAmount, // fill order
+        signedOrder.signature // SignatureType.EthSign
+      ).encodeABI()
+
+      // accounts[1] takes the order, purchases GRG
       const transactionDetails = {
         from: accounts[1],
+        value: tokenAmount,
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
-      // error log: invalid solidity type!: tuple[]
-      // must deprecate deployer
-      const generateRebalance = await totlePrimary.performRebalance
-        .sendTransactionAsync(
+      const generateRebalance = await totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,
@@ -124,65 +149,15 @@ describeContract(contractName, () => {
             minimumExchangeRate, // check on value
             minimumAcceptableTokenAmount,
             [
-                [zeroExHandlerAddress, signedOrder] // SignatureType.EthSign
+                [
+                  zeroExHandlerAddress,
+                  fillOrder
+                ]
             ]
           ]
         ],
-        tradeId,
-        transactionDetails // append transaction options
-      )
-/*
-      const encodedSignedOrder = await web3.eth.abi.encodeParameters(
-        ['address[]','uint256[]','bytes[]','bytes'],
-        [
-          [makerAddress,takerAddress,feeRecipientAddress,senderAddress],
-          [makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt],
-          [makerAssetData,takerAssetData],
-          signedOrder.signature
-        ]
-      )
-
-      const totleOrder = await web3.eth.abi.encodeParameters(
-        ['address','bytes'],
-        [zeroExHandlerAddress, encodedSignedOrder]
-      )
-
-      const totleTrade = await web3.eth.abi.encodeParameters(
-        ['bool','address','uint256','bool','uint256','uint256','tuple[]'],
-        [
-          isSell,
-          grgTokenAddress,
-          tokenAmount,
-          optionalTrade,
-          minimumExchangeRate,
-          minimumAcceptableTokenAmount,
-          [totleOrder, ]
-        ]
-      )
-
-      const methodInterface = {
-        name: 'performRebalance',
-        type: 'function',
-        inputs: [
-          {
-            type: 'tuple[]',
-            name: 'trades'
-          },
-          {
-            type: 'bytes32',
-            name: 'id'
-          }
-        ]
-      }
-      const txHash = await web3.eth.abi.encodeFunctionCall(
-        methodInterface,
-        [[totleTrade, ], tradeId]
-      )
-      expect(txHash).toBeHash()
-      // return invalid tuple error
-      // TODO: encode signature, append encoded params, then
-      // try with web3.eth.accounts.signTransaction(tx, privateKey [, callback])
-      */
+        tradeId
+      ).send({ ...transactionDetails })
     })
   })
 })
