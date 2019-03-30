@@ -144,6 +144,16 @@ module.exports = async (baseAccount, network) => {
   const exchange = await deploy(baseAccount, network, 'Exchange')
   printAddress('Exchange', exchange.address)
 
+  const erc20Proxy = await deploy(
+    baseAccount,
+    network,
+    'Erc20Proxy'
+  )
+  printAddress('Erc20Proxy', erc20Proxy.address)
+
+  await erc20Proxy.addAuthorizedAddress(exchange.address)
+  await exchange.registerAssetProxy(erc20Proxy.address)
+
   const navVerifier = await deploy(baseAccount, network, 'NavVerifier')
   printAddress('NavVerifier', navVerifier.address)
 
@@ -213,6 +223,7 @@ module.exports = async (baseAccount, network) => {
     DragoEventful: dragoEventful,
     DragoFactory: dragoFactory,
     ErrorReporter: errorReporter,
+    Erc20Proxy: erc20Proxy,
     Exchange: exchange,
     ExchangeEfx: exchangeEfx,
     ExchangeV1Fork: exchangeV1Fork,
