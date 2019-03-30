@@ -37,7 +37,7 @@ describeContract(contractName, () => {
   })
 
   describe('performRebalance', () => {
-    it('performs a totle rebalance', async () => {
+    it.skip('performs a totle rebalance', async () => {
       const makerAddress = accounts[0]
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0x0000000000000000000000000000000000000000'
@@ -106,10 +106,15 @@ describeContract(contractName, () => {
       const minimumExchangeRate = 1
       const minimumAcceptableTokenAmount = 10000
 
-/*
+      const transactionDetails = {
+        from: accounts[1],
+        gas: GAS_ESTIMATE,
+        gasPrice: 1
+      }
       // error log: invalid solidity type!: tuple[]
-      // this is most likely due to not up-to-date deployer
-      const generateRebalance = await totlePrimary.performRebalance(
+      // must deprecate deployer
+      const generateRebalance = await totlePrimary.performRebalance
+        .sendTransactionAsync(
         [
           [
             isSell,
@@ -119,14 +124,14 @@ describeContract(contractName, () => {
             minimumExchangeRate, // check on value
             minimumAcceptableTokenAmount,
             [
-                [zeroExHandlerAddress, signedOrder] // check typedSignedOrder
+                [zeroExHandlerAddress, signedOrder] // SignatureType.EthSign
             ]
           ]
         ],
-        tradeId
+        tradeId,
+        transactionDetails // append transaction options
       )
-*/
-
+/*
       const encodedSignedOrder = await web3.eth.abi.encodeParameters(
         ['address[]','uint256[]','bytes[]','bytes'],
         [
@@ -139,7 +144,7 @@ describeContract(contractName, () => {
 
       const totleOrder = await web3.eth.abi.encodeParameters(
         ['address','bytes'],
-        [zeroExHandlerAddress, encodedSignedOrder] // possibly the order does not have the be encoded, just sent as order format
+        [zeroExHandlerAddress, encodedSignedOrder]
       )
 
       const totleTrade = await web3.eth.abi.encodeParameters(
@@ -173,18 +178,10 @@ describeContract(contractName, () => {
         methodInterface,
         [[totleTrade, ], tradeId]
       )
-      /*
-            // error log: invalid solidity type!: tuple[]
-            or abicoder? check on versions of dependancies
-            // possibly because of use of old deployer // TODO: deprecate deployer
-            const txHash = await totlePrimary.performRebalance.sendTransactionAsync(
-              totleTrade, tradeId,
-              {
-                from: accounts[1]
-              }
-            )
-            expect(txHash).toBeHash()
-            // TODO: try with web3.eth.accounts.signTransaction(tx, privateKey [, callback])
+      expect(txHash).toBeHash()
+      // return invalid tuple error
+      // TODO: encode signature, append encoded params, then
+      // try with web3.eth.accounts.signTransaction(tx, privateKey [, callback])
       */
     })
   })
