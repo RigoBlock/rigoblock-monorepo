@@ -132,7 +132,7 @@ describeContract(contractName, () => {
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
-      const generateRebalance = await totlePrimaryInstance.methods.performRebalance(
+      await totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,

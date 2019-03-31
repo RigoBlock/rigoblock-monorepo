@@ -13,6 +13,7 @@ describeContract(contractName, () => {
     totlePrimaryAddress = await baseContracts[
       'TotlePrimary'
     ].address
+
     totlePrimaryInstance = new web3.eth.Contract(
       totlePrimaryArtifact.networks[GANACHE_NETWORK_ID].abi,
       totlePrimaryAddress
