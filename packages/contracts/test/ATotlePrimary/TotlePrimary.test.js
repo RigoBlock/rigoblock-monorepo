@@ -13,7 +13,7 @@ import {
 import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types';
 import web3 from '../web3'
 
-const contractName = 'Drago'
+const contractName = 'TotlePrimary'
 
 describeContract(contractName, () => {
   let dragoAddress
@@ -21,33 +21,23 @@ describeContract(contractName, () => {
   let transactionDefault
   let exchangeAddress
   //let hotWalletAddress
-  let totleAdapterAddress
+  let totlePrimaryAddress
 
   beforeAll(async () => {
-    await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
-    const dragoData = await baseContracts['DragoRegistry'].fromName(
-      'my new drago'
-    )
-    const [, address] = dragoData
-    dragoAddress = address
-    dragoInstance = new web3.eth.Contract(
-      dragoArtifact.networks[GANACHE_NETWORK_ID].abi,
-      dragoAddress
-    )
     transactionDefault = {
       from: accounts[0],
       gas: GAS_ESTIMATE,
       gasPrice: 1
     }
     exchangeAddress = await baseContracts['Exchange'].address
-    totleAdapterAddress = await baseContracts[
-      'ATotlePrimary'
-    ].address
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
+    totlePrimaryAddress = await baseContracts[
+      'TotlePrimary'
+    ].address
   })
 
-  describe('operateOnExchange', () => {
-    it('performs a totle rebalance', async () => {
+  describe('performRebalance', () => {
+    it.skip('performs a totle rebalance', async () => {
       const makerAddress = accounts[0]
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0x0000000000000000000000000000000000000000'
@@ -64,77 +54,101 @@ describeContract(contractName, () => {
         Date.now() + 3600000
       ).toString() // Valid for up to an hour
 
+      // wrap ether from a secondary account
+      await baseContracts['WETH9'].deposit.sendTransactionAsync(
+        {
+          value: takerAssetAmount,
+          from: accounts[1]
+        }
+      )
+
+      // set allowances
+      await baseContracts['WETH9'].approve.sendTransactionAsync(
+        totlePrimaryAddress, takerAssetAmount, { from: accounts[1] }
+      )
+      await baseContracts['RigoToken'].approve.sendTransactionAsync(
+        totlePrimaryAddress, takerAssetAmount, { from: accounts[0] }
+      )
+
       // Generate order
       const order = {
-        exchangeAddress,
-        expirationTimeSeconds,
-        feeRecipientAddress,
         makerAddress,
-        makerAssetAmount,
-        makerAssetData,
-        makerFee,
-        salt,
-        senderAddress,
         takerAddress,
+        feeRecipientAddress,
+        senderAddress,
+        makerAssetAmount,
         takerAssetAmount,
+        makerFee,
+        takerFee,
+        expirationTimeSeconds,
+        salt,
+        makerAssetData,
         takerAssetData,
-        takerFee
+        exchangeAddress
       }
       const providerEngine = web3.currentProvider
 
-      // Signing orderHash -> ecSignature
-      const signerAddress = accounts[0] //'0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3' must include pkey
-      const orderHashHex = await orderHashUtils.getOrderHashHex(order)
+      const signerAddress = accounts[0]
 
-      const signature = await signatureUtils.ecSignHashAsync(
+      const signedOrder = await signatureUtils.ecSignOrderAsync(
         providerEngine,
-        orderHashHex,
+        order,
         signerAddress
-      )
-
-      const typedSignature = await signatureUtils.convertToSignatureWithType(
-        signature,
-        SignatureType.EthSign // double check against EIP712
-      )
-
-      const signedOrder = { ...order, typedSignature }
-
-      const totlePrimaryAddress = await baseContracts[
-        'TotlePrimary'
-      ].address
-
-      await baseContracts['ExchangesAuthority'].setExchangeAdapter(
-        totlePrimaryAddress,
-        totleAdapterAddress
       )
 
       const totlePrimary = baseContracts['TotlePrimary']
       const grgTokenAddress = baseContracts['RigoToken'].address
       const zeroExHandlerAddress = baseContracts['ZeroExExchangeHandler'].address
       const tradeId = '0x1111111111111111111111111111111111111111111111111111111111111111'
-      const isSell = false // buying a token -> isSell = false
+      const isSell = false // buying a token from the secondary account -> isSell = false
       const optionalTrade = false
       const tokenAmount = 10000
       const minimumExchangeRate = 1
       const minimumAcceptableTokenAmount = 10000
 
+      const transactionDetails = {
+        from: accounts[1],
+        gas: GAS_ESTIMATE,
+        gasPrice: 1
+      }
+      // error log: invalid solidity type!: tuple[]
+      // must deprecate deployer
+      const generateRebalance = await totlePrimary.performRebalance
+        .sendTransactionAsync(
+        [
+          [
+            isSell,
+            grgTokenAddress,
+            tokenAmount,
+            optionalTrade,
+            minimumExchangeRate, // check on value
+            minimumAcceptableTokenAmount,
+            [
+                [zeroExHandlerAddress, signedOrder] // SignatureType.EthSign
+            ]
+          ]
+        ],
+        tradeId,
+        transactionDetails // append transaction options
+      )
+/*
       const encodedSignedOrder = await web3.eth.abi.encodeParameters(
         ['address[]','uint256[]','bytes[]','bytes'],
         [
           [makerAddress,takerAddress,feeRecipientAddress,senderAddress],
           [makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt],
           [makerAssetData,takerAssetData],
-          signature
+          signedOrder.signature
         ]
       )
 
       const totleOrder = await web3.eth.abi.encodeParameters(
         ['address','bytes'],
-        [zeroExHandlerAddress,encodedSignedOrder]
+        [zeroExHandlerAddress, encodedSignedOrder]
       )
 
       const totleTrade = await web3.eth.abi.encodeParameters(
-        ['bool','address','uint256','bool','uint256','uint256','bytes'],
+        ['bool','address','uint256','bool','uint256','uint256','tuple[]'],
         [
           isSell,
           grgTokenAddress,
@@ -142,7 +156,7 @@ describeContract(contractName, () => {
           optionalTrade,
           minimumExchangeRate,
           minimumAcceptableTokenAmount,
-          totleOrder
+          [totleOrder, ]
         ]
       )
 
@@ -151,11 +165,7 @@ describeContract(contractName, () => {
         type: 'function',
         inputs: [
           {
-            type: 'address',
-            name: 'totlePrimaryAddress'
-          },
-          {
-            type: 'bytes',
+            type: 'tuple[]',
             name: 'trades'
           },
           {
@@ -164,30 +174,15 @@ describeContract(contractName, () => {
           }
         ]
       }
-
-      // defined trades as bytes type
-      const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
+      const txHash = await web3.eth.abi.encodeFunctionCall(
         methodInterface,
-        [totlePrimaryAddress, totleTrade, tradeId]
+        [[totleTrade, ], tradeId]
       )
-
-      const methodSignature = await web3.eth.abi.encodeFunctionSignature(
-        methodInterface
-      )
-      await baseContracts['ExchangesAuthority'].whitelistMethod(
-        methodSignature,
-        totleAdapterAddress,
-        true
-      ) // byte4(keccak256(method))
-
-      //const txHash = await dragoInstance.methods
-/*
-      await expect(dragoInstance.methods
-        .operateOnExchange(totlePrimaryAddress, [assembledTransaction])
-        .send({ ...transactionDefault })
-      //expect(txHash).toBeHash()
-      ).toThrowErrorMatchingSnapshot() // temporary until check
-*/
+      expect(txHash).toBeHash()
+      // return invalid tuple error
+      // TODO: encode signature, append encoded params, then
+      // try with web3.eth.accounts.signTransaction(tx, privateKey [, callback])
+      */
     })
   })
 })
