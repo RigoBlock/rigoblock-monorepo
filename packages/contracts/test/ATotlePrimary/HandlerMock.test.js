@@ -8,12 +8,19 @@ describeContract(contractName, () => {
   let totlePrimaryAddress
   let totlePrimaryInstance
   let transactionDefault
+  let handlerMockAddress // handler is already whitelisted
+  let rigoTokenAddress
+  let weth9Address
+  let tokenTransferProxyAddress
 
   beforeAll(async () => {
+    handlerMockAddress = await baseContracts['HandlerMock'].address
+    rigoTokenAddress = await baseContracts['RigoToken'].address
+    weth9Address = await baseContracts['WETH9'].address
+    tokenTransferProxyAddress= await baseContracts['TokenTransferProxy'].address
     totlePrimaryAddress = await baseContracts[
       'TotlePrimary'
     ].address
-
     totlePrimaryInstance = new web3.eth.Contract(
       totlePrimaryArtifact.networks[GANACHE_NETWORK_ID].abi,
       totlePrimaryAddress
@@ -27,14 +34,10 @@ describeContract(contractName, () => {
 
   describe('performRebalance', () => {
     it('performs a ETH-GRG buy transaction', async () => {
-      /*await baseContracts['TotlePrimary'].addHandlerToWhitelist(
-        baseContracts['HandlerMock'].address
-      )*/ // already whitelisted
-
       // wrap eth and send to mock handler, weth requires approval
       const grgAmount = 48333317481
       await baseContracts['RigoToken'].transfer(
-        baseContracts['HandlerMock'].address,
+        handlerMockAddress,
         grgAmount
       )
 
@@ -57,13 +60,16 @@ describeContract(contractName, () => {
         [
           [
             isSell,
-            baseContracts['WETH9'].address,
+            weth9Address,
             10000,
             false,
             1,
             10000,
             [
-                [baseContracts['HandlerMock'].address, encodedOrder]
+                [
+                  handlerMockAddress,
+                  encodedOrder
+                ]
             ]
           ]
         ],
@@ -77,12 +83,12 @@ describeContract(contractName, () => {
       // feed mock handler with eth by sending
       await web3.eth.sendTransaction({
         from: accounts[0],
-        to: baseContracts['HandlerMock'].address,
+        to: handlerMockAddress,
         value: 50000
       })
       const grgToSell = 10000
       await baseContracts['RigoToken'].approve(
-        baseContracts['TokenTransferProxy'].address,
+        tokenTransferProxyAddress,
         grgToSell,
         { from: accounts[0] }
       )
@@ -99,13 +105,16 @@ describeContract(contractName, () => {
         [
           [
             isSell,
-            baseContracts['RigoToken'].address,
+            rigoTokenAddress,
             grgToSell,
             false,
             1,
             10000,
             [
-                [baseContracts['HandlerMock'].address, encodedOrder]
+                [
+                  handlerMockAddress,
+                  encodedOrder
+                ]
             ]
           ]
         ],
