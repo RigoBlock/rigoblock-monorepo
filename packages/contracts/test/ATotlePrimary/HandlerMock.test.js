@@ -26,11 +26,11 @@ describeContract(contractName, () => {
   })
 
   describe('performRebalance', () => {
-    it('performs a ETH-GRG transaction', async () => {
+    it('performs a ETH-WETH transaction', async () => {
       /*await baseContracts['TotlePrimary'].addHandlerToWhitelist(
         baseContracts['HandlerMock'].address
       )*/ // already whitelisted
-      await baseContracts['RigoToken'].transfer(
+      await baseContracts['WETH9'].transfer(
         baseContracts['HandlerMock'].address,
         48333317481
       )
@@ -61,7 +61,7 @@ describeContract(contractName, () => {
         [
           [
             isSell,
-            baseContracts['RigoToken'].address,
+            baseContracts['WETH9'].address,
             10000,
             false,
             1,
