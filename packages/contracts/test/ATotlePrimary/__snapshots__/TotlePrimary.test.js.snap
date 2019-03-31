@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[` TotlePrimary performRebalance performs a 0x GRG buy order on totle 1`] = `"Returned error: VM Exception while processing transaction: revert"`;
+
+exports[` TotlePrimary performRebalance performs a 0x GRG sell order on totle 1`] = `"Returned error: VM Exception while processing transaction: revert"`;

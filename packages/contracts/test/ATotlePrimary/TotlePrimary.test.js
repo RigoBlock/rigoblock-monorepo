@@ -23,16 +23,16 @@ describeContract(contractName, () => {
   let exchangeAddress
   let exchangeInstance
   let rigoTokenAddress
-  let weth9Address
+  let weth9TokenAddress
   let erc20ProxyAddress
   let tokenTransferProxyAddress
-  let zeroExHandlerAddress = baseContracts['ZeroExExchangeHandler'].address
+  let zeroExHandlerAddress
 
   beforeAll(async () => {
     rigoTokenAddress = await baseContracts['RigoToken'].address
-    weth9Address = await baseContracts['WETH9'].address
+    weth9TokenAddress = await baseContracts['WETH9'].address
     erc20ProxyAddress = await baseContracts['Erc20Proxy'].address
-    tokenTransferProxyAddress= await baseContracts['TokenTransferProxy'].address
+    tokenTransferProxyAddress = await baseContracts['TokenTransferProxy'].address
     zeroExHandlerAddress = await baseContracts['ZeroExExchangeHandler'].address
     totlePrimaryAddress = await baseContracts[
       'TotlePrimary'
@@ -95,14 +95,13 @@ describeContract(contractName, () => {
       }
       const providerEngine = web3.currentProvider
 
-      const signerAddress = accounts[1]
+      const signerAddress = accounts[0]
 
       const signedOrder = await signatureUtils.ecSignOrderAsync(
         providerEngine,
         order,
         signerAddress
       )
-      console.log(signedOrder)
 
       const takerAssetFillAmount = (takerAssetAmount / 2).toString() // partial fill
 
@@ -131,12 +130,8 @@ describeContract(contractName, () => {
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
 
       const feeAccount = accounts[2]
-      // TODO: check if deployed
-      /*
-      if(!affiliateRegistry.isValidAffiliate(feeAccount)){
-          feeAccount = defaultFeeAccount;
-      }
-      */
+      // TODO: check why base account is not valid affiliate, since it is set up in bootstrap
+      const isAffiliated = await baseContracts['AffiliateRegistry'].isValidAffiliate(accounts[0])
 
       // accounts[1] takes the order, purchases GRG
       const transactionDetails = {
@@ -192,10 +187,10 @@ describeContract(contractName, () => {
         value: makerAssetAmount,
         from: accounts[1]
       })
-      await baseContracts['WETH9'].approve(erc20ProxyAddress, makerAssetAmount
-        ).send({ from: accounts[1] })
+      await baseContracts['WETH9'].approve(erc20ProxyAddress, makerAssetAmount, { from: accounts[1] }
+      )//.send({ from: accounts[1] })
       // account 0 must set allowance to totle token transfer proxy
-      await baseContracts['RigoToken'].approve(tokenTransferProxy, makerAssetAmount)
+      await baseContracts['RigoToken'].approve(tokenTransferProxyAddress, makerAssetAmount)
 
       // Generate order
       const order = {
@@ -249,13 +244,9 @@ describeContract(contractName, () => {
       const minimumExchangeRate = 10000000 // Allowable Price Change (%)
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
 
-      const feeAccount = accounts[2]
-      /*
-      // TODO: verify correctly initiated
-      if(!affiliateRegistry.isValidAffiliate(feeAccount)){
-          feeAccount = defaultFeeAccount;
-      }
-      */
+      const feeAccount = accounts[0]
+      // TODO: check why base account is not valid affiliate, since it is set up in bootstrap
+      const isAffiliated = await baseContracts['AffiliateRegistry'].isValidAffiliate(accounts[0])
 
       await expect(totlePrimaryInstance.methods.performRebalance(
         [

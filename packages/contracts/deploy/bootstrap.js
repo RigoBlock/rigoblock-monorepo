@@ -182,13 +182,13 @@ module.exports = async (baseAccount, network) => {
   ])
   printAddress('AffiliateRegistry', affiliateRegistry.address)
 
-  const defaultFeeAccount = baseAccount
+  await affiliateRegistry.registerAffiliate(baseAccount, 0)
 
   const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
     tokenTransferProxy.address, // same tokentransferproxy unless required
     affiliateRegistry.address,
     errorReporter.address,
-    defaultFeeAccount
+    baseAccount // defaultFeeAccount
   ])
   printAddress('TotlePrimary', totlePrimary.address)
 
