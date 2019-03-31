@@ -16,6 +16,7 @@ module.exports = {
   GANACHE_NETWORK_ID: 5777,
   GAS_ESTIMATE: 5e6,
   CONTRACT_NAMES: [
+    'AbiEncoder',
     'AEthfinex',
     'AffiliateRegistry',
     'ATotlePrimary',

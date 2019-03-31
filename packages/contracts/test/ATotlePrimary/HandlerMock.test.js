@@ -26,38 +26,34 @@ describeContract(contractName, () => {
   })
 
   describe('performRebalance', () => {
-    it('performs a ETH-WETH transaction', async () => {
+    it('performs a ETH-GRG buy transaction', async () => {
       /*await baseContracts['TotlePrimary'].addHandlerToWhitelist(
         baseContracts['HandlerMock'].address
       )*/ // already whitelisted
-      await baseContracts['WETH9'].transfer(
+
+      // wrap eth and send to mock handler, weth requires approval
+      const grgAmount = 48333317481
+      await baseContracts['RigoToken'].transfer(
         baseContracts['HandlerMock'].address,
-        48333317481
+        grgAmount
       )
-      await web3.eth.sendTransaction({
-        from: accounts[0],
-        to: baseContracts['HandlerMock'].address,
-        value: 50000
-      })
 
-      const isSell = true // false to Eth to Dai, true for Dai to Eth
-
-      //Returns an encoded function call to the primary that has a buy order for the handlerMock
-      /*
-      function generateEthToDaiRebalance(handlerMock, totlePrimary){
-        return generateRebalance(handlerMock, totlePrimary, false)
-      }
-
-      function generateDaiToEthRebalance(handlerMock, totlePrimary){
-        return generateRebalance(handlerMock, totlePrimary, true)
-      }*/
-
+      const isSell = false
       const encodedOrder = await web3.eth.abi.encodeParameters(
-        ['uint256'],
-        [2000]
+        ['tuple(uint256)'],
+        [
+          [20000]
+        ]
       )
 
-      const txHash = await totlePrimaryInstance.methods.performRebalance(
+      // default account takes the order by sending ETH
+      const transactionDetails = {
+        value: 10000,
+        from: accounts[0],
+        gas: GAS_ESTIMATE,
+        gasPrice: 1
+      }
+      const performRebalance = await totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,
@@ -73,7 +69,55 @@ describeContract(contractName, () => {
         ],
         '0x0000000000000000000000000000000000000000',
         '0x1111111111111111111111111111111111111111111111111111111111111111'
-      ).send({ ...transactionDefault })
+      ).send({ ...transactionDetails }) // totle requires receiving eth
+    })
+    it('performs a GRG-ETH sell transaction', async () => {
+
+      // feed mock handler with eth by sending
+      await web3.eth.sendTransaction({
+        from: accounts[0],
+        to: baseContracts['HandlerMock'].address,
+        value: 50000
+      })
+      const grgToSell = 10000
+      await baseContracts['RigoToken'].approve(
+        baseContracts['TokenTransferProxy'].address,
+        grgToSell,
+        { from: accounts[0] }
+      )
+
+      const isSell = true
+      const encodedOrder = await web3.eth.abi.encodeParameters(
+        ['tuple(uint256)'],
+        [
+          [20000]
+        ]
+      )
+      // Returned error: VM Exception while processing transaction: invalid opcode
+      //const encodedOrder = await baseContracts['AbiEncoder'].abiEncodeHandlerMockOrder(20000)
+
+      const performRebalance = await totlePrimaryInstance.methods.performRebalance(
+        [
+          [
+            isSell,
+            baseContracts['RigoToken'].address,
+            grgToSell,
+            false,
+            1,
+            10000,
+            [
+                [baseContracts['HandlerMock'].address, encodedOrder]
+            ]
+          ]
+        ],
+        '0x0000000000000000000000000000000000000000',
+        '0x1111111111111111111111111111111111111111111111111111111111111111'
+      ).encodeABI()
+      web3.eth.sendTransaction({
+        from: accounts[0],
+        to: baseContracts['TotlePrimary'].address,
+        data: performRebalance
+      })
     })
   })
 })

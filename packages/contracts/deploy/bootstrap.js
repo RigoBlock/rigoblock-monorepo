@@ -212,7 +212,7 @@ module.exports = async (baseAccount, network) => {
   await totlePrimary.addHandlerToWhitelist(zeroExExchangeHandler.address)
 
   const handlerMock = await deploy(baseAccount, network, 'HandlerMock', [
-    wETH9.address, // token
+    rigoToken.address,
     totlePrimary.address,
     errorReporter.address,
     20 // priceDivider
@@ -235,7 +235,11 @@ module.exports = async (baseAccount, network) => {
   const hGetDragoData = await deploy(baseAccount, network, 'HGetDragoData')
   printAddress('HGetDragoData', hGetDragoData.address)
 
+  const abiEncoder = await deploy(baseAccount, network, 'AbiEncoder')
+  printAddress('AbiEncoder', abiEncoder.address)
+
   return {
+    AbiEncoder: abiEncoder,
     AEthfinex: aEthfinex,
     AffiliateRegistry: affiliateRegistry,
     ATotlePrimary: aTotlePrimary,
