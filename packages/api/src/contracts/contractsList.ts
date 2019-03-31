@@ -17,6 +17,7 @@ import { ExchangeV1Fork } from './models/exchange_v1_fork'
 import { ExchangesAuthority } from './models/exchanges_authority'
 import { Faucet } from './models/faucet'
 import { HGetDragoData } from './models/h_get_drago_data'
+import { HandlerMock } from './models/handler_mock'
 import { Inflation } from './models/inflation'
 import { Migrations } from './models/migrations'
 import { NavVerifier } from './models/nav_verifier'
@@ -59,6 +60,7 @@ export abstract class ContractsList {
   ExchangesAuthority: typeof ExchangesAuthority & ExchangesAuthority
   Faucet: typeof Faucet & Faucet
   HGetDragoData: typeof HGetDragoData & HGetDragoData
+  HandlerMock: typeof HandlerMock & HandlerMock
   Inflation: typeof Inflation & Inflation
   Migrations: typeof Migrations & Migrations
   NavVerifier: typeof NavVerifier & NavVerifier

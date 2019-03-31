@@ -34,6 +34,7 @@ module.exports = {
     'ExchangeV1Fork',
     'ExchangesAuthority',
     'Faucet',
+    'HandlerMock',
     'HGetDragoData',
     'Inflation',
     'Migrations',
