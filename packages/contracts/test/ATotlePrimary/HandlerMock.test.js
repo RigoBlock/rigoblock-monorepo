@@ -53,7 +53,7 @@ describeContract(contractName, () => {
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
-      const performRebalance = await totlePrimaryInstance.methods.performRebalance(
+      await expect(totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,
@@ -70,6 +70,7 @@ describeContract(contractName, () => {
         '0x0000000000000000000000000000000000000000',
         '0x1111111111111111111111111111111111111111111111111111111111111111'
       ).send({ ...transactionDetails }) // totle requires receiving eth
+      ).rejects.toThrowErrorMatchingSnapshot()
     })
     it('performs a GRG-ETH sell transaction', async () => {
 
@@ -93,10 +94,8 @@ describeContract(contractName, () => {
           [20000]
         ]
       )
-      // Returned error: VM Exception while processing transaction: invalid opcode
-      //const encodedOrder = await baseContracts['AbiEncoder'].abiEncodeHandlerMockOrder(20000)
 
-      const performRebalance = await totlePrimaryInstance.methods.performRebalance(
+      await expect(totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,
@@ -112,12 +111,8 @@ describeContract(contractName, () => {
         ],
         '0x0000000000000000000000000000000000000000',
         '0x1111111111111111111111111111111111111111111111111111111111111111'
-      ).encodeABI()
-      web3.eth.sendTransaction({
-        from: accounts[0],
-        to: baseContracts['TotlePrimary'].address,
-        data: performRebalance
-      })
+      ).send({ ...transactionDefault })
+      ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
 })
