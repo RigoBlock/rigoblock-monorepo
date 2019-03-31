@@ -177,9 +177,18 @@ module.exports = async (baseAccount, network) => {
   const errorReporter = await deploy(baseAccount, network, 'ErrorReporter')
   printAddress('ErrorReporter', errorReporter.address)
 
+  const affiliateRegistry = await deploy(baseAccount, network, 'AffiliateRegistry', [
+    baseAccount, baseAccount, 0
+  ])
+  printAddress('AffiliateRegistry', affiliateRegistry.address)
+
+  const defaultFeeAccount = baseAccount
+
   const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
     tokenTransferProxy.address, // same tokentransferproxy unless required
-    errorReporter.address
+    affiliateRegistry.address,
+    errorReporter.address,
+    defaultFeeAccount
   ])
   printAddress('TotlePrimary', totlePrimary.address)
 
@@ -199,6 +208,7 @@ module.exports = async (baseAccount, network) => {
   ])
   printAddress('ZeroExExchangeHandler', zeroExExchangeHandler.address)
 
+  //await zeroExExchangeHandler.addTotle(totlePrimary.address)
   await totlePrimary.addHandlerToWhitelist(zeroExExchangeHandler.address)
 
   await exchangesAuthority.setExchangeAdapter(
@@ -217,6 +227,7 @@ module.exports = async (baseAccount, network) => {
 
   return {
     AEthfinex: aEthfinex,
+    AffiliateRegistry: affiliateRegistry,
     ATotlePrimary: aTotlePrimary,
     AWeth: aWeth,
     Authority: authority,

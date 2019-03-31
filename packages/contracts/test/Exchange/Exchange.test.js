@@ -57,19 +57,18 @@ describeContract(contractName, () => {
       const erc20Proxy = baseContracts['Erc20Proxy'].address // can also be queried from exchange with proxy id (from tokenData)
 
       // default account transaction
-      await baseContracts['RigoToken'].approve.sendTransactionAsync(
-        erc20Proxy, takerAssetAmount, { from: accounts[0] }
-      )
+      await baseContracts['RigoToken'].approve(erc20Proxy, makerAssetAmount)
 
       // secondary account transaction
-      await baseContracts['WETH9'].deposit.sendTransactionAsync(
-        {
-          value: takerAssetAmount,
-          from: accounts[1]
-        }
-      )
-      await baseContracts['WETH9'].approve.sendTransactionAsync(
-        erc20Proxy, takerAssetAmount, { from: accounts[1] }
+      await baseContracts['WETH9'].deposit({
+        value: takerAssetAmount,
+        from: accounts[1]
+      })
+
+      await baseContracts['WETH9'].approve(
+        erc20Proxy,
+        takerAssetAmount,
+        { from: accounts[1] }
       )
 
       // Generate order
@@ -110,10 +109,10 @@ describeContract(contractName, () => {
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
-      const takerAssetFillAmount = takerAssetAmount
+      const takerAssetFillAmount = (takerAssetAmount / 2).toString() // partial fill
       const fillOrder = await exchangeInstance.methods.fillOrder(
         aggregatedOrder,
-        takerAssetFillAmount, // fill order
+        takerAssetFillAmount,
         signedOrder.signature // SignatureType.EthSign
       ).send({ ...transactionDetails })
       const secondaryGRGbalance = await baseContracts['RigoToken'].balanceOf(accounts[1])

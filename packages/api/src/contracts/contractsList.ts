@@ -1,6 +1,7 @@
 import { AEthfinex } from './models/a_ethfinex'
 import { ATotlePrimary } from './models/a_totle_primary'
 import { AWeth } from './models/a_weth'
+import { AffiliateRegistry } from './models/affiliate_registry'
 import { Authority } from './models/authority'
 import { Distribution } from './models/distribution'
 import { Drago } from './models/drago'
@@ -42,6 +43,7 @@ export abstract class ContractsList {
   AEthfinex: typeof AEthfinex & AEthfinex
   ATotlePrimary: typeof ATotlePrimary & ATotlePrimary
   AWeth: typeof AWeth & AWeth
+  AffiliateRegistry: typeof AffiliateRegistry & AffiliateRegistry
   Authority: typeof Authority & Authority
   Distribution: typeof Distribution & Distribution
   Drago: typeof Drago & Drago

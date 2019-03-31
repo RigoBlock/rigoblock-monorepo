@@ -17,6 +17,7 @@ module.exports = {
   GAS_ESTIMATE: 5e6,
   CONTRACT_NAMES: [
     'AEthfinex',
+    'AffiliateRegistry',
     'ATotlePrimary',
     'AWeth',
     'Authority',
