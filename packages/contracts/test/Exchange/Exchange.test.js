@@ -37,12 +37,15 @@ describeContract(contractName, () => {
 
   describe('fillOrder', () => {
     it('swaps GRG from account[0] to accounts[1]', async () => {
+      const rigoTokenAddress = await baseContracts['RigoToken'].address
+      const wethContracAddress = await baseContracts['WETH9'].address
+
       const makerAddress = accounts[0]
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0x0000000000000000000000000000000000000000'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = assetDataUtils.encodeERC20AssetData(baseContracts['RigoToken'].address)
-      const takerAssetData = assetDataUtils.encodeERC20AssetData(baseContracts['WETH9'].address)
+      const makerAssetData = assetDataUtils.encodeERC20AssetData(rigoTokenAddress)
+      const takerAssetData = assetDataUtils.encodeERC20AssetData(wethContracAddress)
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -54,22 +57,21 @@ describeContract(contractName, () => {
       ).toString() // Valid for up to an hour
 
       // wrap eth and set allowances
-      const erc20Proxy = baseContracts['Erc20Proxy'].address // can also be queried from exchange with proxy id (from tokenData)
+      const erc20Proxy = await baseContracts['Erc20Proxy'].address // can also be queried from exchange with proxy id (from tokenData)
 
       // default account transaction
-      await baseContracts['RigoToken'].approve.sendTransactionAsync(
-        erc20Proxy, takerAssetAmount, { from: accounts[0] }
-      )
+      await baseContracts['RigoToken'].approve(erc20Proxy, makerAssetAmount)
 
       // secondary account transaction
-      await baseContracts['WETH9'].deposit.sendTransactionAsync(
-        {
-          value: takerAssetAmount,
-          from: accounts[1]
-        }
-      )
-      await baseContracts['WETH9'].approve.sendTransactionAsync(
-        erc20Proxy, takerAssetAmount, { from: accounts[1] }
+      await baseContracts['WETH9'].deposit({
+        value: takerAssetAmount,
+        from: accounts[1]
+      })
+
+      await baseContracts['WETH9'].approve(
+        erc20Proxy,
+        takerAssetAmount,
+        { from: accounts[1] }
       )
 
       // Generate order
@@ -98,14 +100,11 @@ describeContract(contractName, () => {
         signerAddress
       )
 
-      const encodedOrder = await web3.eth.abi.encodeParameters(
-        ['address[]','uint256[]','bytes[]'],
-        [
-          [makerAddress,takerAddress,feeRecipientAddress,senderAddress],
-          [makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt],
-          [makerAssetData,takerAssetData]
-        ]
-      )
+      const aggregatedOrder = [
+        makerAddress,takerAddress,feeRecipientAddress,senderAddress,
+        makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
+        makerAssetData,takerAssetData
+      ]
 
       // accounts[1] takes the order, purchases GRG
       const transactionDetails = {
@@ -113,16 +112,14 @@ describeContract(contractName, () => {
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
-      const takerAssetFillAmount = takerAssetAmount
+      const takerAssetFillAmount = (takerAssetAmount / 2).toString() // partial fill
       const fillOrder = await exchangeInstance.methods.fillOrder(
-        [
-          makerAddress,takerAddress,feeRecipientAddress,senderAddress,
-          makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
-          makerAssetData,takerAssetData
-        ],
-        takerAssetFillAmount, // fill order
+        aggregatedOrder,
+        takerAssetFillAmount,
         signedOrder.signature // SignatureType.EthSign
       ).send({ ...transactionDetails })
+      const secondaryGRGbalance = await baseContracts['RigoToken'].balanceOf(accounts[1])
+      expect(secondaryGRGbalance.toString()).toEqual(takerAssetFillAmount)
     })
   })
 })

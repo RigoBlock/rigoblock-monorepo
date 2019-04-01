@@ -1,5 +1,6 @@
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
-import dragoArtifact from '../../artifacts/Drago.json'
+import totlePrimaryArtifact from '../../artifacts/TotlePrimary.json'
+import exchangeArtifact from '../../artifacts/Exchange.json'
 import {
     assetDataUtils,
     BigNumber,
@@ -16,59 +17,65 @@ import web3 from '../web3'
 const contractName = 'TotlePrimary'
 
 describeContract(contractName, () => {
-  let dragoAddress
-  let dragoInstance
+  let totlePrimaryAddress
+  let totlePrimaryInstance
   let transactionDefault
   let exchangeAddress
-  //let hotWalletAddress
-  let totlePrimaryAddress
+  let exchangeInstance
+  let rigoTokenAddress
+  let weth9TokenAddress
+  let erc20ProxyAddress
+  let tokenTransferProxyAddress
+  let zeroExHandlerAddress
 
   beforeAll(async () => {
+    rigoTokenAddress = await baseContracts['RigoToken'].address
+    weth9TokenAddress = await baseContracts['WETH9'].address
+    erc20ProxyAddress = await baseContracts['Erc20Proxy'].address
+    tokenTransferProxyAddress = await baseContracts['TokenTransferProxy'].address
+    zeroExHandlerAddress = await baseContracts['ZeroExExchangeHandler'].address
+    totlePrimaryAddress = await baseContracts[
+      'TotlePrimary'
+    ].address
+    totlePrimaryInstance = new web3.eth.Contract(
+      totlePrimaryArtifact.networks[GANACHE_NETWORK_ID].abi,
+      totlePrimaryAddress
+    )
+    exchangeAddress = await baseContracts[
+      'Exchange'
+    ].address
+    exchangeInstance = new web3.eth.Contract(
+      exchangeArtifact.networks[GANACHE_NETWORK_ID].abi,
+      exchangeAddress
+    )
     transactionDefault = {
       from: accounts[0],
       gas: GAS_ESTIMATE,
       gasPrice: 1
     }
-    exchangeAddress = await baseContracts['Exchange'].address
-    await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
-    totlePrimaryAddress = await baseContracts[
-      'TotlePrimary'
-    ].address
   })
 
   describe('performRebalance', () => {
-    it.skip('performs a totle rebalance', async () => {
+    it('performs a 0x GRG buy order on totle', async () => {
+      // account 1 buys from account 0
       const makerAddress = accounts[0]
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0x0000000000000000000000000000000000000000'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = assetDataUtils.encodeERC20AssetData(baseContracts['RigoToken'].address)
-      const takerAssetData = assetDataUtils.encodeERC20AssetData(baseContracts['WETH9'].address)
+      const makerAssetData = assetDataUtils.encodeERC20AssetData(rigoTokenAddress)
+      const takerAssetData = assetDataUtils.encodeERC20AssetData(weth9TokenAddress)
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
       const takerFee = new BigNumber(0).toString()
-      const makerAssetAmount = web3.utils.toWei('0.2').toString()
+      const makerAssetAmount = web3.utils.toWei('0.3').toString() // test with equal amounts (prev 0.2)
       const takerAssetAmount = web3.utils.toWei('0.3').toString()
       const expirationTimeSeconds = new BigNumber(
         Date.now() + 3600000
       ).toString() // Valid for up to an hour
 
-      // wrap ether from a secondary account
-      await baseContracts['WETH9'].deposit.sendTransactionAsync(
-        {
-          value: takerAssetAmount,
-          from: accounts[1]
-        }
-      )
-
-      // set allowances
-      await baseContracts['WETH9'].approve.sendTransactionAsync(
-        totlePrimaryAddress, takerAssetAmount, { from: accounts[1] }
-      )
-      await baseContracts['RigoToken'].approve.sendTransactionAsync(
-        totlePrimaryAddress, takerAssetAmount, { from: accounts[0] }
-      )
+      // default account sets allowance to 0x erc20proxy
+      await baseContracts['RigoToken'].approve(erc20ProxyAddress, makerAssetAmount)
 
       // Generate order
       const order = {
@@ -96,93 +103,172 @@ describeContract(contractName, () => {
         signerAddress
       )
 
-      const totlePrimary = baseContracts['TotlePrimary']
-      const grgTokenAddress = baseContracts['RigoToken'].address
-      const zeroExHandlerAddress = baseContracts['ZeroExExchangeHandler'].address
-      const tradeId = '0x1111111111111111111111111111111111111111111111111111111111111111'
+      const takerAssetFillAmount = (takerAssetAmount / 2).toString() // partial fill
+
+      const encodedOrder = await web3.eth.abi.encodeParameters(
+        [
+          'tuple(address,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bytes,bytes)',
+          'uint256',
+          'bytes'
+        ],
+        [
+          [
+            makerAddress,takerAddress,feeRecipientAddress,senderAddress,
+            makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
+            makerAssetData,takerAssetData
+          ],
+          takerAssetFillAmount,
+          signedOrder.signature
+        ]
+      )
+
+      const tradeId = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock id bytes32
       const isSell = false // buying a token from the secondary account -> isSell = false
       const optionalTrade = false
-      const tokenAmount = 10000
-      const minimumExchangeRate = 1
-      const minimumAcceptableTokenAmount = 10000
+      const tokenAmount = takerAssetFillAmount
+      const minimumExchangeRate = 1 // Allowable Price Change (%)
+      const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
 
+      const feeAccount = accounts[2]
+      // TODO: check why base account is not valid affiliate, since it is set up in bootstrap
+      const isAffiliated = await baseContracts['AffiliateRegistry'].isValidAffiliate(accounts[0])
+
+      // accounts[1] takes the order, purchases GRG
       const transactionDetails = {
+        value: takerAssetFillAmount,
         from: accounts[1],
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
-      // error log: invalid solidity type!: tuple[]
-      // must deprecate deployer
-      const generateRebalance = await totlePrimary.performRebalance
-        .sendTransactionAsync(
+
+      await expect(totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,
-            grgTokenAddress,
+            rigoTokenAddress,
             tokenAmount,
             optionalTrade,
             minimumExchangeRate, // check on value
             minimumAcceptableTokenAmount,
             [
-                [zeroExHandlerAddress, signedOrder] // SignatureType.EthSign
+                [
+                  zeroExHandlerAddress,
+                  encodedOrder
+                ]
             ]
           ]
         ],
-        tradeId,
-        transactionDetails // append transaction options
+        feeAccount,
+        tradeId
+      ).send({ ...transactionDetails })
+      ).rejects.toThrowErrorMatchingSnapshot()
+    }, 9999)
+    it('performs a 0x GRG sell order on totle', async () => {
+      //account 1 signs GRG buy order
+      //must wrap eth
+      const makerAddress = accounts[1]
+      const takerAddress = '0x0000000000000000000000000000000000000000'
+      const senderAddress = '0x0000000000000000000000000000000000000000'
+      const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
+      const makerAssetData = assetDataUtils.encodeERC20AssetData(weth9TokenAddress)
+      const takerAssetData = assetDataUtils.encodeERC20AssetData(rigoTokenAddress)
+      //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
+      const salt = generatePseudoRandomSalt().toString()
+      const makerFee = new BigNumber(0).toString()
+      const takerFee = new BigNumber(0).toString()
+      const makerAssetAmount = web3.utils.toWei('0.3').toString() // test with equal amounts (prev 0.2)
+      const takerAssetAmount = web3.utils.toWei('0.3').toString()
+      const expirationTimeSeconds = new BigNumber(
+        Date.now() + 3600000
+      ).toString() // Valid for up to an hour
+
+      // default account sets allowance to 0x erc20proxy
+      await baseContracts['WETH9'].deposit({
+        value: makerAssetAmount,
+        from: accounts[1]
+      })
+      await baseContracts['WETH9'].approve(erc20ProxyAddress, makerAssetAmount, { from: accounts[1] }
+      )//.send({ from: accounts[1] })
+      // account 0 must set allowance to totle token transfer proxy
+      await baseContracts['RigoToken'].approve(tokenTransferProxyAddress, makerAssetAmount)
+
+      // Generate order
+      const order = {
+        makerAddress,
+        takerAddress,
+        feeRecipientAddress,
+        senderAddress,
+        makerAssetAmount,
+        takerAssetAmount,
+        makerFee,
+        takerFee,
+        expirationTimeSeconds,
+        salt,
+        makerAssetData,
+        takerAssetData,
+        exchangeAddress
+      }
+      const providerEngine = web3.currentProvider
+
+      const signerAddress = accounts[0]
+
+      const signedOrder = await signatureUtils.ecSignOrderAsync(
+        providerEngine,
+        order,
+        signerAddress
       )
-/*
-      const encodedSignedOrder = await web3.eth.abi.encodeParameters(
-        ['address[]','uint256[]','bytes[]','bytes'],
+
+      const takerAssetFillAmount = (takerAssetAmount / 2).toString() // partial fill
+
+      const encodedOrder = await web3.eth.abi.encodeParameters(
         [
-          [makerAddress,takerAddress,feeRecipientAddress,senderAddress],
-          [makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt],
-          [makerAssetData,takerAssetData],
+          'tuple(address,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bytes,bytes)',
+          'uint256',
+          'bytes'
+        ],
+        [
+          [
+            makerAddress,takerAddress,feeRecipientAddress,senderAddress,
+            makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
+            makerAssetData,takerAssetData
+          ],
+          takerAssetFillAmount,
           signedOrder.signature
         ]
       )
 
-      const totleOrder = await web3.eth.abi.encodeParameters(
-        ['address','bytes'],
-        [zeroExHandlerAddress, encodedSignedOrder]
-      )
+      const tradeId = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock id bytes32
+      const isSell = true
+      const optionalTrade = false
+      const tokenAmount = takerAssetFillAmount
+      const minimumExchangeRate = 1 // Allowable Price Change (%)
+      const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
 
-      const totleTrade = await web3.eth.abi.encodeParameters(
-        ['bool','address','uint256','bool','uint256','uint256','tuple[]'],
+      const feeAccount = accounts[0]
+      // TODO: check why base account is not valid affiliate, since it is set up in bootstrap
+      const isAffiliated = await baseContracts['AffiliateRegistry'].isValidAffiliate(accounts[0])
+
+      await expect(totlePrimaryInstance.methods.performRebalance(
         [
-          isSell,
-          grgTokenAddress,
-          tokenAmount,
-          optionalTrade,
-          minimumExchangeRate,
-          minimumAcceptableTokenAmount,
-          [totleOrder, ]
-        ]
-      )
-
-      const methodInterface = {
-        name: 'performRebalance',
-        type: 'function',
-        inputs: [
-          {
-            type: 'tuple[]',
-            name: 'trades'
-          },
-          {
-            type: 'bytes32',
-            name: 'id'
-          }
-        ]
-      }
-      const txHash = await web3.eth.abi.encodeFunctionCall(
-        methodInterface,
-        [[totleTrade, ], tradeId]
-      )
-      expect(txHash).toBeHash()
-      // return invalid tuple error
-      // TODO: encode signature, append encoded params, then
-      // try with web3.eth.accounts.signTransaction(tx, privateKey [, callback])
-      */
-    })
+          [
+            isSell,
+            rigoTokenAddress,
+            tokenAmount,
+            optionalTrade,
+            minimumExchangeRate, // check on value
+            minimumAcceptableTokenAmount,
+            [
+                [
+                  zeroExHandlerAddress,
+                  encodedOrder
+                ]
+            ]
+          ]
+        ],
+        feeAccount,
+        tradeId
+      ).send({ ...transactionDefault })
+      ).rejects.toThrowErrorMatchingSnapshot()
+    }, 9999)
   })
 })

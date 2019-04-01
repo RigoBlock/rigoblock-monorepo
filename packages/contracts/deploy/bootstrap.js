@@ -85,29 +85,12 @@ module.exports = async (baseAccount, network) => {
   await authority.setExchangesAuthority(exchangesAuthority.address)
   await exchangesAuthority.setWhitelister(baseAccount, true)
 
+  // TODO: remove 0x v0 deprecated contracts
   const exchangeEfx = await deploy(baseAccount, network, 'ExchangeEfx')
   printAddress('ExchangeEfx', exchangeEfx.address)
 
   await exchangesAuthority.whitelistExchange(exchangeEfx.address, true)
   const tokenTransferProxyEfx = await exchangeEfx.TOKEN_TRANSFER_PROXY_CONTRACT()
-
-  const wrapperLockEth = await deploy(baseAccount, network, 'WrapperLockEth', [
-    'ETHWrapper',
-    'ETHW',
-    18,
-    tokenTransferProxyEfx
-  ])
-  printAddress('WrapperLockEth', wrapperLockEth.address)
-
-  const wrapperLock = await deploy(baseAccount, network, 'WrapperLock', [
-    rigoToken.address,
-    'Rigo Token Wrapper',
-    'GRG',
-    18,
-    tokenTransferProxyEfx,
-    0
-  ])
-  printAddress('WrapperLock', wrapperLock.address)
 
   const tokenTransferProxy = await deploy(
     baseAccount,
@@ -154,6 +137,24 @@ module.exports = async (baseAccount, network) => {
   await erc20Proxy.addAuthorizedAddress(exchange.address)
   await exchange.registerAssetProxy(erc20Proxy.address)
 
+  const wrapperLockEth = await deploy(baseAccount, network, 'WrapperLockEth', [
+    'ETHWrapper',
+    'ETHW',
+    18,
+    erc20Proxy.address
+  ])
+  printAddress('WrapperLockEth', wrapperLockEth.address)
+
+  const wrapperLock = await deploy(baseAccount, network, 'WrapperLock', [
+    rigoToken.address,
+    'Rigo Token Wrapper',
+    'GRG',
+    18,
+    erc20Proxy.address,
+    0
+  ])
+  printAddress('WrapperLock', wrapperLock.address)
+
   const navVerifier = await deploy(baseAccount, network, 'NavVerifier')
   printAddress('NavVerifier', navVerifier.address)
 
@@ -177,12 +178,22 @@ module.exports = async (baseAccount, network) => {
   const errorReporter = await deploy(baseAccount, network, 'ErrorReporter')
   printAddress('ErrorReporter', errorReporter.address)
 
+  const affiliateRegistry = await deploy(baseAccount, network, 'AffiliateRegistry', [
+    baseAccount, baseAccount, 0
+  ])
+  printAddress('AffiliateRegistry', affiliateRegistry.address)
+
+  await affiliateRegistry.registerAffiliate(baseAccount, 0)
+
   const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
-    tokenTransferProxy.address, // we use the same tokentransferproxy for testing
-    errorReporter.address
+    tokenTransferProxy.address, // same tokentransferproxy unless required
+    affiliateRegistry.address,
+    errorReporter.address,
+    baseAccount // defaultFeeAccount
   ])
   printAddress('TotlePrimary', totlePrimary.address)
 
+  await tokenTransferProxy.addAuthorizedAddress(totlePrimary.address)
   await exchangesAuthority.whitelistExchange(totlePrimary.address, true)
 
   const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary', [
@@ -198,7 +209,18 @@ module.exports = async (baseAccount, network) => {
   ])
   printAddress('ZeroExExchangeHandler', zeroExExchangeHandler.address)
 
+  //await zeroExExchangeHandler.addTotle(totlePrimary.address)
   await totlePrimary.addHandlerToWhitelist(zeroExExchangeHandler.address)
+
+  const handlerMock = await deploy(baseAccount, network, 'HandlerMock', [
+    rigoToken.address,
+    totlePrimary.address,
+    errorReporter.address,
+    20 // priceDivider
+  ])
+  printAddress('HandlerMock', handlerMock.address)
+
+  await totlePrimary.addHandlerToWhitelist(handlerMock.address)
 
   await exchangesAuthority.setExchangeAdapter(
     totlePrimary.address,
@@ -214,8 +236,13 @@ module.exports = async (baseAccount, network) => {
   const hGetDragoData = await deploy(baseAccount, network, 'HGetDragoData')
   printAddress('HGetDragoData', hGetDragoData.address)
 
+  const abiEncoder = await deploy(baseAccount, network, 'AbiEncoder')
+  printAddress('AbiEncoder', abiEncoder.address)
+
   return {
+    AbiEncoder: abiEncoder,
     AEthfinex: aEthfinex,
+    AffiliateRegistry: affiliateRegistry,
     ATotlePrimary: aTotlePrimary,
     AWeth: aWeth,
     Authority: authority,
@@ -229,6 +256,7 @@ module.exports = async (baseAccount, network) => {
     ExchangeV1Fork: exchangeV1Fork,
     ExchangesAuthority: exchangesAuthority,
     Faucet: faucet,
+    HandlerMock: handlerMock,
     HGetDragoData: hGetDragoData,
     NavVerifier: navVerifier,
     RigoToken: rigoToken,

@@ -1,6 +1,142 @@
+pragma solidity 0.4.25;
+
+/**
+ * @title ERC20 interface
+ * @dev see https://github.com/ethereum/EIPs/issues/20
+ */
+contract ERC20 {
+  function totalSupply() public view returns (uint256);
+
+  function balanceOf(address _who) public view returns (uint256);
+
+  function allowance(address _owner, address _spender)
+    public view returns (uint256);
+
+  function transfer(address _to, uint256 _value) public returns (bool);
+
+  function approve(address _spender, uint256 _value)
+    public returns (bool);
+
+  function transferFrom(address _from, address _to, uint256 _value)
+    public returns (bool);
+
+  function decimals() public view returns (uint256);
+
+  event Transfer(
+    address indexed from,
+    address indexed to,
+    uint256 value
+  );
+
+  event Approval(
+    address indexed owner,
+    address indexed spender,
+    uint256 value
+  );
+}
+library ERC20SafeTransfer {
+    function safeTransfer(address _tokenAddress, address _to, uint256 _value) internal returns (bool success) {
+
+        require(_tokenAddress.call(bytes4(keccak256("transfer(address,uint256)")), _to, _value));
+
+        return fetchReturnData();
+    }
+
+    function safeTransferFrom(address _tokenAddress, address _from, address _to, uint256 _value) internal returns (bool success) {
+
+        require(_tokenAddress.call(bytes4(keccak256("transferFrom(address,address,uint256)")), _from, _to, _value));
+
+        return fetchReturnData();
+    }
+
+    function safeApprove(address _tokenAddress, address _spender, uint256 _value) internal returns (bool success) {
+
+        require(_tokenAddress.call(bytes4(keccak256("approve(address,uint256)")), _spender, _value));
+
+        return fetchReturnData();
+    }
+
+    function fetchReturnData() internal returns (bool success){
+        assembly {
+            switch returndatasize()
+            case 0 {
+                success := 1
+            }
+            case 32 {
+                returndatacopy(0, 0, 32)
+                success := mload(0)
+            }
+            default {
+                revert(0, 0)
+            }
+        }
+    }
+
+}
+
+/**
+ * @title Ownable
+ * @dev The Ownable contract has an owner address, and provides basic authorization control
+ * functions, this simplifies the implementation of "user permissions".
+ */
+contract Ownable {
+  address public owner;
+
+  event OwnershipRenounced(address indexed previousOwner);
+  event OwnershipTransferred(
+    address indexed previousOwner,
+    address indexed newOwner
+  );
+
+  /**
+   * @dev The Ownable constructor sets the original `owner` of the contract to the sender
+   * account.
+   */
+  constructor() public {
+    owner = msg.sender;
+  }
+
+  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
+  }
+
+  /**
+   * @dev Allows the current owner to relinquish control of the contract.
+   * @notice Renouncing to ownership will leave the contract without an owner.
+   * It will not be possible to call the functions with the `onlyOwner`
+   * modifier anymore.
+   */
+  function renounceOwnership() public onlyOwner {
+    emit OwnershipRenounced(owner);
+    owner = address(0);
+  }
+
+  /**
+   * @dev Allows the current owner to transfer control of the contract to a newOwner.
+   * @param _newOwner The address to transfer ownership to.
+   */
+  function transferOwnership(address _newOwner) public onlyOwner {
+    _transferOwnership(_newOwner);
+  }
+
+  /**
+   * @dev Transfers control of the contract to a newOwner.
+   * @param _newOwner The address to transfer ownership to.
+   */
+  function _transferOwnership(address _newOwner) internal {
+    require(_newOwner != address(0));
+    emit OwnershipTransferred(owner, _newOwner);
+    owner = _newOwner;
+  }
+}
+
 /*
 
-  Copyright 2017 ZeroEx Intl.
+  Copyright 2018 ZeroEx Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,51 +152,9 @@
 
 */
 
-// solhint-disable
-pragma solidity 0.4.19;
-
-contract Token {
-
-    event Transfer(address indexed _from, address indexed _to, uint256 _value);
-    event Approval(address indexed _owner, address indexed _spender, uint256 _value);
-
-    function transfer(address _to, uint256 _value) external returns (bool success);
-    function transferFrom(address _from, address _to, uint256 _value) external returns (bool success);
-    function approve(address _spender, uint256 _value) external returns (bool success);
-
-    function balanceOf(address _who) external view returns (uint256);
-    function allowance(address _owner, address _spender) external view returns (uint256);
-}
-
-contract Owned {
-
-    address public owner;
-
-    event NewOwner(address indexed old, address indexed current);
-
-    modifier onlyOwner {
-        require(msg.sender == owner);
-        _;
-    }
-
-    function Owned() public {
-        owner = msg.sender;
-    }
-
-    function setOwner(address _new)
-        public
-        onlyOwner
-    {
-        require(_new != address(0));
-        owner = _new;
-        NewOwner(owner, _new);
-    }
-}
-
 /// @title TokenTransferProxy - Transfers tokens on behalf of contracts that have been approved via decentralized governance.
 /// @author Amir Bandeali - <amir@0xProject.com>, Will Warren - <will@0xProject.com>
-// solhint-disable-next-line
-contract TokenTransferProxy is Owned {
+contract TokenTransferProxy is Ownable {
 
     /// @dev Only authorized addresses can invoke functions with this modifier.
     modifier onlyAuthorized {
@@ -87,6 +181,7 @@ contract TokenTransferProxy is Owned {
     /*
      * Public functions
      */
+
     /// @dev Authorizes an address.
     /// @param target Address to authorize.
     function addAuthorizedAddress(address target)
@@ -96,7 +191,7 @@ contract TokenTransferProxy is Owned {
     {
         authorized[target] = true;
         authorities.push(target);
-        LogAuthorizedAddressAdded(target, msg.sender);
+        emit LogAuthorizedAddressAdded(target, msg.sender);
     }
 
     /// @dev Removes authorizion of an address.
@@ -114,7 +209,7 @@ contract TokenTransferProxy is Owned {
                 break;
             }
         }
-        LogAuthorizedAddressRemoved(target, msg.sender);
+        emit LogAuthorizedAddressRemoved(target, msg.sender);
     }
 
     /// @dev Calls into ERC20 Token contract, invoking transferFrom.
@@ -132,17 +227,19 @@ contract TokenTransferProxy is Owned {
         onlyAuthorized
         returns (bool)
     {
-        return Token(token).transferFrom(from, to, value);
+        require(ERC20SafeTransfer.safeTransferFrom(token, from, to, value));
+        return true;
     }
 
     /*
      * Public constant functions
      */
+
     /// @dev Gets all authorized addresses.
     /// @return Array of authorized addresses.
     function getAuthorizedAddresses()
         public
-        constant
+        view
         returns (address[])
     {
         return authorities;

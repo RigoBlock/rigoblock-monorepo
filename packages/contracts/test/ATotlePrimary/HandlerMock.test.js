@@ -1,0 +1,127 @@
+import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
+import totlePrimaryArtifact from '../../artifacts/TotlePrimary.json'
+import web3 from '../web3'
+
+const contractName = 'TotlePrimary'
+
+describeContract(contractName, () => {
+  let totlePrimaryAddress
+  let totlePrimaryInstance
+  let transactionDefault
+  let handlerMockAddress // handler is already whitelisted
+  let rigoTokenAddress
+  let weth9Address
+  let tokenTransferProxyAddress
+
+  beforeAll(async () => {
+    handlerMockAddress = await baseContracts['HandlerMock'].address
+    rigoTokenAddress = await baseContracts['RigoToken'].address
+    weth9Address = await baseContracts['WETH9'].address
+    tokenTransferProxyAddress= await baseContracts['TokenTransferProxy'].address
+    totlePrimaryAddress = await baseContracts[
+      'TotlePrimary'
+    ].address
+    totlePrimaryInstance = new web3.eth.Contract(
+      totlePrimaryArtifact.networks[GANACHE_NETWORK_ID].abi,
+      totlePrimaryAddress
+    )
+    transactionDefault = {
+      from: accounts[0],
+      gas: GAS_ESTIMATE,
+      gasPrice: 1
+    }
+  })
+
+  describe('performRebalance', () => {
+    it('performs a ETH-GRG buy transaction', async () => {
+      // wrap eth and send to mock handler, weth requires approval
+      const grgAmount = 48333317481
+      await baseContracts['RigoToken'].transfer(
+        handlerMockAddress,
+        grgAmount
+      )
+
+      const isSell = false
+      const encodedOrder = await web3.eth.abi.encodeParameters(
+        ['tuple(uint256)'],
+        [
+          [20000]
+        ]
+      )
+
+      // default account takes the order by sending ETH
+      const transactionDetails = {
+        value: 10000,
+        from: accounts[0],
+        gas: GAS_ESTIMATE,
+        gasPrice: 1
+      }
+      await expect(totlePrimaryInstance.methods.performRebalance(
+        [
+          [
+            isSell,
+            weth9Address,
+            10000,
+            false,
+            1,
+            10000,
+            [
+                [
+                  handlerMockAddress,
+                  encodedOrder
+                ]
+            ]
+          ]
+        ],
+        '0x0000000000000000000000000000000000000000',
+        '0x1111111111111111111111111111111111111111111111111111111111111111'
+      ).send({ ...transactionDetails }) // totle requires receiving eth
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
+    it('performs a GRG-ETH sell transaction', async () => {
+
+      // feed mock handler with eth by sending
+      await web3.eth.sendTransaction({
+        from: accounts[0],
+        to: handlerMockAddress,
+        value: 50000
+      })
+      const grgToSell = 10000
+      await baseContracts['RigoToken'].approve(
+        tokenTransferProxyAddress,
+        grgToSell,
+        { from: accounts[0] }
+      )
+
+      const isSell = true
+      const encodedOrder = await web3.eth.abi.encodeParameters(
+        ['tuple(uint256)'],
+        [
+          [20000]
+        ]
+      )
+
+      await expect(totlePrimaryInstance.methods.performRebalance(
+        [
+          [
+            isSell,
+            rigoTokenAddress,
+            grgToSell,
+            false,
+            1,
+            10000,
+            [
+                [
+                  handlerMockAddress,
+                  encodedOrder
+                ]
+            ]
+          ]
+        ],
+        '0x0000000000000000000000000000000000000000',
+        '0x1111111111111111111111111111111111111111111111111111111111111111'
+      ).send({ ...transactionDefault })
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
+  })
+})

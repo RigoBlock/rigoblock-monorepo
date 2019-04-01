@@ -15,7 +15,7 @@ describeContract(contractName, () => {
     rigoToken = baseContracts['RigoToken']
   })
 
-  describe('Faucet Contract - Deploys Correctly', () => {
+  describe.skip('Faucet Contract - Deploys Correctly', () => {
     const faucet_name = 'GRGFaucet'
 
     it('Correctly sets Faucet owner', async () => {
@@ -39,7 +39,7 @@ describeContract(contractName, () => {
     })
   })
 
-  describe('Faucet Contract - receive and withdraw', () => {
+  describe.skip('Faucet Contract - receive and withdraw', () => {
     it('Correctly receive and withdraw tokens', async () => {
       let faucetBalance
 
@@ -68,7 +68,7 @@ describeContract(contractName, () => {
     })
   })
 
-  describe('Faucet Contract - drips 1 Token', () => {
+  describe.skip('Faucet Contract - drips 1 Token', () => {
     it('Correctly drips 1 Token', async () => {
       // Donor sends GRG to faucet
       await rigoToken.transfer(faucet.address, amount)
@@ -122,7 +122,7 @@ describeContract(contractName, () => {
     })
   })
 
-  describe('Faucet Contract - Faucet OFF and ON', () => {
+  describe.skip('Faucet Contract - Faucet OFF and ON', () => {
     it('Correctly turns Faucet OFF and ON', async () => {
       // Turn faucet OFF
       await faucet.turnFaucetOff.sendTransactionAsync({

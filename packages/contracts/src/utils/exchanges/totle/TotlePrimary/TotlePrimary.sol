@@ -9,11 +9,13 @@ pragma experimental ABIEncoderV2;
 contract Ownable {
   address public owner;
 
+
   event OwnershipRenounced(address indexed previousOwner);
   event OwnershipTransferred(
     address indexed previousOwner,
     address indexed newOwner
   );
+
 
   /**
    * @dev The Ownable constructor sets the original `owner` of the contract to the sender
@@ -155,6 +157,8 @@ contract ERC20 {
     uint256 value
   );
 }
+
+// File: contracts/lib/TokenTransferProxy.sol
 
 /*
 
@@ -437,7 +441,7 @@ library Utils {
 
             switch success
             case 0 {
-                decimals := 18 // If the token doesn't implement `decimals()`, return 18 as default
+                decimals := 0 // If the token doesn't implement `decimals()`, return 0 as default
             }
             case 1 {
                 decimals := mload(ptr) // Set decimals to return data from call
@@ -530,16 +534,104 @@ contract ErrorReporter {
     }
 }
 
+contract Affiliate{
+
+  event FeeLog(uint256 ethCollected);
+
+  address public affiliateBeneficiary;
+  uint256 public affiliatePercentage; //This is out of 1 ETH, e.g. 0.5 ETH is 50% of the fee
+
+  uint256 public companyPercentage;
+  address public companyBeneficiary;
+
+  function init(address _companyBeneficiary, uint256 _companyPercentage, address _affiliateBeneficiary, uint256 _affiliatePercentage) public {
+      require(companyBeneficiary == 0x0 && affiliateBeneficiary == 0x0);
+      companyBeneficiary = _companyBeneficiary;
+      companyPercentage = _companyPercentage;
+      affiliateBeneficiary = _affiliateBeneficiary;
+      affiliatePercentage = _affiliatePercentage;
+  }
+
+  function payout() public {
+      // Payout both the affiliate and the company at the same time
+      affiliateBeneficiary.transfer(SafeMath.div(SafeMath.mul(address(this).balance, affiliatePercentage), getTotalFeePercentage()));
+      companyBeneficiary.transfer(address(this).balance);
+  }
+
+  function() public payable {
+      emit FeeLog(msg.value);
+  }
+
+  function getTotalFeePercentage() public view returns (uint256){
+      return affiliatePercentage + companyPercentage;
+  }
+}
+
+contract AffiliateRegistry is Ownable {
+
+  address target;
+  mapping(address => bool) affiliateContracts;
+  address public companyBeneficiary;
+  uint256 public companyPercentage;
+
+  event AffiliateRegistered(address affiliateContract);
+
+
+  constructor(address _target, address _companyBeneficiary, uint256 _companyPercentage) public {
+     target = _target;
+     companyBeneficiary = _companyBeneficiary;
+     companyPercentage = _companyPercentage;
+  }
+
+  function registerAffiliate(address affiliateBeneficiary, uint256 affiliatePercentage) external {
+      Affiliate newAffiliate = Affiliate(createClone());
+      newAffiliate.init(companyBeneficiary, companyPercentage, affiliateBeneficiary, affiliatePercentage);
+      affiliateContracts[address(newAffiliate)] = true;
+      emit AffiliateRegistered(address(newAffiliate));
+  }
+
+  function overrideRegisterAffiliate(address _companyBeneficiary, uint256 _companyPercentage, address affiliateBeneficiary, uint256 affiliatePercentage) external onlyOwner {
+      Affiliate newAffiliate = Affiliate(createClone());
+      newAffiliate.init(_companyBeneficiary, _companyPercentage, affiliateBeneficiary, affiliatePercentage);
+      affiliateContracts[address(newAffiliate)] = true;
+      emit AffiliateRegistered(address(newAffiliate));
+  }
+
+  function deleteAffiliate(address _affiliateAddress) public onlyOwner {
+      affiliateContracts[_affiliateAddress] = false;
+  }
+
+  function createClone() internal returns (address result) {
+      bytes20 targetBytes = bytes20(target);
+      assembly {
+          let clone := mload(0x40)
+          mstore(clone, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)
+          mstore(add(clone, 0x14), targetBytes)
+          mstore(add(clone, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)
+          result := create(0, clone, 0x37)
+      }
+  }
+
+  function isValidAffiliate(address affiliateContract) public view returns(bool) {
+      return affiliateContracts[affiliateContract];
+  }
+
+  function updateCompanyInfo(address newCompanyBeneficiary, uint256 newCompanyPercentage) public onlyOwner {
+      companyBeneficiary = newCompanyBeneficiary;
+      companyPercentage = newCompanyPercentage;
+  }
+}
+
 /// @title A contract which can be used to ensure only the TotlePrimary contract can call
 /// some functions
 /// @dev Defines a modifier which should be used when only the totle contract should
 /// able able to call a function
 contract TotleControl is Ownable {
-    address public totlePrimary;
+    mapping(address => bool) public authorizedPrimaries;
 
     /// @dev A modifier which only allows code execution if msg.sender equals totlePrimary address
     modifier onlyTotle() {
-        require(msg.sender == totlePrimary);
+        require(authorizedPrimaries[msg.sender]);
         _;
     }
 
@@ -547,56 +639,51 @@ contract TotleControl is Ownable {
     /// @dev As this contract inherits ownable, msg.sender will become the contract owner
     /// @param _totlePrimary the address of the contract to be set as totlePrimary
     constructor(address _totlePrimary) public {
-        require(_totlePrimary != address(0x0));
-        totlePrimary = _totlePrimary;
+        authorizedPrimaries[_totlePrimary] = true;
     }
 
     /// @notice A function which allows only the owner to change the address of totlePrimary
     /// @dev onlyOwner modifier only allows the contract owner to run the code
     /// @param _totlePrimary the address of the contract to be set as totlePrimary
-    function setTotle(
+    function addTotle(
         address _totlePrimary
     ) external onlyOwner {
-        require(_totlePrimary != address(0x0));
-        totlePrimary = _totlePrimary;
+        authorizedPrimaries[_totlePrimary] = true;
+    }
+
+    function removeTotle(
+        address _totlePrimary
+    ) external onlyOwner {
+        authorizedPrimaries[_totlePrimary] = false;
     }
 }
 
-
 contract SelectorProvider {
-    bytes4 constant getAmountToGive = bytes4(keccak256("getAmountToGive(bytes)"));
-    bytes4 constant staticExchangeChecks = bytes4(keccak256("staticExchangeChecks(bytes)"));
-    bytes4 constant performBuyOrder = bytes4(keccak256("performBuyOrder(bytes,uint256)"));
-    bytes4 constant performSellOrder = bytes4(keccak256("performSellOrder(bytes,uint256)"));
+    bytes4 constant getAmountToGiveSelector = bytes4(keccak256("getAmountToGive(bytes)"));
+    bytes4 constant staticExchangeChecksSelector = bytes4(keccak256("staticExchangeChecks(bytes)"));
+    bytes4 constant performBuyOrderSelector = bytes4(keccak256("performBuyOrder(bytes,uint256)"));
+    bytes4 constant performSellOrderSelector = bytes4(keccak256("performSellOrder(bytes,uint256)"));
 
     function getSelector(bytes4 genericSelector) public pure returns (bytes4);
 }
 
 /// @title Interface for all exchange handler contracts
-contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
+contract ExchangeHandler is SelectorProvider, TotleControl, Withdrawable, Pausable {
 
     /*
     *   State Variables
     */
 
-    SelectorProvider public selectorProvider;
     ErrorReporter public errorReporter;
     /* Logger public logger; */
     /*
     *   Modifiers
     */
 
-    modifier onlySelf() {
-        require(msg.sender == address(this));
-        _;
-    }
-
     /// @notice Constructor
     /// @dev Calls the constructor of the inherited TotleControl
-    /// @param _selectorProvider the provider for this exchanges function selectors
     /// @param totlePrimary the address of the totlePrimary contract
     constructor(
-        address _selectorProvider,
         address totlePrimary,
         address _errorReporter
         /* ,address _logger */
@@ -604,10 +691,8 @@ contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
         TotleControl(totlePrimary)
         public
     {
-        require(_selectorProvider != address(0x0));
         require(_errorReporter != address(0x0));
         /* require(_logger != address(0x0)); */
-        selectorProvider = SelectorProvider(_selectorProvider);
         errorReporter = ErrorReporter(_errorReporter);
         /* logger = Logger(_logger); */
     }
@@ -620,12 +705,10 @@ contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
     )
         public
         view
-        onlyTotle
-        whenNotPaused
         returns (uint256 amountToGive)
     {
         bool success;
-        bytes4 functionSelector = selectorProvider.getSelector(this.getAmountToGive.selector);
+        bytes4 functionSelector = getSelector(this.getAmountToGive.selector);
 
         assembly {
             let functionSelectorLength := 0x04
@@ -640,10 +723,9 @@ contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
             let functionSelectorCorrect := mload(scratchSpace)
             mstore(genericPayload, functionSelectorCorrect)
 
-            success := call(
+            success := delegatecall(
                             gas,
                             address, // This address of the current contract
-                            callvalue,
                             startOfNewData, // Start data at the beginning of the functionSelector
                             totalLength, // Total length of all data, including functionSelector
                             scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
@@ -663,12 +745,10 @@ contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
     )
         public
         view
-        onlyTotle
-        whenNotPaused
         returns (bool checksPassed)
     {
         bool success;
-        bytes4 functionSelector = selectorProvider.getSelector(this.staticExchangeChecks.selector);
+        bytes4 functionSelector = getSelector(this.staticExchangeChecks.selector);
         assembly {
             let functionSelectorLength := 0x04
             let functionSelectorOffset := 0x1C
@@ -682,10 +762,9 @@ contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
             let functionSelectorCorrect := mload(scratchSpace)
             mstore(genericPayload, functionSelectorCorrect)
 
-            success := call(
+            success := delegatecall(
                             gas,
                             address, // This address of the current contract
-                            callvalue,
                             startOfNewData, // Start data at the beginning of the functionSelector
                             totalLength, // Total length of all data, including functionSelector
                             scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
@@ -707,12 +786,10 @@ contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
     )
         public
         payable
-        onlyTotle
-        whenNotPaused
         returns (uint256 amountSpentOnOrder, uint256 amountReceivedFromOrder)
     {
         bool success;
-        bytes4 functionSelector = selectorProvider.getSelector(this.performBuyOrder.selector);
+        bytes4 functionSelector = getSelector(this.performBuyOrder.selector);
         assembly {
             let callDataOffset := 0x44
             let functionSelectorOffset := 0x1C
@@ -736,10 +813,9 @@ contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
 
             let startOfNewData := add(startOfFreeMemory,functionSelectorOffset)
 
-            success := call(
+            success := delegatecall(
                             gas,
                             address, // This address of the current contract
-                            callvalue,
                             startOfNewData, // Start data at the beginning of the functionSelector
                             totalLength, // Total length of all data, including functionSelector
                             scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
@@ -761,12 +837,10 @@ contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
         uint256 amountToGiveForOrder
     )
         public
-        onlyTotle
-        whenNotPaused
         returns (uint256 amountSpentOnOrder, uint256 amountReceivedFromOrder)
     {
         bool success;
-        bytes4 functionSelector = selectorProvider.getSelector(this.performSellOrder.selector);
+        bytes4 functionSelector = getSelector(this.performSellOrder.selector);
         assembly {
             let callDataOffset := 0x44
             let functionSelectorOffset := 0x1C
@@ -790,10 +864,9 @@ contract ExchangeHandler is TotleControl, Withdrawable, Pausable {
 
             let startOfNewData := add(startOfFreeMemory,functionSelectorOffset)
 
-            success := call(
+            success := delegatecall(
                             gas,
                             address, // This address of the current contract
-                            callvalue,
                             startOfNewData, // Start data at the beginning of the functionSelector
                             totalLength, // Total length of all data, including functionSelector
                             scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
@@ -815,8 +888,10 @@ contract TotlePrimary is Withdrawable, Pausable {
 
     mapping(address => bool) public handlerWhitelistMap;
     address[] public handlerWhitelistArray;
+    AffiliateRegistry affiliateRegistry;
+    address public defaultFeeAccount;
 
-    address public tokenTransferProxy;
+    TokenTransferProxy public tokenTransferProxy;
     ErrorReporter public errorReporter;
     /* Logger public logger; */
 
@@ -856,7 +931,17 @@ contract TotlePrimary is Withdrawable, Pausable {
     */
 
     event LogRebalance(
-        bytes32 id
+        bytes32 id,
+        uint256 totalEthTraded,
+        uint256 totalFee,
+        address feeAccount
+    );
+
+    event LogTrade(
+        bool isSell,
+        address token,
+        uint256 ethAmount,
+        uint256 tokenAmount
     );
 
     /*
@@ -880,18 +965,25 @@ contract TotlePrimary is Withdrawable, Pausable {
     /// @notice Constructor
     /// @param _tokenTransferProxy address of the TokenTransferProxy
     /// @param _errorReporter the address of the error reporter contract
-    constructor (address _tokenTransferProxy, address _errorReporter/*, address _logger*/) public {
-        require(_tokenTransferProxy != address(0x0));
-        require(_errorReporter != address(0x0));
+    constructor (address _tokenTransferProxy, address _affiliateRegistry, address _errorReporter, address _defaultFeeAccount/*, address _logger*/) public {
         /* require(_logger != address(0x0)); */
-        tokenTransferProxy = _tokenTransferProxy;
+        tokenTransferProxy = TokenTransferProxy(_tokenTransferProxy);
+        affiliateRegistry = AffiliateRegistry(_affiliateRegistry);
         errorReporter = ErrorReporter(_errorReporter);
+        defaultFeeAccount = _defaultFeeAccount;
         /* logger = Logger(_logger); */
     }
 
     /*
     *   Public functions
     */
+
+    /// @notice Update the default fee account
+    /// @dev onlyOwner modifier only allows the contract owner to run the code
+    /// @param newDefaultFeeAccount new default fee account
+    function updateDefaultFeeAccount(address newDefaultFeeAccount) public onlyOwner {
+        defaultFeeAccount = newDefaultFeeAccount;
+    }
 
     /// @notice Add an exchangeHandler address to the whitelist
     /// @dev onlyOwner modifier only allows the contract owner to run the code
@@ -923,17 +1015,27 @@ contract TotlePrimary is Withdrawable, Pausable {
         }
     }
 
+    struct FeeVariables{
+        uint256 feePercentage;
+        Affiliate affiliate;
+        uint256 totalFee;
+    }
     /// @notice Performs the requested portfolio rebalance
     /// @param trades A dynamic array of trade structs
     function performRebalance(
-        Trade[] trades,
+        Trade[] memory trades,
+        address feeAccount,
         bytes32 id
     )
         public
         payable
         whenNotPaused
     {
-        emit LogRebalance(id);
+        if(!affiliateRegistry.isValidAffiliate(feeAccount)){
+            feeAccount = defaultFeeAccount;
+        }
+        FeeVariables memory feeVariables = FeeVariables(0, Affiliate(feeAccount), 0);
+        feeVariables.feePercentage  = feeVariables.affiliate.getTotalFeePercentage();
         /* logger.log("Starting Rebalance..."); */
 
         TradeFlag[] memory tradeFlags = initialiseTradeFlags(trades);
@@ -947,9 +1049,8 @@ contract TotlePrimary is Withdrawable, Pausable {
         /* logger.log("Tokens transferred."); */
 
         uint256 etherBalance = msg.value;
-
         /* logger.log("Ether balance arg2: etherBalance.", etherBalance); */
-
+        uint256 totalTraded = 0;
         for (uint256 i; i < trades.length; i++) {
             Trade memory thisTrade = trades[i];
             TradeFlag memory thisTradeFlag = tradeFlags[i];
@@ -957,7 +1058,7 @@ contract TotlePrimary is Withdrawable, Pausable {
             CurrentAmounts memory amounts = CurrentAmounts({
                 amountSpentOnTrade: 0,
                 amountReceivedFromTrade: 0,
-                amountLeftToSpendOnTrade: thisTrade.isSell ? thisTrade.tokenAmount : calculateMaxEtherSpend(thisTrade, etherBalance)
+                amountLeftToSpendOnTrade: thisTrade.isSell ? thisTrade.tokenAmount : calculateMaxEtherSpend(thisTrade, etherBalance, feeVariables.feePercentage)
             });
             /* logger.log("Going to perform trade. arg2: amountLeftToSpendOnTrade", amounts.amountLeftToSpendOnTrade); */
 
@@ -966,7 +1067,18 @@ contract TotlePrimary is Withdrawable, Pausable {
                 thisTradeFlag,
                 amounts
             );
+            emit LogTrade(thisTrade.isSell, thisTrade.tokenAddress, thisTrade.isSell ? amounts.amountReceivedFromTrade:amounts.amountSpentOnTrade, thisTrade.isSell?amounts.amountSpentOnTrade:amounts.amountReceivedFromTrade);
 
+            uint256 ethTraded;
+            uint256 ethFee;
+            if(thisTrade.isSell){
+                ethTraded = amounts.amountReceivedFromTrade;
+            } else {
+                ethTraded = amounts.amountSpentOnTrade;
+            }
+            totalTraded += ethTraded;
+            ethFee = calculateFee(ethTraded, feeVariables.feePercentage);
+            feeVariables.totalFee = SafeMath.add(feeVariables.totalFee, ethFee);
             /* logger.log("Finished performing trade arg2: amountReceivedFromTrade, arg3: amountSpentOnTrade.", amounts.amountReceivedFromTrade, amounts.amountSpentOnTrade); */
 
             if (amounts.amountReceivedFromTrade == 0 && thisTrade.optionalTrade) {
@@ -992,14 +1104,14 @@ contract TotlePrimary is Withdrawable, Pausable {
                     etherBalance,
                     amounts.amountReceivedFromTrade
                 ); */
-                etherBalance = SafeMath.add(etherBalance, amounts.amountReceivedFromTrade);
+                etherBalance = SafeMath.sub(SafeMath.add(etherBalance, ethTraded), ethFee);
             } else {
                 /* logger.log(
                     "This is a buy trade, deducting ether from our balance arg2: etherBalance, arg3: amountSpentOnTrade",
                     etherBalance,
                     amounts.amountSpentOnTrade
                 ); */
-                etherBalance = SafeMath.sub(etherBalance, amounts.amountSpentOnTrade);
+                etherBalance = SafeMath.sub(SafeMath.sub(etherBalance, ethTraded), ethFee);
             }
 
             /* logger.log("Transferring tokens to the user arg:6 tokenAddress.", 0,0,0,0, thisTrade.tokenAddress); */
@@ -1010,7 +1122,10 @@ contract TotlePrimary is Withdrawable, Pausable {
             );
 
         }
-
+        emit LogRebalance(id, totalTraded, feeVariables.totalFee, feeAccount);
+        if(feeVariables.totalFee > 0){
+            feeAccount.transfer(feeVariables.totalFee);
+        }
         if(etherBalance > 0) {
             /* logger.log("Got a positive ether balance, sending to the user arg2: etherBalance.", etherBalance); */
             msg.sender.transfer(etherBalance);
@@ -1038,7 +1153,7 @@ contract TotlePrimary is Withdrawable, Pausable {
                     errorReporter.revertTx("A buy has occured before this sell");
                 }
 
-                if (!Utils.tokenAllowanceAndBalanceSet(msg.sender, thisTrade.tokenAddress, thisTrade.tokenAmount, tokenTransferProxy)) {
+                if (!Utils.tokenAllowanceAndBalanceSet(msg.sender, thisTrade.tokenAddress, thisTrade.tokenAmount, address(tokenTransferProxy))) {
                     if (!thisTrade.optionalTrade) {
                         errorReporter.revertTx("Taker has not sent allowance/balance on a non-optional trade");
                     }
@@ -1118,8 +1233,8 @@ contract TotlePrimary is Withdrawable, Pausable {
     /// @param amounts a struct containing information about amounts spent
     /// and received in the rebalance
     function performTrade(
-        Trade trade,
-        TradeFlag tradeFlag,
+        Trade memory trade,
+        TradeFlag memory tradeFlag,
         CurrentAmounts amounts
     )
         internal
@@ -1128,15 +1243,11 @@ contract TotlePrimary is Withdrawable, Pausable {
 
         for (uint256 j; j < trade.orders.length; j++) {
 
-            /* logger.log("Processing order arg2: orderIndex", j); */
+            if(amounts.amountLeftToSpendOnTrade * 10000 < (amounts.amountSpentOnTrade + amounts.amountLeftToSpendOnTrade)){
+                return;
+            }
 
-            //TODO: Change to the amount of tokens that we are trying to get
-            if( amounts.amountReceivedFromTrade >= trade.minimumAcceptableTokenAmount ) {
-                /* logger.log(
-                    "Got the desired amount from the trade arg2: amountReceivedFromTrade, arg3: minimumAcceptableTokenAmount",
-                    amounts.amountReceivedFromTrade,
-                    trade.minimumAcceptableTokenAmount
-                ); */
+            if((trade.isSell ? amounts.amountSpentOnTrade : amounts.amountReceivedFromTrade) >= trade.tokenAmount ) {
                 return;
             }
 
@@ -1198,6 +1309,7 @@ contract TotlePrimary is Withdrawable, Pausable {
                 /* logger.log("Buy order performed arg2: amountSpentOnOrder, arg3: amountReceivedFromOrder", amountSpentOnOrder, amountReceivedFromOrder); */
             }
 
+
             if (amountReceivedFromOrder > 0) {
                 amounts.amountLeftToSpendOnTrade = SafeMath.sub(amounts.amountLeftToSpendOnTrade, amountSpentOnOrder);
                 amounts.amountSpentOnTrade = SafeMath.add(amounts.amountSpentOnTrade, amountSpentOnOrder);
@@ -1233,13 +1345,13 @@ contract TotlePrimary is Withdrawable, Pausable {
         uint256 tokenAmount = trade.isSell ? amountSpentOnTrade : amountReceivedFromTrade;
         passed = tokenAmount >= trade.minimumAcceptableTokenAmount;
 
-        if( !passed ) {
-            /* logger.log(
+        /*if( !passed ) {
+             logger.log(
                 "Received less than minimum acceptable tokens arg2: tokenAmount , arg3: minimumAcceptableTokenAmount.",
                 tokenAmount,
                 trade.minimumAcceptableTokenAmount
-            ); */
-        }
+            );
+        }*/
 
         if (passed) {
             uint256 tokenDecimals = Utils.getDecimals(ERC20(trade.tokenAddress));
@@ -1249,13 +1361,13 @@ contract TotlePrimary is Withdrawable, Pausable {
             passed = actualRate >= trade.minimumExchangeRate;
         }
 
-        if( !passed ) {
-            /* logger.log(
+        /*if( !passed ) {
+             logger.log(
                 "Order rate was lower than minimum acceptable,  rate arg2: actualRate, arg3: minimumExchangeRate.",
                 actualRate,
                 trade.minimumExchangeRate
-            ); */
-        }
+            );
+        }*/
     }
 
     /// @notice Iterates through a list of token orders, transfer the SELL orders to this contract & calculates if we have the ether needed
@@ -1274,7 +1386,7 @@ contract TotlePrimary is Withdrawable, Pausable {
                     trades[i].tokenAddress
                 ); */
                 if (
-                    !TokenTransferProxy(tokenTransferProxy).transferFrom(
+                    !tokenTransferProxy.transferFrom(
                         trades[i].tokenAddress,
                         msg.sender,
                         address(this),
@@ -1291,7 +1403,7 @@ contract TotlePrimary is Withdrawable, Pausable {
     /// @param trade the buy trade to return the spend amount for
     /// @param etherBalance the amount of ether that we currently have to spend
     /// @return uint256 the maximum amount of ether we should spend on this trade
-    function calculateMaxEtherSpend(Trade trade, uint256 etherBalance) internal view returns (uint256) {
+    function calculateMaxEtherSpend(Trade trade, uint256 etherBalance, uint256 feePercentage) internal view returns (uint256) {
         /// @dev This function should never be called for a sell
         assert(!trade.isSell);
 
@@ -1300,9 +1412,22 @@ contract TotlePrimary is Withdrawable, Pausable {
         uint256 destDecimals = trade.isSell ? Utils.eth_decimals() : tokenDecimals;
         uint256 maxSpendAtMinRate = Utils.calcSrcQty(trade.tokenAmount, srcDecimals, destDecimals, trade.minimumExchangeRate);
 
-        return Utils.min(etherBalance, maxSpendAtMinRate);
+        return Utils.min(removeFee(etherBalance, feePercentage), maxSpendAtMinRate);
     }
 
+    // @notice Calculates the fee amount given a fee percentage and amount
+    // @param amount the amount to calculate the fee based on
+    // @param fee the percentage, out of 1 eth (e.g. 0.01 ETH would be 1%)
+    function calculateFee(uint256 amount, uint256 fee) internal view returns (uint256){
+        return SafeMath.div(SafeMath.mul(amount, fee), 1 ether);
+    }
+
+    // @notice Calculates the cost if amount=cost+fee
+    // @param amount the amount to calculate the base on
+    // @param fee the percentage, out of 1 eth (e.g. 0.01 ETH would be 1%)
+    function removeFee(uint256 amount, uint256 fee) internal view returns (uint256){
+        return SafeMath.div(SafeMath.mul(amount, 1 ether), SafeMath.add(fee, 1 ether));
+    }
     /*
     *   Payable fallback function
     */

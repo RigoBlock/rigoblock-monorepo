@@ -1,6 +1,8 @@
 import { AEthfinex } from './models/a_ethfinex'
 import { ATotlePrimary } from './models/a_totle_primary'
 import { AWeth } from './models/a_weth'
+import { AbiEncoder } from './models/abi_encoder'
+import { AffiliateRegistry } from './models/affiliate_registry'
 import { Authority } from './models/authority'
 import { Distribution } from './models/distribution'
 import { Drago } from './models/drago'
@@ -16,6 +18,7 @@ import { ExchangeV1Fork } from './models/exchange_v1_fork'
 import { ExchangesAuthority } from './models/exchanges_authority'
 import { Faucet } from './models/faucet'
 import { HGetDragoData } from './models/h_get_drago_data'
+import { HandlerMock } from './models/handler_mock'
 import { Inflation } from './models/inflation'
 import { Migrations } from './models/migrations'
 import { NavVerifier } from './models/nav_verifier'
@@ -42,6 +45,8 @@ export abstract class ContractsList {
   AEthfinex: typeof AEthfinex & AEthfinex
   ATotlePrimary: typeof ATotlePrimary & ATotlePrimary
   AWeth: typeof AWeth & AWeth
+  AbiEncoder: typeof AbiEncoder & AbiEncoder
+  AffiliateRegistry: typeof AffiliateRegistry & AffiliateRegistry
   Authority: typeof Authority & Authority
   Distribution: typeof Distribution & Distribution
   Drago: typeof Drago & Drago
@@ -57,6 +62,7 @@ export abstract class ContractsList {
   ExchangesAuthority: typeof ExchangesAuthority & ExchangesAuthority
   Faucet: typeof Faucet & Faucet
   HGetDragoData: typeof HGetDragoData & HGetDragoData
+  HandlerMock: typeof HandlerMock & HandlerMock
   Inflation: typeof Inflation & Inflation
   Migrations: typeof Migrations & Migrations
   NavVerifier: typeof NavVerifier & NavVerifier
