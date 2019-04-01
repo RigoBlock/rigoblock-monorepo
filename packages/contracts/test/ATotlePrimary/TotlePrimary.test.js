@@ -162,7 +162,7 @@ describeContract(contractName, () => {
         tradeId
       ).send({ ...transactionDetails })
       ).rejects.toThrowErrorMatchingSnapshot()
-    })
+    }, 9999)
     it('performs a 0x GRG sell order on totle', async () => {
       //account 1 signs GRG buy order
       //must wrap eth
@@ -241,7 +241,7 @@ describeContract(contractName, () => {
       const isSell = true
       const optionalTrade = false
       const tokenAmount = takerAssetFillAmount
-      const minimumExchangeRate = 10000000 // Allowable Price Change (%)
+      const minimumExchangeRate = 1 // Allowable Price Change (%)
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
 
       const feeAccount = accounts[0]
@@ -269,6 +269,6 @@ describeContract(contractName, () => {
         tradeId
       ).send({ ...transactionDefault })
       ).rejects.toThrowErrorMatchingSnapshot()
-    })
+    }, 9999)
   })
 })

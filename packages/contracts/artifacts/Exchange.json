@@ -8083,7 +8083,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/0xV2/Exchange/Exchange.sol"
             ],
-            "address": "0xb611eb75e36221b78f5b374ee9b2c9de2b9cc23a",
+            "address": "0x7421fad94fa467c2282d74948993690d2d8433d2",
             "constructor_args": "0x"
         }
     }

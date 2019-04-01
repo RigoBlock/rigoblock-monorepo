@@ -47,7 +47,7 @@ describeContract(contractName, () => {
   })
 
   describe('operateOnExchange', () => {
-    it('performs a totle rebalance', async () => {
+    it.skip('performs a totle rebalance', async () => {
       const makerAddress = accounts[0]
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0x0000000000000000000000000000000000000000'

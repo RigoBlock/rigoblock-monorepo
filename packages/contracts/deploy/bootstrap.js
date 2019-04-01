@@ -85,29 +85,12 @@ module.exports = async (baseAccount, network) => {
   await authority.setExchangesAuthority(exchangesAuthority.address)
   await exchangesAuthority.setWhitelister(baseAccount, true)
 
+  // TODO: remove 0x v0 deprecated contracts
   const exchangeEfx = await deploy(baseAccount, network, 'ExchangeEfx')
   printAddress('ExchangeEfx', exchangeEfx.address)
 
   await exchangesAuthority.whitelistExchange(exchangeEfx.address, true)
   const tokenTransferProxyEfx = await exchangeEfx.TOKEN_TRANSFER_PROXY_CONTRACT()
-
-  const wrapperLockEth = await deploy(baseAccount, network, 'WrapperLockEth', [
-    'ETHWrapper',
-    'ETHW',
-    18,
-    tokenTransferProxyEfx
-  ])
-  printAddress('WrapperLockEth', wrapperLockEth.address)
-
-  const wrapperLock = await deploy(baseAccount, network, 'WrapperLock', [
-    rigoToken.address,
-    'Rigo Token Wrapper',
-    'GRG',
-    18,
-    tokenTransferProxyEfx,
-    0
-  ])
-  printAddress('WrapperLock', wrapperLock.address)
 
   const tokenTransferProxy = await deploy(
     baseAccount,
@@ -153,6 +136,24 @@ module.exports = async (baseAccount, network) => {
 
   await erc20Proxy.addAuthorizedAddress(exchange.address)
   await exchange.registerAssetProxy(erc20Proxy.address)
+
+  const wrapperLockEth = await deploy(baseAccount, network, 'WrapperLockEth', [
+    'ETHWrapper',
+    'ETHW',
+    18,
+    erc20Proxy.address
+  ])
+  printAddress('WrapperLockEth', wrapperLockEth.address)
+
+  const wrapperLock = await deploy(baseAccount, network, 'WrapperLock', [
+    rigoToken.address,
+    'Rigo Token Wrapper',
+    'GRG',
+    18,
+    erc20Proxy.address,
+    0
+  ])
+  printAddress('WrapperLock', wrapperLock.address)
 
   const navVerifier = await deploy(baseAccount, network, 'NavVerifier')
   printAddress('NavVerifier', navVerifier.address)

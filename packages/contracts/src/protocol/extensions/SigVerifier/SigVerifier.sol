@@ -29,9 +29,9 @@ import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/
 contract SigVerifier {
 
     using LibBytes for bytes;
-    
+
     address public exchangesAuthorityAddress;
-    
+
     constructor(
         address _exchangesAuthorityAddress)
         public
@@ -65,26 +65,22 @@ contract SigVerifier {
             .getExchangeAdapter(address(tx.origin)) != address(0), // check for attack vectors
             "ORIGIN_NOT_WHITELISTED"
         );
-        
+
 
         address recoveredEIP712 = returnRecoveredEIP712Internal(hash, signature);
+        address recoveredETHSIGN = returnRecoveredETHSIGNInternal(hash, signature);
 
         if (recoveredEIP712 != address(0)) {
             isValid = recoveredEIP712 == Drago(address(msg.sender)).owner();
             return isValid;
+        } else if (recoveredETHSIGN != address(0)) {
+            isValid = recoveredETHSIGN == Drago(address(msg.sender)).owner();
+            return isValid;
         }
+
+        revert("SIGNATURE_INVALID2");
     }
 
-    function returnRecovered(
-        bytes32 hash,
-        bytes signature)
-        external
-        pure
-        returns (address recovered)
-    {
-        return returnRecoveredInternal(hash, signature);
-    }
-    
     function returnRecoveredEIP712(
         bytes32 hash,
         bytes signature)
@@ -95,9 +91,19 @@ contract SigVerifier {
         return returnRecoveredEIP712Internal(hash, signature);
     }
 
+    function returnRecoveredETHSIGN(
+        bytes32 hash,
+        bytes signature)
+        external
+        pure
+        returns (address recovered)
+    {
+        return returnRecoveredETHSIGNInternal(hash, signature);
+    }
+
     // INTERNAL FUNCTIONS
 
-    function returnRecoveredInternal(
+    function returnRecoveredEIP712Internal(
         bytes32 hash,
         bytes signature)
         internal
@@ -121,7 +127,7 @@ contract SigVerifier {
         return recovered;
     }
 
-    function returnRecoveredEIP712Internal(
+    function returnRecoveredETHSIGNInternal(
         bytes32 hash,
         bytes signature)
         internal
