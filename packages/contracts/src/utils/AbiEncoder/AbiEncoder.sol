@@ -16,8 +16,8 @@
 
 */
 
-pragma solidity 0.5.7;
-pragma experimental ABIEncoderV2;
+pragma solidity 0.4.25;
+pragma experimental "v0.5.0";
 
 /// @title ABI Encoder - return an array of encoded parameters.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -40,6 +40,7 @@ contract AbiEncoder {
         uint256 salt;                   // Arbitrary number to facilitate uniqueness of the order's hash.
         bytes makerAssetData;           // Encoded data that can be decoded by a specified proxy contract when transferring makerAsset. The last byte references the id of this proxy.
         bytes takerAssetData;           // Encoded data that can be decoded by a specified proxy contract when transferring takerAsset. The last byte references the id of this proxy.
+        bytes signature;
     }
 
     struct TotleOrder {
@@ -57,6 +58,7 @@ contract AbiEncoder {
         TotleOrder[] orders;
     }
 
+/*
     /// @dev Gets the Abi encoded bytes array of an integer.
     /// @param orderAmount integer of amount.
     /// @return Byte array of the ABI encoded struct.
@@ -70,6 +72,8 @@ contract AbiEncoder {
         encodedOrder = abi.encode(order);
         return encodedOrder;
     }
+*/
+
 /*
     // @notice: following structs not supported yet
     // @notice: pragma ABIEncoderV2 prompts stack-too-deep error
@@ -83,6 +87,7 @@ contract AbiEncoder {
         encodedOrder = abi.encodePacked(order);
         return encodedOrder;
     }
+*/
 
     function abiEncodeZeroExOrder(
         address makerAddress,
@@ -94,44 +99,31 @@ contract AbiEncoder {
         uint256 makerFee,
         uint256 takerFee,
         uint256 expirationTimeSeconds,
-        uint256 salt,
-        bytes memory makerAssetData,
-        bytes memory takerAssetData)
-        public
+        // uint256 salt,
+        // bytes makerAssetData,
+        bytes takerAssetData,
+        bytes signature)
+        external
         pure
         returns (bytes memory encodedOrder)
     {
-        ZeroExOrder memory order;
-        order.makerAddress = makerAddress;
-        order.takerAddress = takerAddress;
-        order.feeRecipientAddress = feeRecipientAddress;
-        order.senderAddress = senderAddress;
-        order.makerAssetAmount = makerAssetAmount;
-        order.takerAssetAmount = takerAssetAmount;
-        order.makerFee = makerFee;
-        order.takerFee = takerFee;
-        order.expirationTimeSeconds = expirationTimeSeconds;
-        order.salt = salt;
-        order.makerAssetData = makerAssetData;
-        order.takerAssetData = takerAssetData;
-        encodedOrder = abi.encode(
-            "ZeroExOrder(",
-                "address makerAddress,",
-                "address takerAddress,",
-                "address feeRecipientAddress,",
-                "address senderAddress,",
-                "uint256 makerAssetAmount,",
-                "uint256 takerAssetAmount,",
-                "uint256 makerFee,",
-                "uint256 takerFee,",
-                "uint256 expirationTimeSeconds,",
-                "uint256 salt,",
-                "bytes makerAssetData,",
-                "bytes takerAssetData",
-            ")"
+        return encodedOrder = abi.encode(
+                makerAddress,
+                takerAddress,
+                feeRecipientAddress,
+                senderAddress,
+                makerAssetAmount,
+                takerAssetAmount,
+                makerFee,
+                takerFee,
+                expirationTimeSeconds,
+                //salt,
+                //makerAssetData,
+                takerAssetData,
+                signature
         );
     }
-
+/*
     function abiEncodePackedZeroExOrder(
         address makerAddress,
         address takerAddress,

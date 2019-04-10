@@ -43,10 +43,8 @@ describeContract(contractName, () => {
 
       const isSell = false
       const encodedOrder = await web3.eth.abi.encodeParameters(
-        ['tuple(uint256)'],
-        [
-          [20000]
-        ]
+        ['uint256'],
+        [20000]
       )
 
       // default account takes the order by sending ETH
@@ -63,8 +61,8 @@ describeContract(contractName, () => {
             weth9Address,
             10000,
             false,
-            1,
-            10000,
+            10,
+            1000,
             [
                 [
                   handlerMockAddress,
@@ -95,10 +93,8 @@ describeContract(contractName, () => {
 
       const isSell = true
       const encodedOrder = await web3.eth.abi.encodeParameters(
-        ['tuple(uint256)'],
-        [
-          [20000]
-        ]
+        ['uint256'],
+        [20000]
       )
 
       await expect(totlePrimaryInstance.methods.performRebalance(
