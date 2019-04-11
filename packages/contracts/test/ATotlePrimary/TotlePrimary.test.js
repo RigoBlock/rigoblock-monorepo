@@ -11,7 +11,7 @@ import {
     signatureUtils,
     SignerType,
 } from '0x.js'
-import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types';
+import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types'
 import web3 from '../web3'
 
 const contractName = 'TotlePrimary'
@@ -134,8 +134,6 @@ struct OrderData {
           makerAssetData,takerAssetData,signature
         ]
       )
-
-      // TODO: check if need to slice(0, -60) the right part of the output string
 
       const tradeId = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock id bytes32
       const isSell = false // buying a token from the secondary account -> isSell = false

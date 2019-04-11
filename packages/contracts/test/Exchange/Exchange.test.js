@@ -10,7 +10,7 @@ import {
     signatureUtils,
     SignerType,
 } from '0x.js'
-import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types';
+import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types'
 import web3 from '../web3'
 
 const contractName = 'Exchange'
