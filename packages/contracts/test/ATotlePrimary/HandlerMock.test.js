@@ -64,8 +64,8 @@ describeContract(contractName, () => {
             ]
           ]
         ],
-        '0x9899beaad8ded0402c39148afdd03850dfe29fda',
-        '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d'
+        '0x0000000000000000000000000000000000000000',
+        '0x1111111111111111111111111111111111111111111111111111111111111111'
       ).encodeABI()
       const ethAmount = 50000
       console.log(encodedAll)
