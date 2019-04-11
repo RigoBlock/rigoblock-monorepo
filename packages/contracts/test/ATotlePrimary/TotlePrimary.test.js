@@ -138,7 +138,7 @@ struct OrderData {
       const tradeId = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock id bytes32
       const isSell = false // buying a token from the secondary account -> isSell = false
       const optionalTrade = false
-      const tokenAmount = takerAssetAmount
+      const tokenAmount = 10000 // takerAssetAmount
       const minimumExchangeRate = 1 // Allowable Price Change (%)
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
 

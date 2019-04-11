@@ -47,33 +47,35 @@ describeContract(contractName, () => {
         [20000]
       )
 
-      // default account takes the order by sending ETH
-      const transactionDetails = {
-        value: 10000,
-        from: accounts[0],
-        gas: GAS_ESTIMATE,
-        gasPrice: 1
-      }
-      await expect(totlePrimaryInstance.methods.performRebalance(
+      const encodedAll = await totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,
-            weth9Address,
+            rigoTokenAddress,
             10000,
-            false,
-            10,
+            true,
+            1,
             1000,
             [
-                [
-                  handlerMockAddress,
-                  encodedOrder
-                ]
+              [
+                handlerMockAddress,
+                encodedOrder
+              ]
             ]
           ]
         ],
-        '0x0000000000000000000000000000000000000000',
-        '0x1111111111111111111111111111111111111111111111111111111111111111'
-      ).send({ ...transactionDetails }) // totle requires receiving eth
+        '0x9899beaad8ded0402c39148afdd03850dfe29fda',
+        '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d'
+      ).encodeABI()
+      const ethAmount = 50000
+      console.log(encodedAll)
+
+      await expect(web3.eth.sendTransaction({
+        from: accounts[0],
+        to: totlePrimaryAddress,
+        data: encodedAll,
+        value: ethAmount
+      })
       ).rejects.toThrowErrorMatchingSnapshot()
     })
     it('performs a GRG-ETH sell transaction', async () => {
@@ -82,7 +84,7 @@ describeContract(contractName, () => {
       await web3.eth.sendTransaction({
         from: accounts[0],
         to: handlerMockAddress,
-        value: 50000
+        value: '50000'
       })
       const grgToSell = 10000
       await baseContracts['RigoToken'].approve(
@@ -97,7 +99,7 @@ describeContract(contractName, () => {
         [20000]
       )
 
-      await expect(totlePrimaryInstance.methods.performRebalance(
+      const encodedAll = await totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,
@@ -116,7 +118,13 @@ describeContract(contractName, () => {
         ],
         '0x0000000000000000000000000000000000000000',
         '0x1111111111111111111111111111111111111111111111111111111111111111'
-      ).send({ ...transactionDefault })
+      ).encodeABI()
+
+      await expect(web3.eth.sendTransaction({
+        from: accounts[0],
+        to: totlePrimaryAddress,
+        data: encodedAll,
+      })
       ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
