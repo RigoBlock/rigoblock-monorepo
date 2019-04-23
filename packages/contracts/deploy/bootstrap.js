@@ -209,7 +209,7 @@ module.exports = async (baseAccount, network) => {
   ])
   printAddress('ZeroExExchangeHandler', zeroExExchangeHandler.address)
 
-  //await zeroExExchangeHandler.addTotle(totlePrimary.address)
+  await zeroExExchangeHandler.addTotle(totlePrimary.address)
   await totlePrimary.addHandlerToWhitelist(zeroExExchangeHandler.address)
 
   const handlerMock = await deploy(baseAccount, network, 'HandlerMock', [
@@ -220,6 +220,7 @@ module.exports = async (baseAccount, network) => {
   ])
   printAddress('HandlerMock', handlerMock.address)
 
+  await handlerMock.addTotle(totlePrimary.address)
   await totlePrimary.addHandlerToWhitelist(handlerMock.address)
 
   await exchangesAuthority.setExchangeAdapter(

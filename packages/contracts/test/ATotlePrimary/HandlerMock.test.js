@@ -43,39 +43,39 @@ describeContract(contractName, () => {
 
       const isSell = false
       const encodedOrder = await web3.eth.abi.encodeParameters(
-        ['tuple(uint256)'],
-        [
-          [20000]
-        ]
+        ['uint256'],
+        [20000]
       )
 
-      // default account takes the order by sending ETH
-      const transactionDetails = {
-        value: 10000,
-        from: accounts[0],
-        gas: GAS_ESTIMATE,
-        gasPrice: 1
-      }
-      await expect(totlePrimaryInstance.methods.performRebalance(
+      const encodedAll = await totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,
-            weth9Address,
+            rigoTokenAddress,
             10000,
-            false,
+            true,
             1,
-            10000,
+            1000,
             [
-                [
-                  handlerMockAddress,
-                  encodedOrder
-                ]
+              [
+                handlerMockAddress,
+                encodedOrder
+              ]
             ]
           ]
         ],
         '0x0000000000000000000000000000000000000000',
         '0x1111111111111111111111111111111111111111111111111111111111111111'
-      ).send({ ...transactionDetails }) // totle requires receiving eth
+      ).encodeABI()
+      const ethAmount = 50000
+      console.log(encodedAll)
+
+      await expect(web3.eth.sendTransaction({
+        from: accounts[0],
+        to: totlePrimaryAddress,
+        data: encodedAll,
+        value: ethAmount
+      })
       ).rejects.toThrowErrorMatchingSnapshot()
     })
     it('performs a GRG-ETH sell transaction', async () => {
@@ -84,7 +84,7 @@ describeContract(contractName, () => {
       await web3.eth.sendTransaction({
         from: accounts[0],
         to: handlerMockAddress,
-        value: 50000
+        value: '50000'
       })
       const grgToSell = 10000
       await baseContracts['RigoToken'].approve(
@@ -95,13 +95,11 @@ describeContract(contractName, () => {
 
       const isSell = true
       const encodedOrder = await web3.eth.abi.encodeParameters(
-        ['tuple(uint256)'],
-        [
-          [20000]
-        ]
+        ['uint256'],
+        [20000]
       )
 
-      await expect(totlePrimaryInstance.methods.performRebalance(
+      const encodedAll = await totlePrimaryInstance.methods.performRebalance(
         [
           [
             isSell,
@@ -120,7 +118,13 @@ describeContract(contractName, () => {
         ],
         '0x0000000000000000000000000000000000000000',
         '0x1111111111111111111111111111111111111111111111111111111111111111'
-      ).send({ ...transactionDefault })
+      ).encodeABI()
+
+      await expect(web3.eth.sendTransaction({
+        from: accounts[0],
+        to: totlePrimaryAddress,
+        data: encodedAll,
+      })
       ).rejects.toThrowErrorMatchingSnapshot()
     })
   })

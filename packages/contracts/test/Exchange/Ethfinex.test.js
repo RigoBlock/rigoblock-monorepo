@@ -9,7 +9,7 @@ import {
     signatureUtils,
     SignerType,
 } from '0x.js'
-import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types';
+import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types'
 import exchangeArtifact from '../../artifacts/Exchange.json'
 import wrapperLockEthArtifact from '../../artifacts/WrapperLockEth.json'
 import moment from 'moment'

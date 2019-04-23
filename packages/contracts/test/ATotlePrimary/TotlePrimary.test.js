@@ -11,7 +11,7 @@ import {
     signatureUtils,
     SignerType,
 } from '0x.js'
-import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types';
+import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types'
 import web3 from '../web3'
 
 const contractName = 'TotlePrimary'
@@ -102,45 +102,58 @@ describeContract(contractName, () => {
         order,
         signerAddress
       )
+      const signature = signedOrder.signature
 
-      const takerAssetFillAmount = (takerAssetAmount / 2).toString() // partial fill
+/*
+struct OrderData {
+    address makerAddress;           // Address that created the order.
+    address takerAddress;           // Address that is allowed to fill the order. If set to 0, any address is allowed to fill the order.
+    address feeRecipientAddress;    // Address that will recieve fees when order is filled.
+    address senderAddress;          // Address that is allowed to call Exchange contract methods that affect this order. If set to 0, any address is allowed to call these methods.
+    uint256 makerAssetAmount;       // Amount of makerAsset being offered by maker. Must be greater than 0.
+    uint256 takerAssetAmount;       // Amount of takerAsset being bid on by maker. Must be greater than 0.
+    uint256 makerFee;               // Amount of ZRX paid to feeRecipient by maker when order is filled. If set to 0, no transfer of ZRX from maker to feeRecipient will be attempted.
+    uint256 takerFee;               // Amount of ZRX paid to feeRecipient by taker when order is filled. If set to 0, no transfer of ZRX from taker to feeRecipient will be attempted.
+    uint256 expirationTimeSeconds;  // Timestamp in seconds at which order expires.
+    uint256 salt;                   // Arbitrary number to facilitate uniqueness of the order's hash.
+    bytes makerAssetData;           // Encoded data that can be decoded by a specified proxy contract when transferring makerAsset. The last byte references the id of this proxy.
+    bytes takerAssetData;           // Encoded data that can be decoded by a specified proxy contract when transferring takerAsset. The last byte references the id of this proxy.
+    bytes signature;
+}
+*/
 
       const encodedOrder = await web3.eth.abi.encodeParameters(
         [
-          'tuple(address,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bytes,bytes)',
-          'uint256',
-          'bytes'
+          'address','address','address','address',
+          'uint256','uint256','uint256','uint256','uint256','uint256',
+          'bytes','bytes','bytes'
         ],
         [
-          [
-            makerAddress,takerAddress,feeRecipientAddress,senderAddress,
-            makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
-            makerAssetData,takerAssetData
-          ],
-          takerAssetFillAmount,
-          signedOrder.signature
+          makerAddress,takerAddress,feeRecipientAddress,senderAddress,
+          makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
+          makerAssetData,takerAssetData,signature
         ]
       )
 
       const tradeId = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock id bytes32
       const isSell = false // buying a token from the secondary account -> isSell = false
       const optionalTrade = false
-      const tokenAmount = takerAssetFillAmount
+      const tokenAmount = 10000 // takerAssetAmount
       const minimumExchangeRate = 1 // Allowable Price Change (%)
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
 
-      const feeAccount = accounts[2]
+      const feeAccount = accounts[0]
       // TODO: check why base account is not valid affiliate, since it is set up in bootstrap
-      const isAffiliated = await baseContracts['AffiliateRegistry'].isValidAffiliate(accounts[0])
+      // affiliate is a contract, created for each affiliate account
+      // const isAffiliated = await baseContracts['AffiliateRegistry'].isValidAffiliate(accounts[0])
 
       // accounts[1] takes the order, purchases GRG
       const transactionDetails = {
-        value: takerAssetFillAmount,
+        value: tokenAmount, //takerAssetFillAmount,
         from: accounts[1],
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
-
       await expect(totlePrimaryInstance.methods.performRebalance(
         [
           [
@@ -161,7 +174,7 @@ describeContract(contractName, () => {
         feeAccount,
         tradeId
       ).send({ ...transactionDetails })
-      ).rejects.toThrowErrorMatchingSnapshot()
+    ).rejects.toThrowErrorMatchingSnapshot()
     }, 9999)
     it('performs a 0x GRG sell order on totle', async () => {
       //account 1 signs GRG buy order
@@ -218,29 +231,24 @@ describeContract(contractName, () => {
         signerAddress
       )
 
-      const takerAssetFillAmount = (takerAssetAmount / 2).toString() // partial fill
-
+      const signature = signedOrder.signature
       const encodedOrder = await web3.eth.abi.encodeParameters(
         [
-          'tuple(address,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bytes,bytes)',
-          'uint256',
-          'bytes'
+          'address','address','address','address',
+          'uint256','uint256','uint256','uint256','uint256','uint256',
+          'bytes','bytes','bytes'
         ],
         [
-          [
-            makerAddress,takerAddress,feeRecipientAddress,senderAddress,
-            makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
-            makerAssetData,takerAssetData
-          ],
-          takerAssetFillAmount,
-          signedOrder.signature
+          makerAddress,takerAddress,feeRecipientAddress,senderAddress,
+          makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
+          makerAssetData,takerAssetData,signature
         ]
       )
 
       const tradeId = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock id bytes32
       const isSell = true
       const optionalTrade = false
-      const tokenAmount = takerAssetFillAmount
+      const tokenAmount = (takerAssetAmount / 2).toString() // partial fill, takerAssetFillAmount
       const minimumExchangeRate = 1 // Allowable Price Change (%)
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
 
