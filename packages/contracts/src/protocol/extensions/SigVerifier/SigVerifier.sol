@@ -53,27 +53,40 @@ contract SigVerifier {
         view
         returns (bool isValid)
     {
-        require(
-            ExchangesAuthority(
-                /*Drago(
-                    address(msg.sender)
-                )
-                .getExchangesAuth()*/
-                exchangesAuthorityAddress
-            )
-            .getExchangeAdapter(address(tx.origin)) != address(0), // check for attack vectors
-            "ORIGIN_NOT_WHITELISTED"
-        );
-
-
         address recoveredEIP712 = returnRecoveredEIP712Internal(hash, signature);
         address recoveredETHSIGN = returnRecoveredETHSIGNInternal(hash, signature);
 
         if (recoveredEIP712 != address(0)) {
-            isValid = recoveredEIP712 == Drago(address(msg.sender)).owner();
+            require(
+                isValid = recoveredEIP712 == Drago(address(msg.sender)).owner(),
+                "EIP712_SIGNER_INVALID"
+            );
+            require(
+                ExchangesAuthority(
+                    // commented part can be useful for extending module to third-party applications
+                    /*Drago(
+                        address(msg.sender)
+                    )
+                    .getExchangesAuth()*/
+                    exchangesAuthorityAddress
+                )
+                .getExchangeAdapter(address(tx.origin)) != address(0),
+                "VALID_EIP712_BUT_ORIGIN_NOT_WHITELISTED"
+            );
             return isValid;
+
         } else if (recoveredETHSIGN != address(0)) {
-            isValid = recoveredETHSIGN == Drago(address(msg.sender)).owner();
+            require(
+                isValid = recoveredETHSIGN == Drago(address(msg.sender)).owner(),
+                "EIP712_SIGNER_INVALID"
+            );
+            require(
+                ExchangesAuthority(
+                    exchangesAuthorityAddress
+                )
+                .getExchangeAdapter(address(tx.origin)) != address(0),
+                "VALID_ETHSIGN_BUT_ORIGIN_NOT_WHITELISTED"
+            );
             return isValid;
         }
 
