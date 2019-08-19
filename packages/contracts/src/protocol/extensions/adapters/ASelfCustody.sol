@@ -1,5 +1,7 @@
 pragma solidity >=0.4.22 <0.6.0;
 
+import { SafeMath } from '../../../utils/SafeMath/SafeMath.sol';
+
 contract Drago {
 
     address public owner;
@@ -25,7 +27,7 @@ interface Authority {
 /// @title Self Custody adapter - A helper contract for self custody.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
-contract ASelfCustody {
+contract ASelfCustody is SafeMath {
 
     Admin admin;
 
@@ -66,9 +68,9 @@ contract ASelfCustody {
             )
             .owner() == msg.sender
         );
-        (bool satisfied, uint256 shortfall) = operatorGRGminimumSatisfied(amount);
-        bool operatorHoldsEnoughGRG = token != address(0) ? true : satisfied;
-        if (operatorHoldsEnoughGRG == true) {
+        require(amount != uint256(0));
+        (bool satisfied, uint256 shortfall) = operatorGRGminimumSatisfied(token, amount);
+        if (satisfied == true) {
             require(
                 transferToSelfCustodyInternal(selfCustodyAccount, token, amount),
                 "TRANSFER_FAIL_GRG_REQ_SATISFIED_ERROR"
@@ -87,25 +89,27 @@ contract ASelfCustody {
      * INTERNAL FUNCTIONS
      */
     /// @dev checks if minimum pool operator GRG amount requirement satisfied.
+    /// @param token Address of the token to be transferred.
     /// @param amount Number of tokens to be transferred.
     /// @return Bool the transaction was successful.
     /// @return Number of GRG pool operator shortfall.
     /// @notice built around powers of pi number.
-    function operatorGRGminimumSatisfied(uint256 amount)
+    function operatorGRGminimumSatisfied(address token, uint256 amount)
         internal
         view
         returns (bool satisfied, uint256 shortfall)
     {
-        uint256 rationalized_amount_base36 = amount * 10 ** (rational_base - ether_base);
+        satisfied = token != address(0) ? true : false;
+        uint256 rationalized_amount_base36 = safeMul(amount, 10 ** (rational_base - ether_base));
         uint256 operator_rationalized_GRG_balance_base36 = Token(RIGOTOKENADDRESS).balanceOf(msg.sender) * (10 ** (rational_base - ether_base));
 
         if (rationalized_amount_base36 < findPi()) {
-            return (true, uint256(0));
+            return (satisfied == true, shortfall = uint256(0));
 
         } else if (rationalized_amount_base36 < findPi2()) {
             if (operator_rationalized_GRG_balance_base36 < findPi4()) {
                 satisfied = false;
-                shortfall = (findPi4() - operator_rationalized_GRG_balance_base36) / (10 ** (rational_base - ether_base)); // odd division
+                shortfall = safeDiv(findPi4() - operator_rationalized_GRG_balance_base36, (10 ** (rational_base - ether_base)));
             } else {
                 satisfied = true;
                 shortfall = uint256(0);
@@ -114,7 +118,7 @@ contract ASelfCustody {
         } else if (rationalized_amount_base36 < findPi3()) {
             if (operator_rationalized_GRG_balance_base36 < findPi5()) {
                 satisfied = false;
-                shortfall = (findPi5() - operator_rationalized_GRG_balance_base36) / (10 ** (rational_base - ether_base)); // odd division
+                shortfall = safeDiv(findPi5() - operator_rationalized_GRG_balance_base36, (10 ** (rational_base - ether_base)));
             } else {
                 satisfied = true;
                 shortfall = uint256(0);
@@ -123,7 +127,7 @@ contract ASelfCustody {
         } else if (rationalized_amount_base36 >= findPi3()) {
             if (operator_rationalized_GRG_balance_base36 < findPi6()) {
                 satisfied = false;
-                shortfall = (findPi6() - operator_rationalized_GRG_balance_base36) / (10 ** (rational_base - ether_base)); // odd division
+                shortfall = safeDiv(findPi6() - operator_rationalized_GRG_balance_base36, (10 ** (rational_base - ether_base)));
             } else {
                 satisfied = true;
                 shortfall = uint256(0);
