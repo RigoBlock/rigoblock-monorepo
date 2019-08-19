@@ -32,7 +32,7 @@ describeContract(contractName, () => {
     }
   })
 
-  describe('performRebalance', () => {
+  describe.skip('performRebalance', () => {
     it('performs a ETH-GRG buy transaction', async () => {
       // wrap eth and send to mock handler, weth requires approval
       const grgAmount = 48333317481
@@ -68,7 +68,6 @@ describeContract(contractName, () => {
         '0x1111111111111111111111111111111111111111111111111111111111111111'
       ).encodeABI()
       const ethAmount = 50000
-      console.log(encodedAll)
 
       await expect(web3.eth.sendTransaction({
         from: accounts[0],

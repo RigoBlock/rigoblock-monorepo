@@ -49,7 +49,7 @@ describeContract(contractName, () => {
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
   })
 
-  describe('isValidSignature', () => {
+  describe.skip('isValidSignature', () => {
     it('rejects order signature for wallet input data if caller not whitelisted', async () => {
       const makerAddress = dragoAddress // '0x2f3ae8c5e7321688999883fd4f569e928d81d68f' // a drago
       const takerAddress = '0x0000000000000000000000000000000000000000'

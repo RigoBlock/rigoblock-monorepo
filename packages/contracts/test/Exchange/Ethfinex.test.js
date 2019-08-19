@@ -40,7 +40,7 @@ describeContract(contractName, () => {
     ethfinexHotWalletAddress = accounts[0] // can try with different accounts
   })
 
-  describe('fillOrder', () => {
+  describe.skip('fillOrder', () => {
     it('swaps ETHW to GRGW from account 1 to account 0', async () => {
       const grgWrapperAddress = await baseContracts['WrapperLock'].address
       const ethWrapperAddress = await baseContracts['WrapperLockEth'].address
