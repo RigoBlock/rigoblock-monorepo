@@ -240,14 +240,10 @@ module.exports = async (baseAccount, network) => {
   const abiEncoder = await deploy(baseAccount, network, 'AbiEncoder')
   printAddress('AbiEncoder', abiEncoder.address)
 
-  const aSelfCustody = await deploy(baseAccount, network, 'ASelfCusotdy')
-  printAddress('ASelfCusotdy', aSelfCustody.address)
-
   return {
     AbiEncoder: abiEncoder,
     AEthfinex: aEthfinex,
     AffiliateRegistry: affiliateRegistry,
-    ASelfCustody: aSelfCustody,
     ATotlePrimary: aTotlePrimary,
     AWeth: aWeth,
     Authority: authority,

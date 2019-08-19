@@ -19,7 +19,6 @@ module.exports = {
     'AbiEncoder',
     'AEthfinex',
     'AffiliateRegistry',
-    'ASelfCustody',
     'ATotlePrimary',
     'AWeth',
     'Authority',
