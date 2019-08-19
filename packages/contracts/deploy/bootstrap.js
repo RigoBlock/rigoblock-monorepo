@@ -240,8 +240,10 @@ module.exports = async (baseAccount, network) => {
   const abiEncoder = await deploy(baseAccount, network, 'AbiEncoder')
   printAddress('AbiEncoder', abiEncoder.address)
 
-  const aSelfCustody = await deploy(baseAccount, network, 'ASelfCusotdy')
-  printAddress('ASelfCusotdy', aSelfCustody.address)
+  const aSelfCustody = await deploy(baseAccount, network, 'ASelfCustody', [
+    rigoToken.address
+  ])
+  printAddress('ASelfCustody', aSelfCustody.address)
 
   return {
     AbiEncoder: abiEncoder,
