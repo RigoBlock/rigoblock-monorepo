@@ -122,7 +122,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/totle/ErrorReporter/ErrorReporter.sol"
             ],
-            "address": "0xac03f6bebfbd485ff3491ace4340633405a3bc9d",
+            "address": "0xf6a4fa23880d892e192c14667988e6a242c64a50",
             "constructor_args": "0x"
         }
     }

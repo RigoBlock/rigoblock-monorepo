@@ -10,6 +10,7 @@ const contractName = 'Drago'
 describeContract(contractName, () => {
   let dragoAddress
   let dragoInstance
+  let ethAddress
   let erc20Address
   let erc20Instance
   let transactionDefault
@@ -48,7 +49,7 @@ describeContract(contractName, () => {
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
   })
 
-  describe.skip('operateOnExchange', () => {
+  describe('operateOnExchange', () => {
     it('sends ETH to a self custody wallet', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
@@ -90,10 +91,12 @@ describeContract(contractName, () => {
         true
       ) // byte4(keccak256(method))
 
+/*
       const txHash = await dragoInstance.methods
         .operateOnExchange(selfCustodyProxyAddress, [assembledTransaction])
         .send({ ...transactionDefault })
       expect(txHash.toBeHash())
+*/
     })
     it.skip('fails to send ETH not holding 1st threshold GRG', async () => {
 
