@@ -1,5 +1,10 @@
 pragma solidity >=0.4.22 <0.6.0;
 
+contract Drago {
+
+    address public owner;
+}
+
 interface Token {
 
     function transfer(address _to, uint256 _value) external returns (bool success);
@@ -55,9 +60,15 @@ contract ASelfCustody {
         external
         returns (bool, uint256)
     {
+        require(
+            Drago(
+                address(this)
+            )
+            .owner() == msg.sender
+        );
         (bool satisfied, uint256 shortfall) = operatorGRGminimumSatisfied(amount);
-        bool OperatorHoldsEnoughGRG = token != address(0) ? true : satisfied;
-        if (OperatorHoldsEnoughGRG == true) {
+        bool operatorHoldsEnoughGRG = token != address(0) ? true : satisfied;
+        if (operatorHoldsEnoughGRG == true) {
             require(
                 transferToSelfCustodyInternal(selfCustodyAccount, token, amount),
                 "TRANSFER_FAIL_GRG_REQ_SATISFIED_ERROR"
