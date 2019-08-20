@@ -368,8 +368,8 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/extensions/adapters/ATotlePrimary.sol"
             ],
-            "address": "0x100cba4e734f1819fbf1f390f800b8c8e7e22ed0",
-            "constructor_args": "0x00000000000000000000000027fb1d72e1278d8c00fd083327cf87e2659c9c83"
+            "address": "0xb438be425346bd88abe9b63b66733d6ae391e448",
+            "constructor_args": "0x00000000000000000000000011272f3a6c205fcff245f54ca3dc126a4bdde9e6"
         }
     }
 }

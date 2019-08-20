@@ -34,7 +34,7 @@ describeContract(contractName, () => {
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
   })
 
-  describe('operateOnExchange', () => {
+  describe.skip('operateOnExchange', () => {
     it('wraps eth to the efx wrapper', async () => {
       // adds additional ether to the pool to be able to deposit
       const purchaseAmount = web3.utils.toWei('1.1')

@@ -35,7 +35,7 @@ describeContract(contractName, () => {
     }
   })
 
-  describe('fillOrder', () => {
+  describe.skip('fillOrder', () => {
     it('swaps GRG from account[0] to accounts[1]', async () => {
       const rigoTokenAddress = await baseContracts['RigoToken'].address
       const wethContracAddress = await baseContracts['WETH9'].address

@@ -55,7 +55,7 @@ describeContract(contractName, () => {
     }
   })
 
-  describe('performRebalance', () => {
+  describe.skip('performRebalance', () => {
     it('performs a 0x GRG buy order on totle', async () => {
       // account 1 buys from account 0
       const makerAddress = accounts[0]

@@ -85,6 +85,9 @@ module.exports = async (baseAccount, network) => {
   await authority.setExchangesAuthority(exchangesAuthority.address)
   await exchangesAuthority.setWhitelister(baseAccount, true)
 
+  const aSelfCustody = await deploy(baseAccount, network, 'ASelfCustody')
+  printAddress('ASelfCustody', aSelfCustody.address)
+
   // TODO: remove 0x v0 deprecated contracts
   const exchangeEfx = await deploy(baseAccount, network, 'ExchangeEfx')
   printAddress('ExchangeEfx', exchangeEfx.address)
@@ -244,6 +247,7 @@ module.exports = async (baseAccount, network) => {
     AbiEncoder: abiEncoder,
     AEthfinex: aEthfinex,
     AffiliateRegistry: affiliateRegistry,
+    ASelfCustody: aSelfCustody,
     ATotlePrimary: aTotlePrimary,
     AWeth: aWeth,
     Authority: authority,
