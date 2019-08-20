@@ -960,7 +960,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/totle/AffiliateRegistry/AffiliateRegistry.sol"
             ],
-            "address": "0x4e9f07b299fdcfe34b666a9dd671f82405fe83d5",
+            "address": "0xf59bc78c31b168f3ae9e2645f2c8ad7d58d94ef2",
             "constructor_args": "0x000000000000000000000000242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196000000000000000000000000242b2dd21e7e1a2b2516d0a3a06b58e2d9bf91960000000000000000000000000000000000000000000000000000000000000000"
         }
     }
