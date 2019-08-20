@@ -16,14 +16,9 @@
 
 */
 
-pragma solidity 0.5.4;
+pragma solidity 0.4.25;
 
 import { SafeMath } from '../../../utils/SafeMath/SafeMath.sol';
-
-contract Drago {
-
-    address public owner;
-}
 
 interface Token {
 
@@ -34,37 +29,27 @@ interface Token {
 
 interface DragoEventful {
 
-    function customDragoLog(bytes4 _methodHash, bytes calldata _encodedParams) external returns (bool success);
+    function customDragoLog(bytes4 _methodHash, bytes _encodedParams) external returns (bool success);
 }
 
-interface Authority {
+interface ExchangesAuthority {
 
-    function getDragoEventful() external view returns (address);
+    function getCasper() external view returns (address);
+}
+
+contract Drago {
+    
+    address public owner;
+
+    function getExchangesAuth() external view returns (address);
+    
+    function getEventful() external view returns (address);
 }
 
 /// @title Self Custody adapter - A helper contract for self custody.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 contract ASelfCustody is SafeMath {
-
-    Admin admin;
-
-    uint256 pi = 3141592;
-    uint256 pi_base = 6;
-    uint256 rational_base = 36;
-    uint256 ether_base = 18;
-
-    address RIGOTOKENADDRESS;
-
-    struct Admin {
-        address authority;
-    }
-
-    constructor(address rigoTokenAddress)
-        public
-    {
-        RIGOTOKENADDRESS = rigoTokenAddress;
-    }
 
     /// @dev transfers ETH or tokens to self custody.
     /// @param selfCustodyAccount Address of the target account.
@@ -74,7 +59,7 @@ contract ASelfCustody is SafeMath {
     /// @return Number of GRG pool operator shortfall.
     /// @notice Transfeer of tokens excluded from GRG requirement for now.
     function transferToSelfCustody(
-        address payable selfCustodyAccount,
+        address selfCustodyAccount,
         address token,
         uint256 amount)
         external
@@ -83,11 +68,18 @@ contract ASelfCustody is SafeMath {
         require(
             Drago(
                 address(this)
-            )
-            .owner() == msg.sender
+            ).owner() == msg.sender,
+            "FAIL_OWNER_CHECK"
         );
+        address grgToken =
+            ExchangesAuthority(
+                Drago(
+                    address(this)
+                ).getExchangesAuth()
+            ).getCasper()
+        ;
         require(amount != uint256(0));
-        (bool satisfied, uint256 shortfall) = operatorGRGminimumSatisfied(token, amount);
+        (bool satisfied, uint256 shortfall) = operatorGRGminimumSatisfied(grgToken, token, amount);
         if (satisfied == true) {
             require(
                 transferToSelfCustodyInternal(selfCustodyAccount, token, amount),
@@ -103,26 +95,48 @@ contract ASelfCustody is SafeMath {
         }
     }
 
-    /*
-     * INTERNAL FUNCTIONS
-     */
-    /// @dev checks if minimum pool operator GRG amount requirement satisfied.
+    /// @dev external check if minimum pool operator GRG amount requirement satisfied.
+    /// @param grgToken Address of the Rigo token.
     /// @param token Address of the token to be transferred.
     /// @param amount Number of tokens to be transferred.
     /// @return Bool the transaction was successful.
     /// @return Number of GRG pool operator shortfall.
     /// @notice built around powers of pi number.
-    function operatorGRGminimumSatisfied(address token, uint256 amount)
+    function operatorGRGminimumSatisfiedExternal (address grgToken, address token, uint256 amount)
+        external
+        view
+        returns (bool satisfied, uint256 shortfall)
+    {
+        return operatorGRGminimumSatisfied(grgToken, token, amount);
+    }
+
+    /*
+     * INTERNAL FUNCTIONS
+     */
+    /// @dev checks if minimum pool operator GRG amount requirement satisfied.
+    /// @param grgToken Address of the Rigo token.
+    /// @param token Address of the token to be transferred.
+    /// @param amount Number of tokens to be transferred.
+    /// @return Bool the transaction was successful.
+    /// @return Number of GRG pool operator shortfall.
+    /// @notice built around powers of pi number.
+    function operatorGRGminimumSatisfied(address grgToken, address token, uint256 amount)
         internal
         view
         returns (bool satisfied, uint256 shortfall)
     {
-        satisfied = token != address(0) ? true : false;
+        uint256 ether_base = 18;
+        uint256 rational_base = 36;
         uint256 rationalized_amount_base36 = safeMul(amount, 10 ** (rational_base - ether_base));
-        uint256 operator_rationalized_GRG_balance_base36 = Token(RIGOTOKENADDRESS).balanceOf(msg.sender) * (10 ** (rational_base - ether_base));
+        uint256 operator_rationalized_GRG_balance_base36 = Token(grgToken).balanceOf(msg.sender) * (10 ** (rational_base - ether_base));
+        
+        if (token != address(0)) {
+            satisfied = true;
+            shortfall = uint256(0);
 
-        if (rationalized_amount_base36 < findPi()) {
-            return (satisfied == true, shortfall = uint256(0));
+        } else if (rationalized_amount_base36 < findPi()) {
+            satisfied = true;
+            shortfall = uint256(0);
 
         } else if (rationalized_amount_base36 < findPi2()) {
             if (operator_rationalized_GRG_balance_base36 < findPi4()) {
@@ -160,43 +174,61 @@ contract ASelfCustody is SafeMath {
 
     /// @dev returns the base 36 value of pi number.
     /// @return pi1 Value of pi.
-    function findPi() internal view returns (uint256 pi1) {
+    function findPi() internal pure returns (uint256 pi1) {
         uint8 power = 1;
+        uint256 pi = 3141592;
+        uint256 pi_base = 6;
+        uint256 rational_base = 36;
         pi1 = pi ** power * 10 ** (rational_base - pi_base * power);
     }
 
     /// @dev returns the base 36 value of pi^2 number.
     /// @return pi2 Value of pi^2.
-    function findPi2() internal view returns (uint256 pi2) {
+    function findPi2() internal pure returns (uint256 pi2) {
         uint8 power = 2;
+        uint256 pi = 3141592;
+        uint256 pi_base = 6;
+        uint256 rational_base = 36;
         pi2 = pi ** power * 10 ** (rational_base - pi_base * power);
     }
 
     /// @dev returns the base 36 value of pi^3 number.
     /// @return pi3 Value of pi^3.
-    function findPi3() internal view returns (uint256 pi3) {
+    function findPi3() internal pure returns (uint256 pi3) {
         uint8 power = 3;
+        uint256 pi = 3141592;
+        uint256 pi_base = 6;
+        uint256 rational_base = 36;
         pi3 = pi ** power * 10 ** (rational_base - pi_base * power);
     }
 
     /// @dev returns the base 36 value of pi^4 number.
     /// @return pi4 Value of pi^4.
-    function findPi4() internal view returns (uint256 pi4) {
+    function findPi4() internal pure returns (uint256 pi4) {
         uint8 power = 4;
+        uint256 pi = 3141592;
+        uint256 pi_base = 6;
+        uint256 rational_base = 36;
         pi4 = pi ** power * 10 ** (rational_base - pi_base * power);
     }
 
     /// @dev returns the base 36 value of pi^5 number.
     /// @return pi5 Value of pi^5.
-    function findPi5() internal view returns (uint256 pi5) {
+    function findPi5() internal pure returns (uint256 pi5) {
         uint8 power = 5;
+        uint256 pi = 3141592;
+        uint256 pi_base = 6;
+        uint256 rational_base = 36;
         pi5 = pi ** power * 10 ** (rational_base - pi_base * power);
     }
 
     /// @dev returns the base 36 value of pi^6 number.
     /// @return pi6 Value of pi^6.
-    function findPi6() internal view returns (uint256 pi6) {
+    function findPi6() internal pure returns (uint256 pi6) {
         uint8 power = 6;
+        uint256 pi = 3141592;
+        uint256 pi_base = 6;
+        uint256 rational_base = 36;
         pi6 = pi ** power * 10 ** (rational_base - pi_base * power);
     }
 
@@ -233,7 +265,7 @@ contract ASelfCustody is SafeMath {
     /// @param amount Number of tokens to be transferred.
     /// @return success Bool the transfer executed correctly.
     function transferToSelfCustodyInternal(
-        address payable selfCustodyAccount,
+        address selfCustodyAccount,
         address token,
         uint256 amount)
         internal
@@ -256,7 +288,10 @@ contract ASelfCustody is SafeMath {
         view
         returns (address)
     {
-        Authority auth = Authority(admin.authority);
-        return auth.getDragoEventful();
+        address dragoEvenfulAddress = 
+            Drago(
+                address(this)
+            ).getEventful();
+        return dragoEvenfulAddress;
     }
 }

@@ -17,6 +17,7 @@ describeContract(contractName, () => {
   let selfCustodyAddress
   let selfCustodyProxyAddress
   let selfCustodyAdapterAddress
+  let grgTokenAddress
 
   beforeAll(async () => {
     await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
@@ -47,10 +48,12 @@ describeContract(contractName, () => {
       true
     )
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
+    grgTokenAddress = await baseContracts['RigoToken'].address
+    await baseContracts['ExchangesAuthority'].setCasper(grgTokenAddress) // temporary patch, GRG = Casper
   })
 
   describe('operateOnExchange', () => {
-    it('sends ETH to a self custody wallet', async () => {
+    it('sends ETH to a self custody wallet when operator holds enough GRG', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
       await dragoInstance.methods.buyDrago().send({
@@ -58,7 +61,7 @@ describeContract(contractName, () => {
         value: purchaseAmount
       })
 
-      const toBeTransferred = web3.utils.toWei('1.51') //web3.utils.toWei('1.1') //1e16 is 10 finney
+      const toBeTransferred = web3.utils.toWei('3.51') //web3.utils.toWei('1.1') //1e16 is 10 finney
 
       const methodInterface = {
         name: 'transferToSelfCustody',
@@ -85,21 +88,165 @@ describeContract(contractName, () => {
       const methodSignature = await web3.eth.abi.encodeFunctionSignature(
         methodInterface
       )
+
       await baseContracts['ExchangesAuthority'].whitelistMethod(
         methodSignature,
         selfCustodyAdapterAddress,
         true
       ) // byte4(keccak256(method))
 
-/*
-      const txHash = await dragoInstance.methods
+      const adapter = await baseContracts['ExchangesAuthority'].getExchangeAdapter(
+        selfCustodyProxyAddress
+      )
+      const isMethodAllowed = await baseContracts['ExchangesAuthority'].isMethodAllowed(
+        methodSignature,
+        adapter
+      )
+
+      const txObject = await dragoInstance.methods
         .operateOnExchange(selfCustodyProxyAddress, [assembledTransaction])
         .send({ ...transactionDefault })
-      expect(txHash.toBeHash())
-*/
+      expect(txObject.transactionHash).toBeHash()
     })
-    it.skip('fails to send ETH not holding 1st threshold GRG', async () => {
+    it('succeeds but does not send ETH if operator not holding 1st threshold GRG', async () => {
+      // adds additional ether to the pool to be able to transfer
+      const purchaseAmount = web3.utils.toWei('5.1')
+      await dragoInstance.methods.buyDrago().send({
+        ...transactionDefault,
+        value: purchaseAmount
+      })
 
+      // transfer default account GRG balance to account 1
+      const grgBalance = await baseContracts['RigoToken'].balanceOf(accounts[0])
+      const grgDiff = grgBalance - web3.utils.toWei('95')
+      await baseContracts['RigoToken'].transfer(accounts[1], grgDiff)
+
+      // transfer an amount bigger than pi number
+      const toBeTransferred = web3.utils.toWei('3.51') //web3.utils.toWei('1.1') //1e16 is 10 finney
+
+      const methodInterface = {
+        name: 'transferToSelfCustody',
+        type: 'function',
+        inputs: [
+          {
+            type: 'address',
+            name: 'selfCustodyAccount'
+          },
+          {
+            type: 'address',
+            name: 'token'
+          },
+          {
+            type: 'uint256',
+            name: 'amount'
+          }
+        ]
+      }
+      const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
+        methodInterface,
+        [selfCustodyAddress, ethAddress, toBeTransferred]
+      )
+      const methodSignature = await web3.eth.abi.encodeFunctionSignature(
+        methodInterface
+      )
+
+      await baseContracts['ExchangesAuthority'].whitelistMethod(
+        methodSignature,
+        selfCustodyAdapterAddress,
+        true
+      ) // byte4(keccak256(method))
+
+      const adapter = await baseContracts['ExchangesAuthority'].getExchangeAdapter(
+        selfCustodyProxyAddress
+      )
+      const isMethodAllowed = await baseContracts['ExchangesAuthority'].isMethodAllowed(
+        methodSignature,
+        adapter
+      )
+
+      const txObject = await dragoInstance.methods
+        .operateOnExchange(selfCustodyProxyAddress, [assembledTransaction])
+        .send({ ...transactionDefault })
+      expect(txObject.transactionHash).toBeHash()
+
+/*
+      // transaction does not fail if insufficient amount, returns shortfall
+      // could be amended as the operate on exchange function does not return the shortfall
+      await expect(dragoInstance.methods
+        .operateOnExchange(selfCustodyProxyAddress, [assembledTransaction])
+        .send({ ...transactionDefault })
+      ).toThrowErrorMatchingSnapshot()
+*/
+
+    })
+    it('succeeds bot does not send ETH if operator holding < 1st threshold GRG', async () => {
+      // adds additional ether to the pool to be able to transfer
+      const purchaseAmount = web3.utils.toWei('5.1')
+      await dragoInstance.methods.buyDrago().send({
+        ...transactionDefault,
+        value: purchaseAmount
+      })
+
+      // transfer default account GRG balance to account 1
+      const grgBalance = await baseContracts['RigoToken'].balanceOf(accounts[0])
+      await baseContracts['RigoToken'].transfer(accounts[1], grgBalance)
+
+      // transfer an amount bigger than pi number
+      const toBeTransferred = web3.utils.toWei('3.51') //web3.utils.toWei('1.1') //1e16 is 10 finney
+
+      const methodInterface = {
+        name: 'transferToSelfCustody',
+        type: 'function',
+        inputs: [
+          {
+            type: 'address',
+            name: 'selfCustodyAccount'
+          },
+          {
+            type: 'address',
+            name: 'token'
+          },
+          {
+            type: 'uint256',
+            name: 'amount'
+          }
+        ]
+      }
+      const assembledTransaction = await web3.eth.abi.encodeFunctionCall(
+        methodInterface,
+        [selfCustodyAddress, ethAddress, toBeTransferred]
+      )
+      const methodSignature = await web3.eth.abi.encodeFunctionSignature(
+        methodInterface
+      )
+
+      await baseContracts['ExchangesAuthority'].whitelistMethod(
+        methodSignature,
+        selfCustodyAdapterAddress,
+        true
+      ) // byte4(keccak256(method))
+
+      const adapter = await baseContracts['ExchangesAuthority'].getExchangeAdapter(
+        selfCustodyProxyAddress
+      )
+      const isMethodAllowed = await baseContracts['ExchangesAuthority'].isMethodAllowed(
+        methodSignature,
+        adapter
+      )
+
+      const txObject = await dragoInstance.methods
+        .operateOnExchange(selfCustodyProxyAddress, [assembledTransaction])
+        .send({ ...transactionDefault })
+      expect(txObject.transactionHash).toBeHash()
+    })
+    it.skip('sends a token to self custody', async () => {
+      erc20Address = await baseContracts[
+        'RigoToken'
+      ].address
+      erc20Instance = new web3.eth.Contract(
+        erc20Artifact.networks[GANACHE_NETWORK_ID].abi,
+        exchangeAddress
+      )
     })
     it.skip('sends a token to self custody', async () => {
       erc20Address = await baseContracts[

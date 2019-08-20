@@ -85,9 +85,7 @@ module.exports = async (baseAccount, network) => {
   await authority.setExchangesAuthority(exchangesAuthority.address)
   await exchangesAuthority.setWhitelister(baseAccount, true)
 
-  const aSelfCustody = await deploy(baseAccount, network, 'ASelfCustody', [
-    rigoToken.address
-  ])
+  const aSelfCustody = await deploy(baseAccount, network, 'ASelfCustody')
   printAddress('ASelfCustody', aSelfCustody.address)
 
   // TODO: remove 0x v0 deprecated contracts
