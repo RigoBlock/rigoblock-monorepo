@@ -1,4 +1,5 @@
 import { AEthfinex } from './models/a_ethfinex'
+import { ASelfCustody } from './models/a_self_custody'
 import { ATotlePrimary } from './models/a_totle_primary'
 import { AWeth } from './models/a_weth'
 import { AbiEncoder } from './models/abi_encoder'
@@ -43,6 +44,7 @@ import { ZeroExExchangeHandler } from './models/zero_ex_exchange_handler'
 
 export abstract class ContractsList {
   AEthfinex: typeof AEthfinex & AEthfinex
+  ASelfCustody: typeof ASelfCustody & ASelfCustody
   ATotlePrimary: typeof ATotlePrimary & ATotlePrimary
   AWeth: typeof AWeth & AWeth
   AbiEncoder: typeof AbiEncoder & AbiEncoder
