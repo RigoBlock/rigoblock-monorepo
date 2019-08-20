@@ -1,6 +1,6 @@
 {
   "name": "@rigoblock/contracts",
-  "version": "0.3.12",
+  "version": "0.3.11",
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
@@ -21,7 +21,6 @@
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
   },
   "jest": {
-    "testEnvironment": "node",
     "setupTestFrameworkScriptFile": "<rootDir>/test/setupTests.js",
     "testMatch": [
       "<rootDir>/test/**/?(*.)(spec|test).{js}"
@@ -62,7 +61,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.0.0-beta.54",
-    "@rigoblock/deployer": "0.1.14",
+    "@rigoblock/deployer": "0.1.13",
     "chalk": "2.4.1",
     "inquirer": "6.2.1",
     "multispinner": "0.2.1",
@@ -83,7 +82,7 @@
     "bignumber.js": "7.2.1",
     "eslint": "5.6.0",
     "fs-extra": "7.0.0",
-    "ganache-cli": "6.1.8",
+    "ganache-cli": "6.4.1",
     "jest": "23.4.1",
     "jest-extended": "0.11.0",
     "solhint": "1.2.1",
