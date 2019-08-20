@@ -10,5 +10,6 @@
     "chalk": "^2.3.2",
     "pino": "^4.15.3",
     "web3": "^1.0.0-beta.33"
-  }
+  },
+  "gitHead": "76ea3bd1d50de299e2fbf216b79d38a8d2f9de85"
 }
