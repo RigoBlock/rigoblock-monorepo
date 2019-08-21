@@ -26,16 +26,41 @@ interface ProofOfPerformanceFace {
     /*
      * CORE FUNCTIONS
      */
+    /// @dev Allows anyone to allocate the pop reward to pool wizards.
+    /// @param _ofPool Number of pool id in registry.
     function claimPop(uint256 _ofPool) external;
+    
+    /// @dev Allows RigoBlock Dao to update the pools registry.
+    /// @param _dragoRegistry Address of new registry.
     function setRegistry(address _dragoRegistry) external;
+    
+    /// @dev Allows RigoBlock Dao to update its address.
+    /// @param _rigoblockDao Address of new dao.
     function setRigoblockDao(address _rigoblockDao) external;
+    
+    /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
+    /// @param _ofGroup Id of the pool.
+    /// @param _ratio Id of the pool.
+    /// @notice onlyRigoblockDao can set ratio.
     function setRatio(address _ofGroup, uint256 _ratio) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
+    /// @dev Gets data of a pool.
+    /// @param _ofPool Id of the pool.
+    /// @return Bool the pool is active.
+    /// @return address of the pool.
+    /// @return address of the pool factory.
+    /// @return price of the pool in wei.
+    /// @return total supply of the pool in units.
+    /// @return total value of the pool in wei.
+    /// @return value of the reward factor or said pool.
+    /// @return ratio of assets/performance reward (from 0 to 10000).
+    /// @return value of the pop reward to be claimed in GRGs.
     function getPoolData(uint256 _ofPool)
-        external view
+        external
+        view
         returns (
             bool active,
             address thePoolAddress,
@@ -48,5 +73,81 @@ interface ProofOfPerformanceFace {
             uint256 pop
         );
 
+    /// @dev Returns the highwatermark of a pool.
+    /// @param _ofPool Id of the pool.
+    /// @return Value of the all-time-high pool nav.
     function getHwm(uint256 _ofPool) external view returns (uint256);
+
+    /// @dev Returns the reward factor for a pool.
+    /// @param _ofPool Id of the pool.
+    /// @return Value of the reward factor.
+    function getEpochReward(uint256 _ofPool)
+        external
+        view
+        returns (uint256);
+
+    /// @dev Returns the split ratio of asset and performance reward.
+    /// @param _ofPool Id of the pool.
+    /// @return Value of the ratio from 1 to 100.
+    function getRatio(uint256 _ofPool)
+        external
+        view
+        returns (uint256);
+
+    /// @dev Returns the proof of performance reward for a pool.
+    /// @param _ofPool Id of the pool.
+    /// @return popReward Value of the pop reward in Rigo tokens.
+    /// @return performanceReward Split of the performance reward in Rigo tokens.
+    /// @notice epoch reward should be big enough that it.
+    /// @notice can be decreased if number of funds increases.
+    /// @notice should be at least 10^6 (just as pool base) to start with.
+    /// @notice rigo token has 10^18 decimals.
+    function proofOfPerformance(uint256 _ofPool)
+        external
+        view
+        returns (uint256 popReward, uint256 performanceReward);
+
+    /// @dev Checks whether a pool is registered and active.
+    /// @param _ofPool Id of the pool.
+    /// @return Bool the pool is active.
+    function isActive(uint256 _ofPool)
+        external
+        view
+        returns (bool);
+
+    /// @dev Returns the address and the group of a pool from its id.
+    /// @param _ofPool Id of the pool.
+    /// @return Address of the target pool.
+    /// @return Address of the pool's group.
+    function addressFromId(uint256 _ofPool)
+        external
+        view
+        returns (
+            address pool,
+            address group
+        );
+
+    /// @dev Returns the price a pool from its id.
+    /// @param _ofPool Id of the pool.
+    /// @return Price of the pool in wei.
+    /// @return Number of tokens of a pool (totalSupply).
+    function getPoolPrice(uint256 _ofPool)
+        external
+        view
+        returns (
+            uint256 thePoolPrice,
+            uint256 totalTokens
+        );
+
+    /// @dev Returns the address and the group of a pool from its id.
+    /// @param _ofPool Id of the pool.
+    /// @return Address of the target pool.
+    /// @return Address of the pool's group.
+    function calcPoolValue(uint256 _ofPool)
+        external
+        view
+        returns (
+            uint256 aum,
+            bool success
+        );
 }

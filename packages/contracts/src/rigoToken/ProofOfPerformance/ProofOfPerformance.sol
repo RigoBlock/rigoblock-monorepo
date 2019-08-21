@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.5.2;
+pragma solidity 0.5.4;
 
 import { Pool } from "../../utils/Pool/Pool.sol";
 import { InflationFace as Inflation } from "../Inflation/InflationFace.sol";
@@ -122,7 +122,7 @@ contract ProofOfPerformance is
         DragoRegistry registry = DragoRegistry(dragoRegistry);
         address poolAddress;
         (poolAddress, , , , , ) = registry.fromId(_ofPool);
-        uint256 pop = proofOfPerformanceInternal(_ofPool);
+        (uint256 pop, ) = proofOfPerformanceInternal(_ofPool);
         require(
             pop > 0,
             "POP_REWARD_IS_NULL"
@@ -205,7 +205,7 @@ contract ProofOfPerformance is
         (poolValue, ) = calcPoolValueInternal(_ofPool);
         epochReward = getEpochRewardInternal(_ofPool);
         ratio = getRatioInternal(_ofPool);
-        pop = proofOfPerformanceInternal(_ofPool);
+        (pop, ) = proofOfPerformanceInternal(_ofPool);
         return(
             active,
             thePoolAddress,
@@ -254,7 +254,8 @@ contract ProofOfPerformance is
 
     /// @dev Returns the proof of performance reward for a pool.
     /// @param _ofPool Id of the pool.
-    /// @return Value of the reward in Rigo tokens.
+    /// @return popReward Value of the pop reward in Rigo tokens.
+    /// @return performanceReward Split of the performance reward in Rigo tokens.
     /// @notice epoch reward should be big enough that it.
     /// @notice can be decreased if number of funds increases.
     /// @notice should be at least 10^6 (just as pool base) to start with.
@@ -262,7 +263,7 @@ contract ProofOfPerformance is
     function proofOfPerformance(uint256 _ofPool)
         external
         view
-        returns (uint256)
+        returns (uint256 popReward, uint256 performanceReward)
     {
         return proofOfPerformanceInternal(_ofPool);
     }
@@ -363,7 +364,8 @@ contract ProofOfPerformance is
 
     /// @dev Returns the proof of performance reward for a pool.
     /// @param _ofPool Id of the pool.
-    /// @return Value of the reward in Rigo tokens.
+    /// @return popReward Value of the pop reward in Rigo tokens.
+    /// @return performanceReward Split of the performance reward in Rigo tokens.
     /// @notice epoch reward should be big enough that it.
     /// @notice can be decreased if number of funds increases.
     /// @notice should be at least 10^6 (just as pool base) to start with.
@@ -371,56 +373,47 @@ contract ProofOfPerformance is
     function proofOfPerformanceInternal(uint256 _ofPool)
         internal
         view
-        returns (uint256)
+        returns (uint256 popReward, uint256 performanceReward)
     {
-        uint256 highwatermark = 1000 ether; //initialize variable with arbitrarily high value
+        uint256 highwatermark;
+
         if (poolPrice[_ofPool].highwatermark == 0) {
             highwatermark = 1 ether;
+
         } else {
             highwatermark = poolPrice[_ofPool].highwatermark;
         }
-        (uint256 poolValue, ) = calcPoolValueInternal(_ofPool);
-        require(
-            poolValue != 0,
-            "POOL_VALUE_NULL"
-        );
+
+        
         (uint256 newPrice, uint256 tokenSupply) = getPoolPriceInternal(_ofPool);
         require (
             newPrice >= highwatermark,
             "PRICE_LOWER_THAN_HWM"
         );
-        require (
-            tokenSupply > 0,
-            "TOKEN_SUPPLY_NULL"
-        );
 
-        uint256 epochReward = 0;
         (address thePoolAddress, ) = addressFromIdInternal(_ofPool);
-        uint256 grgBalance =
-            RigoToken(RIGOTOKENADDRESS)
-            .balanceOf(
-                Pool(thePoolAddress)
-                .owner()
+        uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
+        (uint256 poolValue, ) = calcPoolValueInternal(_ofPool);
+        require(
+            poolEthBalance <= poolValue && poolValue * 1 ether / poolEthBalance < 100 ether,
+            "ETH_HIGHER_THAN_AUM_OR_ETH_AUM_RATIO_BELOW_1PERCENT_ERROR"
         );
-        if (grgBalance >= 1 * 10 ** 18) {
-            epochReward = safeMul(getEpochRewardInternal(_ofPool), 10); // 10x reward if wizard holds 1 GRG
-        } else {
-            epochReward = getEpochRewardInternal(_ofPool);
+    
+        uint256 epochReward = getEpochRewardInternal(_ofPool);
+        uint256 rewardRatio = getRatioInternal(_ofPool);
+        uint256 priceDiff = safeSub(newPrice, highwatermark);
+        uint256 performanceComponent = safeMul(safeMul(priceDiff, tokenSupply) / 1000000, epochReward) * 1000000; // rationalization of performance component by pool BASE
+        performanceReward = safeDiv(safeMul(performanceComponent, rewardRatio), 10000 ether); // reward ratio between 1 and 10000 (100000 = 100%)
+        uint256 assetsComponent = safeMul(poolValue, epochReward);
+        uint256 assetsReward = safeMul(assetsComponent, safeSub(10000, rewardRatio)) / 10000 ether;
+        popReward = safeAdd(performanceReward, assetsReward) * poolEthBalance / poolValue; // reward Eth in pool vs pool value
+
+        if (popReward > RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000) {
+            popReward = RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000; // max single reward 0.01% of total supply
+
         }
 
-        uint256 rewardRatio = getRatioInternal(_ofPool);
-        uint256 prevPrice = highwatermark;
-        uint256 priceDiff = safeSub(newPrice, prevPrice);
-        uint256 performanceComponent = safeMul(safeMul(priceDiff, tokenSupply), epochReward);
-        uint256 performanceReward = safeDiv(safeMul(performanceComponent, rewardRatio), 10000 ether);
-        uint256 assetsComponent = safeMul(poolValue, epochReward);
-        uint256 assetsReward = safeDiv(safeMul(assetsComponent, safeSub(10000, rewardRatio)), 10000 ether);
-        uint256 popReward = safeAdd(performanceReward, assetsReward);
-        if (popReward >= safeDiv(RigoToken(RIGOTOKENADDRESS).totalSupply(), 10000)) {
-            return (safeDiv(RigoToken(RIGOTOKENADDRESS).totalSupply(), 10000));
-        } else {
-            return (popReward);
-        }
+        return (popReward, performanceReward);
     }
 
     /// @dev Checks whether a pool is registered and active.
@@ -485,6 +478,11 @@ contract ProofOfPerformance is
         )
     {
         (uint256 price, uint256 supply) = getPoolPriceInternal(_ofPool);
-        return ((aum = (price * supply / 1000000)), true); //1000000 is the base (decimals)
+        aum = (price * supply / 1000000); //1000000 is the pool BASE (decimals)
+        require(
+            aum != 0 && supply!=0,
+            "POOL_VALUE_NULL"
+        );
+        return (aum, true);
     }
 }
