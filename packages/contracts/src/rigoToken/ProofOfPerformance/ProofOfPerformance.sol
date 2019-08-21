@@ -395,15 +395,15 @@ contract ProofOfPerformance is
         uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
         (uint256 poolValue, ) = calcPoolValueInternal(_ofPool);
         require(
-            poolEthBalance <= poolValue,
-            "ETH_HIGHER_THAN_AUM_ERROR"
+            poolEthBalance <= poolValue && poolValue * 1 ether / poolEthBalance < 100 ether,
+            "ETH_HIGHER_THAN_AUM_OR_ETH_AUM_RATIO_BELOW_1PERCENT_ERROR"
         );
     
         uint256 epochReward = getEpochRewardInternal(_ofPool);
         uint256 rewardRatio = getRatioInternal(_ofPool);
         uint256 priceDiff = safeSub(newPrice, highwatermark);
-        uint256 performanceComponent = safeMul(safeMul(priceDiff, tokenSupply) / 1000000, epochReward) * 1000000; // rationalization of performance component
-        performanceReward = safeDiv(safeMul(performanceComponent, rewardRatio), 10000 ether);
+        uint256 performanceComponent = safeMul(safeMul(priceDiff, tokenSupply) / 1000000, epochReward) * 1000000; // rationalization of performance component by pool BASE
+        performanceReward = safeDiv(safeMul(performanceComponent, rewardRatio), 10000 ether); // reward ratio between 1 and 10000 (100000 = 100%)
         uint256 assetsComponent = safeMul(poolValue, epochReward);
         uint256 assetsReward = safeMul(assetsComponent, safeSub(10000, rewardRatio)) / 10000 ether;
         popReward = safeAdd(performanceReward, assetsReward) * poolEthBalance / poolValue; // reward Eth in pool vs pool value
@@ -411,9 +411,8 @@ contract ProofOfPerformance is
         if (popReward > RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000) {
             popReward = RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000; // max single reward 0.01% of total supply
 
-        } else {
-            popReward = popReward;
         }
+
         return (popReward, performanceReward);
     }
 
@@ -479,7 +478,7 @@ contract ProofOfPerformance is
         )
     {
         (uint256 price, uint256 supply) = getPoolPriceInternal(_ofPool);
-        aum = (price * supply / 1000000); //1000000 is the base (decimals)
+        aum = (price * supply / 1000000); //1000000 is the pool BASE (decimals)
         require(
             aum != 0 && supply!=0,
             "POOL_VALUE_NULL"
