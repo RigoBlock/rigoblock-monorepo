@@ -415,7 +415,7 @@ contract ProofOfPerformance is
 
         (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = getInflationParameters(_ofPool);
 
-        uint256 assetsComponent = safeMul(poolValue, epochReward) * 1 days / epochTime; // inversly proportional to epoch time
+        uint256 assetsComponent = safeMul(poolValue, epochReward) * epochTime / 1 days; // proportional to epoch time
 
         uint256 performanceComponent = safeMul(
             safeMul(
