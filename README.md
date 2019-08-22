@@ -24,6 +24,7 @@
 Ubuntu pre-requisites:
 
     apt-get install build-essential libusb libudev-dev
+    apt-get install build-essential libusb-1.0-0-dev libudev-dev
 
 Install nvm and use the correct node version
 

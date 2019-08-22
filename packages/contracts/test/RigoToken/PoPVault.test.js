@@ -157,7 +157,6 @@ describeContract(contractName, () => {
       expect(value).toEqual(toBigNumber(vaultSupply))
       expect(price.toNumber()).toEqual(vaultPrice)
       expect(epochReward).toEqual(toBigNumber(inflationFactor))
-      // what should this be equal to?
       expect(pop)
     })
   })
