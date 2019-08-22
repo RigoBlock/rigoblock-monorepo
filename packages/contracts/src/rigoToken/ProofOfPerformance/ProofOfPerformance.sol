@@ -149,8 +149,7 @@ contract ProofOfPerformance is
             pop > 0,
             "POP_REWARD_IS_NULL"
         );
-        Pool pool = Pool(poolAddress);
-        uint256 price = pool.calcSharePrice();
+        uint256 price = Pool(poolAddress).calcSharePrice();
         poolPrice[_ofPool].highwatermark = price;
         require(
             Inflation(getMinter()).mintInflation(poolAddress, pop),
@@ -384,8 +383,7 @@ contract ProofOfPerformance is
     /// @param _ofPool Id of the pool.
     /// @return popReward Value of the pop reward in Rigo tokens.
     /// @return performanceReward Split of the performance reward in Rigo tokens.
-    /// @notice epoch reward should be big enough that it.
-    /// @notice can be decreased if number of funds increases.
+    /// @notice epoch reward should be big enough that it  can be decreased when number of funds increases
     /// @notice should be at least 10^6 (just as pool base) to start with.
     function proofOfPerformanceInternal(uint256 _ofPool)
         internal
