@@ -6,7 +6,9 @@ import web3 from '../web3'
 const contractName = 'ProofOfPerformance'
 
 describeContract(contractName, () => {
-  const groupRatio = 5 // between 1 and 10000
+  // note on factors, with > 20 inflation factor, < 9530 gourpRatio, otherwise fail
+  // TODO: check whether require minimum inflation Factor > k or use bigger multiplers in pop
+  const groupRatio = 5000 // between 1 and 10000 (stay below 9530)
   const minimumRigo = 50
   const dragoPrice = 1e18
   const inflationFactor = 20
@@ -168,8 +170,8 @@ describeContract(contractName, () => {
       })
     })
     it("returns the value of pop and performance rewards price over HWM", async () => {
-      const sellPrice = web3.utils.toWei('1.1')
-      const buyPrice = web3.utils.toWei('1.2')
+      const sellPrice = web3.utils.toWei('1.15')
+      const buyPrice = web3.utils.toWei('1.16')
       const block = 1
       const hash = web3.utils.fromAscii('random')
       const data = web3.utils.fromAscii('random')
@@ -183,8 +185,6 @@ describeContract(contractName, () => {
       })
       const popData = await baseContracts[contractName].proofOfPerformance(dragoId)
       const [pop, perfRew] = popData
-      //console.log(pop.toString())
-      //console.log(perfRew.toString())
       const grgTotalSupply = await baseContracts['RigoToken'].totalSupply()
       const maxPop = grgTotalSupply / 10000 // max 0.01% of total supply
       expect(Number(pop)).toBeGreaterThan(Number(perfRew) || Number(pop).toEqual(Number(maxPop)))

@@ -415,7 +415,10 @@ contract ProofOfPerformance is
 
         (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = getInflationParameters(_ofPool);
 
-        uint256 assetsComponent = safeMul(poolValue, epochReward) * epochTime / 1 days; // proportional to epoch time
+        uint256 assetsComponent = safeMul(
+            poolValue,
+            epochReward
+        ) * epochTime / 1 days; // proportional to epoch time
 
         uint256 performanceComponent = safeMul(
             safeMul(
@@ -423,7 +426,7 @@ contract ProofOfPerformance is
                 tokenSupply
             ) / 1000000, // Pool(thePoolAddress).BASE(),
             epochReward
-        ) * 1000000; // rationalization of performance component by pool BASE
+        ) * 365 days / 1 days;
 
         uint256 assetsReward = safeMul(
             assetsComponent,
