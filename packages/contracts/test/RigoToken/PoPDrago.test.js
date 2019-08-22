@@ -219,7 +219,6 @@ describeContract(contractName, () => {
       expect(value).toEqual(toBigNumber(dragoSupply))
       expect(price.toNumber()).toEqual(dragoPrice)
       expect(epochReward).toEqual(toBigNumber(inflationFactor))
-      // what should this be equal to?
       expect(pop)
     })
   })

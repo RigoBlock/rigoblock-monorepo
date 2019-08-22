@@ -37,7 +37,7 @@ describeContract(contractName, () => {
     }
     selfCustodyProxyAddress = '0x0000000000000000000000000000000000000000'
     ethAddress = '0x0000000000000000000000000000000000000000'
-    selfCustodyAddress = accounts[0]
+    selfCustodyAddress = accounts[2]
     selfCustodyAdapterAddress = await baseContracts['ASelfCustody'].address
     await baseContracts['ExchangesAuthority'].setExchangeAdapter(
       selfCustodyProxyAddress,
@@ -102,11 +102,14 @@ describeContract(contractName, () => {
         methodSignature,
         adapter
       )
+      const preBalance = await web3.eth.getBalance(selfCustodyAddress)
 
-      const txObject = await dragoInstance.methods
+      await dragoInstance.methods
         .operateOnExchange(selfCustodyProxyAddress, [assembledTransaction])
         .send({ ...transactionDefault })
-      expect(txObject.transactionHash).toBeHash()
+      const postBalance = await web3.eth.getBalance(selfCustodyAddress)
+      const targetBalance = postBalance - preBalance
+      expect(targetBalance.toString()).toEqual(toBeTransferred.toString())
     })
     it('succeeds but does not send ETH if operator not holding 1st threshold GRG', async () => {
       // adds additional ether to the pool to be able to transfer
@@ -164,10 +167,13 @@ describeContract(contractName, () => {
         adapter
       )
 
-      const txObject = await dragoInstance.methods
+      const preBalance = await web3.eth.getBalance(selfCustodyAddress)
+
+      await dragoInstance.methods
         .operateOnExchange(selfCustodyProxyAddress, [assembledTransaction])
         .send({ ...transactionDefault })
-      expect(txObject.transactionHash).toBeHash()
+      const postBalance = await web3.eth.getBalance(selfCustodyAddress)
+      expect(postBalance.toString()).toEqual(preBalance.toString())
 
 /*
       // transaction does not fail if insufficient amount, returns shortfall
@@ -234,10 +240,13 @@ describeContract(contractName, () => {
         adapter
       )
 
-      const txObject = await dragoInstance.methods
+      const preBalance = await web3.eth.getBalance(selfCustodyAddress)
+
+      await dragoInstance.methods
         .operateOnExchange(selfCustodyProxyAddress, [assembledTransaction])
         .send({ ...transactionDefault })
-      expect(txObject.transactionHash).toBeHash()
+      const postBalance = await web3.eth.getBalance(selfCustodyAddress)
+      expect(postBalance.toString()).toEqual(preBalance.toString())
     })
     it.skip('sends a token to self custody', async () => {
       erc20Address = await baseContracts[
