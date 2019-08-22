@@ -20,6 +20,7 @@ pragma solidity 0.4.25;
 pragma experimental "v0.5.0";
 
 import { LibBytes } from "../../../utils/LibBytes/LibBytes.sol";
+import { ERC20Face as RigoToken } from "../../../tokens/ERC20/ERC20.sol";
 import { Drago } from "../../Drago/Drago.sol";
 import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/ExchangesAuthority/ExchangesAuthorityFace.sol";
 
@@ -30,13 +31,13 @@ contract SigVerifier {
 
     using LibBytes for bytes;
 
-    address public exchangesAuthorityAddress;
+    address public GRGTokenAddress;
 
     constructor(
-        address _exchangesAuthorityAddress)
+        address _GRGTokenAddress)
         public
     {
-        exchangesAuthorityAddress = _exchangesAuthorityAddress;
+        GRGTokenAddress = _GRGTokenAddress;
     }
 
     /// @dev Verifies that a signature is valid.
@@ -54,28 +55,48 @@ contract SigVerifier {
         view
         returns (bool isValid)
     {
-        require(
-            ExchangesAuthority(
-                /*Drago(
-                    address(msg.sender)
-                )
-                .getExchangesAuth()*/
-                exchangesAuthorityAddress
-            )
-            .getExchangeAdapter(address(tx.origin)) != address(0), // check for attack vectors
-            "ORIGIN_NOT_WHITELISTED"
-        );
-
-
         address recoveredEIP712 = returnRecoveredEIP712Internal(hash, signature);
         address recoveredETHSIGN = returnRecoveredETHSIGNInternal(hash, signature);
 
         if (recoveredEIP712 != address(0)) {
-            isValid = recoveredEIP712 == Drago(address(msg.sender)).owner();
-            return isValid;
+            require(
+                isValid = recoveredEIP712 == Drago(address(msg.sender)).owner(),
+                "EIP712_SIGNER_INVALID"
+            );
+
+            // if operator holds at least 100 GRG, valid, otherwise require whitelisted signer
+            if (RigoToken(GRGTokenAddress).balanceOf(Drago(address(msg.sender)).owner()) >= 100 * 10 ** 18) {
+                isValid = true;
+
+            } else {
+                require(
+                    ExchangesAuthority(
+                        Drago(address(msg.sender)).getExchangesAuth()
+                    )
+                    .getExchangeAdapter(address(tx.origin)) != address(0),
+                    "VALID_EIP712_BUT_ORIGIN_NOT_WHITELISTED"
+                );
+            }
+
         } else if (recoveredETHSIGN != address(0)) {
-            isValid = recoveredETHSIGN == Drago(address(msg.sender)).owner();
-            return isValid;
+            require(
+                isValid = recoveredETHSIGN == Drago(address(msg.sender)).owner(),
+                "EIP712_SIGNER_INVALID"
+            );
+
+            // if operator holds at least 100 GRG, valid, otherwise require whitelisted signer
+            if (RigoToken(GRGTokenAddress).balanceOf(Drago(address(msg.sender)).owner()) >= 100 * 10 ** 18) {
+                isValid = true;
+
+            } else {
+                require(
+                    ExchangesAuthority(
+                        Drago(address(msg.sender)).getExchangesAuth()
+                    )
+                    .getExchangeAdapter(address(tx.origin)) != address(0),
+                    "VALID_ETHSIGN_BUT_ORIGIN_NOT_WHITELISTED"
+                );
+            }
         }
 
         revert("SIGNATURE_INVALID2");
