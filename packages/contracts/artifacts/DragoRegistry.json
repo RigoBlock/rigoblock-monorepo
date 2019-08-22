@@ -2459,8 +2459,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/LibSanitize/LibSanitize.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
             ],
-            "address": "0x343e77469aa4394399ca5bfe518bf0cc7deb63f3",
-            "constructor_args": "0x000000000000000000000000551a984819b088048937f602a4d7147362bb2306"
+            "address": "0xf7cbb0849d4a8ec5ab4650030fa776c00eb52da7",
+            "constructor_args": "0x0000000000000000000000007e6957630956f2b5ecc3f16e65a28c26032b1a59"
         }
     }
 }
