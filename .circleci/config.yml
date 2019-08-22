@@ -110,7 +110,6 @@ jobs:
       NODE_ENV: production
     docker:
       - image: *node_image
-    parallelism: 4
     steps:
       - checkout
       - *attach_workspace

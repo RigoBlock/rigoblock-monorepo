@@ -147,7 +147,6 @@ interface ProofOfPerformanceFace {
         external
         view
         returns (
-            uint256 aum,
-            bool success
+            uint256 aum
         );
 }

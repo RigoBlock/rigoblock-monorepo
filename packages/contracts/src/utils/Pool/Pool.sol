@@ -24,6 +24,7 @@ pragma solidity >=0.4.22 <0.6.0;
 contract Pool {
 
     address public owner;
+    uint256 public constant BASE = 1000000;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
