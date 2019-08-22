@@ -421,7 +421,7 @@ contract ProofOfPerformance is
             safeMul(
                 (newPrice - highwatermark),
                 tokenSupply
-            ) / Pool(thePoolAddress).BASE(),
+            ) / 1000000, // Pool(thePoolAddress).BASE(),
             epochReward
         ) * 1000000; // rationalization of performance component by pool BASE
 
@@ -496,7 +496,6 @@ contract ProofOfPerformance is
             thePoolPrice != 0 && totalTokens !=0,
             "POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR"
         );
-        uint256 poolBASE = pool.BASE();
-        aum = thePoolPrice * totalTokens / poolBASE;
+        aum = thePoolPrice * totalTokens / 1000000; // pool.BASE();
     }
 }
