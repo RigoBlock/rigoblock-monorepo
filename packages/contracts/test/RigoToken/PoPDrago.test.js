@@ -183,10 +183,11 @@ describeContract(contractName, () => {
       })
       const popData = await baseContracts[contractName].proofOfPerformance(dragoId)
       const [pop, perfRew] = popData
-      console.log(pop.toString())
-      console.log(perfRew.toString())
-      // expect pop to be higher than performance component (different only in the case pop > 0.01% of total suppy)
-      // set prices to original state to prevent conflict with other tests
+      //console.log(pop.toString())
+      //console.log(perfRew.toString())
+      const grgTotalSupply = await baseContracts['RigoToken'].totalSupply()
+      const maxPop = grgTotalSupply / 10000 // max 0.01% of total supply
+      expect(Number(pop)).toBeGreaterThan(Number(perfRew) || Number(pop).toEqual(Number(maxPop)))
       const initialSellPrice = web3.utils.toWei('1')
       const initialBuyPrice = web3.utils.toWei('1')
       await dragoInstance.methods.setPrices(initialSellPrice, initialBuyPrice, block, hash, data).send({

@@ -428,14 +428,14 @@ contract ProofOfPerformance is
         uint256 assetsReward = safeMul(
             assetsComponent,
             safeSub(10000, rewardRatio) // 100000 = 100%
-        ) / 10000 ether;
+        ) / 10000 ether * address(Pool(thePoolAddress)).balance / poolValue; // reward inversly proportional to Eth in pool
 
         performanceReward = safeDiv(
             safeMul(performanceComponent, rewardRatio),
-            10000 ether
+            10000 ether * address(Pool(thePoolAddress)).balance / poolValue
         );
 
-        popReward = safeAdd(performanceReward, assetsReward) * address(Pool(thePoolAddress)).balance / poolValue; // reward inversly proportional to Eth in pool
+        popReward = safeAdd(performanceReward, assetsReward);
 
         if (popReward > RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000) {
             popReward = RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000; // max single reward 0.01% of total supply
