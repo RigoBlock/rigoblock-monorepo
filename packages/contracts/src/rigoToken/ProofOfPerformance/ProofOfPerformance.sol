@@ -434,7 +434,7 @@ contract ProofOfPerformance is
         performanceReward = safeDiv(
             safeMul(performanceComponent, rewardRatio),
             10000 ether * address(Pool(thePoolAddress)).balance / poolValue
-        );
+        ) * 10; // rationalization by 2-20 rule
 
         popReward = safeAdd(performanceReward, assetsReward);
 
