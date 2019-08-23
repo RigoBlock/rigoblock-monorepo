@@ -1,7 +1,7 @@
 {
   "name": "rigoblock-monorepo",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "npm run build:deployer && npm run build:contracts && npm run build:api && npm run build:exchange-connector && npm run build:stats && npm run build:data-collector && npm run build:dapp",

@@ -2,7 +2,7 @@
   "name": "@rigoblock/data-collector",
   "version": "0.0.7",
   "description": "Rigoblock data collector",
-  "private": true,
+  "private": false,
   "main": "src/index.js",
   "scripts": {
     "start": "node dist/index.js",

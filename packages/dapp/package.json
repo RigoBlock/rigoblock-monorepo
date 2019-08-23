@@ -1,7 +1,7 @@
 {
   "name": "@rigoblock/dapp",
   "version": "0.1.21",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "serve -s dist -p 8080",
     "ganache": "npx ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
