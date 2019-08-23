@@ -1,8 +1,8 @@
 {
   "name": "@rigoblock/stats",
-  "version": "0.1.12",
+  "version": "0.1.14",
   "description": "Rigoblock stats collector",
-  "private": true,
+  "private": false,
   "main": "src/index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -14,9 +14,9 @@
     "postinstall": "rm -f node_modules/web3/index.d.ts"
   },
   "dependencies": {
-    "@rigoblock/api": "^0.2.16",
-    "@rigoblock/contracts": "^0.3.11",
-    "@rigoblock/exchange-connector": "^0.0.13",
+    "@rigoblock/api": "^0.2.18",
+    "@rigoblock/contracts": "^0.3.13",
+    "@rigoblock/exchange-connector": "^0.0.15",
     "bull": "^3.4.7",
     "node-statsd": "^0.1.1",
     "pino": "^5.1.1"
@@ -70,5 +70,6 @@
       "json",
       "node"
     ]
-  }
+  },
+  "gitHead": "32b2d31c4a92481c6a97eefefe660f06d2de232c"
 }
