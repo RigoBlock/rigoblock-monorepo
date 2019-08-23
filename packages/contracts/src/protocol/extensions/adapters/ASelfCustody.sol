@@ -18,7 +18,8 @@
 
 pragma solidity 0.4.25;
 
-import { SafeMath } from '../../../utils/SafeMath/SafeMath.sol';
+import { SafeMath } from "../../../utils/SafeMath/SafeMath.sol";
+import { ReentrancyGuard } from "../../../utils/ReentrancyGuard/ReentrancyGuard.sol";
 
 interface Token {
 
@@ -38,18 +39,18 @@ interface ExchangesAuthority {
 }
 
 contract Drago {
-    
+
     address public owner;
 
     function getExchangesAuth() external view returns (address);
-    
+
     function getEventful() external view returns (address);
 }
 
 /// @title Self Custody adapter - A helper contract for self custody.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
-contract ASelfCustody is SafeMath {
+contract ASelfCustody is SafeMath, ReentrancyGuard {
 
     /// @dev transfers ETH or tokens to self custody.
     /// @param selfCustodyAccount Address of the target account.
@@ -63,6 +64,7 @@ contract ASelfCustody is SafeMath {
         address token,
         uint256 amount)
         external
+        nonReentrant
         returns (bool, uint256)
     {
         require(
@@ -129,7 +131,7 @@ contract ASelfCustody is SafeMath {
         uint256 rational_base = 36;
         uint256 rationalized_amount_base36 = safeMul(amount, 10 ** (rational_base - ether_base));
         uint256 operator_rationalized_GRG_balance_base36 = Token(grgToken).balanceOf(msg.sender) * (10 ** (rational_base - ether_base));
-        
+
         if (token != address(0)) {
             satisfied = true;
             shortfall = uint256(0);
@@ -288,7 +290,7 @@ contract ASelfCustody is SafeMath {
         view
         returns (address)
     {
-        address dragoEvenfulAddress = 
+        address dragoEvenfulAddress =
             Drago(
                 address(this)
             ).getEventful();
