@@ -1,6 +1,6 @@
 {
   "name": "@rigoblock/stats",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Rigoblock stats collector",
   "private": false,
   "main": "src/index.js",
@@ -14,9 +14,9 @@
     "postinstall": "rm -f node_modules/web3/index.d.ts"
   },
   "dependencies": {
-    "@rigoblock/api": "^0.2.16",
-    "@rigoblock/contracts": "^0.3.11",
-    "@rigoblock/exchange-connector": "^0.0.13",
+    "@rigoblock/api": "^0.2.17",
+    "@rigoblock/contracts": "^0.3.12",
+    "@rigoblock/exchange-connector": "^0.0.14",
     "bull": "^3.4.7",
     "node-statsd": "^0.1.1",
     "pino": "^5.1.1"
