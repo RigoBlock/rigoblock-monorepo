@@ -57,7 +57,7 @@ describeContract(contractName, () => {
       await baseContracts[contractName].setRegistry(fakeRegistry)
       const newRegistry = await baseContracts[contractName].dragoRegistry()
       expect(newRegistry).toEqual(fakeRegistry)
-    }, 9999) // runs slow
+    })
     it('can only be called by the rigoblock DAO', async () => {
       await expect(
         baseContracts[contractName].setRegistry.sendTransactionAsync(
