@@ -116,7 +116,7 @@ jobs:
       - *attach_workspace
       - run:
          name: Test contracts
-         command: npx lerna run --scope @rigoblock/contracts test --stream
+         command: npx lerna run --scope @rigoblock/contracts test:ci --stream
 
   build-api:
     working_directory: *workspace_root
