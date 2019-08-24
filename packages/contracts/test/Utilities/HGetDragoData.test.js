@@ -21,7 +21,7 @@ describeContract(contractName, () => {
       baseContracts['HGetDragoData'].abi,
       baseContracts['HGetDragoData'].address
     )
-    registryAddress = baseContracts['DragoRegistry'].address
+    registryAddress = await baseContracts['DragoRegistry'].address
     for (let i = 0; i < dragoNum; i++) {
       await baseContracts['DragoFactory'].createDrago(`Drago ${i}`, `DR${i}`)
       const dragoData = await baseContracts['DragoRegistry'].fromName(

@@ -20,7 +20,7 @@ describeContract(contractName, () => {
   let transactionDefault
 
   beforeAll(async () => {
-    group = baseContracts['DragoFactory'].address
+    group = await baseContracts['DragoFactory'].address
     // setting inflation factor to later gather the data with getPoolData
     await baseContracts['Inflation'].setInflationFactor(group, inflationFactor)
     // creating drago to test functions

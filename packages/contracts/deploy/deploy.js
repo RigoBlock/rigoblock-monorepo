@@ -3,6 +3,8 @@ const Web3 = require('web3')
 const Deployer = require('@rigoblock/deployer').Deployer
 const { GAS_ESTIMATE } = require('../constants')
 
+require('regenerator-runtime')
+
 const deploy = async (
   from,
   networkUrl,

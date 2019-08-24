@@ -17,7 +17,7 @@ describeContract(contractName, () => {
   let transactionDefault
 
   beforeAll(async () => {
-    group = baseContracts['VaultFactory'].address
+    group = await baseContracts['VaultFactory'].address
     // setting inflation factor to later gather the data with getPoolData
     await baseContracts['Inflation'].setInflationFactor(group, inflationFactor)
     // creating vault to test functions

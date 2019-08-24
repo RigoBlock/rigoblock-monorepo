@@ -9,7 +9,7 @@
     "deploy": "node deploy/cli.js",
     "lint": "eslint test deploy . --ext js --ignore-path .gitignore --fix && npm run lint-contracts",
     "test": "NODE_ENV=test node --max_old_space_size=8192 --trace-warnings node_modules/.bin/jest --env=node --runInBand",
-    "test:ci": "NODE_ENV=test node --max_old_space_size=8192 --trace-warnings node_modules/.bin/jest --env=node --runInBand --maxWorkers=2",
+    "test:ci": "NODE_ENV=test node --max_old_space_size=8192 --trace-warnings node_modules/.bin/jest --env=node --maxWorkers=2",
     "lint-contracts": "solhint src/**/**/**/*.sol"
   },
   "files": [
@@ -22,9 +22,9 @@
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/test/setupTests.js",
+    "setupFilesAfterEnv": ["<rootDir>/test/setupTests.js"],
     "testMatch": [
-      "<rootDir>/test/**/?(*.)(spec|test).{js}"
+      "<rootDir>/test/**/?(*.)+(spec|test).[jt]s?(x)"
     ],
     "testURL": "http://localhost",
     "moduleFileExtensions": [
@@ -61,31 +61,33 @@
     }
   },
   "dependencies": {
-    "@babel/polyfill": "7.0.0-beta.54",
     "@rigoblock/deployer": "^0.1.16",
     "chalk": "2.4.1",
+    "core-js": "3.2.1",
     "inquirer": "6.2.1",
     "multispinner": "0.2.1",
     "path": "0.12.7",
-    "pino": "4.17.3",
+    "pino": "5.13.2",
+    "pino-pretty": "3.2.1",
     "truffle-hdwallet-provider": "0.0.6",
     "web3": "1.0.0-beta.37"
   },
   "devDependencies": {
     "0x.js": "^6.0.3",
-    "@babel/core": "7.2.2",
-    "@babel/plugin-proposal-object-rest-spread": "7.3.1",
+    "@babel/core": "7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "7.5.5",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
-    "@babel/preset-env": "7.3.1",
+    "@babel/preset-env": "7.5.5",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "24.0.0",
+    "babel-jest": "24.9.0",
     "babel-loader": "8.0.5",
     "bignumber.js": "7.2.1",
     "eslint": "5.6.0",
     "fs-extra": "7.0.0",
     "ganache-cli": "6.1.8",
-    "jest": "23.4.1",
-    "jest-extended": "0.11.0",
+    "jest": "24.9.0",
+    "jest-extended": "0.11.2",
+    "regenerator-runtime": "0.13.3",
     "solhint": "1.2.1",
     "webpack": "4.16.3",
     "webpack-cli": "3.1.0"
