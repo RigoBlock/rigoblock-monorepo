@@ -42,7 +42,7 @@ describeContract(contractName, () => {
     }
   })
 
-  describe.skip('HGetDragoData queryMultiDataFromId method', () => {
+  describe('HGetDragoData queryMultiDataFromId method', () => {
     it(
       'Correctly returns an array from Ids',
       async () => {
