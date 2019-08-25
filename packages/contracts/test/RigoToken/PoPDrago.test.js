@@ -3,6 +3,8 @@ import { fromMicro, fromWei, toBigNumber } from '../utils'
 import dragoArtifact from '../../artifacts/Drago.json'
 import web3 from '../web3'
 
+jest.setTimeout(10000);
+
 const contractName = 'ProofOfPerformance'
 
 describeContract(contractName, () => {
@@ -43,7 +45,7 @@ describeContract(contractName, () => {
       ...transactionDefault,
       value: dragoSupply
     })
-  }, 9999) // runs slow
+  })
 
   describe('setRegistry', () => {
     afterAll(async () => {

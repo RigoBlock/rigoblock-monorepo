@@ -2,12 +2,13 @@ import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import dragoArtifact from '../../artifacts/Drago.json'
 import web3 from '../web3'
 
+jest.setTimeout(30000);
+
 const contractName = 'HGetDragoData'
 let dragoNum
 let hGetDragoDataInstance
 let registryAddress
 let dragos = []
-const timeout = 19999
 
 describeContract(contractName, () => {
   beforeAll(async () => {
@@ -39,7 +40,7 @@ describeContract(contractName, () => {
         value: purchaseAmount
       })
     }
-  }, timeout)
+  })
 
   describe('HGetDragoData queryMultiDataFromId method', () => {
     it(
@@ -50,9 +51,7 @@ describeContract(contractName, () => {
           .queryMultiDataFromId(registryAddress, dragoIds)
           .call()
         expect(dragoArray).toBeArrayOfSize(dragoNum)
-      },
-      timeout
-    )
+      })
     it(
       'Correctly return drago details from Ids',
       async () => {
@@ -89,9 +88,7 @@ describeContract(contractName, () => {
           expect(symbol.toLowerCase()).toBe(dragoEntry[2].toLowerCase())
           i++
         })
-      },
-      timeout
-    )
+      })
   })
 
   describe('HGetDragoData queryMultiDataFromAddress method', () => {
@@ -103,9 +100,7 @@ describeContract(contractName, () => {
           .queryMultiDataFromAddress(registryAddress, dragoAddresses)
           .call()
         expect(dragoArray).toBeArrayOfSize(dragoNum)
-      },
-      timeout
-    )
+      })
     it(
       'Correctly return drago details from addresses',
       async () => {
@@ -142,9 +137,7 @@ describeContract(contractName, () => {
           expect(symbol.toLowerCase()).toBe(dragoEntry[2].toLowerCase())
           i++
         })
-      },
-      timeout
-    )
+      })
   })
 
   describe('HGetDragoData queryDataFromId method', () => {
@@ -181,9 +174,7 @@ describeContract(contractName, () => {
         expect(id).toBe(dragoTest[0].toString())
         expect(drago.toLowerCase()).toBe(dragoTest[1].toLowerCase())
         expect(symbol.toLowerCase()).toBe(dragoTest[2].toLowerCase())
-      },
-      timeout
-    )
+      })
   })
 
   describe('HGetDragoData queryDataFromAddress method', () => {
@@ -220,8 +211,6 @@ describeContract(contractName, () => {
         expect(id).toBe(dragoTest[0].toString())
         expect(drago.toLowerCase()).toBe(dragoTest[1].toLowerCase())
         expect(symbol.toLowerCase()).toBe(dragoTest[2].toLowerCase())
-      },
-      timeout
-    )
+      })
   })
 })

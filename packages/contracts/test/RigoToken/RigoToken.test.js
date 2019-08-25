@@ -1,6 +1,8 @@
 import { GAS_ESTIMATE } from '../../constants'
 import { toBigNumber } from '../utils'
 
+jest.setTimeout(10000);
+
 const contractName = 'RigoToken'
 
 describeContract(contractName, () => {
@@ -61,7 +63,7 @@ describeContract(contractName, () => {
 
   describe('changeMintingAddress', () => {
     it('sets a new minter given a valid account address', async () => {
-      const inflation = baseContracts['Inflation'].address
+      const inflation = await baseContracts['Inflation'].address
       const txHash = await baseContracts[contractName].changeMintingAddress(
         inflation
       )

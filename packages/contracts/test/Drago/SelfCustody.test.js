@@ -5,6 +5,8 @@ import er20Artifact from '../../artifacts/ERC20.json'
 import moment from 'moment'
 import web3 from '../web3'
 
+jest.setTimeout(30000);
+
 const contractName = 'Drago'
 
 describeContract(contractName, () => {
@@ -21,11 +23,9 @@ describeContract(contractName, () => {
 
   beforeAll(async () => {
     await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
-    const dragoData = await baseContracts['DragoRegistry'].fromName(
+    const [, dragoAddress] = await baseContracts['DragoRegistry'].fromName(
       'my new drago'
     )
-    const [, address] = dragoData
-    dragoAddress = address
     dragoInstance = new web3.eth.Contract(
       dragoArtifact.networks[GANACHE_NETWORK_ID].abi,
       dragoAddress
@@ -50,7 +50,7 @@ describeContract(contractName, () => {
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
     grgTokenAddress = await baseContracts['RigoToken'].address
     await baseContracts['ExchangesAuthority'].setCasper(grgTokenAddress) // temporary patch, GRG = Casper
-  }, 19999) // timeout
+  })
 
   describe('operateOnExchange', () => {
     it('runs slow - sends ETH to a self custody wallet when operator holds enough GRG', async () => {
@@ -110,7 +110,7 @@ describeContract(contractName, () => {
       const postBalance = await web3.eth.getBalance(selfCustodyAddress)
       const targetBalance = postBalance - preBalance
       expect(targetBalance.toString()).toEqual(toBeTransferred.toString())
-    }, 19999) // runs slow
+    })
     it('runs slow - succeeds but does not send ETH if operator not holding 1st threshold GRG', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
@@ -174,7 +174,7 @@ describeContract(contractName, () => {
         .send({ ...transactionDefault })
       const postBalance = await web3.eth.getBalance(selfCustodyAddress)
       expect(postBalance.toString()).toEqual(preBalance.toString())
-    }, 19999) // runs slow
+    })
     it('runs slow - succeeds bot does not send ETH if operator holding < 1st threshold GRG', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
@@ -237,7 +237,7 @@ describeContract(contractName, () => {
         .send({ ...transactionDefault })
       const postBalance = await web3.eth.getBalance(selfCustodyAddress)
       expect(postBalance.toString()).toEqual(preBalance.toString())
-    }, 19999) // runs slow
+    })
     it.skip('sends a token to self custody', async () => {
       erc20Address = await baseContracts[
         'RigoToken'
