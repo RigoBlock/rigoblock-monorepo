@@ -9,7 +9,7 @@
     "deploy": "node deploy/cli.js",
     "lint": "eslint test deploy . --ext js --ignore-path .gitignore --fix && npm run lint-contracts",
     "test": "NODE_ENV=test node --max_old_space_size=8192 --trace-warnings node_modules/.bin/jest --env=node --runInBand",
-    "test:ci": "NODE_ENV=test node --max_old_space_size=8192 --trace-warnings node_modules/.bin/jest --env=node --maxWorkers=2",
+    "test:ci": "NODE_ENV=test node --max_old_space_size=8192 --trace-warnings node_modules/.bin/jest --env=node --runInBand",
     "lint-contracts": "solhint src/**/**/**/*.sol"
   },
   "files": [
