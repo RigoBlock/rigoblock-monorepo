@@ -61,7 +61,7 @@ describeContract(contractName, () => {
 
   describe('changeMintingAddress', () => {
     it('sets a new minter given a valid account address', async () => {
-      const inflation = baseContracts['Inflation'].address
+      const inflation = await baseContracts['Inflation'].address
       const txHash = await baseContracts[contractName].changeMintingAddress(
         inflation
       )
