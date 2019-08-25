@@ -5,7 +5,7 @@ import web3 from '../web3'
 
 const contractName = 'Inflation'
 
-describeContract(contractName, async () => {
+describeContract(contractName, () => {
   let vaultId
   let vaultAddress
   let value
@@ -17,7 +17,7 @@ describeContract(contractName, async () => {
   const reward = 20
 
   beforeAll(async () => {
-    group = baseContracts['VaultFactory'].address
+    group = await baseContracts['VaultFactory'].address
     await baseContracts['VaultFactory'].createVault('testvault', 'VLT')
     const vaultData = await baseContracts['DragoRegistry'].fromName('testvault')
     const [id, address] = vaultData

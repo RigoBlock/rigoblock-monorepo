@@ -10,8 +10,8 @@ describeContract(contractName, () => {
   let inflationAddress
   let transactionDefault
 
-  beforeAll(() => {
-    inflationAddress = baseContracts['Inflation'].address
+  beforeAll(async () => {
+    inflationAddress = await baseContracts['Inflation'].address
     transactionDefault = {
       from: accounts[1],
       gas: GAS_ESTIMATE,
@@ -33,7 +33,7 @@ describeContract(contractName, () => {
         tokenAmount
       )
       expect(txHash).toBeHash()
-      const mintEvent = baseContracts[contractName].TokenMinted()
+      const mintEvent = await baseContracts[contractName].TokenMinted()
       const eventsPromise = new Promise((resolve, reject) => {
         mintEvent.get(
           (err, data) => (err ? reject(new Error(err)) : resolve(data))

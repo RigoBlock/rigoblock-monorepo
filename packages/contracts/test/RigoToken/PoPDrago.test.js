@@ -20,7 +20,7 @@ describeContract(contractName, () => {
   let transactionDefault
 
   beforeAll(async () => {
-    group = baseContracts['DragoFactory'].address
+    group = await baseContracts['DragoFactory'].address
     // setting inflation factor to later gather the data with getPoolData
     await baseContracts['Inflation'].setInflationFactor(group, inflationFactor)
     // creating drago to test functions
@@ -43,13 +43,14 @@ describeContract(contractName, () => {
       ...transactionDefault,
       value: dragoSupply
     })
-  })
+  }, 9999) // runs slow
 
   describe('setRegistry', () => {
     afterAll(async () => {
       // reset the registry
+      const registry = await baseContracts['DragoRegistry'].address
       await baseContracts[contractName].setRegistry(
-        baseContracts['DragoRegistry'].address
+        registry
       )
     })
     it('changes the registry address', async () => {
@@ -124,7 +125,7 @@ describeContract(contractName, () => {
       // claimPop calls the mintInflation method from Inflation.sol,
       // which emits two RigoToken 'TokenMinted' event, one for the DAO
       // and one for the fund wizard
-      const mintEvent = baseContracts['RigoToken'].TokenMinted()
+      const mintEvent = await baseContracts['RigoToken'].TokenMinted()
       const eventsPromise = new Promise((resolve, reject) => {
         mintEvent.get(
           (err, data) => (err ? reject(new Error(err)) : resolve(data))

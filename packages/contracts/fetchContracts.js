@@ -1,5 +1,6 @@
 const { CONTRACT_NAMES } = require('./constants')
-require('@babel/polyfill')
+require('core-js/stable')
+require('regenerator-runtime')
 
 module.exports.default = async networkId => {
   const artifacts = CONTRACT_NAMES.map(contractName => `${contractName}.json`)
