@@ -3,6 +3,8 @@ import { fromMicro, fromWei, toBigNumber } from '../utils'
 import vaultArtifact from '../../artifacts/Vault.json'
 import web3 from '../web3'
 
+jest.setTimeout(10000);
+
 const contractName = 'ProofOfPerformance'
 
 describeContract(contractName, () => {
@@ -40,7 +42,7 @@ describeContract(contractName, () => {
       ...transactionDefault,
       value: vaultSupply
     })
-  }, 9999) // runs slow
+  })
 
   describe('setRegistry', () => {
     afterAll(async () => {

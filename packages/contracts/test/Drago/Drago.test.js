@@ -12,7 +12,7 @@ describeContract(contractName, () => {
   let dragoInstance
   let transactionDefault
   let tokenTransferProxy
-  let GRGtokenAddress
+  let grgTokenAddress
 
   beforeAll(async () => {
     await baseContracts['DragoFactory'].createDrago('my new drago', 'DRA')
@@ -31,7 +31,7 @@ describeContract(contractName, () => {
       gasPrice: 1
     }
     tokenTransferProxy = await baseContracts['TokenTransferProxy'].address
-    GRGtokenAddress = await baseContracts['RigoToken'].address
+    grgTokenAddress = await baseContracts['RigoToken'].address
     await baseContracts['Authority'].setWhitelister(accounts[0], true)
   })
 
@@ -119,7 +119,7 @@ describeContract(contractName, () => {
         true
       )
       await dragoInstance.methods
-        .setAllowance(tokenTransferProxy, GRGtokenAddress, 0)
+        .setAllowance(tokenTransferProxy, grgTokenAddress, 0)
         .send({ ...transactionDefault })
     })
 
@@ -128,7 +128,7 @@ describeContract(contractName, () => {
         new BigNumber(2).pow(256).minus(1)
       )
       await dragoInstance.methods
-        .setAllowance(tokenTransferProxy, GRGtokenAddress, infiniteAllowance)
+        .setAllowance(tokenTransferProxy, grgTokenAddress, infiniteAllowance)
         .send({ ...transactionDefault })
       const allowance = await baseContracts['RigoToken'].allowance(
         dragoAddress,
@@ -143,7 +143,7 @@ describeContract(contractName, () => {
       await dragoInstance.methods
         .setAllowance(
           tokenTransferProxy,
-          GRGtokenAddress,
+          grgTokenAddress,
           discretionaryAllowance
         )
         .send({ ...transactionDefault })
@@ -164,7 +164,7 @@ describeContract(contractName, () => {
       }
       await expect(
         dragoInstance.methods
-          .setAllowance(tokenTransferProxy, GRGtokenAddress, infiniteAllowance)
+          .setAllowance(tokenTransferProxy, grgTokenAddress, infiniteAllowance)
           .send({ ...transactionParams })
       ).rejects.toThrowErrorMatchingSnapshot()
     })
@@ -178,7 +178,7 @@ describeContract(contractName, () => {
         new BigNumber(2).pow(256).minus(1)
       )
       await dragoInstance.methods
-        .setAllowance(tokenTransferProxy, GRGtokenAddress, infiniteAllowance)
+        .setAllowance(tokenTransferProxy, grgTokenAddress, infiniteAllowance)
         .send({ ...transactionDefault })
       const allowance = await baseContracts['RigoToken'].allowance(
         dragoAddress,
