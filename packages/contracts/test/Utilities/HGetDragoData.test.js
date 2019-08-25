@@ -41,7 +41,7 @@ describeContract(contractName, () => {
     }
   }, timeout)
 
-  describe('HGetDragoData queryMultiDataFromId method', () => {
+  describe.skip('HGetDragoData queryMultiDataFromId method', () => {
     it(
       'Correctly returns an array from Ids',
       async () => {
