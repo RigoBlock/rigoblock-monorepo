@@ -3,6 +3,8 @@ import { toBigNumber } from '../utils'
 import vaultArtifact from '../../artifacts/Vault.json'
 import web3 from '../web3'
 
+jest.setTimeout(10000);
+
 const contractName = 'Inflation'
 
 describeContract(contractName, () => {

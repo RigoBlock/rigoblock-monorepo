@@ -1,6 +1,8 @@
 import { GAS_ESTIMATE } from '../../constants'
 import { toBigNumber } from '../utils'
 
+jest.setTimeout(10000);
+
 const contractName = 'RigoToken'
 
 describeContract(contractName, () => {

@@ -1,3 +1,5 @@
+jest.setTimeout(10000);
+
 const contractName = 'VaultFactory'
 
 describeContract(contractName, () => {
