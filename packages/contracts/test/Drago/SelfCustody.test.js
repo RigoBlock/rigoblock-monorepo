@@ -110,7 +110,7 @@ describeContract(contractName, () => {
       const postBalance = await web3.eth.getBalance(selfCustodyAddress)
       const targetBalance = postBalance - preBalance
       expect(targetBalance.toString()).toEqual(toBeTransferred.toString())
-    }, 9999) // runs slow
+    }, 19999) // runs slow
     it('runs slow - succeeds but does not send ETH if operator not holding 1st threshold GRG', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
@@ -174,17 +174,7 @@ describeContract(contractName, () => {
         .send({ ...transactionDefault })
       const postBalance = await web3.eth.getBalance(selfCustodyAddress)
       expect(postBalance.toString()).toEqual(preBalance.toString())
-
-/*
-      // transaction does not fail if insufficient amount, returns shortfall
-      // could be amended as the operate on exchange function does not return the shortfall
-      await expect(dragoInstance.methods
-        .operateOnExchange(selfCustodyProxyAddress, [assembledTransaction])
-        .send({ ...transactionDefault })
-      ).toThrowErrorMatchingSnapshot()
-*/
-
-    }, 9999) // runs slow
+    }, 19999) // runs slow
     it('runs slow - succeeds bot does not send ETH if operator holding < 1st threshold GRG', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
@@ -247,7 +237,7 @@ describeContract(contractName, () => {
         .send({ ...transactionDefault })
       const postBalance = await web3.eth.getBalance(selfCustodyAddress)
       expect(postBalance.toString()).toEqual(preBalance.toString())
-    }, 9999) // runs slow
+    }, 19999) // runs slow
     it.skip('sends a token to self custody', async () => {
       erc20Address = await baseContracts[
         'RigoToken'
