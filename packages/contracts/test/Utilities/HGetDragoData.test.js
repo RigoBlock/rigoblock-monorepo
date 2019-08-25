@@ -7,7 +7,7 @@ let dragoNum
 let hGetDragoDataInstance
 let registryAddress
 let dragos = []
-const timeout = 500000
+const timeout = 19999
 
 describeContract(contractName, () => {
   beforeAll(async () => {
