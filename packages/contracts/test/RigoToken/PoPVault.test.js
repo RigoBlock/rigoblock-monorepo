@@ -40,13 +40,14 @@ describeContract(contractName, () => {
       ...transactionDefault,
       value: vaultSupply
     })
-  })
+  }, 9999) // runs slow
 
   describe('setRegistry', () => {
     afterAll(async () => {
       // reset the registry
+      const registry = await baseContracts['DragoRegistry'].address
       await baseContracts[contractName].setRegistry(
-        baseContracts['DragoRegistry'].address
+        registry
       )
     })
     it('changes the registry address', async () => {
