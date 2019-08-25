@@ -124,7 +124,7 @@ describeContract(contractName, () => {
       // claimPop calls the mintInflation method from Inflation.sol,
       // which emits two RigoToken 'TokenMinted' event, one for the DAO
       // and one for the fund wizard
-      const mintEvent = baseContracts['RigoToken'].TokenMinted()
+      const mintEvent = await baseContracts['RigoToken'].TokenMinted()
       const eventsPromise = new Promise((resolve, reject) => {
         mintEvent.get(
           (err, data) => (err ? reject(new Error(err)) : resolve(data))
