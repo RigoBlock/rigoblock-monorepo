@@ -50,7 +50,11 @@ describeContract(contractName, () => {
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
     grgTokenAddress = await baseContracts['RigoToken'].address
     await baseContracts['ExchangesAuthority'].setCasper(grgTokenAddress) // temporary patch, GRG = Casper
+<<<<<<< HEAD
   })
+=======
+  }, 29999)
+>>>>>>> fix-tests
 
   describe('operateOnExchange', () => {
     it('runs slow - sends ETH to a self custody wallet when operator holds enough GRG', async () => {
