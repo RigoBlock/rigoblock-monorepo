@@ -53,7 +53,7 @@ describeContract(contractName, () => {
   })
 
   describe('operateOnExchange', () => {
-    it('sends ETH to a self custody wallet when operator holds enough GRG', async () => {
+    it('runs slow - sends ETH to a self custody wallet when operator holds enough GRG', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
       await dragoInstance.methods.buyDrago().send({
@@ -110,8 +110,8 @@ describeContract(contractName, () => {
       const postBalance = await web3.eth.getBalance(selfCustodyAddress)
       const targetBalance = postBalance - preBalance
       expect(targetBalance.toString()).toEqual(toBeTransferred.toString())
-    })
-    it('succeeds but does not send ETH if operator not holding 1st threshold GRG', async () => {
+    }, 9999) // runs slow
+    it('runs slow - succeeds but does not send ETH if operator not holding 1st threshold GRG', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
       await dragoInstance.methods.buyDrago().send({
@@ -184,8 +184,8 @@ describeContract(contractName, () => {
       ).toThrowErrorMatchingSnapshot()
 */
 
-    })
-    it('succeeds bot does not send ETH if operator holding < 1st threshold GRG', async () => {
+    }, 9999) // runs slow
+    it('runs slow - succeeds bot does not send ETH if operator holding < 1st threshold GRG', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
       await dragoInstance.methods.buyDrago().send({
@@ -247,7 +247,7 @@ describeContract(contractName, () => {
         .send({ ...transactionDefault })
       const postBalance = await web3.eth.getBalance(selfCustodyAddress)
       expect(postBalance.toString()).toEqual(preBalance.toString())
-    })
+    }, 9999) // runs slow
     it.skip('sends a token to self custody', async () => {
       erc20Address = await baseContracts[
         'RigoToken'
