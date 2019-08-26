@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` ProofOfPerformance proofOfPerformance returns an error with negative performance 1`] = `"VM Exception while processing transaction: revert PRICE_LOWER_THAN_HWM"`;
+exports[` ProofOfPerformance proofOfPerformance returns an error with negative performance 1`] = `"VM Exception while processing transaction: revert PRICE_LOWER_THAN_HWM_ERROR"`;
 
 exports[` ProofOfPerformance setRatio can only be called by the rigoblock DAO 1`] = `"VM Exception while processing transaction: revert ONLY_RIGOBLOCK_DAO"`;
 

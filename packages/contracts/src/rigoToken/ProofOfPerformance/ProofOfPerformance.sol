@@ -247,12 +247,7 @@ contract ProofOfPerformance is
         view
         returns (uint256)
     {
-        if (poolPrice[_ofPool].highwatermark == 0) {
-            return (1 ether);
-
-        } else {
-            return poolPrice[_ofPool].highwatermark;
-        }
+        return (getHwmInternal(_ofPool));
     }
 
     /// @dev Returns the reward factor for a pool.
@@ -395,27 +390,13 @@ contract ProofOfPerformance is
         view
         returns (uint256 popReward, uint256 performanceReward)
     {
-        uint256 highwatermark;
-
-        if (poolPrice[_ofPool].highwatermark == 0) {
-            highwatermark = 1 ether;
-
-        } else {
-            highwatermark = poolPrice[_ofPool].highwatermark;
-        }
-
+        uint256 highwatermark= getHwmInternal(_ofPool);
         (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = getPoolPriceAndValueInternal(_ofPool);
         require (
             newPrice >= highwatermark,
-            "PRICE_LOWER_THAN_HWM"
+            "PRICE_LOWER_THAN_HWM_ERROR"
         );
         (address thePoolAddress, ) = addressFromIdInternal(_ofPool);
-        require(
-            address(Pool(thePoolAddress)).balance <= poolValue 
-            && poolValue * 1 ether / address(Pool(thePoolAddress)).balance < 100 * 1 ether,
-            "ETH_HIGHER_THAN_AUM_OR_ETH_AUM_RATIO_BELOW_1PERCENT_ERROR"
-        );
-
         (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = getInflationParameters(_ofPool);
 
         uint256 assetsComponent = safeMul(
@@ -431,20 +412,77 @@ contract ProofOfPerformance is
             epochReward
         ) * 365 days / 1 days;
 
-        uint256 assetsReward = safeMul(
-            assetsComponent,
-            safeSub(10000, rewardRatio) // 100000 = 100%
-        ) / 10000 ether * address(Pool(thePoolAddress)).balance / poolValue; // reward inversly proportional to Eth in pool
+        uint256 assetsReward = (
+            safeMul(
+                assetsComponent,
+                safeSub(10000, rewardRatio) // 100000 = 100%
+            ) / 10000 ether
+        ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether; // reward inversly proportional to Eth in pool
 
         performanceReward = safeDiv(
             safeMul(performanceComponent, rewardRatio),
             10000 ether
-        ) * 10 * address(Pool(thePoolAddress)).balance / poolValue; // rationalization by 2-20 rule
+        ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether;
 
         popReward = safeAdd(performanceReward, assetsReward);
 
-        if (popReward > RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000) {
-            popReward = RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000; // max single reward 0.01% of total supply
+        if (popReward > 10 ** 25 / 10000) {
+            popReward = 10 ** 25 / 10000; // max single reward 0.01% of total supply
+        }
+    }
+
+    /// @dev Returns the high-watermark of the pool.
+    /// @param _ofPool Number of the pool in registry.
+    /// @return Number high-watermark.
+    function getHwmInternal(uint256 _ofPool) 
+        internal
+        view
+        returns (uint256)
+    {
+        if (poolPrice[_ofPool].highwatermark == 0) {
+            return (1 ether);
+
+        } else {
+            return poolPrice[_ofPool].highwatermark;
+        }
+    }
+
+    /// @dev Returns the non-linear rewards adjustment by eth.
+    /// @param thePoolAddress Address of the pool.
+    /// @param poolValue Number of value of the pool in wei.
+    /// @return Number non-linear adjustment.
+    function ethBalanceAdjustmentInternal(
+        address thePoolAddress,
+        uint256 poolValue)
+        internal
+        view
+        returns (uint256)
+    {
+        uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
+        require(
+            poolEthBalance <= poolValue && poolEthBalance >= 1 finney, // prevent dust from small pools
+            "ETH_BALANCE_HIGHER_THAN_AUM_OR_TOO_SMALL_ERROR"
+        );
+
+        // non-linear progression series with decay factor 18%
+        // y = (1-decay factor)*k^[(1-decay factor)^(n-1)]
+        if (1 ether * poolEthBalance / poolValue >= 800 finney) {
+            return (1 ether * poolEthBalance / poolValue);
+
+        } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
+            return (1 ether * poolEthBalance / poolValue * 820 / 1000);
+
+        } else if (1 ether * poolEthBalance / poolValue >= 400 finney) {
+            return (1 ether * poolEthBalance / poolValue * 201 / 1000);
+
+        } else if (1 ether * poolEthBalance / poolValue >= 200 finney) {
+            return (1 ether * poolEthBalance / poolValue * 29 / 1000);
+
+        } else if (1 ether * poolEthBalance / poolValue >= 100 finney) {
+            return (1 ether * poolEthBalance / poolValue * 5 / 1000);
+
+        } else { // reward is 0 for any pool not backed by < 10% eth
+            revert('ETH_BELOW_10_PERCENT_AUM_ERROR');
         }
     }
 
@@ -499,9 +537,9 @@ contract ProofOfPerformance is
         thePoolPrice = pool.calcSharePrice();
         totalTokens = pool.totalSupply();
         require(
-            thePoolPrice != 0 && totalTokens !=0,
+            thePoolPrice != uint256(0) && totalTokens != uint256(0),
             "POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR"
         );
-        aum = thePoolPrice * totalTokens / 1000000; // pool.BASE();
+        aum = safeMul(thePoolPrice, totalTokens) / 1000000; // pool.BASE();
     }
 }
