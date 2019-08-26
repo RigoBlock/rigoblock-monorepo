@@ -472,13 +472,13 @@ contract ProofOfPerformance is
         } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
             return (1 ether * poolEthBalance / poolValue * 820 / 1000);
 
-        } else if (1 ether * poolEthBalance >= 400 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 400 finney) {
             return (1 ether * poolEthBalance / poolValue * 201 / 1000);
 
-        } else if (1 ether * poolEthBalance >= 200 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 200 finney) {
             return (1 ether * poolEthBalance / poolValue * 29 / 1000);
 
-        } else if (1 ether * poolEthBalance >= 100 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 100 finney) {
             return (1 ether * poolEthBalance / poolValue * 5 / 1000);
 
         } else { // reward is 0 for any pool not backed by < 10% eth
@@ -540,6 +540,6 @@ contract ProofOfPerformance is
             thePoolPrice != 0 && totalTokens !=0,
             "POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR"
         );
-        aum = thePoolPrice * totalTokens / 1000000; // pool.BASE();
+        aum = safeMul(thePoolPrice, totalTokens) / 1000000; // pool.BASE();
     }
 }
