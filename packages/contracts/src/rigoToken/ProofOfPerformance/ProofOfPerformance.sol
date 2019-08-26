@@ -412,20 +412,22 @@ contract ProofOfPerformance is
             epochReward
         ) * 365 days / 1 days;
 
-        uint256 assetsReward = safeMul(
-            assetsComponent,
-            safeSub(10000, rewardRatio) // 100000 = 100%
-        ) / 10000 ether * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether; // reward inversly proportional to Eth in pool
+        uint256 assetsReward = (
+            safeMul(
+                assetsComponent,
+                safeSub(10000, rewardRatio) // 100000 = 100%
+            ) / 10000 ether
+        ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether; // reward inversly proportional to Eth in pool
 
         performanceReward = safeDiv(
             safeMul(performanceComponent, rewardRatio),
             10000 ether
-        ) * 10 * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether; // rationalization by 2-20 rule
+        ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether;
 
         popReward = safeAdd(performanceReward, assetsReward);
 
-        if (popReward > RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000) {
-            popReward = RigoToken(RIGOTOKENADDRESS).totalSupply() / 10000; // max single reward 0.01% of total supply
+        if (popReward > 10 ** 25 / 10000) {
+            popReward = 10 ** 25 / 10000; // max single reward 0.01% of total supply
         }
     }
 
@@ -462,20 +464,22 @@ contract ProofOfPerformance is
             "ETH_HIGHER_THAN_AUM_ERROR"
         );
 
+        // non-linear progression series with decay factor 15%
+        // y = k^[(1-decay factor)^n]
         if (1 ether * poolEthBalance / poolValue >= 800 finney) {
             return (1 ether * poolEthBalance / poolValue);
 
         } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
-            return (1 ether * poolEthBalance * 80 / 100);
+            return (1 ether * poolEthBalance * 355 / 1000);
 
         } else if (1 ether * poolEthBalance >= 400 finney) {
-            return (1 ether * poolEthBalance * 40 / 100);
+            return (1 ether * poolEthBalance * 147 / 1000);
 
         } else if (1 ether * poolEthBalance >= 200 finney) {
-            return (1 ether * poolEthBalance * 20 / 100);
+            return (1 ether * poolEthBalance * 69 / 1000);
 
         } else if (1 ether * poolEthBalance >= 100 finney) {
-            return (1 ether * poolEthBalance * 10 / 100);
+            return (1 ether * poolEthBalance * 37 / 1000);
 
         } else { // reward is 0 for any pool not backed by < 10% eth
             revert('ETH_BELOW_10_PERCENT_AUM_ERROR');
