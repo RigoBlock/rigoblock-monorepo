@@ -460,8 +460,8 @@ contract ProofOfPerformance is
     {
         uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
         require(
-            poolEthBalance <= poolValue,
-            "ETH_HIGHER_THAN_AUM_ERROR"
+            poolEthBalance <= poolValue && poolEthBalance >= 1 finney, // prevent dust from small pools
+            "ETH_BALANCE_HIGHER_THAN_AUM_OR_TOO_SMALL_ERROR"
         );
 
         // non-linear progression series with decay factor 18%
@@ -470,16 +470,16 @@ contract ProofOfPerformance is
             return (1 ether * poolEthBalance / poolValue);
 
         } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
-            return (1 ether * poolEthBalance * 820 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 820 / 1000);
 
         } else if (1 ether * poolEthBalance >= 400 finney) {
-            return (1 ether * poolEthBalance * 201 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 201 / 1000);
 
         } else if (1 ether * poolEthBalance >= 200 finney) {
-            return (1 ether * poolEthBalance * 29 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 29 / 1000);
 
         } else if (1 ether * poolEthBalance >= 100 finney) {
-            return (1 ether * poolEthBalance * 5 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 5 / 1000);
 
         } else { // reward is 0 for any pool not backed by < 10% eth
             revert('ETH_BELOW_10_PERCENT_AUM_ERROR');
