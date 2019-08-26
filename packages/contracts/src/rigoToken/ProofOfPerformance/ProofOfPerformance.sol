@@ -537,7 +537,7 @@ contract ProofOfPerformance is
         thePoolPrice = pool.calcSharePrice();
         totalTokens = pool.totalSupply();
         require(
-            thePoolPrice != 0 && totalTokens !=0,
+            thePoolPrice != uint256(0) && totalTokens != uint256(0),
             "POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR"
         );
         aum = safeMul(thePoolPrice, totalTokens) / 1000000; // pool.BASE();
