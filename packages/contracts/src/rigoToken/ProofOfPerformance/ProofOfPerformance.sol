@@ -247,7 +247,12 @@ contract ProofOfPerformance is
         view
         returns (uint256)
     {
-        return poolPrice[_ofPool].highwatermark;
+        if (poolPrice[_ofPool].highwatermark == 0) {
+            return (1 ether);
+
+        } else {
+            return poolPrice[_ofPool].highwatermark;
+        }
     }
 
     /// @dev Returns the reward factor for a pool.
@@ -433,8 +438,8 @@ contract ProofOfPerformance is
 
         performanceReward = safeDiv(
             safeMul(performanceComponent, rewardRatio),
-            10000 ether * address(Pool(thePoolAddress)).balance / poolValue
-        ) * 10; // rationalization by 2-20 rule
+            10000 ether
+        ) * 10 * address(Pool(thePoolAddress)).balance / poolValue; // rationalization by 2-20 rule
 
         popReward = safeAdd(performanceReward, assetsReward);
 
