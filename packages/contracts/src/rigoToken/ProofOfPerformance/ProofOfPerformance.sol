@@ -464,22 +464,22 @@ contract ProofOfPerformance is
             "ETH_HIGHER_THAN_AUM_ERROR"
         );
 
-        // non-linear progression series with decay factor 15%
-        // y = k^[(1-decay factor)^n]
+        // non-linear progression series with decay factor 18%
+        // y = (1-decay factor)*k^[(1-decay factor)^(n-1)]
         if (1 ether * poolEthBalance / poolValue >= 800 finney) {
             return (1 ether * poolEthBalance / poolValue);
 
         } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
-            return (1 ether * poolEthBalance * 355 / 1000);
+            return (1 ether * poolEthBalance * 820 / 1000);
 
         } else if (1 ether * poolEthBalance >= 400 finney) {
-            return (1 ether * poolEthBalance * 147 / 1000);
+            return (1 ether * poolEthBalance * 201 / 1000);
 
         } else if (1 ether * poolEthBalance >= 200 finney) {
-            return (1 ether * poolEthBalance * 69 / 1000);
+            return (1 ether * poolEthBalance * 29 / 1000);
 
         } else if (1 ether * poolEthBalance >= 100 finney) {
-            return (1 ether * poolEthBalance * 37 / 1000);
+            return (1 ether * poolEthBalance * 5 / 1000);
 
         } else { // reward is 0 for any pool not backed by < 10% eth
             revert('ETH_BELOW_10_PERCENT_AUM_ERROR');
