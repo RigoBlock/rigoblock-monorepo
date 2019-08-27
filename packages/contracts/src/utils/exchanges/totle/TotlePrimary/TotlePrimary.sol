@@ -1,5 +1,5 @@
 /**
- *Submitted for verification at Etherscan.io on 2019-07-10
+ *Submitted for verification at Etherscan.io on 2019-07-17
 */
 
 pragma solidity 0.5.7;
@@ -753,9 +753,9 @@ contract TotlePrimary is Withdrawable, Pausable {
     {
         TokenBalance[20] memory balances;
         balances[0] = TokenBalance(address(Utils.eth_address()), msg.value);
-        this.log("Created eth balance", balances[0].balance, 0x0);
+        //this.log("Created eth balance", balances[0].balance, 0x0);
         for(uint256 swapIndex = 0; swapIndex < swaps.swaps.length; swapIndex++){
-            this.log("About to perform swap", swapIndex, swaps.id);
+            //this.log("About to perform swap", swapIndex, swaps.id);
             performSwap(swaps.id, swaps.swaps[swapIndex], balances, swaps.partnerContract);
         }
         emit LogSwapCollection(swaps.id, swaps.partnerContract, msg.sender);
@@ -785,7 +785,7 @@ contract TotlePrimary is Withdrawable, Pausable {
     {
         if(!transferFromSenderDifference(balances, swap.trades[0].sourceToken, swap.sourceAmount)){
             if(swap.required){
-                revert("Failed to get tokens for required swap");
+                revert("Failed to get tokens for swap");
             } else {
                 return;
             }
@@ -798,7 +798,7 @@ contract TotlePrimary is Withdrawable, Pausable {
                 feeAmount = takeFee(balances, swap.trades[tradeIndex].sourceToken, partnerContract,tradeIndex==0 ? swap.sourceAmount : amountReceived);
             }
             uint256 tempSpent;
-            this.log("About to performTrade",0,0x0);
+            //this.log("About to performTrade",0,0x0);
             (tempSpent, amountReceived) = performTrade(
                 swap.trades[tradeIndex],
                 balances,
@@ -815,12 +815,16 @@ contract TotlePrimary is Withdrawable, Pausable {
             }
             if(tradeIndex == 0){
                 amountSpentFirstTrade = tempSpent;
+                if(feeAmount != 0){
+                    amountSpentFirstTrade += feeAmount;
+                }
             }
             if(tradeIndex == swap.tradeToTakeFeeFrom && !swap.takeFeeFromSource){
                 feeAmount = takeFee(balances, swap.trades[tradeIndex].destinationToken, partnerContract, amountReceived);
+                amountReceived -= feeAmount;
             }
         }
-        this.log("About to emit LogSwap", 0, 0x0);
+        //this.log("About to emit LogSwap", 0, 0x0);
         emit LogSwap(
             swapCollectionId,
             swap.trades[0].sourceToken,
@@ -832,14 +836,14 @@ contract TotlePrimary is Withdrawable, Pausable {
         );
 
         if(amountReceived < swap.minimumDestinationAmount){
-            this.log("Minimum destination amount failed", 0, 0x0);
-            revert("Tokens got less than minimumDestinationAmount");
+            //this.log("Minimum destination amount failed", 0, 0x0);
+            revert("Got less than minimumDestinationAmount");
         } else if (minimumRateFailed(swap.trades[0].sourceToken, swap.trades[swap.trades.length-1].destinationToken,swap.sourceAmount, amountReceived, swap.minimumExchangeRate)){
-            this.log("Minimum rate failed", 0, 0x0);
+            //this.log("Minimum rate failed", 0, 0x0);
             revert("Minimum exchange rate not met");
         }
         if(swap.redirectAddress != msg.sender && swap.redirectAddress != address(0x0)){
-            this.log("About to redirect tokens", amountReceived, 0x0);
+            //this.log("About to redirect tokens", amountReceived, 0x0);
             uint256 destinationTokenIndex = findToken(balances,swap.trades[swap.trades.length-1].destinationToken);
             uint256 amountToSend = Math.min(amountReceived, balances[destinationTokenIndex].balance);
             transferTokens(balances, destinationTokenIndex, swap.redirectAddress, amountToSend);
@@ -848,10 +852,10 @@ contract TotlePrimary is Withdrawable, Pausable {
     }
 
     function performTrade(
-        Trade memory trade,
+        Trade memory trade, 
         TokenBalance[20] memory balances,
         uint256 availableToSpend
-    )
+    ) 
         internal returns (uint256 totalSpent, uint256 totalReceived)
     {
         uint256 tempSpent = 0;
@@ -864,25 +868,25 @@ contract TotlePrimary is Withdrawable, Pausable {
             } else if (trade.isSourceAmount && tempSpent == trade.amount){
                 break;
             }
-            this.log("About to perform order", orderIndex,0x0);
+            //this.log("About to perform order", orderIndex,0x0);
             (tempSpent, tempReceived) = performOrder(
-                trade.orders[orderIndex],
+                trade.orders[orderIndex], 
                 availableToSpend - totalSpent,
-                trade.isSourceAmount ? availableToSpend - totalSpent : trade.amount - totalReceived,
+                trade.isSourceAmount ? availableToSpend - totalSpent : trade.amount - totalReceived, 
                 trade.isSourceAmount,
-                trade.sourceToken,
+                trade.sourceToken, 
                 balances);
-            this.log("Order performed",0,0x0);
+            //this.log("Order performed",0,0x0);
             totalSpent += tempSpent;
             totalReceived += tempReceived;
         }
         addBalance(balances, trade.destinationToken, tempReceived);
         removeBalance(balances, trade.sourceToken, tempSpent);
-        this.log("Trade performed",tempSpent, 0);
+        //this.log("Trade performed",tempSpent, 0);
     }
 
     function performOrder(
-        Order memory order,
+        Order memory order, 
         uint256 availableToSpend,
         uint256 targetAmount,
         bool isSourceAmount,
@@ -891,7 +895,7 @@ contract TotlePrimary is Withdrawable, Pausable {
     )
         internal returns (uint256 spent, uint256 received)
     {
-        this.log("Performing order", availableToSpend, 0x0);
+        //this.log("Performing order", availableToSpend, 0x0);
 
         if(tokenToSpend == Utils.eth_address()){
             (spent, received) = ExchangeHandler(order.exchangeHandler).performOrder.value(availableToSpend)(order.encodedPayload, availableToSpend, targetAmount, isSourceAmount);
@@ -900,8 +904,8 @@ contract TotlePrimary is Withdrawable, Pausable {
             transferTokens(balances, findToken(balances, tokenToSpend), order.exchangeHandler, availableToSpend);
             (spent, received) = ExchangeHandler(order.exchangeHandler).performOrder(order.encodedPayload, availableToSpend, targetAmount, isSourceAmount);
         }
-        this.log("Performing order", spent,0x0);
-        this.log("Performing order", received,0x0);
+        //this.log("Performing order", spent,0x0);
+        //this.log("Performing order", received,0x0);
     }
 
     function minimumRateFailed(
@@ -913,13 +917,13 @@ contract TotlePrimary is Withdrawable, Pausable {
     )
         internal returns(bool failed)
     {
-        this.log("About to get source decimals",sourceAmount,0x0);
+        //this.log("About to get source decimals",sourceAmount,0x0);
         uint256 sourceDecimals = sourceToken == Utils.eth_address() ? 18 : Utils.getDecimals(sourceToken);
-        this.log("About to get destination decimals",destinationAmount,0x0);
+        //this.log("About to get destination decimals",destinationAmount,0x0);
         uint256 destinationDecimals = destinationToken == Utils.eth_address() ? 18 : Utils.getDecimals(destinationToken);
-        this.log("About to calculate amount got",0,0x0);
+        //this.log("About to calculate amount got",0,0x0);
         uint256 rateGot = Utils.calcRateFromQty(sourceAmount, destinationAmount, sourceDecimals, destinationDecimals);
-        this.log("Minimum rate failed", rateGot, 0x0);
+        //this.log("Minimum rate failed", rateGot, 0x0);
         return rateGot < minimumExchangeRate;
     }
 
@@ -934,12 +938,12 @@ contract TotlePrimary is Withdrawable, Pausable {
     {
         Partner partner = Partner(partnerContract);
         uint256 feePercentage = partner.getTotalFeePercentage();
-        this.log("Got fee percentage", feePercentage, 0x0);
+        //this.log("Got fee percentage", feePercentage, 0x0);
         feeAmount = calculateFee(amountTraded, feePercentage);
-        this.log("Taking fee", feeAmount, 0);
+        //this.log("Taking fee", feeAmount, 0);
         transferTokens(balances, findToken(balances, token), partnerContract, feeAmount);
         removeBalance(balances, findToken(balances, token), feeAmount);
-        this.log("Took fee", 0, 0x0);
+        //this.log("Took fee", 0, 0x0);
         return feeAmount;
     }
 
@@ -952,24 +956,24 @@ contract TotlePrimary is Withdrawable, Pausable {
     {
         if(token == Utils.eth_address()){
             if(sourceAmount>balances[0].balance){
-                this.log("Not enough eth", 0,0x0);
+                //this.log("Not enough eth", 0,0x0);
                 return false;
             }
-            this.log("Enough eth", 0,0x0);
+            //this.log("Enough eth", 0,0x0);
             return true;
         }
 
         uint256 tokenIndex = findToken(balances, token);
         if(sourceAmount>balances[tokenIndex].balance){
-            this.log("Transferring in token", 0,0x0);
+            //this.log("Transferring in token", 0,0x0);
             bool success;
             (success,) = address(tokenTransferProxy).call(abi.encodeWithSignature("transferFrom(address,address,address,uint256)", token, msg.sender, address(this), sourceAmount - balances[tokenIndex].balance));
             if(success){
-                this.log("Got enough token", 0,0x0);
+                //this.log("Got enough token", 0,0x0);
                 balances[tokenIndex].balance = sourceAmount;
                 return true;
             }
-            this.log("Didn't get enough token", 0,0x0);
+            //this.log("Didn't get enough token", 0,0x0);
             return false;
         }
         return true;
@@ -980,12 +984,12 @@ contract TotlePrimary is Withdrawable, Pausable {
     )
         internal
     {
-        this.log("About to transfer all tokens", 0, 0x0);
+        //this.log("About to transfer all tokens", 0, 0x0);
         for(uint256 balanceIndex = 0; balanceIndex < balances.length; balanceIndex++){
             if(balanceIndex != 0 && balances[balanceIndex].tokenAddress == address(0x0)){
                 return;
             }
-            this.log("Transferring tokens", uint256(balances[balanceIndex].balance),0x0);
+            //this.log("Transferring tokens", uint256(balances[balanceIndex].balance),0x0);
             transferTokens(balances, balanceIndex, msg.sender, balances[balanceIndex].balance);
         }
     }
