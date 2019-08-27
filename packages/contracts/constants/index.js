@@ -18,7 +18,6 @@ module.exports = {
   CONTRACT_NAMES: [
     'AbiEncoder',
     'AEthfinex',
-    'AffiliateRegistry',
     'ASelfCustody',
     'ATotlePrimary',
     'AWeth',
@@ -43,6 +42,7 @@ module.exports = {
     'NavVerifier',
     'Owned',
     'OwnedUninitialized',
+    'PartnerRegistry',
     'ProofOfPerformance',
     'RigoToken',
     'SigVerifier',

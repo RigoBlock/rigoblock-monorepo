@@ -178,21 +178,18 @@ module.exports = async (baseAccount, network) => {
     aEthfinex.address
   )
 
-  const errorReporter = await deploy(baseAccount, network, 'ErrorReporter')
-  printAddress('ErrorReporter', errorReporter.address)
-
-  const affiliateRegistry = await deploy(baseAccount, network, 'AffiliateRegistry', [
+  // TODO: check if partner registry needed
+  const partnerRegistry = await deploy(baseAccount, network, 'PartnerRegistry', [
     baseAccount, baseAccount, 0
   ])
-  printAddress('AffiliateRegistry', affiliateRegistry.address)
+  printAddress('PartnerRegistry', partnerRegistry.address)
 
-  await affiliateRegistry.registerAffiliate(baseAccount, 0)
+  await partnerRegistry.registerPartner(baseAccount, 0)
 
+  // TODO: check if dedicated transfer proxy must be deployed
   const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
     tokenTransferProxy.address, // same tokentransferproxy unless required
-    affiliateRegistry.address,
-    errorReporter.address,
-    baseAccount // defaultFeeAccount
+    baseAccount // allowed signer account
   ])
   printAddress('TotlePrimary', totlePrimary.address)
 
@@ -246,7 +243,6 @@ module.exports = async (baseAccount, network) => {
   return {
     AbiEncoder: abiEncoder,
     AEthfinex: aEthfinex,
-    AffiliateRegistry: affiliateRegistry,
     ASelfCustody: aSelfCustody,
     ATotlePrimary: aTotlePrimary,
     AWeth: aWeth,
@@ -263,10 +259,11 @@ module.exports = async (baseAccount, network) => {
     Faucet: faucet,
     HandlerMock: handlerMock,
     HGetDragoData: hGetDragoData,
-    NavVerifier: navVerifier,
-    RigoToken: rigoToken,
-    ProofOfPerformance: proofOfPerformance,
     Inflation: inflation,
+    NavVerifier: navVerifier,
+    PartnerRegistry: partnerRegistry,
+    ProofOfPerformance: proofOfPerformance,
+    RigoToken: rigoToken,
     SigVerifier: sigVerifier,
     TotlePrimary: totlePrimary,
     TokenTransferProxy: tokenTransferProxy,
