@@ -250,7 +250,6 @@ module.exports = async (baseAccount, network) => {
     DragoRegistry: dragoRegistry,
     DragoEventful: dragoEventful,
     DragoFactory: dragoFactory,
-    ErrorReporter: errorReporter,
     Erc20Proxy: erc20Proxy,
     Exchange: exchange,
     ExchangeEfx: exchangeEfx,

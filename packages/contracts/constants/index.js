@@ -29,7 +29,6 @@ module.exports = {
     'DragoRegistry',
     'ERC20',
     'Erc20Proxy',
-    'ErrorReporter',
     'Exchange',
     'ExchangeEfx',
     'ExchangeV1Fork',
