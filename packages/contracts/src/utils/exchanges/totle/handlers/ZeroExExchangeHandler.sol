@@ -1,74 +1,62 @@
-pragma solidity 0.4.25;
+pragma solidity 0.5.7;
 pragma experimental ABIEncoderV2;
 
-/**
- * @title SafeMath
- * @dev Math operations with safety checks that revert on error
- */
-library SafeMath {
+contract Ownable {
+  address payable public owner;
+
+
+  event OwnershipRenounced(address indexed previousOwner);
+  event OwnershipTransferred(
+    address indexed previousOwner,
+    address indexed newOwner
+  );
+
 
   /**
-  * @dev Multiplies two numbers, reverts on overflow.
-  */
-  function mul(uint256 _a, uint256 _b) internal pure returns (uint256) {
-    // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
-    // benefit is lost if 'b' is also tested.
-    // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522
-    if (_a == 0) {
-      return 0;
-    }
-
-    uint256 c = _a * _b;
-    require(c / _a == _b);
-
-    return c;
+   * @dev The Ownable constructor sets the original `owner` of the contract to the sender
+   * account.
+   */
+  constructor() public {
+    owner = msg.sender;
   }
 
   /**
-  * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.
-  */
-  function div(uint256 _a, uint256 _b) internal pure returns (uint256) {
-    require(_b > 0); // Solidity only automatically asserts when dividing by 0
-    uint256 c = _a / _b;
-    // assert(_a == _b * c + _a % _b); // There is no case in which this doesn't hold
-
-    return c;
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() {
+    require(msg.sender == owner);
+    _;
   }
 
   /**
-  * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).
-  */
-  function sub(uint256 _a, uint256 _b) internal pure returns (uint256) {
-    require(_b <= _a);
-    uint256 c = _a - _b;
-
-    return c;
+   * @dev Allows the current owner to relinquish control of the contract.
+   * @notice Renouncing to ownership will leave the contract without an owner.
+   * It will not be possible to call the functions with the `onlyOwner`
+   * modifier anymore.
+   */
+  function renounceOwnership() public onlyOwner {
+    emit OwnershipRenounced(owner);
+    owner = address(0);
   }
 
   /**
-  * @dev Adds two numbers, reverts on overflow.
-  */
-  function add(uint256 _a, uint256 _b) internal pure returns (uint256) {
-    uint256 c = _a + _b;
-    require(c >= _a);
-
-    return c;
+   * @dev Allows the current owner to transfer control of the contract to a newOwner.
+   * @param _newOwner The address to transfer ownership to.
+   */
+  function transferOwnership(address payable _newOwner) public onlyOwner {
+    _transferOwnership(_newOwner);
   }
 
   /**
-  * @dev Divides two numbers and returns the remainder (unsigned integer modulo),
-  * reverts when dividing by zero.
-  */
-  function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-    require(b != 0);
-    return a % b;
+   * @dev Transfers control of the contract to a newOwner.
+   * @param _newOwner The address to transfer ownership to.
+   */
+  function _transferOwnership(address payable _newOwner) internal {
+    require(_newOwner != address(0));
+    emit OwnershipTransferred(owner, _newOwner);
+    owner = _newOwner;
   }
 }
-
-/**
- * @title Math
- * @dev Assorted math operations
- */
 
 library Math {
   function max(uint256 a, uint256 b) internal pure returns (uint256) {
@@ -85,45 +73,6 @@ library Math {
   }
 }
 
-/**
- * @title ERC20 interface
- * @dev see https://github.com/ethereum/EIPs/issues/20
- */
-contract ERC20 {
-  function totalSupply() public view returns (uint256);
-
-  function balanceOf(address _who) public view returns (uint256);
-
-  function allowance(address _owner, address _spender)
-    public view returns (uint256);
-
-  function transfer(address _to, uint256 _value) public returns (bool);
-
-  function approve(address _spender, uint256 _value)
-    public returns (bool);
-
-  function transferFrom(address _from, address _to, uint256 _value)
-    public returns (bool);
-
-  function decimals() public view returns (uint256);
-
-  event Transfer(
-    address indexed from,
-    address indexed to,
-    uint256 value
-  );
-
-  event Approval(
-    address indexed owner,
-    address indexed spender,
-    uint256 value
-  );
-}
-
-/*
-    Modified Util contract as used by Kyber Network
-*/
-
 library Utils {
 
     uint256 constant internal PRECISION = (10**18);
@@ -132,6 +81,7 @@ library Utils {
     uint256 constant internal MAX_DECIMALS = 18;
     uint256 constant internal ETH_DECIMALS = 18;
     uint256 constant internal MAX_UINT = 2**256-1;
+    address constant internal ETH_ADDRESS = address(0x0);
 
     // Currently constants can't be accessed from other contracts, so providing functions to do that here
     function precision() internal pure returns (uint256) { return PRECISION; }
@@ -140,6 +90,7 @@ library Utils {
     function max_decimals() internal pure returns (uint256) { return MAX_DECIMALS; }
     function eth_decimals() internal pure returns (uint256) { return ETH_DECIMALS; }
     function max_uint() internal pure returns (uint256) { return MAX_UINT; }
+    function eth_address() internal pure returns (address) { return ETH_ADDRESS; }
 
     /// @notice Retrieve the number of decimals used for a given ERC20 token
     /// @dev As decimals are an optional feature in ERC20, this contract uses `call` to
@@ -148,7 +99,6 @@ library Utils {
     /// @return decimals the number of decimals in the given token
     function getDecimals(address token)
         internal
-        view
         returns (uint256 decimals)
     {
         bytes4 functionSig = bytes4(keccak256("decimals()"));
@@ -233,12 +183,12 @@ library Utils {
         return (numerator + denominator - 1) / denominator; //avoid rounding down errors
     }
 
-    function calcDestAmount(ERC20 src, ERC20 dest, uint srcAmount, uint rate) internal view returns (uint) {
-        return calcDstQty(srcAmount, getDecimals(src), getDecimals(dest), rate);
+    function calcDestAmount(ERC20 src, ERC20 dest, uint srcAmount, uint rate) internal returns (uint) {
+        return calcDstQty(srcAmount, getDecimals(address(src)), getDecimals(address(dest)), rate);
     }
 
-    function calcSrcAmount(ERC20 src, ERC20 dest, uint destAmount, uint rate) internal view returns (uint) {
-        return calcSrcQty(destAmount, getDecimals(src), getDecimals(dest), rate);
+    function calcSrcAmount(ERC20 src, ERC20 dest, uint destAmount, uint rate) internal returns (uint) {
+        return calcSrcQty(destAmount, getDecimals(address(src)), getDecimals(address(dest)), rate);
     }
 
     function calcRateFromQty(uint srcAmount, uint destAmount, uint srcDecimals, uint dstDecimals)
@@ -262,49 +212,6 @@ library Utils {
     }
 }
 
-library ERC20SafeTransfer {
-    function safeTransfer(address _tokenAddress, address _to, uint256 _value) internal returns (bool success) {
-
-        require(_tokenAddress.call(bytes4(keccak256("transfer(address,uint256)")), _to, _value));
-
-        return fetchReturnData();
-    }
-
-    function safeTransferFrom(address _tokenAddress, address _from, address _to, uint256 _value) internal returns (bool success) {
-
-        require(_tokenAddress.call(bytes4(keccak256("transferFrom(address,address,uint256)")), _from, _to, _value));
-
-        return fetchReturnData();
-    }
-
-    function safeApprove(address _tokenAddress, address _spender, uint256 _value) internal returns (bool success) {
-
-        require(_tokenAddress.call(bytes4(keccak256("approve(address,uint256)")), _spender, _value));
-
-        return fetchReturnData();
-    }
-
-    function fetchReturnData() internal returns (bool success){
-        assembly {
-            switch returndatasize()
-            case 0 {
-                success := 1
-            }
-            case 32 {
-                returndatacopy(0, 0, 32)
-                success := mload(0)
-            }
-            default {
-                revert(0, 0)
-            }
-        }
-    }
-
-}
-
-/// @title A contract which is used to check and set allowances of tokens
-/// @dev In order to use this contract is must be inherited in the contract which is using
-/// its functionality
 contract AllowanceSetter {
     uint256 constant MAX_UINT = 2**256 - 1;
 
@@ -321,103 +228,6 @@ contract AllowanceSetter {
 
 }
 
-/**
- * @title Ownable
- * @dev The Ownable contract has an owner address, and provides basic authorization control
- * functions, this simplifies the implementation of "user permissions".
- */
-contract Ownable {
-  address public owner;
-
-  event OwnershipRenounced(address indexed previousOwner);
-  event OwnershipTransferred(
-    address indexed previousOwner,
-    address indexed newOwner
-  );
-
-  /**
-   * @dev The Ownable constructor sets the original `owner` of the contract to the sender
-   * account.
-   */
-  constructor() public {
-    owner = msg.sender;
-  }
-
-  /**
-   * @dev Throws if called by any account other than the owner.
-   */
-  modifier onlyOwner() {
-    require(msg.sender == owner);
-    _;
-  }
-
-  /**
-   * @dev Allows the current owner to relinquish control of the contract.
-   * @notice Renouncing to ownership will leave the contract without an owner.
-   * It will not be possible to call the functions with the `onlyOwner`
-   * modifier anymore.
-   */
-  function renounceOwnership() public onlyOwner {
-    emit OwnershipRenounced(owner);
-    owner = address(0);
-  }
-
-  /**
-   * @dev Allows the current owner to transfer control of the contract to a newOwner.
-   * @param _newOwner The address to transfer ownership to.
-   */
-  function transferOwnership(address _newOwner) public onlyOwner {
-    _transferOwnership(_newOwner);
-  }
-
-  /**
-   * @dev Transfers control of the contract to a newOwner.
-   * @param _newOwner The address to transfer ownership to.
-   */
-  function _transferOwnership(address _newOwner) internal {
-    require(_newOwner != address(0));
-    emit OwnershipTransferred(owner, _newOwner);
-    owner = _newOwner;
-  }
-}
-
-/// @title A contract which can be used to ensure only the TotlePrimary contract can call
-/// some functions
-/// @dev Defines a modifier which should be used when only the totle contract should
-/// able able to call a function
-contract TotleControl is Ownable {
-    mapping(address => bool) public authorizedPrimaries;
-
-    /// @dev A modifier which only allows code execution if msg.sender equals totlePrimary address
-    modifier onlyTotle() {
-        require(authorizedPrimaries[msg.sender]);
-        _;
-    }
-
-    /// @notice Contract constructor
-    /// @dev As this contract inherits ownable, msg.sender will become the contract owner
-    /// @param _totlePrimary the address of the contract to be set as totlePrimary
-    constructor(address _totlePrimary) public {
-        authorizedPrimaries[_totlePrimary] = true;
-    }
-
-    /// @notice A function which allows only the owner to change the address of totlePrimary
-    /// @dev onlyOwner modifier only allows the contract owner to run the code
-    /// @param _totlePrimary the address of the contract to be set as totlePrimary
-    function addTotle(
-        address _totlePrimary
-    ) external onlyOwner {
-        authorizedPrimaries[_totlePrimary] = true;
-    }
-
-    function removeTotle(
-        address _totlePrimary
-    ) external onlyOwner {
-        authorizedPrimaries[_totlePrimary] = false;
-    }
-}
-
-/// @title A contract which allows its owner to withdraw any ether which is contained inside
 contract Withdrawable is Ownable {
 
     /// @notice Withdraw ether contained in this contract and send it back to owner
@@ -437,10 +247,6 @@ contract Withdrawable is Ownable {
     }
 }
 
-/**
- * @title Pausable
- * @dev Base contract which allows children to implement an emergency stop mechanism.
- */
 contract Pausable is Ownable {
   event Paused();
   event Unpaused();
@@ -487,250 +293,89 @@ contract Pausable is Ownable {
   }
 }
 
-contract ErrorReporter {
-    function revertTx(string reason) public pure {
-        revert(reason);
+library SafeMath {
+
+  /**
+  * @dev Multiplies two numbers, reverts on overflow.
+  */
+  function mul(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+    // benefit is lost if 'b' is also tested.
+    // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522
+    if (_a == 0) {
+      return 0;
     }
-}
 
-contract SelectorProvider {
-    bytes4 constant getAmountToGiveSelector = bytes4(keccak256("getAmountToGive(bytes)"));
-    bytes4 constant staticExchangeChecksSelector = bytes4(keccak256("staticExchangeChecks(bytes)"));
-    bytes4 constant performBuyOrderSelector = bytes4(keccak256("performBuyOrder(bytes,uint256)"));
-    bytes4 constant performSellOrderSelector = bytes4(keccak256("performSellOrder(bytes,uint256)"));
+    uint256 c = _a * _b;
+    require(c / _a == _b);
 
-    function getSelector(bytes4 genericSelector) public pure returns (bytes4);
+    return c;
+  }
+
+  /**
+  * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.
+  */
+  function div(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    require(_b > 0); // Solidity only automatically asserts when dividing by 0
+    uint256 c = _a / _b;
+    // assert(_a == _b * c + _a % _b); // There is no case in which this doesn't hold
+
+    return c;
+  }
+
+  /**
+  * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).
+  */
+  function sub(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    require(_b <= _a);
+    uint256 c = _a - _b;
+
+    return c;
+  }
+
+  /**
+  * @dev Adds two numbers, reverts on overflow.
+  */
+  function add(uint256 _a, uint256 _b) internal pure returns (uint256) {
+    uint256 c = _a + _b;
+    require(c >= _a);
+
+    return c;
+  }
+
+  /**
+  * @dev Divides two numbers and returns the remainder (unsigned integer modulo),
+  * reverts when dividing by zero.
+  */
+  function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+    require(b != 0);
+    return a % b;
+  }
 }
 
 /// @title Interface for all exchange handler contracts
-contract ExchangeHandler is SelectorProvider, TotleControl, Withdrawable, Pausable {
+contract ExchangeHandler is Withdrawable, Pausable {
 
     /*
     *   State Variables
     */
 
-    ErrorReporter public errorReporter;
     /* Logger public logger; */
     /*
     *   Modifiers
     */
 
-    /// @notice Constructor
-    /// @dev Calls the constructor of the inherited TotleControl
-    /// @param totlePrimary the address of the totlePrimary contract
-    constructor(
-        address totlePrimary,
-        address _errorReporter
-        /* ,address _logger */
-    )
-        TotleControl(totlePrimary)
-        public
-    {
-        require(_errorReporter != address(0x0));
-        /* require(_logger != address(0x0)); */
-        errorReporter = ErrorReporter(_errorReporter);
-        /* logger = Logger(_logger); */
-    }
-
-    /// @notice Gets the amount that Totle needs to give for this order
-    /// @param genericPayload the data for this order in a generic format
-    /// @return amountToGive amount taker needs to give in order to fill the order
-    function getAmountToGive(
-        bytes genericPayload
-    )
-        public
-        view
-        returns (uint256 amountToGive)
-    {
-        bool success;
-        bytes4 functionSelector = getSelector(this.getAmountToGive.selector);
-
-        assembly {
-            let functionSelectorLength := 0x04
-            let functionSelectorOffset := 0x1C
-            let scratchSpace := 0x0
-            let wordLength := 0x20
-            let bytesLength := mload(genericPayload)
-            let totalLength := add(functionSelectorLength, bytesLength)
-            let startOfNewData := add(genericPayload, functionSelectorOffset)
-
-            mstore(add(scratchSpace, functionSelectorOffset), functionSelector)
-            let functionSelectorCorrect := mload(scratchSpace)
-            mstore(genericPayload, functionSelectorCorrect)
-
-            success := delegatecall(
-                            gas,
-                            address, // This address of the current contract
-                            startOfNewData, // Start data at the beginning of the functionSelector
-                            totalLength, // Total length of all data, including functionSelector
-                            scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
-                            wordLength // Length of return variable is one word
-                           )
-            amountToGive := mload(scratchSpace)
-            if eq(success, 0) { revert(0, 0) }
-        }
-    }
-
-    /// @notice Perform exchange-specific checks on the given order
-    /// @dev this should be called to check for payload errors
-    /// @param genericPayload the data for this order in a generic format
-    /// @return checksPassed value representing pass or fail
-    function staticExchangeChecks(
-        bytes genericPayload
-    )
-        public
-        view
-        returns (bool checksPassed)
-    {
-        bool success;
-        bytes4 functionSelector = getSelector(this.staticExchangeChecks.selector);
-        assembly {
-            let functionSelectorLength := 0x04
-            let functionSelectorOffset := 0x1C
-            let scratchSpace := 0x0
-            let wordLength := 0x20
-            let bytesLength := mload(genericPayload)
-            let totalLength := add(functionSelectorLength, bytesLength)
-            let startOfNewData := add(genericPayload, functionSelectorOffset)
-
-            mstore(add(scratchSpace, functionSelectorOffset), functionSelector)
-            let functionSelectorCorrect := mload(scratchSpace)
-            mstore(genericPayload, functionSelectorCorrect)
-
-            success := delegatecall(
-                            gas,
-                            address, // This address of the current contract
-                            startOfNewData, // Start data at the beginning of the functionSelector
-                            totalLength, // Total length of all data, including functionSelector
-                            scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
-                            wordLength // Length of return variable is one word
-                           )
-            checksPassed := mload(scratchSpace)
-            if eq(success, 0) { revert(0, 0) }
-        }
-    }
-
-    /// @notice Perform a buy order at the exchange
-    /// @param genericPayload the data for this order in a generic format
-    /// @param  amountToGiveForOrder amount that should be spent on this order
-    /// @return amountSpentOnOrder the amount that would be spent on the order
-    /// @return amountReceivedFromOrder the amount that was received from this order
-    function performBuyOrder(
-        bytes genericPayload,
-        uint256 amountToGiveForOrder
+    function performOrder(
+        bytes memory genericPayload,
+        uint256 availableToSpend,
+        uint256 targetAmount,
+        bool targetAmountIsSource
     )
         public
         payable
-        returns (uint256 amountSpentOnOrder, uint256 amountReceivedFromOrder)
-    {
-        bool success;
-        bytes4 functionSelector = getSelector(this.performBuyOrder.selector);
-        assembly {
-            let callDataOffset := 0x44
-            let functionSelectorOffset := 0x1C
-            let functionSelectorLength := 0x04
-            let scratchSpace := 0x0
-            let wordLength := 0x20
-            let startOfFreeMemory := mload(0x40)
+        returns (uint256 amountSpentOnOrder, uint256 amountReceivedFromOrder);
 
-            calldatacopy(startOfFreeMemory, callDataOffset, calldatasize)
-
-            let bytesLength := mload(startOfFreeMemory)
-            let totalLength := add(add(functionSelectorLength, bytesLength), wordLength)
-
-            mstore(add(scratchSpace, functionSelectorOffset), functionSelector)
-
-            let functionSelectorCorrect := mload(scratchSpace)
-
-            mstore(startOfFreeMemory, functionSelectorCorrect)
-
-            mstore(add(startOfFreeMemory, add(wordLength, bytesLength)), amountToGiveForOrder)
-
-            let startOfNewData := add(startOfFreeMemory,functionSelectorOffset)
-
-            success := delegatecall(
-                            gas,
-                            address, // This address of the current contract
-                            startOfNewData, // Start data at the beginning of the functionSelector
-                            totalLength, // Total length of all data, including functionSelector
-                            scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
-                            mul(wordLength, 0x02) // Length of return variables is two words
-                          )
-            amountSpentOnOrder := mload(scratchSpace)
-            amountReceivedFromOrder := mload(add(scratchSpace, wordLength))
-            if eq(success, 0) { revert(0, 0) }
-        }
-    }
-
-    /// @notice Perform a sell order at the exchange
-    /// @param genericPayload the data for this order in a generic format
-    /// @param  amountToGiveForOrder amount that should be spent on this order
-    /// @return amountSpentOnOrder the amount that would be spent on the order
-    /// @return amountReceivedFromOrder the amount that was received from this order
-    function performSellOrder(
-        bytes genericPayload,
-        uint256 amountToGiveForOrder
-    )
-        public
-        returns (uint256 amountSpentOnOrder, uint256 amountReceivedFromOrder)
-    {
-        bool success;
-        bytes4 functionSelector = getSelector(this.performSellOrder.selector);
-        assembly {
-            let callDataOffset := 0x44
-            let functionSelectorOffset := 0x1C
-            let functionSelectorLength := 0x04
-            let scratchSpace := 0x0
-            let wordLength := 0x20
-            let startOfFreeMemory := mload(0x40)
-
-            calldatacopy(startOfFreeMemory, callDataOffset, calldatasize)
-
-            let bytesLength := mload(startOfFreeMemory)
-            let totalLength := add(add(functionSelectorLength, bytesLength), wordLength)
-
-            mstore(add(scratchSpace, functionSelectorOffset), functionSelector)
-
-            let functionSelectorCorrect := mload(scratchSpace)
-
-            mstore(startOfFreeMemory, functionSelectorCorrect)
-
-            mstore(add(startOfFreeMemory, add(wordLength, bytesLength)), amountToGiveForOrder)
-
-            let startOfNewData := add(startOfFreeMemory,functionSelectorOffset)
-
-            success := delegatecall(
-                            gas,
-                            address, // This address of the current contract
-                            startOfNewData, // Start data at the beginning of the functionSelector
-                            totalLength, // Total length of all data, including functionSelector
-                            scratchSpace, // Use the first word of memory (scratch space) to store our return variable.
-                            mul(wordLength, 0x02) // Length of return variables is two words
-                          )
-            amountSpentOnOrder := mload(scratchSpace)
-            amountReceivedFromOrder := mload(add(scratchSpace, wordLength))
-            if eq(success, 0) { revert(0, 0) }
-        }
-    }
 }
-
-/*
-
-  Copyright 2018 ZeroEx Intl.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-*/
 
 contract LibEIP712 {
 
@@ -763,7 +408,7 @@ contract LibEIP712 {
             EIP712_DOMAIN_SEPARATOR_SCHEMA_HASH,
             keccak256(bytes(EIP712_DOMAIN_NAME)),
             keccak256(bytes(EIP712_DOMAIN_VERSION)),
-            bytes32(address(this))
+            abi.encodePacked(address(this))
         ));
     }
 
@@ -798,24 +443,6 @@ contract LibEIP712 {
         return result;
     }
 }
-
-/*
-
-  Copyright 2018 ZeroEx Intl.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-*/
 
 contract LibOrder is
     LibEIP712
@@ -940,24 +567,6 @@ contract LibOrder is
     }
 }
 
-/*
-
-  Copyright 2018 ZeroEx Intl.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-*/
-
 contract LibFillResults
 {
     struct FillResults {
@@ -1045,6 +654,7 @@ interface WETH {
     function withdraw(uint256 amount) external;
 }
 
+
 /// @title ZeroExExchangeHandler
 /// @notice Handles the all ZeroExExchange trades for the primary contract
 contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
@@ -1065,22 +675,17 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
 
     /// @notice Constructor
     /// @param _exchange Address of the IExchangeCore exchange
-    /// @param totlePrimary the address of the totlePrimary contract
     constructor(
         address _exchange,
-        address totlePrimary,
-        address _weth,
-        address errorReporter
-        /* ,address logger */
+        address _weth
     )
-        ExchangeHandler(totlePrimary, errorReporter/*, logger*/)
         public
     {
-        require(_exchange != address(0x0));
         exchange = IExchangeCore(_exchange);
         ERC20_ASSET_PROXY = exchange.getAssetProxy(toBytes4(ZRX_ASSET_DATA, 0));
         weth = WETH(_weth);
     }
+
 
     struct OrderData {
         address makerAddress;           // Address that created the order.
@@ -1102,6 +707,8 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
     *   Public functions
     */
 
+
+
     /*
     *   Internal functions
     */
@@ -1110,11 +717,10 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
     /// @param data LibOrder.Order struct containing order values
     /// @return amountToGive amount taker needs to give in order to fill the order
     function getAmountToGive_(
-        OrderData data
+        OrderData memory data
     )
-      public
+      internal
       view
-      onlyTotle
       returns (uint256 amountToGive)
     {
         LibOrder.OrderInfo memory orderInfo = exchange.getOrderInfo(
@@ -1129,16 +735,17 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
             maxFromMakerFee),
             SafeMath.sub(data.takerAssetAmount, orderInfo.orderTakerAssetFilledAmount)
         );
+        //TODO add in taker fee shit - both in calculating this and actually buying the ZRX
         /* logger.log("Getting amountToGive from ZeroEx arg2: amountToGive", amountToGive); */
     }
 
-    function getAssetDataAvailable(bytes assetData, address account) internal view returns (uint){
+    function getAssetDataAvailable(bytes memory assetData, address account) internal view returns (uint){
         address tokenAddress = toAddress(assetData, 16);
         ERC20 token = ERC20(tokenAddress);
         return Math.min(token.balanceOf(account), token.allowance(account, ERC20_ASSET_PROXY));
     }
 
-    function getZeroExOrder(OrderData data) internal pure returns (LibOrder.Order) {
+    function getZeroExOrder(OrderData memory data) internal pure returns (LibOrder.Order memory) {
         return LibOrder.Order({
             makerAddress: data.makerAddress,
             takerAddress: data.takerAddress,
@@ -1159,12 +766,11 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
     /// @dev This should be called to check for payload errors
     /// @param data LibOrder.Order struct containing order values
     /// @return checksPassed value representing pass or fail
-    function staticExchangeChecks_(
-        OrderData data
+    function staticExchangeChecks(
+        OrderData memory data
     )
-        public
+        internal
         view
-        onlyTotle
         returns (bool checksPassed)
     {
 
@@ -1184,62 +790,60 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
         );
     }
 
-    /// @notice Perform a buy order at the exchange
-    /// @param data LibOrder.Order struct containing order values
-    /// @return amountSpentOnOrder the amount that would be spent on the order
-    /// @return amountReceivedFromOrder the amount that was received from this order
-    function performBuyOrder_(
-        OrderData data
+    function performOrder(
+        bytes memory genericPayload,
+        uint256 availableToSpend,
+        uint256 targetAmount,
+        bool targetAmountIsSource
     )
         public
         payable
-        onlyTotle
         returns (uint256 amountSpentOnOrder, uint256 amountReceivedFromOrder)
     {
-        uint256 amountToGiveForOrder = toUint(msg.data, msg.data.length - 32);
+        OrderData memory data = abi.decode(genericPayload, (OrderData));
+        address sourceAddress = toAddress(data.takerAssetData, 16);
+        if(!staticExchangeChecks(data)){
+            if(sourceAddress == address(weth)){
+                msg.sender.transfer(availableToSpend);
+            } else {
+                ERC20SafeTransfer.safeTransfer(sourceAddress, msg.sender, availableToSpend);
+            }
+            return (0,0);
 
-        approveAddress(ERC20_ASSET_PROXY, toAddress(data.takerAssetData, 16));
-
-        weth.deposit.value(amountToGiveForOrder)();
+        }
+        if(sourceAddress == address(weth)){
+            weth.deposit.value(availableToSpend);
+        }
+        approveAddress(ERC20_ASSET_PROXY, sourceAddress);
 
         LibFillResults.FillResults memory results = exchange.fillOrder(
             getZeroExOrder(data),
-            amountToGiveForOrder,
-            data.signature
-        );
-        require(ERC20SafeTransfer.safeTransfer(toAddress(data.makerAssetData, 16), msg.sender, results.makerAssetFilledAmount));
-
-        amountSpentOnOrder = results.takerAssetFilledAmount;
-        amountReceivedFromOrder = results.makerAssetFilledAmount;
-        /* logger.log("Performed buy order on ZeroEx arg2: amountSpentOnOrder, arg3: amountReceivedFromOrder", amountSpentOnOrder, amountReceivedFromOrder); */
-    }
-
-    /// @notice Perform a sell order at the exchange
-    /// @param data LibOrder.Order struct containing order values
-    /// @return amountSpentOnOrder the amount that would be spent on the order
-    /// @return amountReceivedFromOrder the amount that was received from this order
-    function performSellOrder_(
-        OrderData data
-    )
-        public
-        onlyTotle
-        returns (uint256 amountSpentOnOrder, uint256 amountReceivedFromOrder)
-    {
-        uint256 amountToGiveForOrder = toUint(msg.data, msg.data.length - 32);
-        approveAddress(ERC20_ASSET_PROXY, toAddress(data.takerAssetData, 16));
-
-        LibFillResults.FillResults memory results = exchange.fillOrder(
-            getZeroExOrder(data),
-            amountToGiveForOrder,
+            Math.min(targetAmount, availableToSpend),
             data.signature
         );
 
-        weth.withdraw(results.makerAssetFilledAmount);
-        msg.sender.transfer(results.makerAssetFilledAmount);
-
         amountSpentOnOrder = results.takerAssetFilledAmount;
         amountReceivedFromOrder = results.makerAssetFilledAmount;
-        /* logger.log("Performed sell order on ZeroEx arg2: amountSpentOnOrder, arg3: amountReceivedFromOrder", amountSpentOnOrder, amountReceivedFromOrder); */
+
+        if(amountSpentOnOrder < availableToSpend){
+            if(sourceAddress == address(weth)){
+                weth.withdraw(availableToSpend - amountSpentOnOrder);
+                msg.sender.transfer(amountSpentOnOrder);
+            } else {
+                ERC20SafeTransfer.safeTransfer(sourceAddress, msg.sender, availableToSpend - amountSpentOnOrder);
+            }
+        }
+
+        address destinationAddress = toAddress(data.makerAssetData, 16);
+
+        if(destinationAddress == address(weth)){
+            weth.withdraw(amountReceivedFromOrder);
+            msg.sender.transfer(amountReceivedFromOrder);
+        } else {
+            ERC20SafeTransfer.safeTransfer(destinationAddress, msg.sender, amountReceivedFromOrder);
+        }
+
+
     }
 
     /// @notice Calculate the result of ((numerator * target) / denominator)
@@ -1263,7 +867,7 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
     // @param _bytes a string of at least 20 bytes
     // @param _start the offset of the address within the byte stream
     // @return tempAddress the address encoded in the bytestring beginning at _start
-    function toAddress(bytes _bytes, uint _start) internal  pure returns (address) {
+    function toAddress(bytes memory _bytes, uint _start) internal  pure returns (address) {
         require(_bytes.length >= (_start + 20));
         address tempAddress;
 
@@ -1274,7 +878,7 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
         return tempAddress;
     }
 
-    function toBytes4(bytes _bytes, uint _start) internal pure returns (bytes4) {
+    function toBytes4(bytes memory _bytes, uint _start) internal pure returns (bytes4) {
         require(_bytes.length >= (_start + 4));
         bytes4 tempBytes4;
 
@@ -1288,7 +892,7 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
     // @param _bytes a string of at least 32 bytes
     // @param _start the offset of the uint256 within the byte stream
     // @return tempUint the uint encoded in the bytestring beginning at _start
-    function toUint(bytes _bytes, uint _start) internal  pure returns (uint256) {
+    function toUint(bytes memory _bytes, uint _start) internal  pure returns (uint256) {
         require(_bytes.length >= (_start + 32));
         uint256 tempUint;
 
@@ -1299,27 +903,13 @@ contract ZeroExExchangeHandler is ExchangeHandler, AllowanceSetter  {
         return tempUint;
     }
 
-    function getSelector(bytes4 genericSelector) public pure returns (bytes4) {
-        if (genericSelector == getAmountToGiveSelector) {
-            return bytes4(keccak256("getAmountToGive_((address,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bytes,bytes,bytes))"));
-        } else if (genericSelector == staticExchangeChecksSelector) {
-            return bytes4(keccak256("staticExchangeChecks_((address,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bytes,bytes,bytes))"));
-        } else if (genericSelector == performBuyOrderSelector) {
-            return bytes4(keccak256("performBuyOrder_((address,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bytes,bytes,bytes))"));
-        } else if (genericSelector == performSellOrderSelector) {
-            return bytes4(keccak256("performSellOrder_((address,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bytes,bytes,bytes))"));
-        } else {
-            return bytes4(0x0);
-        }
-    }
-
     /*
     *   Payable fallback function
     */
 
     /// @notice payable fallback to allow the exchange to return ether directly to this contract
     /// @dev note that only the exchange should be able to send ether to this contract
-    function() public payable {
+    function() external payable {
         require(msg.sender == address(weth));
     }
 }

@@ -19,51 +19,87 @@
 pragma solidity >=0.4.22 <0.6.0;
 pragma experimental ABIEncoderV2;
 
+interface Partner {
+
+    function payout(
+        address[] calldata tokens,
+        uint256[] calldata amounts
+    )
+    external;
+
+    function getTotalFeePercentage() external view returns (uint256);
+
+    function() external payable;
+}
+
 /// @title The primary interface for Totle - Allows interaction with the Totle primary contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 interface ITotlePrimary {
 
+    // Structs
+    struct Order {
+        address payable exchangeHandler;
+        bytes encodedPayload;
+    }
+
     struct Trade {
-        bool isSell;
-        address tokenAddress;
-        uint256 tokenAmount;
-        bool optionalTrade;
-        uint256 minimumExchangeRate;
-        uint256 minimumAcceptableTokenAmount;
+        address sourceToken;
+        address destinationToken;
+        uint256 amount;
+        bool isSourceAmount; //true if amount is sourceToken, false if it's destinationToken
         Order[] orders;
     }
 
-    struct Order {
-        address exchangeHandler;
-        bytes genericPayload;
+    struct Swap {
+        Trade[] trades;
+        uint256 minimumExchangeRate;
+        uint256 minimumDestinationAmount;
+        uint256 sourceAmount;
+        uint256 tradeToTakeFeeFrom;
+        bool takeFeeFromSource; //Takes the fee before the trade if true, takes it after if false
+        address payable redirectAddress;
+        bool required;
     }
 
-     struct TradeFlag {
-        bool ignoreTrade;
-        bool[] ignoreOrder;
+    struct SwapCollection {
+        Swap[] swaps;
+        address payable partnerContract;
+        uint256 expirationBlock;
+        bytes32 id;
+        uint8 v;
+        bytes32 r;
+        bytes32 s;
+    }
+
+    struct TokenBalance {
+        address tokenAddress;
+        uint256 balance;
+    }
+
+    struct FeeVariables {
+        uint256 feePercentage;
+        Partner partner;
+        uint256 totalFee;
+    }
+
+    struct AmountsSpentReceived{
+        uint256 spent;
+        uint256 received;
     }
 
     /*
     *   Public functions
     */
-    /// @notice Performs the requested portfolio rebalance
-    /// @param trades A dynamic array of trade structs
-    function performRebalance(
-        Trade[] calldata trades,
-        bytes32 id
+    /// @notice Performs the requested set of swaps
+    /// @param swaps The struct that defines the collection of swaps to perform
+    function performSwapCollection(
+        SwapCollection calldata swaps
     )
         external
         payable;
-
-    /// @notice Performs static checks on the rebalance payload before execution
-    /// @dev This function is public so a rebalance can be checked before performing a rebalance
-    /// @param trades A dynamic array of trade structs
-    /// @param tradeFlags A dynamic array of flags indicating trade and order status
-    function staticChecks(
-        Trade[] calldata trades,
-        TradeFlag[] calldata tradeFlags
-    )
-        external
-        view;
+    function addSigner(address newSigner) external;
+    function removeSigner(address signer) external;
+    function() external payable;
+    function log(string calldata a, uint256 b, bytes32 c) external;
 }
