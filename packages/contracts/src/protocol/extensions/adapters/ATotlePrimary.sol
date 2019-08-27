@@ -51,7 +51,7 @@ interface Oracle {
 //import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
 //import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/ExchangesAuthority/ExchangesAuthorityFace.sol";
 
-pragma solidity 0.5.4;
+pragma solidity 0.5.7;
 pragma experimental ABIEncoderV2;
 
 contract TotlePrimary {

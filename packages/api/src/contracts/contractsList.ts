@@ -22,6 +22,7 @@ import { Migrations } from './models/migrations'
 import { NavVerifier } from './models/nav_verifier'
 import { Owned } from './models/owned'
 import { OwnedUninitialized } from './models/owned_uninitialized'
+import { PartnerRegistry } from './models/partner_registry'
 import { ProofOfPerformance } from './models/proof_of_performance'
 import { RigoToken } from './models/rigo_token'
 import { SigVerifier } from './models/sig_verifier'
@@ -64,6 +65,7 @@ export abstract class ContractsList {
   NavVerifier: typeof NavVerifier & NavVerifier
   Owned: typeof Owned & Owned
   OwnedUninitialized: typeof OwnedUninitialized & OwnedUninitialized
+  PartnerRegistry: typeof PartnerRegistry & PartnerRegistry
   ProofOfPerformance: typeof ProofOfPerformance & ProofOfPerformance
   RigoToken: typeof RigoToken & RigoToken
   SigVerifier: typeof SigVerifier & SigVerifier
