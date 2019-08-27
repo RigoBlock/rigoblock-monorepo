@@ -212,17 +212,6 @@ module.exports = async (baseAccount, network) => {
   await zeroExExchangeHandler.addTotle(totlePrimary.address)
   await totlePrimary.addHandlerToWhitelist(zeroExExchangeHandler.address)
 
-  const handlerMock = await deploy(baseAccount, network, 'HandlerMock', [
-    rigoToken.address,
-    totlePrimary.address,
-    errorReporter.address,
-    20 // priceDivider
-  ])
-  printAddress('HandlerMock', handlerMock.address)
-
-  await handlerMock.addTotle(totlePrimary.address)
-  await totlePrimary.addHandlerToWhitelist(handlerMock.address)
-
   await exchangesAuthority.setExchangeAdapter(
     totlePrimary.address,
     aTotlePrimary.address
@@ -256,7 +245,6 @@ module.exports = async (baseAccount, network) => {
     ExchangeV1Fork: exchangeV1Fork,
     ExchangesAuthority: exchangesAuthority,
     Faucet: faucet,
-    HandlerMock: handlerMock,
     HGetDragoData: hGetDragoData,
     Inflation: inflation,
     NavVerifier: navVerifier,
