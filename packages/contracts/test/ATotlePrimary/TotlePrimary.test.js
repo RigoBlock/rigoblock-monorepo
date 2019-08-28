@@ -175,16 +175,15 @@ struct OrderData {
         required // bool required
       ]
 
-      // TODO: Trade[] and Order[] should be encoded as arrays
       const encodedSwaps = await web3.eth.abi.encodeParameters(
         [
           {
-            "Trade": {
+            "Trade[]": {
               "propertyOne": 'address',
               "propertyTwo": 'address',
               "propertyThree": 'uint256',
               "propertyFour": 'bool',
-              "Order": {
+              "Order[]": {
                 "propertyOne": 'address',
                 "propertyTwo": 'bytes'
               }
@@ -199,16 +198,20 @@ struct OrderData {
           'bool'
         ],
         [
-          {
-            "propertyOne": weth9TokenAddress,
-            "propertyTwo": rigoTokenAddress,
-            "propertyThree": tokenAmount,
-            "propertyFour": isSourceAmount,
-            "Order": {
-              "propertyOne": zeroExHandlerAddress,
-              "propertyTwo": encodedOrder
+          [
+            {
+              "propertyOne": weth9TokenAddress,
+              "propertyTwo": rigoTokenAddress,
+              "propertyThree": tokenAmount,
+              "propertyFour": isSourceAmount,
+              "Order":   [
+                {
+                  "propertyOne": zeroExHandlerAddress,
+                  "propertyTwo": encodedOrder
+                }
+              ]
             }
-          },
+          ],
           minimumExchangeRate,
           minimumAcceptableTokenAmount,
           tokenAmount,
@@ -216,7 +219,7 @@ struct OrderData {
           takeFeeFromSource,
           accounts[1],
           required
-        ] // to mock multiple swaps add ,[]
+        ]
       )
 
       const swapsHash = web3.utils.keccak256(encodedSwaps, accounts[0], expirationTimeSeconds, tradeId)
@@ -244,6 +247,7 @@ struct OrderData {
       ).send({ ...transactionDetails })
       ).rejects.toThrowErrorMatchingSnapshot()
     })
+    // ignore following test until first one successfully passes
     it.skip('performs a 0x GRG sell order on totle', async () => {
       //account 1 signs GRG buy order
       //must wrap eth
