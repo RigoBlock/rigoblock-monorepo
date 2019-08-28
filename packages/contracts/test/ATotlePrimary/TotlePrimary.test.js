@@ -147,14 +147,6 @@ struct OrderData {
       const takeFeeFromSource = false
       const required = true
 
-      // accounts[1] takes the order, purchases GRG
-      const transactionDetails = {
-        value: tokenAmount, //takerAssetFillAmount,
-        from: accounts[1],
-        gas: GAS_ESTIMATE,
-        gasPrice: 1
-      }
-
       const swaps = [
         [[
           weth9TokenAddress, // address sourceToken
@@ -222,13 +214,27 @@ struct OrderData {
         ]
       )
 
-      const swapsHash = web3.utils.keccak256(encodedSwaps, accounts[0], expirationTimeSeconds, tradeId, accounts[0])
+      const swapsHash = web3.utils.keccak256(
+        encodedSwaps,
+        accounts[0],
+        expirationTimeSeconds,
+        tradeId,
+        accounts[1] // msg.sender
+      )
       const swapsSignature = await web3.eth.sign(swapsHash, accounts[0])
       const r = swapsSignature.slice( 0, 66 )
       const s = `0x${swapsSignature.slice( 66, 130 )}`
       let v = `0x${swapsSignature.slice( 130, 132 )}`
       v = web3.utils.toDecimal( v )
       if ( ![ 27, 28 ].includes( v ) ) v += 27
+
+      // accounts[1] takes the order, purchases GRG
+      const transactionDetails = {
+        value: tokenAmount, //takerAssetFillAmount,
+        from: accounts[1],
+        gas: GAS_ESTIMATE,
+        gasPrice: 1
+      }
 
       // if weth, must hold weth and approve tokentransferproxy
       // if eth, must send value together with function
