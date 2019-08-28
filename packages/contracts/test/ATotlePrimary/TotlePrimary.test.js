@@ -143,6 +143,9 @@ struct OrderData {
       const tokenAmount = 10000 // takerAssetAmount
       const minimumExchangeRate = 1 // Allowable Price Change (%)
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
+      const isSourceAmount = false
+      const takeFeeFromSource = false
+      const required = true
 
       // accounts[1] takes the order, purchases GRG
       const transactionDetails = {
@@ -157,7 +160,7 @@ struct OrderData {
           weth9TokenAddress, // address sourceToken
           rigoTokenAddress, // address destinationToken
           tokenAmount, // uint256 amount
-          false, //bool isSourceAmount, //true if amount is sourceToken, false if it's destinationToken
+          isSourceAmount, //bool isSourceAmount, //true if amount is sourceToken, false if it's destinationToken
           [[
             zeroExHandlerAddress, // address payable exchangeHandler
             encodedOrder // bytes encodedPayload
@@ -167,14 +170,56 @@ struct OrderData {
         minimumAcceptableTokenAmount, // uint256 minimumDestinationAmount
         tokenAmount, // uint256 sourceAmount
         makerFee, // uint256 tradeToTakeFeeFrom (maker fee is 0)
-        false, // bool takeFeeFromSource //Takes the fee before the trade if true, takes it after if false
+        takeFeeFromSource, // bool takeFeeFromSource //Takes the fee before the trade if true, takes it after if false
         accounts[1], // address payable redirectAddress
-        true // bool required
+        required // bool required
       ]
 
-      // TODO: fix signature parameters hashing
-      const swapsHash = web3.utils.keccak256(swaps, accounts[0], expirationTimeSeconds, tradeId)
+      // TODO: Trade[] and Order[] should be encoded as arrays
+      const encodedSwaps = await web3.eth.abi.encodeParameters(
+        [
+          {
+            "Trade": {
+              "propertyOne": 'address',
+              "propertyTwo": 'address',
+              "propertyThree": 'uint256',
+              "propertyFour": 'bool',
+              "Order": {
+                "propertyOne": 'address',
+                "propertyTwo": 'bytes'
+              }
+            }
+          },
+          'uint256',
+          'uint256',
+          'uint256',
+          'uint256',
+          'bool',
+          'address',
+          'bool'
+        ],
+        [
+          {
+            "propertyOne": weth9TokenAddress,
+            "propertyTwo": rigoTokenAddress,
+            "propertyThree": tokenAmount,
+            "propertyFour": isSourceAmount,
+            "Order": {
+              "propertyOne": zeroExHandlerAddress,
+              "propertyTwo": encodedOrder
+            }
+          },
+          minimumExchangeRate,
+          minimumAcceptableTokenAmount,
+          tokenAmount,
+          makerFee,
+          takeFeeFromSource,
+          accounts[1],
+          required
+        ] // to mock multiple swaps add ,[]
+      )
 
+      const swapsHash = web3.utils.keccak256(encodedSwaps, accounts[0], expirationTimeSeconds, tradeId)
       const swapsSignature = await web3.eth.sign(swapsHash, accounts[0])
       const r = swapsSignature.slice( 0, 66 )
       const s = `0x${swapsSignature.slice( 66, 130 )}`
@@ -272,6 +317,28 @@ struct OrderData {
       const tokenAmount = (takerAssetAmount / 2).toString() // partial fill, takerAssetFillAmount
       const minimumExchangeRate = 1 // Allowable Price Change (%)
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
+
+/*
+      const swaps = [
+        [[
+          weth9TokenAddress, // address sourceToken
+          rigoTokenAddress, // address destinationToken
+          tokenAmount, // uint256 amount
+          false, //bool isSourceAmount, //true if amount is sourceToken, false if it's destinationToken
+          [[
+            zeroExHandlerAddress, // address payable exchangeHandler
+            encodedOrder // bytes encodedPayload
+          ]]
+        ]],
+        minimumExchangeRate, // uint256 minimumExchangeRate
+        minimumAcceptableTokenAmount, // uint256 minimumDestinationAmount
+        tokenAmount, // uint256 sourceAmount
+        makerFee, // uint256 tradeToTakeFeeFrom (maker fee is 0)
+        false, // bool takeFeeFromSource //Takes the fee before the trade if true, takes it after if false
+        accounts[1], // address payable redirectAddress
+        true // bool required
+      ]
+*/
 
       // if weth, must hold weth and approve tokentransferproxy
       // if eth, must send value together with function
