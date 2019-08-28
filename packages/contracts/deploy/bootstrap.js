@@ -178,53 +178,22 @@ module.exports = async (baseAccount, network) => {
     aEthfinex.address
   )
 
-  const errorReporter = await deploy(baseAccount, network, 'ErrorReporter')
-  printAddress('ErrorReporter', errorReporter.address)
-
-  const affiliateRegistry = await deploy(baseAccount, network, 'AffiliateRegistry', [
-    baseAccount, baseAccount, 0
-  ])
-  printAddress('AffiliateRegistry', affiliateRegistry.address)
-
-  await affiliateRegistry.registerAffiliate(baseAccount, 0)
-
-  const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
-    tokenTransferProxy.address, // same tokentransferproxy unless required
-    affiliateRegistry.address,
-    errorReporter.address,
-    baseAccount // defaultFeeAccount
-  ])
-  printAddress('TotlePrimary', totlePrimary.address)
-
-  await tokenTransferProxy.addAuthorizedAddress(totlePrimary.address)
-  await exchangesAuthority.whitelistExchange(totlePrimary.address, true)
-
   const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary', [
     wETH9.address // TODO: add totle primary as constructor input
   ])
   printAddress('ATotlePrimary', aTotlePrimary.address)
 
+  const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
+    tokenTransferProxy.address,
+    baseAccount
+  ])
+  printAddress('TotlePrimary', totlePrimary.address)
+
   const zeroExExchangeHandler = await deploy(baseAccount, network, 'ZeroExExchangeHandler', [
     exchange.address,
-    totlePrimary.address,
-    wETH9.address,
-    errorReporter.address
+    wETH9.address
   ])
   printAddress('ZeroExExchangeHandler', zeroExExchangeHandler.address)
-
-  await zeroExExchangeHandler.addTotle(totlePrimary.address)
-  await totlePrimary.addHandlerToWhitelist(zeroExExchangeHandler.address)
-
-  const handlerMock = await deploy(baseAccount, network, 'HandlerMock', [
-    rigoToken.address,
-    totlePrimary.address,
-    errorReporter.address,
-    20 // priceDivider
-  ])
-  printAddress('HandlerMock', handlerMock.address)
-
-  await handlerMock.addTotle(totlePrimary.address)
-  await totlePrimary.addHandlerToWhitelist(handlerMock.address)
 
   await exchangesAuthority.setExchangeAdapter(
     totlePrimary.address,
@@ -246,7 +215,6 @@ module.exports = async (baseAccount, network) => {
   return {
     AbiEncoder: abiEncoder,
     AEthfinex: aEthfinex,
-    AffiliateRegistry: affiliateRegistry,
     ASelfCustody: aSelfCustody,
     ATotlePrimary: aTotlePrimary,
     AWeth: aWeth,
@@ -254,27 +222,25 @@ module.exports = async (baseAccount, network) => {
     DragoRegistry: dragoRegistry,
     DragoEventful: dragoEventful,
     DragoFactory: dragoFactory,
-    ErrorReporter: errorReporter,
     Erc20Proxy: erc20Proxy,
     Exchange: exchange,
     ExchangeEfx: exchangeEfx,
     ExchangeV1Fork: exchangeV1Fork,
     ExchangesAuthority: exchangesAuthority,
     Faucet: faucet,
-    HandlerMock: handlerMock,
     HGetDragoData: hGetDragoData,
     NavVerifier: navVerifier,
     RigoToken: rigoToken,
     ProofOfPerformance: proofOfPerformance,
+    TotlePrimary: totlePrimary,
     Inflation: inflation,
     SigVerifier: sigVerifier,
-    TotlePrimary: totlePrimary,
     TokenTransferProxy: tokenTransferProxy,
     VaultEventful: vaultEventful,
     VaultFactory: vaultFactory,
     WETH9: wETH9,
     WrapperLockEth: wrapperLockEth,
     WrapperLock: wrapperLock,
-    ZeroExExchangeHandler: zeroExExchangeHandler,
+    ZeroExExchangeHandler: zeroExExchangeHandler
   }
 }

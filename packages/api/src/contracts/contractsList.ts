@@ -3,7 +3,6 @@ import { ASelfCustody } from './models/a_self_custody'
 import { ATotlePrimary } from './models/a_totle_primary'
 import { AWeth } from './models/a_weth'
 import { AbiEncoder } from './models/abi_encoder'
-import { AffiliateRegistry } from './models/affiliate_registry'
 import { Authority } from './models/authority'
 import { Distribution } from './models/distribution'
 import { Drago } from './models/drago'
@@ -12,14 +11,12 @@ import { DragoFactory } from './models/drago_factory'
 import { DragoRegistry } from './models/drago_registry'
 import { ERC20 } from './models/erc20'
 import { Erc20Proxy } from './models/erc20_proxy'
-import { ErrorReporter } from './models/error_reporter'
 import { Exchange } from './models/exchange'
 import { ExchangeEfx } from './models/exchange_efx'
 import { ExchangeV1Fork } from './models/exchange_v1_fork'
 import { ExchangesAuthority } from './models/exchanges_authority'
 import { Faucet } from './models/faucet'
 import { HGetDragoData } from './models/h_get_drago_data'
-import { HandlerMock } from './models/handler_mock'
 import { Inflation } from './models/inflation'
 import { Migrations } from './models/migrations'
 import { NavVerifier } from './models/nav_verifier'
@@ -48,7 +45,6 @@ export abstract class ContractsList {
   ATotlePrimary: typeof ATotlePrimary & ATotlePrimary
   AWeth: typeof AWeth & AWeth
   AbiEncoder: typeof AbiEncoder & AbiEncoder
-  AffiliateRegistry: typeof AffiliateRegistry & AffiliateRegistry
   Authority: typeof Authority & Authority
   Distribution: typeof Distribution & Distribution
   Drago: typeof Drago & Drago
@@ -57,14 +53,12 @@ export abstract class ContractsList {
   DragoRegistry: typeof DragoRegistry & DragoRegistry
   ERC20: typeof ERC20 & ERC20
   Erc20Proxy: typeof Erc20Proxy & Erc20Proxy
-  ErrorReporter: typeof ErrorReporter & ErrorReporter
   Exchange: typeof Exchange & Exchange
   ExchangeEfx: typeof ExchangeEfx & ExchangeEfx
   ExchangeV1Fork: typeof ExchangeV1Fork & ExchangeV1Fork
   ExchangesAuthority: typeof ExchangesAuthority & ExchangesAuthority
   Faucet: typeof Faucet & Faucet
   HGetDragoData: typeof HGetDragoData & HGetDragoData
-  HandlerMock: typeof HandlerMock & HandlerMock
   Inflation: typeof Inflation & Inflation
   Migrations: typeof Migrations & Migrations
   NavVerifier: typeof NavVerifier & NavVerifier

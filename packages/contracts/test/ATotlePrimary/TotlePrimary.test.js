@@ -14,6 +14,8 @@ import {
 import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types'
 import web3 from '../web3'
 
+jest.setTimeout(30000);
+
 const contractName = 'TotlePrimary'
 
 describeContract(contractName, () => {
@@ -55,7 +57,7 @@ describeContract(contractName, () => {
     }
   })
 
-  describe.skip('performRebalance', () => {
+  describe('performSwapCollection', () => {
     it('performs a 0x GRG buy order on totle', async () => {
       // account 1 buys from account 0
       const makerAddress = accounts[0]
@@ -136,16 +138,11 @@ struct OrderData {
       )
 
       const tradeId = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock id bytes32
-      const isSell = false // buying a token from the secondary account -> isSell = false
-      const optionalTrade = false
+      //const isSell = false // buying a token from the secondary account -> isSell = false
+      //const optionalTrade = false
       const tokenAmount = 10000 // takerAssetAmount
       const minimumExchangeRate = 1 // Allowable Price Change (%)
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
-
-      const feeAccount = accounts[0]
-      // TODO: check why base account is not valid affiliate, since it is set up in bootstrap
-      // affiliate is a contract, created for each affiliate account
-      // const isAffiliated = await baseContracts['AffiliateRegistry'].isValidAffiliate(accounts[0])
 
       // accounts[1] takes the order, purchases GRG
       const transactionDetails = {
@@ -154,29 +151,58 @@ struct OrderData {
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
-      await expect(totlePrimaryInstance.methods.performRebalance(
+
+      const swaps = [
+        [[
+          weth9TokenAddress, // address sourceToken
+          rigoTokenAddress, // address destinationToken
+          tokenAmount, // uint256 amount
+          false, //bool isSourceAmount, //true if amount is sourceToken, false if it's destinationToken
+          [[
+            zeroExHandlerAddress, // address payable exchangeHandler
+            encodedOrder // bytes encodedPayload
+          ]]
+        ]],
+        minimumExchangeRate, // uint256 minimumExchangeRate
+        minimumAcceptableTokenAmount, // uint256 minimumDestinationAmount
+        tokenAmount, // uint256 sourceAmount
+        makerFee, // uint256 tradeToTakeFeeFrom (maker fee is 0)
+        false, // bool takeFeeFromSource //Takes the fee before the trade if true, takes it after if false
+        accounts[1], // address payable redirectAddress
+        true // bool required
+      ]
+
+      // TODO: fix signature
+      //const swapsHash = web3.utils.soliditySha3([swaps], accounts[0], expirationTimeSeconds, tradeId)
+      const swapsHash = web3.utils.keccak256(swaps, accounts[0], expirationTimeSeconds, tradeId)
+      const swapsSignature = await web3.eth.sign(swapsHash, accounts[0])
+      const r = signature.slice( 0, 66 )
+      const s = `0x${signature.slice( 66, 130 )}`
+      const v = '0x27'
+/*
+      let v = `0x${signature.slice( 130, 132 )}`
+      v = web3.utils.toDecimal( v )
+      if ( ![ 27, 28 ].includes( v ) ) v += 27
+*/
+
+      // if weth, must hold weth and approve tokentransferproxy
+      // if eth, must send value together with function
+      await expect(totlePrimaryInstance.methods.performSwapCollection(
         [
           [
-            isSell,
-            rigoTokenAddress,
-            tokenAmount,
-            optionalTrade,
-            minimumExchangeRate, // check on value
-            minimumAcceptableTokenAmount,
-            [
-                [
-                  zeroExHandlerAddress,
-                  encodedOrder
-                ]
-            ]
-          ]
-        ],
-        feeAccount,
-        tradeId
+            swaps
+          ],
+          accounts[0], // address payable partnerContract
+          expirationTimeSeconds, // uint256 expirationBlock
+          tradeId, // bytes32 id
+          v, //uint8 v
+          r, // bytes32 r
+          s // bytes32 s
+        ]
       ).send({ ...transactionDetails })
-    ).rejects.toThrowErrorMatchingSnapshot()
-    }, 9999)
-    it('performs a 0x GRG sell order on totle', async () => {
+      ).rejects.toThrowErrorMatchingSnapshot()
+    })
+    it.skip('performs a 0x GRG sell order on totle', async () => {
       //account 1 signs GRG buy order
       //must wrap eth
       const makerAddress = accounts[1]
@@ -246,37 +272,44 @@ struct OrderData {
       )
 
       const tradeId = '0xfa39c1a29cab1aa241b62c2fd067a6602a9893c2afe09aaea371609e11cbd92d' // mock id bytes32
-      const isSell = true
-      const optionalTrade = false
       const tokenAmount = (takerAssetAmount / 2).toString() // partial fill, takerAssetFillAmount
       const minimumExchangeRate = 1 // Allowable Price Change (%)
       const minimumAcceptableTokenAmount = 10000 // Minimum Token Fill Quantity(%)
 
-      const feeAccount = accounts[0]
-      // TODO: check why base account is not valid affiliate, since it is set up in bootstrap
-      const isAffiliated = await baseContracts['AffiliateRegistry'].isValidAffiliate(accounts[0])
-
-      await expect(totlePrimaryInstance.methods.performRebalance(
-        [
-          [
-            isSell,
-            rigoTokenAddress,
-            tokenAmount,
-            optionalTrade,
-            minimumExchangeRate, // check on value
-            minimumAcceptableTokenAmount,
-            [
-                [
-                  zeroExHandlerAddress,
-                  encodedOrder
-                ]
-            ]
-          ]
-        ],
-        feeAccount,
-        tradeId
-      ).send({ ...transactionDefault })
+      // if weth, must hold weth and approve tokentransferproxy
+      // if eth, must send value together with function
+/*
+      await expect(totlePrimaryInstance.methods.performSwapCollection(
+      [
+        [[
+          [[
+            weth9TokenAddress, // address sourceToken
+            rigoTokenAddress, // address destinationToken
+            tokenAmount, // uint256 amount
+            false, //bool isSourceAmount, //true if amount is sourceToken, false if it's destinationToken
+            [[
+              zeroExHandlerAddress, // address payable exchangeHandler
+              encodedOrder // bytes encodedPayload
+            ]]
+          ]],
+          minimumExchangeRate, // uint256 minimumExchangeRate
+          minimumAcceptableTokenAmount, // uint256 minimumDestinationAmount
+          tokenAmount, // uint256 sourceAmount
+          makerFee, // uint256 tradeToTakeFeeFrom (maker fee is 0)
+          false, // bool takeFeeFromSource //Takes the fee before the trade if true, takes it after if false
+          accounts[1], // address payable redirectAddress
+          true // bool required
+        ]],
+        accounts[0], // address payable partnerContract
+        expirationTimeSeconds, // uint256 expirationBlock
+        tradeId, // bytes32 id
+        v, //uint8 v
+        r, // bytes32 r
+        s // bytes32 s
+      ]
+      ).send({ ...transactionDetails })
       ).rejects.toThrowErrorMatchingSnapshot()
-    }, 9999)
+*/
+    })
   })
 })
