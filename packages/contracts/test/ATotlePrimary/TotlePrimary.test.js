@@ -173,17 +173,16 @@ struct OrderData {
       ]
 
       // TODO: fix signature
-      //const swapsHash = web3.utils.soliditySha3([swaps], accounts[0], expirationTimeSeconds, tradeId)
       const swapsHash = web3.utils.keccak256(swaps, accounts[0], expirationTimeSeconds, tradeId)
+
       const swapsSignature = await web3.eth.sign(swapsHash, accounts[0])
       const r = signature.slice( 0, 66 )
       const s = `0x${signature.slice( 66, 130 )}`
       const v = '0x27'
-/*
-      let v = `0x${signature.slice( 130, 132 )}`
-      v = web3.utils.toDecimal( v )
-      if ( ![ 27, 28 ].includes( v ) ) v += 27
-*/
+
+      //let v = `0x${signature.slice( 130, 132 )}`
+      //v = web3.utils.toDecimal( v )
+      //if ( ![ 27, 28 ].includes( v ) ) v += 27
 
       // if weth, must hold weth and approve tokentransferproxy
       // if eth, must send value together with function
