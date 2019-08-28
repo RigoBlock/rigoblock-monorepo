@@ -222,7 +222,7 @@ struct OrderData {
         ]
       )
 
-      const swapsHash = web3.utils.keccak256(encodedSwaps, accounts[0], expirationTimeSeconds, tradeId)
+      const swapsHash = web3.utils.keccak256(encodedSwaps, accounts[0], expirationTimeSeconds, tradeId, accounts[0])
       const swapsSignature = await web3.eth.sign(swapsHash, accounts[0])
       const r = swapsSignature.slice( 0, 66 )
       const s = `0x${swapsSignature.slice( 66, 130 )}`
