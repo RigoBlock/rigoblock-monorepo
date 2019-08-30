@@ -3,7 +3,7 @@
   "version": "0.3.15",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
+    "build": "npm run compile && rm -rf dist && lerna run --scope=@rgbk/dapp ganache:bootstrap && webpack",
     "ganache": "ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "compile": "node deploy/compiler.js",
     "deploy": "node deploy/cli.js",
@@ -63,7 +63,7 @@
     }
   },
   "dependencies": {
-    "@rigoblock/deployer": "^0.1.16",
+    "@rgbk/deployer": "^0.1.18",
     "chalk": "2.4.1",
     "core-js": "3.2.1",
     "inquirer": "6.2.1",

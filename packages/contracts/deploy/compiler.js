@@ -1,5 +1,5 @@
 const Web3 = require('web3')
-const Compiler = require('@rigoblock/deployer').Compiler
+const Compiler = require('@rgbk/deployer').Compiler
 const c = require('chalk')
 const {
   NETWORKS,

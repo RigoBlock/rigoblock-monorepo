@@ -48,7 +48,7 @@ Bootstrap all packages and install all their dependencies
 
 Build all packages in order. Ganache needs to be launched first as it is required for our contracts to be compiled. Optionally you can open the Ganache client instead of using the CLI.
 
-    npx lerna run --loglevel silent --scope @rigoblock/dapp ganache &> /dev/null &
+    npx lerna run --loglevel silent --scope @rgbk/dapp ganache &> /dev/null &
     yarn build
     kill %1
 

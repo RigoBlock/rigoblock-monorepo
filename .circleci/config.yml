@@ -64,7 +64,7 @@ jobs:
       - *attach_workspace
       - run:
           name: JS unit tests
-          command: npx lerna run --scope @rigoblock/dapp test:cov --stream
+          command: npx lerna run --scope @rgbk/dapp test:cov --stream
       - store_artifacts:
           path: coverage/dapp/lcov-report
 
@@ -88,7 +88,7 @@ jobs:
             DOCKERIZE_VERSION: v0.3.0
       - run:
           name: Starting ganache cli
-          command: npx lerna run --scope @rigoblock/dapp ganache --stream
+          command: npx lerna run --scope @rgbk/dapp ganache --stream
           background: true
       - run:
           name: Wait for ganache cli
@@ -116,7 +116,7 @@ jobs:
       - *attach_workspace
       - run:
          name: Test contracts
-         command: npx lerna run --scope @rigoblock/contracts test:ci --stream
+         command: npx lerna run --scope @rgbk/contracts test:ci --stream
 
   build-api:
     working_directory: *workspace_root
@@ -164,7 +164,7 @@ jobs:
       - *attach_workspace
       - run:
           name: Running unit tests
-          command: npx lerna run --scope @rigoblock/exchange-connector test:unit --stream
+          command: npx lerna run --scope @rgbk/exchange-connector test:unit --stream
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -206,14 +206,14 @@ jobs:
             DOCKERIZE_VERSION: v0.3.0
       - run:
           name: Starting HTTP server
-          command: npx lerna run --scope @rigoblock/dapp start --stream
+          command: npx lerna run --scope @rgbk/dapp start --stream
           background: true
       - run:
           name: Wait for HTTP server
           command: dockerize -wait tcp://localhost:8080 -timeout 1m
       - run:
           name: JS feature tests
-          command: npx lerna run --scope @rigoblock/dapp test:feature:debug --stream
+          command: npx lerna run --scope @rgbk/dapp test:feature:debug --stream
       - store_artifacts:
           path: packages/dapp/output
 

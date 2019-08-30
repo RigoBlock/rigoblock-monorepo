@@ -1,3 +1,3 @@
-import ExchangeConnector from '@rigoblock/exchange-connector'
+import ExchangeConnector from '@rgbk/exchange-connector'
 
 export default new ExchangeConnector()

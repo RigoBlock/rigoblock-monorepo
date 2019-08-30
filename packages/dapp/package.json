@@ -29,8 +29,8 @@
     "@babel/plugin-syntax-jsx": "7.0.0",
     "@babel/plugin-transform-react-display-name": "7.0.0",
     "@babel/plugin-transform-react-jsx": "7.0.0",
-    "@rigoblock/api": "^0.2.18",
-    "@rigoblock/ganache-bootstrap": "^0.1.25",
+    "@rgbk/api": "^0.2.20",
+    "@rgbk/ganache-bootstrap": "^0.1.27",
     "@storybook/addon-info": "^4.0.0-rc.1",
     "@storybook/addon-knobs": "^4.0.0-rc.1",
     "@storybook/addon-options": "^4.0.0-rc.1",
@@ -161,7 +161,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.1.0",
-    "@rigoblock/contracts": "^0.3.13",
+    "@rgbk/contracts": "^0.3.15",
     "core-js": "3.0.0-beta.3",
     "serve": "10.1.1"
   },

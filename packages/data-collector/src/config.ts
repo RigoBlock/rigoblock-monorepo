@@ -1,4 +1,4 @@
-import { NETWORKS } from '@rigoblock/exchange-connector'
+import { NETWORKS } from '@rgbk/exchange-connector'
 import tokensMap from './tokensMap'
 
 export type ConfigEntry = {
