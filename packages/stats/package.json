@@ -1,6 +1,6 @@
 {
   "name": "@rgbk/stats",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Rigoblock stats collector",
   "private": false,
   "main": "src/index.js",

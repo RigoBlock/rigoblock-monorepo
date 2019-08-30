@@ -1,6 +1,6 @@
 {
   "name": "@rgbk/data-collector",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Rigoblock data collector",
   "private": false,
   "main": "src/index.js",

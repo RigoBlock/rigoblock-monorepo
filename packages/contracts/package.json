@@ -1,6 +1,6 @@
 {
   "name": "@rgbk/contracts",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run compile && rm -rf dist && lerna run --scope=@rigoblock/dapp ganache:bootstrap && webpack",
@@ -22,7 +22,9 @@
     "mnemonic": "lemon scrub wasp bracket town boat property sadness layer taxi butter audit"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/test/setupTests.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setupTests.js"
+    ],
     "testMatch": [
       "<rootDir>/test/**/?(*.)+(spec|test).[jt]s?(x)"
     ],

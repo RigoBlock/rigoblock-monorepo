@@ -1,7 +1,7 @@
 {
   "name": "@rgbk/api",
   "description": "A JS wrapper around RigoBlock Smart Contracts to simplify their consumption.",
-  "version": "0.2.18",
+  "version": "0.2.19",
   "main": "dist/api.js",
   "types": "dist/api.d.ts",
   "engines": {
