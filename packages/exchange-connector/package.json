@@ -1,7 +1,7 @@
 {
   "name": "@rgbk/exchange-connector",
   "description": "A JS utility to interacts with Exchanges API.",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "dist/index.js",
   "author": "",
   "license": "ISC",
@@ -74,5 +74,5 @@
       "node"
     ]
   },
-  "gitHead": "32b2d31c4a92481c6a97eefefe660f06d2de232c"
+  "gitHead": "9b5b4afd5d4197f721fa322549b436b6501ab4f8"
 }

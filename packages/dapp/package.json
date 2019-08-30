@@ -1,6 +1,6 @@
 {
   "name": "@rgbk/dapp",
-  "version": "0.1.24",
+  "version": "0.1.25",
   "private": false,
   "scripts": {
     "start": "serve -s dist -p 8080",
@@ -165,5 +165,5 @@
     "core-js": "3.0.0-beta.3",
     "serve": "10.1.1"
   },
-  "gitHead": "32b2d31c4a92481c6a97eefefe660f06d2de232c"
+  "gitHead": "9b5b4afd5d4197f721fa322549b436b6501ab4f8"
 }

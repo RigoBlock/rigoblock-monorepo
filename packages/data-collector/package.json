@@ -1,6 +1,6 @@
 {
   "name": "@rgbk/data-collector",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Rigoblock data collector",
   "private": false,
   "main": "src/index.js",
@@ -53,5 +53,5 @@
       "@babel/plugin-proposal-class-properties"
     ]
   },
-  "gitHead": "32b2d31c4a92481c6a97eefefe660f06d2de232c"
+  "gitHead": "9b5b4afd5d4197f721fa322549b436b6501ab4f8"
 }
