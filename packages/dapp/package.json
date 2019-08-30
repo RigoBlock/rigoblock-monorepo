@@ -1,6 +1,6 @@
 {
   "name": "@rgbk/dapp",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "private": false,
   "scripts": {
     "start": "serve -s dist -p 8080",
@@ -29,8 +29,8 @@
     "@babel/plugin-syntax-jsx": "7.0.0",
     "@babel/plugin-transform-react-display-name": "7.0.0",
     "@babel/plugin-transform-react-jsx": "7.0.0",
-    "@rgbk/api": "^0.2.20",
-    "@rgbk/ganache-bootstrap": "^0.1.27",
+    "@rgbk/api": "^0.2.21",
+    "@rgbk/ganache-bootstrap": "^0.1.28",
     "@storybook/addon-info": "^4.0.0-rc.1",
     "@storybook/addon-knobs": "^4.0.0-rc.1",
     "@storybook/addon-options": "^4.0.0-rc.1",
@@ -161,7 +161,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.1.0",
-    "@rgbk/contracts": "^0.3.15",
+    "@rgbk/contracts": "^0.3.16",
     "core-js": "3.0.0-beta.3",
     "serve": "10.1.1"
   },
