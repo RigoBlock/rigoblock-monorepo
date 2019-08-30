@@ -1,5 +1,5 @@
 {
-  "name": "@rigoblock/api",
+  "name": "@rgbk/api",
   "description": "A JS wrapper around RigoBlock Smart Contracts to simplify their consumption.",
   "version": "0.2.18",
   "main": "dist/api.js",

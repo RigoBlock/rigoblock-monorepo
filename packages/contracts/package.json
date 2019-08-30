@@ -1,5 +1,5 @@
 {
-  "name": "@rigoblock/contracts",
+  "name": "@rgbk/contracts",
   "version": "0.3.13",
   "main": "dist/index.js",
   "scripts": {

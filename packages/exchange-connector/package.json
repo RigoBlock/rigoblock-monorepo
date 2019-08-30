@@ -1,5 +1,5 @@
 {
-  "name": "@rigoblock/exchange-connector",
+  "name": "@rgbk/exchange-connector",
   "description": "A JS utility to interacts with Exchanges API.",
   "version": "0.0.15",
   "main": "dist/index.js",

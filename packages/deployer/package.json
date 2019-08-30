@@ -1,5 +1,5 @@
 {
-    "name": "@rigoblock/deployer",
+    "name": "@rgbk/deployer",
     "version": "0.1.16",
     "description": "Smart contract deployer",
     "main": "dist/index.js",
