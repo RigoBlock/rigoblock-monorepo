@@ -5,10 +5,10 @@ import {
   EFX_TOKENS_LIST,
   POOL_DECIMALS
 } from '../../constants'
-import { NETWORKS, supportedExchanges } from '@rigoblock/exchange-connector'
+import { NETWORKS, supportedExchanges } from '@rgbk/exchange-connector'
 import { postJSON, toBn, toUnitAmount } from '../../utils'
 import exchangeConnector from '../../exchangeConnector'
-import fetchContracts from '@rigoblock/contracts'
+import fetchContracts from '@rgbk/contracts'
 import redis from '../../redis'
 import statsD from '../../statsd'
 import web3ErrorWrapper from '../web3ErrorWrapper'

@@ -1,3 +1,3 @@
-import RigoApi from '@rigoblock/api'
+import RigoApi from '@rgbk/api'
 
 export default new RigoApi()

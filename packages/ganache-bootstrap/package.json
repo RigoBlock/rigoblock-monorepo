@@ -1,15 +1,15 @@
 {
-  "name": "@rigoblock/ganache-bootstrap",
-  "version": "0.1.25",
+  "name": "@rgbk/ganache-bootstrap",
+  "version": "0.1.28",
   "bin": {
     "ganache-bootstrap": "bin/ganache-bootstrap.js",
     "ganache-seed": "bin/ganache-seed.js"
   },
   "dependencies": {
-    "@rigoblock/contracts": "^0.3.13",
+    "@rgbk/contracts": "^0.3.16",
     "chalk": "^2.3.2",
     "pino": "^4.15.3",
     "web3": "^1.0.0-beta.33"
   },
-  "gitHead": "32b2d31c4a92481c6a97eefefe660f06d2de232c"
+  "gitHead": "9b5b4afd5d4197f721fa322549b436b6501ab4f8"
 }

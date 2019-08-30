@@ -1,6 +1,6 @@
 import * as crypto from 'crypto'
 import * as moment from 'moment'
-import { supportedExchanges } from '@rigoblock/exchange-connector'
+import { supportedExchanges } from '@rgbk/exchange-connector'
 import connector from '../connector'
 
 export class TokenPrice {

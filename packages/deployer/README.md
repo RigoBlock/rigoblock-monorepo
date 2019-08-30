@@ -7,14 +7,14 @@ A packages that facilitates the compilation and deployment of smart contracts. D
 ## Importing the package
 
 ```javascript
-import { Deployer, Compiler } from '@rigoblock/deployer';
+import { Deployer, Compiler } from '@rgbk/deployer';
 ```
 
 or
 
 ```javascript
-const Deployer = require('@rigoblock/deployer').Deployer;
-const Compiler = require('@rigoblock/deployer').Compiler;
+const Deployer = require('@rgbk/deployer').Deployer;
+const Compiler = require('@rgbk/deployer').Compiler;
 ```
 
 ## Available Scripts

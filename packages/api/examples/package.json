@@ -8,8 +8,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@rigoblock/api": "^0.2.15",
-    "@rigoblock/contracts": "^0.3.10",
+    "@rgbk/api": "^0.2.15",
+    "@rgbk/contracts": "^0.3.10",
     "chalk": "^2.4.2"
   }
 }

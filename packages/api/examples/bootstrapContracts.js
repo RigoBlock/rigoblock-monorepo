@@ -1,4 +1,4 @@
-const bootstrap = require('@rigoblock/contracts/deploy/bootstrap')
+const bootstrap = require('@rgbk/contracts/deploy/bootstrap')
 const Web3 = require('web3')
 
 const bootstrapContracts = async () => {
