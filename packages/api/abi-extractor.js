@@ -1,7 +1,7 @@
 const path = require('path')
 const clk = require('chalk')
 const fs = require('fs')
-const fetchContracts = require('@rigoblock/contracts').default
+const fetchContracts = require('@rgbk/contracts').default
 
 const writeFilePromise = (name, content) =>
   new Promise((resolve, reject) =>

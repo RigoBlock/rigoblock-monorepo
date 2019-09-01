@@ -1,5 +1,5 @@
 import Web3 = require('web3')
-import fetchContracts from '@rigoblock/contracts'
+import fetchContracts from '@rgbk/contracts'
 import redis from '../../redis'
 import statsD from '../../statsd'
 import web3ErrorWrapper from '../web3ErrorWrapper'

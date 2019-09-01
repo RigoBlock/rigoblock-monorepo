@@ -1,6 +1,6 @@
 'use strict'
 const Web3 = require('web3')
-const fetchContracts = require('@rigoblock/contracts').default
+const fetchContracts = require('@rgbk/contracts').default
 // in this file you can append custom step methods to 'I' object
 
 const GANACHE_URL = 'http://localhost:8545'

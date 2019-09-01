@@ -1,7 +1,7 @@
 const clk = require('chalk')
 const fs = require('fs')
 const { promisify } = require('util')
-const fetchContracts = require('@rigoblock/contracts').default
+const fetchContracts = require('@rgbk/contracts').default
 
 const glob = promisify(require('glob'))
 const exec = promisify(require('child_process').exec)

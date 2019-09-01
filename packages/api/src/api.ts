@@ -14,7 +14,7 @@ import { SignerSubprovider } from '@0x/subproviders'
  and import the correct one.
 */
 import WebSocketSubProvider from './webSocketSubprovider'
-import fetchContracts from '@rigoblock/contracts'
+import fetchContracts from '@rgbk/contracts'
 
 export interface ProviderEngineFix extends ProviderEngine {
   start(cb?: Function): void

@@ -1,7 +1,7 @@
 require('jest-extended')
 
 import { GANACHE_NETWORK_ID, GANACHE_PORT, NETWORKS } from '../constants'
-import bootstrap from '@rigoblock/contracts/deploy/bootstrap'
+import bootstrap from '@rgbk/contracts/deploy/bootstrap'
 import c from 'chalk'
 import ganache from 'ganache-cli'
 import logger from '../deploy/logger'

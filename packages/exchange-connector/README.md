@@ -5,7 +5,7 @@ An API to simplify interaction with token Exchanges.
 ## Importing the package
 
 ```javascript
-import exchangeConnector, { supportedExchanges, NETWORKS, exchanges } from '@rigoblock/exchange-connector'
+import exchangeConnector, { supportedExchanges, NETWORKS, exchanges } from '@rgbk/exchange-connector'
 ```
 
 ## How to use it
@@ -19,12 +19,12 @@ example:
 
 ```javascript
 // exchangeConnector.js
-import ExchangeConnector from '@rigoblock/exchange-connector'
+import ExchangeConnector from '@rgbk/exchange-connector'
 
 export default new ExchangeConnector()
 
 // someOtherFile.js
-import { supportedExchanges, NETWORKS } from '@rigoblock/exchange-connector'
+import { supportedExchanges, NETWORKS } from '@rgbk/exchange-connector'
 import connector from './exchangeConnector.js'
 
 const ethfinex = connector.getExchange(supportedExchanges.ETHFINEX, {
@@ -42,7 +42,7 @@ Some methods require specific parameters to be passed, these are saved under a p
 import {
   NETWORKS,
   supportedExchanges
-} from '@rigoblock/exchange-connector'
+} from '@rgbk/exchange-connector'
 import connector from './exchangeConnector.js'
 
 const ethfinex = connector.getExchange(supportedExchanges.ETHFINEX, {

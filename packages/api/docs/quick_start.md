@@ -13,13 +13,13 @@ Installation
 ------------
 
 ```
-npm install --save @rigoblock/api
+npm install --save @rgbk/api
 ```
 
 Or with Yarn:
 
 ```
-yarn add @rigoblock/api
+yarn add @rgbk/api
 ```
 
 Usage
@@ -28,7 +28,7 @@ Usage
 ### Initialising the API
 
 ```javascript
-import Api from '@rigoblock/api'
+import Api from '@rgbk/api'
 
 const api = new Api()
 await api.init(web3)
@@ -56,7 +56,7 @@ const authority = await api.contract.Authority.createAndValidate(
 Creating a Vault from the VaultFactory contract
 
 ```javascript
-import Api from '@rigoblock/api'
+import Api from '@rgbk/api'
 
 const api = new Api()
 await api.init()
@@ -222,4 +222,3 @@ Read our [contribution guidelines](https://github.com/RigoBlock/rigoblock-monore
 * ["webSocketSubprovider"](modules/_websocketsubprovider_.md)
 
 ---
-

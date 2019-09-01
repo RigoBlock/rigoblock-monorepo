@@ -1,6 +1,6 @@
 const Web3 = require('web3')
 const c = require('chalk')
-const bootstrap = require('@rigoblock/contracts/deploy/bootstrap')
+const bootstrap = require('@rgbk/contracts/deploy/bootstrap')
 const logger = require('./logger')
 
 module.exports = async network => {

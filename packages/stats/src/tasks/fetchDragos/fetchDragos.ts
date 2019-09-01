@@ -1,7 +1,7 @@
 import Web3 = require('web3')
 import { EventLog } from '../../types'
 import { chunkifyEvents } from '../../utils'
-import fetchContracts from '@rigoblock/contracts'
+import fetchContracts from '@rgbk/contracts'
 import redis from '../../redis'
 import web3ErrorWrapper from '../web3ErrorWrapper'
 
