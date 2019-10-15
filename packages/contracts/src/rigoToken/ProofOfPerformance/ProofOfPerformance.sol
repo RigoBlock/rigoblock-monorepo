@@ -424,7 +424,7 @@ contract ProofOfPerformance is
             10000 ether
         ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether;
 
-        popReward = safeAdd(performanceReward, assetsReward);
+        popReward = grgBalanceRewardSlashInternal(thePoolAddress, safeAdd(performanceReward, assetsReward));
 
         if (popReward > 10 ** 25 / 10000) {
             popReward = 10 ** 25 / 10000; // max single reward 0.01% of total supply
@@ -483,6 +483,42 @@ contract ProofOfPerformance is
 
         } else { // reward is 0 for any pool not backed by < 10% eth
             revert('ETH_BELOW_10_PERCENT_AUM_ERROR');
+        }
+    }
+
+    /// @dev Returns the non-linear rewards adjustment by grg operator balance.
+    /// @param thePoolAddress Address of the pool.
+    /// @param pop Number of preliminary reward.
+    /// @return Number non-linear adjustment.
+    function grgBalanceRewardSlashInternal(
+        address thePoolAddress,
+        uint256 pop)
+        internal
+        view
+        returns (uint256)
+    {
+        uint256 operatorGrgBalance = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(thePoolAddress).owner());
+        uint256 grgTotalSupply = RigoToken(RIGOTOKENADDRESS).totalSupply();
+
+        // non-linear progression series with decay factor 18%
+        // y = (1-decay factor)*k^[(1-decay factor)^(n-1)]
+        if (10 ether * operatorGrgBalance / grgTotalSupply >= 5 finney) {
+            return (pop);
+
+        } else if (10 ether * operatorGrgBalance / grgTotalSupply >= 4 finney) {
+            return (pop * 820 / 1000);
+
+        } else if (10 ether * operatorGrgBalance / grgTotalSupply >= 3 finney) {
+            return (pop * 201 / 1000);
+
+        } else if (10 ether * operatorGrgBalance / grgTotalSupply >= 2 finney) {
+            return (pop * 29 / 1000);
+
+        } else if (10 ether * operatorGrgBalance / grgTotalSupply >= 1 finney) {
+            return (pop * 5 / 1000);
+
+        } else {
+            return (pop * 2 / 1000);
         }
     }
 
