@@ -16,7 +16,8 @@
 
 */
 
-//import { ITotlePrimary } from "../../../utils/exchanges/totle/ITotlePrimary/ITotlePrimary.sol";
+pragma solidity 0.5.4;
+pragma experimental ABIEncoderV2;
 
 // https://github.com/ethereum/EIPs/issues/20
 interface ERC20 {
@@ -50,9 +51,6 @@ interface Oracle {
 //import { Drago } from "../../Drago/Drago.sol";
 //import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
 //import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/ExchangesAuthority/ExchangesAuthorityFace.sol";
-
-pragma solidity 0.5.4;
-pragma experimental ABIEncoderV2;
 
 contract TotlePrimary {
     address public tokenTransferProxy;
