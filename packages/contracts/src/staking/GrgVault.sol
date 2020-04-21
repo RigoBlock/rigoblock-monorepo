@@ -1,7 +1,7 @@
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
-  Modified work Copyright Rigo Intl.
+  Modified work Copyright 2020 Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity ^0.6.6;
 
 import "@0x/contracts-utils/contracts/src/Authorizable.sol";
 import "@0x/contracts-utils/contracts/src/LibRichErrors.sol";
@@ -26,12 +26,12 @@ import "@0x/contracts-asset-proxy/contracts/src/interfaces/IAssetProxy.sol";
 import "@0x/contracts-asset-proxy/contracts/src/interfaces/IAssetData.sol";
 import "@0x/contracts-erc20/contracts/src/interfaces/IERC20Token.sol";
 import "./libs/LibStakingRichErrors.sol";
-import "./interfaces/IZrxVault.sol";
+import "./interfaces/IGrgVault.sol";
 
 
 contract GrgVault is
     Authorizable,
-    IZrxVault
+    IGrgVault
 {
     using LibSafeMath for uint256;
 
@@ -41,17 +41,17 @@ contract GrgVault is
     // True iff vault has been set to Catastrophic Failure Mode
     bool public isInCatastrophicFailure;
 
-    // Mapping from staker to ZRX balance
+    // Mapping from staker to GRG balance
     mapping (address => uint256) internal _balances;
 
-    // Zrx Asset Proxy
-    IAssetProxy public zrxAssetProxy;
+    // Grg Asset Proxy
+    IAssetProxy public grgAssetProxy;
 
-    // Zrx Token
-    IERC20Token internal _zrxToken;
+    // Grg Token
+    IERC20Token internal _grgToken;
 
     // Asset data for the ERC20 Proxy
-    bytes internal _zrxAssetData;
+    bytes internal _grgAssetData;
 
     /// @dev Only stakingProxy can call this function.
     modifier onlyStakingProxy() {
@@ -72,20 +72,20 @@ contract GrgVault is
     }
 
     /// @dev Constructor.
-    /// @param _zrxProxyAddress Address of the 0x Zrx Proxy.
-    /// @param _zrxTokenAddress Address of the Zrx Token.
+    /// @param _grgProxyAddress Address of the RigoBlock Grg Proxy.
+    /// @param _grgTokenAddress Address of the Grg Token.
     constructor(
-        address _zrxProxyAddress,
-        address _zrxTokenAddress
+        address _grgProxyAddress,
+        address _grgTokenAddress
     )
         public
         Authorizable()
     {
-        zrxAssetProxy = IAssetProxy(_zrxProxyAddress);
-        _zrxToken = IERC20Token(_zrxTokenAddress);
-        _zrxAssetData = abi.encodeWithSelector(
+        grgAssetProxy = IAssetProxy(_grgProxyAddress);
+        _grgToken = IERC20Token(_grgTokenAddress);
+        _grgAssetData = abi.encodeWithSelector(
             IAssetData(address(0)).ERC20Token.selector,
-            _zrxTokenAddress
+            _grgTokenAddress
         );
     }
 
@@ -112,24 +112,24 @@ contract GrgVault is
         emit InCatastrophicFailureMode(msg.sender);
     }
 
-    /// @dev Sets the Zrx proxy.
+    /// @dev Sets the Grg proxy.
     /// Note that only an authorized address can call this function.
     /// Note that this can only be called when *not* in Catastrophic Failure mode.
-    /// @param _zrxProxyAddress Address of the 0x Zrx Proxy.
-    function setZrxProxy(address _zrxProxyAddress)
+    /// @param _grgProxyAddress Address of the RigoBlock Grg Proxy.
+    function setGrgProxy(address _grgProxyAddress)
         external
         onlyAuthorized
         onlyNotInCatastrophicFailure
     {
-        zrxAssetProxy = IAssetProxy(_zrxProxyAddress);
-        emit ZrxProxySet(_zrxProxyAddress);
+        grgAssetProxy = IAssetProxy(_grgProxyAddress);
+        emit GrgProxySet(_grgProxyAddress);
     }
 
-    /// @dev Deposit an `amount` of Zrx Tokens from `staker` into the vault.
+    /// @dev Deposit an `amount` of Grg Tokens from `staker` into the vault.
     /// Note that only the Staking contract can call this.
     /// Note that this can only be called when *not* in Catastrophic Failure mode.
-    /// @param staker of Zrx Tokens.
-    /// @param amount of Zrx Tokens to deposit.
+    /// @param staker of Grg Tokens.
+    /// @param amount of Grg Tokens to deposit.
     function depositFrom(address staker, uint256 amount)
         external
         onlyStakingProxy
@@ -141,20 +141,20 @@ contract GrgVault is
         // notify
         emit Deposit(staker, amount);
 
-        // deposit ZRX from staker
-        zrxAssetProxy.transferFrom(
-            _zrxAssetData,
+        // deposit GRG from staker
+        grgAssetProxy.transferFrom(
+            _grgAssetData,
             staker,
             address(this),
             amount
         );
     }
 
-    /// @dev Withdraw an `amount` of Zrx Tokens to `staker` from the vault.
+    /// @dev Withdraw an `amount` of Grg Tokens to `staker` from the vault.
     /// Note that only the Staking contract can call this.
     /// Note that this can only be called when *not* in Catastrophic Failure mode.
-    /// @param staker of Zrx Tokens.
-    /// @param amount of Zrx Tokens to withdraw.
+    /// @param staker of Grg Tokens.
+    /// @param amount of Grg Tokens to withdraw.
     function withdrawFrom(address staker, uint256 amount)
         external
         onlyStakingProxy
@@ -163,9 +163,9 @@ contract GrgVault is
         _withdrawFrom(staker, amount);
     }
 
-    /// @dev Withdraw ALL Zrx Tokens to `staker` from the vault.
+    /// @dev Withdraw ALL Grg Tokens to `staker` from the vault.
     /// Note that this can only be called when *in* Catastrophic Failure mode.
-    /// @param staker of Zrx Tokens.
+    /// @param staker of Grg Tokens.
     function withdrawAllFrom(address staker)
         external
         onlyInCatastrophicFailure
@@ -174,13 +174,13 @@ contract GrgVault is
         // get total balance
         uint256 totalBalance = _balances[staker];
 
-        // withdraw ZRX to staker
+        // withdraw GRG to staker
         _withdrawFrom(staker, totalBalance);
         return totalBalance;
     }
 
-    /// @dev Returns the balance in Zrx Tokens of the `staker`
-    /// @return Balance in Zrx.
+    /// @dev Returns the balance in Grg Tokens of the `staker`
+    /// @return Balance in Grg.
     function balanceOf(address staker)
         external
         view
@@ -189,18 +189,18 @@ contract GrgVault is
         return _balances[staker];
     }
 
-    /// @dev Returns the entire balance of Zrx tokens in the vault.
-    function balanceOfZrxVault()
+    /// @dev Returns the entire balance of Grg tokens in the vault.
+    function balanceOfGrgVault()
         external
         view
         returns (uint256)
     {
-        return _zrxToken.balanceOf(address(this));
+        return _grgToken.balanceOf(address(this));
     }
 
-    /// @dev Withdraw an `amount` of Zrx Tokens to `staker` from the vault.
-    /// @param staker of Zrx Tokens.
-    /// @param amount of Zrx Tokens to withdraw.
+    /// @dev Withdraw an `amount` of Grg Tokens to `staker` from the vault.
+    /// @param staker of Grg Tokens.
+    /// @param amount of Grg Tokens to withdraw.
     function _withdrawFrom(address staker, uint256 amount)
         internal
     {
@@ -212,8 +212,8 @@ contract GrgVault is
         // notify
         emit Withdraw(staker, amount);
 
-        // withdraw ZRX to staker
-        _zrxToken.transfer(
+        // withdraw GRG to staker
+        _grgToken.transfer(
             staker,
             amount
         );
