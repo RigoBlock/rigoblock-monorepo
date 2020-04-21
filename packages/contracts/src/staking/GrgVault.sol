@@ -1,6 +1,7 @@
 /*
 
-  Copyright 2019 ZeroEx Intl.
+  Original work Copyright 2019 ZeroEx Intl.
+  Modified work Copyright Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -28,7 +29,7 @@ import "./libs/LibStakingRichErrors.sol";
 import "./interfaces/IZrxVault.sol";
 
 
-contract ZrxVault is
+contract GrgVault is
     Authorizable,
     IZrxVault
 {

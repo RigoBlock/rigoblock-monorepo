@@ -1,6 +1,7 @@
 /*
 
-  Copyright 2019 ZeroEx Intl.
+  Original work Copyright 2019 ZeroEx Intl.
+  Modified work Copyright Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -26,7 +27,7 @@ import "./interfaces/IStorageInit.sol";
 import "./interfaces/IStakingProxy.sol";
 
 
-/// #dev The 0x Staking contract.
+/// #dev The RigoBlock Staking contract.
 contract StakingProxy is
     IStakingProxy,
     MixinStorage,
