@@ -1,6 +1,7 @@
 /*
 
-  Copyright 2019 ZeroEx Intl.
+  Original work Copyright 2019 ZeroEx Intl.
+  Modified work Copyright 2020 Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,10 +17,10 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity ^0.6.6;
 
-import "@0x/contracts-erc20/contracts/src/interfaces/IEtherToken.sol";
-import "../interfaces/IZrxVault.sol";
+import "../../utils/0xUtils/IEtherToken.sol";
+import "../interfaces/IGrgVault.sol";
 
 
 // solhint-disable separate-by-one-line-in-contract
@@ -38,17 +39,17 @@ contract MixinDeploymentConstants {
 
     // @TODO SET THESE VALUES FOR DEPLOYMENT
 
-    // Mainnet ZrxVault address
-    address constant private ZRX_VAULT_ADDRESS = address(0xBa7f8b5fB1b19c1211c5d49550fcD149177A5Eaf);
+    // Mainnet GrgVault address
+    address constant private GRG_VAULT_ADDRESS = address(0xBa7f8b5fB1b19c1211c5d49550fcD149177A5Eaf);
 
-    // Kovan ZrxVault address
-    // address constant private ZRX_VAULT_ADDRESS = address(0xf36eabdFE986B35b62c8FD5a98A7f2aEBB79B291);
+    // Kovan GrgVault address
+    // address constant private GRG_VAULT_ADDRESS = address(0xf36eabdFE986B35b62c8FD5a98A7f2aEBB79B291);
 
-    // Ropsten ZrxVault address
-    // address constant private ZRX_VAULT_ADDRESS = address(0xffD161026865Ad8B4aB28a76840474935eEc4DfA);
+    // Ropsten GrgVault address
+    // address constant private GRG_VAULT_ADDRESS = address(0xffD161026865Ad8B4aB28a76840474935eEc4DfA);
 
-    // Rinkeby ZrxVault address
-    // address constant private ZRX_VAULT_ADDRESS = address(0xA5Bf6aC73bC40790FC6Ffc9DBbbCE76c9176e224);
+    // Rinkeby GrgVault address
+    // address constant private GRG_VAULT_ADDRESS = address(0xA5Bf6aC73bC40790FC6Ffc9DBbbCE76c9176e224);
 
     /// @dev An overridable way to access the deployed WETH contract.
     ///      Must be view to allow overrides to access state.
@@ -62,15 +63,15 @@ contract MixinDeploymentConstants {
         return wethContract;
     }
 
-    /// @dev An overridable way to access the deployed zrxVault.
+    /// @dev An overridable way to access the deployed grgVault.
     ///      Must be view to allow overrides to access state.
-    /// @return zrxVault The zrxVault contract.
-    function getZrxVault()
+    /// @return grgVault The grgVault contract.
+    function getGrgVault()
         public
         view
-        returns (IZrxVault zrxVault)
+        returns (IGrgVault grgVault)
     {
-        zrxVault = IZrxVault(ZRX_VAULT_ADDRESS);
-        return zrxVault;
+        grgVault = IGrgVault(GRG_VAULT_ADDRESS);
+        return grgVault;
     }
 }

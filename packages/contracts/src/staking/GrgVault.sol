@@ -19,12 +19,12 @@
 
 pragma solidity ^0.6.6;
 
-import "@0x/contracts-utils/contracts/src/Authorizable.sol";
-import "@0x/contracts-utils/contracts/src/LibRichErrors.sol";
-import "@0x/contracts-utils/contracts/src/LibSafeMath.sol";
-import "@0x/contracts-asset-proxy/contracts/src/interfaces/IAssetProxy.sol";
-import "@0x/contracts-asset-proxy/contracts/src/interfaces/IAssetData.sol";
-import "@0x/contracts-erc20/contracts/src/interfaces/IERC20Token.sol";
+import "../../utils/0xUtils/Authorizable.sol";
+import "../../utils/0xUtils/LibRichErrors.sol";
+import "../../utils/0xUtils/LibSafeMath.sol";
+import "../../utils/0xUtils/IAssetProxy.sol";
+import "../../utils/0xUtils/IAssetData.sol";
+import "../../utils/0xUtils/IERC20Token.sol";
 import "./libs/LibStakingRichErrors.sol";
 import "./interfaces/IGrgVault.sol";
 

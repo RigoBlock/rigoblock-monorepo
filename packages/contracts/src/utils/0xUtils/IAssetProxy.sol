@@ -20,14 +20,25 @@
 pragma solidity ^0.6.6;
 
 
-contract MixinConstants {
+contract IAssetProxy {
 
-    // 100% in parts-per-million.
-    uint32 constant internal PPM_DENOMINATOR = 10**6;
+    /// @dev Transfers assets. Either succeeds or throws.
+    /// @param assetData Byte array encoded for the respective asset proxy.
+    /// @param from Address to transfer asset from.
+    /// @param to Address to transfer asset to.
+    /// @param amount Amount of asset to transfer.
+    function transferFrom(
+        bytes calldata assetData,
+        address from,
+        address to,
+        uint256 amount
+    )
+        external;
 
-    bytes32 constant internal NIL_POOL_ID = 0x0000000000000000000000000000000000000000000000000000000000000000;
-
-    address constant internal NIL_ADDRESS = 0x0000000000000000000000000000000000000000;
-
-    uint256 constant internal MIN_TOKEN_VALUE = 10**18;
+    /// @dev Gets the proxy id associated with the proxy address.
+    /// @return Proxy id.
+    function getProxyId()
+        external
+        pure
+        returns (bytes4);
 }

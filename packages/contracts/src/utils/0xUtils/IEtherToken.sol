@@ -1,7 +1,6 @@
 /*
 
-  Original work Copyright 2019 ZeroEx Intl.
-  Modified work Copyright 2020 Rigo Intl.
+  Copyright 2019 ZeroEx Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -17,17 +16,18 @@
 
 */
 
-pragma solidity ^0.6.6;
+pragma solidity ^0.5.9;
+
+import "./IERC20Token.sol";
 
 
-contract MixinConstants {
+contract IEtherToken is
+    IERC20Token
+{
+    function deposit()
+        public
+        payable;
 
-    // 100% in parts-per-million.
-    uint32 constant internal PPM_DENOMINATOR = 10**6;
-
-    bytes32 constant internal NIL_POOL_ID = 0x0000000000000000000000000000000000000000000000000000000000000000;
-
-    address constant internal NIL_ADDRESS = 0x0000000000000000000000000000000000000000;
-
-    uint256 constant internal MIN_TOKEN_VALUE = 10**18;
+    function withdraw(uint256 amount)
+        public;
 }

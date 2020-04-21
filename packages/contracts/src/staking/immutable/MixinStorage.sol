@@ -1,6 +1,7 @@
 /*
 
-  Copyright 2019 ZeroEx Intl.
+  Original work Copyright 2019 ZeroEx Intl.
+  Modified work Copyright 2020 Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,13 +17,13 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity ^0.6.6;
 pragma experimental ABIEncoderV2;
 
-import "@0x/contracts-utils/contracts/src/LibRichErrors.sol";
-import "@0x/contracts-utils/contracts/src/Authorizable.sol";
 import "./MixinConstants.sol";
-import "../interfaces/IZrxVault.sol";
+import "../../utils/0xUtils/LibRichErrors.sol";
+import "../../utils/0xUtils/Authorizable.sol";
+import "../interfaces/IGrgVault.sol";
 import "../interfaces/IStructs.sol";
 import "../libs/LibStakingRichErrors.sol";
 
@@ -76,10 +77,10 @@ contract MixinStorage is
     // mapping from Pool Id to Epoch
     mapping (bytes32 => uint256) internal _cumulativeRewardsByPoolLastStored;
 
-    /// @dev Registered 0x Exchange contracts, capable of paying protocol fees.
+    /// @dev Registered RigoBlock Proof_of_Performance contracts, capable of paying protocol fees.
     /// @param 0 The address to check.
-    /// @return 0 Whether the address is a registered exchange.
-    mapping (address => bool) public validExchanges;
+    /// @return 0 Whether the address is a registered proof_of_performance.
+    mapping (address => bool) public validPop;
 
     /* Tweakable parameters */
 

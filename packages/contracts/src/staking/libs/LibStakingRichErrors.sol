@@ -1,6 +1,7 @@
 /*
 
-  Copyright 2019 ZeroEx Intl.
+  Original work Copyright 2019 ZeroEx Intl.
+  Modified work Copyright 2020 Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,9 +17,9 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity ^0.6.6;
 
-import "@0x/contracts-utils/contracts/src/LibRichErrors.sol";
+import "../../utils/0xUtils/LibRichErrors.sol";
 import "../interfaces/IStructs.sol";
 
 
@@ -42,17 +43,17 @@ library LibStakingRichErrors {
         InvalidEpochDuration
     }
 
-    enum ExchangeManagerErrorCodes {
-        ExchangeAlreadyRegistered,
-        ExchangeNotRegistered
+    enum PopManagerErrorCodes {
+        PopAlreadyRegistered,
+        PopNotRegistered
     }
 
-    // bytes4(keccak256("OnlyCallableByExchangeError(address)"))
-    bytes4 internal constant ONLY_CALLABLE_BY_EXCHANGE_ERROR_SELECTOR =
+    // bytes4(keccak256("OnlyCallableByPopError(address)"))
+    bytes4 internal constant ONLY_CALLABLE_BY_POP_ERROR_SELECTOR =
         0xb56d2df0;
 
-    // bytes4(keccak256("ExchangeManagerError(uint8,address)"))
-    bytes4 internal constant EXCHANGE_MANAGER_ERROR_SELECTOR =
+    // bytes4(keccak256("PopManagerError(uint8,address)"))
+    bytes4 internal constant POP_MANAGER_ERROR_SELECTOR =
         0xb9588e43;
 
     // bytes4(keccak256("InsufficientBalanceError(uint256,uint256)"))
@@ -112,7 +113,7 @@ library LibStakingRichErrors {
         0x5caa0b05;
 
     // solhint-disable func-name-mixedcase
-    function OnlyCallableByExchangeError(
+    function OnlyCallableByPopError(
         address senderAddress
     )
         internal
@@ -120,23 +121,23 @@ library LibStakingRichErrors {
         returns (bytes memory)
     {
         return abi.encodeWithSelector(
-            ONLY_CALLABLE_BY_EXCHANGE_ERROR_SELECTOR,
+            ONLY_CALLABLE_BY_POP_ERROR_SELECTOR,
             senderAddress
         );
     }
 
-    function ExchangeManagerError(
-        ExchangeManagerErrorCodes errorCodes,
-        address exchangeAddress
+    function PopManagerError(
+        PopManagerErrorCodes errorCodes,
+        address popAddress
     )
         internal
         pure
         returns (bytes memory)
     {
         return abi.encodeWithSelector(
-            EXCHANGE_MANAGER_ERROR_SELECTOR,
+            POP_MANAGER_ERROR_SELECTOR,
             errorCodes,
-            exchangeAddress
+            popAddress
         );
     }
 

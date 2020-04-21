@@ -1,6 +1,7 @@
 /*
 
-  Copyright 2019 ZeroEx Intl.
+  Original work Copyright 2019 ZeroEx Intl.
+  Modified work Copyright 2020 Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,9 +17,9 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity ^0.6.6;
 
-import "@0x/contracts-utils/contracts/src/LibRichErrors.sol";
+import "../../utils/0xUtils/LibRichErrors.sol";
 import "../immutable/MixinStorage.sol";
 import "../immutable/MixinConstants.sol";
 import "../interfaces/IStakingEvents.sol";
@@ -92,7 +93,7 @@ contract MixinParams is
         _assertParamsNotInitialized();
 
         // Set up defaults.
-        uint256 _epochDurationInSeconds = 10 days;
+        uint256 _epochDurationInSeconds = 14 days;
         uint32 _rewardDelegatedStakeWeight = (90 * PPM_DENOMINATOR) / 100;
         uint256 _minimumPoolStake = 100 * MIN_TOKEN_VALUE;
         uint32 _cobbDouglasAlphaNumerator = 2;

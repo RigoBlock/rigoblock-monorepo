@@ -1,6 +1,7 @@
 /*
 
-  Copyright 2019 ZeroEx Intl.
+  Original work Copyright 2019 ZeroEx Intl.
+  Modified work Copyright 2020 Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,10 +17,10 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity ^0.6.6;
 pragma experimental ABIEncoderV2;
 
-import "@0x/contracts-utils/contracts/src/LibSafeMath.sol";
+import "../../utils/0xUtils/LibSafeMath.sol";
 import "../staking_pools/MixinStakingPool.sol";
 import "../libs/LibStakingRichErrors.sol";
 
@@ -29,16 +30,16 @@ contract MixinStake is
 {
     using LibSafeMath for uint256;
 
-    /// @dev Stake ZRX tokens. Tokens are deposited into the ZRX Vault.
-    ///      Unstake to retrieve the ZRX. Stake is in the 'Active' status.
-    /// @param amount Amount of ZRX to stake.
+    /// @dev Stake GRG tokens. Tokens are deposited into the GRG Vault.
+    ///      Unstake to retrieve the GRG. Stake is in the 'Active' status.
+    /// @param amount Amount of GRG to stake.
     function stake(uint256 amount)
         external
     {
         address staker = msg.sender;
 
-        // deposit equivalent amount of ZRX into vault
-        getZrxVault().depositFrom(staker, amount);
+        // deposit equivalent amount of GRG into vault
+        getGrgVault().depositFrom(staker, amount);
 
         // mint stake
         _increaseCurrentAndNextBalance(
@@ -53,10 +54,10 @@ contract MixinStake is
         );
     }
 
-    /// @dev Unstake. Tokens are withdrawn from the ZRX Vault and returned to
+    /// @dev Unstake. Tokens are withdrawn from the GRG Vault and returned to
     ///      the staker. Stake must be in the 'undelegated' status in both the
     ///      current and next epoch in order to be unstaked.
-    /// @param amount Amount of ZRX to unstake.
+    /// @param amount Amount of GRG to unstake.
     function unstake(uint256 amount)
         external
     {
@@ -86,8 +87,8 @@ contract MixinStake is
             amount
         );
 
-        // withdraw equivalent amount of ZRX from vault
-        getZrxVault().withdrawFrom(staker, amount);
+        // withdraw equivalent amount of GRG from vault
+        getGrgVault().withdrawFrom(staker, amount);
 
         // emit stake event
         emit Unstake(

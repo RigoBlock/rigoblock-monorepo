@@ -1,12 +1,13 @@
 /*
 
-  Copyright 2019 ZeroEx Intl.
+  Original work Copyright 2019 ZeroEx Intl.
+  Modified work Copyright 2020 Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +17,10 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity ^0.6.6;
 
 import "../libs/LibSafeDowncast.sol";
-import "@0x/contracts-utils/contracts/src/LibSafeMath.sol";
+import "../../utils/0xUtils/LibSafeMath.sol";
 import "../interfaces/IStructs.sol";
 import "../sys/MixinScheduler.sol";
 

@@ -1,6 +1,7 @@
 /*
 
-  Copyright 2019 ZeroEx Intl.
+  Original work Copyright 2019 ZeroEx Intl.
+  Modified work Copyright 2020 Rigo Intl.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,19 +17,19 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity ^0.6.6;
 pragma experimental ABIEncoderV2;
 
-import "@0x/contracts-erc20/contracts/src/interfaces/IEtherToken.sol";
+import "../../utils/0xUtils/IEtherToken.sol";
 import "./IStructs.sol";
-import "./IZrxVault.sol";
+import "./IGrgVault.sol";
 
 
 interface IStaking {
 
-    /// @dev Adds a new exchange address
-    /// @param addr Address of exchange contract to add
-    function addExchangeAddress(address addr)
+    /// @dev Adds a new proof_of_performance address
+    /// @param addr Address of proof_of_performance contract to add
+    function addPopAddress(address addr)
         external;
 
     /// @dev Create a new staking pool. The sender will be the operator of this pool.
@@ -99,9 +100,9 @@ interface IStaking {
         external
         payable;
 
-    /// @dev Removes an existing exchange address
-    /// @param addr Address of exchange contract to remove
-    function removeExchangeAddress(address addr)
+    /// @dev Removes an existing proof_of_performance address
+    /// @param addr Address of proof_of_performance contract to remove
+    function removePopAddress(address addr)
         external;
 
     /// @dev Set all configurable parameters at once.
@@ -119,16 +120,16 @@ interface IStaking {
     )
         external;
 
-    /// @dev Stake ZRX tokens. Tokens are deposited into the ZRX Vault.
-    ///      Unstake to retrieve the ZRX. Stake is in the 'Active' status.
-    /// @param amount of ZRX to stake.
+    /// @dev Stake GRG tokens. Tokens are deposited into the GRG Vault.
+    ///      Unstake to retrieve the GRG. Stake is in the 'Active' status.
+    /// @param amount of GRG to stake.
     function stake(uint256 amount)
         external;
 
-    /// @dev Unstake. Tokens are withdrawn from the ZRX Vault and returned to
+    /// @dev Unstake. Tokens are withdrawn from the GRG Vault and returned to
     ///      the staker. Stake must be in the 'undelegated' status in both the
     ///      current and next epoch in order to be unstaked.
-    /// @param amount of ZRX to unstake.
+    /// @param amount of GRG to unstake.
     function unstake(uint256 amount)
         external;
 
@@ -241,11 +242,11 @@ interface IStaking {
         view
         returns (IEtherToken wethContract);
 
-    /// @dev An overridable way to access the deployed zrxVault.
+    /// @dev An overridable way to access the deployed grgVault.
     ///      Must be view to allow overrides to access state.
-    /// @return zrxVault The zrxVault contract.
-    function getZrxVault()
+    /// @return grgVault The grgVault contract.
+    function getGrgVault()
         external
         view
-        returns (IZrxVault zrxVault);
+        returns (IGrgVault grgVault);
 }

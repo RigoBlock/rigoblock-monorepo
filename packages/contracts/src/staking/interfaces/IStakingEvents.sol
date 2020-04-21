@@ -1,27 +1,27 @@
-pragma solidity ^0.5.9;
+pragma solidity ^0.6.6;
 
 
 interface IStakingEvents {
 
-    /// @dev Emitted by MixinStake when ZRX is staked.
-    /// @param staker of ZRX.
-    /// @param amount of ZRX staked.
+    /// @dev Emitted by MixinStake when GRG is staked.
+    /// @param staker of GRG.
+    /// @param amount of GRG staked.
     event Stake(
         address indexed staker,
         uint256 amount
     );
 
-    /// @dev Emitted by MixinStake when ZRX is unstaked.
-    /// @param staker of ZRX.
-    /// @param amount of ZRX unstaked.
+    /// @dev Emitted by MixinStake when GRG is unstaked.
+    /// @param staker of GRG.
+    /// @param amount of GRG unstaked.
     event Unstake(
         address indexed staker,
         uint256 amount
     );
 
-    /// @dev Emitted by MixinStake when ZRX is unstaked.
-    /// @param staker of ZRX.
-    /// @param amount of ZRX unstaked.
+    /// @dev Emitted by MixinStake when GRG is unstaked.
+    /// @param staker of GRG.
+    /// @param amount of GRG unstaked.
     event MoveStake(
         address indexed staker,
         uint256 amount,
