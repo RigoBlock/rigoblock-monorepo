@@ -24,7 +24,7 @@ import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
 
 contract Inflation {
-    
+
     uint256 public period;
 
     /*
@@ -415,7 +415,7 @@ contract ProofOfPerformance is
         uint256 assetsReward = (
             safeMul(
                 assetsComponent,
-                safeSub(10000, rewardRatio) // 100000 = 100%
+                safeSub(10000, rewardRatio) // 10000 = 100%
             ) / 10000 ether
         ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether; // reward inversly proportional to Eth in pool
 
@@ -434,7 +434,7 @@ contract ProofOfPerformance is
     /// @dev Returns the high-watermark of the pool.
     /// @param _ofPool Number of the pool in registry.
     /// @return Number high-watermark.
-    function getHwmInternal(uint256 _ofPool) 
+    function getHwmInternal(uint256 _ofPool)
         internal
         view
         returns (uint256)

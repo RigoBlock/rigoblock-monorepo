@@ -62,7 +62,7 @@ contract Inflation is
         uint256 epochReward;
     }
 
-    /// @notice in order to qualify for PoP user has to told minimum rigo token
+    /// @notice in order to qualify for PoP user has to hold minimum rigo token
     modifier minimumRigo(address _ofPool) {
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
         require(
