@@ -196,6 +196,7 @@ contract Inflation is
         external
         onlyRigoblockDao
     {
+        require(period > 1 days && period <= 365 days);
         period = _newPeriod;
     }
 
