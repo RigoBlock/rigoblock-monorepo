@@ -137,6 +137,7 @@ contract Inflation is
         uint256 reward = _reward * 95 / 100; //5% royalty to rigoblock dao
         uint256 rigoblockReward = safeSub(_reward, reward);
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
+        // TODO: amend logic as staking contract receives reward
         rigoToken.mintToken(getPoolOwner(_thePool), reward);
         rigoToken.mintToken(rigoblockDao, rigoblockReward);
         return true;

@@ -392,19 +392,18 @@ contract ProofOfPerformance is
     {
         uint256 highwatermark= getHwmInternal(poolId);
         (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = getPoolPriceAndValueInternal(poolId);
-        require (
-            newPrice >= highwatermark,
-            "PRICE_LOWER_THAN_HWM_ERROR"
-        );
         (address thePoolAddress, ) = addressFromIdInternal(poolId);
         (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = getInflationParameters(poolId);
+        uint256 assetsComponent = 0;
+        uint256 performanceComponent = 0;
 
-        uint256 assetsComponent = safeMul(
+        assetsComponent = safeMul(
             poolValue,
             epochReward
         ) * epochTime / 1 days; // proportional to epoch time
 
-        uint256 performanceComponent = safeMul(
+        // TODO: test new logic of only performance component null if price below high watermark
+        uint256 performanceComponent = newPrice < highwatermark ? 0 : safeMul(
             safeMul(
                 (newPrice - highwatermark),
                 tokenSupply
@@ -460,44 +459,42 @@ contract ProofOfPerformance is
             "ETH_BALANCE_HIGHER_THAN_AUM_OR_TOO_SMALL_ERROR"
         );
 
-        // polynomial progression
+        // logistic function progression g(x)=e^x/(1+e^x).
+        // rebased on (poolEthBalance / poolValue) ∈ [0.125:0.6], x ∈ [-1.9:2.8].
         if (1 ether * poolEthBalance / poolValue >= 800 finney) {
             return (1 ether * poolEthBalance / poolValue);
 
         } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
-            return (1 ether * poolEthBalance / poolValue * 908 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 943 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 500 finney) {
-            return (1 ether * poolEthBalance / poolValue * 855 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 881 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 400 finney) {
-            return (1 ether * poolEthBalance / poolValue * 794 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 769 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 300 finney) {
-            return (1 ether * poolEthBalance / poolValue * 722 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 599 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 200 finney) {
-            return (1 ether * poolEthBalance / poolValue * 630 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 401 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 100 finney) {
-            return (1 ether * poolEthBalance / poolValue * 500 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 231 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 70 finney) {
-            return (1 ether * poolEthBalance / poolValue * 444 / 1000);
+        } else if (1 ether * poolEthBalance / poolValue >= 75 finney) {
+            return (1 ether * poolEthBalance / poolValue * 198 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 50 finney) {
-            return (1 ether * poolEthBalance / poolValue * 397 / 1000);
+            return (1 ether * poolEthBalance / poolValue * 168 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 30 finney) {
-            return (1 ether * poolEthBalance / poolValue * 334 / 1000);
+        } else if (1 ether * poolEthBalance / poolValue >= 38 finney) {
+            return (1 ether * poolEthBalance / poolValue * 155 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 20 finney) {
-            return (1 ether * poolEthBalance / poolValue * 292 / 1000);
+        } else if (1 ether * poolEthBalance / poolValue >= 25 finney) {
+            return (1 ether * poolEthBalance / poolValue * 142 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 10 finney) {
-            return (1 ether * poolEthBalance / poolValue * 232 / 1000);
-
-        } else { // reward is 0 for any pool not backed by at least 1% eth
+        } else { // reward is 0 for any pool not backed by at least 2.5% eth
             revert('ETH_BELOW_1_PERCENT_AUM_ERROR');
         }
     }
@@ -518,34 +515,35 @@ contract ProofOfPerformance is
         uint256 stakedGrgRebasedOnEpoch = IStaking(stakingContractAddress).getTotalStakeDeledatedToPool(bytes32(poolId)) * epochTime / 365 days;
 
         // TODO: verify stakedGrgRebasedOnEpoch not null or higher than minimum
+        // check for overflows/underflows of pop / stakedGrgRebasedOnEpoch
 
-        // polynomial progression.
+        // half-exponential progression with slashing factor = (pop/stakedGrgRebasedOnEpoch)^(2/3).
         if (pop >= stakedGrgRebasedOnEpoch) {
-            popReward = stakedGrgRebasedOnEpoch; // max single reward = stake / period
+            return stakedGrgRebasedOnEpoch; // max single reward = stake / period, max 100% of staked GRG per year.
 
         } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 80 finney) {
-            return (stakedGrgRebasedOnEpoch * 894 / 1000);
+            return (stakedGrgRebasedOnEpoch * 862 / 1000);
 
         } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 60 finney) {
-            return (stakedGrgRebasedOnEpoch * 775 / 1000);
+            return (stakedGrgRebasedOnEpoch * 711 / 1000);
 
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 40 finney) {
-            return (stakedGrgRebasedOnEpoch * 548 / 1000);
+        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 30 finney) {
+            return (stakedGrgRebasedOnEpoch * 448 / 1000);
 
         } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 20 finney) {
-            return (stakedGrgRebasedOnEpoch * 447 / 1000);
+            return (stakedGrgRebasedOnEpoch * 342 / 1000);
 
         } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 10 finney) {
-            return (stakedGrgRebasedOnEpoch * 316 / 1000);
+            return (stakedGrgRebasedOnEpoch * 215 / 1000);
 
         } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 1 finney) {
-            return (stakedGrgRebasedOnEpoch * 100 / 1000);
+            return (stakedGrgRebasedOnEpoch * 46 / 1000);
 
         } else if (10 ether * pop / stakedGrgRebasedOnEpoch >= 5 finney) {
-            return (stakedGrgRebasedOnEpoch * 71 / 1000);
+            return (stakedGrgRebasedOnEpoch * 29 / 1000);
 
         } else if (100 ether * pop / stakedGrgRebasedOnEpoch >= 5 finney) {
-            return (stakedGrgRebasedOnEpoch * 22 / 1000);
+            return (stakedGrgRebasedOnEpoch * 6 / 1000);
 
         // all remaining values are overstaked
         } else {
