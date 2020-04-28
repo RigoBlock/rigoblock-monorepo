@@ -18,6 +18,7 @@
 
 pragma solidity 0.5.4;
 
+import { IStaking } from "../../staking/interfaces/IStaking.sol";
 import { Pool } from "../../utils/Pool/Pool.sol";
 import { ReentrancyGuard } from "../../utils/ReentrancyGuard/ReentrancyGuard.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
@@ -26,6 +27,7 @@ import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
 contract Inflation {
 
     uint256 public period;
+    uint256 public minimumGRG;
 
     /*
      * CORE FUNCTIONS
@@ -511,11 +513,12 @@ contract ProofOfPerformance is
         view
         returns (uint256)
     {
-        // TODO: attach staking interface
         uint256 stakedGrgRebasedOnEpoch = IStaking(stakingContractAddress).getTotalStakeDeledatedToPool(bytes32(poolId)) * epochTime / 365 days;
 
-        // TODO: verify stakedGrgRebasedOnEpoch not null or higher than minimum
-        // check for overflows/underflows of pop / stakedGrgRebasedOnEpoch
+        // TODO: test stakedGrgRebasedOnEpoch above minimumGRG
+        if (stakedGrgRebasedOnEpoch < Inflation(getMinter()).minimumGRG()) {
+            return 0;
+        }
 
         // half-exponential progression with slashing factor = (pop/stakedGrgRebasedOnEpoch)^(2/3).
         if (pop >= stakedGrgRebasedOnEpoch) {

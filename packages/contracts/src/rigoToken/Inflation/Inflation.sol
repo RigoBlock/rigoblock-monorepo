@@ -42,7 +42,7 @@ contract Inflation is
     address public RIGOTOKENADDRESS;
 
     uint256 public period = 1 days;
-    uint256 public minimumGRG = 0;
+    uint256 public minimumGRG = 10**18;
     address public proofOfPerformance;
     address public authority;
     address public rigoblockDao;
@@ -160,6 +160,10 @@ contract Inflation is
         external
         onlyRigoblockDao
     {
+        require(
+            minimumGRG > 10**18,
+            "STAKED_GRG_BELOW_1_ERROR"
+        );
         minimumGRG = _minimum;
     }
 
@@ -197,7 +201,10 @@ contract Inflation is
         external
         onlyRigoblockDao
     {
-        require(period > 1 days && period <= 365 days);
+        require(
+            period > 1 days && period <= 365 days,
+            "PERIOD_TOO_LONG_OR_TOO_SHORT_ERROR"
+        );
         period = _newPeriod;
     }
 
