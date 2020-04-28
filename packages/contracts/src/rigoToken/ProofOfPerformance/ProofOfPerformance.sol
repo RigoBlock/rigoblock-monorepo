@@ -403,7 +403,7 @@ contract ProofOfPerformance is
         ) * epochTime / 1 days; // proportional to epoch time
 
         // TODO: test new logic of only performance component null if price below high watermark
-        uint256 performanceComponent = newPrice < highwatermark ? 0 : safeMul(
+        performanceComponent = newPrice < highwatermark ? 0 : safeMul(
             safeMul(
                 (newPrice - highwatermark),
                 tokenSupply
