@@ -16,22 +16,22 @@
 
 */
 
-pragma solidity >=0.4.22 <0.6.0;
+pragma solidity >=0.4.22 <0.7.0;
 
 /// @title Pool Interface Contract - Interface of pool standard functions.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 /// @notice used in order to access public variable
-contract Pool {
+abstract contract Pool {
 
     address public owner;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    function balanceOf(address _who) external view returns (uint256);
-    function totalSupply() external view returns (uint256 totaSupply);
-    function getEventful() external view returns (address);
-    function getData() external view returns (string memory name, string memory symbol, uint256 sellPrice, uint256 buyPrice);
-    function calcSharePrice() external view returns (uint256);
-    function getAdminData() external view returns (address, address feeCollector, address dragodAO, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
+    function balanceOf(address _who) external view virtual returns (uint256);
+    function totalSupply() external view virtual returns (uint256 totaSupply);
+    function getEventful() external view virtual returns (address);
+    function getData() external view virtual returns (string memory name, string memory symbol, uint256 sellPrice, uint256 buyPrice);
+    function calcSharePrice() external view virtual returns (uint256);
+    function getAdminData() external view virtual returns (address, address feeCollector, address dragodAO, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
 }

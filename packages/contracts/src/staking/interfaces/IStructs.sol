@@ -17,7 +17,7 @@
 
 */
 
-pragma solidity ^0.6.6;
+pragma solidity ^0.6.5;
 
 
 interface IStructs {

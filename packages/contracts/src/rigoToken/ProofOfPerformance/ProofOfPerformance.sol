@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.5.4;
+pragma solidity 0.6.6;
 
 import { IStaking } from "../../staking/interfaces/IStaking.sol";
 import { Pool } from "../../utils/Pool/Pool.sol";
@@ -24,7 +24,7 @@ import { ReentrancyGuard } from "../../utils/ReentrancyGuard/ReentrancyGuard.sol
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
 
-contract Inflation {
+abstract contract Inflation {
 
     uint256 public period;
     uint256 public minimumGRG;
@@ -32,27 +32,27 @@ contract Inflation {
     /*
      * CORE FUNCTIONS
      */
-    function mintInflation(address _thePool, uint256 _reward) external returns (bool);
-    function setInflationFactor(address _group, uint256 _inflationFactor) external;
-    function setMinimumRigo(uint256 _minimum) external;
-    function setRigoblock(address _newRigoblock) external;
-    function setAuthority(address _authority) external;
-    function setProofOfPerformance(address _pop) external;
-    function setPeriod(uint256 _newPeriod) external;
+    function mintInflation(address _thePool, uint256 _reward) external virtual returns (bool);
+    function setInflationFactor(address _group, uint256 _inflationFactor) external virtual;
+    function setMinimumRigo(uint256 _minimum) external virtual;
+    function setRigoblock(address _newRigoblock) external virtual;
+    function setAuthority(address _authority) external virtual;
+    function setProofOfPerformance(address _pop) external virtual;
+    function setPeriod(uint256 _newPeriod) external virtual;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    function canWithdraw(address _thePool) external view returns (bool);
-    function timeUntilClaim(address _thePool) external view returns (uint256);
-    function getInflationFactor(address _group) external view returns (uint256);
+    function canWithdraw(address _thePool) external view virtual returns (bool);
+    function timeUntilClaim(address _thePool) external view virtual returns (uint256);
+    function getInflationFactor(address _group) external view virtual returns (uint256);
 }
 
-contract RigoToken {
+abstract contract RigoToken {
     address public minter;
     uint256 public totalSupply;
 
-    function balanceOf(address _who) external view returns (uint256);
+    function balanceOf(address _who) external view virtual returns (uint256);
 }
 
 interface DragoRegistry {
@@ -100,6 +100,7 @@ contract ProofOfPerformance is
     ProofOfPerformanceFace
 {
     address public RIGOTOKENADDRESS;
+    address public STAKINGCONTRACTADDRESS;
 
     address public dragoRegistry;
     address public rigoblockDao;
@@ -126,12 +127,14 @@ contract ProofOfPerformance is
     constructor(
         address _rigoTokenAddress,
         address _rigoblockDao,
-        address _dragoRegistry)
+        address _dragoRegistry,
+        address _stakingContractAddress)
         public
     {
         RIGOTOKENADDRESS = _rigoTokenAddress;
         rigoblockDao = _rigoblockDao;
         dragoRegistry = _dragoRegistry;
+        STAKINGCONTRACTADDRESS = _stakingContractAddress;
     }
 
     /*
@@ -141,6 +144,7 @@ contract ProofOfPerformance is
     /// @param poolId Number of pool id in registry.
     function claimPop(uint256 poolId)
         external
+        override
         nonReentrant
     {
         DragoRegistry registry = DragoRegistry(dragoRegistry);
@@ -163,6 +167,7 @@ contract ProofOfPerformance is
     /// @param _dragoRegistry Address of new registry.
     function setRegistry(address _dragoRegistry)
         external
+        override
         onlyRigoblockDao
     {
         dragoRegistry = _dragoRegistry;
@@ -172,6 +177,7 @@ contract ProofOfPerformance is
     /// @param _rigoblockDao Address of new dao.
     function setRigoblockDao(address _rigoblockDao)
         external
+        override
         onlyRigoblockDao
     {
         rigoblockDao = _rigoblockDao;
@@ -185,6 +191,7 @@ contract ProofOfPerformance is
         address _ofGroup,
         uint256 _ratio)
         external
+        override
         onlyRigoblockDao
     {
         require(
@@ -199,17 +206,18 @@ contract ProofOfPerformance is
      */
     /// @dev Gets data of a pool.
     /// @param poolId Id of the pool.
-    /// @return Bool the pool is active.
-    /// @return address of the pool.
-    /// @return address of the pool factory.
-    /// @return price of the pool in wei.
-    /// @return total supply of the pool in units.
-    /// @return total value of the pool in wei.
-    /// @return value of the reward factor or said pool.
+    /// @return active Bool the pool is active.
+    /// @return thePoolAddress address of the pool.
+    /// @return thePoolGroup address of the pool factory.
+    /// @return thePoolPrice price of the pool in wei.
+    /// @return thePoolSupply total supply of the pool in units.
+    /// @return poolValue total value of the pool in wei.
+    /// @return epochReward value of the reward factor or said pool.
     /// @return ratio of assets/performance reward (from 0 to 10000).
-    /// @return value of the pop reward to be claimed in GRGs.
+    /// @return pop value of the pop reward to be claimed in GRGs.
     function getPoolData(uint256 poolId)
         external
+        override
         view
         returns (
             bool active,
@@ -247,6 +255,7 @@ contract ProofOfPerformance is
     function getHwm(uint256 poolId)
         external
         view
+        override
         returns (uint256)
     {
         return (getHwmInternal(poolId));
@@ -258,6 +267,7 @@ contract ProofOfPerformance is
     function getEpochReward(uint256 poolId)
         external
         view
+        override
         returns (uint256)
     {
         (uint256 epochReward, , ) = getInflationParameters(poolId);
@@ -270,6 +280,7 @@ contract ProofOfPerformance is
     function getRatio(uint256 poolId)
         external
         view
+        override
         returns (uint256)
     {
         ( , , uint256 ratio) = getInflationParameters(poolId);
@@ -287,6 +298,7 @@ contract ProofOfPerformance is
     function proofOfPerformance(uint256 poolId)
         external
         view
+        override
         returns (uint256 popReward, uint256 performanceReward)
     {
         return proofOfPerformanceInternal(poolId);
@@ -298,6 +310,7 @@ contract ProofOfPerformance is
     function isActive(uint256 poolId)
         external
         view
+        override
         returns (bool)
     {
         return isActiveInternal(poolId);
@@ -305,11 +318,12 @@ contract ProofOfPerformance is
 
     /// @dev Returns the address and the group of a pool from its id.
     /// @param poolId Id of the pool.
-    /// @return Address of the target pool.
-    /// @return Address of the pool's group.
+    /// @return pool Address of the target pool.
+    /// @return group Address of the pool's group.
     function addressFromId(uint256 poolId)
         external
         view
+        override
         returns (
             address pool,
             address group
@@ -320,11 +334,12 @@ contract ProofOfPerformance is
 
     /// @dev Returns the price a pool from its id.
     /// @param poolId Id of the pool.
-    /// @return Price of the pool in wei.
-    /// @return Number of tokens of a pool (totalSupply).
+    /// @return thePoolPrice Price of the pool in wei.
+    /// @return totalTokens Number of tokens of a pool (totalSupply).
     function getPoolPrice(uint256 poolId)
         external
         view
+        override
         returns (
             uint256 thePoolPrice,
             uint256 totalTokens
@@ -333,13 +348,13 @@ contract ProofOfPerformance is
         (thePoolPrice, totalTokens, ) = getPoolPriceAndValueInternal(poolId);
     }
 
-    /// @dev Returns the address and the group of a pool from its id.
+    /// @dev Returns the value of a pool from its id.
     /// @param poolId Id of the pool.
-    /// @return Address of the target pool.
-    /// @return Address of the pool's group.
+    /// @return aum Total value of the pool in ETH.
     function calcPoolValue(uint256 poolId)
         external
         view
+        override
         returns (
             uint256 aum
         )
@@ -352,9 +367,9 @@ contract ProofOfPerformance is
      */
     /// @dev Returns the split ratio of asset and performance reward.
     /// @param poolId Id of the pool.
-    /// @return Value of the reward factor.
-    /// @return Value of epoch time.
-    /// @return Value of the ratio from 1 to 100.
+    /// @return epochReward Value of the reward factor.
+    /// @return epochTime Value of epoch time.
+    /// @return ratio Value of the ratio from 1 to 100.
     function getInflationParameters(uint256 poolId)
         internal
         view
@@ -513,9 +528,10 @@ contract ProofOfPerformance is
         view
         returns (uint256)
     {
-        uint256 stakedGrgRebasedOnEpoch = IStaking(stakingContractAddress).getTotalStakeDeledatedToPool(bytes32(poolId)) * epochTime / 365 days;
-
-        // TODO: test stakedGrgRebasedOnEpoch above minimumGRG
+        // TODO: getTotalStakeDelegatedToPool should be called from staking contract
+        // TODO: test ignore dust stake pool
+        uint256 stakedGrgRebasedOnEpoch = IStaking(STAKINGCONTRACTADDRESS).getTotalStakeDelegatedToPool(bytes32(poolId)).currentEpochBalance * epochTime / 365 days;
+        // ignore pools with dust stake
         if (stakedGrgRebasedOnEpoch < Inflation(getMinter()).minimumGRG()) {
             return 0;
         }
@@ -570,8 +586,8 @@ contract ProofOfPerformance is
 
     /// @dev Returns the address and the group of a pool from its id.
     /// @param poolId Id of the pool.
-    /// @return Address of the target pool.
-    /// @return Address of the pool's group.
+    /// @return pool Address of the target pool.
+    /// @return group Address of the pool's group.
     function addressFromIdInternal(uint256 poolId)
         internal
         view
@@ -585,12 +601,11 @@ contract ProofOfPerformance is
         return (pool, group);
     }
 
-    /// @dev Returns price, supply, aum and boolean of a pool from its id.
+    /// @dev Returns price, supply, aum of a pool from its id.
     /// @param poolId Id of the pool.
-    /// @return Price of the pool in wei.
-    /// @return Number of tokens of a pool (totalSupply).
-    /// @return Address of the target pool.
-    /// @return Address of the pool's group.
+    /// @return thePoolPrice Price of the pool in wei.
+    /// @return totalTokens Number of tokens of a pool (totalSupply).
+    /// @return aum Address of the target pool.
     function getPoolPriceAndValueInternal(uint256 poolId)
         internal
         view

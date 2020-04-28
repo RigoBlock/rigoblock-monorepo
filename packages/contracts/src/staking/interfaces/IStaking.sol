@@ -17,7 +17,7 @@
 
 */
 
-pragma solidity ^0.6.6;
+pragma solidity ^0.6.5;
 pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/IEtherToken.sol";
@@ -142,7 +142,7 @@ interface IStaking {
     /// @dev Computes the reward balance in ETH of a specific member of a pool.
     /// @param poolId Unique id of pool.
     /// @param member The member of the pool.
-    /// @return totalReward Balance in ETH.
+    /// @return reward Balance in ETH.
     function computeRewardBalanceOfDelegator(bytes32 poolId, address member)
         external
         view
@@ -150,7 +150,7 @@ interface IStaking {
 
     /// @dev Computes the reward balance in ETH of the operator of a pool.
     /// @param poolId Unique id of pool.
-    /// @return totalReward Balance in ETH.
+    /// @return reward Balance in ETH.
     function computeRewardBalanceOfOperator(bytes32 poolId)
         external
         view
@@ -167,7 +167,7 @@ interface IStaking {
 
     /// @dev Gets global stake for a given status.
     /// @param stakeStatus UNDELEGATED or DELEGATED
-    /// @return Global stake for given status.
+    /// @return balance Global stake for given status.
     function getGlobalStakeByStatus(IStructs.StakeStatus stakeStatus)
         external
         view
@@ -176,7 +176,7 @@ interface IStaking {
     /// @dev Gets an owner's stake balances by status.
     /// @param staker Owner of stake.
     /// @param stakeStatus UNDELEGATED or DELEGATED
-    /// @return Owner's stake balances for given status.
+    /// @return balance Owner's stake balances for given status.
     function getOwnerStakeByStatus(
         address staker,
         IStructs.StakeStatus stakeStatus
@@ -204,7 +204,7 @@ interface IStaking {
 
     /// @param staker of stake.
     /// @param poolId Unique Id of pool.
-    /// @return Stake delegated to pool by staker.
+    /// @return balance Stake delegated to pool by staker.
     function getStakeDelegatedToPoolByOwner(address staker, bytes32 poolId)
         external
         view
@@ -228,7 +228,7 @@ interface IStaking {
     /// @dev Returns the total stake delegated to a specific staking pool,
     ///      across all members.
     /// @param poolId Unique Id of pool.
-    /// @return Total stake delegated to pool.
+    /// @return balance Total stake delegated to pool.
     function getTotalStakeDelegatedToPool(bytes32 poolId)
         external
         view

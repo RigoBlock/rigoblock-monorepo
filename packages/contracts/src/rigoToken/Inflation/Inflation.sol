@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.5.2;
+pragma solidity 0.6.6;
 
 import { Owned } from "../../utils/Owned/Owned.sol";
 import { AuthorityFace as Authority } from "../../protocol/authorities/Authority/AuthorityFace.sol";
@@ -99,7 +99,7 @@ contract Inflation is
 
     modifier timeAtLeast(address _thePool) {
         require(
-            now >= performers[_thePool].endTime,
+            block.timestamp >= performers[_thePool].endTime,
             "TIME_NOT_ENOUGH"
         );
         _;
@@ -126,13 +126,14 @@ contract Inflation is
     /// @return Bool the transaction executed correctly
     function mintInflation(address _thePool, uint256 _reward)
         external
+        override
         onlyProofOfPerformance
         minimumRigo(_thePool)
         timeAtLeast(_thePool)
         returns (bool)
     {
-        performers[_thePool].startTime = now;
-        performers[_thePool].endTime = now + period;
+        performers[_thePool].startTime = block.timestamp;
+        performers[_thePool].endTime = block.timestamp + period;
         ++performers[_thePool].epoch;
         uint256 reward = _reward * 95 / 100; //5% royalty to rigoblock dao
         uint256 rigoblockReward = safeSub(_reward, reward);
@@ -148,6 +149,7 @@ contract Inflation is
     /// @param _inflationFactor Value of the reward factor
     function setInflationFactor(address _group, uint256 _inflationFactor)
         external
+        override
         onlyRigoblockDao
         isApprovedFactory(_group)
     {
@@ -158,6 +160,7 @@ contract Inflation is
     /// @param _minimum Number of minimum tokens
     function setMinimumRigo(uint256 _minimum)
         external
+        override
         onlyRigoblockDao
     {
         require(
@@ -171,6 +174,7 @@ contract Inflation is
     /// @param _newRigoblock Address of the new rigoblock dao
     function setRigoblock(address _newRigoblock)
         external
+        override
         onlyRigoblockDao
     {
         rigoblockDao = _newRigoblock;
@@ -180,6 +184,7 @@ contract Inflation is
     /// @param _authority Address of the authority
     function setAuthority(address _authority)
         external
+        override
         onlyRigoblockDao
     {
         authority = _authority;
@@ -189,6 +194,7 @@ contract Inflation is
     /// @param _pop Address of the Proof of Performance contract
     function setProofOfPerformance(address _pop)
         external
+        override
         onlyRigoblockDao
     {
         proofOfPerformance = _pop;
@@ -199,6 +205,7 @@ contract Inflation is
     /// @notice set period on shorter subsets of time for testing
     function setPeriod(uint256 _newPeriod)
         external
+        override
         onlyRigoblockDao
     {
         require(
@@ -216,10 +223,11 @@ contract Inflation is
     /// @return Bool the wizard can claim
     function canWithdraw(address _thePool)
         external
+        override
         view
         returns (bool)
     {
-        if (now >= performers[_thePool].endTime) {
+        if (block.timestamp >= performers[_thePool].endTime) {
             return true;
         }
     }
@@ -229,10 +237,11 @@ contract Inflation is
     /// @return Number in seconds
     function timeUntilClaim(address _thePool)
         external
+        override
         view
         returns (uint256)
     {
-        if (now < performers[_thePool].endTime) {
+        if (block.timestamp < performers[_thePool].endTime) {
             return (performers[_thePool].endTime);
         }
     }
@@ -242,6 +251,7 @@ contract Inflation is
     /// @return Value of the reward factor
     function getInflationFactor(address _group)
         external
+        override
         view
         returns (uint256)
     {
