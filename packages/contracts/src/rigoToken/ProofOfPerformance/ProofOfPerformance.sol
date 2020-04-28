@@ -17,6 +17,7 @@
 */
 
 pragma solidity 0.6.6;
+pragma experimental ABIEncoderV2;
 
 import { IStaking } from "../../staking/interfaces/IStaking.sol";
 import { Pool } from "../../utils/Pool/Pool.sol";
