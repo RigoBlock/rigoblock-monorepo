@@ -1,6 +1,6 @@
 {
     "name": "@rgbk/deployer",
-    "version": "0.2.0",
+    "version": "0.1.19",
     "description": "Smart contract deployer",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -28,11 +28,11 @@
         "mocha": "^4.0.1",
         "node-fetch": "^2.1.2",
         "npm-run-all": "^4.1.2",
-        "openzeppelin-solidity": "3.0.1",
         "types-bn": "^0.0.1",
         "typescript": "2.9.2",
         "typescript-eslint-parser": "^16.0.1",
-        "web3-typescript-typings": "^0.10.2"
+        "web3-typescript-typings": "^0.10.2",
+        "openzeppelin-solidity": "3.0.1"
     },
     "dependencies": {
         "@0xproject/json-schemas": "^0.7.21",
@@ -48,7 +48,7 @@
         "lodash": "^4.17.4",
         "require-from-string": "^2.0.1",
         "semver": "^5.5.0",
-        "solc": "^0.5.2",
+        "solc": "^0.6.6",
         "web3": "0.20.6",
         "web3-eth-abi": "1.0.0-beta.37",
         "yargs": "^10.0.3"
