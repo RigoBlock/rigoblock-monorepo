@@ -1,7 +1,7 @@
 const { NETWORKS } = require('../constants')
 const c = require('chalk')
 const deploy = require('./deploy')
-const HDWalletProvider = require('truffle-hdwallet-provider')
+const HDWalletProvider = require('@truffle/hdwallet-provider')
 const inquirer = require('inquirer')
 const Web3 = require('web3')
 const logger = require('./logger')

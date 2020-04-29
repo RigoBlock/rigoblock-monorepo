@@ -191,25 +191,30 @@ export class Compiler {
         }
       }
     }
-    const compiled: solc.StandardOutput = JSON.parse(
-      solcInstance.compileStandardWrapper(
-        JSON.stringify(standardInput),
+    // JSON.stringify(standardInput)
+    // const compiled: solc.StandardOutput = JSON.parse(
+    // const compiled: solc.CompilationResult = (
+    const compiled: any = (
+      solcInstance.compile(
+        standardInput,
+        10000, // optimizerEnabled
         importPath => {
           const sourceCodeIfExists = this._resolver.resolve(importPath)
           return { contents: sourceCodeIfExists.source }
         }
       )
     )
+    console.log(compiled)
     process.removeAllListeners('uncaughtException')
     if (!_.isUndefined(compiled.errors)) {
       const SOLIDITY_WARNING = 'warning'
-      const errors = _.filter(
+      const errors: any = _.filter(
         compiled.errors,
-        entry => entry.severity !== SOLIDITY_WARNING
+        (entry: any) => entry.severity !== SOLIDITY_WARNING
       )
-      const warnings = _.filter(
+      const warnings: any = _.filter(
         compiled.errors,
-        entry => entry.severity === SOLIDITY_WARNING
+        (entry: any) => entry.severity === SOLIDITY_WARNING
       )
       if (!_.isEmpty(errors)) {
         errors.forEach(error => {
