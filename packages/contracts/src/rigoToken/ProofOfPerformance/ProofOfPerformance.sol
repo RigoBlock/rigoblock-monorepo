@@ -1,6 +1,6 @@
 /*
 
- Copyright 2017-2019 RigoBlock, Rigo Investment Sagl.
+ Copyright 2017-2019 RigoBlock, Rigo Investment Sagl, 2020 Rigo Intl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -472,10 +472,10 @@ contract ProofOfPerformance is
         returns (uint256)
     {
         uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
-        require(
-            poolEthBalance <= poolValue && poolEthBalance >= 1 finney, // prevent dust from small pools
-            "ETH_BALANCE_HIGHER_THAN_AUM_OR_TOO_SMALL_ERROR"
-        );
+        // prevent dust from small pools
+        if (poolEthBalance <= poolValue && poolEthBalance >= 1 finney) {
+            return;
+        }
 
         // logistic function progression g(x)=e^x/(1+e^x).
         // rebased on (poolEthBalance / poolValue) ∈ [0.125:0.6], x ∈ [-1.9:2.8].
@@ -530,39 +530,38 @@ contract ProofOfPerformance is
         returns (uint256)
     {
         // TODO: getTotalStakeDelegatedToPool should be called from staking contract
-        // TODO: test ignore dust stake pool
         uint256 stakedGrgRebasedOnEpoch = IStaking(STAKINGCONTRACTADDRESS).getTotalStakeDelegatedToPool(bytes32(poolId)).currentEpochBalance * epochTime / 365 days;
         // ignore pools with dust stake
         if (stakedGrgRebasedOnEpoch < Inflation(getMinter()).minimumGRG()) {
-            return 0;
+            return;
         }
 
         // half-exponential progression with slashing factor = (pop/stakedGrgRebasedOnEpoch)^(2/3).
         if (pop >= stakedGrgRebasedOnEpoch) {
             return stakedGrgRebasedOnEpoch; // max single reward = stake / period, max 100% of staked GRG per year.
 
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 80 finney) {
+        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 800 finney) {
             return (stakedGrgRebasedOnEpoch * 862 / 1000);
 
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 60 finney) {
+        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 600 finney) {
             return (stakedGrgRebasedOnEpoch * 711 / 1000);
 
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 30 finney) {
+        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 300 finney) {
             return (stakedGrgRebasedOnEpoch * 448 / 1000);
 
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 20 finney) {
+        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 200 finney) {
             return (stakedGrgRebasedOnEpoch * 342 / 1000);
 
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 10 finney) {
+        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 100 finney) {
             return (stakedGrgRebasedOnEpoch * 215 / 1000);
 
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 1 finney) {
+        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 10 finney) {
             return (stakedGrgRebasedOnEpoch * 46 / 1000);
 
-        } else if (10 ether * pop / stakedGrgRebasedOnEpoch >= 5 finney) {
+        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 5 finney) {
             return (stakedGrgRebasedOnEpoch * 29 / 1000);
 
-        } else if (100 ether * pop / stakedGrgRebasedOnEpoch >= 5 finney) {
+        } else if (10 ether * pop / stakedGrgRebasedOnEpoch >= 5 finney) {
             return (stakedGrgRebasedOnEpoch * 6 / 1000);
 
         // all remaining values are overstaked

@@ -1,6 +1,6 @@
 /*
 
- Copyright 2017-2019 RigoBlock, Rigo Investment Sagl.
+ Copyright 2017-2019 RigoBlock, Rigo Investment Sagl, 2020 Rigo Intl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -29,15 +29,15 @@ interface ProofOfPerformanceFace {
     /// @dev Allows anyone to allocate the pop reward to pool wizards.
     /// @param poolId Number of pool id in registry.
     function claimPop(uint256 poolId) external;
-    
+
     /// @dev Allows RigoBlock Dao to update the pools registry.
     /// @param _dragoRegistry Address of new registry.
     function setRegistry(address _dragoRegistry) external;
-    
+
     /// @dev Allows RigoBlock Dao to update its address.
     /// @param _rigoblockDao Address of new dao.
     function setRigoblockDao(address _rigoblockDao) external;
-    
+
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
     /// @param _ofGroup Id of the pool.
     /// @param _ratio Id of the pool.
