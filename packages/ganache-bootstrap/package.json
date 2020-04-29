@@ -1,12 +1,12 @@
 {
   "name": "@rgbk/ganache-bootstrap",
-  "version": "0.1.28",
+  "version": "0.1.30",
   "bin": {
     "ganache-bootstrap": "bin/ganache-bootstrap.js",
     "ganache-seed": "bin/ganache-seed.js"
   },
   "dependencies": {
-    "@rgbk/contracts": "^0.3.16",
+    "@rgbk/contracts": "^0.3.18",
     "chalk": "^2.3.2",
     "pino": "^4.15.3",
     "web3": "^1.0.0-beta.33"
