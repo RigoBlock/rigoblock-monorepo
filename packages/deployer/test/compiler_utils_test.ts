@@ -66,7 +66,7 @@ describe('Compiler utils', () => {
       })
       const dependencies = parseDependencies({ source, path })
       const expectedDependencies = [
-        'zeppelin-solidity/contracts/token/ERC20/ERC20.sol',
+        '@openzeppelin/contracts/token/ERC20/ERC20.sol',
         'packages/deployer/lib/test/fixtures/contracts/TokenTransferProxy.sol',
         'packages/deployer/lib/test/fixtures/contracts/base/SafeMath.sol'
       ]
@@ -86,8 +86,8 @@ describe('Compiler utils', () => {
         encoding: 'utf8'
       })
       expect(parseDependencies({ source, path })).to.be.deep.equal([
-        'zeppelin-solidity/contracts/ownership/Ownable.sol',
-        'zeppelin-solidity/contracts/token/ERC20/ERC20.sol'
+        '@openzeppelin/contracts/ownership/Ownable.sol',
+        '@openzeppelin/contracts/token/ERC20/ERC20.sol'
       ])
     })
     // TODO: For now that doesn't work. This will work after we switch to a grammar-based parser

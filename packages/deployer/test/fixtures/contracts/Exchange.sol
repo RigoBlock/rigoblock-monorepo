@@ -18,7 +18,7 @@
 
 pragma solidity ^0.4.14;
 
-import {ERC20 as Token} from "zeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import {ERC20 as Token} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 import "./TokenTransferProxy.sol";
 import "./base/SafeMath.sol";
