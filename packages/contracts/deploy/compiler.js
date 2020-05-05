@@ -1,5 +1,5 @@
 const Web3 = require('web3')
-const Compiler = require('@rgbk/deployer').Compiler
+const Compiler = require('@0x/sol-compiler').Compiler
 const c = require('chalk')
 const {
   NETWORKS,
