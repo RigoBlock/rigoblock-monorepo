@@ -16,10 +16,7 @@ const compile = async (contracts, networkUrl) => {
   const compilerOpts = {
     artifactsDir: ARTIFACTS_DIR,
     contractsDir: CONTRACTS_DIR,
-    networkId,
-    specifiedContracts: new Set(contracts),
-    optimizerEnabled: true,
-    optimizerRuns: 1000000
+    contracts: new Set(contracts)
   }
 
   const compiler = new Compiler(compilerOpts)
