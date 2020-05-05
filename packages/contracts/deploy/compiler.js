@@ -12,7 +12,7 @@ const constants = require ('./util/constants')
 
 const compile = async (contracts, networkUrl) => {
   const web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
-  const networkId = await web3.eth.net.getId()
+  //const networkId = await web3.eth.net.getId()
 
   const compilerOpts = {
     artifactsDir: ARTIFACTS_DIR,
