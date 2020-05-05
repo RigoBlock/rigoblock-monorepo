@@ -8,6 +8,7 @@ const {
   CONTRACT_NAMES
 } = require('../constants')
 const logger = require('./logger')
+const constants = require ('./util/constants')
 
 const compile = async (contracts, networkUrl) => {
   const web3 = new Web3(new Web3.providers.HttpProvider(networkUrl))
@@ -16,7 +17,7 @@ const compile = async (contracts, networkUrl) => {
   const compilerOpts = {
     artifactsDir: ARTIFACTS_DIR,
     contractsDir: CONTRACTS_DIR,
-    contracts: new Set(contracts)
+    contracts: constants.contracts
   }
 
   const compiler = new Compiler(compilerOpts)
