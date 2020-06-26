@@ -473,10 +473,11 @@ contract ProofOfPerformance is
     {
         uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
         // prevent dust from small pools
-        if (poolEthBalance <= poolValue && poolEthBalance >= 1 finney) {
-            return;
+        if (poolEthBalance >= poolValue || poolEthBalance <= 1 finney) {
+            revert('ETH_BALANCE_HIGHER_THAN_AUM_OR_DUST_ERROR');
         }
 
+        // TODO: double check whether we are slashing twice
         // logistic function progression g(x)=e^x/(1+e^x).
         // rebased on (poolEthBalance / poolValue) ∈ [0.125:0.6], x ∈ [-1.9:2.8].
         if (1 ether * poolEthBalance / poolValue >= 800 finney) {
@@ -513,7 +514,7 @@ contract ProofOfPerformance is
             return (1 ether * poolEthBalance / poolValue * 142 / 1000);
 
         } else { // reward is 0 for any pool not backed by at least 2.5% eth
-            revert('ETH_BELOW_1_PERCENT_AUM_ERROR');
+            revert('ETH_BELOW_2.5_PERCENT_AUM_ERROR');
         }
     }
 
@@ -533,7 +534,7 @@ contract ProofOfPerformance is
         uint256 stakedGrgRebasedOnEpoch = IStaking(STAKINGCONTRACTADDRESS).getTotalStakeDelegatedToPool(bytes32(poolId)).currentEpochBalance * epochTime / 365 days;
         // ignore pools with dust stake
         if (stakedGrgRebasedOnEpoch < Inflation(getMinter()).minimumGRG()) {
-            return;
+            revert('STAKED_GRG_BELOW_MINIMUM');
         }
 
         // half-exponential progression with slashing factor = (pop/stakedGrgRebasedOnEpoch)^(2/3).
