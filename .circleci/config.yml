@@ -58,7 +58,7 @@ jobs:
     environment:
       TZ: *timezone
     docker:
-      - image: circleci/node:8.10-stretch
+      - image: circleci/node:10.0-stretch
     steps:
       - checkout
       - *attach_workspace
@@ -195,7 +195,7 @@ jobs:
     environment:
       TZ: *timezone
     docker:
-      - image: circleci/node:8.10-stretch-browsers
+      - image: circleci/node:10.0-stretch-browsers
     steps:
       - checkout
       - *attach_workspace
