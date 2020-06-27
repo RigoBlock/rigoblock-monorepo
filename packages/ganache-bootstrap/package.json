@@ -9,7 +9,7 @@
     "@rgbk/contracts": "^0.3.18",
     "chalk": "^2.3.2",
     "pino": "^4.15.3",
-    "web3": "^1.0.0-beta.33"
+    "web3": "^1.2.9"
   },
   "gitHead": "9b5b4afd5d4197f721fa322549b436b6501ab4f8"
 }

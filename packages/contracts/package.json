@@ -79,7 +79,7 @@
     "pino": "5.13.2",
     "pino-pretty": "3.2.1",
     "@truffle/hdwallet-provider": "1.0.34",
-    "web3": "1.0.0-beta.37"
+    "web3": "^1.2.9"
   },
   "devDependencies": {
     "0x.js": "^6.0.3",
