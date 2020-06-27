@@ -956,7 +956,9 @@
                 "/home/gabriele/github/rigoblock-monorepo/packages/contracts/src/examples/Faucet/Faucet.sol",
                 "/home/gabriele/github/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20Face.sol",
                 "/home/gabriele/github/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
-            ]
+            ],
+            "address": "0x4d3a4be51ceb608ecf7127a7a09ef3f6d1ea54b1",
+            "constructor_args": "0x00000000000000000000000028e0e1b733178f0a6bc4e8a19ba0247c70a6b89e000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000094752474661756365740000000000000000000000000000000000000000000000"
         }
     }
 }

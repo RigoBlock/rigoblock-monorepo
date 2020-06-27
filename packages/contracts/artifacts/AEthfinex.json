@@ -422,7 +422,9 @@
                 "/home/gabriele/github/rigoblock-monorepo/packages/contracts/src/utils/Owned/OwnedUninitialized.sol",
                 "/home/gabriele/github/rigoblock-monorepo/packages/contracts/src/utils/ReentrancyGuard/ReentrancyGuard.sol",
                 "/home/gabriele/github/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMathLight.sol"
-            ]
+            ],
+            "address": "0x92a383ae5561182f9bb01aedd18525967c3358c9",
+            "constructor_args": "0x"
         }
     }
 }

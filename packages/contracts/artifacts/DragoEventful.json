@@ -4095,7 +4095,9 @@
                 "/home/gabriele/github/rigoblock-monorepo/packages/contracts/src/protocol/DragoEventful/DragoEventfulFace.sol",
                 "/home/gabriele/github/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
                 "/home/gabriele/github/rigoblock-monorepo/packages/contracts/src/protocol/authorities/ExchangesAuthority/ExchangesAuthorityFace.sol"
-            ]
+            ],
+            "address": "0x7de6cf2cbcb26aafaf52f5d5e18e34e48b74681f",
+            "constructor_args": "0x000000000000000000000000bddbc4f6ce2aafd2b94ce36b4f41ad6abe9603a2"
         }
     }
 }

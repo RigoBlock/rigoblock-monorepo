@@ -49,8 +49,8 @@
         "require-from-string": "^2.0.1",
         "semver": "^5.5.0",
         "solc": "^0.6.10",
-        "web3": "^1.2.9",
-        "web3-eth-abi": "^1.2.9",
+        "web3": "^0.20.6",
+        "web3-eth-abi": "^1.0.0-beta.37",
         "yargs": "^10.0.3"
     },
     "gitHead": "9b5b4afd5d4197f721fa322549b436b6501ab4f8"

@@ -3,6 +3,8 @@
     "src/**/*.ts"
   ],
   "compilerOptions": {
+    "esModuleInterop": true,
+    "types": ["node"],
     "module": "commonjs",
     "target": "es6",
     "lib": ["es2017", "dom"],
@@ -11,6 +13,6 @@
     "declaration": true,
     "sourceMap": true,
     "pretty": true,
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"]
 }
 }
