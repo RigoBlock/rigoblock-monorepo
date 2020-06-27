@@ -7,7 +7,7 @@ RUN apt-get update \
 
 ARG NPM_KEY
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 10.0.0
+ENV NODE_VERSION 8.16.0
 ENV NPM_KEY ${NPM_KEY}
 
 # install nvm
