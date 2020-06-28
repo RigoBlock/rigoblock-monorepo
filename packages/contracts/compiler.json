@@ -1,0 +1,25 @@
+{
+    "artifactsDir": "./artifacts",
+    "contractsDir": "./src",
+    "useDockerisedSolc": false,
+    "isOfflineMode": true,
+    "shouldSaveStandardInput": true,
+    "compilerSettings": {
+        "optimizer": {
+            "enabled": true,
+            "runs": 1000000,
+        },
+        "outputSelection": {
+            "*": {
+                "*": [
+                    "abi",
+                    "devdoc",
+                    "evm.bytecode.object",
+                    "evm.bytecode.sourceMap",
+                    "evm.deployedBytecode.object",
+                    "evm.deployedBytecode.sourceMap"
+                ]
+            }
+        }
+    }
+}
