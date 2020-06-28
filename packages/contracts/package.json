@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run compile && rm -rf dist && lerna run --scope=@rgbk/dapp ganache:bootstrap && webpack",
     "ganache": "ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
-    "compile": "node deploy/compiler.js",
+    "compile": "truffle compile",
     "deploy": "node deploy/cli.js",
     "lint": "eslint test deploy . --ext js --ignore-path .gitignore --fix && npm run lint-contracts",
     "test": "NODE_ENV=test node --max_old_space_size=8192 --trace-warnings node_modules/.bin/jest --env=node --runInBand",
@@ -91,6 +91,7 @@
     "jest-extended": "0.11.2",
     "regenerator-runtime": "0.13.3",
     "solhint": "1.2.1",
+    "truffle": "^5.1.32",
     "webpack": "4.16.3",
     "webpack-cli": "3.1.0"
   },
