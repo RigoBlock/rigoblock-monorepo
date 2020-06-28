@@ -1,13 +1,14 @@
 {
-    "artifactsDir": "./artifacts",
+    "artifactsDir": "./generated-artifacts",
     "contractsDir": "./src",
+    "contracts": "*",
     "useDockerisedSolc": false,
     "isOfflineMode": true,
     "shouldSaveStandardInput": true,
     "compilerSettings": {
         "optimizer": {
             "enabled": true,
-            "runs": 1000000,
+            "runs": 1000000
         },
         "outputSelection": {
             "*": {
