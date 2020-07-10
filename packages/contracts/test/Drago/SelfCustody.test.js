@@ -94,6 +94,10 @@ describeContract(contractName, () => {
       const adapter = await baseContracts[
         'ExchangesAuthority'
       ].getExchangeAdapter(selfCustodyProxyAddress)
+      const isMethodAllowed = await baseContracts['ExchangesAuthority'].isMethodAllowed(
+        methodSignature,
+        adapter
+      )
       */
       const preBalance = await web3.eth.getBalance(selfCustodyAddress)
 
@@ -155,6 +159,10 @@ describeContract(contractName, () => {
       const adapter = await baseContracts[
         'ExchangesAuthority'
       ].getExchangeAdapter(selfCustodyProxyAddress)
+      const isMethodAllowed = await baseContracts['ExchangesAuthority'].isMethodAllowed(
+        methodSignature,
+        adapter
+      )
       */
       const preBalance = await web3.eth.getBalance(selfCustodyAddress)
 
@@ -214,6 +222,10 @@ describeContract(contractName, () => {
       const adapter = await baseContracts[
         'ExchangesAuthority'
       ].getExchangeAdapter(selfCustodyProxyAddress)
+      const isMethodAllowed = await baseContracts['ExchangesAuthority'].isMethodAllowed(
+        methodSignature,
+        adapter
+      )
       */
       const preBalance = await web3.eth.getBalance(selfCustodyAddress)
 
