@@ -1,60 +1,50 @@
-import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
+//import { BigNumber, assetDataUtils, generatePseudoRandomSalt } from '0x.js'
+import { GANACHE_NETWORK_ID } from '../../constants'
 import exchangeArtifact from '../../artifacts/Exchange.json'
-import {
-    assetDataUtils,
-    BigNumber,
-    ContractWrappers,
-    generatePseudoRandomSalt,
-    Order,
-    orderHashUtils,
-    signatureUtils,
-    SignerType,
-} from '0x.js'
-import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types'
 import web3 from '../web3'
 
 const contractName = 'Exchange'
 
 describeContract(contractName, () => {
   let exchangeAddress
-  let exchangeInstance
-  let transactionDefault
 
   beforeAll(async () => {
-    exchangeAddress = await baseContracts[
-      'Exchange'
-    ].address
+    exchangeAddress = await baseContracts['Exchange'].address
     exchangeInstance = new web3.eth.Contract(
       exchangeArtifact.networks[GANACHE_NETWORK_ID].abi,
       exchangeAddress
     )
-    transactionDefault = {
-      from: accounts[0],
-      gas: GAS_ESTIMATE,
-      gasPrice: 1
-    }
   })
 
   describe.skip('fillOrder', () => {
     it('swaps GRG from account[0] to accounts[1]', async () => {
+      /*
       const rigoTokenAddress = await baseContracts['RigoToken'].address
       const wethContracAddress = await baseContracts['WETH9'].address
+
 
       const makerAddress = accounts[0]
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0x0000000000000000000000000000000000000000'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = assetDataUtils.encodeERC20AssetData(rigoTokenAddress)
-      const takerAssetData = assetDataUtils.encodeERC20AssetData(wethContracAddress)
+      const makerAssetData = assetDataUtils.encodeERC20AssetData(
+        rigoTokenAddress
+      )
+      const takerAssetData = assetDataUtils.encodeERC20AssetData(
+        wethContracAddress
+      )
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
       const takerFee = new BigNumber(0).toString()
+      */
       const makerAssetAmount = web3.utils.toWei('0.3').toString() // test with equal amounts (prev 0.2)
       const takerAssetAmount = web3.utils.toWei('0.3').toString()
+      /*
       const expirationTimeSeconds = new BigNumber(
         Date.now() + 3600000
       ).toString() // Valid for up to an hour
+      */
 
       // wrap eth and set allowances
       const erc20Proxy = await baseContracts['Erc20Proxy'].address // can also be queried from exchange with proxy id (from tokenData)
@@ -68,12 +58,11 @@ describeContract(contractName, () => {
         from: accounts[1]
       })
 
-      await baseContracts['WETH9'].approve(
-        erc20Proxy,
-        takerAssetAmount,
-        { from: accounts[1] }
-      )
+      await baseContracts['WETH9'].approve(erc20Proxy, takerAssetAmount, {
+        from: accounts[1]
+      })
 
+      /*
       // Generate order
       const order = {
         makerAddress,
@@ -93,7 +82,9 @@ describeContract(contractName, () => {
       const providerEngine = web3.currentProvider
 
       const signerAddress = accounts[0]
+      */
 
+      /*
       const signedOrder = await signatureUtils.ecSignOrderAsync(
         providerEngine,
         order,
@@ -101,9 +92,18 @@ describeContract(contractName, () => {
       )
 
       const aggregatedOrder = [
-        makerAddress,takerAddress,feeRecipientAddress,senderAddress,
-        makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
-        makerAssetData,takerAssetData
+        makerAddress,
+        takerAddress,
+        feeRecipientAddress,
+        senderAddress,
+        makerAssetAmount,
+        takerAssetAmount,
+        makerFee,
+        takerFee,
+        expirationTimeSeconds,
+        salt,
+        makerAssetData,
+        takerAssetData
       ]
 
       // accounts[1] takes the order, purchases GRG
@@ -112,13 +112,11 @@ describeContract(contractName, () => {
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
+      */
       const takerAssetFillAmount = (takerAssetAmount / 2).toString() // partial fill
-      const fillOrder = await exchangeInstance.methods.fillOrder(
-        aggregatedOrder,
-        takerAssetFillAmount,
-        signedOrder.signature // SignatureType.EthSign
-      ).send({ ...transactionDetails })
-      const secondaryGRGbalance = await baseContracts['RigoToken'].balanceOf(accounts[1])
+      const secondaryGRGbalance = await baseContracts['RigoToken'].balanceOf(
+        accounts[1]
+      )
       expect(secondaryGRGbalance.toString()).toEqual(takerAssetFillAmount)
     })
   })

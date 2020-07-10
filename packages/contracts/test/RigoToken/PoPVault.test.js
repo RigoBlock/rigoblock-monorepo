@@ -3,13 +3,12 @@ import { fromMicro, fromWei, toBigNumber } from '../utils'
 import vaultArtifact from '../../artifacts/Vault.json'
 import web3 from '../web3'
 
-jest.setTimeout(10000);
+jest.setTimeout(10000)
 
 const contractName = 'ProofOfPerformance'
 
 describeContract(contractName, () => {
   const groupRatio = 5
-  const minimumRigo = 50
   const vaultPrice = 1e18
   const inflationFactor = 2
   let vaultId
@@ -48,9 +47,7 @@ describeContract(contractName, () => {
     afterAll(async () => {
       // reset the registry
       const registry = await baseContracts['DragoRegistry'].address
-      await baseContracts[contractName].setRegistry(
-        registry
-      )
+      await baseContracts[contractName].setRegistry(registry)
     })
     it('changes the registry address', async () => {
       const fakeRegistry = '0x7ce6e371085cb611fb46d5065397223ef2f000ff'
@@ -126,8 +123,8 @@ describeContract(contractName, () => {
       // and one for the fund wizard
       const mintEvent = await baseContracts['RigoToken'].TokenMinted()
       const eventsPromise = new Promise((resolve, reject) => {
-        mintEvent.get(
-          (err, data) => (err ? reject(new Error(err)) : resolve(data))
+        mintEvent.get((err, data) =>
+          err ? reject(new Error(err)) : resolve(data)
         )
       })
       const events = await eventsPromise

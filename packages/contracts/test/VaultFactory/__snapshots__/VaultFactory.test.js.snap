@@ -10,4 +10,4 @@ exports[` VaultFactory createVault throws an error when provided with the same n
 
 exports[` VaultFactory createVault throws an exception when provided with a symbol longer smaller than 3 characters 1`] = `"VM Exception while processing transaction: revert"`;
 
-exports[` VaultFactory createVault throws an exception when provided with a symbol longer than 3 characters 1`] = `"VM Exception while processing transaction: revert"`;
+exports[` VaultFactory createVault throws an exception when provided with a symbol longer than 5 characters 1`] = `"VM Exception while processing transaction: revert"`;

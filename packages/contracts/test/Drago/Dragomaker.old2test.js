@@ -1,18 +1,14 @@
-import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import {
-    assetDataUtils,
-    BigNumber,
-    ContractWrappers,
-    generatePseudoRandomSalt,
-    Order,
-    orderHashUtils,
-    signatureUtils,
-    SignerType,
+  BigNumber,
+  assetDataUtils,
+  generatePseudoRandomSalt,
+  orderHashUtils,
+  signatureUtils
 } from '0x.js'
-import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types'
+import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
+import { SignatureType } from '@0x/types'
 import dragoArtifact from '../../artifacts/Drago.json'
 import exchangeArtifact from '../../artifacts/Exchange.json'
-import moment from 'moment'
 import web3 from '../web3'
 
 const contractName = 'Drago'
@@ -21,7 +17,7 @@ describeContract(contractName, () => {
   let dragoAddress
   let dragoInstance
   let exchangeAddress
-  let exchangeInstance
+  //let exchangeInstance
   let transactionDefault
   let ethfinexHotWalletAddress
   let ethfinexAdapterAddress
@@ -37,9 +33,7 @@ describeContract(contractName, () => {
       dragoArtifact.networks[GANACHE_NETWORK_ID].abi,
       dragoAddress
     )
-    exchangeAddress = await baseContracts[
-      'Exchange'
-    ].address
+    exchangeAddress = await baseContracts['Exchange'].address
     exchangeInstance = new web3.eth.Contract(
       exchangeArtifact.networks[GANACHE_NETWORK_ID].abi,
       exchangeAddress
@@ -130,9 +124,7 @@ describeContract(contractName, () => {
         .send({ ...transactionDefault })
 
       // Check ETH wrapped balance is correct
-      await baseContracts[
-        'WrapperLockEth'
-      ].balanceOf(dragoAddress)
+      await baseContracts['WrapperLockEth'].balanceOf(dragoAddress)
 
       // wrap some GRG from the user account, so that the user can sell GRG buy ETH
       const GRGtokenWrapper = await baseContracts['WrapperLock'].address
@@ -144,8 +136,12 @@ describeContract(contractName, () => {
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0x0000000000000000000000000000000000000000' // in real environment, sender is ethfinexHotWalletAddress
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000' // in real environment, fee receipient is ethfinexHotWalletAddress
-      const makerAssetData = assetDataUtils.encodeERC20AssetData(ETHtokenWrapper.toString())
-      const takerAssetData = assetDataUtils.encodeERC20AssetData(GRGtokenWrapper.toString())
+      const makerAssetData = assetDataUtils.encodeERC20AssetData(
+        ETHtokenWrapper.toString()
+      )
+      const takerAssetData = assetDataUtils.encodeERC20AssetData(
+        GRGtokenWrapper.toString()
+      )
       // exchangeAddress
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -189,22 +185,35 @@ describeContract(contractName, () => {
         SignatureType.Wallet
       )
 
-      const signedOrderHashHex = await orderHashUtils.getOrderHashHex(signedOrder)
+      const signedOrderHashHex = await orderHashUtils.getOrderHashHex(
+        signedOrder
+      )
 
       // signature validation
       const isValidSignature = await signatureUtils.isValidWalletSignatureAsync(
-          providerEngine,
-          signedOrderHashHex,
-          signedOrderSignature,
-          dragoAddress
+        providerEngine,
+        signedOrderHashHex,
+        signedOrderSignature,
+        dragoAddress
       )
       expect(isValidSignature).toBe(true)
 
+      /*
       const aggregatedOrder = [
-        makerAddress,takerAddress,feeRecipientAddress,senderAddress,
-        makerAssetAmount,takerAssetAmount,makerFee,takerFee,expirationTimeSeconds,salt,
-        makerAssetData,takerAssetData
+        makerAddress,
+        takerAddress,
+        feeRecipientAddress,
+        senderAddress,
+        makerAssetAmount,
+        takerAssetAmount,
+        makerFee,
+        takerFee,
+        expirationTimeSeconds,
+        salt,
+        makerAssetData,
+        takerAssetData
       ]
+      */
 
       // in order to move wrapped tokens, either the from or to address must be signer
       const isETHWSigner = await baseContracts['WrapperLockEth'].isSigner(
@@ -216,18 +225,22 @@ describeContract(contractName, () => {
       expect(isETHWSigner || isGRGWSigner).toEqual(true)
 
       // accounts[0] takes the order, sells GRG
+      /*
       const transactionDetails = {
         from: accounts[0],
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
+      */
       const takerAssetFillAmount = (takerAssetAmount / 2).toString() // partial fill
-      const fillOrder = await exchangeInstance.methods.fillOrder(
-        aggregatedOrder,
-        takerAssetFillAmount,
-        signedOrderSignature
-      ).send({ ...transactionDefault })
-      const secondaryGRGbalance = await baseContracts['WrapperLock'].balanceOf(dragoAddress)
+      /*
+      const fillOrder = await exchangeInstance.methods
+        .fillOrder(aggregatedOrder, takerAssetFillAmount, signedOrderSignature)
+        .send({ ...transactionDefault })
+        */
+      const secondaryGRGbalance = await baseContracts['WrapperLock'].balanceOf(
+        dragoAddress
+      )
       expect(secondaryGRGbalance.toString()).toEqual(takerAssetFillAmount) // expect drago to hold amount GRGW
     })
   })

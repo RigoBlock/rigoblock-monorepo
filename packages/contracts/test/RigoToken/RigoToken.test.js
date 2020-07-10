@@ -1,14 +1,11 @@
 import { GAS_ESTIMATE } from '../../constants'
 import { toBigNumber } from '../utils'
 
-jest.setTimeout(10000);
+jest.setTimeout(10000)
 
 const contractName = 'RigoToken'
 
 describeContract(contractName, () => {
-  const RIGOTOKEN = 'Rigo Token'
-  const RIGOTOKEN_SYMBOL = 'GRG'
-  const RIGOTOKEN_DECIMALS = 18
   let inflationAddress
   let transactionDefault
 
@@ -37,8 +34,8 @@ describeContract(contractName, () => {
       expect(txHash).toBeHash()
       const mintEvent = await baseContracts[contractName].TokenMinted()
       const eventsPromise = new Promise((resolve, reject) => {
-        mintEvent.get(
-          (err, data) => (err ? reject(new Error(err)) : resolve(data))
+        mintEvent.get((err, data) =>
+          err ? reject(new Error(err)) : resolve(data)
         )
       })
       const events = await eventsPromise

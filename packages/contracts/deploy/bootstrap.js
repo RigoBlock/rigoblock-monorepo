@@ -93,7 +93,6 @@ module.exports = async (baseAccount, network) => {
   printAddress('ExchangeEfx', exchangeEfx.address)
 
   await exchangesAuthority.whitelistExchange(exchangeEfx.address, true)
-  const tokenTransferProxyEfx = await exchangeEfx.TOKEN_TRANSFER_PROXY_CONTRACT()
 
   const tokenTransferProxy = await deploy(
     baseAccount,
@@ -130,11 +129,7 @@ module.exports = async (baseAccount, network) => {
   const exchange = await deploy(baseAccount, network, 'Exchange')
   printAddress('Exchange', exchange.address)
 
-  const erc20Proxy = await deploy(
-    baseAccount,
-    network,
-    'Erc20Proxy'
-  )
+  const erc20Proxy = await deploy(baseAccount, network, 'Erc20Proxy')
   printAddress('Erc20Proxy', erc20Proxy.address)
 
   await erc20Proxy.addAuthorizedAddress(exchange.address)
@@ -189,10 +184,12 @@ module.exports = async (baseAccount, network) => {
   ])
   printAddress('TotlePrimary', totlePrimary.address)
 
-  const zeroExExchangeHandler = await deploy(baseAccount, network, 'ZeroExExchangeHandler', [
-    exchange.address,
-    wETH9.address
-  ])
+  const zeroExExchangeHandler = await deploy(
+    baseAccount,
+    network,
+    'ZeroExExchangeHandler',
+    [exchange.address, wETH9.address]
+  )
   printAddress('ZeroExExchangeHandler', zeroExExchangeHandler.address)
 
   await exchangesAuthority.setExchangeAdapter(
