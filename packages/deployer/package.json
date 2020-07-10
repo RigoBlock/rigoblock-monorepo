@@ -48,7 +48,7 @@
         "lodash": "^4.17.4",
         "require-from-string": "^2.0.1",
         "semver": "^5.5.0",
-        "solc": "^0.6.10",
+        "solc": "^0.6.11",
         "web3": "0.20.6",
         "web3-eth-abi": "1.0.0-beta.37",
         "yargs": "^10.0.3"
