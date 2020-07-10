@@ -110,6 +110,8 @@ jobs:
       NODE_ENV: production
     docker:
       - image: *node_image
+        environment:
+          NODE_OPTIONS: --max_old_space_size=4096
     parallelism: 4
     steps:
       - checkout
