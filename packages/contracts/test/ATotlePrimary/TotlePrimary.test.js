@@ -51,7 +51,7 @@ describeContract(contractName, () => {
     */
   })
 
-  describe('performSwapCollection', () => {
+  describe.skip('performSwapCollection', () => {
     it('performs a 0x GRG buy order on totle', async () => {
       // account 1 buys from account 0
       const makerAddress = accounts[0]
