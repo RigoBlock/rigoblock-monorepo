@@ -192,13 +192,10 @@ export class Compiler {
       }
     }
     const compiled: solc.StandardOutput = JSON.parse(
-      solcInstance.compileStandardWrapper(
-        JSON.stringify(standardInput),
-        importPath => {
-          const sourceCodeIfExists = this._resolver.resolve(importPath)
-          return { contents: sourceCodeIfExists.source }
-        }
-      )
+      solcInstance.compile(JSON.stringify(standardInput), importPath => {
+        const sourceCodeIfExists = this._resolver.resolve(importPath)
+        return { contents: sourceCodeIfExists.source }
+      })
     )
     process.removeAllListeners('uncaughtException')
     if (!_.isUndefined(compiled.errors)) {
