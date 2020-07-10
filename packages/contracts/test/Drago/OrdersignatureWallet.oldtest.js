@@ -1,26 +1,19 @@
-//import { BigNumber } from 'bignumber.js'
-//import { ZeroEx } from '0x.js'
-import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
-import dragoArtifact from '../../artifacts/Drago.json'
 import {
-    assetDataUtils,
-    BigNumber,
-    ContractWrappers,
-    generatePseudoRandomSalt,
-    Order,
-    orderHashUtils,
-    signatureUtils,
-    SignerType,
+  BigNumber,
+  generatePseudoRandomSalt,
+  orderHashUtils,
+  signatureUtils
 } from '0x.js'
-import { ECSignature, SignatureType, SignedOrder, ValidatorSignature } from '@0x/types';
+import { GANACHE_NETWORK_ID } from '../../constants'
+import { SignatureType } from '@0x/types'
+import dragoArtifact from '../../artifacts/Drago.json'
 import web3 from '../web3'
 
 const contractName = 'Drago'
 
 describeContract(contractName, () => {
   let dragoAddress
-  let dragoInstance
-  let transactionDefault
+  //let transactionDefault
   let exchangeAddress
   //let hotWalletAddress
   let ethfinexAdapterAddress
@@ -36,16 +29,9 @@ describeContract(contractName, () => {
       dragoArtifact.networks[GANACHE_NETWORK_ID].abi,
       dragoAddress
     )
-    transactionDefault = {
-      from: accounts[0],
-      gas: GAS_ESTIMATE,
-      gasPrice: 1
-    }
     exchangeAddress = await baseContracts['Exchange'].address
     //hotWalletAddress = accounts[0] // hot wallet
-    ethfinexAdapterAddress = await baseContracts[
-      'AEthfinex'
-    ].address
+    ethfinexAdapterAddress = await baseContracts['AEthfinex'].address
     await baseContracts['ExchangesAuthority'].setWhitelister(accounts[0], true)
   })
 
@@ -55,8 +41,10 @@ describeContract(contractName, () => {
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
-      const takerAssetData = '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
+      const makerAssetData =
+        '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
+      const takerAssetData =
+        '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -81,7 +69,7 @@ describeContract(contractName, () => {
         takerAddress,
         takerAssetAmount,
         takerAssetData,
-        takerFee,
+        takerFee
       }
       const providerEngine = web3.currentProvider
 
@@ -102,9 +90,8 @@ describeContract(contractName, () => {
       )
 
       // check against 0x api
-      const isValidSignature = await expect(
-        signatureUtils
-        .isValidWalletSignatureAsync(
+      await expect(
+        signatureUtils.isValidWalletSignatureAsync(
           providerEngine,
           orderHashHex,
           typedSignature,
@@ -118,8 +105,10 @@ describeContract(contractName, () => {
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
-      const takerAssetData = '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
+      const makerAssetData =
+        '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
+      const takerAssetData =
+        '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -144,7 +133,7 @@ describeContract(contractName, () => {
         takerAddress,
         takerAssetAmount,
         takerAssetData,
-        takerFee,
+        takerFee
       }
       const providerEngine = web3.currentProvider
 
@@ -164,19 +153,16 @@ describeContract(contractName, () => {
         SignatureType.Wallet
       )
 
-      const signedOrder = { ...order, typedSignature }
+      //const signedOrder = { ...order, typedSignature }
 
       await baseContracts['ExchangesAuthority'].setExchangeAdapter(
         accounts[0],
         ethfinexAdapterAddress
       )
 
-      const isValidWalletSignature = await baseContracts['Exchange']
-        .isValidSignature(
-          orderHashHex,
-          dragoAddress,
-          typedSignature
-        )
+      const isValidWalletSignature = await baseContracts[
+        'Exchange'
+      ].isValidSignature(orderHashHex, dragoAddress, typedSignature)
       expect(isValidWalletSignature).toEqual(true)
     })
     // hash signature rejected against wallet validation
@@ -185,8 +171,10 @@ describeContract(contractName, () => {
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
-      const takerAssetData = '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
+      const makerAssetData =
+        '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
+      const takerAssetData =
+        '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -211,7 +199,7 @@ describeContract(contractName, () => {
         takerAddress,
         takerAssetAmount,
         takerAssetData,
-        takerFee,
+        takerFee
       }
       const providerEngine = web3.currentProvider
 
@@ -237,22 +225,23 @@ describeContract(contractName, () => {
         ethfinexAdapterAddress
       )
 
-      const isValidSignature = await signatureUtils
-        .isValidWalletSignatureAsync(
-          providerEngine,
-          orderHashHex,
-          walletSignature,
-          dragoAddress
-        )
-      //expect(isValidSignature).toBe(true)
+      const isValidSignature = await signatureUtils.isValidWalletSignatureAsync(
+        providerEngine,
+        orderHashHex,
+        walletSignature,
+        dragoAddress
+      )
+      expect(isValidSignature).toBe(true)
     }, 9999) // runs slow
     it('confirms valid a signed order signature', async () => {
       const makerAddress = dragoAddress // '0x2f3ae8c5e7321688999883fd4f569e928d81d68f' // a drago
       const takerAddress = '0x0000000000000000000000000000000000000000'
       const senderAddress = '0xc2b5122381bcddb87e75fab2e46a70e7c19b69d3'
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000'
-      const makerAssetData = '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
-      const takerAssetData = '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
+      const makerAssetData =
+        '0xf47261b0000000000000000000000000cc64620c47a9cd6aa4a5265b48c85911dfb0005d'
+      const takerAssetData =
+        '0xf47261b000000000000000000000000002fcb8a7d3eae24dbd0bc67fdb5de13e3ec7cf93'
       //const exchangeAddress = exchangeAddress //'0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
@@ -277,7 +266,7 @@ describeContract(contractName, () => {
         takerAddress,
         takerAssetAmount,
         takerAssetData,
-        takerFee,
+        takerFee
       }
       const providerEngine = web3.currentProvider
 
@@ -295,20 +284,21 @@ describeContract(contractName, () => {
         SignatureType.Wallet
       )
 
-      const signedOrderHashHex = await orderHashUtils.getOrderHashHex(signedOrder)
+      const signedOrderHashHex = await orderHashUtils.getOrderHashHex(
+        signedOrder
+      )
 
       await baseContracts['ExchangesAuthority'].setExchangeAdapter(
         accounts[0],
         ethfinexAdapterAddress
       )
 
-      const isValidSignature = await signatureUtils
-        .isValidWalletSignatureAsync(
-          providerEngine,
-          signedOrderHashHex,
-          signedOrderSignature,
-          dragoAddress
-        )
+      const isValidSignature = await signatureUtils.isValidWalletSignatureAsync(
+        providerEngine,
+        signedOrderHashHex,
+        signedOrderSignature,
+        dragoAddress
+      )
       expect(isValidSignature).toBe(true)
     }, 9999) // runs slow
   })

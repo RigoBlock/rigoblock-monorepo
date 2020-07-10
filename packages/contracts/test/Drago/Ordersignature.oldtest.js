@@ -1,20 +1,14 @@
-import { GANACHE_NETWORK_ID } from '../../constants'
 import {
-    assetDataUtils,
-    BigNumber,
-    ContractWrappers,
-    generatePseudoRandomSalt,
-    Order,
-    orderHashUtils,
-    signatureUtils,
-    SignerType,
+  BigNumber,
+  generatePseudoRandomSalt,
+  orderHashUtils,
+  signatureUtils
 } from '0x.js'
 import web3 from '../web3'
 
 const contractName = 'Drago'
 
 describeContract(contractName, () => {
-
   describe.skip('operateOnExchange', () => {
     it('logs an order signature for input data', async () => {
       const makerAddress = '0x2f3ae8c5e7321688999883fd4f569e928d81d68f' // a drago
@@ -23,8 +17,7 @@ describeContract(contractName, () => {
       const feeRecipientAddress = '0x0000000000000000000000000000000000000000' // ZeroEx.NULL_ADDRESS
       const makerAssetData = '0xacfb4c79259e3c2c1bf054f136e6d75f7cc2b07e' // GRGW // TODO: double check format
       const takerAssetData = '0x06da2eb72279c1cec53c251bbff4a06fbfb93a5b' // ETHW // TODO: double check format
-      const exchangeAddress =
-        '0x1d8643aae25841322ecde826862a9fa922770981'
+      const exchangeAddress = '0x1d8643aae25841322ecde826862a9fa922770981'
       const salt = generatePseudoRandomSalt().toString()
       const makerFee = new BigNumber(0).toString()
       const takerFee = new BigNumber(0).toString()
@@ -37,18 +30,18 @@ describeContract(contractName, () => {
       // Generate order
       const order = {
         exchangeAddress,
-	      expirationTimeSeconds,
-	      feeRecipientAddress,
-	      makerAddress,
-	      makerAssetAmount,
-	      makerAssetData,
-	      makerFee,
-	      salt,
-	      senderAddress,
-	      takerAddress,
-	      takerAssetAmount,
-	      takerAssetData,
-	      takerFee,
+        expirationTimeSeconds,
+        feeRecipientAddress,
+        makerAddress,
+        makerAssetAmount,
+        makerAssetData,
+        makerFee,
+        salt,
+        senderAddress,
+        takerAddress,
+        takerAssetAmount,
+        takerAssetData,
+        takerFee
       }
 
       const orderHash = await orderHashUtils.getOrderHashHex(order)
@@ -71,16 +64,13 @@ describeContract(contractName, () => {
         signerAddress
       )
 
-      const v = new BigNumber(ecSignature.v).toString()
-      const r = ecSignature.r
-      const s = ecSignature.s
+      //const v = new BigNumber(ecSignature.v).toString()
+      //const r = ecSignature.r
+      //const s = ecSignature.s
 
       const signature = ecSignature
 
-      const typedSignature = await signatureUtils.convertToSignatureWithType(
-        signature,
-        'EthSign'
-      )
+      await signatureUtils.convertToSignatureWithType(signature, 'EthSign')
       const data = orderHash
 
       // check against 0x api

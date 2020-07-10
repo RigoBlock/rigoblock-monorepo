@@ -1,20 +1,15 @@
 import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 
 import dragoArtifact from '../../artifacts/Drago.json'
-import er20Artifact from '../../artifacts/ERC20.json'
-import moment from 'moment'
 import web3 from '../web3'
 
-jest.setTimeout(30000);
+jest.setTimeout(30000)
 
 const contractName = 'Drago'
 
 describeContract(contractName, () => {
-  let dragoAddress
   let dragoInstance
   let ethAddress
-  let erc20Address
-  let erc20Instance
   let transactionDefault
   let selfCustodyAddress
   let selfCustodyProxyAddress
@@ -95,13 +90,11 @@ describeContract(contractName, () => {
         true
       ) // byte4(keccak256(method))
 
-      const adapter = await baseContracts['ExchangesAuthority'].getExchangeAdapter(
-        selfCustodyProxyAddress
-      )
-      const isMethodAllowed = await baseContracts['ExchangesAuthority'].isMethodAllowed(
-        methodSignature,
-        adapter
-      )
+      /*
+      const adapter = await baseContracts[
+        'ExchangesAuthority'
+      ].getExchangeAdapter(selfCustodyProxyAddress)
+      */
       const preBalance = await web3.eth.getBalance(selfCustodyAddress)
 
       await dragoInstance.methods
@@ -158,15 +151,11 @@ describeContract(contractName, () => {
         selfCustodyAdapterAddress,
         true
       ) // byte4(keccak256(method))
-
-      const adapter = await baseContracts['ExchangesAuthority'].getExchangeAdapter(
-        selfCustodyProxyAddress
-      )
-      const isMethodAllowed = await baseContracts['ExchangesAuthority'].isMethodAllowed(
-        methodSignature,
-        adapter
-      )
-
+      /*
+      const adapter = await baseContracts[
+        'ExchangesAuthority'
+      ].getExchangeAdapter(selfCustodyProxyAddress)
+      */
       const preBalance = await web3.eth.getBalance(selfCustodyAddress)
 
       await dragoInstance.methods
@@ -221,15 +210,11 @@ describeContract(contractName, () => {
         selfCustodyAdapterAddress,
         true
       ) // byte4(keccak256(method))
-
-      const adapter = await baseContracts['ExchangesAuthority'].getExchangeAdapter(
-        selfCustodyProxyAddress
-      )
-      const isMethodAllowed = await baseContracts['ExchangesAuthority'].isMethodAllowed(
-        methodSignature,
-        adapter
-      )
-
+      /*
+      const adapter = await baseContracts[
+        'ExchangesAuthority'
+      ].getExchangeAdapter(selfCustodyProxyAddress)
+      */
       const preBalance = await web3.eth.getBalance(selfCustodyAddress)
 
       await dragoInstance.methods
@@ -239,18 +224,14 @@ describeContract(contractName, () => {
       expect(postBalance.toString()).toEqual(preBalance.toString())
     })
     it.skip('sends a token to self custody', async () => {
-      erc20Address = await baseContracts[
-        'RigoToken'
-      ].address
+      erc20Address = await baseContracts['RigoToken'].address
       erc20Instance = new web3.eth.Contract(
         erc20Artifact.networks[GANACHE_NETWORK_ID].abi,
         exchangeAddress
       )
     })
     it.skip('sends a token to self custody', async () => {
-      erc20Address = await baseContracts[
-        'RigoToken'
-      ].address
+      erc20Address = await baseContracts['RigoToken'].address
       erc20Instance = new web3.eth.Contract(
         erc20Artifact.networks[GANACHE_NETWORK_ID].abi,
         exchangeAddress

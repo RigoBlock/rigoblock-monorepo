@@ -3,7 +3,7 @@ import { fromMicro, fromWei, toBigNumber } from '../utils'
 import dragoArtifact from '../../artifacts/Drago.json'
 import web3 from '../web3'
 
-jest.setTimeout(10000);
+jest.setTimeout(10000)
 
 const contractName = 'ProofOfPerformance'
 
@@ -11,7 +11,6 @@ describeContract(contractName, () => {
   // note on factors, with > 20 inflation factor, < 9530 gourpRatio, otherwise fail
   // TODO: check whether require minimum inflation Factor > k or use bigger multiplers in pop
   const groupRatio = 5000 // between 1 and 10000 (stay below 9530)
-  const minimumRigo = 50
   const dragoPrice = 1e18
   const inflationFactor = 20
   let dragoId
@@ -27,7 +26,9 @@ describeContract(contractName, () => {
     await baseContracts['Inflation'].setInflationFactor(group, inflationFactor)
     // creating drago to test functions
     await baseContracts['DragoFactory'].createDrago('dragotester', 'DTS')
-    const dragoData = await baseContracts['DragoRegistry'].fromName('dragotester')
+    const dragoData = await baseContracts['DragoRegistry'].fromName(
+      'dragotester'
+    )
     const [id, address] = dragoData
     dragoId = id
     dragoAddress = address
@@ -51,9 +52,7 @@ describeContract(contractName, () => {
     afterAll(async () => {
       // reset the registry
       const registry = await baseContracts['DragoRegistry'].address
-      await baseContracts[contractName].setRegistry(
-        registry
-      )
+      await baseContracts[contractName].setRegistry(registry)
     })
     it('changes the registry address', async () => {
       const fakeRegistry = '0x7ce6e371085cb611fb46d5065397223ef2f000ff'
@@ -129,8 +128,8 @@ describeContract(contractName, () => {
       // and one for the fund wizard
       const mintEvent = await baseContracts['RigoToken'].TokenMinted()
       const eventsPromise = new Promise((resolve, reject) => {
-        mintEvent.get(
-          (err, data) => (err ? reject(new Error(err)) : resolve(data))
+        mintEvent.get((err, data) =>
+          err ? reject(new Error(err)) : resolve(data)
         )
       })
       const events = await eventsPromise
@@ -141,12 +140,14 @@ describeContract(contractName, () => {
   })
 
   describe('proofOfPerformance', () => {
-    it("returns the value of pop and performance reward with null performance", async () => {
-      const popData = await baseContracts[contractName].proofOfPerformance(dragoId)
-      const [pop, perfRew] = popData
+    it('returns the value of pop and performance reward with null performance', async () => {
+      const popData = await baseContracts[contractName].proofOfPerformance(
+        dragoId
+      )
+      const [, perfRew] = popData
       expect(perfRew).toEqual(toBigNumber(0))
     })
-    it("returns an error with negative performance", async () => {
+    it('returns an error with negative performance', async () => {
       const sellPrice = web3.utils.toWei('0.8')
       const buyPrice = web3.utils.toWei('0.9')
       const block = 1
@@ -158,9 +159,11 @@ describeContract(contractName, () => {
         gasPrice: 1
       }
       // only owner can set prices
-      await dragoInstance.methods.setPrices(sellPrice, buyPrice, block, hash, data).send({
-        ...transactionDetails
-      })
+      await dragoInstance.methods
+        .setPrices(sellPrice, buyPrice, block, hash, data)
+        .send({
+          ...transactionDetails
+        })
       await expect(
         baseContracts[contractName].proofOfPerformance(dragoId)
       ).rejects.toThrowErrorMatchingSnapshot()
@@ -168,11 +171,13 @@ describeContract(contractName, () => {
       // set prices to original state, as otherwise get pool data test will fail
       const initialSellPrice = web3.utils.toWei('1')
       const initialBuyPrice = web3.utils.toWei('1')
-      await dragoInstance.methods.setPrices(initialSellPrice, initialBuyPrice, block, hash, data).send({
-        ...transactionDetails
-      })
+      await dragoInstance.methods
+        .setPrices(initialSellPrice, initialBuyPrice, block, hash, data)
+        .send({
+          ...transactionDetails
+        })
     })
-    it("returns the value of pop and performance rewards price over HWM", async () => {
+    it('returns the value of pop and performance rewards price over HWM', async () => {
       const sellPrice = web3.utils.toWei('1.15')
       const buyPrice = web3.utils.toWei('1.16')
       const block = 1
@@ -183,19 +188,27 @@ describeContract(contractName, () => {
         gas: GAS_ESTIMATE,
         gasPrice: 1
       }
-      await dragoInstance.methods.setPrices(sellPrice, buyPrice, block, hash, data).send({
-        ...transactionDetails
-      })
-      const popData = await baseContracts[contractName].proofOfPerformance(dragoId)
+      await dragoInstance.methods
+        .setPrices(sellPrice, buyPrice, block, hash, data)
+        .send({
+          ...transactionDetails
+        })
+      const popData = await baseContracts[contractName].proofOfPerformance(
+        dragoId
+      )
       const [pop, perfRew] = popData
       const grgTotalSupply = await baseContracts['RigoToken'].totalSupply()
       const maxPop = grgTotalSupply / 10000 // max 0.01% of total supply
-      expect(Number(pop)).toBeGreaterThan(Number(perfRew) || Number(pop).toEqual(Number(maxPop)))
+      expect(Number(pop)).toBeGreaterThan(
+        Number(perfRew) || Number(pop).toEqual(Number(maxPop))
+      )
       const initialSellPrice = web3.utils.toWei('1')
       const initialBuyPrice = web3.utils.toWei('1')
-      await dragoInstance.methods.setPrices(initialSellPrice, initialBuyPrice, block, hash, data).send({
-        ...transactionDetails
-      })
+      await dragoInstance.methods
+        .setPrices(initialSellPrice, initialBuyPrice, block, hash, data)
+        .send({
+          ...transactionDetails
+        })
     })
   })
 

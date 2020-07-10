@@ -1,4 +1,4 @@
-jest.setTimeout(10000);
+jest.setTimeout(10000)
 
 const contractName = 'VaultFactory'
 
