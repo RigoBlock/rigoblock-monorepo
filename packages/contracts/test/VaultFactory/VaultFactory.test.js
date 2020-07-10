@@ -1,4 +1,4 @@
-jest.setTimeout(10000);
+jest.setTimeout(20000)
 
 const contractName = 'VaultFactory'
 
@@ -26,15 +26,10 @@ describeContract(contractName, () => {
 
     it('does not throw an error when provided with space parameters in the middle', async () => {
       const txHash1 = await baseContracts[contractName].createVault(
-        'some name',
-        'TTT'
-      )
-      const txHash2 = await baseContracts[contractName].createVault(
         'o thern ame',
         'TTT'
       )
       expect(txHash1).toBeHash()
-      expect(txHash2).toBeHash()
     })
 
     it('does not throw an error when provided with uppercase parameters in name', async () => {
@@ -60,19 +55,15 @@ describeContract(contractName, () => {
     })
 
     it('does not throw an error when provided with the same symbol', async () => {
+      await baseContracts[contractName].createVault('somename', 'TTT')
       const txHash1 = await baseContracts[contractName].createVault(
-        'somename',
-        'TTT'
-      )
-      const txHash2 = await baseContracts[contractName].createVault(
         'othername',
         'TTT'
       )
       expect(txHash1).toBeHash()
-      expect(txHash2).toBeHash()
     })
 
-    it('throws an exception when provided with a symbol longer than 3 characters', async () => {
+    it('throws an exception when provided with a symbol longer than 5 characters', async () => {
       await expect(
         baseContracts[contractName].createVault('longone', 'TOOLONG')
       ).rejects.toThrowErrorMatchingSnapshot()
