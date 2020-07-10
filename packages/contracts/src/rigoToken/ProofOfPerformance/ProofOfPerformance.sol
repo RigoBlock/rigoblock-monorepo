@@ -459,10 +459,10 @@ contract ProofOfPerformance is
         returns (uint256)
     {
         uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
-        require(
-            poolEthBalance <= poolValue && poolEthBalance >= 1 finney, // prevent dust from small pools
-            "ETH_BALANCE_HIGHER_THAN_AUM_OR_TOO_SMALL_ERROR"
-        );
+        // prevent dust from small pools
+        if (poolEthBalance >= poolValue || poolEthBalance <= 1 finney) {
+            revert('ETH_BALANCE_HIGHER_THAN_AUM_OR_TOO_SMALL_ERROR');
+        }
 
         // non-linear progression series with decay factor 18%
         // y = (1-decay factor)*k^[(1-decay factor)^(n-1)]
