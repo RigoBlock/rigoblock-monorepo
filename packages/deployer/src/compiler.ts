@@ -20,8 +20,6 @@ import {
 import { logUtils, promisify } from '@0xproject/utils'
 import chalk from 'chalk'
 
-import solc = require('solc')
-
 import {
   CompilerOptions,
   ContractArtifact,
@@ -41,6 +39,8 @@ import {
 import { fsWrapper } from './utils/fs_wrapper'
 import { utils } from './utils/utils'
 import solcVersionFetch from './utils/solcVersionFetch'
+
+const solc = require('solc')
 
 const ALL_CONTRACTS_IDENTIFIER = '*'
 const SOLC_BIN_DIR = path.join(__dirname, '..', 'solc_bin')
@@ -157,9 +157,11 @@ export class Compiler {
       solcjs = await response.text()
       fs.writeFileSync(compilerBinFilename, solcjs)
     }
+    /*
     const solcInstance = solc.setupMethods(
       requireFromString(solcjs, compilerBinFilename)
     )
+    */
 
     logUtils.log(`Compiling ${contractName} with Solidity v${solcVersion}...`)
     const source = contractSource.source
@@ -191,8 +193,9 @@ export class Compiler {
         }
       }
     }
-    const compiled: solc.StandardOutput = JSON.parse(
-      solcInstance.compile(JSON.stringify(standardInput), importPath => {
+    //const compiled: solc.StandardOutput = JSON.parse(
+    const compiled: any = JSON.parse(
+      solc.compile(JSON.stringify(standardInput), importPath => {
         const sourceCodeIfExists = this._resolver.resolve(importPath)
         return { contents: sourceCodeIfExists.source }
       })
