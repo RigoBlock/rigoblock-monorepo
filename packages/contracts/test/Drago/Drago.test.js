@@ -3,7 +3,7 @@ import { GANACHE_NETWORK_ID, GAS_ESTIMATE } from '../../constants'
 import dragoArtifact from '../../artifacts/Drago.json'
 import web3 from '../web3'
 
-jest.setTimeout(10000);
+jest.setTimeout(10000)
 
 const contractName = 'Drago'
 
