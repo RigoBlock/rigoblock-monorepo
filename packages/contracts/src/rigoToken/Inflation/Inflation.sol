@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.5.2;
+pragma solidity 0.5.17;
 
 import { Owned } from "../../utils/Owned/Owned.sol";
 import { AuthorityFace as Authority } from "../../protocol/authorities/Authority/AuthorityFace.sol";
@@ -42,7 +42,7 @@ contract Inflation is
     address public RIGOTOKENADDRESS;
 
     uint256 public period = 1 days;
-    uint256 public minimumGRG = 0;
+    uint256 public minimumGRG = 10**18;
     address public proofOfPerformance;
     address public authority;
     address public rigoblockDao;
@@ -62,7 +62,7 @@ contract Inflation is
         uint256 epochReward;
     }
 
-    /// @notice in order to qualify for PoP user has to told minimum rigo token
+    /// @notice in order to qualify for PoP user has to hold minimum rigo token
     modifier minimumRigo(address _ofPool) {
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
         require(
@@ -99,7 +99,7 @@ contract Inflation is
 
     modifier timeAtLeast(address _thePool) {
         require(
-            now >= performers[_thePool].endTime,
+            block.timestamp >= performers[_thePool].endTime,
             "TIME_NOT_ENOUGH"
         );
         _;
@@ -131,8 +131,8 @@ contract Inflation is
         timeAtLeast(_thePool)
         returns (bool)
     {
-        performers[_thePool].startTime = now;
-        performers[_thePool].endTime = now + period;
+        performers[_thePool].startTime = block.timestamp;
+        performers[_thePool].endTime = block.timestamp + period;
         ++performers[_thePool].epoch;
         uint256 reward = _reward * 95 / 100; //5% royalty to rigoblock dao
         uint256 rigoblockReward = safeSub(_reward, reward);
@@ -210,7 +210,7 @@ contract Inflation is
         view
         returns (bool)
     {
-        if (now >= performers[_thePool].endTime) {
+        if (block.timestamp >= performers[_thePool].endTime) {
             return true;
         }
     }
@@ -223,7 +223,7 @@ contract Inflation is
         view
         returns (uint256)
     {
-        if (now < performers[_thePool].endTime) {
+        if (block.timestamp < performers[_thePool].endTime) {
             return (performers[_thePool].endTime);
         }
     }
