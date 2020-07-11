@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.5.17;
+pragma solidity 0.5.9;
 
 import { Owned } from "../../utils/Owned/Owned.sol";
 import { AuthorityFace as Authority } from "../../protocol/authorities/Authority/AuthorityFace.sol";
