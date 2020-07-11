@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.5.4;
+pragma solidity 0.5.17;
 
 import { Pool } from "../../utils/Pool/Pool.sol";
 import { ReentrancyGuard } from "../../utils/ReentrancyGuard/ReentrancyGuard.sol";
