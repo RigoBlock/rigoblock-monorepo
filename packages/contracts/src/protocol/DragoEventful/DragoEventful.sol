@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { AuthorityFace as Authority } from "../authorities/Authority/AuthorityFace.sol";
 import { ExchangesAuthorityFace as DexAuth } from "../authorities/ExchangesAuthority/ExchangesAuthorityFace.sol";
@@ -210,8 +209,8 @@ contract DragoEventful is DragoEventfulFace {
         address _targetDrago,
         uint256 _value,
         uint256 _amount,
-        bytes _name,
-        bytes _symbol)
+        bytes calldata _name,
+        bytes calldata _symbol)
         external
         approvedDragoOnly(msg.sender)
         returns (bool success)
@@ -231,8 +230,8 @@ contract DragoEventful is DragoEventfulFace {
         address _targetDrago,
         uint256 _amount,
         uint256 _revenue,
-        bytes _name,
-        bytes _symbol)
+        bytes calldata _name,
+        bytes calldata _symbol)
         external
         approvedDragoOnly(msg.sender)
         returns(bool success)
@@ -386,7 +385,7 @@ contract DragoEventful is DragoEventfulFace {
     /// @return Bool the transaction executed successfully
     function customDragoLog(
         bytes4 _methodHash,
-        bytes _encodedParams)
+        bytes calldata _encodedParams)
         external
         approvedDragoOnly(msg.sender)
         returns (bool success)
@@ -403,7 +402,7 @@ contract DragoEventful is DragoEventfulFace {
         bytes4 _methodHash,
         bytes32 topic2,
         bytes32 topic3,
-        bytes _encodedParams)
+        bytes calldata _encodedParams)
         external
         approvedDragoOnly(msg.sender)
         returns (bool success)
@@ -418,7 +417,7 @@ contract DragoEventful is DragoEventfulFace {
     /// @return Bool the transaction executed successfully
     function customExchangeLog(
         bytes4 _methodHash,
-        bytes _encodedParams)
+        bytes calldata _encodedParams)
         external
         approvedExchangeOnly(msg.sender)
         returns (bool success)
@@ -435,7 +434,7 @@ contract DragoEventful is DragoEventfulFace {
         bytes4 _methodHash,
         bytes32 topic2,
         bytes32 topic3,
-        bytes _encodedParams)
+        bytes calldata _encodedParams)
         external
         approvedExchangeOnly(msg.sender)
         returns (bool success)
@@ -454,8 +453,8 @@ contract DragoEventful is DragoEventfulFace {
     function createDrago(
         address _who,
         address _newDrago,
-        string _name,
-        string _symbol,
+        string calldata _name,
+        string calldata _symbol,
         uint256 _dragoId)
         external
         approvedFactoryOnly(msg.sender)
@@ -482,8 +481,8 @@ contract DragoEventful is DragoEventfulFace {
         address _factory,
         uint256 _value,
         uint256 _amount,
-        bytes _name,
-        bytes _symbol)
+        bytes memory _name,
+        bytes memory _symbol)
         internal
     {
         emit BuyDrago(_targetDrago, _who, _factory, _value, _amount, _name, _symbol);
@@ -503,8 +502,8 @@ contract DragoEventful is DragoEventfulFace {
         address _factory,
         uint256 _amount,
         uint256 _revenue,
-        bytes _name,
-        bytes _symbol)
+        bytes memory _name,
+        bytes memory _symbol)
         internal
     {
         emit SellDrago(_targetDrago, _who, _factory, _amount, _revenue, _name, _symbol);
@@ -522,8 +521,8 @@ contract DragoEventful is DragoEventfulFace {
         address _factory,
         address _who,
         uint256 _dragoId,
-        string _name,
-        string _symbol)
+        string memory _name,
+        string memory _symbol)
         internal
     {
         emit DragoCreated(_newDrago, _factory, _who, _dragoId, _name, _symbol);

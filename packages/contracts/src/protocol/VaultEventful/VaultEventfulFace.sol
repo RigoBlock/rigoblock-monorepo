@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 /// @title Vault Eventful Interface - Logs all vaults transactions.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -38,11 +37,11 @@ interface VaultEventfulFace {
     /*
      * CORE FUNCTIONS
      */
-    function buyVault(address _who, address _targetVault, uint256 _value, uint256 _amount, bytes _name, bytes _symbol) external returns (bool success);
-    function sellVault(address _who, address _targetVault, uint256 _amount, uint256 _revenue, bytes _name, bytes _symbol) external returns(bool success);
+    function buyVault(address _who, address _targetVault, uint256 _value, uint256 _amount, bytes calldata _name, bytes calldata _symbol) external returns (bool success);
+    function sellVault(address _who, address _targetVault, uint256 _amount, uint256 _revenue, bytes calldata _name, bytes calldata _symbol) external returns(bool success);
     function changeRatio(address _who, address _targetVault, uint256 _ratio) external returns(bool success);
     function setTransactionFee(address _who, address _targetVault, uint256 _transactionFee) external returns(bool success);
     function changeFeeCollector(address _who, address _targetVault, address _feeCollector) external returns(bool success);
     function changeVaultDao(address _who, address _targetVault, address _vaultDao) external returns(bool success);
-    function createVault(address _who, address _newVault, string _name, string _symbol, uint256 _vaultId) external returns(bool success);
+    function createVault(address _who, address _newVault, string calldata _name, string calldata _symbol, uint256 _vaultId) external returns(bool success);
 }
