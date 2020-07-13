@@ -63,7 +63,6 @@
     }
   },
   "dependencies": {
-    "@rgbk/deployer": "^0.1.19",
     "chalk": "2.4.1",
     "core-js": "3.2.1",
     "inquirer": "6.2.1",
@@ -90,6 +89,7 @@
     "jest": "24.9.0",
     "jest-extended": "0.11.2",
     "regenerator-runtime": "0.13.3",
+    "solc": "0.6.11",
     "solhint": "1.2.1",
     "ethereum-waffle": "^3.0.2",
     "webpack": "4.16.3",
