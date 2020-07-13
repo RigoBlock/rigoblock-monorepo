@@ -1,63 +1,74 @@
 const c = require('chalk')
 const logger = require('./logger')
-const deploy = require('./deploy')
+const deployContract = require('ethereum-waffle')
 
 const printAddress = (name, address) => {
   return logger.info(c.bold(name), c.bold.magenta(address))
 }
 
 module.exports = async (baseAccount, network) => {
-  const authority = await deploy(baseAccount, network, 'Authority')
+  const authority = await deployContract(baseAccount, network, 'Authority')
   printAddress('Authority', authority.address)
 
-  const dragoRegistry = await deploy(baseAccount, network, 'DragoRegistry', [
-    authority.address
-  ])
+  const dragoRegistry = await deployContract(
+    baseAccount,
+    network,
+    'DragoRegistry',
+    [authority.address]
+  )
   printAddress('DragoRegistry', dragoRegistry.address)
 
-  const vaultEventful = await deploy(baseAccount, network, 'VaultEventful', [
-    authority.address
-  ])
+  const vaultEventful = await deployContract(
+    baseAccount,
+    network,
+    'VaultEventful',
+    [authority.address]
+  )
   printAddress('VaultEventful', vaultEventful.address)
 
   logger.info(c.bold('Setting up VaultEventful...'))
   await authority.setVaultEventful(vaultEventful.address)
 
-  const vaultFactory = await deploy(baseAccount, network, 'VaultFactory', [
-    dragoRegistry.address,
+  const vaultFactory = await deployContract(
     baseAccount,
-    authority.address
-  ])
+    network,
+    'VaultFactory',
+    [dragoRegistry.address, baseAccount, authority.address]
+  )
   printAddress('VaultFactory', vaultFactory.address)
 
   logger.info(c.bold('Whitelisting VaultFactory...'))
   await authority.whitelistFactory(vaultFactory.address, true)
 
-  const dragoEventful = await deploy(baseAccount, network, 'DragoEventful', [
-    authority.address
-  ])
+  const dragoEventful = await deployContract(
+    baseAccount,
+    network,
+    'DragoEventful',
+    [authority.address]
+  )
   printAddress('DragoEventful', dragoEventful.address)
 
   logger.info(c.bold('Setting up DragoEventful...'))
   await authority.setDragoEventful(dragoEventful.address)
 
-  const dragoFactory = await deploy(baseAccount, network, 'DragoFactory', [
-    dragoRegistry.address,
+  const dragoFactory = await deployContract(
     baseAccount,
-    authority.address
-  ])
+    network,
+    'DragoFactory',
+    [dragoRegistry.address, baseAccount, authority.address]
+  )
   printAddress('DragoFactory', dragoFactory.address)
 
   logger.info(c.bold('Whitelisting DragoFactory...'))
   await authority.whitelistFactory(dragoFactory.address, true)
 
-  const rigoToken = await deploy(baseAccount, network, 'RigoToken', [
+  const rigoToken = await deployContract(baseAccount, network, 'RigoToken', [
     baseAccount,
     baseAccount
   ])
   printAddress('RigoToken', rigoToken.address)
 
-  const proofOfPerformance = await deploy(
+  const proofOfPerformance = await deployContract(
     baseAccount,
     network,
     'ProofOfPerformance',
@@ -65,7 +76,7 @@ module.exports = async (baseAccount, network) => {
   )
   printAddress('ProofOfPerformance', proofOfPerformance.address)
 
-  const inflation = await deploy(baseAccount, network, 'Inflation', [
+  const inflation = await deployContract(baseAccount, network, 'Inflation', [
     rigoToken.address,
     proofOfPerformance.address,
     authority.address
@@ -75,7 +86,7 @@ module.exports = async (baseAccount, network) => {
   await rigoToken.changeMintingAddress(inflation.address)
   printAddress('Setting minting address...', inflation.address)
 
-  const exchangesAuthority = await deploy(
+  const exchangesAuthority = await deployContract(
     baseAccount,
     network,
     'ExchangesAuthority'
@@ -85,16 +96,20 @@ module.exports = async (baseAccount, network) => {
   await authority.setExchangesAuthority(exchangesAuthority.address)
   await exchangesAuthority.setWhitelister(baseAccount, true)
 
-  const aSelfCustody = await deploy(baseAccount, network, 'ASelfCustody')
+  const aSelfCustody = await deployContract(
+    baseAccount,
+    network,
+    'ASelfCustody'
+  )
   printAddress('ASelfCustody', aSelfCustody.address)
 
   // TODO: remove 0x v0 deprecated contracts
-  const exchangeEfx = await deploy(baseAccount, network, 'ExchangeEfx')
+  const exchangeEfx = await deployContract(baseAccount, network, 'ExchangeEfx')
   printAddress('ExchangeEfx', exchangeEfx.address)
 
   await exchangesAuthority.whitelistExchange(exchangeEfx.address, true)
 
-  const tokenTransferProxy = await deploy(
+  const tokenTransferProxy = await deployContract(
     baseAccount,
     network,
     'TokenTransferProxy'
@@ -106,66 +121,69 @@ module.exports = async (baseAccount, network) => {
     true
   )
 
-  const wETH9 = await deploy(baseAccount, network, 'WETH9')
+  const wETH9 = await deployContract(baseAccount, network, 'WETH9')
   printAddress('WETH9', wETH9.address)
 
   await exchangesAuthority.whitelistWrapper(wETH9.address, true)
 
-  const aWeth = await deploy(baseAccount, network, 'AWeth')
+  const aWeth = await deployContract(baseAccount, network, 'AWeth')
   printAddress('AWeth', aWeth.address)
 
   await exchangesAuthority.setExchangeAdapter(wETH9.address, aWeth.address)
 
-  const exchangeV1Fork = await deploy(baseAccount, network, 'ExchangeV1Fork', [
-    rigoToken.address,
-    tokenTransferProxy.address
-  ])
+  const exchangeV1Fork = await deployContract(
+    baseAccount,
+    network,
+    'ExchangeV1Fork',
+    [rigoToken.address, tokenTransferProxy.address]
+  )
   printAddress('ExchangeV1Fork', exchangeV1Fork.address)
 
   await tokenTransferProxy.addAuthorizedAddress(exchangeV1Fork.address)
   await exchangesAuthority.whitelistExchange(exchangeV1Fork.address, true)
 
   // 0x V2 exchange
-  const exchange = await deploy(baseAccount, network, 'Exchange')
+  const exchange = await deployContract(baseAccount, network, 'Exchange')
   printAddress('Exchange', exchange.address)
 
-  const erc20Proxy = await deploy(baseAccount, network, 'Erc20Proxy')
+  const erc20Proxy = await deployContract(baseAccount, network, 'Erc20Proxy')
   printAddress('Erc20Proxy', erc20Proxy.address)
 
   await erc20Proxy.addAuthorizedAddress(exchange.address)
   await exchange.registerAssetProxy(erc20Proxy.address)
 
-  const wrapperLockEth = await deploy(baseAccount, network, 'WrapperLockEth', [
-    'ETHWrapper',
-    'ETHW',
-    18,
-    erc20Proxy.address
-  ])
+  const wrapperLockEth = await deployContract(
+    baseAccount,
+    network,
+    'WrapperLockEth',
+    ['ETHWrapper', 'ETHW', 18, erc20Proxy.address]
+  )
   printAddress('WrapperLockEth', wrapperLockEth.address)
 
-  const wrapperLock = await deploy(baseAccount, network, 'WrapperLock', [
-    rigoToken.address,
-    'Rigo Token Wrapper',
-    'GRG',
-    18,
-    erc20Proxy.address,
-    0
-  ])
+  const wrapperLock = await deployContract(
+    baseAccount,
+    network,
+    'WrapperLock',
+    [rigoToken.address, 'Rigo Token Wrapper', 'GRG', 18, erc20Proxy.address, 0]
+  )
   printAddress('WrapperLock', wrapperLock.address)
 
-  const navVerifier = await deploy(baseAccount, network, 'NavVerifier')
+  const navVerifier = await deployContract(baseAccount, network, 'NavVerifier')
   printAddress('NavVerifier', navVerifier.address)
 
   await authority.setNavVerifier(navVerifier.address)
 
-  const sigVerifier = await deploy(baseAccount, network, 'SigVerifier', [
-    exchangesAuthority.address
-  ])
+  const sigVerifier = await deployContract(
+    baseAccount,
+    network,
+    'SigVerifier',
+    [exchangesAuthority.address]
+  )
   printAddress('SigVerifier', sigVerifier.address)
 
   await exchangesAuthority.setSignatureVerifier(sigVerifier.address)
 
-  const aEthfinex = await deploy(baseAccount, network, 'AEthfinex')
+  const aEthfinex = await deployContract(baseAccount, network, 'AEthfinex')
   printAddress('AEthfinex', aEthfinex.address)
 
   await exchangesAuthority.setExchangeAdapter(
@@ -173,18 +191,25 @@ module.exports = async (baseAccount, network) => {
     aEthfinex.address
   )
 
-  const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary', [
-    wETH9.address // TODO: add totle primary as constructor input
-  ])
+  const aTotlePrimary = await deployContract(
+    baseAccount,
+    network,
+    'ATotlePrimary',
+    [
+      wETH9.address // TODO: add totle primary as constructor input
+    ]
+  )
   printAddress('ATotlePrimary', aTotlePrimary.address)
 
-  const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
-    tokenTransferProxy.address,
-    baseAccount
-  ])
+  const totlePrimary = await deployContract(
+    baseAccount,
+    network,
+    'TotlePrimary',
+    [tokenTransferProxy.address, baseAccount]
+  )
   printAddress('TotlePrimary', totlePrimary.address)
 
-  const zeroExExchangeHandler = await deploy(
+  const zeroExExchangeHandler = await deployContract(
     baseAccount,
     network,
     'ZeroExExchangeHandler',
@@ -197,16 +222,20 @@ module.exports = async (baseAccount, network) => {
     aTotlePrimary.address
   )
 
-  const faucet = await deploy(baseAccount, network, 'Faucet', [
+  const faucet = await deployContract(baseAccount, network, 'Faucet', [
     rigoToken.address,
     'GRGFaucet'
   ])
   printAddress('Faucet', faucet.address)
 
-  const hGetDragoData = await deploy(baseAccount, network, 'HGetDragoData')
+  const hGetDragoData = await deployContract(
+    baseAccount,
+    network,
+    'HGetDragoData'
+  )
   printAddress('HGetDragoData', hGetDragoData.address)
 
-  const abiEncoder = await deploy(baseAccount, network, 'AbiEncoder')
+  const abiEncoder = await deployContract(baseAccount, network, 'AbiEncoder')
   printAddress('AbiEncoder', abiEncoder.address)
 
   return {
