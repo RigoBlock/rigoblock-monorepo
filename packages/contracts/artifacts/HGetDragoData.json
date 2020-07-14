@@ -1395,7 +1395,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/examples/helpers/HGetDragoData.sol"
             ],
-            "address": "0xd2694662a95bd7e72ceae8f0673e7ed65e7f829e",
+            "address": "0x2ed47cc189478dc4ef1de495b89c4858de939e74",
             "constructor_args": "0x"
         }
     }

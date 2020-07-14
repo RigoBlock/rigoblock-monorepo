@@ -1239,8 +1239,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
             ],
-            "address": "0x14f440289398e24b6fbb573bed807e92ca3be409",
-            "constructor_args": "0x0000000000000000000000006d8270ec063563f83a53759b6d90edf9423edcbc000000000000000000000000dfcb96c849dc24d4de472a3941fe3a4a83099c76000000000000000000000000462e80d8e286d7bcb9cea34a956cf77e55f1949a"
+            "address": "0xd21d92bce72696dc3bace609fa9d0b71bb634732",
+            "constructor_args": "0x000000000000000000000000aff70d2e74b8e86d232d17ffa5c0e9a2369d7ef000000000000000000000000086e8c4a4ec7cd3bfe52b87a9d9bc0d1d9ffd043f000000000000000000000000d7ac717779948a5ee4d9154e79e73f10f96a78fb"
         }
     }
 }

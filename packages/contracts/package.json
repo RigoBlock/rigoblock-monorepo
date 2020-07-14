@@ -9,7 +9,7 @@
     "compile": "sol-compiler",
     "contracts:gen": "contracts-gen generate",
     "contracts:copy": "contracts-gen copy",
-    "generate_contract_wrappers": "abi-gen --debug --abis  ${npm_package_config_abis} --output test/generated-wrappers --backend ethers",
+    "generate_contract_wrappers": "abi-gen --debug --abis  ${npm_package_config_abis} --output ./generated-wrappers --backend ethers",
     "deploy": "node deploy/cli.js",
     "lint": "eslint test deploy . --ext js --ignore-path .gitignore --fix && npm run lint-contracts",
     "test": "NODE_ENV=test node --max_old_space_size=8192 --trace-warnings node_modules/.bin/jest --env=node --runInBand",
