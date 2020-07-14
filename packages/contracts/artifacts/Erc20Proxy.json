@@ -810,7 +810,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/0xV2/Erc20Proxy/Erc20Proxy.sol"
             ],
-            "address": "0xcdb7b8074a61081830bed783cf3dc2bdeecb078e",
+            "address": "0xebd900442d29e2a45d55aeea722854461167c524",
             "constructor_args": "0x"
         }
     }
