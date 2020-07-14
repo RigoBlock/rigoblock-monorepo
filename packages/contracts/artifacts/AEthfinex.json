@@ -423,7 +423,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/ReentrancyGuard/ReentrancyGuard.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMathLight.sol"
             ],
-            "address": "0x8468b8ea144226a7f11655f745b7906f410c2955",
+            "address": "0x5b9c75c7ea3834940acf7ea39cb5375754302dbc",
             "constructor_args": "0x"
         }
     }
