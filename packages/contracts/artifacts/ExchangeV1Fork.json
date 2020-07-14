@@ -2761,8 +2761,8 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/exchangeV1Fork/ExchangeV1Fork/ExchangeV1Fork.sol"
             ],
-            "address": "0x754eb341ff357e2b059b5c99b77ff62ec404aba1",
-            "constructor_args": "0x000000000000000000000000d1fd098edb43032addb00549f4dce78b0a4d6c01000000000000000000000000b63b702092ed83630417dcc4e271c99498b59d77"
+            "address": "0x6deae8759755a4282b043297f61fd3d8081dbc87",
+            "constructor_args": "0x0000000000000000000000001fb4c7f7197ef339ae4125aeec9406a6788bb0650000000000000000000000003b32af945599707baf0ecb195c20b60f063f987a"
         }
     }
 }
