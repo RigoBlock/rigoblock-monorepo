@@ -2,6 +2,8 @@
   "artifactsDir": "./generated-artifacts",
   "contractsDir": "./src",
   "contracts": [
+    "ASelfCustody",
+    "ATotlePrimary",
     "AbiEncoder",
     "Authority",
     "AWeth",
@@ -34,7 +36,7 @@
     "ZeroExExchangeHandler"
   ],
   "useDockerisedSolc": false,
-  "isOfflineMode": false,
+  "isOfflineMode": true,
   "shouldSaveStandardInput": true,
   "compilerSettings": {
     "optimizer": { "enabled": true, "runs": 1000000 },
