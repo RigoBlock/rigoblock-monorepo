@@ -1,26 +1,26 @@
 {
-    "artifactsDir": "./generated-artifacts",
-    "contractsDir": "./src",
-    "contracts": "*",
-    "useDockerisedSolc": false,
-    "isOfflineMode": true,
-    "shouldSaveStandardInput": true,
-    "compilerSettings": {
-        "optimizer": {
-            "enabled": true,
-            "runs": 1000000
-        },
-        "outputSelection": {
-            "*": {
-                "*": [
-                    "abi",
-                    "devdoc",
-                    "evm.bytecode.object",
-                    "evm.bytecode.sourceMap",
-                    "evm.deployedBytecode.object",
-                    "evm.deployedBytecode.sourceMap"
-                ]
-            }
-        }
+  "artifactsDir": "./generated-artifacts",
+  "contractsDir": "./src",
+  "contracts": [
+    "protocol/DragoRegistry/DragoRegistry.sol",
+    "protocol/authorities/Authority/Authority.sol"
+  ],
+  "useDockerisedSolc": false,
+  "isOfflineMode": false,
+  "shouldSaveStandardInput": true,
+  "compilerSettings": {
+    "optimizer": { "enabled": true, "runs": 1000000 },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "devdoc",
+          "evm.bytecode.object",
+          "evm.bytecode.sourceMap",
+          "evm.deployedBytecode.object",
+          "evm.deployedBytecode.sourceMap"
+        ]
+      }
     }
+  }
 }
