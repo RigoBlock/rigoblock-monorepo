@@ -3,10 +3,14 @@
   "contractsDir": "./src",
   "contracts": [
     "AbiEncoder",
-    "protocol/authorities/Authority/Authority.sol",
+    "Authority",
     "AWeth",
     "Distribution",
-    "protocol/DragoRegistry/DragoRegistry.sol"
+    "Drago",
+    "DragoEventful",
+    "DragoFactory",
+    "DragoRegistry",
+    "Erc20Proxy"
   ],
   "useDockerisedSolc": false,
   "isOfflineMode": false,
