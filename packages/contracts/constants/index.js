@@ -9,7 +9,7 @@ const NETWORKS = {
 
 module.exports = {
   TMP_DIR: '.tmp',
-  ARTIFACTS_DIR: path.resolve(__dirname, '../artifacts'),
+  ARTIFACTS_DIR: path.resolve(__dirname, '../generated-artifacts'),
   CONTRACTS_DIR: path.resolve(__dirname, '../src'),
   NETWORKS,
   GANACHE_PORT: 8545,

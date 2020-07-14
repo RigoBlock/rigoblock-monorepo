@@ -18,7 +18,7 @@ const deploy = async (
     : new Web3(new Web3.providers.HttpProvider(networkUrl))
   const networkId = await web3.eth.net.getId()
   const deployerOpts = {
-    artifactsDir: path.resolve(__dirname, '..', 'artifacts'),
+    artifactsDir: path.resolve(__dirname, '..', 'generated-artifacts'),
     jsonrpcUrl: networkUrl,
     provider,
     verbose,

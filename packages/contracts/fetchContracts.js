@@ -5,7 +5,7 @@ require('regenerator-runtime')
 module.exports.default = async networkId => {
   const artifacts = CONTRACT_NAMES.map(contractName => `${contractName}.json`)
   const abisPromises = artifacts.map(async artifact => {
-    const json = await import('./artifacts/' + artifact)
+    const json = await import('./generated-artifacts/' + artifact)
     if (!json['networks'][networkId]) {
       throw new Error(
         `Make sure contracts are deployed for network Id ${networkId}`

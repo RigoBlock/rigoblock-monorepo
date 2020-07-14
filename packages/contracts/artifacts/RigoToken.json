@@ -1397,7 +1397,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
             ],
-            "address": "0xd1fd098edb43032addb00549f4dce78b0a4d6c01",
+            "address": "0x8487329c94c68f5937831784b43016300f212861",
             "constructor_args": "0x000000000000000000000000242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196000000000000000000000000242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196"
         }
     }

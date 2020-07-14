@@ -42,7 +42,7 @@ Launches the smart contract deployment CLI.
     -   Insert the name of the contract to be deployed
     -   Insert the arguments required from the contract, if any, separated by a comma
     -   Insert your account mnemonic
--   The `contracts/artifacts` folder will now have uncommitted changes, commit them.
+-   The `contracts/generated-artifacts` folder will now have uncommitted changes, commit them.
 -   Push the changes to Github (`git push --set-upstream origin your-branch-name`)
 -   Open a pull request with your changes and await approval.
 
