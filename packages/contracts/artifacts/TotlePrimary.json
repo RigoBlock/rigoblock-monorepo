@@ -1949,8 +1949,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/totle/lib/Utils.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/totle/lib/Withdrawable.sol"
             ],
-            "address": "0xdcfe9ae9c17e19180758e2d1e233099087fb6fdd",
-            "constructor_args": "0x0000000000000000000000002accf125fd56915e8f1f2a691410f54a8280773f000000000000000000000000242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196"
+            "address": "0xfdb3391db8bc39409f1fafdea5a80807e4503f3f",
+            "constructor_args": "0x000000000000000000000000944f4ad4bce4e39606eaa4ee6b3d9c90df02e081000000000000000000000000242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196"
         }
     }
 }

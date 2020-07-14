@@ -10,7 +10,8 @@
     "DragoEventful",
     "DragoFactory",
     "DragoRegistry",
-    "Erc20Proxy"
+    "Erc20Proxy",
+    "Exchange"
   ],
   "useDockerisedSolc": false,
   "isOfflineMode": false,
