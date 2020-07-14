@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run pre_build && rm -rf dist && lerna run --scope=@rgbk/dapp ganache:bootstrap && webpack",
-    "pre_build": "run-s compile contracts:gen",
+    "pre_build": "run-s compile",
     "ganache": "ganache-cli -p 8545 -i 5777 -m \"${npm_package_config_mnemonic}\"",
     "compile": "sol-compiler",
     "contracts:gen": "contracts-gen generate",

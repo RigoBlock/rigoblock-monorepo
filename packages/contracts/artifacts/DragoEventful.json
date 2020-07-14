@@ -4096,8 +4096,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/ExchangesAuthority/ExchangesAuthorityFace.sol"
             ],
-            "address": "0x7a967aefed7db0c3df2e6cc5e7dbe32e9a3f51ce",
-            "constructor_args": "0x000000000000000000000000462e80d8e286d7bcb9cea34a956cf77e55f1949a"
+            "address": "0x7de6cf2cbcb26aafaf52f5d5e18e34e48b74681f",
+            "constructor_args": "0x000000000000000000000000bddbc4f6ce2aafd2b94ce36b4f41ad6abe9603a2"
         }
     }
 }
