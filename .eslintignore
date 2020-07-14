@@ -1,2 +1,3 @@
 packages/contracts/src/*.ts
 packages/contracts/test/*.ts
+packages/contracts/test/generated-wrappers/*.ts
