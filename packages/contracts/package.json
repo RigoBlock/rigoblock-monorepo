@@ -20,7 +20,6 @@
     "artifacts",
     "deploy",
     "dist",
-    "generated-artifacts",
     "constants"
   ],
   "config": {

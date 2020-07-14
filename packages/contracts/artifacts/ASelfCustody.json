@@ -346,7 +346,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/extensions/adapters/ASelfCustody.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMath.sol"
             ],
-            "address": "0x1692bd462ec15ddbbad44037becd05813e78a269",
+            "address": "0xaeb15f709568e78fb383302904a58cfb0982b3fd",
             "constructor_args": "0x"
         }
     }
