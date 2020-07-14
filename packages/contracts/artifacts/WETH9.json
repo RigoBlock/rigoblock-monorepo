@@ -1174,7 +1174,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/WETH9/WETH9.sol"
             ],
-            "address": "0xaaecb8999730b92ae5f447c8e1fd9b9a3de092ed",
+            "address": "0xe74451dfa4063f93c0239ef58f32a55dec414479",
             "constructor_args": "0x"
         }
     }

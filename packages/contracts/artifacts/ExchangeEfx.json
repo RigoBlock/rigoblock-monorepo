@@ -2628,7 +2628,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/ethfinex/ExchangeEfx/ExchangeEfx.sol"
             ],
-            "address": "0xa333217c8dc72213ccf60b09dfdfb53e7fe891c2",
+            "address": "0x392b64e03beba973d2e2f57ac5bea104018d78c8",
             "constructor_args": "0x"
         }
     }
