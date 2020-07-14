@@ -2087,8 +2087,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/VaultEventful/VaultEventfulFace.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/authorities/Authority/AuthorityFace.sol"
             ],
-            "address": "0x074f9170c9dbc57f114f0368f0981c12d87204e3",
-            "constructor_args": "0x000000000000000000000000bddbc4f6ce2aafd2b94ce36b4f41ad6abe9603a2"
+            "address": "0xd263092ad37442990493722da0d9f84603b5391c",
+            "constructor_args": "0x000000000000000000000000d7ac717779948a5ee4d9154e79e73f10f96a78fb"
         }
     }
 }

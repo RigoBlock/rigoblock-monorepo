@@ -2,8 +2,11 @@
   "artifactsDir": "./generated-artifacts",
   "contractsDir": "./src",
   "contracts": [
-    "protocol/DragoRegistry/DragoRegistry.sol",
-    "protocol/authorities/Authority/Authority.sol"
+    "AbiEncoder",
+    "protocol/authorities/Authority/Authority.sol",
+    "AWeth",
+    "Distribution",
+    "protocol/DragoRegistry/DragoRegistry.sol"
   ],
   "useDockerisedSolc": false,
   "isOfflineMode": false,

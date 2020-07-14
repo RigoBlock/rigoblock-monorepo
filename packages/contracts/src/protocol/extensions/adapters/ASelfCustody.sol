@@ -38,11 +38,11 @@ interface ExchangesAuthority {
 }
 
 contract Drago {
-    
+
     address public owner;
 
     function getExchangesAuth() external view returns (address);
-    
+
     function getEventful() external view returns (address);
 }
 
@@ -129,7 +129,7 @@ contract ASelfCustody is SafeMath {
         uint256 rational_base = 36;
         uint256 rationalized_amount_base36 = safeMul(amount, 10 ** (rational_base - ether_base));
         uint256 operator_rationalized_GRG_balance_base36 = Token(grgToken).balanceOf(msg.sender) * (10 ** (rational_base - ether_base));
-        
+
         if (token != address(0)) {
             satisfied = true;
             shortfall = uint256(0);
@@ -288,7 +288,7 @@ contract ASelfCustody is SafeMath {
         view
         returns (address)
     {
-        address dragoEvenfulAddress = 
+        address dragoEvenfulAddress =
             Drago(
                 address(this)
             ).getEventful();
