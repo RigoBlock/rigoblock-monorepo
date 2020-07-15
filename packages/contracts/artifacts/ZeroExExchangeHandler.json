@@ -1037,8 +1037,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/totle/lib/Utils.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/totle/lib/Withdrawable.sol"
             ],
-            "address": "0x8fb13e31bd3a21d2fe5bd7a3a549a0366a7d9d31",
-            "constructor_args": "0x000000000000000000000000e98b6214d381938f44d322dbdb85280d76cf2a2400000000000000000000000062d7ef9d037c8351bce82c5e294576bdc6be027d"
+            "address": "0xeca718f782aa54d8ca76cb6c5146e3de5c4ff2fc",
+            "constructor_args": "0x0000000000000000000000005bd9d9ed31b60a757f72ef84b3d5bdd7c7a5327600000000000000000000000011272f3a6c205fcff245f54ca3dc126a4bdde9e6"
         }
     }
 }

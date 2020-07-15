@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity >=0.4.25 <0.6.0;
 
 /// @title Pool Interface - Interface of pool standard functions.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
