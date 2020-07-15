@@ -203,7 +203,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -222,7 +222,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -260,7 +260,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -279,7 +279,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -298,7 +298,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -321,7 +321,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -340,7 +340,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -423,7 +423,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -474,7 +474,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -493,7 +493,7 @@ _dragoRegistry
                 constant: false,
                 inputs: [
                     {
-                        name: '_ofPool',
+                        name: 'poolId',
                         type: 'uint256',
                     },
                 ],
@@ -671,15 +671,15 @@ _dragoRegistry
     };
     /**
      * Returns the highwatermark of a pool.
-      * @param _ofPool Id of the pool.
+      * @param poolId Id of the pool.
     * @returns Value of the all-time-high pool nav.
      */
     public getHwm(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractFunctionObj<BigNumber
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'getHwm(uint256)';
 
         return {
@@ -696,22 +696,22 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
     };
     /**
      * Returns the address and the group of a pool from its id.
-      * @param _ofPool Id of the pool.
-    * @returns Address of the target pool.Address of the pool&#x27;s group.
+      * @param poolId Id of the pool.
+    * @returns pool Address of the target pool.group Address of the pool&#x27;s group.
      */
     public addressFromId(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractFunctionObj<[string, string]
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'addressFromId(uint256)';
 
         return {
@@ -728,7 +728,7 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
@@ -758,16 +758,16 @@ _dragoRegistry
         }
     };
     /**
-     * Returns the address and the group of a pool from its id.
-      * @param _ofPool Id of the pool.
-    * @returns Address of the target pool.Address of the pool&#x27;s group.
+     * Returns the value of a pool from its id.
+      * @param poolId Id of the pool.
+    * @returns aum Total value of the pool in ETH.
      */
     public calcPoolValue(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractFunctionObj<BigNumber
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'calcPoolValue(uint256)';
 
         return {
@@ -784,22 +784,22 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
     };
     /**
      * Returns the split ratio of asset and performance reward.
-      * @param _ofPool Id of the pool.
+      * @param poolId Id of the pool.
     * @returns Value of the ratio from 1 to 100.
      */
     public getRatio(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractFunctionObj<BigNumber
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'getRatio(uint256)';
 
         return {
@@ -816,22 +816,22 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
     };
     /**
      * Returns the proof of performance reward for a pool.
-      * @param _ofPool Id of the pool.
+      * @param poolId Id of the pool.
     * @returns popReward Value of the pop reward in Rigo tokens.performanceReward Split of the performance reward in Rigo tokens.
      */
     public proofOfPerformance(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractFunctionObj<[BigNumber, BigNumber]
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'proofOfPerformance(uint256)';
 
         return {
@@ -848,22 +848,22 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
     };
     /**
      * Checks whether a pool is registered and active.
-      * @param _ofPool Id of the pool.
+      * @param poolId Id of the pool.
     * @returns Bool the pool is active.
      */
     public isActive(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractFunctionObj<boolean
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'isActive(uint256)';
 
         return {
@@ -880,22 +880,22 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
     };
     /**
      * Returns the price a pool from its id.
-      * @param _ofPool Id of the pool.
-    * @returns Price of the pool in wei.Number of tokens of a pool (totalSupply).
+      * @param poolId Id of the pool.
+    * @returns thePoolPrice Price of the pool in wei.totalTokens Number of tokens of a pool (totalSupply).
      */
     public getPoolPrice(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractFunctionObj<[BigNumber, BigNumber]
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'getPoolPrice(uint256)';
 
         return {
@@ -912,7 +912,7 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
@@ -1083,15 +1083,15 @@ _dragoRegistry
     };
     /**
      * Gets data of a pool.
-      * @param _ofPool Id of the pool.
-    * @returns Bool the pool is active.address of the pool.address of the pool factory.price of the pool in wei.total supply of the pool in units.total value of the pool in wei.value of the reward factor or said pool.ratio of assets/performance reward (from 0 to 10000).value of the pop reward to be claimed in GRGs.
+      * @param poolId Id of the pool.
+    * @returns active Bool the pool is active.thePoolAddress address of the pool.thePoolGroup address of the pool factory.thePoolPrice price of the pool in wei.thePoolSupply total supply of the pool in units.poolValue total value of the pool in wei.epochReward value of the reward factor or said pool.ratio of assets/performance reward (from 0 to 10000).pop value of the pop reward to be claimed in GRGs.
      */
     public getPoolData(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractFunctionObj<[boolean, string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber]
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'getPoolData(uint256)';
 
         return {
@@ -1108,22 +1108,22 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
     };
     /**
      * Returns the reward factor for a pool.
-      * @param _ofPool Id of the pool.
+      * @param poolId Id of the pool.
     * @returns Value of the reward factor.
      */
     public getEpochReward(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractFunctionObj<BigNumber
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'getEpochReward(uint256)';
 
         return {
@@ -1140,21 +1140,21 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
     };
     /**
      * Allows anyone to allocate the pop reward to pool wizards.
-      * @param _ofPool Number of pool id in registry.
+      * @param poolId Number of pool id in registry.
      */
     public claimPop(
-            _ofPool: BigNumber,
+            poolId: BigNumber,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('_ofPool', _ofPool);
+            assert.isBigNumber('poolId', poolId);
         const functionSignature = 'claimPop(uint256)';
 
         return {
@@ -1198,7 +1198,7 @@ _dragoRegistry
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_ofPool
+                return self._strictEncodeArguments(functionSignature, [poolId
             ]);
             },
         }
