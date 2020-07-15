@@ -517,7 +517,16 @@ contract ProofOfPerformance is
         view
         returns (uint256)
     {
+        // TODO: fix code
+        //previous code
+        //uint256 operatorGrgBalance = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(thePoolAddress).owner());
+        //uint256 grgTotalSupply = RigoToken(RIGOTOKENADDRESS).totalSupply();
+
+        //mock variable definition
+        uint256 stakedGrgRebasedOnEpoch = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(thePoolAddress).owner()) * epochTime / 365 days;
+
         // TODO: getTotalStakeDelegatedToPool should be called from staking contract
+        //next code
         uint256 stakedGrgRebasedOnEpoch = IStaking(STAKINGCONTRACTADDRESS).getTotalStakeDelegatedToPool(bytes32(poolId)).currentEpochBalance * epochTime / 365 days;
         // ignore pools with dust stake
         if (stakedGrgRebasedOnEpoch < Inflation(getMinter()).minimumGRG()) {
