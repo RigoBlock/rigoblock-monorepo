@@ -27,7 +27,7 @@ import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
 contract Inflation {
 
     uint256 public period;
-    //uint256 public minimumGRG;
+    uint256 public minimumGRG;
 
     /*
      * CORE FUNCTIONS
@@ -523,11 +523,12 @@ contract ProofOfPerformance is
         //uint256 grgTotalSupply = RigoToken(RIGOTOKENADDRESS).totalSupply();
 
         //mock variable definition
+        (address thePoolAddress, , , , , ) = DragoRegistry(dragoRegistry).fromId(poolId);
         uint256 stakedGrgRebasedOnEpoch = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(thePoolAddress).owner()) * epochTime / 365 days;
 
         // TODO: getTotalStakeDelegatedToPool should be called from staking contract
         //next code
-        uint256 stakedGrgRebasedOnEpoch = IStaking(STAKINGCONTRACTADDRESS).getTotalStakeDelegatedToPool(bytes32(poolId)).currentEpochBalance * epochTime / 365 days;
+        //uint256 stakedGrgRebasedOnEpoch = IStaking(STAKINGCONTRACTADDRESS).getTotalStakeDelegatedToPool(bytes32(poolId)).currentEpochBalance * epochTime / 365 days;
         // ignore pools with dust stake
         if (stakedGrgRebasedOnEpoch < Inflation(getMinter()).minimumGRG()) {
             revert('STAKED_GRG_BELOW_MINIMUM');
