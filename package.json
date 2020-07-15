@@ -49,7 +49,7 @@
   },
   "lint-staged": {
     "*.{ts,js,jsx}": [
-      "eslint --fix",
+      "eslint --ignore-path .eslintignore --fix",
       "git add"
     ],
     "*.{scss,css}": [

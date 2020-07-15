@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { LibBytes } from "../../../utils/LibBytes/LibBytes.sol";
 import { ERC20Face as RigoToken } from "../../../tokens/ERC20/ERC20.sol";
@@ -48,7 +47,7 @@ contract SigVerifier {
     function isValidSignature(
         /* solhint-disable */
         bytes32 hash,
-        bytes signature
+        bytes calldata signature
         /* solhint-disable */
     )
         external
@@ -104,7 +103,7 @@ contract SigVerifier {
 
     function returnRecoveredEIP712(
         bytes32 hash,
-        bytes signature)
+        bytes calldata signature)
         external
         pure
         returns (address recovered)
@@ -114,7 +113,7 @@ contract SigVerifier {
 
     function returnRecoveredETHSIGN(
         bytes32 hash,
-        bytes signature)
+        bytes calldata signature)
         external
         pure
         returns (address recovered)
@@ -126,7 +125,7 @@ contract SigVerifier {
 
     function returnRecoveredEIP712Internal(
         bytes32 hash,
-        bytes signature)
+        bytes memory signature)
         internal
         pure
         returns (address recovered)
@@ -150,7 +149,7 @@ contract SigVerifier {
 
     function returnRecoveredETHSIGNInternal(
         bytes32 hash,
-        bytes signature)
+        bytes memory signature)
         internal
         pure
         returns (address recovered)

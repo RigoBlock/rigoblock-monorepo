@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 /// @title Find Method Library - library to find the method of a call.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -26,7 +25,7 @@ library LibFindMethod {
     /// @dev Returns the method of an ABIencoded call
     /// @param assembledData Bytes of the call data
     /// @return Bytes4 of the function signature
-    function findMethod(bytes assembledData)
+    function findMethod(bytes memory assembledData)
         internal
         pure
         returns (bytes4 method)

@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 /// @title Vault Interface - Allows interaction with the Vault contracts.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -48,7 +47,7 @@ interface VaultFace {
     function timeToUnlock(address _token, address _user) external view returns (uint256);
     function tokensInVault(address _token) external view returns (uint256);
     function getEventful() external view returns (address);
-    function getData() external view returns (string name, string symbol, uint256 sellPrice, uint256 buyPrice);
+    function getData() external view returns (string memory name, string memory symbol, uint256 sellPrice, uint256 buyPrice);
     function calcSharePrice() external view returns (uint256);
     function getAdminData() external view returns (address, address feeCollector, address vaultDao, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
     function totalSupply() external view returns (uint256);

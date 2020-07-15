@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
 import { Vault } from "../../Vault/Vault.sol";
@@ -43,8 +42,8 @@ library VaultFactoryLibrary {
     /// @return Bool the function executed
     function createVault(
         NewVault storage self,
-        string _name,
-        string _symbol,
+        string memory _name,
+        string memory _symbol,
         address _owner,
         uint256 _vaultId,
         address _authority)

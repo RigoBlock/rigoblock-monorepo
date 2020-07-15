@@ -1,4 +1,3 @@
-import { AEthfinex } from './models/a_ethfinex'
 import { ASelfCustody } from './models/a_self_custody'
 import { ATotlePrimary } from './models/a_totle_primary'
 import { AWeth } from './models/a_weth'
@@ -12,8 +11,6 @@ import { DragoRegistry } from './models/drago_registry'
 import { ERC20 } from './models/erc20'
 import { Erc20Proxy } from './models/erc20_proxy'
 import { Exchange } from './models/exchange'
-import { ExchangeEfx } from './models/exchange_efx'
-import { ExchangeV1Fork } from './models/exchange_v1_fork'
 import { ExchangesAuthority } from './models/exchanges_authority'
 import { Faucet } from './models/faucet'
 import { HGetDragoData } from './models/h_get_drago_data'
@@ -32,15 +29,12 @@ import { Vault } from './models/vault'
 import { VaultEventful } from './models/vault_eventful'
 import { VaultFactory } from './models/vault_factory'
 import { WETH9 } from './models/weth9'
-import { WrapperLock } from './models/wrapper_lock'
-import { WrapperLockEth } from './models/wrapper_lock_eth'
 import { ZeroExExchangeHandler } from './models/zero_ex_exchange_handler'
 
 // typeof Authority & Authority = needed to expose all static methods and
 // instance methods of the Authority contract
 
 export abstract class ContractsList {
-  AEthfinex: typeof AEthfinex & AEthfinex
   ASelfCustody: typeof ASelfCustody & ASelfCustody
   ATotlePrimary: typeof ATotlePrimary & ATotlePrimary
   AWeth: typeof AWeth & AWeth
@@ -54,8 +48,6 @@ export abstract class ContractsList {
   ERC20: typeof ERC20 & ERC20
   Erc20Proxy: typeof Erc20Proxy & Erc20Proxy
   Exchange: typeof Exchange & Exchange
-  ExchangeEfx: typeof ExchangeEfx & ExchangeEfx
-  ExchangeV1Fork: typeof ExchangeV1Fork & ExchangeV1Fork
   ExchangesAuthority: typeof ExchangesAuthority & ExchangesAuthority
   Faucet: typeof Faucet & Faucet
   HGetDragoData: typeof HGetDragoData & HGetDragoData
@@ -69,12 +61,11 @@ export abstract class ContractsList {
   SigVerifier: typeof SigVerifier & SigVerifier
   TokenTransferProxy: typeof TokenTransferProxy & TokenTransferProxy
   TotlePrimary: typeof TotlePrimary & TotlePrimary
-  UnlimitedAllowanceToken: typeof UnlimitedAllowanceToken & UnlimitedAllowanceToken
+  UnlimitedAllowanceToken: typeof UnlimitedAllowanceToken &
+    UnlimitedAllowanceToken
   Vault: typeof Vault & Vault
   VaultEventful: typeof VaultEventful & VaultEventful
   VaultFactory: typeof VaultFactory & VaultFactory
   WETH9: typeof WETH9 & WETH9
-  WrapperLock: typeof WrapperLock & WrapperLock
-  WrapperLockEth: typeof WrapperLockEth & WrapperLockEth
   ZeroExExchangeHandler: typeof ZeroExExchangeHandler & ZeroExExchangeHandler
 }

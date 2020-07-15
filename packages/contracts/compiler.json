@@ -1,0 +1,56 @@
+{
+  "artifactsDir": "./generated-artifacts",
+  "contractsDir": "./src",
+  "contracts": [
+    "Migrations.sol",
+    "examples/Distribution/Distribution.sol",
+    "examples/Faucet/Faucet.sol",
+    "examples/helpers/HGetDragoData.sol",
+    "protocol/Drago/Drago.sol",
+    "protocol/DragoEventful/DragoEventful.sol",
+    "protocol/DragoRegistry/DragoRegistry.sol",
+    "protocol/Vault/Vault.sol",
+    "protocol/VaultEventful/VaultEventful.sol",
+    "protocol/authorities/Authority/Authority.sol",
+    "protocol/authorities/ExchangesAuthority/ExchangesAuthority.sol",
+    "protocol/dragoFactory/DragoFactory/DragoFactory.sol",
+    "protocol/extensions/NavVerifier/NavVerifier.sol",
+    "protocol/extensions/SigVerifier/SigVerifier.sol",
+    "protocol/extensions/adapters/ASelfCustody.sol",
+    "protocol/extensions/adapters/ATotlePrimary.sol",
+    "protocol/extensions/adapters/AWeth.sol",
+    "protocol/vaultFactory/VaultFactory/VaultFactory.sol",
+    "rigoToken/Inflation/Inflation.sol",
+    "rigoToken/ProofOfPerformance/ProofOfPerformance.sol",
+    "rigoToken/RigoToken/RigoToken.sol",
+    "tokens/ERC20/ERC20.sol",
+    "tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
+    "tokens/WETH9/WETH9.sol",
+    "utils/AbiEncoder/AbiEncoder.sol",
+    "utils/Owned/Owned.sol",
+    "utils/Owned/OwnedUninitialized.sol",
+    "utils/exchanges/0xV2/Erc20Proxy/Erc20Proxy.sol",
+    "utils/exchanges/0xV2/Exchange/Exchange.sol",
+    "utils/exchanges/TokenTransferProxy/TokenTransferProxy.sol",
+    "utils/exchanges/totle/TotlePrimary.sol",
+    "utils/exchanges/totle/exchange_handlers/ZeroExExchangeHandler.sol"
+  ],
+  "useDockerisedSolc": false,
+  "isOfflineMode": true,
+  "shouldSaveStandardInput": true,
+  "compilerSettings": {
+    "optimizer": { "enabled": true, "runs": 1000000 },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "devdoc",
+          "evm.bytecode.object",
+          "evm.bytecode.sourceMap",
+          "evm.deployedBytecode.object",
+          "evm.deployedBytecode.sourceMap"
+        ]
+      }
+    }
+  }
+}

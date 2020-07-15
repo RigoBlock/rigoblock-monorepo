@@ -22,7 +22,7 @@
  * Inspired by https://github.com/AvocadoNetwork
  */
 
-pragma solidity 0.4.25;
+pragma solidity 0.5.0;
 
 import { ERC20Face as Token } from "../../tokens/ERC20/ERC20Face.sol";
 import { Owned as Owned } from "../../utils/Owned/Owned.sol";
@@ -64,7 +64,7 @@ contract Faucet is Owned {
     /// @dev Contract constructor
     /// @param _tokenInstance address of ERC20Basic token
     /// @param _faucetName sets the name for the faucet
-    constructor(address _tokenInstance, string _faucetName)
+    constructor(address _tokenInstance, string memory _faucetName)
       public
     {
         tokenInstance = Token(_tokenInstance);

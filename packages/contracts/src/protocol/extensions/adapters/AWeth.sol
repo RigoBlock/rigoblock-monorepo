@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { Drago } from "../../Drago/Drago.sol";
 import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
@@ -33,20 +32,20 @@ contract AWeth {
     /// @param wrapper Address of the target exchange
     /// @param amount Value of the Eth in wei
     function wrapEth(
-        address wrapper,
+        address payable wrapper,
         uint256 amount)
         external
     {
         require(
             Drago(
-                address(this)
+                address(uint160(address(this)))
             )
             .owner() == msg.sender
         );
         require(
             ExchangesAuthority(
                 Drago(
-                    address(this)
+                    address(uint160(address(this)))
                 )
                 .getExchangesAuth()
             )
@@ -55,13 +54,12 @@ contract AWeth {
         require(
             ExchangesAuthority(
                 Drago(
-                    address(this)
+                    address(uint160(address(this)))
                 )
                 .getExchangesAuth()
             )
             .canWrapTokenOnWrapper(address(0), wrapper)
         );
-
         WETH9(wrapper).deposit.value(amount)();
     }
 
@@ -69,20 +67,20 @@ contract AWeth {
     /// @param wrapper Address of the weth9 contract
     /// @param amount Value of the Eth in wei
     function unwrapEth(
-        address wrapper,
+        address payable wrapper,
         uint256 amount)
         external
     {
         require(
             Drago(
-                address(this)
+                address(uint160(address(this)))
             )
             .owner() == msg.sender
         );
         require(
             ExchangesAuthority(
                 Drago(
-                    address(this)
+                    address(uint160(address(this)))
                 )
                 .getExchangesAuth()
             )
@@ -91,7 +89,7 @@ contract AWeth {
         require(
             ExchangesAuthority(
                 Drago(
-                    address(this)
+                    address(uint160(address(this)))
                 )
                 .getExchangesAuth()
             )

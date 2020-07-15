@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 /// @title Drago Eventful Interface contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -47,8 +46,8 @@ interface DragoEventfulFace {
     /*
      * CORE FUNCTIONS
      */
-    function buyDrago(address _who, address _targetDrago, uint256 _value, uint256 _amount, bytes _name, bytes _symbol) external returns (bool success);
-    function sellDrago(address _who, address _targetDrago, uint256 _amount, uint256 _revenue, bytes _name, bytes _symbol) external returns(bool success);
+    function buyDrago(address _who, address _targetDrago, uint256 _value, uint256 _amount, bytes calldata _name, bytes calldata _symbol) external returns (bool success);
+    function sellDrago(address _who, address _targetDrago, uint256 _amount, uint256 _revenue, bytes calldata _name, bytes calldata _symbol) external returns(bool success);
     function changeRatio(address _who, address _targetDrago, uint256 _ratio) external returns(bool success);
     function changeFeeCollector(address _who, address _targetDrago, address _feeCollector) external returns(bool success);
     function changeDragoDao(address _who, address _targetDrago, address _dragoDao) external returns(bool success);
@@ -56,9 +55,9 @@ interface DragoEventfulFace {
     function setTransactionFee(address _who, address _targetDrago, uint256 _transactionFee) external returns(bool success);
     function depositToExchange(address _who, address _targetDrago, address _exchange, address _token, uint256 _value) external returns(bool success);
     function withdrawFromExchange(address _who, address _targetDrago, address _exchange, address _token, uint256 _value) external returns(bool success);
-    function customDragoLog(bytes4 _methodHash, bytes _encodedParams) external returns (bool success);
-    function customDragoLog2(bytes4 _methodHash, bytes32 topic2, bytes32 topic3, bytes _encodedParams) external returns (bool success);
-    function customExchangeLog(bytes4 _methodHash, bytes _encodedParams) external returns (bool success);
-    function customExchangeLog2(bytes4 _methodHash, bytes32 topic2, bytes32 topic3,bytes _encodedParams) external returns (bool success);
-    function createDrago(address _who, address _newDrago, string _name, string _symbol, uint256 _dragoId) external returns(bool success);
+    function customDragoLog(bytes4 _methodHash, bytes calldata _encodedParams) external returns (bool success);
+    function customDragoLog2(bytes4 _methodHash, bytes32 topic2, bytes32 topic3, bytes calldata _encodedParams) external returns (bool success);
+    function customExchangeLog(bytes4 _methodHash, bytes calldata _encodedParams) external returns (bool success);
+    function customExchangeLog2(bytes4 _methodHash, bytes32 topic2, bytes32 topic3,bytes calldata _encodedParams) external returns (bool success);
+    function createDrago(address _who, address _newDrago, string calldata _name, string calldata _symbol, uint256 _dragoId) external returns(bool success);
 }

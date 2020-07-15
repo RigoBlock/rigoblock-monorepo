@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
+pragma solidity 0.5.0;
 pragma experimental ABIEncoderV2;
 
 import { AuthorityFace as Authority } from "../authorities/Authority/AuthorityFace.sol";
@@ -140,8 +140,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     }
 
     constructor(
-        string _dragoName,
-        string _dragoSymbol,
+        string memory _dragoName,
+        string memory _dragoSymbol,
         uint256 _dragoId,
         address _owner,
         address _authority)
@@ -231,7 +231,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         uint256 _newBuyPrice,
         uint256 _signaturevaliduntilBlock,
         bytes32 _hash,
-        bytes _signedData)
+        bytes calldata _signedData)
         external
         nonReentrant
         onlyOwnerOrAuthority
@@ -248,7 +248,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
             )
         );
         DragoEventful events = DragoEventful(getDragoEventful());
-        require(events.setDragoPrice(msg.sender, this, _newSellPrice, _newBuyPrice));
+        require(events.setDragoPrice(msg.sender, address(this), _newSellPrice, _newBuyPrice));
         data.sellPrice = _newSellPrice;
         data.buyPrice = _newBuyPrice;
     }
@@ -260,7 +260,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         onlyDragoDao
     {
         DragoEventful events = DragoEventful(getDragoEventful());
-        require(events.changeRatio(msg.sender, this, _ratio));
+        require(events.changeRatio(msg.sender, address(this), _ratio));
         admin.ratio = _ratio;
     }
 
@@ -272,7 +272,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     {
         require(_transactionFee <= 100); //fee cannot be higher than 1%
         DragoEventful events = DragoEventful(getDragoEventful());
-        require(events.setTransactionFee(msg.sender, this, _transactionFee));
+        require(events.setTransactionFee(msg.sender, address(this), _transactionFee));
         data.transactionFee = _transactionFee;
     }
 
@@ -283,7 +283,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         onlyOwner
     {
         DragoEventful events = DragoEventful(getDragoEventful());
-        events.changeFeeCollector(msg.sender, this, _feeCollector);
+        events.changeFeeCollector(msg.sender, address(this), _feeCollector);
         admin.feeCollector = _feeCollector;
     }
 
@@ -294,7 +294,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         onlyDragoDao
     {
         DragoEventful events = DragoEventful(getDragoEventful());
-        require(events.changeDragoDao(msg.sender, this, _dragoDao));
+        require(events.changeDragoDao(msg.sender, address(this), _dragoDao));
         admin.dragoDao = _dragoDao;
     }
 
@@ -338,8 +338,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @param _amounts Array of number of tokens to be approved.
     function setMultipleAllowances(
         address _tokenTransferProxy,
-        address[] _tokens,
-        uint256[] _amounts)
+        address[] calldata _tokens,
+        uint256[] calldata _amounts)
         external
     {
         for (uint256 i = 0; i < _tokens.length; i++) {
@@ -446,8 +446,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         external
         view
         returns (
-            string name,
-            string symbol,
+            string memory name,
+            string memory symbol,
             uint256 sellPrice,
             uint256 buyPrice
         )
@@ -512,7 +512,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @return Validity of order signature.
     function isValidSignature(
         bytes32 hash,
-        bytes signature
+        bytes calldata signature
     )
         external
         view
@@ -553,7 +553,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         internal
         returns (bool success)
     {
-        if (admin.kycProvider != 0x0) {
+        if (admin.kycProvider != address(0)) {
             require(Kyc(admin.kycProvider).isWhitelistedUser(_hodler));
         }
         uint256 grossAmount;
@@ -611,7 +611,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         bytes memory symbol = bytes(data.symbol);
         Authority auth = Authority(admin.authority);
         DragoEventful events = DragoEventful(auth.getDragoEventful());
-        require(events.buyDrago(msg.sender, this, msg.value, _amount, name, symbol));
+        require(events.buyDrago(msg.sender, address(this), msg.value, _amount, name, symbol));
     }
 
     /// @dev Sends a sell log to the eventful contract.
@@ -624,7 +624,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         bytes memory symbol = bytes(data.symbol);
         Authority auth = Authority(admin.authority);
         DragoEventful events = DragoEventful(auth.getDragoEventful());
-        require(events.sellDrago(msg.sender, this, _amount, _netRevenue, name, symbol));
+        require(events.sellDrago(msg.sender, address(this), _amount, _netRevenue, name, symbol));
     }
 
     /// @dev Allows owner to set an infinite allowance to an approved exchange.
@@ -738,7 +738,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         uint256 buyPrice,
         uint256 signaturevaliduntilBlock,
         bytes32 hash,
-        bytes signedData)
+        bytes memory signedData)
         internal
         view
         returns (bool isValid)
@@ -780,7 +780,7 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
     /// @dev Returns the method of a call.
     /// @param assembledData Bytes of the encoded transaction.
     /// @return Bytes4 function signature.
-    function findMethod(bytes assembledData)
+    function findMethod(bytes memory assembledData)
         internal
         pure
         returns (bytes4 method)
