@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { Owned } from "../../../utils/Owned/Owned.sol";
 import { ExchangesAuthorityFace } from "./ExchangesAuthorityFace.sol";

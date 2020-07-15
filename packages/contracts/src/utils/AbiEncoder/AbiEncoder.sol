@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 /// @title ABI Encoder - return an array of encoded parameters.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -101,8 +100,8 @@ contract AbiEncoder {
         uint256 expirationTimeSeconds,
         // uint256 salt,
         // bytes makerAssetData,
-        bytes takerAssetData,
-        bytes signature)
+        bytes calldata takerAssetData,
+        bytes calldata signature)
         external
         pure
         returns (bytes memory encodedOrder)

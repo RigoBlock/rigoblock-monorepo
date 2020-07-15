@@ -13,7 +13,7 @@ describeContract(contractName, () => {
   let value
   let group
   let transactionDefault
-  const minimumRigo = 5
+  const minimumRigo = 150e18
   const inflationFactor = 1
   const fakeFactory = '0x7ce6e371085cb611fb46d5065397223ef2f000ff'
   const reward = 20
@@ -226,7 +226,7 @@ describeContract(contractName, () => {
       // Setting accounts[0] as minter to be able to call mintToken
       await baseContracts['RigoToken'].changeMintingAddress(accounts[0])
       await baseContracts['RigoToken'].mintToken(accounts[0], 200)
-      await baseContracts['Inflation'].setMinimumRigo(20)
+      await baseContracts['Inflation'].setMinimumRigo(110e18)
       await baseContracts['RigoToken'].changeMintingAddress(inflation)
       await baseContracts['Inflation'].setProofOfPerformance(accounts[0])
 

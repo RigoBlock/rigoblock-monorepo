@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { VaultFace as Vault } from "../../protocol/Vault/Vault.sol";
 import { DistributionFace } from "./DistributionFace.sol";
@@ -46,7 +45,7 @@ contract Distribution is
     }
 
     modifier nonZeroAddress(address _target) {
-        require(_target != 0);
+        require(_target != address(0));
         _;
     }
 
@@ -54,8 +53,8 @@ contract Distribution is
      * CORE FUNCTIONS
      */
     function subscribe(
-        address _pool,
-        address _distributor,
+        address payable _pool,
+        address payable _distributor,
         address _buyer
     )
         external

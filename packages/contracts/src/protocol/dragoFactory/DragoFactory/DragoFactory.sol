@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { DragoRegistryFace as DragoRegistry } from "../../DragoRegistry/DragoRegistryFace.sol";
 import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
@@ -40,7 +39,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     struct Data {
         uint256 fee;
         address dragoRegistry;
-        address dragoDao;
+        address payable dragoDao;
         address authority;
         mapping(address => address[]) dragos;
     }
@@ -55,7 +54,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
 
     modifier whitelistedFactory(address _authority) {
         Authority auth = Authority(_authority);
-        if (auth.isWhitelistedFactory(this)) _;
+        if (auth.isWhitelistedFactory(address(this))) _;
     }
 
     modifier whenFeePaid {
@@ -75,7 +74,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
 
     constructor(
         address _registry,
-        address _dragoDao,
+        address payable _dragoDao,
         address _authority)
         public
     {
@@ -92,7 +91,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @param _name String of the name
     /// @param _symbol String of the symbol
     /// @return Bool the transaction executed correctly
-    function createDrago(string _name, string _symbol)
+    function createDrago(string calldata _name, string calldata _symbol)
         external
         payable
         whenFeePaid
@@ -116,7 +115,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @dev Enables manual update of dao for single dragos
     /// @param _targetDrago Address of the target drago
     /// @param _dragoDao Address of the new drago dao
-    function setTargetDragoDao(address _targetDrago, address _dragoDao)
+    function setTargetDragoDao(address payable _targetDrago, address _dragoDao)
         external
         onlyOwner
     {
@@ -127,7 +126,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @dev Allows drago dao/factory to update its address
     /// @dev Creates internal record
     /// @param _newDragoDao Address of the drago dao
-    function changeDragoDao(address _newDragoDao)
+    function changeDragoDao(address payable _newDragoDao)
         external
         onlyDragoDao
     {
@@ -145,7 +144,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
 
     /// @dev Allows owner to set the address which can collect creation fees
     /// @param _dragoDao Address of the new drago dao/factory
-    function setBeneficiary(address _dragoDao)
+    function setBeneficiary(address payable _dragoDao)
         external
         onlyOwner
     {
@@ -190,7 +189,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
         view
         returns (
             address dragoDao,
-            string version,
+            string memory version,
             uint256 nextDragoId
         )
     {
@@ -218,7 +217,7 @@ contract DragoFactory is Owned, DragoFactoryFace {
     function getDragosByAddress(address _owner)
         external
         view
-        returns (address[])
+        returns (address[] memory)
     {
         return data.dragos[_owner];
     }
@@ -233,8 +232,8 @@ contract DragoFactory is Owned, DragoFactoryFace {
     /// @param _dragoId Number of the new drago Id
     /// @return Bool the transaction executed correctly
     function createDragoInternal(
-        string _name,
-        string _symbol,
+        string memory _name,
+        string memory _symbol,
         address _owner,
         uint256 _dragoId)
         internal

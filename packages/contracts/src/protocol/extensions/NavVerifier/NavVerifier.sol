@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 /// @title Nav Verifier - Allows to check if new NAV comes from approved authority.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -37,7 +36,7 @@ contract NavVerifier {
         uint256 buyPrice,
         uint256 signaturevaliduntilBlock,
         bytes32 hash,
-        bytes signedData
+        bytes calldata signedData
         /* solhint-disable */
     )
         external

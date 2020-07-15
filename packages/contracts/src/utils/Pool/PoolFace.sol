@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity >=0.4.25 <0.6.0;
 
 /// @title Pool Interface - Interface of pool standard functions.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -29,7 +28,7 @@ interface PoolFace {
     function balanceOf(address _who) external view returns (uint256);
     function totalSupply() external view returns (uint256 totaSupply);
     function getEventful() external view returns (address);
-    function getData() external view returns (string name, string symbol, uint256 sellPrice, uint256 buyPrice);
+    function getData() external view returns (string memory name, string memory symbol, uint256 sellPrice, uint256 buyPrice);
     function calcSharePrice() external view returns (uint256);
     function getAdminData() external view returns (address, address feeCollector, address dragodAO, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
 }

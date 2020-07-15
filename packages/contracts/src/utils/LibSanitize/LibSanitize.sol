@@ -16,35 +16,38 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 /// @title Lib Sanitize - Sanitize strings in smart contracts.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 library LibSanitize {
 
-    function isValidCheck(string str)
+    function isValidCheck(string memory str)
         internal
         pure
         returns (bool)
     {
         bytes memory bStr = bytes(str);
         uint arrayLength = bStr.length;
-        require(bStr[0] != 32);
-        require(bStr[arrayLength - 1] != 32);
+        require(
+            bStr[0] != byte(uint8(32))
+        );    
+        require(
+            bStr[arrayLength - 1] != byte(uint8(32))
+        );    
         for (uint i =0; i < arrayLength; i++) {
             if (
                 (
-                    bStr[i] < 48 ||
-                    bStr[i] > 122 ||
-                    (bStr[i] > 57 && bStr[i] < 65) ||
-                    (bStr[i] > 90 && bStr[i] < 97 )
-                ) && (bStr[i] != 32)
+                    bStr[i] < byte(uint8(48)) ||
+                    bStr[i] > byte(uint8(122)) ||
+                    bStr[i] > byte(uint8(57)) && bStr[i] < byte(uint8(65)) ||
+                    bStr[i] > byte(uint8(90)) && bStr[i] < byte(uint8(97))
+                ) && bStr[i] != byte(uint8(32))
             ) return false;
         } return true;
     }
 
-    function isLowercase(string str)
+    function isLowercase(string memory str)
         internal
         pure
         returns (bool)
@@ -52,11 +55,11 @@ library LibSanitize {
         bytes memory bStr = bytes(str);
         uint arrayLength = bStr.length;
 		    for (uint i = 0; i < arrayLength; i++) {
-			     if ((bStr[i] >= 65) && (bStr[i] <= 90)) return false;
+			     if ((bStr[i] >= byte(uint8(65))) && (bStr[i] <= byte(uint8(90)))) return false;
 		    } return true;
     }
 
-    function isUppercase(string str)
+    function isUppercase(string memory str)
         internal
         pure
         returns (bool)
@@ -64,7 +67,7 @@ library LibSanitize {
         bytes memory bStr = bytes(str);
         uint arrayLength = bStr.length;
         for (uint i = 0; i < arrayLength; i++) {
-            if ((bStr[i] >= 97) && (bStr[i] <= 122)) return false;
+            if ((bStr[i] >= byte(uint8(97))) && (bStr[i] <= byte(uint8(122)))) return false;
         } return true;
     }
 }

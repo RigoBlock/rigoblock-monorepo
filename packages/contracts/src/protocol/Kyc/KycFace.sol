@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 /// @title KycFace - allows interaction with a Kyc provider.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
