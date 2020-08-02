@@ -31,6 +31,7 @@ import * as ProofOfPerformance from "../generated-artifacts/ProofOfPerformance.j
 import * as RigoToken from "../generated-artifacts/RigoToken.json";
 import * as SigVerifier from "../generated-artifacts/SigVerifier.json";
 import * as Staking from "../generated-artifacts/Staking.json";
+import * as StakingProxy from "../generated-artifacts/StakingProxy.json";
 import * as TokenTransferProxy from "../generated-artifacts/TokenTransferProxy.json";
 import * as TotlePrimary from "../generated-artifacts/TotlePrimary.json";
 import * as UnlimitedAllowanceToken from "../generated-artifacts/UnlimitedAllowanceToken.json";
@@ -61,6 +62,7 @@ export const artifacts = {
   Inflation: Inflation as ContractArtifact,
   ProofOfPerformance: ProofOfPerformance as ContractArtifact,
   RigoToken: RigoToken as ContractArtifact,
+  GrgVault: GrgVault as ContractArtifact,
   Staking: Staking as ContractArtifact,
   ERC20: ERC20 as ContractArtifact,
   UnlimitedAllowanceToken: UnlimitedAllowanceToken as ContractArtifact,
@@ -73,5 +75,5 @@ export const artifacts = {
   TokenTransferProxy: TokenTransferProxy as ContractArtifact,
   TotlePrimary: TotlePrimary as ContractArtifact,
   ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact,
-  GrgVault: GrgVault as ContractArtifact
+  StakingProxy: StakingProxy as ContractArtifact
 };
