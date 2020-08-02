@@ -17,10 +17,10 @@
 
 */
 
-pragma solidity ^0.6.5;
+pragma solidity ^0.5.9;
 
 
-abstract contract IERC20Token {
+contract IERC20Token {
 
     // solhint-disable no-simple-event-func-name
     event Transfer(
@@ -41,7 +41,6 @@ abstract contract IERC20Token {
     /// @return True if transfer was successful
     function transfer(address _to, uint256 _value)
         external
-        virtual
         returns (bool);
 
     /// @dev send `value` token to `to` from `from` on the condition it is approved by `from`
@@ -55,7 +54,6 @@ abstract contract IERC20Token {
         uint256 _value
     )
         external
-        virtual
         returns (bool);
 
     /// @dev `msg.sender` approves `_spender` to spend `_value` tokens
@@ -64,7 +62,6 @@ abstract contract IERC20Token {
     /// @return Always true if the call has enough gas to complete execution
     function approve(address _spender, uint256 _value)
         external
-        virtual
         returns (bool);
 
     /// @dev Query total supply of token
@@ -72,7 +69,6 @@ abstract contract IERC20Token {
     function totalSupply()
         external
         view
-        virtual
         returns (uint256);
 
     /// @param _owner The address from which the balance will be retrieved
@@ -80,7 +76,6 @@ abstract contract IERC20Token {
     function balanceOf(address _owner)
         external
         view
-        virtual
         returns (uint256);
 
     /// @param _owner The address of the account owning tokens
@@ -89,6 +84,5 @@ abstract contract IERC20Token {
     function allowance(address _owner, address _spender)
         external
         view
-        virtual
         returns (uint256);
 }

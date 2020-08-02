@@ -20,6 +20,7 @@ import * as Erc20Proxy from "../generated-artifacts/Erc20Proxy.json";
 import * as Exchange from "../generated-artifacts/Exchange.json";
 import * as ExchangesAuthority from "../generated-artifacts/ExchangesAuthority.json";
 import * as Faucet from "../generated-artifacts/Faucet.json";
+import * as GrgVault from "../generated-artifacts/GrgVault.json";
 import * as HGetDragoData from "../generated-artifacts/HGetDragoData.json";
 import * as Inflation from "../generated-artifacts/Inflation.json";
 import * as Migrations from "../generated-artifacts/Migrations.json";
@@ -29,6 +30,8 @@ import * as OwnedUninitialized from "../generated-artifacts/OwnedUninitialized.j
 import * as ProofOfPerformance from "../generated-artifacts/ProofOfPerformance.json";
 import * as RigoToken from "../generated-artifacts/RigoToken.json";
 import * as SigVerifier from "../generated-artifacts/SigVerifier.json";
+import * as Staking from "../generated-artifacts/Staking.json";
+import * as StakingProxy from "../generated-artifacts/StakingProxy.json";
 import * as TokenTransferProxy from "../generated-artifacts/TokenTransferProxy.json";
 import * as TotlePrimary from "../generated-artifacts/TotlePrimary.json";
 import * as UnlimitedAllowanceToken from "../generated-artifacts/UnlimitedAllowanceToken.json";
@@ -59,6 +62,8 @@ export const artifacts = {
   Inflation: Inflation as ContractArtifact,
   ProofOfPerformance: ProofOfPerformance as ContractArtifact,
   RigoToken: RigoToken as ContractArtifact,
+  GrgVault: GrgVault as ContractArtifact,
+  Staking: Staking as ContractArtifact,
   ERC20: ERC20 as ContractArtifact,
   UnlimitedAllowanceToken: UnlimitedAllowanceToken as ContractArtifact,
   WETH9: WETH9 as ContractArtifact,
@@ -69,5 +74,6 @@ export const artifacts = {
   Exchange: Exchange as ContractArtifact,
   TokenTransferProxy: TokenTransferProxy as ContractArtifact,
   TotlePrimary: TotlePrimary as ContractArtifact,
-  ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact
+  ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact,
+  StakingProxy: StakingProxy as ContractArtifact
 };

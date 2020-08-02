@@ -17,7 +17,7 @@
 
 */
 
-pragma solidity ^0.5.4;
+pragma solidity ^0.5.9;
 pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/LibSafeMath.sol";
@@ -46,7 +46,7 @@ contract MixinStakeBalances is
         if (stakeStatus == IStructs.StakeStatus.UNDELEGATED) {
             // Undelegated stake is the difference between total stake and delegated stake
             // Note that any ZRX erroneously sent to the vault will be counted as undelegated stake
-            uint256 totalStake = getZrxVault().balanceOfZrxVault();
+            uint256 totalStake = getGrgVault().balanceOfGrgVault();
             balance.currentEpochBalance = totalStake.safeSub(balance.currentEpochBalance).downcastToUint96();
             balance.nextEpochBalance = totalStake.safeSub(balance.nextEpochBalance).downcastToUint96();
         }
@@ -79,7 +79,7 @@ contract MixinStakeBalances is
         view
         returns (uint256)
     {
-        return getZrxVault().balanceOf(staker);
+        return getGrgVault().balanceOf(staker);
     }
 
     /// @dev Returns the stake delegated to a specific staking pool, by a given staker.

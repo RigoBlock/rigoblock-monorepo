@@ -17,7 +17,7 @@
 
 */
 
-pragma solidity ^0.5.4;
+pragma solidity ^0.5.9;
 
 import "../../utils/0xUtils/LibRichErrors.sol";
 import "../interfaces/IStructs.sol";
@@ -43,12 +43,13 @@ library LibStakingRichErrors {
         InvalidEpochDuration
     }
 
-    enum PopManagerErrorCodes {
-        PopAlreadyRegistered,
-        PopNotRegistered
+    // TODO: amend with PopManagerErrorCodes, PopAlreadyRegistered, PopNotRegistered
+    enum ExchangeManagerErrorCodes {
+        ExchangeAlreadyRegistered,
+        ExchangeNotRegistered
     }
 
-    // bytes4(keccak256("OnlyCallableByPopError(address)"))
+    // bytes4(keccak256("OnlyCallableByExchangeError(address)")) // TODO: amend to OnlyCallableByPopError
     bytes4 internal constant ONLY_CALLABLE_BY_POP_ERROR_SELECTOR =
         0xb56d2df0;
 
@@ -112,8 +113,9 @@ library LibStakingRichErrors {
     bytes4 internal constant POOL_NOT_FINALIZED_ERROR_SELECTOR =
         0x5caa0b05;
 
+    // TODO: amend with OnlyCallableByPopError
     // solhint-disable func-name-mixedcase
-    function OnlyCallableByPopError(
+    function OnlyCallableByExchangeError(
         address senderAddress
     )
         internal
@@ -126,8 +128,9 @@ library LibStakingRichErrors {
         );
     }
 
-    function PopManagerError(
-        PopManagerErrorCodes errorCodes,
+    // TODO: amend with PopManagerError, PopManagerErrorCodes
+    function ExchangeManagerError(
+        ExchangeManagerErrorCodes errorCodes,
         address popAddress
     )
         internal

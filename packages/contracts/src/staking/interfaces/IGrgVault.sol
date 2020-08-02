@@ -17,7 +17,7 @@
 
 */
 
-pragma solidity ^0.6.5;
+pragma solidity ^0.5.9;
 
 
 interface IGrgVault {
