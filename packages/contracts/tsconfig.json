@@ -54,6 +54,8 @@
     "generated-artifacts/RigoToken.json",
     "generated-artifacts/SigVerifier.json",
     "generated-artifacts/SigVerifier.json",
+    "generated-artifacts/Staking.json",
+    "generated-artifacts/Staking.json",
     "generated-artifacts/TokenTransferProxy.json",
     "generated-artifacts/TokenTransferProxy.json",
     "generated-artifacts/TotlePrimary.json",
