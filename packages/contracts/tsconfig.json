@@ -58,6 +58,8 @@
     "generated-artifacts/SigVerifier.json",
     "generated-artifacts/Staking.json",
     "generated-artifacts/Staking.json",
+    "generated-artifacts/StakingProxy.json",
+    "generated-artifacts/StakingProxy.json",
     "generated-artifacts/TokenTransferProxy.json",
     "generated-artifacts/TokenTransferProxy.json",
     "generated-artifacts/TotlePrimary.json",
