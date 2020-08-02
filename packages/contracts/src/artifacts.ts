@@ -29,6 +29,7 @@ import * as OwnedUninitialized from "../generated-artifacts/OwnedUninitialized.j
 import * as ProofOfPerformance from "../generated-artifacts/ProofOfPerformance.json";
 import * as RigoToken from "../generated-artifacts/RigoToken.json";
 import * as SigVerifier from "../generated-artifacts/SigVerifier.json";
+import * as Staking from "../generated-artifacts/Staking.json";
 import * as TokenTransferProxy from "../generated-artifacts/TokenTransferProxy.json";
 import * as TotlePrimary from "../generated-artifacts/TotlePrimary.json";
 import * as UnlimitedAllowanceToken from "../generated-artifacts/UnlimitedAllowanceToken.json";
@@ -69,5 +70,6 @@ export const artifacts = {
   Exchange: Exchange as ContractArtifact,
   TokenTransferProxy: TokenTransferProxy as ContractArtifact,
   TotlePrimary: TotlePrimary as ContractArtifact,
-  ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact
+  ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact,
+  Staking: Staking as ContractArtifact
 };
