@@ -17,14 +17,14 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity 0.5.9;
 
-import "../../utils/0xUtils/Authorizable.sol";
-import "../../utils/0xUtils/LibRichErrors.sol";
-import "../../utils/0xUtils/LibSafeMath.sol";
-import "../../utils/0xUtils/IAssetProxy.sol";
-import "../../utils/0xUtils/IAssetData.sol";
-import "../../utils/0xUtils/IERC20Token.sol";
+import "../utils/0xUtils/Authorizable.sol";
+import "../utils/0xUtils/LibRichErrors.sol";
+import "../utils/0xUtils/LibSafeMath.sol";
+import "../utils/0xUtils/IAssetProxy.sol";
+import "../utils/0xUtils/IAssetData.sol";
+import "../utils/0xUtils/IERC20Token.sol";
 import "./libs/LibStakingRichErrors.sol";
 import "./interfaces/IGrgVault.sol";
 
