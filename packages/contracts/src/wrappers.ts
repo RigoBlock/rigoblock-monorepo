@@ -29,6 +29,7 @@ export * from "../generated-wrappers/proof_of_performance";
 export * from "../generated-wrappers/rigo_token";
 export * from "../generated-wrappers/sig_verifier";
 export * from "../generated-wrappers/staking";
+export * from "../generated-wrappers/staking_proxy";
 export * from "../generated-wrappers/token_transfer_proxy";
 export * from "../generated-wrappers/totle_primary";
 export * from "../generated-wrappers/unlimited_allowance_token";
