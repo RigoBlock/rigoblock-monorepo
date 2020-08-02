@@ -23,6 +23,7 @@
     "rigoToken/Inflation/Inflation.sol",
     "rigoToken/ProofOfPerformance/ProofOfPerformance.sol",
     "rigoToken/RigoToken/RigoToken.sol",
+    "staking/Staking.sol",
     "tokens/ERC20/ERC20.sol",
     "tokens/UnlimitedAllowanceToken/UnlimitedAllowanceToken.sol",
     "tokens/WETH9/WETH9.sol",
