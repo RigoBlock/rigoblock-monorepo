@@ -20,6 +20,7 @@ import * as Erc20Proxy from "../generated-artifacts/Erc20Proxy.json";
 import * as Exchange from "../generated-artifacts/Exchange.json";
 import * as ExchangesAuthority from "../generated-artifacts/ExchangesAuthority.json";
 import * as Faucet from "../generated-artifacts/Faucet.json";
+import * as GrgVault from "../generated-artifacts/GrgVault.json";
 import * as HGetDragoData from "../generated-artifacts/HGetDragoData.json";
 import * as Inflation from "../generated-artifacts/Inflation.json";
 import * as Migrations from "../generated-artifacts/Migrations.json";
@@ -60,6 +61,7 @@ export const artifacts = {
   Inflation: Inflation as ContractArtifact,
   ProofOfPerformance: ProofOfPerformance as ContractArtifact,
   RigoToken: RigoToken as ContractArtifact,
+  Staking: Staking as ContractArtifact,
   ERC20: ERC20 as ContractArtifact,
   UnlimitedAllowanceToken: UnlimitedAllowanceToken as ContractArtifact,
   WETH9: WETH9 as ContractArtifact,
@@ -71,5 +73,5 @@ export const artifacts = {
   TokenTransferProxy: TokenTransferProxy as ContractArtifact,
   TotlePrimary: TotlePrimary as ContractArtifact,
   ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact,
-  Staking: Staking as ContractArtifact
+  GrgVault: GrgVault as ContractArtifact
 };
