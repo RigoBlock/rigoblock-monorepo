@@ -17,7 +17,7 @@
 
 */
 
-pragma solidity ^0.5.4;
+pragma solidity ^0.5.9;
 
 import "../../utils/0xUtils/IEtherToken.sol";
 import "../interfaces/IGrgVault.sol";
