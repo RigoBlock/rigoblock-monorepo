@@ -17,7 +17,7 @@
 
 */
 
-pragma solidity ^0.5.4;
+pragma solidity ^0.5.9;
 pragma experimental ABIEncoderV2;
 
 import "./MixinConstants.sol";
@@ -80,7 +80,7 @@ contract MixinStorage is
     /// @dev Registered RigoBlock Proof_of_Performance contracts, capable of paying protocol fees.
     /// @param 0 The address to check.
     /// @return 0 Whether the address is a registered proof_of_performance.
-    mapping (address => bool) public validPop;
+    mapping (address => bool) public validExchanges; // TODO: change to validPop
 
     /* Tweakable parameters */
 
