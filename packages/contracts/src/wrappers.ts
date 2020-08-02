@@ -18,6 +18,7 @@ export * from "../generated-wrappers/erc20_proxy";
 export * from "../generated-wrappers/exchange";
 export * from "../generated-wrappers/exchanges_authority";
 export * from "../generated-wrappers/faucet";
+export * from "../generated-wrappers/grg_vault";
 export * from "../generated-wrappers/h_get_drago_data";
 export * from "../generated-wrappers/inflation";
 export * from "../generated-wrappers/migrations";
