@@ -16,10 +16,9 @@
 
 */
 
-pragma solidity 0.5.12;
+pragma solidity 0.6.6;
 
-//import '@uniswap/v2-periphery/contracts/UniswapV2Router02.sol';
-import { IUniswapV2Router02 as UniswapV2Router } from "../../../utils/exchanges/uniswap/IUniswapV2Router02/IUniswapV2Router02.sol";
+import "../../../utils/exchanges/uniswap/IUniswapV2Router02/IUniswapV2Router02.sol";
 
 interface Token {
 
@@ -33,17 +32,17 @@ interface DragoEventful {
     function customDragoLog(bytes4 _methodHash, bytes calldata _encodedParams) external returns (bool success);
 }
 
-contract Drago {
+abstract contract Drago {
 
     address public owner;
 
-    function getExchangesAuth() external view returns (address);
+    function getExchangesAuth() external virtual view returns (address);
 
-    function getEventful() external view returns (address);
+    function getEventful() external virtual view returns (address);
 }
 
-contract ExchangesAuthority {
-    function canTradeTokenOnExchange(address _token, address _exchange) external view returns (bool);
+abstract contract ExchangesAuthority {
+    function canTradeTokenOnExchange(address _token, address _exchange) external virtual view returns (bool);
 }
 
 contract AUniswapV2 {
@@ -74,7 +73,7 @@ contract AUniswapV2 {
             Token(tokenB).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_B_APPROVE_ERROR"
         );
-        (amountA, amountB, liquidity) = UniswapV2Router(uniswapV2RouterAddress).addLiquidity(
+        (amountA, amountB, liquidity) = IUniswapV2Router02(uniswapV2RouterAddress).addLiquidity(
             tokenA,
             tokenB,
             amountADesired,
@@ -131,8 +130,8 @@ contract AUniswapV2 {
             Token(token).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        (amountToken, amountETH, liquidity) = UniswapV2Router(uniswapV2RouterAddress)
-        .addLiquidityETH.value(sendETHAmount)(
+        (amountToken, amountETH, liquidity) = IUniswapV2Router02(uniswapV2RouterAddress)
+        .addLiquidityETH{value: sendETHAmount}(
             token,
             amountTokenDesired,
             amountTokenMin,
@@ -161,7 +160,7 @@ contract AUniswapV2 {
         returns (uint amountA, uint amountB)
     {
         //callerIsDragoOwner();
-        (amountA, amountB) = UniswapV2Router(uniswapV2RouterAddress).removeLiquidity(
+        (amountA, amountB) = IUniswapV2Router02(uniswapV2RouterAddress).removeLiquidity(
             tokenA,
             tokenB,
             liquidity,
@@ -186,7 +185,7 @@ contract AUniswapV2 {
         returns (uint amountToken, uint amountETH)
     {
         //callerIsDragoOwner();
-        (amountToken, amountETH) = UniswapV2Router(uniswapV2RouterAddress).removeLiquidityETH(
+        (amountToken, amountETH) = IUniswapV2Router02(uniswapV2RouterAddress).removeLiquidityETH(
             token,
             liquidity,
             amountTokenMin,
@@ -211,7 +210,7 @@ contract AUniswapV2 {
         returns (uint amountETH)
     {
         //callerIsDragoOwner();
-        amountETH = UniswapV2Router(uniswapV2RouterAddress).removeLiquidityETHSupportingFeeOnTransferTokens(
+        amountETH = IUniswapV2Router02(uniswapV2RouterAddress).removeLiquidityETHSupportingFeeOnTransferTokens(
             token,
             liquidity,
             amountTokenMin,
@@ -243,7 +242,7 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = UniswapV2Router(uniswapV2RouterAddress).swapExactTokensForTokens(
+        amounts = IUniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForTokens(
             amountIn,
             amountOutMin,
             path,
@@ -274,7 +273,7 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = UniswapV2Router(uniswapV2RouterAddress).swapTokensForExactTokens(
+        amounts = IUniswapV2Router02(uniswapV2RouterAddress).swapTokensForExactTokens(
             amountOut,
             amountInMax,
             path,
@@ -301,8 +300,8 @@ contract AUniswapV2 {
     {
         //callerIsDragoOwner();
         //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
-        amounts = UniswapV2Router(uniswapV2RouterAddress)
-        .swapExactETHForTokens.value(exactETHAmount)(
+        amounts = IUniswapV2Router02(uniswapV2RouterAddress)
+        .swapExactETHForTokens{value: exactETHAmount}(
             amountOutMin,
             path,
             to == address(this) ? to : address(this), // can only transfer to this drago
@@ -328,7 +327,7 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = UniswapV2Router(uniswapV2RouterAddress).swapTokensForExactETH(
+        amounts = IUniswapV2Router02(uniswapV2RouterAddress).swapTokensForExactETH(
             amountOut,
             amountInMax,
             path,
@@ -358,7 +357,7 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = UniswapV2Router(uniswapV2RouterAddress).swapExactTokensForETH(
+        amounts = IUniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForETH(
             amountIn,
             amountOutMin,
             path,
@@ -385,8 +384,8 @@ contract AUniswapV2 {
     {
         //callerIsDragoOwner();
         //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
-        amounts = UniswapV2Router(uniswapV2RouterAddress)
-        .swapETHForExactTokens.value(sendETHAmount)(
+        amounts = IUniswapV2Router02(uniswapV2RouterAddress)
+        .swapETHForExactTokens{value: sendETHAmount}(
             amountOut,
             path,
             to == address(this) ? to : address(this), // can only transfer to this drago
@@ -413,7 +412,7 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        UniswapV2Router(uniswapV2RouterAddress).swapExactTokensForTokensSupportingFeeOnTransferTokens(
+        IUniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForTokensSupportingFeeOnTransferTokens(
             amountIn,
             amountOutMin,
             path,
@@ -439,8 +438,8 @@ contract AUniswapV2 {
     {
         //callerIsDragoOwner();
         //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
-        UniswapV2Router(uniswapV2RouterAddress)
-        .swapExactETHForTokensSupportingFeeOnTransferTokens.value(exactETHAmount)(
+        IUniswapV2Router02(uniswapV2RouterAddress)
+        .swapExactETHForTokensSupportingFeeOnTransferTokens{value: exactETHAmount}(
             amountOutMin,
             path,
             to == address(this) ? to : address(this),
@@ -465,7 +464,7 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        UniswapV2Router(uniswapV2RouterAddress).swapExactTokensForETHSupportingFeeOnTransferTokens(
+        IUniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForETHSupportingFeeOnTransferTokens(
             amountIn,
             amountOutMin,
             path,
