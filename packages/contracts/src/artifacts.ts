@@ -58,6 +58,7 @@ export const artifacts = {
   SigVerifier: SigVerifier as ContractArtifact,
   ASelfCustody: ASelfCustody as ContractArtifact,
   ATotlePrimary: ATotlePrimary as ContractArtifact,
+  AUniswapV2: AUniswapV2 as ContractArtifact,
   AWeth: AWeth as ContractArtifact,
   VaultFactory: VaultFactory as ContractArtifact,
   Inflation: Inflation as ContractArtifact,
@@ -76,6 +77,5 @@ export const artifacts = {
   Exchange: Exchange as ContractArtifact,
   TokenTransferProxy: TokenTransferProxy as ContractArtifact,
   TotlePrimary: TotlePrimary as ContractArtifact,
-  ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact,
-  AUniswapV2: AUniswapV2 as ContractArtifact
+  ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact
 };
