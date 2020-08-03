@@ -18,7 +18,7 @@
 
 pragma solidity 0.6.6;
 
-//im port '@uniswap/v2-periphery/contracts/UniswapV2Router';
+import '@uniswap/v2-periphery/contracts/UniswapV2Router02.sol';
 
 interface Token {
 
@@ -29,23 +29,23 @@ interface Token {
 
 interface DragoEventful {
 
-    function customDragoLog(bytes4 _methodHash, bytes _encodedParams) external returns (bool success);
+    function customDragoLog(bytes4 _methodHash, bytes calldata _encodedParams) external returns (bool success);
 }
 
-contract Drago {
+abstract contract Drago {
 
     address public owner;
 
-    function getExchangesAuth() external view returns (address);
+    function getExchangesAuth() external virtual view returns (address);
 
-    function getEventful() external view returns (address);
+    function getEventful() external virtual view returns (address);
 }
 
 contract AUniswapV2 {
 
     // **** ADD LIQUIDITY ****
     function addLiquidity(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         address tokenA,
         address tokenB,
         uint amountADesired,
@@ -57,7 +57,6 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
         returns (uint amountA, uint amountB, uint liquidity)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
@@ -70,20 +69,20 @@ contract AUniswapV2 {
             Token(tokenB).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_B_APPROVE_ERROR"
         );
-        (amountA, amountB, liquidity) = UniswapV2Router(uniswapV2RouterAddress).addLiquidity(
+        (amountA, amountB, liquidity) = UniswapV2Router02(uniswapV2RouterAddress).addLiquidity(
             tokenA,
             tokenB,
             amountADesired,
             amountBDesired,
             amountAMin,
             amountBMin,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(tokenA).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
+        if (Token(tokenA).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
             Token(tokenA).approve(uniswapV2RouterAddress, uint256(0));
         }
-        if (Token(tokenB).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
+        if (Token(tokenB).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
             Token(tokenB).approve(uniswapV2RouterAddress, uint256(0));
         }
         /*
@@ -108,7 +107,7 @@ contract AUniswapV2 {
     }
 
     function addLiquidityETH(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         address token,
         uint sendETHAmount,
         uint amountTokenDesired,
@@ -119,7 +118,6 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
         payable
         returns (uint amountToken, uint amountETH, uint liquidity)
     {
@@ -129,27 +127,24 @@ contract AUniswapV2 {
             Token(token).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        (amountToken, amountETH, liquidity) = UniswapV2Router(uniswapV2RouterAddress)
+        (amountToken, amountETH, liquidity) = UniswapV2Router02(uniswapV2RouterAddress)
         .addLiquidityETH{value: sendETHAmount}(
             token,
             amountTokenDesired,
             amountTokenMin,
             amountETHMin,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         ); //.value(amountETHMin);
-        if (Token(tokenA).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
-            Token(tokenA).approve(uniswapV2RouterAddress, uint256(0));
-        }
-        if (Token(tokenB).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
-            Token(tokenB).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(token).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
+            Token(token).approve(uniswapV2RouterAddress, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     // **** REMOVE LIQUIDITY ****
     function removeLiquidity(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         address tokenA,
         address tokenB,
         uint liquidity,
@@ -160,24 +155,23 @@ contract AUniswapV2 {
     )
         public
         virtual
-        override
         returns (uint amountA, uint amountB)
     {
         //callerIsDragoOwner();
-        (amountA, amountB) = UniswapV2Router(uniswapV2RouterAddress).removeLiquidity(
+        (amountA, amountB) = UniswapV2Router02(uniswapV2RouterAddress).removeLiquidity(
             tokenA,
             tokenB,
             liquidity,
             amountAMin,
             amountBMin,
-            address(this), // cannot remove liquidity to any other than Drago
+            to == address(this) ? to : address(this), // cannot remove liquidity to any other than Drago
             deadline
         );
         // TODO: check whether logging in eventful
     }
 
     function removeLiquidityETH(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         address token,
         uint liquidity,
         uint amountTokenMin,
@@ -187,16 +181,15 @@ contract AUniswapV2 {
     )
         public
         virtual
-        override
         returns (uint amountToken, uint amountETH)
     {
         //callerIsDragoOwner();
-        (amountToken, amountETH) = UniswapV2Router(uniswapV2RouterAddress).removeLiquidityETH(
+        (amountToken, amountETH) = UniswapV2Router02(uniswapV2RouterAddress).removeLiquidityETH(
             token,
             liquidity,
             amountTokenMin,
             amountETHMin,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         );
         // TODO: check whether logging in eventful
@@ -204,7 +197,7 @@ contract AUniswapV2 {
 
     // **** REMOVE LIQUIDITY (supporting fee-on-transfer tokens) ****
     function removeLiquidityETHSupportingFeeOnTransferTokens(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         address token,
         uint liquidity,
         uint amountTokenMin,
@@ -214,16 +207,15 @@ contract AUniswapV2 {
     )
         public
         virtual
-        override
         returns (uint amountETH)
     {
         //callerIsDragoOwner();
-        (, amountETH) = UniswapV2Router(uniswapV2RouterAddress).removeLiquidityETHSupportingFeeOnTransferTokens(
+        amountETH = UniswapV2Router02(uniswapV2RouterAddress).removeLiquidityETHSupportingFeeOnTransferTokens(
             token,
             liquidity,
             amountTokenMin,
             amountETHMin,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         );
         // TODO: check whether logging in eventful
@@ -231,7 +223,7 @@ contract AUniswapV2 {
 
     // **** SWAP ****
     function swapExactTokensForTokens(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -240,7 +232,6 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
@@ -249,21 +240,21 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = UniswapV2Router(uniswapV2RouterAddress).swapExactTokensForTokens(
+        amounts = UniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForTokens(
             amountIn,
             amountOutMin,
             path,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(path[0]).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
+        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
             Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapTokensForExactTokens(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         uint amountOut,
         uint amountInMax,
         address[] calldata path,
@@ -272,7 +263,6 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
@@ -281,21 +271,21 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = UniswapV2Router(uniswapV2RouterAddress).swapTokensForExactTokens(
+        amounts = UniswapV2Router02(uniswapV2RouterAddress).swapTokensForExactTokens(
             amountOut,
             amountInMax,
             path,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(path[0]).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
+        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
             Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapExactETHForTokens(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         uint256 exactETHAmount,
         uint amountOutMin,
         address[] calldata path,
@@ -304,24 +294,23 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
         payable
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
-        amounts = UniswapV2Router(uniswapV2RouterAddress)
+        amounts = UniswapV2Router02(uniswapV2RouterAddress)
         .swapExactETHForTokens{value: exactETHAmount}(
             amountOutMin,
             path,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         );
         // TODO: check whether logging in eventful
     }
 
     function swapTokensForExactETH(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         uint amountOut,
         uint amountInMax,
         address[] calldata path,
@@ -330,7 +319,6 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
@@ -339,21 +327,21 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = UniswapV2Router(uniswapV2RouterAddress).swapTokensForExactETH(
+        amounts = UniswapV2Router02(uniswapV2RouterAddress).swapTokensForExactETH(
             amountOut,
             amountInMax,
             path,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(path[0]).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
+        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
             Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapExactTokensForETH(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -362,7 +350,6 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
@@ -371,21 +358,21 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = UniswapV2Router(uniswapV2RouterAddress).swapExactTokensForETH(
+        amounts = UniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForETH(
             amountIn,
             amountOutMin,
             path,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(path[0]).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
+        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
             Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapETHForExactTokens(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         uint256 sendETHAmount,
         uint amountOut,
         address[] calldata path,
@@ -394,17 +381,16 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
         payable
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
-        amounts = UniswapV2Router(uniswapV2RouterAddress)
+        amounts = UniswapV2Router02(uniswapV2RouterAddress)
         .swapETHForExactTokens{value: sendETHAmount}(
             amountOut,
             path,
-            address(this), // can only transfer to this drago
+            to == address(this) ? to : address(this), // can only transfer to this drago
             deadline
         );
         // TODO: check whether logging in eventful
@@ -412,7 +398,7 @@ contract AUniswapV2 {
 
     // **** SWAP (supporting fee-on-transfer tokens) ****
     function swapExactTokensForTokensSupportingFeeOnTransferTokens(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -421,7 +407,6 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
@@ -429,21 +414,21 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = UniswapV2Router(uniswapV2RouterAddress).swapExactTokensForTokensSupportingFeeOnTransferTokens(
+        UniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForTokensSupportingFeeOnTransferTokens(
             amountIn,
             amountOutMin,
             path,
-            address(this),
+            to == address(this) ? to : address(this),
             deadline
         );
-        if (Token(path[0]).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
+        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
             Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapExactETHForTokensSupportingFeeOnTransferTokens(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         uint256 exactETHAmount,
         uint amountOutMin,
         address[] calldata path,
@@ -452,23 +437,22 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
         payable
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
-        amounts = UniswapV2Router(uniswapV2RouterAddress)
+        UniswapV2Router02(uniswapV2RouterAddress)
         .swapExactETHForTokensSupportingFeeOnTransferTokens{value: exactETHAmount}(
             amountOutMin,
             path,
-            address(this),
+            to == address(this) ? to : address(this),
             deadline
         );
         // TODO: check whether logging in eventful
     }
 
     function swapExactTokensForETHSupportingFeeOnTransferTokens(
-        address uniswapV2RouterAddress,
+        address payable uniswapV2RouterAddress,
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -477,7 +461,6 @@ contract AUniswapV2 {
     )
         external
         virtual
-        override
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
@@ -485,14 +468,14 @@ contract AUniswapV2 {
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        UniswapV2Router(uniswapV2RouterAddress).swapExactTokensForETHSupportingFeeOnTransferTokens(
+        UniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForETHSupportingFeeOnTransferTokens(
             amountIn,
             amountOutMin,
             path,
-            address(this),
+            to == address(this) ? to : address(this),
             deadline
         );
-        if (Token(path[0]).allowance(Drago(address(this)), uniswapV2RouterAddress) > uint256(0)) {
+        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
             Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
         }
         // TODO: check whether logging in eventful
