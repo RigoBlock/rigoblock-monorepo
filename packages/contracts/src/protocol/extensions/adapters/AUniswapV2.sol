@@ -61,6 +61,7 @@ contract AUniswapV2 {
         returns (uint amountA, uint amountB, uint liquidity)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         require(
             Token(tokenA).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_A_APPROVE_ERROR"
@@ -123,6 +124,7 @@ contract AUniswapV2 {
         returns (uint amountToken, uint amountETH, uint liquidity)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         require(
             Token(token).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -161,6 +163,7 @@ contract AUniswapV2 {
         override
         returns (uint amountA, uint amountB)
     {
+        //callerIsDragoOwner();
         (amountA, amountB) = UniswapV2Router(uniswapV2RouterAddress).removeLiquidity(
             tokenA,
             tokenB,
@@ -187,6 +190,7 @@ contract AUniswapV2 {
         override
         returns (uint amountToken, uint amountETH)
     {
+        //callerIsDragoOwner();
         (amountToken, amountETH) = UniswapV2Router(uniswapV2RouterAddress).removeLiquidityETH(
             token,
             liquidity,
@@ -213,6 +217,7 @@ contract AUniswapV2 {
         override
         returns (uint amountETH)
     {
+        //callerIsDragoOwner();
         (, amountETH) = UniswapV2Router(uniswapV2RouterAddress).removeLiquidityETHSupportingFeeOnTransferTokens(
             token,
             liquidity,
@@ -239,6 +244,7 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -270,6 +276,7 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -302,6 +309,7 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         amounts = UniswapV2Router(uniswapV2RouterAddress)
         .swapExactETHForTokens{value: exactETHAmount}(
             amountOutMin,
@@ -326,6 +334,7 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -357,6 +366,7 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -389,6 +399,7 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         amounts = UniswapV2Router(uniswapV2RouterAddress)
         .swapETHForExactTokens{value: sendETHAmount}(
             amountOut,
@@ -413,6 +424,7 @@ contract AUniswapV2 {
         override
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -444,6 +456,7 @@ contract AUniswapV2 {
         payable
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         amounts = UniswapV2Router(uniswapV2RouterAddress)
         .swapExactETHForTokensSupportingFeeOnTransferTokens{value: exactETHAmount}(
             amountOutMin,
@@ -467,6 +480,7 @@ contract AUniswapV2 {
         override
     {
         // TODO: restrict to whitelisted token on wrapper (uniswap router)
+        //callerIsDragoOwner();
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -484,6 +498,7 @@ contract AUniswapV2 {
         // TODO: check whether logging in eventful
     }
 
+    // **** INTERNAL ****
     /// @dev Gets the address of the logger contract.
     /// @return Address of the logger contrac.
     function getDragoEventful()
@@ -496,5 +511,16 @@ contract AUniswapV2 {
                 address(this)
             ).getEventful();
         return dragoEvenfulAddress;
+    }
+
+    function callerIsDragoOwner()
+        internal
+        view
+    {
+        if (
+            Drago(
+                address(this)
+            ).owner() != msg.sender
+        ) { revert("FAIL_OWNER_CHECK_ERROR"); }
     }
 }
