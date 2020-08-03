@@ -41,6 +41,10 @@ abstract contract Drago {
     function getEventful() external virtual view returns (address);
 }
 
+abstract contract ExchangesAuthority {
+    function canTradeTokenOnExchange(address _token, address _exchange) external virtual view returns (bool);
+}
+
 contract AUniswapV2 {
 
     // **** ADD LIQUIDITY ****
@@ -59,8 +63,9 @@ contract AUniswapV2 {
         virtual
         returns (uint amountA, uint amountB, uint liquidity)
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, tokenA);
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, tokenB);
         require(
             Token(tokenA).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_A_APPROVE_ERROR"
@@ -121,8 +126,8 @@ contract AUniswapV2 {
         payable
         returns (uint amountToken, uint amountETH, uint liquidity)
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, token);
         require(
             Token(token).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -222,6 +227,8 @@ contract AUniswapV2 {
     }
 
     // **** SWAP ****
+    // TODO: check for attack vectors in complex path in all functions
+    // TODO: potentially restrict to known/preapproved paths or max path.length = 2
     function swapExactTokensForTokens(
         address payable uniswapV2RouterAddress,
         uint amountIn,
@@ -234,8 +241,9 @@ contract AUniswapV2 {
         virtual
         returns (uint[] memory amounts)
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -265,8 +273,9 @@ contract AUniswapV2 {
         virtual
         returns (uint[] memory amounts)
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -297,8 +306,8 @@ contract AUniswapV2 {
         payable
         returns (uint[] memory amounts)
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
         amounts = UniswapV2Router02(uniswapV2RouterAddress)
         .swapExactETHForTokens{value: exactETHAmount}(
             amountOutMin,
@@ -321,8 +330,8 @@ contract AUniswapV2 {
         virtual
         returns (uint[] memory amounts)
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -352,8 +361,8 @@ contract AUniswapV2 {
         virtual
         returns (uint[] memory amounts)
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -384,8 +393,8 @@ contract AUniswapV2 {
         payable
         returns (uint[] memory amounts)
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
         amounts = UniswapV2Router02(uniswapV2RouterAddress)
         .swapETHForExactTokens{value: sendETHAmount}(
             amountOut,
@@ -408,8 +417,9 @@ contract AUniswapV2 {
         external
         virtual
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -439,8 +449,8 @@ contract AUniswapV2 {
         virtual
         payable
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
         UniswapV2Router02(uniswapV2RouterAddress)
         .swapExactETHForTokensSupportingFeeOnTransferTokens{value: exactETHAmount}(
             amountOutMin,
@@ -462,8 +472,8 @@ contract AUniswapV2 {
         external
         virtual
     {
-        // TODO: restrict to whitelisted token on wrapper (uniswap router)
         //callerIsDragoOwner();
+        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
         require(
             Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
@@ -505,5 +515,23 @@ contract AUniswapV2 {
                 address(this)
             ).owner() != msg.sender
         ) { revert("FAIL_OWNER_CHECK_ERROR"); }
+    }
+    
+    function canTradeTokenOnExchange(
+        address payable uniswapV2RouterAddress,
+        address token
+        )
+        internal
+        view
+    {
+        if (!ExchangesAuthority(
+                Drago(
+                    address(uint160(address(this)))
+                )
+                .getExchangesAuth()
+            )
+            .canTradeTokenOnExchange(token, uniswapV2RouterAddress)) {
+                revert("UNISWAP_TOKEN_ON_EXCHANGE_ERROR");
+            }
     }
 }
