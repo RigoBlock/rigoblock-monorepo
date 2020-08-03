@@ -223,7 +223,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/protocol/extensions/NavVerifier/NavVerifier.sol"
             ],
-            "address": "0xdd15cd6b4aa1ab6de12074a516c51c4502c7d931",
+            "address": "0x783e4b10ae677678cefa975a4c5f45b1a1646b05",
             "constructor_args": "0x"
         }
     }
