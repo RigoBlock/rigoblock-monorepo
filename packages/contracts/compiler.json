@@ -18,6 +18,7 @@
     "protocol/extensions/SigVerifier/SigVerifier.sol",
     "protocol/extensions/adapters/ASelfCustody.sol",
     "protocol/extensions/adapters/ATotlePrimary.sol",
+    "protocol/extensions/adapters/AUniswapV2.sol",
     "protocol/extensions/adapters/AWeth.sol",
     "protocol/vaultFactory/VaultFactory/VaultFactory.sol",
     "rigoToken/Inflation/Inflation.sol",
