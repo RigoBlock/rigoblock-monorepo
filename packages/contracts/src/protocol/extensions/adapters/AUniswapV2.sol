@@ -47,6 +47,12 @@ abstract contract ExchangesAuthority {
 
 contract AUniswapV2 {
 
+    address immutable public UNISWAPV2ROUTERADDRESS;
+
+    constructor(address uniswapV2RouterAddress) public {
+        UNISWAPV2ROUTERADDRESS = uniswapV2RouterAddress;
+    }
+
     // **** ADD LIQUIDITY ****
     function addLiquidity(
         address payable uniswapV2RouterAddress,
@@ -287,7 +293,7 @@ contract AUniswapV2 {
     }
 
     function swapExactETHForTokens(
-        address payable uniswapV2RouterAddress,
+        //address payable uniswapV2RouterAddress,
         uint256 exactETHAmount,
         uint amountOutMin,
         address[] calldata path,
@@ -300,7 +306,7 @@ contract AUniswapV2 {
     {
         //callerIsDragoOwner();
         //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
-        amounts = IUniswapV2Router02(uniswapV2RouterAddress)
+        amounts = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS)
         .swapExactETHForTokens{value: exactETHAmount}(
             amountOutMin,
             path,
