@@ -19,6 +19,8 @@
 pragma solidity 0.6.6;
 
 import "../../../utils/exchanges/uniswap/IUniswapV2Router02/IUniswapV2Router02.sol";
+import "../../../utils/exchanges/uniswap/IUniswapV2Factory/IUniswapV2Factory.sol";
+import "../../../utils/exchanges/uniswap/IUniswapV2Pair/IUniswapV2Pair.sol";
 
 interface Token {
 
@@ -159,6 +161,11 @@ contract AUniswapV2 {
         returns (uint amountA, uint amountB)
     {
         //callerIsDragoOwner();
+        IUniswapV2Pair(
+            address(IUniswapV2Factory(
+                IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).factory()
+            ))
+        ).approve(UNISWAPV2ROUTERADDRESS, liquidity);
         (amountA, amountB) = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).removeLiquidity(
             tokenA,
             tokenB,
@@ -183,6 +190,11 @@ contract AUniswapV2 {
         returns (uint amountToken, uint amountETH)
     {
         //callerIsDragoOwner();
+        IUniswapV2Pair(
+            address(IUniswapV2Factory(
+                IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).factory()
+            ))
+        ).approve(UNISWAPV2ROUTERADDRESS, liquidity);
         (amountToken, amountETH) = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).removeLiquidityETH(
             token,
             liquidity,
