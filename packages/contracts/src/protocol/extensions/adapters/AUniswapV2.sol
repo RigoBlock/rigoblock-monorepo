@@ -47,15 +47,10 @@ abstract contract ExchangesAuthority {
 
 contract AUniswapV2 {
 
-    address immutable public UNISWAPV2ROUTERADDRESS;
-
-    constructor(address uniswapV2RouterAddress) public {
-        UNISWAPV2ROUTERADDRESS = uniswapV2RouterAddress;
-    }
+    address payable immutable public UNISWAPV2ROUTERADDRESS = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
 
     // **** ADD LIQUIDITY ****
     function addLiquidity(
-        address payable uniswapV2RouterAddress,
         address tokenA,
         address tokenB,
         uint amountADesired,
@@ -69,17 +64,17 @@ contract AUniswapV2 {
         returns (uint amountA, uint amountB, uint liquidity)
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, tokenA);
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, tokenB);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, tokenA);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, tokenB);
         require(
-            Token(tokenA).approve(uniswapV2RouterAddress, 2**256 -1),
+            Token(tokenA).approve(UNISWAPV2ROUTERADDRESS, 2**256 -1),
             "UNISWAP_TOKEN_A_APPROVE_ERROR"
         );
         require(
-            Token(tokenB).approve(uniswapV2RouterAddress, 2**256 -1),
+            Token(tokenB).approve(UNISWAPV2ROUTERADDRESS, 2**256 -1),
             "UNISWAP_TOKEN_B_APPROVE_ERROR"
         );
-        (amountA, amountB, liquidity) = IUniswapV2Router02(uniswapV2RouterAddress).addLiquidity(
+        (amountA, amountB, liquidity) = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).addLiquidity(
             tokenA,
             tokenB,
             amountADesired,
@@ -89,11 +84,11 @@ contract AUniswapV2 {
             to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(tokenA).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
-            Token(tokenA).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(tokenA).allowance(address(this), UNISWAPV2ROUTERADDRESS) > uint256(0)) {
+            Token(tokenA).approve(UNISWAPV2ROUTERADDRESS, uint256(0));
         }
-        if (Token(tokenB).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
-            Token(tokenB).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(tokenB).allowance(address(this), UNISWAPV2ROUTERADDRESS) > uint256(0)) {
+            Token(tokenB).approve(UNISWAPV2ROUTERADDRESS, uint256(0));
         }
         /*
         DragoEventful events = DragoEventful(getDragoEventful());
@@ -117,7 +112,6 @@ contract AUniswapV2 {
     }
 
     function addLiquidityETH(
-        address payable uniswapV2RouterAddress,
         address token,
         uint sendETHAmount,
         uint amountTokenDesired,
@@ -131,12 +125,12 @@ contract AUniswapV2 {
         returns (uint amountToken, uint amountETH, uint liquidity)
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, token);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, token);
         require(
-            Token(token).approve(uniswapV2RouterAddress, 2**256 -1),
+            Token(token).approve(UNISWAPV2ROUTERADDRESS, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        (amountToken, amountETH, liquidity) = IUniswapV2Router02(uniswapV2RouterAddress)
+        (amountToken, amountETH, liquidity) = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS)
         .addLiquidityETH{value: sendETHAmount}(
             token,
             amountTokenDesired,
@@ -145,15 +139,14 @@ contract AUniswapV2 {
             to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(token).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
-            Token(token).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(token).allowance(address(this), UNISWAPV2ROUTERADDRESS) > uint256(0)) {
+            Token(token).approve(UNISWAPV2ROUTERADDRESS, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     // **** REMOVE LIQUIDITY ****
     function removeLiquidity(
-        address payable uniswapV2RouterAddress,
         address tokenA,
         address tokenB,
         uint liquidity,
@@ -166,7 +159,7 @@ contract AUniswapV2 {
         returns (uint amountA, uint amountB)
     {
         //callerIsDragoOwner();
-        (amountA, amountB) = IUniswapV2Router02(uniswapV2RouterAddress).removeLiquidity(
+        (amountA, amountB) = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).removeLiquidity(
             tokenA,
             tokenB,
             liquidity,
@@ -179,7 +172,6 @@ contract AUniswapV2 {
     }
 
     function removeLiquidityETH(
-        address payable uniswapV2RouterAddress,
         address token,
         uint liquidity,
         uint amountTokenMin,
@@ -191,7 +183,7 @@ contract AUniswapV2 {
         returns (uint amountToken, uint amountETH)
     {
         //callerIsDragoOwner();
-        (amountToken, amountETH) = IUniswapV2Router02(uniswapV2RouterAddress).removeLiquidityETH(
+        (amountToken, amountETH) = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).removeLiquidityETH(
             token,
             liquidity,
             amountTokenMin,
@@ -204,7 +196,6 @@ contract AUniswapV2 {
 
     // **** REMOVE LIQUIDITY (supporting fee-on-transfer tokens) ****
     function removeLiquidityETHSupportingFeeOnTransferTokens(
-        address payable uniswapV2RouterAddress,
         address token,
         uint liquidity,
         uint amountTokenMin,
@@ -216,7 +207,7 @@ contract AUniswapV2 {
         returns (uint amountETH)
     {
         //callerIsDragoOwner();
-        amountETH = IUniswapV2Router02(uniswapV2RouterAddress).removeLiquidityETHSupportingFeeOnTransferTokens(
+        amountETH = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).removeLiquidityETHSupportingFeeOnTransferTokens(
             token,
             liquidity,
             amountTokenMin,
@@ -231,7 +222,6 @@ contract AUniswapV2 {
     // TODO: check for attack vectors in complex path in all functions
     // TODO: potentially restrict to known/preapproved paths or max path.length = 2
     function swapExactTokensForTokens(
-        address payable uniswapV2RouterAddress,
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -242,27 +232,26 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[0]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[(path.length -1)]);
         require(
-            Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = IUniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForTokens(
+        amounts = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).swapExactTokensForTokens(
             amountIn,
             amountOutMin,
             path,
             to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
-            Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(path[0]).allowance(address(this), UNISWAPV2ROUTERADDRESS) > uint256(0)) {
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapTokensForExactTokens(
-        address payable uniswapV2RouterAddress,
         uint amountOut,
         uint amountInMax,
         address[] calldata path,
@@ -273,27 +262,26 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[0]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[(path.length -1)]);
         require(
-            Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = IUniswapV2Router02(uniswapV2RouterAddress).swapTokensForExactTokens(
+        amounts = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).swapTokensForExactTokens(
             amountOut,
             amountInMax,
             path,
             to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
-            Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(path[0]).allowance(address(this), UNISWAPV2ROUTERADDRESS) > uint256(0)) {
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapExactETHForTokens(
-        //address payable uniswapV2RouterAddress,
         uint256 exactETHAmount,
         uint amountOutMin,
         address[] calldata path,
@@ -305,7 +293,7 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[(path.length -1)]);
         amounts = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS)
         .swapExactETHForTokens{value: exactETHAmount}(
             amountOutMin,
@@ -317,7 +305,6 @@ contract AUniswapV2 {
     }
 
     function swapTokensForExactETH(
-        address payable uniswapV2RouterAddress,
         uint amountOut,
         uint amountInMax,
         address[] calldata path,
@@ -328,26 +315,25 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[0]);
         require(
-            Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = IUniswapV2Router02(uniswapV2RouterAddress).swapTokensForExactETH(
+        amounts = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).swapTokensForExactETH(
             amountOut,
             amountInMax,
             path,
             to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
-            Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(path[0]).allowance(address(this), UNISWAPV2ROUTERADDRESS) > uint256(0)) {
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapExactTokensForETH(
-        address payable uniswapV2RouterAddress,
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -358,26 +344,25 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[0]);
         require(
-            Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        amounts = IUniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForETH(
+        amounts = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).swapExactTokensForETH(
             amountIn,
             amountOutMin,
             path,
             to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
-        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
-            Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(path[0]).allowance(address(this), UNISWAPV2ROUTERADDRESS) > uint256(0)) {
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapETHForExactTokens(
-        address payable uniswapV2RouterAddress,
         uint256 sendETHAmount,
         uint amountOut,
         address[] calldata path,
@@ -389,8 +374,8 @@ contract AUniswapV2 {
         returns (uint[] memory amounts)
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
-        amounts = IUniswapV2Router02(uniswapV2RouterAddress)
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[(path.length -1)]);
+        amounts = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS)
         .swapETHForExactTokens{value: sendETHAmount}(
             amountOut,
             path,
@@ -402,7 +387,6 @@ contract AUniswapV2 {
 
     // **** SWAP (supporting fee-on-transfer tokens) ****
     function swapExactTokensForTokensSupportingFeeOnTransferTokens(
-        address payable uniswapV2RouterAddress,
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -412,27 +396,26 @@ contract AUniswapV2 {
         external
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[0]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[(path.length -1)]);
         require(
-            Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        IUniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForTokensSupportingFeeOnTransferTokens(
+        IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).swapExactTokensForTokensSupportingFeeOnTransferTokens(
             amountIn,
             amountOutMin,
             path,
             to != address(this) ? address(this) : address(this),
             deadline
         );
-        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
-            Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(path[0]).allowance(address(this), UNISWAPV2ROUTERADDRESS) > uint256(0)) {
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
 
     function swapExactETHForTokensSupportingFeeOnTransferTokens(
-        address payable uniswapV2RouterAddress,
         uint256 exactETHAmount,
         uint amountOutMin,
         address[] calldata path,
@@ -443,8 +426,8 @@ contract AUniswapV2 {
         payable
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[(path.length -1)]);
-        IUniswapV2Router02(uniswapV2RouterAddress)
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[(path.length -1)]);
+        IUniswapV2Router02(UNISWAPV2ROUTERADDRESS)
         .swapExactETHForTokensSupportingFeeOnTransferTokens{value: exactETHAmount}(
             amountOutMin,
             path,
@@ -455,7 +438,6 @@ contract AUniswapV2 {
     }
 
     function swapExactTokensForETHSupportingFeeOnTransferTokens(
-        address payable uniswapV2RouterAddress,
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
@@ -465,20 +447,20 @@ contract AUniswapV2 {
         external
     {
         //callerIsDragoOwner();
-        //canTradeTokenOnExchange(uniswapV2RouterAddress, path[0]);
+        //canTradeTokenOnExchange(UNISWAPV2ROUTERADDRESS, path[0]);
         require(
-            Token(path[0]).approve(uniswapV2RouterAddress, 2**256 -1),
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, 2**256 -1),
             "UNISWAP_TOKEN_APPROVE_ERROR"
         );
-        IUniswapV2Router02(uniswapV2RouterAddress).swapExactTokensForETHSupportingFeeOnTransferTokens(
+        IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).swapExactTokensForETHSupportingFeeOnTransferTokens(
             amountIn,
             amountOutMin,
             path,
             to != address(this) ? address(this) : address(this),
             deadline
         );
-        if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
-            Token(path[0]).approve(uniswapV2RouterAddress, uint256(0));
+        if (Token(path[0]).allowance(address(this), UNISWAPV2ROUTERADDRESS) > uint256(0)) {
+            Token(path[0]).approve(UNISWAPV2ROUTERADDRESS, uint256(0));
         }
         // TODO: check whether logging in eventful
     }
