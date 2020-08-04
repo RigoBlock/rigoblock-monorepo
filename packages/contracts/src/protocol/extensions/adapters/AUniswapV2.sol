@@ -162,9 +162,14 @@ contract AUniswapV2 {
     {
         //callerIsDragoOwner();
         IUniswapV2Pair(
-            address(IUniswapV2Factory(
-                IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).factory()
-            ))
+            address(
+                IUniswapV2Factory(
+                    IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).factory()
+                ).getPair(
+                    tokenA,
+                    tokenB
+                )
+            )
         ).approve(UNISWAPV2ROUTERADDRESS, liquidity);
         (amountA, amountB) = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).removeLiquidity(
             tokenA,
@@ -224,6 +229,16 @@ contract AUniswapV2 {
         returns (uint amountETH)
     {
         //callerIsDragoOwner();
+        IUniswapV2Pair(
+            address(
+                IUniswapV2Factory(
+                    IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).factory()
+                ).getPair(
+                    IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).WETH(),
+                    token
+                )
+            )
+        ).approve(UNISWAPV2ROUTERADDRESS, liquidity);
         amountETH = IUniswapV2Router02(UNISWAPV2ROUTERADDRESS).removeLiquidityETHSupportingFeeOnTransferTokens(
             token,
             liquidity,
