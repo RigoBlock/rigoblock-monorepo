@@ -80,7 +80,7 @@ contract AUniswapV2 {
             amountBDesired,
             amountAMin,
             amountBMin,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         if (Token(tokenA).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
@@ -136,7 +136,7 @@ contract AUniswapV2 {
             amountTokenDesired,
             amountTokenMin,
             amountETHMin,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         if (Token(token).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
@@ -166,7 +166,7 @@ contract AUniswapV2 {
             liquidity,
             amountAMin,
             amountBMin,
-            to == address(this) ? to : address(this), // cannot remove liquidity to any other than Drago
+            to != address(this) ? address(this) : address(this), // cannot remove liquidity to any other than Drago
             deadline
         );
         // TODO: check whether logging in eventful
@@ -190,7 +190,7 @@ contract AUniswapV2 {
             liquidity,
             amountTokenMin,
             amountETHMin,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         // TODO: check whether logging in eventful
@@ -215,7 +215,7 @@ contract AUniswapV2 {
             liquidity,
             amountTokenMin,
             amountETHMin,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         // TODO: check whether logging in eventful
@@ -246,7 +246,7 @@ contract AUniswapV2 {
             amountIn,
             amountOutMin,
             path,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
@@ -277,7 +277,7 @@ contract AUniswapV2 {
             amountOut,
             amountInMax,
             path,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
@@ -304,7 +304,7 @@ contract AUniswapV2 {
         .swapExactETHForTokens{value: exactETHAmount}(
             amountOutMin,
             path,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         // TODO: check whether logging in eventful
@@ -331,7 +331,7 @@ contract AUniswapV2 {
             amountOut,
             amountInMax,
             path,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
@@ -361,7 +361,7 @@ contract AUniswapV2 {
             amountIn,
             amountOutMin,
             path,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
@@ -388,7 +388,7 @@ contract AUniswapV2 {
         .swapETHForExactTokens{value: sendETHAmount}(
             amountOut,
             path,
-            to == address(this) ? to : address(this), // can only transfer to this drago
+            to != address(this) ? address(this) : address(this), // can only transfer to this drago
             deadline
         );
         // TODO: check whether logging in eventful
@@ -416,7 +416,7 @@ contract AUniswapV2 {
             amountIn,
             amountOutMin,
             path,
-            to == address(this) ? to : address(this),
+            to != address(this) ? address(this) : address(this),
             deadline
         );
         if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
@@ -442,7 +442,7 @@ contract AUniswapV2 {
         .swapExactETHForTokensSupportingFeeOnTransferTokens{value: exactETHAmount}(
             amountOutMin,
             path,
-            to == address(this) ? to : address(this),
+            to != address(this) ? address(this) : address(this),
             deadline
         );
         // TODO: check whether logging in eventful
@@ -468,7 +468,7 @@ contract AUniswapV2 {
             amountIn,
             amountOutMin,
             path,
-            to == address(this) ? to : address(this),
+            to != address(this) ? address(this) : address(this),
             deadline
         );
         if (Token(path[0]).allowance(address(this), uniswapV2RouterAddress) > uint256(0)) {
