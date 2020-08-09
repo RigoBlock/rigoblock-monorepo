@@ -8,6 +8,7 @@ import { ContractArtifact } from "ethereum-types";
 import * as AbiEncoder from "../generated-artifacts/AbiEncoder.json";
 import * as ASelfCustody from "../generated-artifacts/ASelfCustody.json";
 import * as ATotlePrimary from "../generated-artifacts/ATotlePrimary.json";
+import * as AUniswapV2 from "../generated-artifacts/AUniswapV2.json";
 import * as Authority from "../generated-artifacts/Authority.json";
 import * as AWeth from "../generated-artifacts/AWeth.json";
 import * as Distribution from "../generated-artifacts/Distribution.json";
@@ -57,6 +58,7 @@ export const artifacts = {
   SigVerifier: SigVerifier as ContractArtifact,
   ASelfCustody: ASelfCustody as ContractArtifact,
   ATotlePrimary: ATotlePrimary as ContractArtifact,
+  AUniswapV2: AUniswapV2 as ContractArtifact,
   AWeth: AWeth as ContractArtifact,
   VaultFactory: VaultFactory as ContractArtifact,
   Inflation: Inflation as ContractArtifact,
@@ -64,6 +66,7 @@ export const artifacts = {
   RigoToken: RigoToken as ContractArtifact,
   GrgVault: GrgVault as ContractArtifact,
   Staking: Staking as ContractArtifact,
+  StakingProxy: StakingProxy as ContractArtifact,
   ERC20: ERC20 as ContractArtifact,
   UnlimitedAllowanceToken: UnlimitedAllowanceToken as ContractArtifact,
   WETH9: WETH9 as ContractArtifact,
@@ -74,6 +77,5 @@ export const artifacts = {
   Exchange: Exchange as ContractArtifact,
   TokenTransferProxy: TokenTransferProxy as ContractArtifact,
   TotlePrimary: TotlePrimary as ContractArtifact,
-  ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact,
-  StakingProxy: StakingProxy as ContractArtifact
+  ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact
 };

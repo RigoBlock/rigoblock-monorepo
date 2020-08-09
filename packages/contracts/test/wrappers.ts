@@ -5,6 +5,7 @@
  */
 export * from "../test/generated-wrappers/a_self_custody";
 export * from "../test/generated-wrappers/a_totle_primary";
+export * from "../test/generated-wrappers/a_uniswap_v2";
 export * from "../test/generated-wrappers/a_weth";
 export * from "../test/generated-wrappers/abi_encoder";
 export * from "../test/generated-wrappers/authority";
