@@ -155,10 +155,19 @@ public static async deployFrom0xArtifactAsync(
         const abi = [
             { 
                 inputs: [
+                ],
+                name: 'UNISWAPV2ROUTERADDRESS',
+                outputs: [
                     {
-                        name: 'uniswapV2RouterAddress',
+                        name: '',
                         type: 'address',
                     },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
                     {
                         name: 'tokenA',
                         type: 'address',
@@ -213,10 +222,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
-                    {
                         name: 'token',
                         type: 'address',
                     },
@@ -266,10 +271,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
-                    {
                         name: 'tokenA',
                         type: 'address',
                     },
@@ -315,10 +316,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
-                    {
                         name: 'token',
                         type: 'address',
                     },
@@ -360,10 +357,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
-                    {
                         name: 'token',
                         type: 'address',
                     },
@@ -401,10 +394,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
-                    {
                         name: 'sendETHAmount',
                         type: 'uint256',
                     },
@@ -437,10 +426,6 @@ public static async deployFrom0xArtifactAsync(
             },
             { 
                 inputs: [
-                    {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
                     {
                         name: 'exactETHAmount',
                         type: 'uint256',
@@ -475,10 +460,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
-                    {
                         name: 'exactETHAmount',
                         type: 'uint256',
                     },
@@ -507,10 +488,6 @@ public static async deployFrom0xArtifactAsync(
             },
             { 
                 inputs: [
-                    {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
                     {
                         name: 'amountIn',
                         type: 'uint256',
@@ -545,10 +522,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
-                    {
                         name: 'amountIn',
                         type: 'uint256',
                     },
@@ -577,10 +550,6 @@ public static async deployFrom0xArtifactAsync(
             },
             { 
                 inputs: [
-                    {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
                     {
                         name: 'amountIn',
                         type: 'uint256',
@@ -615,10 +584,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
-                    {
                         name: 'amountIn',
                         type: 'uint256',
                     },
@@ -647,10 +612,6 @@ public static async deployFrom0xArtifactAsync(
             },
             { 
                 inputs: [
-                    {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
                     {
                         name: 'amountOut',
                         type: 'uint256',
@@ -684,10 +645,6 @@ public static async deployFrom0xArtifactAsync(
             },
             { 
                 inputs: [
-                    {
-                        name: 'uniswapV2RouterAddress',
-                        type: 'address',
-                    },
                     {
                         name: 'amountOut',
                         type: 'uint256',
@@ -801,8 +758,58 @@ public static async deployFrom0xArtifactAsync(
         return abiEncoder.getSelector();
     }
 
+    public UNISWAPV2ROUTERADDRESS(
+    ): ContractTxFunctionObj<string
+> {
+        const self = this as any as AUniswapV2Contract;
+        const functionSignature = 'UNISWAPV2ROUTERADDRESS()';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { ...txData, data: this.getABIEncodedTransactionData() }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
     public addLiquidity(
-            uniswapV2RouterAddress: string,
             tokenA: string,
             tokenB: string,
             amountADesired: BigNumber,
@@ -814,7 +821,6 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<[BigNumber, BigNumber, BigNumber]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isString('tokenA', tokenA);
             assert.isString('tokenB', tokenB);
             assert.isBigNumber('amountADesired', amountADesired);
@@ -823,7 +829,7 @@ public static async deployFrom0xArtifactAsync(
             assert.isBigNumber('amountBMin', amountBMin);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'addLiquidity(address,address,address,uint256,uint256,uint256,uint256,address,uint256)';
+        const functionSignature = 'addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -866,8 +872,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            tokenA.toLowerCase(),
+                return self._strictEncodeArguments(functionSignature, [tokenA.toLowerCase(),
             tokenB.toLowerCase(),
             amountADesired,
             amountBDesired,
@@ -880,7 +885,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public addLiquidityETH(
-            uniswapV2RouterAddress: string,
             token: string,
             sendETHAmount: BigNumber,
             amountTokenDesired: BigNumber,
@@ -891,7 +895,6 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<[BigNumber, BigNumber, BigNumber]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isString('token', token);
             assert.isBigNumber('sendETHAmount', sendETHAmount);
             assert.isBigNumber('amountTokenDesired', amountTokenDesired);
@@ -899,7 +902,7 @@ public static async deployFrom0xArtifactAsync(
             assert.isBigNumber('amountETHMin', amountETHMin);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'addLiquidityETH(address,address,uint256,uint256,uint256,uint256,address,uint256)';
+        const functionSignature = 'addLiquidityETH(address,uint256,uint256,uint256,uint256,address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -942,8 +945,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            token.toLowerCase(),
+                return self._strictEncodeArguments(functionSignature, [token.toLowerCase(),
             sendETHAmount,
             amountTokenDesired,
             amountTokenMin,
@@ -955,7 +957,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public removeLiquidity(
-            uniswapV2RouterAddress: string,
             tokenA: string,
             tokenB: string,
             liquidity: BigNumber,
@@ -966,7 +967,6 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<[BigNumber, BigNumber]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isString('tokenA', tokenA);
             assert.isString('tokenB', tokenB);
             assert.isBigNumber('liquidity', liquidity);
@@ -974,7 +974,7 @@ public static async deployFrom0xArtifactAsync(
             assert.isBigNumber('amountBMin', amountBMin);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'removeLiquidity(address,address,address,uint256,uint256,uint256,address,uint256)';
+        const functionSignature = 'removeLiquidity(address,address,uint256,uint256,uint256,address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1017,8 +1017,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            tokenA.toLowerCase(),
+                return self._strictEncodeArguments(functionSignature, [tokenA.toLowerCase(),
             tokenB.toLowerCase(),
             liquidity,
             amountAMin,
@@ -1030,7 +1029,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public removeLiquidityETH(
-            uniswapV2RouterAddress: string,
             token: string,
             liquidity: BigNumber,
             amountTokenMin: BigNumber,
@@ -1040,14 +1038,13 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<[BigNumber, BigNumber]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isString('token', token);
             assert.isBigNumber('liquidity', liquidity);
             assert.isBigNumber('amountTokenMin', amountTokenMin);
             assert.isBigNumber('amountETHMin', amountETHMin);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'removeLiquidityETH(address,address,uint256,uint256,uint256,address,uint256)';
+        const functionSignature = 'removeLiquidityETH(address,uint256,uint256,uint256,address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1090,8 +1087,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            token.toLowerCase(),
+                return self._strictEncodeArguments(functionSignature, [token.toLowerCase(),
             liquidity,
             amountTokenMin,
             amountETHMin,
@@ -1102,7 +1098,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public removeLiquidityETHSupportingFeeOnTransferTokens(
-            uniswapV2RouterAddress: string,
             token: string,
             liquidity: BigNumber,
             amountTokenMin: BigNumber,
@@ -1112,14 +1107,13 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<BigNumber
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isString('token', token);
             assert.isBigNumber('liquidity', liquidity);
             assert.isBigNumber('amountTokenMin', amountTokenMin);
             assert.isBigNumber('amountETHMin', amountETHMin);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'removeLiquidityETHSupportingFeeOnTransferTokens(address,address,uint256,uint256,uint256,address,uint256)';
+        const functionSignature = 'removeLiquidityETHSupportingFeeOnTransferTokens(address,uint256,uint256,uint256,address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1162,8 +1156,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            token.toLowerCase(),
+                return self._strictEncodeArguments(functionSignature, [token.toLowerCase(),
             liquidity,
             amountTokenMin,
             amountETHMin,
@@ -1174,7 +1167,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public swapETHForExactTokens(
-            uniswapV2RouterAddress: string,
             sendETHAmount: BigNumber,
             amountOut: BigNumber,
             path: string[],
@@ -1183,13 +1175,12 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<BigNumber[]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isBigNumber('sendETHAmount', sendETHAmount);
             assert.isBigNumber('amountOut', amountOut);
             assert.isArray('path', path);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'swapETHForExactTokens(address,uint256,uint256,address[],address,uint256)';
+        const functionSignature = 'swapETHForExactTokens(uint256,uint256,address[],address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1232,8 +1223,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            sendETHAmount,
+                return self._strictEncodeArguments(functionSignature, [sendETHAmount,
             amountOut,
             path,
             to.toLowerCase(),
@@ -1243,7 +1233,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public swapExactETHForTokens(
-            uniswapV2RouterAddress: string,
             exactETHAmount: BigNumber,
             amountOutMin: BigNumber,
             path: string[],
@@ -1252,13 +1241,12 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<BigNumber[]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isBigNumber('exactETHAmount', exactETHAmount);
             assert.isBigNumber('amountOutMin', amountOutMin);
             assert.isArray('path', path);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'swapExactETHForTokens(address,uint256,uint256,address[],address,uint256)';
+        const functionSignature = 'swapExactETHForTokens(uint256,uint256,address[],address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1301,8 +1289,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            exactETHAmount,
+                return self._strictEncodeArguments(functionSignature, [exactETHAmount,
             amountOutMin,
             path,
             to.toLowerCase(),
@@ -1312,7 +1299,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public swapExactETHForTokensSupportingFeeOnTransferTokens(
-            uniswapV2RouterAddress: string,
             exactETHAmount: BigNumber,
             amountOutMin: BigNumber,
             path: string[],
@@ -1321,13 +1307,12 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isBigNumber('exactETHAmount', exactETHAmount);
             assert.isBigNumber('amountOutMin', amountOutMin);
             assert.isArray('path', path);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'swapExactETHForTokensSupportingFeeOnTransferTokens(address,uint256,uint256,address[],address,uint256)';
+        const functionSignature = 'swapExactETHForTokensSupportingFeeOnTransferTokens(uint256,uint256,address[],address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1370,8 +1355,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            exactETHAmount,
+                return self._strictEncodeArguments(functionSignature, [exactETHAmount,
             amountOutMin,
             path,
             to.toLowerCase(),
@@ -1381,7 +1365,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public swapExactTokensForETH(
-            uniswapV2RouterAddress: string,
             amountIn: BigNumber,
             amountOutMin: BigNumber,
             path: string[],
@@ -1390,13 +1373,12 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<BigNumber[]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isBigNumber('amountIn', amountIn);
             assert.isBigNumber('amountOutMin', amountOutMin);
             assert.isArray('path', path);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'swapExactTokensForETH(address,uint256,uint256,address[],address,uint256)';
+        const functionSignature = 'swapExactTokensForETH(uint256,uint256,address[],address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1439,8 +1421,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            amountIn,
+                return self._strictEncodeArguments(functionSignature, [amountIn,
             amountOutMin,
             path,
             to.toLowerCase(),
@@ -1450,7 +1431,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public swapExactTokensForETHSupportingFeeOnTransferTokens(
-            uniswapV2RouterAddress: string,
             amountIn: BigNumber,
             amountOutMin: BigNumber,
             path: string[],
@@ -1459,13 +1439,12 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isBigNumber('amountIn', amountIn);
             assert.isBigNumber('amountOutMin', amountOutMin);
             assert.isArray('path', path);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'swapExactTokensForETHSupportingFeeOnTransferTokens(address,uint256,uint256,address[],address,uint256)';
+        const functionSignature = 'swapExactTokensForETHSupportingFeeOnTransferTokens(uint256,uint256,address[],address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1508,8 +1487,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            amountIn,
+                return self._strictEncodeArguments(functionSignature, [amountIn,
             amountOutMin,
             path,
             to.toLowerCase(),
@@ -1519,7 +1497,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public swapExactTokensForTokens(
-            uniswapV2RouterAddress: string,
             amountIn: BigNumber,
             amountOutMin: BigNumber,
             path: string[],
@@ -1528,13 +1505,12 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<BigNumber[]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isBigNumber('amountIn', amountIn);
             assert.isBigNumber('amountOutMin', amountOutMin);
             assert.isArray('path', path);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'swapExactTokensForTokens(address,uint256,uint256,address[],address,uint256)';
+        const functionSignature = 'swapExactTokensForTokens(uint256,uint256,address[],address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1577,8 +1553,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            amountIn,
+                return self._strictEncodeArguments(functionSignature, [amountIn,
             amountOutMin,
             path,
             to.toLowerCase(),
@@ -1588,7 +1563,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public swapExactTokensForTokensSupportingFeeOnTransferTokens(
-            uniswapV2RouterAddress: string,
             amountIn: BigNumber,
             amountOutMin: BigNumber,
             path: string[],
@@ -1597,13 +1571,12 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isBigNumber('amountIn', amountIn);
             assert.isBigNumber('amountOutMin', amountOutMin);
             assert.isArray('path', path);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'swapExactTokensForTokensSupportingFeeOnTransferTokens(address,uint256,uint256,address[],address,uint256)';
+        const functionSignature = 'swapExactTokensForTokensSupportingFeeOnTransferTokens(uint256,uint256,address[],address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1646,8 +1619,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            amountIn,
+                return self._strictEncodeArguments(functionSignature, [amountIn,
             amountOutMin,
             path,
             to.toLowerCase(),
@@ -1657,7 +1629,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public swapTokensForExactETH(
-            uniswapV2RouterAddress: string,
             amountOut: BigNumber,
             amountInMax: BigNumber,
             path: string[],
@@ -1666,13 +1637,12 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<BigNumber[]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isBigNumber('amountOut', amountOut);
             assert.isBigNumber('amountInMax', amountInMax);
             assert.isArray('path', path);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'swapTokensForExactETH(address,uint256,uint256,address[],address,uint256)';
+        const functionSignature = 'swapTokensForExactETH(uint256,uint256,address[],address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1715,8 +1685,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            amountOut,
+                return self._strictEncodeArguments(functionSignature, [amountOut,
             amountInMax,
             path,
             to.toLowerCase(),
@@ -1726,7 +1695,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public swapTokensForExactTokens(
-            uniswapV2RouterAddress: string,
             amountOut: BigNumber,
             amountInMax: BigNumber,
             path: string[],
@@ -1735,13 +1703,12 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<BigNumber[]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('uniswapV2RouterAddress', uniswapV2RouterAddress);
             assert.isBigNumber('amountOut', amountOut);
             assert.isBigNumber('amountInMax', amountInMax);
             assert.isArray('path', path);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'swapTokensForExactTokens(address,uint256,uint256,address[],address,uint256)';
+        const functionSignature = 'swapTokensForExactTokens(uint256,uint256,address[],address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -1784,8 +1751,7 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [uniswapV2RouterAddress.toLowerCase(),
-            amountOut,
+                return self._strictEncodeArguments(functionSignature, [amountOut,
             amountInMax,
             path,
             to.toLowerCase(),

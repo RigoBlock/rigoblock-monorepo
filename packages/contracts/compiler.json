@@ -40,7 +40,7 @@
     "utils/exchanges/totle/exchange_handlers/ZeroExExchangeHandler.sol"
   ],
   "useDockerisedSolc": false,
-  "isOfflineMode": true,
+  "isOfflineMode": false,
   "shouldSaveStandardInput": true,
   "compilerSettings": {
     "optimizer": { "enabled": true, "runs": 1000000 },
