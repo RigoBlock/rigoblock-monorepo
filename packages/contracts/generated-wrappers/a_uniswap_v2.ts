@@ -222,12 +222,12 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'token',
-                        type: 'address',
-                    },
-                    {
                         name: 'sendETHAmount',
                         type: 'uint256',
+                    },
+                    {
+                        name: 'token',
+                        type: 'address',
                     },
                     {
                         name: 'amountTokenDesired',
@@ -885,8 +885,8 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     public addLiquidityETH(
-            token: string,
             sendETHAmount: BigNumber,
+            token: string,
             amountTokenDesired: BigNumber,
             amountTokenMin: BigNumber,
             amountETHMin: BigNumber,
@@ -895,14 +895,14 @@ public static async deployFrom0xArtifactAsync(
     ): ContractTxFunctionObj<[BigNumber, BigNumber, BigNumber]
 > {
         const self = this as any as AUniswapV2Contract;
-            assert.isString('token', token);
             assert.isBigNumber('sendETHAmount', sendETHAmount);
+            assert.isString('token', token);
             assert.isBigNumber('amountTokenDesired', amountTokenDesired);
             assert.isBigNumber('amountTokenMin', amountTokenMin);
             assert.isBigNumber('amountETHMin', amountETHMin);
             assert.isString('to', to);
             assert.isBigNumber('deadline', deadline);
-        const functionSignature = 'addLiquidityETH(address,uint256,uint256,uint256,uint256,address,uint256)';
+        const functionSignature = 'addLiquidityETH(uint256,address,uint256,uint256,uint256,address,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -945,8 +945,8 @@ public static async deployFrom0xArtifactAsync(
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [token.toLowerCase(),
-            sendETHAmount,
+                return self._strictEncodeArguments(functionSignature, [sendETHAmount,
+            token.toLowerCase(),
             amountTokenDesired,
             amountTokenMin,
             amountETHMin,
