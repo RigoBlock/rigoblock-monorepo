@@ -57,21 +57,12 @@ interface DragoRegistryFace {
 // solhint-disable-next-line
 contract HGetPools {
     
-    struct DragoData {
+    struct PoolBaseData {
+        address poolAddress;
         string name;
         string symbol;
-        uint256 sellPrice;
-        uint256 buyPrice;
+        uint256 dragoId;
         address owner;
-        address feeCollector;
-        address dragoDao;
-        uint256 ratio;
-        uint256 transactionFee;
-        uint256 totalSupply;
-        uint256 ethBalance;
-        uint32 minPeriod;
-        uint256 id;
-        address drago;
     }
 
     /*
@@ -80,52 +71,62 @@ contract HGetPools {
     /// @dev Returns structs of infos on a list of dragos for a group.
     /// @param _dragoRegistry Address of the pools registry.
     /// @param _group Number of the target drago group.
-    /// @return Arrays of structs of data and related address of a drago.
+    /// @return Arrays of structs of data and related address of a pool.
     function queryAllPoolsByGroup(
         address _dragoRegistry,
         address _group)
         external
         view
         returns (
-            address[] memory dragos,
-            string[]  memory names,
-            string[]  memory symbols,
-            uint256[]  memory dragoIds,
-            address[] memory owners
+            PoolBaseData[] memory
         )
     {
         DragoRegistryFace dragoRegistryInstance = DragoRegistryFace(_dragoRegistry);
         uint256 length = dragoRegistryInstance.dragoCount();
+        PoolBaseData[] memory poolBaseData = new PoolBaseData[](length);
         address[] memory groups = new address[](length);
         for (uint256 i = 0; i < length; i++) {
-            (dragos[i], names[i], symbols[i], dragoIds[i], owners[i], groups[i]) = dragoRegistryInstance.fromId(i);
+            (
+                poolBaseData[i].poolAddress,
+                poolBaseData[i].name,
+                poolBaseData[i].symbol,
+                poolBaseData[i].dragoId,
+                poolBaseData[i].owner,
+                groups[i]
+            ) = dragoRegistryInstance.fromId(i);
             if (groups[i] != _group) continue;
         }
+        return (poolBaseData);
     }
-    
+
     /// @dev Returns structs of infos on a list of dragos for a group.
     /// @param _dragoRegistry Address of the pools registry.
     /// @param _group Number of the target drago group.
-    /// @return Arrays of structs of data and related address of a drago.
+    /// @return Arrays of structs of data and related address of a pool.
     function queryAllPoolsByCaller(
         address _dragoRegistry,
         address _group)
         external
         view
         returns (
-            address[] memory dragos,
-            string[]  memory names,
-            string[]  memory symbols,
-            uint256[]  memory dragoIds
+            PoolBaseData[] memory
         )
     {
         DragoRegistryFace dragoRegistryInstance = DragoRegistryFace(_dragoRegistry);
         uint256 length = dragoRegistryInstance.dragoCount();
-        address[] memory owners = new address[](length);
+        PoolBaseData[] memory poolBaseData = new PoolBaseData[](length);
         address[] memory groups = new address[](length);
         for (uint256 i = 0; i < length; i++) {
-            (dragos[i], names[i], symbols[i], dragoIds[i], owners[i], groups[i]) = dragoRegistryInstance.fromId(i);
-            if (owners[i] != address(msg.sender) || groups[i] != _group) continue;
+            (
+                poolBaseData[i].poolAddress,
+                poolBaseData[i].name,
+                poolBaseData[i].symbol,
+                poolBaseData[i].dragoId,
+                poolBaseData[i].owner,
+                groups[i]
+            ) = dragoRegistryInstance.fromId(i);
+            if (groups[i] != _group || poolBaseData[i].owner != address(msg.sender)) continue;
         }
+        return (poolBaseData);
     }
 }
