@@ -86,25 +86,16 @@ contract HGetPools {
         PoolBaseData[] memory poolBaseData = new PoolBaseData[](length);
         address[] memory groups = new address[](length);
         for (uint256 i = 0; i < length; i++) {
-            address poolAddress;
-            string memory name;
-            string memory symbol;
-            uint256 poolId;
-            address owner;
-            (
-                poolAddress,
-                name,
-                symbol,
-                poolId,
-                owner,
-                groups[i]
-            ) = dragoRegistryInstance.fromId(i);
+            ( , , , , , groups[i]) = dragoRegistryInstance.fromId(i);
             if (groups[i] != _group) continue;
-            poolBaseData[i].poolAddress = poolAddress;
-            poolBaseData[i].name = name;
-            poolBaseData[i].symbol = symbol;
-            poolBaseData[i].poolId = poolId;
-            poolBaseData[i].owner = owner;
+            (
+                poolBaseData[i].poolAddress,
+                poolBaseData[i].name,
+                poolBaseData[i].symbol,
+                poolBaseData[i].poolId,
+                poolBaseData[i].owner,
+                
+            ) = dragoRegistryInstance.fromId(i);
         }
         return (poolBaseData);
     }
@@ -126,26 +117,18 @@ contract HGetPools {
         uint256 length = dragoRegistryInstance.dragoCount();
         PoolBaseData[] memory poolBaseData = new PoolBaseData[](length);
         address[] memory groups = new address[](length);
+        address[] memory owners = new address[](length);
         for (uint256 i = 0; i < length; i++) {
-            address poolAddress;
-            string memory name;
-            string memory symbol;
-            uint256 poolId;
-            address owner;
+            ( , , , , owners[i], groups[i]) = dragoRegistryInstance.fromId(i);
+            if (groups[i] != _group || owners[i] != address(msg.sender)) continue;
             (
-                poolAddress,
-                name,
-                symbol,
-                poolId,
-                owner,
-                groups[i]
+                poolBaseData[i].poolAddress,
+                poolBaseData[i].name,
+                poolBaseData[i].symbol,
+                poolBaseData[i].poolId,
+                poolBaseData[i].owner,
+
             ) = dragoRegistryInstance.fromId(i);
-            if (groups[i] != _group || poolBaseData[i].owner != address(msg.sender)) continue;
-            poolBaseData[i].poolAddress = poolAddress;
-            poolBaseData[i].name = name;
-            poolBaseData[i].symbol = symbol;
-            poolBaseData[i].poolId = poolId;
-            poolBaseData[i].owner = owner;
         }
         return (poolBaseData);
     }
