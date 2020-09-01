@@ -97,7 +97,7 @@ interface DragoRegistryFace {
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 contract HGetDragoData {
-    
+
     struct DragoData {
         string name;
         string symbol;
@@ -119,7 +119,7 @@ contract HGetDragoData {
      * CONSTANT PUBLIC FUNCTIONS
      */
     /// @dev Returns structs of infos on a drago from its ID.
-    /// @param _dragoRegistry Address of the target drago.
+    /// @param _dragoRegistry Address of the pools registry.
     /// @param _dragoId Number of the target drago ID.
     /// @return Structs of data.
     function queryDataFromId(
@@ -142,7 +142,8 @@ contract HGetDragoData {
     }
 
     /// @dev Returns structs of infos on a drago from its address.
-    /// @param _dragoAddress Array of addresses of the target dragos.
+    /// @param _dragoRegistry Address of the pools registry.
+    /// @param _dragoAddress Array of addresses of the target drago.
     /// @return Arrays of structs of data.
     function queryDataFromAddress(
         address _dragoRegistry,
@@ -194,6 +195,7 @@ contract HGetDragoData {
     }
 
     /// @dev Returns structs of infos on a drago from its address.
+    /// @param _dragoRegistry Address of the pools registry.
     /// @param _dragoAddresses Array of addresses of the target dragos.
     /// @return Arrays of structs of data and related address of a drago.
     function queryMultiDataFromAddress(
