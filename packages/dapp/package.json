@@ -93,7 +93,7 @@
     "redux-persist": "^5.9.1",
     "rxjs": "5",
     "sass-loader": "^6.0.7",
-    "serve": "10.1.1",
+    "serve": "11.3.2",
     "style-loader": "0.20.3",
     "svg-react-loader": "^0.4.5",
     "sw-precache-webpack-plugin": "0.11.5",
@@ -163,7 +163,7 @@
     "@babel/preset-env": "^7.1.0",
     "@rgbk/contracts": "^0.3.16",
     "core-js": "3.0.0-beta.3",
-    "serve": "10.1.1"
+    "serve": "11.3.2"
   },
   "gitHead": "9b5b4afd5d4197f721fa322549b436b6501ab4f8"
 }
