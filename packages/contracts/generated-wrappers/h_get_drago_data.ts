@@ -561,6 +561,7 @@ public static async deployFrom0xArtifactAsync(
 
     /**
      * Returns structs of infos on a drago from its address.
+      * @param _dragoRegistry Address of the pools registry.
       * @param _dragoAddresses Array of addresses of the target dragos.
     * @returns Arrays of structs of data and related address of a drago.
      */
@@ -596,7 +597,8 @@ public static async deployFrom0xArtifactAsync(
     };
     /**
      * Returns structs of infos on a drago from its address.
-      * @param _dragoAddress Array of addresses of the target dragos.
+      * @param _dragoRegistry Address of the pools registry.
+      * @param _dragoAddress Array of addresses of the target drago.
     * @returns Arrays of structs of data.
      */
     public queryDataFromAddress(
@@ -631,7 +633,7 @@ public static async deployFrom0xArtifactAsync(
     };
     /**
      * Returns structs of infos on a drago from its ID.
-      * @param _dragoRegistry Address of the target drago.
+      * @param _dragoRegistry Address of the pools registry.
       * @param _dragoId Number of the target drago ID.
     * @returns Structs of data.
      */
