@@ -16,10 +16,10 @@
 
 */
 
-pragma solidity 0.5.0;
+pragma solidity 0.6.6;
 
-import { PoolFace as Pool } from "../../utils/Pool/PoolFace.sol";
-import { DragoRegistryFace as DragoRegistry } from "../../protocol/DragoRegistry/DragoRegistry.sol";
+import { IPool } from "../../utils/Pool/IPool.sol";
+import { IDragoRegistry } from "../../protocol/DragoRegistry/IDragoRegistry.sol";
 
 /// @title Network - Returns data of active pools and network value.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -38,35 +38,41 @@ contract Network {
      * CONSTANT PUBLIC FUNCTIONS
      */
     /// @dev Returns two arrays of prices and total supply
-    /// @return Array of addressed of the active pools
-    /// @return Array of the prices of the active pools
-    /// @return Array of the number of tokens of each pool
+    /// @return poolAddresses Array of addressed of the active pools
+    /// @return poolPrices Array of the prices of the active pools
+    /// @return totalTokens Array of the number of tokens of each pool
     function getPoolsPrices()
         external view
         returns (
-            address[] memory poolAddresses,
-            uint256[] memory poolPrices,
-            uint256[] memory totalTokens
+            address[] memory,
+            uint256[] memory,
+            uint256[] memory
         )
     {
-        uint256 length = DragoRegistry(DRAGOREGISTRYADDRESS).dragoCount();
+        uint256 length = IDragoRegistry(DRAGOREGISTRYADDRESS).dragoCount();
+        address[] memory poolAddresses = new address[](length);
+        uint256[] memory poolPrices = new uint256[](length);
+        uint256[] memory totalTokens = new uint256[](length);
         for (uint256 i = 0; i < length; ++i) {
             bool active = isActive(i);
             if (!active) {
                 continue;
             }
-            (address poolAddress, ) = addressFromId(i);
-            poolAddresses[i] = poolAddress;
-            Pool poolInstance = Pool(poolAddress);
-            uint256 poolPrice = poolInstance.calcSharePrice();
-            poolPrices[i] = poolPrice;
+            (poolAddresses[i], ) = addressFromId(i);
+            IPool poolInstance = IPool(poolAddresses[i]);
+            poolPrices[i] = poolInstance.calcSharePrice();
             totalTokens[i] = poolInstance.totalSupply();
         }
+        return (
+            poolAddresses,
+            poolPrices,
+            totalTokens
+        );
     }
 
     /// @dev Returns the value of the assets in the rigoblock network
-    /// @return Value of the rigoblock network in wei
-    /// @return Number of active funds
+    /// @return networkValue alue of the rigoblock network in wei
+    /// @return numberOfPools Number of active funds
     function calcNetworkValue()
         external view
         returns (
@@ -74,7 +80,7 @@ contract Network {
             uint256 numberOfPools
         )
     {
-        numberOfPools = DragoRegistry(DRAGOREGISTRYADDRESS).dragoCount();
+        numberOfPools = IDragoRegistry(DRAGOREGISTRYADDRESS).dragoCount();
         for (uint256 i = 0; i < numberOfPools; ++i) {
             bool active = isActive(i);
             if (!active) {
@@ -87,8 +93,8 @@ contract Network {
     
     /// @dev Returns the value of the assets in the rigoblock network given a mock input
     /// @param mockInput Random number, must be 1 for querying data
-    /// @return Value of the rigoblock network in wei
-    /// @return Number of active funds
+    /// @return networkValue Value of the rigoblock network in wei
+    /// @return numberOfPools Number of active funds
     function calcNetworkValueDuneAnalytics(uint256 mockInput)
         external view
         returns (
@@ -99,7 +105,7 @@ contract Network {
         if(mockInput > uint256(1)) {
             return (uint256(0), uint256(0));
         }
-        numberOfPools = DragoRegistry(DRAGOREGISTRYADDRESS).dragoCount();
+        numberOfPools = IDragoRegistry(DRAGOREGISTRYADDRESS).dragoCount();
         for (uint256 i = 0; i < numberOfPools; ++i) {
             bool active = isActive(i);
             if (!active) {
@@ -121,7 +127,7 @@ contract Network {
         internal view
         returns (bool)
     {
-        (address poolAddress, , , , , ) = DragoRegistry(DRAGOREGISTRYADDRESS).fromId(poolId);
+        (address poolAddress, , , , , ) = IDragoRegistry(DRAGOREGISTRYADDRESS).fromId(poolId);
         if (poolAddress != address(0)) {
             return true;
         }
@@ -129,8 +135,8 @@ contract Network {
 
     /// @dev Returns the address and the group of a pool from its id
     /// @param poolId Id of the pool
-    /// @return Address of the target pool
-    /// @return Address of the pool's group
+    /// @return poolAddress Address of the target pool
+    /// @return groupAddress Address of the pool's group
     function addressFromId(uint256 poolId)
         internal view
         returns (
@@ -138,13 +144,13 @@ contract Network {
             address groupAddress
         )
     {
-        (poolAddress, , , , , groupAddress) = DragoRegistry(DRAGOREGISTRYADDRESS).fromId(poolId);
+        (poolAddress, , , , , groupAddress) = IDragoRegistry(DRAGOREGISTRYADDRESS).fromId(poolId);
     }
 
     /// @dev Returns the price a pool from its id
     /// @param poolId Id of the pool
-    /// @return Price of the pool in wei
-    /// @return Number of tokens of a pool (totalSupply)
+    /// @return poolPrice Price of the pool in wei
+    /// @return totalTokens Number of tokens of a pool (totalSupply)
     function getPoolPrice(uint256 poolId)
         internal view
         returns (
@@ -153,15 +159,15 @@ contract Network {
         )
     {
         (address poolAddress, ) = addressFromId(poolId);
-        Pool poolInstance = Pool(poolAddress);
+        IPool poolInstance = IPool(poolAddress);
         poolPrice = poolInstance.calcSharePrice();
         totalTokens = poolInstance.totalSupply();
     }
 
     /// @dev Returns the address and the group of a pool from its id
     /// @param poolId Id of the pool
-    /// @return Address of the target pool
-    /// @return Address of the pool's group
+    /// @return aum Address of the target pool
+    /// @return success Address of the pool's group
     function calcPoolValue(uint256 poolId)
         internal view
         returns (
@@ -170,6 +176,9 @@ contract Network {
         )
     {
         (uint256 price, uint256 supply) = getPoolPrice(poolId);
-        return ((aum = (price * supply / 1000000)), true); //1000000 is the base (decimals)
+        return (
+            aum = (price * supply / 1000000), //1000000 is the base (6 decimals)
+            success = true
+        );
     }
 }
