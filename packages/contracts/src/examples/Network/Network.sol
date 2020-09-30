@@ -1,6 +1,6 @@
 /*
 
- Copyright 2018 RigoBlock, Rigo Investment Sagl.
+ Copyright 2018-2019 RigoBlock, Rigo Investment Sagl, 2020 Rigo Intl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -44,9 +44,9 @@ contract Network {
     function getPoolsPrices()
         external view
         returns (
-            address[] pools,
-            uint256[] poolPrices,
-            uint256[] totalTokens
+            address[] memory pools,
+            uint256[] memory poolPrices,
+            uint256[] memory totalTokens
         )
     {
         DragoRegistry registry = DragoRegistry(dragoRegistry);
@@ -75,6 +75,33 @@ contract Network {
             uint256 numberOfFunds
         )
     {
+        DragoRegistry registry = DragoRegistry(dragoRegistry);
+        uint256 length = registry.dragoCount();
+        for (uint256 i = 0; i < length; ++i) {
+            bool active = isActive(i);
+            if (!active) {
+                continue;
+            }
+            (uint256 poolValue, ) = calcPoolValue(i);
+            networkValue += poolValue;
+        }
+        return (networkValue, length);
+    }
+    
+    /// @dev Returns the value of the assets in the rigoblock network given a mock input
+    /// @param mockInput Random number, must be 1 for querying data
+    /// @return Value of the rigoblock network in wei
+    /// @return Number of active funds
+    function calcNetworkValueDune(uint256 mockInput)
+        external view
+        returns (
+            uint256 networkValue,
+            uint256 numberOfFunds
+        )
+    {
+        if(mockInput > 1) {
+            return (0, 0);
+        }
         DragoRegistry registry = DragoRegistry(dragoRegistry);
         uint256 length = registry.dragoCount();
         for (uint256 i = 0; i < length; ++i) {
