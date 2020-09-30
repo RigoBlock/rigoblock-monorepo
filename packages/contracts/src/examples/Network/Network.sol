@@ -72,7 +72,7 @@ contract Network {
         external view
         returns (
             uint256 networkValue,
-            uint256 numberOfFunds
+            uint256 numberOfPools
         )
     {
         DragoRegistry registry = DragoRegistry(dragoRegistry);
@@ -96,7 +96,7 @@ contract Network {
         external view
         returns (
             uint256 networkValue,
-            uint256 numberOfFunds
+            uint256 numberOfPools
         )
     {
         if(mockInput > 1) {
