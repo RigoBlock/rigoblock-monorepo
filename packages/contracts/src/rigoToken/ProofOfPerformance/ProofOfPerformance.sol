@@ -427,7 +427,10 @@ contract ProofOfPerformance is
             10000 ether
         ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether;
 
-        popReward = grgBalanceRewardSlashInternal(poolId, epochTime, safeAdd(performanceReward, assetsReward));
+        // TODO: return pop before GRG slashing and move GRG rebasing to staking proxy
+        // note: popClaim must include GRG slashing, therefore must be moved to staking proxy as well
+        //popReward = grgBalanceRewardSlashInternal(poolId, epochTime, safeAdd(performanceReward, assetsReward));
+        popReward = safeAdd(performanceReward, assetsReward);
     }
 
     /// @dev Returns the high-watermark of the pool.
@@ -462,9 +465,9 @@ contract ProofOfPerformance is
         if (
             poolEthBalance >= poolValue ||
             poolEthBalance <= 1 finney ||
-            poolValue <= 10 finney)
-        {
-            revert('ETH_BALANCE_HIGHER_THAN_AUM_OR_DUST_ERROR');
+            poolValue <= 10 finney
+          ) {
+            revert('ETH_>=_AUM_OR_DUST_ERROR');
         }
 
         // logistic function progression g(x)=e^x/(1+e^x).
