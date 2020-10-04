@@ -459,45 +459,48 @@ contract ProofOfPerformance is
     {
         uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
         // prevent dust from small pools
-        if (poolEthBalance >= poolValue || poolEthBalance <= 1 finney) {
+        if (
+            poolEthBalance >= poolValue ||
+            poolEthBalance <= 1 finney ||
+            poolValue <= 10 finney)
+        {
             revert('ETH_BALANCE_HIGHER_THAN_AUM_OR_DUST_ERROR');
         }
 
-        // TODO: double check whether we are slashing twice (can potentially save some gas)
         // logistic function progression g(x)=e^x/(1+e^x).
-        // rebased on (poolEthBalance / poolValue) ∈ [0.125:0.6], x ∈ [-1.9:2.8].
+        // rebased on {(poolEthBalance / poolValue)} ∈ [0.025:0.6], x ∈ [-1.9:2.8].
         if (1 ether * poolEthBalance / poolValue >= 800 finney) {
-            return (1 ether * poolEthBalance / poolValue);
+            return (1 ether);
 
         } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
-            return (1 ether * poolEthBalance / poolValue * 943 / 1000);
+            return (1 ether * 943 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 500 finney) {
-            return (1 ether * poolEthBalance / poolValue * 881 / 1000);
+            return (1 ether * 881 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 400 finney) {
-            return (1 ether * poolEthBalance / poolValue * 769 / 1000);
+            return (1 ether * 769 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 300 finney) {
-            return (1 ether * poolEthBalance / poolValue * 599 / 1000);
+            return (1 ether * 599 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 200 finney) {
-            return (1 ether * poolEthBalance / poolValue * 401 / 1000);
+            return (1 ether * 401 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 100 finney) {
-            return (1 ether * poolEthBalance / poolValue * 231 / 1000);
+            return (1 ether * 231 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 75 finney) {
-            return (1 ether * poolEthBalance / poolValue * 198 / 1000);
+            return (1 ether * 198 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 50 finney) {
-            return (1 ether * poolEthBalance / poolValue * 168 / 1000);
+            return (1 ether * 168 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 38 finney) {
-            return (1 ether * poolEthBalance / poolValue * 155 / 1000);
+            return (1 ether * 155 / 1000);
 
         } else if (1 ether * poolEthBalance / poolValue >= 25 finney) {
-            return (1 ether * poolEthBalance / poolValue * 142 / 1000);
+            return (1 ether * 142 / 1000);
 
         } else { // reward is 0 for any pool not backed by at least 2.5% eth
             revert('ETH_BELOW_2.5_PERCENT_AUM_ERROR');
