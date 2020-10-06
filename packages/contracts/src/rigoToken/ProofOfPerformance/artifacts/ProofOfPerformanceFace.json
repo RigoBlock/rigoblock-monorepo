@@ -46,6 +46,7 @@
 		"methodIdentifiers": {
 			"addressFromId(uint256)": "360dafa0",
 			"calcPoolValue(uint256)": "427fdc0c",
+			"claimPop(uint256)": "dc5d2799",
 			"getEpochReward(uint256)": "d418634a",
 			"getHwm(uint256)": "249d9123",
 			"getPoolData(uint256)": "d21c87ad",
@@ -319,6 +320,20 @@
 			],
 			"payable": false,
 			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "poolId",
+					"type": "uint256"
+				}
+			],
+			"name": "claimPop",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
