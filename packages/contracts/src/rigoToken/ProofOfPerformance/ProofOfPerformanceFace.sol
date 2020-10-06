@@ -28,7 +28,7 @@ interface ProofOfPerformanceFace {
      */
     /// @dev Allows anyone to allocate the pop reward to pool wizards.
     /// @param poolId Number of pool id in registry.
-    function claimPop(uint256 poolId) external;
+    //function claimPop(uint256 poolId) external;
 
     /// @dev Allows RigoBlock Dao to update the pools registry.
     /// @param _dragoRegistry Address of new registry.
@@ -148,4 +148,12 @@ interface ProofOfPerformanceFace {
         returns (
             uint256 aum
         );
+    
+    /// @dev Returns the aggregated reward of all rigoblock pools belonging to a staking pool.
+    /// @param stakingPoolId Hex-encoded staking pool id.
+    /// @return popReward Value of the aggregated reward.
+    function getPop(bytes32 stakingPoolId)
+        external
+        view
+        returns (uint256 popReward);
 }

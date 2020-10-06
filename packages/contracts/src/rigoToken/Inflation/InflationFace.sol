@@ -23,21 +23,23 @@ pragma solidity >=0.4.22 <0.6.0;
 // solhint-disable-next-line
 interface InflationFace {
 
+    function period() external;
+
     /*
      * CORE FUNCTIONS
      */
-    function mintInflation(address _thePool, uint256 _reward) external returns (bool);
-    function setInflationFactor(address _group, uint256 _inflationFactor) external;
-    function setMinimumRigo(uint256 _minimum) external;
-    function setRigoblock(address _newRigoblock) external;
-    function setAuthority(address _authority) external;
-    function setProofOfPerformance(address _pop) external;
-    function setPeriod(uint256 _newPeriod) external;
+    function mintInflation(bytes32 poolId, uint256 reward) external returns (bool);
+    function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
+    function setMinimumRigo(uint256 minimum) external;
+    function setRigoblock(address newRigoblockDaoAddress) external;
+    function setAuthority(address authorityAddress) external;
+    function setProofOfPerformance(address popAddress) external;
+    function setPeriod(uint256 newPeriod) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    function canWithdraw(address _thePool) external view returns (bool);
-    function timeUntilClaim(address _thePool) external view returns (uint256);
-    function getInflationFactor(address _group) external view returns (uint256);
+    function canWithdraw(bytes32 stakingPoolId) external view returns (bool);
+    function timeUntilClaim(bytes32 stakingPoolId) external view returns (uint256);
+    function getInflationFactor(address groupAddress) external view returns (uint256);
 }
