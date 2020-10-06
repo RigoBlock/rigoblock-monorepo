@@ -18,11 +18,11 @@
 
 pragma solidity 0.5.4;
 
-//im port { IStaking } from "../../staking/interfaces/IStaking.sol";
 import { Pool } from "../../utils/Pool/Pool.sol";
 import { ReentrancyGuard } from "../../utils/ReentrancyGuard/ReentrancyGuard.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
+
 
 contract Inflation {
 
@@ -32,20 +32,20 @@ contract Inflation {
     /*
      * CORE FUNCTIONS
      */
-    function mintInflation(address _thePool, uint256 _reward) external returns (bool);
-    function setInflationFactor(address _group, uint256 _inflationFactor) external;
-    function setMinimumRigo(uint256 _minimum) external;
-    function setRigoblock(address _newRigoblock) external;
-    function setAuthority(address _authority) external;
-    function setProofOfPerformance(address _pop) external;
-    function setPeriod(uint256 _newPeriod) external;
+    function mintInflation(bytes32 poolId, uint256 reward) external returns (bool);
+    function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
+    function setMinimumRigo(uint256 minimum) external;
+    function setRigoblock(address newRigoblockDaoAddress) external;
+    function setAuthority(address authorityAddress) external;
+    function setProofOfPerformance(address popAddress) external;
+    function setPeriod(uint256 newPeriod) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    function canWithdraw(address _thePool) external view returns (bool);
-    function timeUntilClaim(address _thePool) external view returns (uint256);
-    function getInflationFactor(address _group) external view returns (uint256);
+    function canWithdraw(bytes32 stakingPoolId) external view returns (bool);
+    function timeUntilClaim(bytes32 stakingPoolId) external view returns (uint256);
+    function getInflationFactor(address groupAddress) external view returns (uint256);
 }
 
 contract RigoToken {
@@ -55,13 +55,15 @@ contract RigoToken {
     function balanceOf(address _who) external view returns (uint256);
 }
 
+interface Staking {
+
+    function getPoolsAddressesByStakingPoolId(bytes32 stakingPoolId)
+        external
+        view
+        returns (address[] memory);
+}
+
 interface DragoRegistry {
-
-    //EVENTS
-
-    event Registered(string name, string symbol, uint256 id, address indexed drago, address indexed owner, address indexed group);
-    event Unregistered(string indexed name, string indexed symbol, uint256 indexed id);
-    event MetaChanged(uint256 indexed id, bytes32 indexed key, bytes32 value);
 
     /*
      * CORE FUNCTIONS
@@ -100,12 +102,12 @@ contract ProofOfPerformance is
     ProofOfPerformanceFace
 {
     address public RIGOTOKENADDRESS;
-    //address public STAKINGCONTRACTADDRESS;
+    address public STAKING_PROXY_ADDRESS;
 
-    address public dragoRegistry;
-    address public rigoblockDao;
+    address public dragoRegistryAddress;
+    address public rigoblockDaoAddress;
 
-    mapping (uint256 => PoolPrice) poolPrice;
+    mapping (uint256 => PoolPrice) poolPriceById;
     mapping (address => Group) groups;
 
     struct PoolPrice {
@@ -118,8 +120,16 @@ contract ProofOfPerformance is
 
     modifier onlyRigoblockDao() {
         require(
-            msg.sender == rigoblockDao,
+            msg.sender == rigoblockDaoAddress,
             "ONLY_RIGOBLOCK_DAO"
+        );
+        _;
+    }
+    
+    modifier onlyStakingProxy() {
+        require(
+            msg.sender == STAKING_PROXY_ADDRESS,
+            "ONLY_STAKING_PROXY"
         );
         _;
     }
@@ -127,37 +137,41 @@ contract ProofOfPerformance is
     constructor(
         address _rigoTokenAddress,
         address _rigoblockDao,
-        address _dragoRegistry)
-        //address _stakingContractAddress)
+        address _dragoRegistry,
+        address _stakingProxyAddress)
         public
     {
         RIGOTOKENADDRESS = _rigoTokenAddress;
-        rigoblockDao = _rigoblockDao;
-        dragoRegistry = _dragoRegistry;
-        //STAKINGCONTRACTADDRESS = _stakingContractAddress;
+        rigoblockDaoAddress = _rigoblockDao;
+        dragoRegistryAddress = _dragoRegistry;
+        STAKING_PROXY_ADDRESS = _stakingProxyAddress;
     }
 
     /*
      * CORE FUNCTIONS
      */
-    /// @dev Allows anyone to allocate the pop reward to pool wizards.
-    /// @param poolId Number of pool id in registry.
-    function claimPop(uint256 poolId)
+    /// @dev Allows staking proxy to allocate the pop reward to staking pool.
+    /// @param stakingPoolId Hex-encoded staking pool id.
+    /// @param reward Value of the stake-rebased reward.
+    function claimPop(bytes32 stakingPoolId, uint256 reward)
         external
         nonReentrant
+        onlyStakingProxy
     {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        address poolAddress;
-        (poolAddress, , , , , ) = registry.fromId(poolId);
-        (uint256 pop, ) = proofOfPerformanceInternal(poolId);
+        address[] memory poolsArray = Staking(STAKING_PROXY_ADDRESS).getPoolsAddressesByStakingPoolId(stakingPoolId);
+
+        for (uint i=0; i<poolsArray.length; i++) {
+            address poolAddress = poolsArray[i];
+            (uint256 poolId, , , , , ) = DragoRegistry(dragoRegistryAddress).fromAddress(poolAddress);
+            uint256 poolPrice = Pool(poolAddress).calcSharePrice();
+            
+            // pop assets component is always positive, therefore we must update the hwm if positive performance
+            if (poolPrice > poolPriceById[poolId].highwatermark) {
+                poolPriceById[poolId].highwatermark = poolPrice;
+            }
+        }
         require(
-            pop > 0,
-            "POP_REWARD_IS_NULL"
-        );
-        uint256 price = Pool(poolAddress).calcSharePrice();
-        poolPrice[poolId].highwatermark = price;
-        require(
-            Inflation(getMinter()).mintInflation(poolAddress, pop),
+            Inflation(getMinter()).mintInflation(stakingPoolId, reward),
             "MINT_INFLATION_ERROR"
         );
     }
@@ -168,7 +182,7 @@ contract ProofOfPerformance is
         external
         onlyRigoblockDao
     {
-        dragoRegistry = _dragoRegistry;
+        dragoRegistryAddress = _dragoRegistry;
     }
 
     /// @dev Allows RigoBlock Dao to update its address.
@@ -177,7 +191,7 @@ contract ProofOfPerformance is
         external
         onlyRigoblockDao
     {
-        rigoblockDao = _rigoblockDao;
+        rigoblockDaoAddress = _rigoblockDao;
     }
 
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
@@ -203,10 +217,10 @@ contract ProofOfPerformance is
     /// @dev Gets data of a pool.
     /// @param poolId Id of the pool.
     /// @return active Bool the pool is active.
-    /// @return thePoolAddress address of the pool.
-    /// @return thePoolGroup address of the pool factory.
-    /// @return thePoolPrice price of the pool in wei.
-    /// @return thePoolSupply total supply of the pool in units.
+    /// @return poolAddress address of the pool.
+    /// @return poolGroup address of the pool factory.
+    /// @return poolPrice price of the pool in wei.
+    /// @return poolSupply total supply of the pool in units.
     /// @return poolValue total value of the pool in wei.
     /// @return epochReward value of the reward factor or said pool.
     /// @return ratio of assets/performance reward (from 0 to 10000).
@@ -216,10 +230,10 @@ contract ProofOfPerformance is
         view
         returns (
             bool active,
-            address thePoolAddress,
-            address thePoolGroup,
-            uint256 thePoolPrice,
-            uint256 thePoolSupply,
+            address poolAddress,
+            address poolGroup,
+            uint256 poolPrice,
+            uint256 poolSupply,
             uint256 poolValue,
             uint256 epochReward,
             uint256 ratio,
@@ -227,16 +241,16 @@ contract ProofOfPerformance is
         )
     {
         active = isActiveInternal(poolId);
-        (thePoolAddress, thePoolGroup) = addressFromIdInternal(poolId);
-        (thePoolPrice, thePoolSupply, poolValue) = getPoolPriceAndValueInternal(poolId);
+        (poolAddress, poolGroup) = addressFromIdInternal(poolId);
+        (poolPrice, poolSupply, poolValue) = getPoolPriceAndValueInternal(poolId);
         (epochReward, , ratio) = getInflationParameters(poolId);
         (pop, ) = proofOfPerformanceInternal(poolId);
         return(
             active,
-            thePoolAddress,
-            thePoolGroup,
-            thePoolPrice,
-            thePoolSupply,
+            poolAddress,
+            poolGroup,
+            poolPrice,
+            poolSupply,
             poolValue,
             epochReward,
             ratio,
@@ -348,6 +362,25 @@ contract ProofOfPerformance is
     {
         ( , , aum) = getPoolPriceAndValueInternal(poolId);
     }
+    
+    /// @dev Returns the aggregated reward of all rigoblock pools belonging to a staking pool.
+    /// @param stakingPoolId Hex-encoded staking pool id.
+    /// @return popReward Value of the aggregated reward.
+    function getPop(bytes32 stakingPoolId)
+        external
+        view
+        returns (uint256 popReward)
+    {
+        address[] memory poolsArray = Staking(STAKING_PROXY_ADDRESS).getPoolsAddressesByStakingPoolId(stakingPoolId);
+
+        //TODO: check following: poolsArray length is always <= 100 from staking proxy
+        for (uint i=0; i<poolsArray.length; i++) {
+            address poolAddress = poolsArray[i];
+            (uint256 poolId, , , , , ) = DragoRegistry(dragoRegistryAddress).fromAddress(poolAddress);
+            (uint256 aggregateReward, ) = proofOfPerformanceInternal(poolId);
+            popReward += aggregateReward;
+        }
+    }
 
     /*
      * INTERNAL FUNCTIONS
@@ -366,14 +399,15 @@ contract ProofOfPerformance is
             uint256 ratio
         )
     {
-        ( , address group) = addressFromIdInternal(poolId);
-        epochReward = Inflation(getMinter()).getInflationFactor(group);
+        ( , address groupAddress) = addressFromIdInternal(poolId);
+        epochReward = Inflation(getMinter()).getInflationFactor(groupAddress);
         epochTime = Inflation(getMinter()).period();
-        ratio = groups[group].rewardRatio;
+        ratio = groups[groupAddress].rewardRatio;
     }
 
     /// @dev Returns the address of the Inflation contract.
     /// @return Address of the minter/inflation.
+
     function getMinter()
         internal
         view
@@ -420,7 +454,7 @@ contract ProofOfPerformance is
                 assetsComponent,
                 safeSub(10000, rewardRatio) // 10000 = 100%
             ) / 10000 ether
-        ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether; // reward inversly proportional to Eth in pool
+        ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether; // reward inversely proportional to Eth in pool
 
         performanceReward = safeDiv(
             safeMul(performanceComponent, rewardRatio),
@@ -441,11 +475,11 @@ contract ProofOfPerformance is
         view
         returns (uint256)
     {
-        if (poolPrice[poolId].highwatermark == 0) {
+        if (poolPriceById[poolId].highwatermark == 0) {
             return (1 ether);
 
         } else {
-            return poolPrice[poolId].highwatermark;
+            return poolPriceById[poolId].highwatermark;
         }
     }
 
@@ -453,6 +487,7 @@ contract ProofOfPerformance is
     /// @param thePoolAddress Address of the pool.
     /// @param poolValue Number of value of the pool in wei.
     /// @return Number non-linear adjustment.
+    
     function ethBalanceAdjustmentInternal(
         address thePoolAddress,
         uint256 poolValue)
@@ -463,11 +498,11 @@ contract ProofOfPerformance is
         uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
         // prevent dust from small pools
         if (
-            poolEthBalance >= poolValue ||
-            poolEthBalance <= 1 finney ||
-            poolValue <= 10 finney
+            poolEthBalance > poolValue ||
+            poolEthBalance < 1 finney ||
+            poolValue < 10 finney
           ) {
-            revert('ETH_>=_AUM_OR_DUST_ERROR');
+            revert('ETH_ABOVE_AUM_OR_DUST_ERROR');
         }
 
         // logistic function progression g(x)=e^x/(1+e^x).
@@ -515,6 +550,7 @@ contract ProofOfPerformance is
     /// @param epochTime Length of an epoch in seconds.
     /// @param pop Number of preliminary reward.
     /// @return Number non-linear adjustment.
+    /*
     function grgBalanceRewardSlashInternal(
         uint256 poolId,
         uint256 epochTime,
@@ -529,8 +565,8 @@ contract ProofOfPerformance is
         //uint256 grgTotalSupply = RigoToken(RIGOTOKENADDRESS).totalSupply();
 
         //mock variable definition
-        (address thePoolAddress, , , , , ) = DragoRegistry(dragoRegistry).fromId(poolId);
-        uint256 stakedGrgRebasedOnEpoch = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(thePoolAddress).owner()) * epochTime / 365 days;
+        (address poolAddress, , , , , ) = DragoRegistry(dragoRegistryAddress).fromId(poolId);
+        uint256 stakedGrgRebasedOnEpoch = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(poolAddress).owner()) * epochTime / 365 days;
 
         // TODO: getTotalStakeDelegatedToPool should be called from staking contract
         //next code
@@ -572,7 +608,7 @@ contract ProofOfPerformance is
         } else {
             return pop;
         }
-    }
+    }*/
 
     /// @dev Checks whether a pool is registered and active.
     /// @param poolId Id of the pool.
@@ -581,8 +617,7 @@ contract ProofOfPerformance is
         internal view
         returns (bool)
     {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        (address thePool, , , , , ) = registry.fromId(poolId);
+        (address thePool, , , , , ) = DragoRegistry(dragoRegistryAddress).fromId(poolId);
         if (thePool != address(0)) {
             return true;
         }
@@ -600,8 +635,7 @@ contract ProofOfPerformance is
             address group
         )
     {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        (pool, , , , , group) = registry.fromId(poolId);
+        (pool, , , , , group) = DragoRegistry(dragoRegistryAddress).fromId(poolId);
         return (pool, group);
     }
 
@@ -614,19 +648,18 @@ contract ProofOfPerformance is
         internal
         view
         returns (
-            uint256 thePoolPrice,
+            uint256 poolPrice,
             uint256 totalTokens,
             uint256 aum
         )
     {
         (address poolAddress, ) = addressFromIdInternal(poolId);
         Pool pool = Pool(poolAddress);
-        thePoolPrice = pool.calcSharePrice();
+        poolPrice = pool.calcSharePrice();
         totalTokens = pool.totalSupply();
-        require(
-            thePoolPrice != uint256(0) && totalTokens != uint256(0),
-            "POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR"
-        );
-        aum = safeMul(thePoolPrice, totalTokens) / 1000000; // pool.BASE();
+        if (poolPrice == uint256(0) || totalTokens == uint256(0)) {
+            revert("POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR");
+        }
+        aum = safeMul(poolPrice, totalTokens) / 1000000; // pool.BASE();
     }
 }
