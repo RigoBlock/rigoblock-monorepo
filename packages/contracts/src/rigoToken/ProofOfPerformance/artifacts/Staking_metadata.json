@@ -1,0 +1,84 @@
+{
+	"compiler": {
+		"version": "0.5.4+commit.9549d8ff"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "bytes32"
+					},
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "rigoblockOperatorPools",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/rigoToken/ProofOfPerformance/ProofOfPerformance.sol": "Staking"
+		},
+		"evmVersion": "byzantium",
+		"libraries": {},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/rigoToken/ProofOfPerformance/ProofOfPerformance.sol": {
+			"keccak256": "0x800f15278bcb3b712bae44205093a4e33fd831a8bf30fbd1df1903047225b408",
+			"urls": [
+				"bzzr://9581d25af268b95d60e1bc92c3fa1f9363ca30ae0336f57b4bc24570625d26c2"
+			]
+		},
+		"localhost/rigoToken/ProofOfPerformance/ProofOfPerformanceFace.sol": {
+			"keccak256": "0x2bf90791b9599f37e90693afb8f4fdc6a19e8df87702e35db150bb2a55bf3345",
+			"urls": [
+				"bzzr://d85c86e740e302dcfbf3e02b5ae552121f4e2d1ebf0fc338c044e7c8b3e33f3d"
+			]
+		},
+		"localhost/utils/Pool/Pool.sol": {
+			"keccak256": "0xe18cb0d0ea553e0dadd213575a61831e2c20e45be68715dc994a897078bc2909",
+			"urls": [
+				"bzzr://a9c4a053aa0cea4c87c22ea0f44464461b8f91e71f7a9cc2421f56b714c783f7"
+			]
+		},
+		"localhost/utils/ReentrancyGuard/ReentrancyGuard.sol": {
+			"keccak256": "0x5e85ada215c542e3120aad9cf74e9a160fcdd169bd41913b534cc0121c12a8d2",
+			"urls": [
+				"bzzr://acd4f5853ebc7b2207bae4e9ab588f0887940c9639462aa7eb738ad99c729a88"
+			]
+		},
+		"localhost/utils/SafeMath/SafeMath.sol": {
+			"keccak256": "0x5fce40103165c675d5e12c07813bde1826416403a7be753c05c33f8f14039947",
+			"urls": [
+				"bzzr://ba92580e49f2fac69f6723c8a613d8f3dddc0a4d522cfeb02394ae5664f69ef2"
+			]
+		}
+	},
+	"version": 1
+}
