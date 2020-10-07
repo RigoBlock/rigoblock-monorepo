@@ -125,7 +125,7 @@ contract ProofOfPerformance is
         );
         _;
     }
-    
+
     modifier onlyStakingProxy() {
         require(
             msg.sender == STAKING_PROXY_ADDRESS,
@@ -164,7 +164,7 @@ contract ProofOfPerformance is
             address poolAddress = poolsArray[i];
             (uint256 poolId, , , , , ) = DragoRegistry(dragoRegistryAddress).fromAddress(poolAddress);
             uint256 poolPrice = Pool(poolAddress).calcSharePrice();
-            
+
             // pop assets component is always positive, therefore we must update the hwm if positive performance
             if (poolPrice > poolPriceById[poolId].highwatermark) {
                 poolPriceById[poolId].highwatermark = poolPrice;
@@ -362,7 +362,7 @@ contract ProofOfPerformance is
     {
         ( , , aum) = getPoolPriceAndValueInternal(poolId);
     }
-    
+
     /// @dev Returns the aggregated reward of all rigoblock pools belonging to a staking pool.
     /// @param stakingPoolId Hex-encoded staking pool id.
     /// @return popReward Value of the aggregated reward.
@@ -378,7 +378,7 @@ contract ProofOfPerformance is
             address poolAddress = poolsArray[i];
             (uint256 poolId, , , , , ) = DragoRegistry(dragoRegistryAddress).fromAddress(poolAddress);
             (uint256 aggregateReward, ) = proofOfPerformanceInternal(poolId);
-            popReward += aggregateReward;
+            popReward = safeAdd(popReward, aggregateReward);
         }
     }
 
@@ -487,7 +487,7 @@ contract ProofOfPerformance is
     /// @param thePoolAddress Address of the pool.
     /// @param poolValue Number of value of the pool in wei.
     /// @return Number non-linear adjustment.
-    
+
     function ethBalanceAdjustmentInternal(
         address thePoolAddress,
         uint256 poolValue)
