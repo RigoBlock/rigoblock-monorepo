@@ -249,7 +249,7 @@ interface IStaking {
         external
         view
         returns (IGrgVault grgVault);
-    
+
     /// @dev Get list of rigoblock pools addresses by staking pool Id.
     /// @param stakingPoolId Staking pool Id to query.
     /// @return List of addresses.

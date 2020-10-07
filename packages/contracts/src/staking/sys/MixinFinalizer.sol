@@ -91,11 +91,6 @@ contract MixinFinalizer is
     function finalizePool(bytes32 poolId)
         external
     {
-        //prevent smart contract calls
-        if (_isContract(msg.sender)) {
-            revert("CALLER_IS_SMART_CONTRACT_ERROR");
-        }
-
         // Compute relevant epochs
         uint256 currentEpoch_ = currentEpoch;
         uint256 prevEpoch = currentEpoch_.safeSub(1);
@@ -257,20 +252,5 @@ contract MixinFinalizer is
         if (rewardsRemaining < rewards) {
             rewards = rewardsRemaining;
         }
-    }
-    
-    /// @dev Determines whether an address is an account or a contract
-    /// @param target Address to be inspected
-    /// @return Boolean the address is a contract
-    /// @notice if it is a contract, we use this function to lookup for the owner
-    function _isContract(address target)
-        internal view
-        returns (bool)
-    {
-        uint size;
-        assembly {
-            size := extcodesize(target)
-        }
-        return size > 0;
     }
 }
