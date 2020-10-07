@@ -1,0 +1,608 @@
+{
+	"compiler": {
+		"version": "0.5.9+commit.e560f70d"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "bytes32"
+					},
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "poolStatsByEpoch",
+				"outputs": [
+					{
+						"name": "feesCollected",
+						"type": "uint256"
+					},
+					{
+						"name": "weightedStake",
+						"type": "uint256"
+					},
+					{
+						"name": "membersStake",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "aggregatedStatsByEpoch",
+				"outputs": [
+					{
+						"name": "rewardsAvailable",
+						"type": "uint256"
+					},
+					{
+						"name": "numPoolsToFinalize",
+						"type": "uint256"
+					},
+					{
+						"name": "totalFeesCollected",
+						"type": "uint256"
+					},
+					{
+						"name": "totalWeightedStake",
+						"type": "uint256"
+					},
+					{
+						"name": "totalRewardsFinalized",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "bytes32"
+					},
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "rigoblockOperatorPools",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "target",
+						"type": "address"
+					}
+				],
+				"name": "addAuthorizedAddress",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "authorities",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "currentEpochStartTimeInSeconds",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "validExchanges",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "poolIdByRbPool",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "epochDurationInSeconds",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "target",
+						"type": "address"
+					}
+				],
+				"name": "removeAuthorizedAddress",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "currentEpoch",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "cobbDouglasAlphaNumerator",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint32"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "target",
+						"type": "address"
+					},
+					{
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "removeAuthorizedAddressAtIndex",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "minimumPoolStake",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "lastPoolId",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "wethReservedForPoolRewards",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "authorized",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "rewardsByPoolId",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getAuthorizedAddresses",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "rewardDelegatedStakeWeight",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint32"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "cobbDouglasAlphaDenominator",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint32"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "stakingContract",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "target",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"name": "caller",
+						"type": "address"
+					}
+				],
+				"name": "AuthorizedAddressAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "target",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"name": "caller",
+						"type": "address"
+					}
+				],
+				"name": "AuthorizedAddressRemoved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"methods": {
+				"addAuthorizedAddress(address)": {
+					"details": "Authorizes an address.",
+					"params": {
+						"target": "Address to authorize."
+					}
+				},
+				"getAuthorizedAddresses()": {
+					"details": "Gets all authorized addresses.",
+					"return": "Array of authorized addresses."
+				},
+				"removeAuthorizedAddress(address)": {
+					"details": "Removes authorizion of an address.",
+					"params": {
+						"target": "Address to remove authorization from."
+					}
+				},
+				"removeAuthorizedAddressAtIndex(address,uint256)": {
+					"details": "Removes authorizion of an address.",
+					"params": {
+						"index": "Index of target in authorities array.",
+						"target": "Address to remove authorization from."
+					}
+				},
+				"transferOwnership(address)": {
+					"details": "Change the owner of this contract.",
+					"params": {
+						"newOwner": "New owner address."
+					}
+				}
+			}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/staking/immutable/MixinStorage.sol": "MixinStorage"
+		},
+		"evmVersion": "petersburg",
+		"libraries": {},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/staking/immutable/MixinConstants.sol": {
+			"keccak256": "0xcf9b9250913f00b59c147b42eec5b03078e586797072745dd1ec586f58adad57",
+			"urls": [
+				"bzzr://0f66ffef46370c045092cefffebf1a58dc191eba3b6bd3c0e4df3d94f5b98629",
+				"dweb:/ipfs/QmWwAi2QGei9oJQiCQYczEsQkBC8UUFP65RkbPERSEfjQp"
+			]
+		},
+		"localhost/staking/immutable/MixinStorage.sol": {
+			"keccak256": "0x29f1af986aca61b3e49ea40d81fbb2454ba2e65895d4450fe935c00b34891669",
+			"urls": [
+				"bzzr://4df11d10004b6f5dea41f1b94717247bcc733efc0edf5bb1ef1cb55ae37d04be",
+				"dweb:/ipfs/QmV2kiY7RX3V59uzeiEr9WwA2DkGvEkci4iPGQd9fqMCTB"
+			]
+		},
+		"localhost/staking/interfaces/IGrgVault.sol": {
+			"keccak256": "0x3b6c339568dd8b7e8f330702c2edac7c58dbbe420952e56e4badd420394d78fd",
+			"urls": [
+				"bzzr://330fef5d92100b63e685c090278b50e1df16026ae0dba581c4d5eefe3edf12e4",
+				"dweb:/ipfs/QmV1jufafpt2jrjLzEkqTycGyeyp1x7Hu11ZdsNcmK9Dyi"
+			]
+		},
+		"localhost/staking/interfaces/IStructs.sol": {
+			"keccak256": "0xc3dcf7e7748029bbd5cb4731a892343812e92df6ce040ecca5dd2469658a7cf1",
+			"urls": [
+				"bzzr://fe20aaac4c8ca4bf7c9a89008a39b4473279813044c8066bd2290bf740b574c0",
+				"dweb:/ipfs/QmQ33qAfNcCCDBjDN2TF1oPLGFa3uHmkY68HxLhAKFxkGb"
+			]
+		},
+		"localhost/staking/libs/LibStakingRichErrors.sol": {
+			"keccak256": "0x9fd346514f4493fe6c8be681740af0600ec9771fcbdb7bfe61d548e91e26181b",
+			"urls": [
+				"bzzr://31dc5d92a898a8314a981615abe545ee8a66f56ece54971cfb1e8e0e9c51c6f5",
+				"dweb:/ipfs/QmZ8hUGjKH2H4q7rWfA1RWDfxyCWg1ykaRVw2jXF11ZEwe"
+			]
+		},
+		"localhost/utils/0xUtils/Authorizable.sol": {
+			"keccak256": "0xca0e2034860168cf1abb698c4745650c8397cf850cc4c1e73f82279769037b81",
+			"urls": [
+				"bzzr://bc108e119befcf74a6bc1a8b5ced3a80a531e4018c13a488ad202734b87f0228",
+				"dweb:/ipfs/QmXqh4LZLqvvPbaYHHzXeujuPv4ggmdh5cbVAVH3kjrhjA"
+			]
+		},
+		"localhost/utils/0xUtils/LibAuthorizableRichErrors.sol": {
+			"keccak256": "0xbf557501c90a4e53f6ee05bfc0ce09fb05395dfef56c3a653b2cd1a7327a4ebc",
+			"urls": [
+				"bzzr://22b038c54ad6d05d07ea42402c102809447feaa5bdbf4947865a824c925d934c",
+				"dweb:/ipfs/QmbAEiFR1wBLmfcKBRPHP432KtHNRnGA868oPMFidVjJMJ"
+			]
+		},
+		"localhost/utils/0xUtils/LibOwnableRichErrors.sol": {
+			"keccak256": "0xfe1658c79678842a12d9b5841157eb871aaa810ed8a0223c715f49ad4c71d690",
+			"urls": [
+				"bzzr://699bc12e6ed8c7fda8f4d498839e629811f965c8db4ea798899817bee78729ad",
+				"dweb:/ipfs/QmWbiBGMegH2kkKJeCCkXfMJZYbvnoXrEJA2uuG1XCZ6iZ"
+			]
+		},
+		"localhost/utils/0xUtils/LibRichErrors.sol": {
+			"keccak256": "0xe3ce6ded2fea3cc80998ca4d364bda530e273af0ba1c78d22a6cdadb6f64186e",
+			"urls": [
+				"bzzr://d45e3a4141f19e14777fd765e25d66f7aba65e36ce80d524a5992a0a7b38c059",
+				"dweb:/ipfs/QmbttkX94CxMkS6t1K4He5bNwGKCRUhKqTt9pNsAL5ynst"
+			]
+		},
+		"localhost/utils/0xUtils/Ownable.sol": {
+			"keccak256": "0x1e93522fe38a8408cdcb029fec6c9d021abab97b3d191cd95a46a64c3853ec06",
+			"urls": [
+				"bzzr://2f1a2d3510c4da0b3c639a4de2c9b60a695d3492027205e104d001ec33134eba",
+				"dweb:/ipfs/QmdrZ8HkgiPQmrSB17Cz5VD6L217qoNcUBPaFkrt1QHnZA"
+			]
+		},
+		"localhost/utils/0xUtils/interfaces/IAuthorizable.sol": {
+			"keccak256": "0x961072f728ffdd8797ba433cf9d78715e88324e7e0eca3a33700b132ae67a1ca",
+			"urls": [
+				"bzzr://82f362ab328d9c87b783c43c6e460cee4148bb609d5bd40e10fb6c0a7d426aa2",
+				"dweb:/ipfs/QmWaoR21aj4CmtGHeM2oUU8zJVPpd7Y7jSGrL4xVMhxvp1"
+			]
+		},
+		"localhost/utils/0xUtils/interfaces/IOwnable.sol": {
+			"keccak256": "0x8a9c1243689632ecdf3e85d51c904ab61192bfe40e0115f37dc549c52e445ba2",
+			"urls": [
+				"bzzr://9f457f5793118d5c181afec5f617b819bab2799ca4fa2f54c69393f44f41eb6d",
+				"dweb:/ipfs/QmS1o2HnyhsY5b35s1sADd2sZwq4QDE3rXk1UUC7JjPvCS"
+			]
+		}
+	},
+	"version": 1
+}

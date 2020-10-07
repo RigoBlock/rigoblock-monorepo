@@ -1,0 +1,98 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getGrgVault",
+				"outputs": [
+					{
+						"internalType": "contract IGrgVault",
+						"name": "grgVault",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getWethContract",
+				"outputs": [
+					{
+						"internalType": "contract IEtherToken",
+						"name": "wethContract",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {
+				"getGrgVault()": {
+					"details": "An overridable way to access the deployed grgVault.      Must be view to allow overrides to access state.",
+					"return": "grgVault The grgVault contract."
+				},
+				"getWethContract()": {
+					"details": "An overridable way to access the deployed WETH contract.      Must be view to allow overrides to access state.",
+					"return": "wethContract The WETH contract instance."
+				}
+			}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/staking/immutable/MixinDeploymentConstants.sol": "MixinDeploymentConstants"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/staking/immutable/MixinDeploymentConstants.sol": {
+			"keccak256": "0x0ee79f1ccfef16ff698a13ec5f21748acf18102a3f0e3e5cf217d8bca74ab0b4",
+			"urls": [
+				"bzz-raw://a0861d60ca88b31de95f6db1fab04c354febe4a742bacad867becad43b154d04",
+				"dweb:/ipfs/QmNb1e7ZpDoqfUcgQNzgour89ikcQTcr78khPbmfUAhTwx"
+			]
+		},
+		"localhost/staking/interfaces/IGrgVault.sol": {
+			"keccak256": "0x3b6c339568dd8b7e8f330702c2edac7c58dbbe420952e56e4badd420394d78fd",
+			"urls": [
+				"bzz-raw://cc5eaed08f91f75b8f8b450f5f69ba6d07f3b8455844692fde62de001a47babb",
+				"dweb:/ipfs/QmV1jufafpt2jrjLzEkqTycGyeyp1x7Hu11ZdsNcmK9Dyi"
+			]
+		},
+		"localhost/utils/0xUtils/IERC20Token.sol": {
+			"keccak256": "0x4eab85561a24071b7fa2229035daa1e9beb9d18b5f78f56b0cf8f0b094c5f8e3",
+			"urls": [
+				"bzz-raw://5be7f8843d72ad86d7926d32396bcc01b82b29d977b6e695c81d273e331ba91f",
+				"dweb:/ipfs/QmWjhz3QYkJpgpiLyuX4mShSV44314FuVYCHViSvoSCqhY"
+			]
+		},
+		"localhost/utils/0xUtils/IEtherToken.sol": {
+			"keccak256": "0xfd4a5af3c7700a3df24a297262a863969e3672f0c6c033c8c3088933b97059bf",
+			"urls": [
+				"bzz-raw://3c7f5f6a066f7614c8c2ffd9695f8cf4f9427c5c935662092e9cf76203cb1b84",
+				"dweb:/ipfs/QmQn4BbuXFtoAxkbQQfrB7bKBxbDSswGLHnCCvX6EKfWZr"
+			]
+		}
+	},
+	"version": 1
+}
