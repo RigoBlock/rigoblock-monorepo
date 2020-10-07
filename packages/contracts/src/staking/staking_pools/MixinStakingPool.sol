@@ -28,6 +28,10 @@ import "../sys/MixinAbstract.sol";
 import "./MixinStakingPoolRewards.sol";
 
 
+interface DragoRegistry {
+    function fromAddress(address _drago) external view returns (uint256 id, string memory name, string memory symbol, uint256 dragoId, address owner, address group);
+}
+
 contract MixinStakingPool is
     MixinAbstract,
     MixinStakingPoolRewards
@@ -45,9 +49,9 @@ contract MixinStakingPool is
     /// @dev Create a new staking pool. The sender will be the operator of this pool.
     /// Note that an operator must be payable.
     /// @param operatorShare Portion of rewards owned by the operator, in ppm.
-    /// @param addOperatorAsMaker Adds operator to the created pool as a maker for convenience iff true.
+    /// @param rigoblockPoolAddress Adds rigoblock pool to the created staking pool for convenience if non-null.
     /// @return poolId The unique pool id generated for this pool.
-    function createStakingPool(uint32 operatorShare, bool addOperatorAsMaker)
+    function createStakingPool(uint32 operatorShare, address rigoblockPoolAddress)
         external
         returns (bytes32 poolId)
     {
@@ -74,8 +78,8 @@ contract MixinStakingPool is
         // Staking pool has been created
         emit StakingPoolCreated(poolId, operator, operatorShare);
 
-        if (addOperatorAsMaker) {
-            joinStakingPoolAsMaker(poolId);
+        if (rigoblockPoolAddress != address(0)) {
+            joinStakingPoolAsRbPool(poolId, rigoblockPoolAddress);
         }
 
         return poolId;
@@ -105,15 +109,43 @@ contract MixinStakingPool is
         );
     }
 
-    /// @dev Allows caller to join a staking pool as a maker.
+    /// @dev Allows caller to join a staking pool as a rigoblock pool.
     /// @param poolId Unique id of pool.
-    function joinStakingPoolAsMaker(bytes32 poolId)
+    function joinStakingPoolAsRbPool(bytes32 poolId, address rigoblockPoolAddress)
         public
     {
-        address maker = msg.sender;
-        poolIdByMaker[maker] = poolId;
-        emit MakerStakingPoolSet(
-            maker,
+        //TODO: test
+        // delete rigoblock pool from existing staking pool
+        // TODO: either add registry or pop address as public constant
+        (uint256 rbPoolId, , , , address rbPoolOwner, ) = DragoRegistry(address(0)).fromAddress(rigoblockPoolAddress);
+        require(
+            rbPoolId != uint256(0) && rbPoolOwner == msg.sender,
+            "ONLY_POOL_OWNER_CAN_ATTACH_REGISTERED_RB_POOL"
+        );
+        bytes32 existingPoolId = poolIdByRbPool[rigoblockPoolAddress];
+        uint256 existingArrayLength = rigoblockOperatorPools[existingPoolId].length;
+        
+        if (existingArrayLength >= uint256(100)) {
+            revert("POOLS_ARRAY_TOO_BIG_ERROR");
+        }
+        
+        //bool alreadyAttachedPool = poolIdByRbPool[rigoblockPoolAddress] != bytes32(0);
+        if (existingPoolId != bytes32(0)) {
+            uint256 poolPositionToBeSwitched;
+            address[] memory exitistingPoolsList = rigoblockOperatorPools[poolIdByRbPool[rigoblockPoolAddress]];
+            // check whether address associated with any other pool array
+            for (uint i=0; i < existingArrayLength; i++) {
+                if (exitistingPoolsList[i] != rigoblockPoolAddress) continue;
+                poolPositionToBeSwitched = i;
+            }
+            // overwrite last list element to switched pool position and pop from array
+            rigoblockOperatorPools[existingPoolId][poolPositionToBeSwitched] = exitistingPoolsList[exitistingPoolsList.length-1];
+            rigoblockOperatorPools[existingPoolId].pop();
+        }
+        poolIdByRbPool[rigoblockPoolAddress] = poolId;
+        rigoblockOperatorPools[poolId].push(rigoblockPoolAddress);
+        emit RbPoolStakingPoolSet(
+            rigoblockPoolAddress,
             poolId
         );
     }

@@ -111,11 +111,11 @@ interface IStakingEvents {
         uint32 operatorShare
     );
 
-    /// @dev Emitted by MixinStakingPool when a maker sets their pool.
-    /// @param makerAddress Adress of maker added to pool.
+    /// @dev Emitted by MixinStakingPool when a rigoblock pool is added to its staking pool.
+    /// @param rbPoolAddress Adress of maker added to pool.
     /// @param poolId Unique id of pool.
-    event MakerStakingPoolSet(
-        address indexed makerAddress,
+    event RbPoolStakingPoolSet(
+        address indexed rbPoolAddress,
         bytes32 indexed poolId
     );
 

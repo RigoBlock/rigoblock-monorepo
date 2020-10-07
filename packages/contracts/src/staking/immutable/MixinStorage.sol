@@ -52,10 +52,15 @@ contract MixinStorage is
     // tracking Pool Id, a unique identifier for each staking pool.
     bytes32 public lastPoolId;
 
-    /// @dev Mapping from Maker Address to pool Id of maker
+    /// @dev Mapping from Maker Address to pool Id of rigoblock pool
     /// @param 0 Maker address.
     /// @return 0 The pool ID.
-    mapping (address => bytes32) public poolIdByMaker;
+    mapping (address => bytes32) public poolIdByRbPool;
+
+    /// @dev Mapping of RigoBlock pools from staking pool Id
+    /// @param 0 Staking pool ID.
+    /// @return 0 The list of RigoBlock pools.
+    mapping(bytes32 => address[]) public rigoblockOperatorPools;
 
     // mapping from Pool Id to Pool
     mapping (bytes32 => IStructs.Pool) internal _poolById;

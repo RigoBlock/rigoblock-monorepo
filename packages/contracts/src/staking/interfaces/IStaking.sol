@@ -70,9 +70,9 @@ interface IStaking {
     function init()
         external;
 
-    /// @dev Allows caller to join a staking pool as a maker.
-    /// @param poolId Unique id of pool.
-    function joinStakingPoolAsMaker(bytes32 poolId)
+    /// @dev Allows caller to join a staking pool as a rigoblock pool id.
+    /// @param stakingPoolId Unique id of staking pool.
+    function joinStakingPoolAsRbPool(bytes32 stakingPoolId)
         external;
 
     /// @dev Moves stake between statuses: 'undelegated' or 'delegated'.
@@ -249,4 +249,12 @@ interface IStaking {
         external
         view
         returns (IGrgVault grgVault);
+    
+    /// @dev Get list of rigoblock pools addresses by staking pool Id.
+    /// @param stakingPoolId Staking pool Id to query.
+    /// @return List of addresses.
+    function getPoolsAddressesByStakingPoolId(bytes32 stakingPoolId)
+        external
+        view
+        returns (address[] memory);
 }
