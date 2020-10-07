@@ -54,6 +54,7 @@ public static async deployFrom0xArtifactAsync(
             _rigoTokenAddress: string,
             _rigoblockDao: string,
             _dragoRegistry: string,
+            _stakingProxyAddress: string,
     ): Promise<ProofOfPerformanceContract> {
         assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
             schemas.addressSchema,
@@ -74,7 +75,8 @@ public static async deployFrom0xArtifactAsync(
         }
         return ProofOfPerformanceContract.deployAsync(bytecode, abi, provider, txDefaults, logDecodeDependenciesAbiOnly, _rigoTokenAddress,
 _rigoblockDao,
-_dragoRegistry
+_dragoRegistry,
+_stakingProxyAddress
 );
     }
 
@@ -87,6 +89,7 @@ _dragoRegistry
             _rigoTokenAddress: string,
             _rigoblockDao: string,
             _dragoRegistry: string,
+            _stakingProxyAddress: string,
     ): Promise<ProofOfPerformanceContract> {
         assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
             schemas.addressSchema,
@@ -116,7 +119,8 @@ _dragoRegistry
         );
         return ProofOfPerformanceContract.deployAsync(bytecode, abi, provider, txDefaults, logDecodeDependenciesAbiOnly, _rigoTokenAddress,
 _rigoblockDao,
-_dragoRegistry
+_dragoRegistry,
+_stakingProxyAddress
 );
     }
 
@@ -129,6 +133,7 @@ _dragoRegistry
             _rigoTokenAddress: string,
             _rigoblockDao: string,
             _dragoRegistry: string,
+            _stakingProxyAddress: string,
     ): Promise<ProofOfPerformanceContract> {
         assert.isHexString('bytecode', bytecode);
         assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
@@ -140,12 +145,14 @@ _dragoRegistry
         const constructorAbi = BaseContract._lookupConstructorAbi(abi);
         [_rigoTokenAddress,
 _rigoblockDao,
-_dragoRegistry
+_dragoRegistry,
+_stakingProxyAddress
 ] = BaseContract._formatABIDataItemList(
             constructorAbi.inputs,
             [_rigoTokenAddress,
 _rigoblockDao,
-_dragoRegistry
+_dragoRegistry,
+_stakingProxyAddress
 ],
             BaseContract._bigNumberToString,
         );
@@ -153,7 +160,8 @@ _dragoRegistry
         const deployInfo = iface.deployFunction;
         const txData = deployInfo.encode(bytecode, [_rigoTokenAddress,
 _rigoblockDao,
-_dragoRegistry
+_dragoRegistry,
+_stakingProxyAddress
 ]);
         const web3Wrapper = new Web3Wrapper(provider);
         const txDataWithDefaults = await BaseContract._applyDefaultsToContractTxDataAsync(
@@ -170,7 +178,8 @@ _dragoRegistry
         const contractInstance = new ProofOfPerformanceContract(txReceipt.contractAddress as string, provider, txDefaults, logDecodeDependencies);
         contractInstance.constructorArgs = [_rigoTokenAddress,
 _rigoblockDao,
-_dragoRegistry
+_dragoRegistry,
+_stakingProxyAddress
 ];
         return contractInstance;
     }
@@ -180,6 +189,21 @@ _dragoRegistry
      */
     public static ABI(): ContractAbi {
         const abi = [
+            { 
+                constant: true,
+                inputs: [
+                ],
+                name: 'dragoRegistryAddress',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
             { 
                 constant: false,
                 inputs: [
@@ -234,21 +258,6 @@ _dragoRegistry
                     },
                     {
                         name: 'group',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'rigoblockDao',
-                outputs: [
-                    {
-                        name: '',
                         type: 'address',
                     },
                 ],
@@ -320,6 +329,21 @@ _dragoRegistry
             { 
                 constant: true,
                 inputs: [
+                ],
+                name: 'rigoblockDaoAddress',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
                     {
                         name: 'poolId',
                         type: 'uint256',
@@ -334,6 +358,25 @@ _dragoRegistry
                 ],
                 payable: false,
                 stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: false,
+                inputs: [
+                    {
+                        name: 'stakingPoolId',
+                        type: 'bytes32',
+                    },
+                    {
+                        name: 'reward',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'claimPop',
+                outputs: [
+                ],
+                payable: false,
+                stateMutability: 'nonpayable',
                 type: 'function',
             },
             { 
@@ -408,7 +451,7 @@ _dragoRegistry
                 constant: true,
                 inputs: [
                 ],
-                name: 'dragoRegistry',
+                name: 'STAKING_PROXY_ADDRESS',
                 outputs: [
                     {
                         name: '',
@@ -434,19 +477,19 @@ _dragoRegistry
                         type: 'bool',
                     },
                     {
-                        name: 'thePoolAddress',
+                        name: 'poolAddress',
                         type: 'address',
                     },
                     {
-                        name: 'thePoolGroup',
+                        name: 'poolGroup',
                         type: 'address',
                     },
                     {
-                        name: 'thePoolPrice',
+                        name: 'poolPrice',
                         type: 'uint256',
                     },
                     {
-                        name: 'thePoolSupply',
+                        name: 'poolSupply',
                         type: 'uint256',
                     },
                     {
@@ -505,6 +548,25 @@ _dragoRegistry
                 type: 'function',
             },
             { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'stakingPoolId',
+                        type: 'bytes32',
+                    },
+                ],
+                name: 'getPop',
+                outputs: [
+                    {
+                        name: 'popReward',
+                        type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
                 inputs: [
                     {
                         name: '_rigoTokenAddress',
@@ -516,6 +578,10 @@ _dragoRegistry
                     },
                     {
                         name: '_dragoRegistry',
+                        type: 'address',
+                    },
+                    {
+                        name: '_stakingProxyAddress',
                         type: 'address',
                     },
                 ],
@@ -607,6 +673,30 @@ _dragoRegistry
         return abiEncoder.getSelector();
     }
 
+    public dragoRegistryAddress(
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as ProofOfPerformanceContract;
+        const functionSignature = 'dragoRegistryAddress()';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
     /**
      * Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
       * @param _ofGroup Id of the pool.
@@ -733,30 +823,6 @@ _dragoRegistry
             },
         }
     };
-    public rigoblockDao(
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as ProofOfPerformanceContract;
-        const functionSignature = 'rigoblockDao()';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
     /**
      * Returns the value of a pool from its id.
       * @param poolId Id of the pool.
@@ -853,6 +919,30 @@ _dragoRegistry
             },
         }
     };
+    public rigoblockDaoAddress(
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as ProofOfPerformanceContract;
+        const functionSignature = 'rigoblockDaoAddress()';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
     /**
      * Checks whether a pool is registered and active.
       * @param poolId Id of the pool.
@@ -881,6 +971,68 @@ _dragoRegistry
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [poolId
+            ]);
+            },
+        }
+    };
+    /**
+     * Allows staking proxy to allocate the pop reward to staking pool.
+      * @param stakingPoolId Hex-encoded staking pool id.
+      * @param reward Value of the stake-rebased reward.
+     */
+    public claimPop1(
+            stakingPoolId: string,
+            reward: BigNumber,
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as ProofOfPerformanceContract;
+            assert.isString('stakingPoolId', stakingPoolId);
+            assert.isBigNumber('reward', reward);
+        const functionSignature = 'claimPop(bytes32,uint256)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { ...txData, data: this.getABIEncodedTransactionData() }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [stakingPoolId,
+            reward
             ]);
             },
         }
@@ -1057,11 +1209,11 @@ _dragoRegistry
             },
         }
     };
-    public dragoRegistry(
+    public STAKING_PROXY_ADDRESS(
     ): ContractFunctionObj<string
 > {
         const self = this as any as ProofOfPerformanceContract;
-        const functionSignature = 'dragoRegistry()';
+        const functionSignature = 'STAKING_PROXY_ADDRESS()';
 
         return {
             async callAsync(
@@ -1084,7 +1236,7 @@ _dragoRegistry
     /**
      * Gets data of a pool.
       * @param poolId Id of the pool.
-    * @returns active Bool the pool is active.thePoolAddress address of the pool.thePoolGroup address of the pool factory.thePoolPrice price of the pool in wei.thePoolSupply total supply of the pool in units.poolValue total value of the pool in wei.epochReward value of the reward factor or said pool.ratio of assets/performance reward (from 0 to 10000).pop value of the pop reward to be claimed in GRGs.
+    * @returns active Bool the pool is active.poolAddress address of the pool.poolGroup address of the pool factory.poolPrice price of the pool in wei.poolSupply total supply of the pool in units.poolValue total value of the pool in wei.epochReward value of the reward factor or said pool.ratio of assets/performance reward (from 0 to 10000).pop value of the pop reward to be claimed in GRGs.
      */
     public getPoolData(
             poolId: BigNumber,
@@ -1149,7 +1301,7 @@ _dragoRegistry
      * Allows anyone to allocate the pop reward to pool wizards.
       * @param poolId Number of pool id in registry.
      */
-    public claimPop(
+    public claimPop2(
             poolId: BigNumber,
     ): ContractTxFunctionObj<void
 > {
@@ -1199,6 +1351,38 @@ _dragoRegistry
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [poolId
+            ]);
+            },
+        }
+    };
+    /**
+     * Returns the aggregated reward of all rigoblock pools belonging to a staking pool.
+      * @param stakingPoolId Hex-encoded staking pool id.
+    * @returns popReward Value of the aggregated reward.
+     */
+    public getPop(
+            stakingPoolId: string,
+    ): ContractFunctionObj<BigNumber
+> {
+        const self = this as any as ProofOfPerformanceContract;
+            assert.isString('stakingPoolId', stakingPoolId);
+        const functionSignature = 'getPop(bytes32)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [stakingPoolId
             ]);
             },
         }

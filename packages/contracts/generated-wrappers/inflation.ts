@@ -52,6 +52,7 @@ public static async deployFrom0xArtifactAsync(
         txDefaults: Partial<TxData>,
         logDecodeDependencies: { [contractName: string]: (ContractArtifact | SimpleContractArtifact) },
             _rigoTokenAddress: string,
+            _grgVaultAddress: string,
             _proofOfPerformance: string,
             _authority: string,
     ): Promise<InflationContract> {
@@ -73,6 +74,7 @@ public static async deployFrom0xArtifactAsync(
             }
         }
         return InflationContract.deployAsync(bytecode, abi, provider, txDefaults, logDecodeDependenciesAbiOnly, _rigoTokenAddress,
+_grgVaultAddress,
 _proofOfPerformance,
 _authority
 );
@@ -85,6 +87,7 @@ _authority
         txDefaults: Partial<TxData>,
         logDecodeDependencies: { [contractName: string]: (ContractArtifact | SimpleContractArtifact) },
             _rigoTokenAddress: string,
+            _grgVaultAddress: string,
             _proofOfPerformance: string,
             _authority: string,
     ): Promise<InflationContract> {
@@ -115,6 +118,7 @@ _authority
             libraryAddresses,
         );
         return InflationContract.deployAsync(bytecode, abi, provider, txDefaults, logDecodeDependenciesAbiOnly, _rigoTokenAddress,
+_grgVaultAddress,
 _proofOfPerformance,
 _authority
 );
@@ -127,6 +131,7 @@ _authority
         txDefaults: Partial<TxData>,
         logDecodeDependencies: { [contractName: string]: ContractAbi },
             _rigoTokenAddress: string,
+            _grgVaultAddress: string,
             _proofOfPerformance: string,
             _authority: string,
     ): Promise<InflationContract> {
@@ -139,11 +144,13 @@ _authority
         const provider = providerUtils.standardizeOrThrow(supportedProvider);
         const constructorAbi = BaseContract._lookupConstructorAbi(abi);
         [_rigoTokenAddress,
+_grgVaultAddress,
 _proofOfPerformance,
 _authority
 ] = BaseContract._formatABIDataItemList(
             constructorAbi.inputs,
             [_rigoTokenAddress,
+_grgVaultAddress,
 _proofOfPerformance,
 _authority
 ],
@@ -152,6 +159,7 @@ _authority
         const iface = new ethers.utils.Interface(abi);
         const deployInfo = iface.deployFunction;
         const txData = deployInfo.encode(bytecode, [_rigoTokenAddress,
+_grgVaultAddress,
 _proofOfPerformance,
 _authority
 ]);
@@ -169,6 +177,7 @@ _authority
         logUtils.log(`Inflation successfully deployed at ${txReceipt.contractAddress}`);
         const contractInstance = new InflationContract(txReceipt.contractAddress as string, provider, txDefaults, logDecodeDependencies);
         contractInstance.constructorArgs = [_rigoTokenAddress,
+_grgVaultAddress,
 _proofOfPerformance,
 _authority
 ];
@@ -184,11 +193,11 @@ _authority
                 constant: false,
                 inputs: [
                     {
-                        name: '_group',
+                        name: 'groupAddress',
                         type: 'address',
                     },
                     {
-                        name: '_inflationFactor',
+                        name: 'inflationFactor',
                         type: 'uint256',
                     },
                 ],
@@ -203,7 +212,7 @@ _authority
                 constant: false,
                 inputs: [
                     {
-                        name: '_newPeriod',
+                        name: 'newPeriod',
                         type: 'uint256',
                     },
                 ],
@@ -217,16 +226,12 @@ _authority
             { 
                 constant: true,
                 inputs: [
-                    {
-                        name: '_thePool',
-                        type: 'address',
-                    },
                 ],
-                name: 'canWithdraw',
+                name: 'slot',
                 outputs: [
                     {
                         name: '',
-                        type: 'bool',
+                        type: 'uint256',
                     },
                 ],
                 payable: false,
@@ -249,10 +254,63 @@ _authority
                 type: 'function',
             },
             { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'stakingPoolId',
+                        type: 'bytes32',
+                    },
+                ],
+                name: 'timeUntilClaim',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                ],
+                name: 'GRG_VAULT_ADDRESS',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'stakingPoolId',
+                        type: 'bytes32',
+                    },
+                ],
+                name: 'canWithdraw',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'bool',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
                 constant: false,
                 inputs: [
                     {
-                        name: '_minimum',
+                        name: 'minimum',
                         type: 'uint256',
                     },
                 ],
@@ -267,7 +325,7 @@ _authority
                 constant: false,
                 inputs: [
                     {
-                        name: '_newRigoblock',
+                        name: 'newRigoblockDaoAddress',
                         type: 'address',
                     },
                 ],
@@ -282,12 +340,35 @@ _authority
                 constant: false,
                 inputs: [
                     {
-                        name: '_authority',
+                        name: 'authorityAddress',
                         type: 'address',
                     },
                 ],
                 name: 'setAuthority',
                 outputs: [
+                ],
+                payable: false,
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                constant: false,
+                inputs: [
+                    {
+                        name: 'stakingPoolId',
+                        type: 'bytes32',
+                    },
+                    {
+                        name: 'reward',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'mintInflation',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'bool',
+                    },
                 ],
                 payable: false,
                 stateMutability: 'nonpayable',
@@ -309,29 +390,6 @@ _authority
                 type: 'function',
             },
             { 
-                constant: false,
-                inputs: [
-                    {
-                        name: '_thePool',
-                        type: 'address',
-                    },
-                    {
-                        name: '_reward',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'mintInflation',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'bool',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
                 constant: true,
                 inputs: [
                 ],
@@ -350,26 +408,7 @@ _authority
                 constant: true,
                 inputs: [
                     {
-                        name: '_thePool',
-                        type: 'address',
-                    },
-                ],
-                name: 'timeUntilClaim',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'uint256',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                    {
-                        name: '_group',
+                        name: 'groupAddress',
                         type: 'address',
                     },
                 ],
@@ -388,7 +427,7 @@ _authority
                 constant: false,
                 inputs: [
                     {
-                        name: '_pop',
+                        name: 'popAddress',
                         type: 'address',
                     },
                 ],
@@ -448,6 +487,10 @@ _authority
                 inputs: [
                     {
                         name: '_rigoTokenAddress',
+                        type: 'address',
+                    },
+                    {
+                        name: '_grgVaultAddress',
                         type: 'address',
                     },
                     {
@@ -548,18 +591,18 @@ _authority
     }
 
     /**
-     * Allows rigoblock dao to set the inflation factor for a group
-      * @param _group Address of the group/factory
-      * @param _inflationFactor Value of the reward factor
+     * Allows rigoblock dao to set the inflation factor for a group.
+      * @param groupAddress Address of the group/factory.
+      * @param inflationFactor Value of the reward factor.
      */
     public setInflationFactor(
-            _group: string,
-            _inflationFactor: BigNumber,
+            groupAddress: string,
+            inflationFactor: BigNumber,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isString('_group', _group);
-            assert.isBigNumber('_inflationFactor', _inflationFactor);
+            assert.isString('groupAddress', groupAddress);
+            assert.isBigNumber('inflationFactor', inflationFactor);
         const functionSignature = 'setInflationFactor(address,uint256)';
 
         return {
@@ -603,22 +646,22 @@ _authority
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_group.toLowerCase(),
-            _inflationFactor
+                return self._strictEncodeArguments(functionSignature, [groupAddress.toLowerCase(),
+            inflationFactor
             ]);
             },
         }
     };
     /**
-     * Allows rigoblock dao to set the minimum time between reward collection
-      * @param _newPeriod Number of seconds between 2 rewards
+     * Allows rigoblock dao to set the minimum time between reward collection.
+      * @param newPeriod Number of seconds between 2 rewards.
      */
     public setPeriod(
-            _newPeriod: BigNumber,
+            newPeriod: BigNumber,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isBigNumber('_newPeriod', _newPeriod);
+            assert.isBigNumber('newPeriod', newPeriod);
         const functionSignature = 'setPeriod(uint256)';
 
         return {
@@ -662,40 +705,32 @@ _authority
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_newPeriod
+                return self._strictEncodeArguments(functionSignature, [newPeriod
             ]);
             },
         }
     };
-    /**
-     * Returns whether a wizard can claim reward tokens
-      * @param _thePool Address of the target pool
-    * @returns Bool the wizard can claim
-     */
-    public canWithdraw(
-            _thePool: string,
-    ): ContractFunctionObj<boolean
+    public slot(
+    ): ContractFunctionObj<BigNumber
 > {
         const self = this as any as InflationContract;
-            assert.isString('_thePool', _thePool);
-        const functionSignature = 'canWithdraw(address)';
+        const functionSignature = 'slot()';
 
         return {
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
-            ): Promise<boolean
+            ): Promise<BigNumber
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<boolean
+                return abiEncoder.strictDecodeReturnValue<BigNumber
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_thePool.toLowerCase()
-            ]);
+                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
@@ -724,15 +759,103 @@ _authority
         }
     };
     /**
-     * Allows rigoblock dao to set the minimum number of required tokens
-      * @param _minimum Number of minimum tokens
+     * Returns how much time needed until next claim.
+      * @param stakingPoolId Address of the target pool.
+    * @returns Number in seconds.
+     */
+    public timeUntilClaim(
+            stakingPoolId: string,
+    ): ContractFunctionObj<BigNumber
+> {
+        const self = this as any as InflationContract;
+            assert.isString('stakingPoolId', stakingPoolId);
+        const functionSignature = 'timeUntilClaim(bytes32)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [stakingPoolId
+            ]);
+            },
+        }
+    };
+    public GRG_VAULT_ADDRESS(
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as InflationContract;
+        const functionSignature = 'GRG_VAULT_ADDRESS()';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    /**
+     * Returns whether a staking pool's reward can be claimed.
+      * @param stakingPoolId Address of the target pool.
+    * @returns Bool the wizard can claim.
+     */
+    public canWithdraw(
+            stakingPoolId: string,
+    ): ContractFunctionObj<boolean
+> {
+        const self = this as any as InflationContract;
+            assert.isString('stakingPoolId', stakingPoolId);
+        const functionSignature = 'canWithdraw(bytes32)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<boolean
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<boolean
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [stakingPoolId
+            ]);
+            },
+        }
+    };
+    /**
+     * Allows rigoblock dao to set the minimum number of required tokens.
+      * @param minimum Number of minimum tokens.
      */
     public setMinimumRigo(
-            _minimum: BigNumber,
+            minimum: BigNumber,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isBigNumber('_minimum', _minimum);
+            assert.isBigNumber('minimum', minimum);
         const functionSignature = 'setMinimumRigo(uint256)';
 
         return {
@@ -776,21 +899,21 @@ _authority
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_minimum
+                return self._strictEncodeArguments(functionSignature, [minimum
             ]);
             },
         }
     };
     /**
-     * Allows rigoblock dao to upgrade its address
-      * @param _newRigoblock Address of the new rigoblock dao
+     * Allows rigoblock dao to upgrade its address.
+      * @param newRigoblockDaoAddress Address of the new rigoblock dao.
      */
     public setRigoblock(
-            _newRigoblock: string,
+            newRigoblockDaoAddress: string,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isString('_newRigoblock', _newRigoblock);
+            assert.isString('newRigoblockDaoAddress', newRigoblockDaoAddress);
         const functionSignature = 'setRigoblock(address)';
 
         return {
@@ -834,21 +957,21 @@ _authority
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_newRigoblock.toLowerCase()
+                return self._strictEncodeArguments(functionSignature, [newRigoblockDaoAddress.toLowerCase()
             ]);
             },
         }
     };
     /**
-     * Allows rigoblock dao to update the authority
-      * @param _authority Address of the authority
+     * Allows rigoblock dao to update the authority.
+      * @param authorityAddress Address of the authority.
      */
     public setAuthority(
-            _authority: string,
+            authorityAddress: string,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isString('_authority', _authority);
+            assert.isString('authorityAddress', authorityAddress);
         const functionSignature = 'setAuthority(address)';
 
         return {
@@ -892,50 +1015,26 @@ _authority
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_authority.toLowerCase()
+                return self._strictEncodeArguments(functionSignature, [authorityAddress.toLowerCase()
             ]);
             },
         }
     };
-    public RIGOTOKENADDRESS(
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as InflationContract;
-        const functionSignature = 'RIGOTOKENADDRESS()';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
     /**
-     * Allows ProofOfPerformance to mint rewards
-      * @param _thePool Address of the target pool
-      * @param _reward Number of reward in Rigo tokens
-    * @returns Bool the transaction executed correctly
+     * Allows ProofOfPerformance to mint rewards.
+      * @param stakingPoolId String of the staking pool.
+      * @param reward Number of reward in Rigo tokens.
+    * @returns Bool the transaction executed correctly.
      */
     public mintInflation(
-            _thePool: string,
-            _reward: BigNumber,
+            stakingPoolId: string,
+            reward: BigNumber,
     ): ContractTxFunctionObj<boolean
 > {
         const self = this as any as InflationContract;
-            assert.isString('_thePool', _thePool);
-            assert.isBigNumber('_reward', _reward);
-        const functionSignature = 'mintInflation(address,uint256)';
+            assert.isString('stakingPoolId', stakingPoolId);
+            assert.isBigNumber('reward', reward);
+        const functionSignature = 'mintInflation(bytes32,uint256)';
 
         return {
             async sendTransactionAsync(
@@ -978,9 +1077,33 @@ _authority
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_thePool.toLowerCase(),
-            _reward
+                return self._strictEncodeArguments(functionSignature, [stakingPoolId,
+            reward
             ]);
+            },
+        }
+    };
+    public RIGOTOKENADDRESS(
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as InflationContract;
+        const functionSignature = 'RIGOTOKENADDRESS()';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
@@ -1009,48 +1132,16 @@ _authority
         }
     };
     /**
-     * Returns how much time needed until next claim
-      * @param _thePool Address of the target pool
-    * @returns Number in seconds
-     */
-    public timeUntilClaim(
-            _thePool: string,
-    ): ContractFunctionObj<BigNumber
-> {
-        const self = this as any as InflationContract;
-            assert.isString('_thePool', _thePool);
-        const functionSignature = 'timeUntilClaim(address)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<BigNumber
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<BigNumber
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_thePool.toLowerCase()
-            ]);
-            },
-        }
-    };
-    /**
-     * Return the reward factor for a group
-      * @param _group Address of the group
-    * @returns Value of the reward factor
+     * Return the reward factor for a group.
+      * @param groupAddress Address of the group.
+    * @returns Value of the reward factor.
      */
     public getInflationFactor(
-            _group: string,
+            groupAddress: string,
     ): ContractFunctionObj<BigNumber
 > {
         const self = this as any as InflationContract;
-            assert.isString('_group', _group);
+            assert.isString('groupAddress', groupAddress);
         const functionSignature = 'getInflationFactor(address)';
 
         return {
@@ -1067,21 +1158,21 @@ _authority
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_group.toLowerCase()
+                return self._strictEncodeArguments(functionSignature, [groupAddress.toLowerCase()
             ]);
             },
         }
     };
     /**
-     * Allows rigoblock dao to update proof of performance
-      * @param _pop Address of the Proof of Performance contract
+     * Allows rigoblock dao to update proof of performance.
+      * @param popAddress Address of the Proof of Performance contract.
      */
     public setProofOfPerformance(
-            _pop: string,
+            popAddress: string,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isString('_pop', _pop);
+            assert.isString('popAddress', popAddress);
         const functionSignature = 'setProofOfPerformance(address)';
 
         return {
@@ -1125,7 +1216,7 @@ _authority
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_pop.toLowerCase()
+                return self._strictEncodeArguments(functionSignature, [popAddress.toLowerCase()
             ]);
             },
         }
