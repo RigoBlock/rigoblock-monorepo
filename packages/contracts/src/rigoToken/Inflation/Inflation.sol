@@ -160,6 +160,8 @@ contract Inflation is
         // reject any reward higher than amount of GRG staked to a staking pool divided by epoch legth
         address stakingProxyAddress = GrgVault(GRG_VAULT_ADDRESS).stakingProxyAddress();
         uint256 maxEpochReward = uint256(Staking(stakingProxyAddress).getTotalStakeDelegatedToPool(stakingPoolId).currentEpochBalance) * period / 365 days;
+
+        // final integrity check, should the value overflow in some of the passages, but it shouldn't.
         require(
             reward <= maxEpochReward,
             "REWARD_HIGER_THAN_STAKE_REBASED_ON_EPOCH_ERROR"
