@@ -66,7 +66,7 @@
 		"evmVersion": "istanbul",
 		"libraries": {},
 		"optimizer": {
-			"enabled": true,
+			"enabled": false,
 			"runs": 200
 		},
 		"remappings": []
@@ -80,17 +80,17 @@
 			]
 		},
 		"localhost/staking/immutable/MixinDeploymentConstants.sol": {
-			"keccak256": "0x5c213ba11bf7b8d0cc582b03e2ae9caa30758806495cb33ce29d70ff46c03d02",
+			"keccak256": "0x0ee79f1ccfef16ff698a13ec5f21748acf18102a3f0e3e5cf217d8bca74ab0b4",
 			"urls": [
-				"bzz-raw://ce3ca15cc0ff571e092e7298b0f70c0bee549248a50440a8bc8633e4ca2f5e3c",
-				"dweb:/ipfs/QmQ71zmHtyJbsuts8RRYQMt5D5NA67ZzQuCA85McCSNuwb"
+				"bzz-raw://a0861d60ca88b31de95f6db1fab04c354febe4a742bacad867becad43b154d04",
+				"dweb:/ipfs/QmNb1e7ZpDoqfUcgQNzgour89ikcQTcr78khPbmfUAhTwx"
 			]
 		},
 		"localhost/staking/immutable/MixinStorage.sol": {
-			"keccak256": "0x1b11e502e7b96e7a793ea4a33a04c19999032d972bcd0a413be81e13a69abcbf",
+			"keccak256": "0x29f1af986aca61b3e49ea40d81fbb2454ba2e65895d4450fe935c00b34891669",
 			"urls": [
-				"bzz-raw://16008d42abdd0b6f463354de8d5a1f4737d04b016265b168fca5f6e6812a00b1",
-				"dweb:/ipfs/QmQT7Me6UbRoGGjd8aBwj4tyYFbNnpz7opjfi7JpuhxKW1"
+				"bzz-raw://08de106074f0c57c36e785a2755139bcbe5cbee2d90e313a1296f006fab8e55b",
+				"dweb:/ipfs/QmV2kiY7RX3V59uzeiEr9WwA2DkGvEkci4iPGQd9fqMCTB"
 			]
 		},
 		"localhost/staking/interfaces/IGrgVault.sol": {
@@ -150,10 +150,10 @@
 			]
 		},
 		"localhost/staking/staking_pools/MixinStakingPool.sol": {
-			"keccak256": "0x146619298e7a53f7a2d98d67884bf2345a8d390fe4e7de79650fa2065235fdc9",
+			"keccak256": "0x3d45e34bd497703bce71b638e2a5718456417f7d46c68cc41ccf03c6fe661475",
 			"urls": [
-				"bzz-raw://3475d0d60a298ee24bb888165f8c2a80a279d32540559e1eb1bed9beb4597f2c",
-				"dweb:/ipfs/QmSq6YMfcJFcNQbqfgKV7isKAmgMAt6rxGWqrv2fzja9sZ"
+				"bzz-raw://a3c751f9b54e9e970332fa7a110bc541a936028e7b4e7efc8e9be36efd1d308c",
+				"dweb:/ipfs/QmanpQThbpQEq8gtUwANYLyW4ZR8mfZM1vKjMV6UjFKKhW"
 			]
 		},
 		"localhost/staking/staking_pools/MixinStakingPoolRewards.sol": {

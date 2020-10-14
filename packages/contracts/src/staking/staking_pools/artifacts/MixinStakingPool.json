@@ -52,7 +52,7 @@
 			"cobbDouglasAlphaNumerator()": "81666796",
 			"computeRewardBalanceOfDelegator(bytes32,address)": "e907f003",
 			"computeRewardBalanceOfOperator(bytes32)": "bb7ef7e0",
-			"createStakingPool(uint32,address)": "83b15f89",
+			"createStakingPool(address)": "be111af4",
 			"currentEpoch()": "76671808",
 			"currentEpochStartTimeInSeconds()": "587da023",
 			"decreaseStakingPoolOperatorShare(bytes32,uint32)": "5d91121d",
@@ -77,6 +77,7 @@
 			"removeAuthorizedAddressAtIndex(address,uint256)": "9ad26744",
 			"rewardDelegatedStakeWeight()": "e0ee036e",
 			"rewardsByPoolId(bytes32)": "c18c9141",
+			"rigoblockOperatorPools(bytes32,uint256)": "3cb25d34",
 			"stakingContract()": "ee99205c",
 			"transferOwnership(address)": "f2fde38b",
 			"validExchanges(address)": "5bd4ab73",
@@ -646,11 +647,6 @@
 			"constant": false,
 			"inputs": [
 				{
-					"internalType": "uint32",
-					"name": "operatorShare",
-					"type": "uint32"
-				},
-				{
 					"internalType": "address",
 					"name": "rigoblockPoolAddress",
 					"type": "address"
@@ -1196,6 +1192,32 @@
 					"internalType": "uint256",
 					"name": "",
 					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"internalType": "bytes32",
+					"name": "",
+					"type": "bytes32"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "rigoblockOperatorPools",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
 				}
 			],
 			"payable": false,
