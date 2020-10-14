@@ -32,15 +32,15 @@
 	"data": {
 		"bytecode": {
 			"linkReferences": {},
-			"object": "6080604052348015600f57600080fd5b50603e80601d6000396000f3fe6080604052600080fdfea265627a7a72315820c586df2e099c7a41571ff4b008d73355008692b2ab0e973a51a3ed72cb89b59c64736f6c63430005110032",
-			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xF JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x3E DUP1 PUSH1 0x1D PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 0xC5 DUP7 0xDF 0x2E MULMOD SWAP13 PUSH27 0x41571FF4B008D73355008692B2AB0E973A51A3ED72CB89B59C6473 PUSH16 0x6C634300051100320000000000000000 ",
-			"sourceMap": "26:4887:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:4887:0;;;;;;;"
+			"object": "6080604052348015600f57600080fd5b50603e80601d6000396000f3fe6080604052600080fdfea265627a7a723158204c20a1198dfb042e2445abf7bdf6bbee5d717d1925d05b380335b31d8e8cf0e364736f6c63430005110032",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xF JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x3E DUP1 PUSH1 0x1D PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 0x4C KECCAK256 LOG1 NOT DUP14 0xFB DIV 0x2E 0x24 GASLIMIT 0xAB 0xF7 0xBD 0xF6 0xBB 0xEE 0x5D PUSH18 0x7D1925D05B380335B31D8E8CF0E364736F6C PUSH4 0x43000511 STOP ORIGIN ",
+			"sourceMap": "26:4877:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:4877:0;;;;;;;"
 		},
 		"deployedBytecode": {
 			"linkReferences": {},
-			"object": "6080604052600080fdfea265627a7a72315820c586df2e099c7a41571ff4b008d73355008692b2ab0e973a51a3ed72cb89b59c64736f6c63430005110032",
-			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 0xC5 DUP7 0xDF 0x2E MULMOD SWAP13 PUSH27 0x41571FF4B008D73355008692B2AB0E973A51A3ED72CB89B59C6473 PUSH16 0x6C634300051100320000000000000000 ",
-			"sourceMap": "26:4887:0:-;;;;;"
+			"object": "6080604052600080fdfea265627a7a723158204c20a1198dfb042e2445abf7bdf6bbee5d717d1925d05b380335b31d8e8cf0e364736f6c63430005110032",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 0x4C KECCAK256 LOG1 NOT DUP14 0xFB DIV 0x2E 0x24 GASLIMIT 0xAB 0xF7 0xBD 0xF6 0xBB 0xEE 0x5D PUSH18 0x7D1925D05B380335B31D8E8CF0E364736F6C PUSH4 0x43000511 STOP ORIGIN ",
+			"sourceMap": "26:4877:0:-;;;;;"
 		},
 		"gasEstimates": {
 			"creation": {
@@ -112,32 +112,6 @@
 				}
 			],
 			"name": "EpochFinalized",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "exchangeAddress",
-					"type": "address"
-				}
-			],
-			"name": "ExchangeAdded",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "exchangeAddress",
-					"type": "address"
-				}
-			],
-			"name": "ExchangeRemoved",
 			"type": "event"
 		},
 		{
@@ -243,6 +217,32 @@
 				}
 			],
 			"name": "ParamsSet",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "exchangeAddress",
+					"type": "address"
+				}
+			],
+			"name": "PopAdded",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "exchangeAddress",
+					"type": "address"
+				}
+			],
+			"name": "PopRemoved",
 			"type": "event"
 		},
 		{

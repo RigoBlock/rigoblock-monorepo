@@ -71,32 +71,6 @@
 				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "exchangeAddress",
-						"type": "address"
-					}
-				],
-				"name": "ExchangeAdded",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "exchangeAddress",
-						"type": "address"
-					}
-				],
-				"name": "ExchangeRemoved",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
 						"indexed": true,
 						"internalType": "address",
 						"name": "staker",
@@ -196,6 +170,32 @@
 					}
 				],
 				"name": "ParamsSet",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "exchangeAddress",
+						"type": "address"
+					}
+				],
+				"name": "PopAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "exchangeAddress",
+						"type": "address"
+					}
+				],
+				"name": "PopRemoved",
 				"type": "event"
 			},
 			{
@@ -352,10 +352,10 @@
 	},
 	"sources": {
 		"localhost/staking/interfaces/IStakingEvents.sol": {
-			"keccak256": "0xb2f681b66d6e02fc79a33d00e57d9fd19848b14fb9b024a22f577aecebcffcb8",
+			"keccak256": "0x34b11789f72ee8694b37e29c9085c1e8e6a7078ca8585e3dd9e79eed3851b881",
 			"urls": [
-				"bzz-raw://b40712bd4417030b883ff745c188c600a31d6aca857d18b42861072ff487839e",
-				"dweb:/ipfs/QmPK2PbmEpvoxxt7XG9uEZffbDTb5tsKdkstYtNhimVKDT"
+				"bzz-raw://c958bd0bcd6603d9bd243df5a56990f89e915c4d74517f74ddf09002e5358a98",
+				"dweb:/ipfs/QmQwy21gPnV6apLQ9Xc7wMJQeB54e2wHzFtDWDNB81CwbA"
 			]
 		}
 	},
