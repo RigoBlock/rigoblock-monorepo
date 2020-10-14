@@ -50,7 +50,7 @@ contract MixinExchangeFees is
     )
         external
         payable
-        onlyExchange
+        onlyPop
     {
         _assertValidProtocolFee(protocolFee);
 
