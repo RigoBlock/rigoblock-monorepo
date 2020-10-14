@@ -25,34 +25,34 @@ import "../interfaces/IStakingEvents.sol";
 import "../immutable/MixinStorage.sol";
 
 
-contract MixinExchangeManager is
+contract MixinPopManager is
     IStakingEvents,
     MixinStorage
 {
-    /// @dev Asserts that the call is coming from a valid exchange.
-    modifier onlyExchange() {
-        if (!validExchanges[msg.sender]) {
-            LibRichErrors.rrevert(LibStakingRichErrors.OnlyCallableByExchangeError(
+    /// @dev Asserts that the call is coming from a valid pop.
+    modifier onlyPop() {
+        if (!validPops[msg.sender]) {
+            LibRichErrors.rrevert(LibStakingRichErrors.OnlyCallableByPopError(
                 msg.sender
             ));
         }
         _;
     }
 
-    /// @dev Adds a new exchange address
-    /// @param addr Address of exchange contract to add
-    function addExchangeAddress(address addr)
+    /// @dev Adds a new pop address
+    /// @param addr Address of pop contract to add
+    function addPopAddress(address addr)
         external
         onlyAuthorized
     {
-        if (validExchanges[addr]) {
-            LibRichErrors.rrevert(LibStakingRichErrors.ExchangeManagerError(
-                LibStakingRichErrors.ExchangeManagerErrorCodes.ExchangeAlreadyRegistered,
+        if (validPops[addr]) {
+            LibRichErrors.rrevert(LibStakingRichErrors.PopManagerError(
+                LibStakingRichErrors.PopManagerErrorCodes.PopAlreadyRegistered,
                 addr
             ));
         }
-        validExchanges[addr] = true;
-        emit ExchangeAdded(addr);
+        validPops[addr] = true;
+        emit PopAdded(addr);
     }
 
     /// @dev Removes an existing exchange address
@@ -61,13 +61,13 @@ contract MixinExchangeManager is
         external
         onlyAuthorized
     {
-        if (!validExchanges[addr]) {
-            LibRichErrors.rrevert(LibStakingRichErrors.ExchangeManagerError(
-                LibStakingRichErrors.ExchangeManagerErrorCodes.ExchangeNotRegistered,
+        if (!validPops[addr]) {
+            LibRichErrors.rrevert(LibStakingRichErrors.PopManagerError(
+                LibStakingRichErrors.PopManagerErrorCodes.PopNotRegistered,
                 addr
             ));
         }
-        validExchanges[addr] = false;
-        emit ExchangeRemoved(addr);
+        validPops[addr] = false;
+        emit PopRemoved(addr);
     }
 }
