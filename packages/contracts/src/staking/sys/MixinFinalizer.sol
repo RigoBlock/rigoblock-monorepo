@@ -239,6 +239,8 @@ contract MixinFinalizer is
             return rewards;
         }
 
+        //TODO: use non-weighted stake and query stats correctly
+
         // Use the cobb-douglas function to compute the total reward.
         rewards = LibCobbDouglas.cobbDouglas(
             aggregatedStats.rewardsAvailable,
