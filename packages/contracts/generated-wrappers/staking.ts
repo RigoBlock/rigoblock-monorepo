@@ -42,8 +42,8 @@ export type StakingEventArgs =
     | StakingStakeEventArgs
     | StakingUnstakeEventArgs
     | StakingMoveStakeEventArgs
-    | StakingExchangeAddedEventArgs
-    | StakingExchangeRemovedEventArgs
+    | StakingPopAddedEventArgs
+    | StakingPopRemovedEventArgs
     | StakingStakingPoolEarnedRewardsInEpochEventArgs
     | StakingEpochEndedEventArgs
     | StakingEpochFinalizedEventArgs
@@ -60,8 +60,8 @@ export enum StakingEvents {
     Stake = 'Stake',
     Unstake = 'Unstake',
     MoveStake = 'MoveStake',
-    ExchangeAdded = 'ExchangeAdded',
-    ExchangeRemoved = 'ExchangeRemoved',
+    PopAdded = 'PopAdded',
+    PopRemoved = 'PopRemoved',
     StakingPoolEarnedRewardsInEpoch = 'StakingPoolEarnedRewardsInEpoch',
     EpochEnded = 'EpochEnded',
     EpochFinalized = 'EpochFinalized',
@@ -106,11 +106,11 @@ export interface StakingMoveStakeEventArgs extends DecodedLogArgs {
     toPool: string;
 }
 
-export interface StakingExchangeAddedEventArgs extends DecodedLogArgs {
+export interface StakingPopAddedEventArgs extends DecodedLogArgs {
     exchangeAddress: string;
 }
 
-export interface StakingExchangeRemovedEventArgs extends DecodedLogArgs {
+export interface StakingPopRemovedEventArgs extends DecodedLogArgs {
     exchangeAddress: string;
 }
 
@@ -652,6 +652,25 @@ public static async deployFrom0xArtifactAsync(
             { 
                 constant: true,
                 inputs: [
+                    {
+                        name: 'index_0',
+                        type: 'address',
+                    },
+                ],
+                name: 'validPops',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'bool',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
                 ],
                 name: 'currentEpochStartTimeInSeconds',
                 outputs: [
@@ -705,25 +724,6 @@ public static async deployFrom0xArtifactAsync(
                 ],
                 payable: false,
                 stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'address',
-                    },
-                ],
-                name: 'validExchanges',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'bool',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
                 type: 'function',
             },
             { 
@@ -910,44 +910,6 @@ public static async deployFrom0xArtifactAsync(
                 ],
                 payable: false,
                 stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'operatorShare',
-                        type: 'uint32',
-                    },
-                    {
-                        name: 'rigoblockPoolAddress',
-                        type: 'address',
-                    },
-                ],
-                name: 'createStakingPool',
-                outputs: [
-                    {
-                        name: 'poolId',
-                        type: 'bytes32',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'addr',
-                        type: 'address',
-                    },
-                ],
-                name: 'addExchangeAddress',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
                 type: 'function',
             },
             { 
@@ -1183,6 +1145,25 @@ public static async deployFrom0xArtifactAsync(
                 ],
                 payable: false,
                 stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: false,
+                inputs: [
+                    {
+                        name: 'rigoblockPoolAddress',
+                        type: 'address',
+                    },
+                ],
+                name: 'createStakingPool',
+                outputs: [
+                    {
+                        name: 'poolId',
+                        type: 'bytes32',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'nonpayable',
                 type: 'function',
             },
             { 
@@ -1556,7 +1537,7 @@ public static async deployFrom0xArtifactAsync(
                         indexed: false,
                     },
                 ],
-                name: 'ExchangeAdded',
+                name: 'PopAdded',
                 outputs: [
                 ],
                 type: 'event',
@@ -1570,7 +1551,7 @@ public static async deployFrom0xArtifactAsync(
                         indexed: false,
                     },
                 ],
-                name: 'ExchangeRemoved',
+                name: 'PopRemoved',
                 outputs: [
                 ],
                 type: 'event',
@@ -2012,8 +1993,8 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     /**
-     * Adds a new proof_of_performance address
-      * @param addr Address of proof_of_performance contract to add
+     * Adds a new pop address
+      * @param addr Address of pop contract to add
      */
     public addPopAddress(
             addr: string,
@@ -2520,6 +2501,33 @@ public static async deployFrom0xArtifactAsync(
             },
         }
     };
+    public validPops(
+            index_0: string,
+    ): ContractFunctionObj<boolean
+> {
+        const self = this as any as StakingContract;
+            assert.isString('index_0', index_0);
+        const functionSignature = 'validPops(address)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<boolean
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<boolean
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
+            ]);
+            },
+        }
+    };
     public currentEpochStartTimeInSeconds(
     ): ContractFunctionObj<BigNumber
 > {
@@ -2608,33 +2616,6 @@ public static async deployFrom0xArtifactAsync(
                 return self._strictEncodeArguments(functionSignature, [from,
             to,
             amount
-            ]);
-            },
-        }
-    };
-    public validExchanges(
-            index_0: string,
-    ): ContractFunctionObj<boolean
-> {
-        const self = this as any as StakingContract;
-            assert.isString('index_0', index_0);
-        const functionSignature = 'validExchanges(address)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<boolean
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<boolean
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
             ]);
             },
         }
@@ -3067,128 +3048,6 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    /**
-     * Create a new staking pool. The sender will be the operator of this pool. Note that an operator must be payable.
-      * @param operatorShare Portion of rewards owned by the operator, in ppm.
-      * @param rigoblockPoolAddress Adds rigoblock pool to the created staking pool
-     *     for convenience if non-null.
-    * @returns poolId The unique pool id generated for this pool.
-     */
-    public createStakingPool1(
-            operatorShare: number|BigNumber,
-            rigoblockPoolAddress: string,
-    ): ContractTxFunctionObj<string
-> {
-        const self = this as any as StakingContract;
-            assert.isNumberOrBigNumber('operatorShare', operatorShare);
-            assert.isString('rigoblockPoolAddress', rigoblockPoolAddress);
-        const functionSignature = 'createStakingPool(uint32,address)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [operatorShare,
-            rigoblockPoolAddress.toLowerCase()
-            ]);
-            },
-        }
-    };
-    /**
-     * Adds a new exchange address
-      * @param addr Address of exchange contract to add
-     */
-    public addExchangeAddress(
-            addr: string,
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as StakingContract;
-            assert.isString('addr', addr);
-        const functionSignature = 'addExchangeAddress(address)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [addr.toLowerCase()
-            ]);
             },
         }
     };
@@ -3731,6 +3590,66 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [poolId
+            ]);
+            },
+        }
+    };
+    /**
+     * Create a new staking pool. The sender will be the operator of this pool. Note that an operator must be payable.
+      * @param rigoblockPoolAddress Adds rigoblock pool to the created staking pool
+     *     for convenience if non-null.
+    * @returns poolId The unique pool id generated for this pool.
+     */
+    public createStakingPool1(
+            rigoblockPoolAddress: string,
+    ): ContractTxFunctionObj<string
+> {
+        const self = this as any as StakingContract;
+            assert.isString('rigoblockPoolAddress', rigoblockPoolAddress);
+        const functionSignature = 'createStakingPool(address)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { ...txData, data: this.getABIEncodedTransactionData() }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [rigoblockPoolAddress.toLowerCase()
             ]);
             },
         }

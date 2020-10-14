@@ -338,12 +338,16 @@ public static async deployFrom0xArtifactAsync(
             { 
                 constant: true,
                 inputs: [
+                    {
+                        name: 'index_0',
+                        type: 'address',
+                    },
                 ],
-                name: 'currentEpochStartTimeInSeconds',
+                name: 'validPops',
                 outputs: [
                     {
                         name: '',
-                        type: 'uint256',
+                        type: 'bool',
                     },
                 ],
                 payable: false,
@@ -353,16 +357,12 @@ public static async deployFrom0xArtifactAsync(
             { 
                 constant: true,
                 inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'address',
-                    },
                 ],
-                name: 'validExchanges',
+                name: 'currentEpochStartTimeInSeconds',
                 outputs: [
                     {
                         name: '',
-                        type: 'bool',
+                        type: 'uint256',
                     },
                 ],
                 payable: false,
@@ -1095,6 +1095,33 @@ public static async deployFrom0xArtifactAsync(
             },
         }
     };
+    public validPops(
+            index_0: string,
+    ): ContractFunctionObj<boolean
+> {
+        const self = this as any as StakingProxyContract;
+            assert.isString('index_0', index_0);
+        const functionSignature = 'validPops(address)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<boolean
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<boolean
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
+            ]);
+            },
+        }
+    };
     public currentEpochStartTimeInSeconds(
     ): ContractFunctionObj<BigNumber
 > {
@@ -1116,33 +1143,6 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    public validExchanges(
-            index_0: string,
-    ): ContractFunctionObj<boolean
-> {
-        const self = this as any as StakingProxyContract;
-            assert.isString('index_0', index_0);
-        const functionSignature = 'validExchanges(address)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<boolean
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<boolean
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
-            ]);
             },
         }
     };
