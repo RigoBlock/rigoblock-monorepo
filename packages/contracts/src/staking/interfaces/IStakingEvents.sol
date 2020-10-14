@@ -33,13 +33,13 @@ interface IStakingEvents {
 
     /// @dev Emitted by MixinExchangeManager when an exchange is added.
     /// @param exchangeAddress Address of new exchange.
-    event ExchangeAdded(
+    event PopAdded(
         address exchangeAddress
     );
 
     /// @dev Emitted by MixinExchangeManager when an exchange is removed.
     /// @param exchangeAddress Address of removed exchange.
-    event ExchangeRemoved(
+    event PopRemoved(
         address exchangeAddress
     );
 

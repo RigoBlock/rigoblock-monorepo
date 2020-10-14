@@ -27,11 +27,11 @@ import "../libs/LibStakingRichErrors.sol";
 import "../interfaces/IStructs.sol";
 import "../sys/MixinFinalizer.sol";
 import "../staking_pools/MixinStakingPool.sol";
-import "./MixinExchangeManager.sol";
+import "./MixinPopManager.sol";
 
 
 contract MixinExchangeFees is
-    MixinExchangeManager,
+    MixinPopManager,
     MixinStakingPool,
     MixinFinalizer
 {

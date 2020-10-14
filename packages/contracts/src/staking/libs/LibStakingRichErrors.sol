@@ -43,10 +43,9 @@ library LibStakingRichErrors {
         InvalidEpochDuration
     }
 
-    // TODO: amend with PopManagerErrorCodes, PopAlreadyRegistered, PopNotRegistered
-    enum ExchangeManagerErrorCodes {
-        ExchangeAlreadyRegistered,
-        ExchangeNotRegistered
+    enum PopManagerErrorCodes {
+        PopAlreadyRegistered,
+        PopNotRegistered
     }
 
     // bytes4(keccak256("OnlyCallableByExchangeError(address)")) // TODO: amend to OnlyCallableByPopError
@@ -113,9 +112,8 @@ library LibStakingRichErrors {
     bytes4 internal constant POOL_NOT_FINALIZED_ERROR_SELECTOR =
         0x5caa0b05;
 
-    // TODO: amend with OnlyCallableByPopError
     // solhint-disable func-name-mixedcase
-    function OnlyCallableByExchangeError(
+    function OnlyCallableByPopError(
         address senderAddress
     )
         internal
@@ -128,9 +126,8 @@ library LibStakingRichErrors {
         );
     }
 
-    // TODO: amend with PopManagerError, PopManagerErrorCodes
-    function ExchangeManagerError(
-        ExchangeManagerErrorCodes errorCodes,
+    function PopManagerError(
+        PopManagerErrorCodes errorCodes,
         address popAddress
     )
         internal

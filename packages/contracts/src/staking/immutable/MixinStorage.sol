@@ -85,7 +85,7 @@ contract MixinStorage is
     /// @dev Registered RigoBlock Proof_of_Performance contracts, capable of paying protocol fees.
     /// @param 0 The address to check.
     /// @return 0 Whether the address is a registered proof_of_performance.
-    mapping (address => bool) public validExchanges; // TODO: change to validPop
+    mapping (address => bool) public validPops;
 
     /* Tweakable parameters */
 
