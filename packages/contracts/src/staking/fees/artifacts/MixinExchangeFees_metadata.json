@@ -109,32 +109,6 @@
 				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "exchangeAddress",
-						"type": "address"
-					}
-				],
-				"name": "ExchangeAdded",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "exchangeAddress",
-						"type": "address"
-					}
-				],
-				"name": "ExchangeRemoved",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
 						"indexed": true,
 						"internalType": "address",
 						"name": "staker",
@@ -253,6 +227,32 @@
 					}
 				],
 				"name": "ParamsSet",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "exchangeAddress",
+						"type": "address"
+					}
+				],
+				"name": "PopAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "exchangeAddress",
+						"type": "address"
+					}
+				],
+				"name": "PopRemoved",
 				"type": "event"
 			},
 			{
@@ -411,7 +411,7 @@
 						"type": "address"
 					}
 				],
-				"name": "addExchangeAddress",
+				"name": "addPopAddress",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
@@ -580,11 +580,6 @@
 			{
 				"constant": false,
 				"inputs": [
-					{
-						"internalType": "uint32",
-						"name": "operatorShare",
-						"type": "uint32"
-					},
 					{
 						"internalType": "address",
 						"name": "rigoblockPoolAddress",
@@ -1310,7 +1305,7 @@
 						"type": "address"
 					}
 				],
-				"name": "validExchanges",
+				"name": "validPops",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -1361,10 +1356,10 @@
 						"target": "Address to authorize."
 					}
 				},
-				"addExchangeAddress(address)": {
-					"details": "Adds a new exchange address",
+				"addPopAddress(address)": {
+					"details": "Adds a new pop address",
 					"params": {
-						"addr": "Address of exchange contract to add"
+						"addr": "Address of pop contract to add"
 					}
 				},
 				"computeRewardBalanceOfDelegator(bytes32,address)": {
@@ -1382,10 +1377,9 @@
 					},
 					"return": "totalReward Balance in ETH."
 				},
-				"createStakingPool(uint32,address)": {
+				"createStakingPool(address)": {
 					"details": "Create a new staking pool. The sender will be the operator of this pool. Note that an operator must be payable.",
 					"params": {
-						"operatorShare": "Portion of rewards owned by the operator, in ppm.",
 						"rigoblockPoolAddress": "Adds rigoblock pool to the created staking pool for convenience if non-null."
 					},
 					"return": "poolId The unique pool id generated for this pool."
@@ -1531,24 +1525,24 @@
 		"evmVersion": "istanbul",
 		"libraries": {},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"localhost/staking/fees/MixinExchangeFees.sol": {
-			"keccak256": "0xd805434e58b35ffee897450a4c2cf2b82622de85e19589c1be5efd78ff991982",
+			"keccak256": "0xe08bd868f8f84393583fafee5697cff5b828a47b0c4f83b532779a22b4a33a41",
 			"urls": [
-				"bzz-raw://0935d463dc191a5c8054ab1a68f24439be9b8cf7b085fc351e87171bbebdafa1",
-				"dweb:/ipfs/QmWnG7ikAsEzHn9zicCeVkSCuU2a6qxGMXCvBhBeGK1RdF"
+				"bzz-raw://e4df8c8ce446d3462ce5c4b826fcc07b66d4e632b0b68c0f3a81660d760d8459",
+				"dweb:/ipfs/QmaMj9ij23opsJKFMqy5GAyZmoaBRWtFpnhMv6PtALYvCu"
 			]
 		},
-		"localhost/staking/fees/MixinExchangeManager.sol": {
-			"keccak256": "0x47b7c21fc789fcb0b6f8d14e1c9aaf132128561ec774b271b6f627f455e294f5",
+		"localhost/staking/fees/MixinPopManager.sol": {
+			"keccak256": "0x47581108999256025302d8d7263246eb83060ba4d5ebddd41f3f2ef8d097a45f",
 			"urls": [
-				"bzz-raw://b056ca8aeb330e659a34078c75d1f9d888468ab2b90cfd9b657d9116729a7ff8",
-				"dweb:/ipfs/Qmb4aejyVBt7j26iRZZ8tNJx19LWiJFXuwdBG4phrFS2o1"
+				"bzz-raw://300deed75c10e95569dee2a5a2168b9f32deca3eed4fd059cc174b7c0878676a",
+				"dweb:/ipfs/QmWk3FkX22a15mSUQL2oYFYxwu1r6FrFNFK4M1eqRQK1F2"
 			]
 		},
 		"localhost/staking/immutable/MixinConstants.sol": {
@@ -1559,17 +1553,17 @@
 			]
 		},
 		"localhost/staking/immutable/MixinDeploymentConstants.sol": {
-			"keccak256": "0x5c213ba11bf7b8d0cc582b03e2ae9caa30758806495cb33ce29d70ff46c03d02",
+			"keccak256": "0x0ee79f1ccfef16ff698a13ec5f21748acf18102a3f0e3e5cf217d8bca74ab0b4",
 			"urls": [
-				"bzz-raw://ce3ca15cc0ff571e092e7298b0f70c0bee549248a50440a8bc8633e4ca2f5e3c",
-				"dweb:/ipfs/QmQ71zmHtyJbsuts8RRYQMt5D5NA67ZzQuCA85McCSNuwb"
+				"bzz-raw://a0861d60ca88b31de95f6db1fab04c354febe4a742bacad867becad43b154d04",
+				"dweb:/ipfs/QmNb1e7ZpDoqfUcgQNzgour89ikcQTcr78khPbmfUAhTwx"
 			]
 		},
 		"localhost/staking/immutable/MixinStorage.sol": {
-			"keccak256": "0x29f1af986aca61b3e49ea40d81fbb2454ba2e65895d4450fe935c00b34891669",
+			"keccak256": "0x06b0e37c8e84ae3b3f7152266ec2a363393002898579b283829addee5add6701",
 			"urls": [
-				"bzz-raw://08de106074f0c57c36e785a2755139bcbe5cbee2d90e313a1296f006fab8e55b",
-				"dweb:/ipfs/QmV2kiY7RX3V59uzeiEr9WwA2DkGvEkci4iPGQd9fqMCTB"
+				"bzz-raw://28a98fe4c9944a15441b017e25cac7899d0b59d25d79c02cf980b09ba1aaa1ae",
+				"dweb:/ipfs/Qmc7Ms9uY4ExuDQoa7y6JfLHFspvL9LG1sxDBRrj6kawBm"
 			]
 		},
 		"localhost/staking/interfaces/IGrgVault.sol": {
@@ -1580,10 +1574,10 @@
 			]
 		},
 		"localhost/staking/interfaces/IStakingEvents.sol": {
-			"keccak256": "0xb2f681b66d6e02fc79a33d00e57d9fd19848b14fb9b024a22f577aecebcffcb8",
+			"keccak256": "0x34b11789f72ee8694b37e29c9085c1e8e6a7078ca8585e3dd9e79eed3851b881",
 			"urls": [
-				"bzz-raw://b40712bd4417030b883ff745c188c600a31d6aca857d18b42861072ff487839e",
-				"dweb:/ipfs/QmPK2PbmEpvoxxt7XG9uEZffbDTb5tsKdkstYtNhimVKDT"
+				"bzz-raw://c958bd0bcd6603d9bd243df5a56990f89e915c4d74517f74ddf09002e5358a98",
+				"dweb:/ipfs/QmQwy21gPnV6apLQ9Xc7wMJQeB54e2wHzFtDWDNB81CwbA"
 			]
 		},
 		"localhost/staking/interfaces/IStructs.sol": {
@@ -1622,10 +1616,10 @@
 			]
 		},
 		"localhost/staking/libs/LibStakingRichErrors.sol": {
-			"keccak256": "0x9fd346514f4493fe6c8be681740af0600ec9771fcbdb7bfe61d548e91e26181b",
+			"keccak256": "0xa5c4e488db4b0b694d2d6a61786e7d0317b87eeaac5c1e8ec581c3a9517e94e2",
 			"urls": [
-				"bzz-raw://d560d782da1824a4c2eb5f67802187da2b56debe062370af6b136ae26cbcc986",
-				"dweb:/ipfs/QmZ8hUGjKH2H4q7rWfA1RWDfxyCWg1ykaRVw2jXF11ZEwe"
+				"bzz-raw://0f6b890b8691666e65946327654ea2095e92f42b5ee557c3d60f8d5e8948d15c",
+				"dweb:/ipfs/QmSJEPtNYzow9kcRHJw5moedtY922n5EtsTJmaV5dUbn9r"
 			]
 		},
 		"localhost/staking/stake/MixinStakeBalances.sol": {
@@ -1650,10 +1644,10 @@
 			]
 		},
 		"localhost/staking/staking_pools/MixinStakingPool.sol": {
-			"keccak256": "0x146619298e7a53f7a2d98d67884bf2345a8d390fe4e7de79650fa2065235fdc9",
+			"keccak256": "0x714e69072d222194d04ff5134fdeedeaec26668d38c36b0ba08ee6fe055b0686",
 			"urls": [
-				"bzz-raw://3475d0d60a298ee24bb888165f8c2a80a279d32540559e1eb1bed9beb4597f2c",
-				"dweb:/ipfs/QmSq6YMfcJFcNQbqfgKV7isKAmgMAt6rxGWqrv2fzja9sZ"
+				"bzz-raw://cffac97830547feee82f0b8fbd6b7acb45ed57c574c108002cd976874538e789",
+				"dweb:/ipfs/QmabxW5iYtkxhE4nUNPo9KxKdTM6FuvvLaHLr4fiPAEyXf"
 			]
 		},
 		"localhost/staking/staking_pools/MixinStakingPoolRewards.sol": {
@@ -1671,10 +1665,10 @@
 			]
 		},
 		"localhost/staking/sys/MixinFinalizer.sol": {
-			"keccak256": "0x7b2701dc6da7afd7be4378f0c50bd4563525f2f7abe89cf8739eeff68469a483",
+			"keccak256": "0x3a28c213d9344358451a4efa19a875a33cd063191bb00c847b4b07bd9914f59a",
 			"urls": [
-				"bzz-raw://7a8141c91bd9c47fd02fd8d3cf3791a1d7a71b20cc41fdafe1151c5f726dd253",
-				"dweb:/ipfs/QmZ9snCs2BMipH8Wo6kw9Af6GgTndC8jTAomV9TTAt1TbD"
+				"bzz-raw://cd469be3481a5ab2412e2ef3ffa791ffd3aac3f7a420316de664f00e44e87e1e",
+				"dweb:/ipfs/QmdQV6GjjF4EHYu6f8FFnkYJQC64qSRLsii46iNsYsRNNJ"
 			]
 		},
 		"localhost/staking/sys/MixinScheduler.sol": {
