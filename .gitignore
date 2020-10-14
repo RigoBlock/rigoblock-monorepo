@@ -15,3 +15,6 @@ coverage
 packages/deployer/package-lock\.json
 
 packages/exchange-connector/package-lock\.json
+
+# generated truffle contract artifacts/
+packages/contracts/src/**/**/artifacts/
