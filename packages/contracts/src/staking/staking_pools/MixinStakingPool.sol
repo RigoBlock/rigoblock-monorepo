@@ -48,15 +48,18 @@ contract MixinStakingPool is
 
     /// @dev Create a new staking pool. The sender will be the operator of this pool.
     /// Note that an operator must be payable.
-    /// @param operatorShare Portion of rewards owned by the operator, in ppm.
     /// @param rigoblockPoolAddress Adds rigoblock pool to the created staking pool for convenience if non-null.
     /// @return poolId The unique pool id generated for this pool.
-    function createStakingPool(uint32 operatorShare, address rigoblockPoolAddress)
+    function createStakingPool(address rigoblockPoolAddress) // TODO: stakingPal address as input
         external
         returns (bytes32 poolId)
     {
         // note that an operator must be payable
         address operator = msg.sender;
+        // pal = stakingPoolPalAddress;
+
+        // operator initially shares 30% with stakers
+        uint32 operatorShare = uint32(700000);
 
         // compute unique id for this pool
         poolId = lastPoolId = bytes32(uint256(lastPoolId).safeAdd(1));
@@ -122,13 +125,18 @@ contract MixinStakingPool is
             rbPoolId != uint256(0) && rbPoolOwner == msg.sender,
             "ONLY_POOL_OWNER_CAN_ATTACH_REGISTERED_RB_POOL"
         );
+        // TODO: check whether we require msg.sender = pooloperator
+        //or modify prev. requirement as rbPoolOwner = pooloperator
+        //in order to allow checks on staked tokens instead of token balances
+        // TODO: check whether staking pool should have just 1 rigoblock pool
         bytes32 existingPoolId = poolIdByRbPool[rigoblockPoolAddress];
         uint256 existingArrayLength = rigoblockOperatorPools[existingPoolId].length;
-        
-        if (existingArrayLength >= uint256(100)) {
+
+        // ensure maximum 32 rigoblock pools attached to 1 staking pool
+        if (existingArrayLength >= uint256(32)) {
             revert("POOLS_ARRAY_TOO_BIG_ERROR");
         }
-        
+
         //bool alreadyAttachedPool = poolIdByRbPool[rigoblockPoolAddress] != bytes32(0);
         if (existingPoolId != bytes32(0)) {
             uint256 poolPositionToBeSwitched;
