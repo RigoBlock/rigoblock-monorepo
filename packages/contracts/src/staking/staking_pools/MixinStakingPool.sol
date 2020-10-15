@@ -28,10 +28,6 @@ import "../sys/MixinAbstract.sol";
 import "./MixinStakingPoolRewards.sol";
 
 
-interface DragoRegistry {
-    function fromAddress(address _drago) external view returns (uint256 id, string memory name, string memory symbol, uint256 dragoId, address owner, address group);
-}
-
 contract MixinStakingPool is
     MixinAbstract,
     MixinStakingPoolRewards
@@ -50,19 +46,31 @@ contract MixinStakingPool is
     /// Note that an operator must be payable.
     /// @param rigoblockPoolAddress Adds rigoblock pool to the created staking pool for convenience if non-null.
     /// @return poolId The unique pool id generated for this pool.
-    function createStakingPool(address rigoblockPoolAddress) // TODO: stakingPal address as input
+    function createStakingPool(address rigoblockPoolAddress)
         external
         returns (bytes32 poolId)
     {
+        // TODO: test
+        (uint256 rbPoolId, , , , address rbPoolOwner, ) = getDragoRegistry().fromAddress(rigoblockPoolAddress);
+        require(
+            rbPoolId != uint256(0),
+            "NON_REGISTERED_RB_POOL_ERROR"
+        );
         // note that an operator must be payable
-        address operator = msg.sender;
-        // pal = stakingPoolPalAddress;
+        address operator = rbPoolOwner;
+
+        // add stakingPal, which will receive part of community reward if not pool operator
+        address stakingPal;
+        if (rbPoolOwner != msg.sender) {
+            stakingPal = msg.sender;
+        }
 
         // operator initially shares 30% with stakers
         uint32 operatorShare = uint32(700000);
 
-        // compute unique id for this pool
-        poolId = lastPoolId = bytes32(uint256(lastPoolId).safeAdd(1));
+        // check that staking pool does not exist and add unique id for this pool
+        _assertStakingPoolDoesNotExist(bytes32(rbPoolId));
+        poolId = bytes32(rbPoolId);
 
         // sanity check on operator share
         _assertNewOperatorShare(
@@ -82,7 +90,7 @@ contract MixinStakingPool is
         emit StakingPoolCreated(poolId, operator, operatorShare);
 
         if (rigoblockPoolAddress != address(0)) {
-            joinStakingPoolAsRbPool(poolId, rigoblockPoolAddress);
+            joinStakingPoolAsRbPoolAccount(poolId, rigoblockPoolAddress);
         }
 
         return poolId;
@@ -112,24 +120,23 @@ contract MixinStakingPool is
         );
     }
 
-    /// @dev Allows caller to join a staking pool as a rigoblock pool.
+    /// @dev Allows caller to join a staking pool as a rigoblock pool account.
     /// @param poolId Unique id of pool.
-    function joinStakingPoolAsRbPool(bytes32 poolId, address rigoblockPoolAddress)
+    function joinStakingPoolAsRbPoolAccount(bytes32 poolId, address rigoblockPoolAccount)
         public
     {
         //TODO: test
-        // delete rigoblock pool from existing staking pool
-        // TODO: either add registry or pop address as public constant
-        (uint256 rbPoolId, , , , address rbPoolOwner, ) = DragoRegistry(address(0)).fromAddress(rigoblockPoolAddress);
+        // delete rigoblock pool accout from existing staking pool
+        (uint256 rbPoolId, , , , address rbPoolOwner, ) = getDragoRegistry().fromAddress(rigoblockPoolAccount);
         require(
             rbPoolId != uint256(0) && rbPoolOwner == msg.sender,
-            "ONLY_POOL_OWNER_CAN_ATTACH_REGISTERED_RB_POOL"
+            "ONLY_POOL_OWNER_CAN_ATTACH_REGISTERED_RB_POOL_SUBACCOUNT"
         );
         // TODO: check whether we require msg.sender = pooloperator
         //or modify prev. requirement as rbPoolOwner = pooloperator
         //in order to allow checks on staked tokens instead of token balances
         // TODO: check whether staking pool should have just 1 rigoblock pool
-        bytes32 existingPoolId = poolIdByRbPool[rigoblockPoolAddress];
+        bytes32 existingPoolId = poolIdByRbPool[rigoblockPoolAccount];
         uint256 existingArrayLength = rigoblockOperatorPools[existingPoolId].length;
 
         // ensure maximum 32 rigoblock pools attached to 1 staking pool
@@ -140,20 +147,20 @@ contract MixinStakingPool is
         //bool alreadyAttachedPool = poolIdByRbPool[rigoblockPoolAddress] != bytes32(0);
         if (existingPoolId != bytes32(0)) {
             uint256 poolPositionToBeSwitched;
-            address[] memory exitistingPoolsList = rigoblockOperatorPools[poolIdByRbPool[rigoblockPoolAddress]];
+            address[] memory exitistingPoolsList = rigoblockOperatorPools[poolIdByRbPool[rigoblockPoolAccount]];
             // check whether address associated with any other pool array
             for (uint i=0; i < existingArrayLength; i++) {
-                if (exitistingPoolsList[i] != rigoblockPoolAddress) continue;
+                if (exitistingPoolsList[i] != rigoblockPoolAccount) continue;
                 poolPositionToBeSwitched = i;
             }
             // overwrite last list element to switched pool position and pop from array
             rigoblockOperatorPools[existingPoolId][poolPositionToBeSwitched] = exitistingPoolsList[exitistingPoolsList.length-1];
             rigoblockOperatorPools[existingPoolId].pop();
         }
-        poolIdByRbPool[rigoblockPoolAddress] = poolId;
-        rigoblockOperatorPools[poolId].push(rigoblockPoolAddress);
+        poolIdByRbPool[rigoblockPoolAccount] = poolId;
+        rigoblockOperatorPools[poolId].push(rigoblockPoolAccount);
         emit RbPoolStakingPoolSet(
-            rigoblockPoolAddress,
+            rigoblockPoolAccount,
             poolId
         );
     }
@@ -175,6 +182,23 @@ contract MixinStakingPool is
         view
     {
         if (_poolById[poolId].operator == NIL_ADDRESS) {
+            // we use the pool's operator as a proxy for its existence
+            LibRichErrors.rrevert(
+                LibStakingRichErrors.PoolExistenceError(
+                    poolId,
+                    false
+                )
+            );
+        }
+    }
+    
+    /// @dev Reverts iff a staking pool does exist.
+    /// @param poolId Unique id of pool.
+    function _assertStakingPoolDoesNotExist(bytes32 poolId)
+        internal
+        view
+    {
+        if (_poolById[poolId].operator != NIL_ADDRESS) {
             // we use the pool's operator as a proxy for its existence
             LibRichErrors.rrevert(
                 LibStakingRichErrors.PoolExistenceError(
