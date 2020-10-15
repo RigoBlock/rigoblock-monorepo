@@ -21,13 +21,11 @@ pragma solidity ^0.5.9;
 
 import "../../utils/0xUtils/IEtherToken.sol";
 import "../interfaces/IGrgVault.sol";
+import "../../protocol/DragoRegistry/IDragoRegistry.sol";
 
 
 // solhint-disable separate-by-one-line-in-contract
 contract MixinDeploymentConstants {
-
-    // @TODO SET THESE VALUES FOR DEPLOYMENT
-    // add GRG_ADDRESS but all these parameters should not be hardcoded but initialized
 
     // Mainnet WETH9 Address
     address constant private WETH_ADDRESS = address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
@@ -37,8 +35,6 @@ contract MixinDeploymentConstants {
 
     // Ropsten & Rinkeby WETH9 Address
     // address constant private WETH_ADDRESS = address(0xc778417E063141139Fce010982780140Aa0cD5Ab);
-
-    // @TODO SET THESE VALUES FOR DEPLOYMENT
 
     // Mainnet GrgVault address
     address constant private GRG_VAULT_ADDRESS = address(0xBa7f8b5fB1b19c1211c5d49550fcD149177A5Eaf);
@@ -51,6 +47,12 @@ contract MixinDeploymentConstants {
 
     // Rinkeby GrgVault address
     // address constant private GRG_VAULT_ADDRESS = address(0xA5Bf6aC73bC40790FC6Ffc9DBbbCE76c9176e224);
+    
+    // Mainnet DragoRegistry address
+    address constant private DRAGO_REGISTRY_ADDRESS = address(0xdE6445484a8dcD9bf35fC95eb4E3990Cc358822e);
+    
+    // Ropsten DragoRegistry address
+    // address constant private DRAGO_REGISTRY_ADDRESS = address(0x4e868D1dDF940316964eA7673E21bE6CBED8b30B);
 
     /// @dev An overridable way to access the deployed WETH contract.
     ///      Must be view to allow overrides to access state.
@@ -74,5 +76,17 @@ contract MixinDeploymentConstants {
     {
         grgVault = IGrgVault(GRG_VAULT_ADDRESS);
         return grgVault;
+    }
+    
+    /// @dev An overridable way to access the deployed dragoRegistry.
+    ///      Must be view to allow overrides to access state.
+    /// @return dragoRegistry The dragoRegistry contract.
+    function getDragoRegistry()
+        public
+        view
+        returns (IDragoRegistry dragoRegistry)
+    {
+        dragoRegistry = IDragoRegistry(DRAGO_REGISTRY_ADDRESS);
+        return dragoRegistry;
     }
 }
