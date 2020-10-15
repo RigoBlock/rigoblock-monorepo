@@ -316,6 +316,25 @@ public static async deployFrom0xArtifactAsync(
                 type: 'function',
             },
             { 
+                constant: false,
+                inputs: [
+                    {
+                        name: 'poolId',
+                        type: 'bytes32',
+                    },
+                    {
+                        name: 'rigoblockPoolAccount',
+                        type: 'address',
+                    },
+                ],
+                name: 'joinStakingPoolAsRbPoolAccount',
+                outputs: [
+                ],
+                payable: false,
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
                 constant: true,
                 inputs: [
                     {
@@ -453,29 +472,6 @@ public static async deployFrom0xArtifactAsync(
                 outputs: [
                     {
                         name: 'wethContract',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'bytes32',
-                    },
-                    {
-                        name: 'index_1',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'rigoblockOperatorPools',
-                outputs: [
-                    {
-                        name: '',
                         type: 'address',
                     },
                 ],
@@ -642,6 +638,10 @@ public static async deployFrom0xArtifactAsync(
                                 name: 'operatorShare',
                                 type: 'uint32',
                             },
+                            {
+                                name: 'stakingPal',
+                                type: 'address',
+                            },
                         ]
                     },
                 ],
@@ -748,25 +748,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 constant: true,
                 inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'address',
-                    },
-                ],
-                name: 'poolIdByRbPool',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'bytes32',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
                 ],
                 name: 'getParams',
                 outputs: [
@@ -849,40 +830,6 @@ public static async deployFrom0xArtifactAsync(
                 type: 'function',
             },
             { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'poolId',
-                        type: 'bytes32',
-                    },
-                    {
-                        name: 'rigoblockPoolAddress',
-                        type: 'address',
-                    },
-                ],
-                name: 'joinStakingPoolAsRbPool',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'stakingPoolId',
-                        type: 'bytes32',
-                    },
-                ],
-                name: 'joinStakingPoolAsRbPool',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
                 constant: true,
                 inputs: [
                 ],
@@ -891,6 +838,25 @@ public static async deployFrom0xArtifactAsync(
                     {
                         name: '',
                         type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'index_0',
+                        type: 'address',
+                    },
+                ],
+                name: 'poolIdByRbPoolAccount',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'bytes32',
                     },
                 ],
                 payable: false,
@@ -1112,6 +1078,21 @@ public static async deployFrom0xArtifactAsync(
             { 
                 constant: true,
                 inputs: [
+                ],
+                name: 'getDragoRegistry',
+                outputs: [
+                    {
+                        name: 'dragoRegistry',
+                        type: 'address',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
                     {
                         name: 'index_0',
                         type: 'address',
@@ -1179,6 +1160,29 @@ public static async deployFrom0xArtifactAsync(
                     {
                         name: '',
                         type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'index_0',
+                        type: 'bytes32',
+                    },
+                    {
+                        name: 'index_1',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'rigoblockOperatorPoolAccounts',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
                     },
                 ],
                 payable: false,
@@ -1961,6 +1965,69 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     /**
+     * Allows caller to join a staking pool as a rigoblock pool account.
+      * @param poolId Unique id of pool.
+      * @param rigoblockPoolAccount Address of subaccount to be added to staking
+     *     pool.
+     */
+    public joinStakingPoolAsRbPoolAccount(
+            poolId: string,
+            rigoblockPoolAccount: string,
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as StakingContract;
+            assert.isString('poolId', poolId);
+            assert.isString('rigoblockPoolAccount', rigoblockPoolAccount);
+        const functionSignature = 'joinStakingPoolAsRbPoolAccount(bytes32,address)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { ...txData, data: this.getABIEncodedTransactionData() }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [poolId,
+            rigoblockPoolAccount.toLowerCase()
+            ]);
+            },
+        }
+    };
+    /**
      * Returns the total stake for a given staker.
       * @param staker of stake.
     * @returns Total GRG staked by &#x60;staker&#x60;.
@@ -2254,36 +2321,6 @@ public static async deployFrom0xArtifactAsync(
             },
         }
     };
-    public rigoblockOperatorPools(
-            index_0: string,
-            index_1: BigNumber,
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as StakingContract;
-            assert.isString('index_0', index_0);
-            assert.isBigNumber('index_1', index_1);
-        const functionSignature = 'rigoblockOperatorPools(bytes32,uint256)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0,
-            index_1
-            ]);
-            },
-        }
-    };
     /**
      * Returns the total stake delegated to a specific staking pool,
  * across all members.
@@ -2476,7 +2513,7 @@ public static async deployFrom0xArtifactAsync(
      */
     public getStakingPool(
             poolId: string,
-    ): ContractFunctionObj<{operator: string;operatorShare: number}
+    ): ContractFunctionObj<{operator: string;operatorShare: number;stakingPal: string}
 > {
         const self = this as any as StakingContract;
             assert.isString('poolId', poolId);
@@ -2486,13 +2523,13 @@ public static async deployFrom0xArtifactAsync(
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
-            ): Promise<{operator: string;operatorShare: number}
+            ): Promise<{operator: string;operatorShare: number;stakingPal: string}
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<{operator: string;operatorShare: number}
+                return abiEncoder.strictDecodeReturnValue<{operator: string;operatorShare: number;stakingPal: string}
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
@@ -2683,33 +2720,6 @@ public static async deployFrom0xArtifactAsync(
             },
         }
     };
-    public poolIdByRbPool(
-            index_0: string,
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as StakingContract;
-            assert.isString('index_0', index_0);
-        const functionSignature = 'poolIdByRbPool(address)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
-            ]);
-            },
-        }
-    };
     /**
      * Retrieves all configurable parameter values.
     * @returns _epochDurationInSeconds Minimum seconds between epochs._rewardDelegatedStakeWeight How much delegated stake is weighted vs operator stake, in ppm._minimumPoolStake Minimum amount of stake required in a pool to collect rewards._cobbDouglasAlphaNumerator Numerator for cobb douglas alpha factor._cobbDouglasAlphaDenominator Denominator for cobb douglas alpha factor.
@@ -2884,125 +2894,6 @@ public static async deployFrom0xArtifactAsync(
             },
         }
     };
-    /**
-     * Allows caller to join a staking pool as a rigoblock pool.
-      * @param poolId Unique id of pool.
-     */
-    public joinStakingPoolAsRbPool2(
-            poolId: string,
-            rigoblockPoolAddress: string,
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as StakingContract;
-            assert.isString('poolId', poolId);
-            assert.isString('rigoblockPoolAddress', rigoblockPoolAddress);
-        const functionSignature = 'joinStakingPoolAsRbPool(bytes32,address)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [poolId,
-            rigoblockPoolAddress.toLowerCase()
-            ]);
-            },
-        }
-    };
-    /**
-     * Allows caller to join a staking pool as a rigoblock pool id.
-      * @param stakingPoolId Unique id of staking pool.
-     */
-    public joinStakingPoolAsRbPool1(
-            stakingPoolId: string,
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as StakingContract;
-            assert.isString('stakingPoolId', stakingPoolId);
-        const functionSignature = 'joinStakingPoolAsRbPool(bytes32)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [stakingPoolId
-            ]);
-            },
-        }
-    };
     public currentEpoch(
     ): ContractFunctionObj<BigNumber
 > {
@@ -3024,6 +2915,33 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    public poolIdByRbPoolAccount(
+            index_0: string,
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as StakingContract;
+            assert.isString('index_0', index_0);
+        const functionSignature = 'poolIdByRbPoolAccount(address)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
+            ]);
             },
         }
     };
@@ -3535,6 +3453,35 @@ public static async deployFrom0xArtifactAsync(
             },
         }
     };
+    /**
+     * An overridable way to access the deployed dragoRegistry.
+ * Must be view to allow overrides to access state.
+    * @returns dragoRegistry The dragoRegistry contract.
+     */
+    public getDragoRegistry(
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as StakingContract;
+        const functionSignature = 'getDragoRegistry()';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
     public authorized(
             index_0: string,
     ): ContractFunctionObj<boolean
@@ -3677,6 +3624,36 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [index_0
+            ]);
+            },
+        }
+    };
+    public rigoblockOperatorPoolAccounts(
+            index_0: string,
+            index_1: BigNumber,
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as StakingContract;
+            assert.isString('index_0', index_0);
+            assert.isBigNumber('index_1', index_1);
+        const functionSignature = 'rigoblockOperatorPoolAccounts(bytes32,uint256)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [index_0,
+            index_1
             ]);
             },
         }

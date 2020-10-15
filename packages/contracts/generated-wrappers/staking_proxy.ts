@@ -279,29 +279,6 @@ public static async deployFrom0xArtifactAsync(
                 type: 'function',
             },
             { 
-                constant: true,
-                inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'bytes32',
-                    },
-                    {
-                        name: 'index_1',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'rigoblockOperatorPools',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
                 constant: false,
                 inputs: [
                     {
@@ -372,25 +349,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 constant: true,
                 inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'address',
-                    },
-                ],
-                name: 'poolIdByRbPool',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'bytes32',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
                 ],
                 name: 'epochDurationInSeconds',
                 outputs: [
@@ -442,6 +400,25 @@ public static async deployFrom0xArtifactAsync(
                     {
                         name: '',
                         type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'index_0',
+                        type: 'address',
+                    },
+                ],
+                name: 'poolIdByRbPoolAccount',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'bytes32',
                     },
                 ],
                 payable: false,
@@ -605,6 +582,29 @@ public static async deployFrom0xArtifactAsync(
                 ],
                 name: 'assertValidStorageParams',
                 outputs: [
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'index_0',
+                        type: 'bytes32',
+                    },
+                    {
+                        name: 'index_1',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'rigoblockOperatorPoolAccounts',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
                 ],
                 payable: false,
                 stateMutability: 'view',
@@ -980,36 +980,6 @@ public static async deployFrom0xArtifactAsync(
             },
         }
     };
-    public rigoblockOperatorPools(
-            index_0: string,
-            index_1: BigNumber,
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as StakingProxyContract;
-            assert.isString('index_0', index_0);
-            assert.isBigNumber('index_1', index_1);
-        const functionSignature = 'rigoblockOperatorPools(bytes32,uint256)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0,
-            index_1
-            ]);
-            },
-        }
-    };
     /**
      * Authorizes an address.
       * @param target Address to authorize.
@@ -1143,33 +1113,6 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    public poolIdByRbPool(
-            index_0: string,
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as StakingProxyContract;
-            assert.isString('index_0', index_0);
-        const functionSignature = 'poolIdByRbPool(address)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
-            ]);
             },
         }
     };
@@ -1334,6 +1277,33 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    public poolIdByRbPoolAccount(
+            index_0: string,
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as StakingProxyContract;
+            assert.isString('index_0', index_0);
+        const functionSignature = 'poolIdByRbPoolAccount(address)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
+            ]);
             },
         }
     };
@@ -1656,6 +1626,36 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    public rigoblockOperatorPoolAccounts(
+            index_0: string,
+            index_1: BigNumber,
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as StakingProxyContract;
+            assert.isString('index_0', index_0);
+            assert.isBigNumber('index_1', index_1);
+        const functionSignature = 'rigoblockOperatorPoolAccounts(bytes32,uint256)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [index_0,
+            index_1
+            ]);
             },
         }
     };

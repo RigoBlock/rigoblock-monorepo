@@ -84,7 +84,7 @@ contract MixinParams is
         _cobbDouglasAlphaNumerator = cobbDouglasAlphaNumerator;
         _cobbDouglasAlphaDenominator = cobbDouglasAlphaDenominator;
     }
-    
+
     /// @dev Get list of rigoblock pools addresses by staking pool Id.
     /// @param stakingPoolId Staking pool Id to query.
     /// @return List of addresses.
@@ -93,7 +93,7 @@ contract MixinParams is
         view
         returns (address[] memory)
     {
-        return rigoblockOperatorPools[stakingPoolId];  
+        return rigoblockOperatorPoolAccounts[stakingPoolId];  
     }
 
     /// @dev Initialize storage belonging to this mixin.
