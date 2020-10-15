@@ -60,6 +60,7 @@ contract MixinStakingPool is
         address operator = rbPoolOwner;
 
         // add stakingPal, which will receive part of community reward if not pool operator
+        // staking pal can be added in storage in Pool by adding 1 address
         address stakingPal;
         if (rbPoolOwner != msg.sender) {
             stakingPal = msg.sender;
@@ -82,16 +83,15 @@ contract MixinStakingPool is
         // create and store pool
         IStructs.Pool memory pool = IStructs.Pool({
             operator: operator,
-            operatorShare: operatorShare
+            operatorShare: operatorShare,
+            stakingPal: stakingPal
         });
         _poolById[poolId] = pool;
 
         // Staking pool has been created
         emit StakingPoolCreated(poolId, operator, operatorShare);
 
-        if (rigoblockPoolAddress != address(0)) {
-            joinStakingPoolAsRbPoolAccount(poolId, rigoblockPoolAddress);
-        }
+        joinStakingPoolAsRbPoolAccount(poolId, rigoblockPoolAddress);
 
         return poolId;
     }
@@ -122,43 +122,51 @@ contract MixinStakingPool is
 
     /// @dev Allows caller to join a staking pool as a rigoblock pool account.
     /// @param poolId Unique id of pool.
+    /// @param rigoblockPoolAccount Address of subaccount to be added to staking pool.
     function joinStakingPoolAsRbPoolAccount(bytes32 poolId, address rigoblockPoolAccount)
         public
     {
         //TODO: test
-        // delete rigoblock pool accout from existing staking pool
-        (uint256 rbPoolId, , , , address rbPoolOwner, ) = getDragoRegistry().fromAddress(rigoblockPoolAccount);
+        // delete rigoblock pool account from existing staking pool
+        (address poolAddress, , , uint256 rbPoolId, , ) = getDragoRegistry().fromId(uint256(poolId));
+        
+        // only rigoblock pools registered in drago registry can have accounts added to their staking pool
         require(
-            rbPoolId != uint256(0) && rbPoolOwner == msg.sender,
-            "ONLY_POOL_OWNER_CAN_ATTACH_REGISTERED_RB_POOL_SUBACCOUNT"
+            rbPoolId != uint256(0),
+            "NON_REGISTERED_POOL_ID_ERROR"
         );
-        // TODO: check whether we require msg.sender = pooloperator
-        //or modify prev. requirement as rbPoolOwner = pooloperator
-        //in order to allow checks on staked tokens instead of token balances
-        // TODO: check whether staking pool should have just 1 rigoblock pool
-        bytes32 existingPoolId = poolIdByRbPool[rigoblockPoolAccount];
-        uint256 existingArrayLength = rigoblockOperatorPools[existingPoolId].length;
+        
+        // further accounts can be attached only by pool itself
+        if (rigoblockPoolAccount != poolAddress) {
+            require(
+                poolAddress == msg.sender,
+                "ONLY_CALLABLE_BY_RIGOBLOCK_POOL_ERROR"
+            );
+        }
 
-        // ensure maximum 32 rigoblock pools attached to 1 staking pool
-        if (existingArrayLength >= uint256(32)) {
+        // TODO: test
+        bytes32 existingPoolId = poolIdByRbPoolAccount[rigoblockPoolAccount];
+        address[] memory existingPoolsSubaccounts = rigoblockOperatorPoolAccounts[existingPoolId];
+
+        // ensure maximum 32 rigoblock subaccounts attached to 1 staking pool
+        if (existingPoolsSubaccounts.length >= uint256(32)) {
             revert("POOLS_ARRAY_TOO_BIG_ERROR");
         }
 
-        //bool alreadyAttachedPool = poolIdByRbPool[rigoblockPoolAddress] != bytes32(0);
-        if (existingPoolId != bytes32(0)) {
-            uint256 poolPositionToBeSwitched;
-            address[] memory exitistingPoolsList = rigoblockOperatorPools[poolIdByRbPool[rigoblockPoolAccount]];
-            // check whether address associated with any other pool array
-            for (uint i=0; i < existingArrayLength; i++) {
-                if (exitistingPoolsList[i] != rigoblockPoolAccount) continue;
-                poolPositionToBeSwitched = i;
-            }
-            // overwrite last list element to switched pool position and pop from array
-            rigoblockOperatorPools[existingPoolId][poolPositionToBeSwitched] = exitistingPoolsList[exitistingPoolsList.length-1];
-            rigoblockOperatorPools[existingPoolId].pop();
+        // attach new address and delete if associated with any other pool
+        uint256 poolPositionToBeSwitched;
+        // check whether address associated with any other pool array
+        for (uint i=0; i < existingPoolsSubaccounts.length; i++) {
+            if (existingPoolsSubaccounts[i] != rigoblockPoolAccount) continue;
+            poolPositionToBeSwitched = i;
         }
-        poolIdByRbPool[rigoblockPoolAccount] = poolId;
-        rigoblockOperatorPools[poolId].push(rigoblockPoolAccount);
+        // overwrite last list element to switched pool position and pop from array
+        rigoblockOperatorPoolAccounts[existingPoolId][poolPositionToBeSwitched] = existingPoolsSubaccounts[existingPoolsSubaccounts.length-1];
+        rigoblockOperatorPoolAccounts[existingPoolId].pop();
+
+        // write to storage
+        poolIdByRbPoolAccount[rigoblockPoolAccount] = poolId;
+        rigoblockOperatorPoolAccounts[poolId].push(rigoblockPoolAccount);
         emit RbPoolStakingPoolSet(
             rigoblockPoolAccount,
             poolId
