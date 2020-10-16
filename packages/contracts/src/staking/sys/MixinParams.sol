@@ -88,7 +88,7 @@ contract MixinParams is
     /// @dev Get list of rigoblock pools addresses by staking pool Id.
     /// @param stakingPoolId Staking pool Id to query.
     /// @return List of addresses.
-    function getPoolsAddressesByStakingPoolId(bytes32 stakingPoolId)
+    function getPoolSubaccountsByStakingPoolId(bytes32 stakingPoolId)
         external
         view
         returns (address[] memory)

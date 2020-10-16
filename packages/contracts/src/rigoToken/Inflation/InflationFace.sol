@@ -28,7 +28,7 @@ interface InflationFace {
     /*
      * CORE FUNCTIONS
      */
-    function mintInflation(bytes32 poolId, uint256 reward) external returns (bool);
+    function mintInflation(bytes32 stakingPoolId, uint256 reward) external returns (bool);
     function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
     function setMinimumRigo(uint256 minimum) external;
     function setRigoblock(address newRigoblockDaoAddress) external;
