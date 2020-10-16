@@ -154,13 +154,14 @@ contract ProofOfPerformance is
         (address poolAddress, , , , , ) = DragoRegistry(dragoRegistryAddress).fromId(poolId);
         uint256 poolPrice = Pool(poolAddress).calcSharePrice();
         
+        // TODO: either receive reward as input or call arrow-pratt transformation here
+        (popReward, ) = proofOfPerformanceInternal(poolId);
+
         // pop assets component is always positive, therefore we must update the hwm if positive performance
         if (poolPrice > poolPriceById[poolId].highwatermark) {
             poolPriceById[poolId].highwatermark = poolPrice;
         }
-        
-        // TODO: either receive reward as input or call arrow-pratt transformation here
-        (popReward, ) = proofOfPerformanceInternal(poolId);
+
         require(
             Inflation(getMinter()).mintInflation(stakingPoolId, popReward),
             "MINT_INFLATION_ERROR"
