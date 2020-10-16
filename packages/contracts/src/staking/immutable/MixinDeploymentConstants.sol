@@ -22,6 +22,7 @@ pragma solidity ^0.5.9;
 import "../../utils/0xUtils/IEtherToken.sol";
 import "../interfaces/IGrgVault.sol";
 import "../../protocol/DragoRegistry/IDragoRegistry.sol";
+import "../../rigoToken/RigoToken/RigoTokenFace.sol";
 
 
 // solhint-disable separate-by-one-line-in-contract
@@ -53,6 +54,12 @@ contract MixinDeploymentConstants {
     
     // Ropsten DragoRegistry address
     // address constant private DRAGO_REGISTRY_ADDRESS = address(0x4e868D1dDF940316964eA7673E21bE6CBED8b30B);
+    
+    // Mainnet GRG Address
+    address constant private GRG_ADDRESS = address(0x4FbB350052Bca5417566f188eB2EBCE5b19BC964);
+
+    // Ropsten GRG Address
+    // address constant private GRG_ADDRESS = address(0x6FA8590920c5966713b1a86916f7b0419411e474);
 
     /// @dev An overridable way to access the deployed WETH contract.
     ///      Must be view to allow overrides to access state.
@@ -88,5 +95,17 @@ contract MixinDeploymentConstants {
     {
         dragoRegistry = IDragoRegistry(DRAGO_REGISTRY_ADDRESS);
         return dragoRegistry;
+    }
+    
+    /// @dev An overridable way to access the deployed GRG contract.
+    ///      Must be view to allow overrides to access state.
+    /// @return grgContract The GRG contract instance.
+    function getGrgContract()
+        public
+        view
+        returns (RigoTokenFace grgContract)
+    {
+        grgContract = RigoTokenFace(GRG_ADDRESS);
+        return grgContract;
     }
 }
