@@ -22,6 +22,8 @@ pragma solidity >=0.4.22 <0.6.0;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 interface ProofOfPerformanceFace {
+    
+    function minter() external view returns (address);
 
     /*
      * CORE FUNCTIONS

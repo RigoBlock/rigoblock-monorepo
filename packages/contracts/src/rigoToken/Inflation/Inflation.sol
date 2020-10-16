@@ -23,16 +23,8 @@ import { Owned } from "../../utils/Owned/Owned.sol";
 import { AuthorityFace as Authority } from "../../protocol/authorities/Authority/AuthorityFace.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { InflationFace } from "./InflationFace.sol";
+import { RigoTokenFace } from "../RigoToken/RigoTokenFace.sol";
 
-
-interface RigoToken {
-
-    function mintToken(address _recipient, uint256 _amount) external;
-    function changeMintingAddress(address _newAddress) external;
-    function changeRigoblockAddress(address _newAddress) external;
-
-    function balanceOf(address _who) external view returns (uint256);
-}
 
 interface IStructs {
     /// @dev Encapsulates a balance for the current and next epochs.
@@ -60,8 +52,8 @@ interface Staking {
         returns (IStructs.StoredBalance memory balance);
 }
 
-contract GrgVault {
-    address public stakingProxyAddress;
+interface GrgVault {
+    function stakingProxyAddress() external view returns (address);
 }
 
 /// @title Inflation - Allows ProofOfPerformance to mint tokens.
@@ -175,7 +167,7 @@ contract Inflation is
         performers[stakingPoolId].endTime = block.timestamp + period;
         ++slot;
         uint256 rigoblockDaoReward = reward * 5 / 100; //5% royalty to rigoblock dao
-        RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
+        RigoTokenFace rigoToken = RigoTokenFace(RIGOTOKENADDRESS);
         // TODO: test
         rigoToken.mintToken(rigoblockDao, rigoblockDaoReward);
         rigoToken.mintToken(GRG_VAULT_ADDRESS, safeSub(reward, rigoblockDaoReward));

@@ -20,6 +20,9 @@
 pragma solidity ^0.5.9;
 pragma experimental ABIEncoderV2;
 
+import "../../rigoToken/RigoToken/RigoTokenFace.sol";
+import "../../rigoToken/Inflation/InflationFace.sol";
+import "../../rigoToken/ProofOfPerformance/ProofOfPerformanceFace.sol";
 import "../../utils/0xUtils/LibRichErrors.sol";
 import "../../utils/0xUtils/LibSafeMath.sol";
 import "../libs/LibCobbDouglas.sol";
