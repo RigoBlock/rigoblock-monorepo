@@ -144,26 +144,26 @@ contract ProofOfPerformance is
      */
     /// @dev Allows staking proxy to allocate the pop reward to staking pool.
     /// @param stakingPoolId Hex-encoded staking pool id.
-    function claimPop(bytes32 stakingPoolId)
+    /// @param reward Value of the stake-rebased reward.
+    function claimPop(
+        bytes32 stakingPoolId,
+        uint256 reward
+    )
         external
         nonReentrant
         onlyStakingProxy
-        returns (uint256 popReward)
     {
         uint256 poolId = uint256(stakingPoolId);
         (address poolAddress, , , , , ) = DragoRegistry(dragoRegistryAddress).fromId(poolId);
         uint256 poolPrice = Pool(poolAddress).calcSharePrice();
         
-        // TODO: either receive reward as input or call arrow-pratt transformation here
-        (popReward, ) = proofOfPerformanceInternal(poolId);
-
         // pop assets component is always positive, therefore we must update the hwm if positive performance
         if (poolPrice > poolPriceById[poolId].highwatermark) {
             poolPriceById[poolId].highwatermark = poolPrice;
         }
 
         require(
-            Inflation(getMinter()).mintInflation(stakingPoolId, popReward),
+            Inflation(getMinter()).mintInflation(stakingPoolId, reward),
             "MINT_INFLATION_ERROR"
         );
     }

@@ -27,8 +27,13 @@ interface ProofOfPerformanceFace {
      * CORE FUNCTIONS
      */
     /// @dev Allows anyone to allocate the pop reward to pool wizards.
-    /// @param poolId Number of pool id in registry.
-    function claimPop(uint256 poolId) external;
+    /// @param stakingPoolId Number of pool id in registry.
+    /// @param reward Value of the stake-rebased reward.
+    function claimPop(
+        bytes32 stakingPoolId,
+        uint256 reward
+    )
+        external;
 
     /// @dev Allows RigoBlock Dao to update the pools registry.
     /// @param _dragoRegistry Address of new registry.
