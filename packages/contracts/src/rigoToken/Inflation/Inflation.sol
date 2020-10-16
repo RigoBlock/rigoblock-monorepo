@@ -74,7 +74,7 @@ contract Inflation is
     address public RIGOTOKENADDRESS;
     address public GRG_VAULT_ADDRESS;
 
-    uint256 public period = 1 days;
+    uint256 public period = 14 days;
     uint256 public minimumGRG = 100 * 10**18;
     uint256 public slot;
     address public proofOfPerformance;
@@ -89,7 +89,6 @@ contract Inflation is
         mapping(uint256 => bool) claim;
         uint256 startTime;
         uint256 endTime;
-        uint256 epoch;
     }
 
     struct Group {
@@ -157,11 +156,17 @@ contract Inflation is
         returns (bool)
     {
         //TODO: test
-        // reject any reward higher than amount of GRG staked to a staking pool divided by epoch legth
         address stakingProxyAddress = GrgVault(GRG_VAULT_ADDRESS).stakingProxyAddress();
-        uint256 maxEpochReward = uint256(Staking(stakingProxyAddress).getTotalStakeDelegatedToPool(stakingPoolId).currentEpochBalance) * period / 365 days;
+        uint256 totalGrgDelegatedToPool = uint256(Staking(stakingProxyAddress).getTotalStakeDelegatedToPool(stakingPoolId).currentEpochBalance);
+        
+        // assert minimum staked GRG constraint fulfilled
+        if (totalGrgDelegatedToPool < minimumGRG) {
+            revert("STAKED_GRG_AMOUNT_BELOW_MINIMUM_ERROR");
+        }
 
+        // reject any reward bigger than amount of GRG staked to a staking pool divided by epoch legth
         // final integrity check, should the value overflow in some of the passages, but it shouldn't.
+        uint256 maxEpochReward = totalGrgDelegatedToPool * period / 365 days;
         require(
             reward <= maxEpochReward,
             "REWARD_HIGER_THAN_STAKE_REBASED_ON_EPOCH_ERROR"
@@ -171,7 +176,7 @@ contract Inflation is
         ++slot;
         uint256 rigoblockDaoReward = reward * 5 / 100; //5% royalty to rigoblock dao
         RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
-        // TODO: test and check whether we can move 5% royalty to stakingproxy (will save some gas)
+        // TODO: test
         rigoToken.mintToken(rigoblockDao, rigoblockDaoReward);
         rigoToken.mintToken(GRG_VAULT_ADDRESS, safeSub(reward, rigoblockDaoReward));
         return true;
