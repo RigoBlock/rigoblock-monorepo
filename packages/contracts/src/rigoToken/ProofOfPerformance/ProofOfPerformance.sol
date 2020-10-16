@@ -32,7 +32,7 @@ contract Inflation {
     /*
      * CORE FUNCTIONS
      */
-    function mintInflation(bytes32 poolId, uint256 reward) external returns (bool);
+    function mintInflation(bytes32 stakingPoolId, uint256 reward) external returns (bool);
     function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
     function setMinimumRigo(uint256 minimum) external;
     function setRigoblock(address newRigoblockDaoAddress) external;
@@ -53,14 +53,6 @@ contract RigoToken {
     uint256 public totalSupply;
 
     function balanceOf(address _who) external view returns (uint256);
-}
-
-interface Staking {
-
-    function getPoolsAddressesByStakingPoolId(bytes32 stakingPoolId)
-        external
-        view
-        returns (address[] memory);
 }
 
 interface DragoRegistry {
@@ -152,26 +144,25 @@ contract ProofOfPerformance is
      */
     /// @dev Allows staking proxy to allocate the pop reward to staking pool.
     /// @param stakingPoolId Hex-encoded staking pool id.
-    /// @param reward Value of the stake-rebased reward.
-    function claimPop(bytes32 stakingPoolId, uint256 reward)
+    function claimPop(bytes32 stakingPoolId)
         external
         nonReentrant
         onlyStakingProxy
+        returns (uint256 popReward)
     {
-        address[] memory poolsArray = Staking(STAKING_PROXY_ADDRESS).getPoolsAddressesByStakingPoolId(stakingPoolId);
-
-        for (uint i=0; i<poolsArray.length; i++) {
-            address poolAddress = poolsArray[i];
-            (uint256 poolId, , , , , ) = DragoRegistry(dragoRegistryAddress).fromAddress(poolAddress);
-            uint256 poolPrice = Pool(poolAddress).calcSharePrice();
-
-            // pop assets component is always positive, therefore we must update the hwm if positive performance
-            if (poolPrice > poolPriceById[poolId].highwatermark) {
-                poolPriceById[poolId].highwatermark = poolPrice;
-            }
+        uint256 poolId = uint256(stakingPoolId);
+        (address poolAddress, , , , , ) = DragoRegistry(dragoRegistryAddress).fromId(poolId);
+        uint256 poolPrice = Pool(poolAddress).calcSharePrice();
+        
+        // pop assets component is always positive, therefore we must update the hwm if positive performance
+        if (poolPrice > poolPriceById[poolId].highwatermark) {
+            poolPriceById[poolId].highwatermark = poolPrice;
         }
+        
+        // TODO: either receive reward as input or call arrow-pratt transformation here
+        (popReward, ) = proofOfPerformanceInternal(poolId);
         require(
-            Inflation(getMinter()).mintInflation(stakingPoolId, reward),
+            Inflation(getMinter()).mintInflation(stakingPoolId, popReward),
             "MINT_INFLATION_ERROR"
         );
     }
@@ -371,15 +362,7 @@ contract ProofOfPerformance is
         view
         returns (uint256 popReward)
     {
-        address[] memory poolsArray = Staking(STAKING_PROXY_ADDRESS).getPoolsAddressesByStakingPoolId(stakingPoolId);
-
-        //TODO: check following: poolsArray length is always <= 100 from staking proxy
-        for (uint i=0; i<poolsArray.length; i++) {
-            address poolAddress = poolsArray[i];
-            (uint256 poolId, , , , , ) = DragoRegistry(dragoRegistryAddress).fromAddress(poolAddress);
-            (uint256 aggregateReward, ) = proofOfPerformanceInternal(poolId);
-            popReward = safeAdd(popReward, aggregateReward);
-        }
+        (popReward, ) = proofOfPerformanceInternal(uint256(stakingPoolId));
     }
 
     /*
