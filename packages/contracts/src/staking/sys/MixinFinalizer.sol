@@ -20,7 +20,7 @@
 pragma solidity ^0.5.9;
 pragma experimental ABIEncoderV2;
 
-import "../../rigoToken/RigoToken/RigoTokenFace.sol";
+//import "../../rigoToken/RigoToken/RigoTokenFace.sol";
 import "../../rigoToken/Inflation/InflationFace.sol";
 import "../../rigoToken/ProofOfPerformance/ProofOfPerformanceFace.sol";
 import "../../utils/0xUtils/LibRichErrors.sol";
@@ -242,13 +242,27 @@ contract MixinFinalizer is
             return rewards;
         }
 
+        InflationFace inflationInstance = InflationFace(
+            getGrgContract().minter()
+        );
+
         //TODO: use non-weighted stake and query stats correctly
+        uint256 popReward = ProofOfPerformanceFace(
+            inflationInstance.proofOfPerformance()
+        ).getPop(bytes32(uint256(1))); //.getPop(bytes32(1));
+        
+        uint256 period = inflationInstance.period();
+        
+        //TODO: calculate total stake allocated to pool
+        //TODO: check whether inputs can be sent from calling method
+        uint256 totalGrgDelegatedToPool =getTotalStakeDelegatedToPool(bytes32(uint256(1))).currentEpochBalance;
+        uint256 maxEpochReward = totalGrgDelegatedToPool * period / 365 days;
 
         // Use the cobb-douglas function to compute the total reward.
         rewards = LibCobbDouglas.cobbDouglas(
-            aggregatedStats.rewardsAvailable,
-            poolStats.feesCollected,
-            aggregatedStats.totalFeesCollected,
+            uint256(1), //this becomes uint256(1)
+            popReward, //this becomes pop
+            maxEpochReward, //this becomes stake rebased on epoch
             poolStats.weightedStake,
             aggregatedStats.totalWeightedStake,
             cobbDouglasAlphaNumerator,
