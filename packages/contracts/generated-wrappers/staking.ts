@@ -1019,7 +1019,7 @@ public static async deployFrom0xArtifactAsync(
                         type: 'bytes32',
                     },
                 ],
-                name: 'getPoolsAddressesByStakingPoolId',
+                name: 'getPoolSubaccountsByStakingPoolId',
                 outputs: [
                     {
                         name: '',
@@ -1324,6 +1324,21 @@ public static async deployFrom0xArtifactAsync(
                 outputs: [
                     {
                         name: '',
+                        type: 'address',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                ],
+                name: 'getGrgContract',
+                outputs: [
+                    {
+                        name: 'grgContract',
                         type: 'address',
                     },
                 ],
@@ -3313,13 +3328,13 @@ public static async deployFrom0xArtifactAsync(
       * @param stakingPoolId Staking pool Id to query.
     * @returns List of addresses.
      */
-    public getPoolsAddressesByStakingPoolId(
+    public getPoolSubaccountsByStakingPoolId(
             stakingPoolId: string,
     ): ContractFunctionObj<string[]
 > {
         const self = this as any as StakingContract;
             assert.isString('stakingPoolId', stakingPoolId);
-        const functionSignature = 'getPoolsAddressesByStakingPoolId(bytes32)';
+        const functionSignature = 'getPoolSubaccountsByStakingPoolId(bytes32)';
 
         return {
             async callAsync(
@@ -3892,6 +3907,35 @@ public static async deployFrom0xArtifactAsync(
 > {
         const self = this as any as StakingContract;
         const functionSignature = 'stakingContract()';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    /**
+     * An overridable way to access the deployed GRG contract.
+ * Must be view to allow overrides to access state.
+    * @returns grgContract The GRG contract instance.
+     */
+    public getGrgContract(
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as StakingContract;
+        const functionSignature = 'getGrgContract()';
 
         return {
             async callAsync(

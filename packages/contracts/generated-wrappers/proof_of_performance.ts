@@ -226,6 +226,21 @@ _stakingProxyAddress
             { 
                 constant: true,
                 inputs: [
+                ],
+                name: 'minter',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
                     {
                         name: 'poolId',
                         type: 'uint256',
@@ -533,21 +548,6 @@ _stakingProxyAddress
                 type: 'function',
             },
             { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'poolId',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'claimPop',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
                 constant: true,
                 inputs: [
                     {
@@ -756,6 +756,30 @@ _stakingProxyAddress
                 return self._strictEncodeArguments(functionSignature, [_ofGroup.toLowerCase(),
             _ratio
             ]);
+            },
+        }
+    };
+    public minter(
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as ProofOfPerformanceContract;
+        const functionSignature = 'minter()';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
@@ -980,7 +1004,7 @@ _stakingProxyAddress
       * @param stakingPoolId Hex-encoded staking pool id.
       * @param reward Value of the stake-rebased reward.
      */
-    public claimPop1(
+    public claimPop(
             stakingPoolId: string,
             reward: BigNumber,
     ): ContractTxFunctionObj<void
@@ -1289,64 +1313,6 @@ _stakingProxyAddress
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<BigNumber
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [poolId
-            ]);
-            },
-        }
-    };
-    /**
-     * Allows anyone to allocate the pop reward to pool wizards.
-      * @param poolId Number of pool id in registry.
-     */
-    public claimPop2(
-            poolId: BigNumber,
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as ProofOfPerformanceContract;
-            assert.isBigNumber('poolId', poolId);
-        const functionSignature = 'claimPop(uint256)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
