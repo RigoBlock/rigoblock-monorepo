@@ -260,9 +260,9 @@ contract MixinFinalizer is
 
         // Use the cobb-douglas function to compute the total reward.
         rewards = LibCobbDouglas.cobbDouglas(
-            uint256(1), //this becomes uint256(1)
-            popReward, //this becomes pop
-            maxEpochReward, //this becomes stake rebased on epoch
+            maxEpochReward,
+            popReward,
+            maxEpochReward,
             poolStats.weightedStake,
             aggregatedStats.totalWeightedStake,
             cobbDouglasAlphaNumerator,
