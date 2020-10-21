@@ -94,9 +94,12 @@ contract MixinFinalizer is
     function finalizePool(bytes32 poolId)
         external
     {
-        //prevent smart contract calls
+        // allow smart contract calls only from whitelisted smart contract
         if (_isContract(msg.sender)) {
-            revert("CALLER_IS_SMART_CONTRACT_ERROR");
+            require(
+                validPops[msg.sender] = true,
+                "CALLER_IS_NON_WHITELISTED_SMART_CONTRACT_ERROR"
+            );
         }
 
         // Compute relevant epochs
