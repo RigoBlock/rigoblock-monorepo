@@ -43,4 +43,5 @@ interface InflationFace {
     function canWithdraw(bytes32 stakingPoolId) external view returns (bool);
     function timeUntilClaim(bytes32 stakingPoolId) external view returns (uint256);
     function getInflationFactor(address groupAddress) external view returns (uint256);
+    function getMaxEpochReward(uint256 totalGrgDelegatedToPool) external view returns (uint256);
 }

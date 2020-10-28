@@ -279,6 +279,9 @@ contract Inflation is
     /*
      * INTERNAL METHODS
      */
+    /// @dev Returns the amount of GRG staked to a pool.
+    /// @param stakingPoolId ID of the staking pool.
+    /// @return Amount of GRG staked.
     function _getTotalGrgDelegatedToPool(bytes32 stakingPoolId) internal view returns (uint256) {
         address stakingProxyAddress = GrgVault(GRG_VAULT_ADDRESS).stakingProxyAddress();
         return uint256(
@@ -288,6 +291,8 @@ contract Inflation is
         );
     }
     
+    /// @dev Asserts that the minimum GRG amount is staked.
+    /// @param totalGrgDelegatedToPool GRG amount staked to pool.
     function _assertMinimumGrgContraintSatisfied(uint256 totalGrgDelegatedToPool)
         internal
         view
@@ -297,6 +302,9 @@ contract Inflation is
         }
     }
     
+    /// @dev Asserts that the reward is below the maximum allowed.
+    /// @param reward Reward to be sent.
+    /// @param totalGrgDelegatedToPool GRG amount staked to pool.
     function _assertRewardNotAboveMaxEpochReward(
         uint256 reward,
         uint256 totalGrgDelegatedToPool
@@ -308,7 +316,9 @@ contract Inflation is
             revert("REWARD_ABOVE_MAX_EPOCH_REWARD_ERROR");
         }
     }
-
+    
+    /// @dev Returns the value of the disinflationary divisor.
+    /// @return Value of the divisor.
     function _getDisinflationaryDivisor() internal view returns (uint256) {
         uint256 firstHalving = uint256(1636581600); // 10 Nov 2021 10:00pm UTC
         if (block.timestamp < firstHalving) {
