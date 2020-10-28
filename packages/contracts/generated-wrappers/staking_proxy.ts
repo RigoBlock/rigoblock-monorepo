@@ -590,29 +590,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 constant: true,
                 inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'bytes32',
-                    },
-                    {
-                        name: 'index_1',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'rigoblockOperatorPoolAccounts',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
                 ],
                 name: 'getAuthorizedAddresses',
                 outputs: [
@@ -1626,36 +1603,6 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    public rigoblockOperatorPoolAccounts(
-            index_0: string,
-            index_1: BigNumber,
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as StakingProxyContract;
-            assert.isString('index_0', index_0);
-            assert.isBigNumber('index_1', index_1);
-        const functionSignature = 'rigoblockOperatorPoolAccounts(bytes32,uint256)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0,
-            index_1
-            ]);
             },
         }
     };

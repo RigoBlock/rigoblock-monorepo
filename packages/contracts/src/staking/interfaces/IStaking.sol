@@ -75,8 +75,7 @@ interface IStaking {
     /// @param rigoblockPoolAccount Address of subaccount to be added to staking pool.
     function joinStakingPoolAsRbPoolAccount(
         bytes32 stakingPoolId,
-        address rigoblockPoolAccount
-    )
+        address rigoblockPoolAccount)
         external;
 
     /// @dev Moves stake between statuses: 'undelegated' or 'delegated'.
@@ -253,12 +252,4 @@ interface IStaking {
         external
         view
         returns (IGrgVault grgVault);
-    
-    /// @dev Get list of rigoblock pools addresses by staking pool Id.
-    /// @param stakingPoolId Staking pool Id to query.
-    /// @return List of addresses.
-    function getPoolSubaccountsByStakingPoolId(bytes32 stakingPoolId)
-        external
-        view
-        returns (address[] memory);
 }
