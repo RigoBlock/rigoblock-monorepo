@@ -75,8 +75,7 @@ interface IStaking {
     /// @param rigoblockPoolAccount Address of subaccount to be added to staking pool.
     function joinStakingPoolAsRbPoolAccount(
         bytes32 stakingPoolId,
-        address rigoblockPoolAccount
-    )
+        address rigoblockPoolAccount)
         external;
 
     /// @dev Moves stake between statuses: 'undelegated' or 'delegated'.
