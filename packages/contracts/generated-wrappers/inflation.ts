@@ -275,6 +275,25 @@ _authority
             { 
                 constant: true,
                 inputs: [
+                    {
+                        name: 'totalGrgDelegatedToPool',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'getMaxEpochReward',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
                 ],
                 name: 'GRG_VAULT_ADDRESS',
                 outputs: [
@@ -786,6 +805,33 @@ _authority
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [stakingPoolId
+            ]);
+            },
+        }
+    };
+    public getMaxEpochReward(
+            totalGrgDelegatedToPool: BigNumber,
+    ): ContractFunctionObj<BigNumber
+> {
+        const self = this as any as InflationContract;
+            assert.isBigNumber('totalGrgDelegatedToPool', totalGrgDelegatedToPool);
+        const functionSignature = 'getMaxEpochReward(uint256)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [totalGrgDelegatedToPool
             ]);
             },
         }
