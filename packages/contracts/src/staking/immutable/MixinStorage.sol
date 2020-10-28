@@ -57,6 +57,11 @@ contract MixinStorage is
     /// @return 0 The pool ID.
     mapping (address => bytes32) public poolIdByRbPoolAccount;
 
+    /// @dev Mapping of RigoBlock pools from staking pool Id
+    /// @param 0 Staking pool ID.
+    /// @return 0 The list of RigoBlock pools.
+    mapping(bytes32 => address[]) public rigoblockOperatorPoolAccounts;
+
     // mapping from Pool Id to Pool
     mapping (bytes32 => IStructs.Pool) internal _poolById;
 
