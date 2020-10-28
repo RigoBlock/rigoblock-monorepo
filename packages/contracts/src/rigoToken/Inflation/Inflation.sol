@@ -71,7 +71,7 @@ contract Inflation is
     uint256 public slot;
     address public proofOfPerformance;
     address public authority;
-    address public rigoblockDao;
+    address public rigoblockDao; // TODO: check if make this private
 
     mapping(bytes32 => Performer) performers;
     mapping(address => Group) groups;
@@ -148,21 +148,11 @@ contract Inflation is
         returns (bool)
     {
         //TODO: test
-        address stakingProxyAddress = GrgVault(GRG_VAULT_ADDRESS).stakingProxyAddress();
-        uint256 totalGrgDelegatedToPool = uint256(Staking(stakingProxyAddress).getTotalStakeDelegatedToPool(stakingPoolId).currentEpochBalance);
+        uint256 totalGrgDelegatedToPool = _getTotalGrgDelegatedToPool(stakingPoolId);
         
-        // assert minimum staked GRG constraint fulfilled
-        if (totalGrgDelegatedToPool < minimumGRG) {
-            revert("STAKED_GRG_AMOUNT_BELOW_MINIMUM_ERROR");
-        }
+        _assertMinimumGrgContraintSatisfied(totalGrgDelegatedToPool);
+        _assertRewardNotAboveMaxEpochReward(reward, totalGrgDelegatedToPool);
 
-        // reject any reward bigger than amount of GRG staked to a staking pool divided by epoch legth
-        // final integrity check, should the value overflow in some of the passages, but it shouldn't.
-        uint256 maxEpochReward = totalGrgDelegatedToPool * period / 365 days;
-        require(
-            reward <= maxEpochReward,
-            "REWARD_HIGER_THAN_STAKE_REBASED_ON_EPOCH_ERROR"
-        );
         performers[stakingPoolId].startTime = block.timestamp;
         performers[stakingPoolId].endTime = block.timestamp + period;
         ++slot;
@@ -277,5 +267,64 @@ contract Inflation is
         returns (uint256)
     {
         return groups[groupAddress].epochReward;
+    }
+    
+    function getMaxEpochReward(uint256 totalGrgDelegatedToPool) public view returns (uint256) {
+        return safeDiv(
+            totalGrgDelegatedToPool * period,
+            _getDisinflationaryDivisor() * 365 days // multiply in order not to dividing in previous line
+        );
+    }
+    
+    /*
+     * INTERNAL METHODS
+     */
+    /// @dev Returns the amount of GRG staked to a pool.
+    /// @param stakingPoolId ID of the staking pool.
+    /// @return Amount of GRG staked.
+    function _getTotalGrgDelegatedToPool(bytes32 stakingPoolId) internal view returns (uint256) {
+        address stakingProxyAddress = GrgVault(GRG_VAULT_ADDRESS).stakingProxyAddress();
+        return uint256(
+            Staking(stakingProxyAddress)
+            .getTotalStakeDelegatedToPool(stakingPoolId)
+            .currentEpochBalance
+        );
+    }
+    
+    /// @dev Asserts that the minimum GRG amount is staked.
+    /// @param totalGrgDelegatedToPool GRG amount staked to pool.
+    function _assertMinimumGrgContraintSatisfied(uint256 totalGrgDelegatedToPool)
+        internal
+        view
+    {
+        if (totalGrgDelegatedToPool < minimumGRG) {
+            revert("STAKED_GRG_AMOUNT_BELOW_MINIMUM_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that the reward is below the maximum allowed.
+    /// @param reward Reward to be sent.
+    /// @param totalGrgDelegatedToPool GRG amount staked to pool.
+    function _assertRewardNotAboveMaxEpochReward(
+        uint256 reward,
+        uint256 totalGrgDelegatedToPool
+    )
+        internal
+        view
+    {
+        if (reward > getMaxEpochReward(totalGrgDelegatedToPool)) {
+            revert("REWARD_ABOVE_MAX_EPOCH_REWARD_ERROR");
+        }
+    }
+    
+    /// @dev Returns the value of the disinflationary divisor.
+    /// @return Value of the divisor.
+    function _getDisinflationaryDivisor() internal view returns (uint256) {
+        uint256 firstHalving = uint256(1636581600); // 10 Nov 2021 10:00pm UTC
+        if (block.timestamp < firstHalving) {
+            return uint256(1);
+        } else if (block.timestamp < firstHalving + 52 weeks) {
+            return uint256(2);
+        } else return uint256(4);
     }
 }
