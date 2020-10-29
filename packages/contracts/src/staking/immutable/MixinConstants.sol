@@ -29,6 +29,5 @@ contract MixinConstants {
 
     address constant internal NIL_ADDRESS = 0x0000000000000000000000000000000000000000;
 
-    // TODO: check whether set 100 minimum here (i.e. 100*10**18)
     uint256 constant internal MIN_TOKEN_VALUE = 10**18;
 }
