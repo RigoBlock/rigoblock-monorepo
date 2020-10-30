@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
   Copyright 2019 ZeroEx Intl.
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,7 +13,7 @@
   limitations under the License.
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 
 import "./interfaces/IOwnable.sol";
 import "./LibOwnableRichErrors.sol";
@@ -26,7 +28,6 @@ contract Ownable is
     address public owner;
 
     constructor ()
-        public
     {
         owner = msg.sender;
     }
@@ -40,6 +41,7 @@ contract Ownable is
     /// @param newOwner New owner address.
     function transferOwnership(address newOwner)
         public
+        override
         onlyOwner
     {
         if (newOwner == address(0)) {

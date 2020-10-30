@@ -333,7 +333,7 @@ public static async deployFrom0xArtifactAsync(
                 if (self._deployedBytecodeIfExists) {
                     rawCallResult = await self._evmExecAsync(this.getABIEncodedTransactionData());
                 } else {
-                    rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                    rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 }
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);

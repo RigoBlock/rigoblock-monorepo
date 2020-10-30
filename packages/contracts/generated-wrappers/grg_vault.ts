@@ -36,46 +36,24 @@ import * as ethers from 'ethers';
 
 
 export type GrgVaultEventArgs =
-    | GrgVaultStakingProxySetEventArgs
-    | GrgVaultInCatastrophicFailureModeEventArgs
-    | GrgVaultDepositEventArgs
-    | GrgVaultWithdrawEventArgs
-    | GrgVaultGrgProxySetEventArgs
     | GrgVaultAuthorizedAddressAddedEventArgs
     | GrgVaultAuthorizedAddressRemovedEventArgs
-    | GrgVaultOwnershipTransferredEventArgs;
+    | GrgVaultDepositEventArgs
+    | GrgVaultGrgProxySetEventArgs
+    | GrgVaultInCatastrophicFailureModeEventArgs
+    | GrgVaultOwnershipTransferredEventArgs
+    | GrgVaultStakingProxySetEventArgs
+    | GrgVaultWithdrawEventArgs;
 
 export enum GrgVaultEvents {
-    StakingProxySet = 'StakingProxySet',
-    InCatastrophicFailureMode = 'InCatastrophicFailureMode',
-    Deposit = 'Deposit',
-    Withdraw = 'Withdraw',
-    GrgProxySet = 'GrgProxySet',
     AuthorizedAddressAdded = 'AuthorizedAddressAdded',
     AuthorizedAddressRemoved = 'AuthorizedAddressRemoved',
+    Deposit = 'Deposit',
+    GrgProxySet = 'GrgProxySet',
+    InCatastrophicFailureMode = 'InCatastrophicFailureMode',
     OwnershipTransferred = 'OwnershipTransferred',
-}
-
-export interface GrgVaultStakingProxySetEventArgs extends DecodedLogArgs {
-    stakingProxyAddress: string;
-}
-
-export interface GrgVaultInCatastrophicFailureModeEventArgs extends DecodedLogArgs {
-    sender: string;
-}
-
-export interface GrgVaultDepositEventArgs extends DecodedLogArgs {
-    staker: string;
-    amount: BigNumber;
-}
-
-export interface GrgVaultWithdrawEventArgs extends DecodedLogArgs {
-    staker: string;
-    amount: BigNumber;
-}
-
-export interface GrgVaultGrgProxySetEventArgs extends DecodedLogArgs {
-    grgProxyAddress: string;
+    StakingProxySet = 'StakingProxySet',
+    Withdraw = 'Withdraw',
 }
 
 export interface GrgVaultAuthorizedAddressAddedEventArgs extends DecodedLogArgs {
@@ -88,9 +66,31 @@ export interface GrgVaultAuthorizedAddressRemovedEventArgs extends DecodedLogArg
     caller: string;
 }
 
+export interface GrgVaultDepositEventArgs extends DecodedLogArgs {
+    staker: string;
+    amount: BigNumber;
+}
+
+export interface GrgVaultGrgProxySetEventArgs extends DecodedLogArgs {
+    grgProxyAddress: string;
+}
+
+export interface GrgVaultInCatastrophicFailureModeEventArgs extends DecodedLogArgs {
+    sender: string;
+}
+
 export interface GrgVaultOwnershipTransferredEventArgs extends DecodedLogArgs {
     previousOwner: string;
     newOwner: string;
+}
+
+export interface GrgVaultStakingProxySetEventArgs extends DecodedLogArgs {
+    stakingProxyAddress: string;
+}
+
+export interface GrgVaultWithdrawEventArgs extends DecodedLogArgs {
+    staker: string;
+    amount: BigNumber;
 }
 
 
@@ -232,315 +232,6 @@ _grgTokenAddress
     public static ABI(): ContractAbi {
         const abi = [
             { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'staker',
-                        type: 'address',
-                    },
-                    {
-                        name: 'amount',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'depositFrom',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'isInCatastrophicFailure',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'bool',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'target',
-                        type: 'address',
-                    },
-                ],
-                name: 'addAuthorizedAddress',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'authorities',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'grgAssetProxy',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'balanceOfGrgVault',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'uint256',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: '_stakingProxyAddress',
-                        type: 'address',
-                    },
-                ],
-                name: 'setStakingProxy',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'target',
-                        type: 'address',
-                    },
-                ],
-                name: 'removeAuthorizedAddress',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                    {
-                        name: 'staker',
-                        type: 'address',
-                    },
-                ],
-                name: 'balanceOf',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'uint256',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'owner',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'staker',
-                        type: 'address',
-                    },
-                    {
-                        name: 'amount',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'withdrawFrom',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'target',
-                        type: 'address',
-                    },
-                    {
-                        name: 'index',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'removeAuthorizedAddressAtIndex',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'address',
-                    },
-                ],
-                name: 'authorized',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'bool',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                ],
-                name: 'enterCatastrophicFailure',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'stakingProxyAddress',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'getAuthorizedAddresses',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address[]',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: '_grgProxyAddress',
-                        type: 'address',
-                    },
-                ],
-                name: 'setGrgProxy',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'newOwner',
-                        type: 'address',
-                    },
-                ],
-                name: 'transferOwnership',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: 'staker',
-                        type: 'address',
-                    },
-                ],
-                name: 'withdrawAllFrom',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'uint256',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
                 inputs: [
                     {
                         name: '_grgProxyAddress',
@@ -553,89 +244,8 @@ _grgTokenAddress
                 ],
                 outputs: [
                 ],
-                payable: false,
                 stateMutability: 'nonpayable',
                 type: 'constructor',
-            },
-            { 
-                anonymous: false,
-                inputs: [
-                    {
-                        name: 'stakingProxyAddress',
-                        type: 'address',
-                        indexed: false,
-                    },
-                ],
-                name: 'StakingProxySet',
-                outputs: [
-                ],
-                type: 'event',
-            },
-            { 
-                anonymous: false,
-                inputs: [
-                    {
-                        name: 'sender',
-                        type: 'address',
-                        indexed: false,
-                    },
-                ],
-                name: 'InCatastrophicFailureMode',
-                outputs: [
-                ],
-                type: 'event',
-            },
-            { 
-                anonymous: false,
-                inputs: [
-                    {
-                        name: 'staker',
-                        type: 'address',
-                        indexed: true,
-                    },
-                    {
-                        name: 'amount',
-                        type: 'uint256',
-                        indexed: false,
-                    },
-                ],
-                name: 'Deposit',
-                outputs: [
-                ],
-                type: 'event',
-            },
-            { 
-                anonymous: false,
-                inputs: [
-                    {
-                        name: 'staker',
-                        type: 'address',
-                        indexed: true,
-                    },
-                    {
-                        name: 'amount',
-                        type: 'uint256',
-                        indexed: false,
-                    },
-                ],
-                name: 'Withdraw',
-                outputs: [
-                ],
-                type: 'event',
-            },
-            { 
-                anonymous: false,
-                inputs: [
-                    {
-                        name: 'grgProxyAddress',
-                        type: 'address',
-                        indexed: false,
-                    },
-                ],
-                name: 'GrgProxySet',
-                outputs: [
-                ],
-                type: 'event',
             },
             { 
                 anonymous: false,
@@ -679,6 +289,53 @@ _grgTokenAddress
                 anonymous: false,
                 inputs: [
                     {
+                        name: 'staker',
+                        type: 'address',
+                        indexed: true,
+                    },
+                    {
+                        name: 'amount',
+                        type: 'uint256',
+                        indexed: false,
+                    },
+                ],
+                name: 'Deposit',
+                outputs: [
+                ],
+                type: 'event',
+            },
+            { 
+                anonymous: false,
+                inputs: [
+                    {
+                        name: 'grgProxyAddress',
+                        type: 'address',
+                        indexed: false,
+                    },
+                ],
+                name: 'GrgProxySet',
+                outputs: [
+                ],
+                type: 'event',
+            },
+            { 
+                anonymous: false,
+                inputs: [
+                    {
+                        name: 'sender',
+                        type: 'address',
+                        indexed: false,
+                    },
+                ],
+                name: 'InCatastrophicFailureMode',
+                outputs: [
+                ],
+                type: 'event',
+            },
+            { 
+                anonymous: false,
+                inputs: [
+                    {
                         name: 'previousOwner',
                         type: 'address',
                         indexed: true,
@@ -693,6 +350,310 @@ _grgTokenAddress
                 outputs: [
                 ],
                 type: 'event',
+            },
+            { 
+                anonymous: false,
+                inputs: [
+                    {
+                        name: 'stakingProxyAddress',
+                        type: 'address',
+                        indexed: false,
+                    },
+                ],
+                name: 'StakingProxySet',
+                outputs: [
+                ],
+                type: 'event',
+            },
+            { 
+                anonymous: false,
+                inputs: [
+                    {
+                        name: 'staker',
+                        type: 'address',
+                        indexed: true,
+                    },
+                    {
+                        name: 'amount',
+                        type: 'uint256',
+                        indexed: false,
+                    },
+                ],
+                name: 'Withdraw',
+                outputs: [
+                ],
+                type: 'event',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'target',
+                        type: 'address',
+                    },
+                ],
+                name: 'addAuthorizedAddress',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'index_0',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'authorities',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'index_0',
+                        type: 'address',
+                    },
+                ],
+                name: 'authorized',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'bool',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'staker',
+                        type: 'address',
+                    },
+                ],
+                name: 'balanceOf',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
+                name: 'balanceOfGrgVault',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'staker',
+                        type: 'address',
+                    },
+                    {
+                        name: 'amount',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'depositFrom',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
+                name: 'enterCatastrophicFailure',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
+                name: 'getAuthorizedAddresses',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address[]',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
+                name: 'grgAssetProxy',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
+                name: 'isInCatastrophicFailure',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'bool',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
+                name: 'owner',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'target',
+                        type: 'address',
+                    },
+                ],
+                name: 'removeAuthorizedAddress',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'target',
+                        type: 'address',
+                    },
+                    {
+                        name: 'index',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'removeAuthorizedAddressAtIndex',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: '_grgProxyAddress',
+                        type: 'address',
+                    },
+                ],
+                name: 'setGrgProxy',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: '_stakingProxyAddress',
+                        type: 'address',
+                    },
+                ],
+                name: 'setStakingProxy',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
+                name: 'stakingProxyAddress',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'newOwner',
+                        type: 'address',
+                    },
+                ],
+                name: 'transferOwnership',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'staker',
+                        type: 'address',
+                    },
+                ],
+                name: 'withdrawAllFrom',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
+                        name: 'staker',
+                        type: 'address',
+                    },
+                    {
+                        name: 'amount',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'withdrawFrom',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
             },
         ] as ContractAbi;
         return abi;
@@ -777,6 +738,283 @@ _grgTokenAddress
     }
 
     /**
+     * Authorizes an address.
+      * @param target Address to authorize.
+     */
+    public addAuthorizedAddress(
+            target: string,
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as GrgVaultContract;
+            assert.isString('target', target);
+        const functionSignature = 'addAuthorizedAddress(address)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [target.toLowerCase()
+            ]);
+            },
+        }
+    };
+    public authorities(
+            index_0: BigNumber,
+    ): ContractTxFunctionObj<string
+> {
+        const self = this as any as GrgVaultContract;
+            assert.isBigNumber('index_0', index_0);
+        const functionSignature = 'authorities(uint256)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [index_0
+            ]);
+            },
+        }
+    };
+    public authorized(
+            index_0: string,
+    ): ContractTxFunctionObj<boolean
+> {
+        const self = this as any as GrgVaultContract;
+            assert.isString('index_0', index_0);
+        const functionSignature = 'authorized(address)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<boolean
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<boolean
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
+            ]);
+            },
+        }
+    };
+    /**
+     * Returns the balance in Grg Tokens of the `staker`
+     */
+    public balanceOf(
+            staker: string,
+    ): ContractTxFunctionObj<BigNumber
+> {
+        const self = this as any as GrgVaultContract;
+            assert.isString('staker', staker);
+        const functionSignature = 'balanceOf(address)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [staker.toLowerCase()
+            ]);
+            },
+        }
+    };
+    /**
+     * Returns the entire balance of Grg tokens in the vault.
+     */
+    public balanceOfGrgVault(
+    ): ContractTxFunctionObj<BigNumber
+> {
+        const self = this as any as GrgVaultContract;
+        const functionSignature = 'balanceOfGrgVault()';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    /**
      * Deposit an `amount` of Grg Tokens from `staker` into the vault. Note that only the Staking contract can call this. Note that this can only be called when *not* in Catastrophic Failure mode.
       * @param staker of Grg Tokens.
       * @param amount of Grg Tokens to deposit.
@@ -797,7 +1035,7 @@ _grgTokenAddress
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -815,7 +1053,7 @@ _grgTokenAddress
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -825,7 +1063,7 @@ _grgTokenAddress
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
@@ -838,20 +1076,206 @@ _grgTokenAddress
             },
         }
     };
+    /**
+     * Vault enters into Catastrophic Failure Mode. *** WARNING - ONCE IN CATOSTROPHIC FAILURE MODE, YOU CAN NEVER GO BACK! *** Note that only the contract owner can call this function.
+     */
+    public enterCatastrophicFailure(
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as GrgVaultContract;
+        const functionSignature = 'enterCatastrophicFailure()';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    /**
+     * Gets all authorized addresses.
+     */
+    public getAuthorizedAddresses(
+    ): ContractTxFunctionObj<string[]
+> {
+        const self = this as any as GrgVaultContract;
+        const functionSignature = 'getAuthorizedAddresses()';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string[]
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string[]
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    public grgAssetProxy(
+    ): ContractTxFunctionObj<string
+> {
+        const self = this as any as GrgVaultContract;
+        const functionSignature = 'grgAssetProxy()';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
     public isInCatastrophicFailure(
-    ): ContractFunctionObj<boolean
+    ): ContractTxFunctionObj<boolean
 > {
         const self = this as any as GrgVaultContract;
         const functionSignature = 'isInCatastrophicFailure()';
 
         return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -862,17 +1286,11 @@ _grgTokenAddress
             },
         }
     };
-    /**
-     * Authorizes an address.
-      * @param target Address to authorize.
-     */
-    public addAuthorizedAddress(
-            target: string,
-    ): ContractTxFunctionObj<void
+    public owner(
+    ): ContractTxFunctionObj<string
 > {
         const self = this as any as GrgVaultContract;
-            assert.isString('target', target);
-        const functionSignature = 'addAuthorizedAddress(address)';
+        const functionSignature = 'owner()';
 
         return {
             async sendTransactionAsync(
@@ -880,7 +1298,7 @@ _grgTokenAddress
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -898,69 +1316,17 @@ _grgTokenAddress
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [target.toLowerCase()
-            ]);
-            },
-        }
-    };
-    public authorities(
-            index_0: BigNumber,
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as GrgVaultContract;
-            assert.isBigNumber('index_0', index_0);
-        const functionSignature = 'authorities(uint256)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
             ): Promise<string
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0
-            ]);
-            },
-        }
-    };
-    public grgAssetProxy(
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as GrgVaultContract;
-        const functionSignature = 'grgAssetProxy()';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<string
@@ -968,91 +1334,6 @@ _grgTokenAddress
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    /**
-     * Returns the entire balance of Grg tokens in the vault.
-     */
-    public balanceOfGrgVault(
-    ): ContractFunctionObj<BigNumber
-> {
-        const self = this as any as GrgVaultContract;
-        const functionSignature = 'balanceOfGrgVault()';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<BigNumber
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<BigNumber
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    /**
-     * Sets the address of the StakingProxy contract. Note that only the contract owner can call this function.
-      * @param _stakingProxyAddress Address of Staking proxy contract.
-     */
-    public setStakingProxy(
-            _stakingProxyAddress: string,
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as GrgVaultContract;
-            assert.isString('_stakingProxyAddress', _stakingProxyAddress);
-        const functionSignature = 'setStakingProxy(address)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_stakingProxyAddress.toLowerCase()
-            ]);
             },
         }
     };
@@ -1074,7 +1355,7 @@ _grgTokenAddress
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1092,7 +1373,7 @@ _grgTokenAddress
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1102,7 +1383,7 @@ _grgTokenAddress
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
@@ -1110,123 +1391,6 @@ _grgTokenAddress
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [target.toLowerCase()
-            ]);
-            },
-        }
-    };
-    /**
-     * Returns the balance in Grg Tokens of the `staker`
-    * @returns Balance in Grg.
-     */
-    public balanceOf(
-            staker: string,
-    ): ContractFunctionObj<BigNumber
-> {
-        const self = this as any as GrgVaultContract;
-            assert.isString('staker', staker);
-        const functionSignature = 'balanceOf(address)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<BigNumber
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<BigNumber
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [staker.toLowerCase()
-            ]);
-            },
-        }
-    };
-    public owner(
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as GrgVaultContract;
-        const functionSignature = 'owner()';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    /**
-     * Withdraw an `amount` of Grg Tokens to `staker` from the vault. Note that only the Staking contract can call this. Note that this can only be called when *not* in Catastrophic Failure mode.
-      * @param staker of Grg Tokens.
-      * @param amount of Grg Tokens to withdraw.
-     */
-    public withdrawFrom(
-            staker: string,
-            amount: BigNumber,
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as GrgVaultContract;
-            assert.isString('staker', staker);
-            assert.isBigNumber('amount', amount);
-        const functionSignature = 'withdrawFrom(address,uint256)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [staker.toLowerCase(),
-            amount
             ]);
             },
         }
@@ -1252,7 +1416,7 @@ _grgTokenAddress
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1270,7 +1434,7 @@ _grgTokenAddress
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1280,7 +1444,7 @@ _grgTokenAddress
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
@@ -1290,139 +1454,6 @@ _grgTokenAddress
                 return self._strictEncodeArguments(functionSignature, [target.toLowerCase(),
             index
             ]);
-            },
-        }
-    };
-    public authorized(
-            index_0: string,
-    ): ContractFunctionObj<boolean
-> {
-        const self = this as any as GrgVaultContract;
-            assert.isString('index_0', index_0);
-        const functionSignature = 'authorized(address)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<boolean
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<boolean
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
-            ]);
-            },
-        }
-    };
-    /**
-     * Vault enters into Catastrophic Failure Mode. *** WARNING - ONCE IN CATOSTROPHIC FAILURE MODE, YOU CAN NEVER GO BACK! *** Note that only the contract owner can call this function.
-     */
-    public enterCatastrophicFailure(
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as GrgVaultContract;
-        const functionSignature = 'enterCatastrophicFailure()';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    public stakingProxyAddress(
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as GrgVaultContract;
-        const functionSignature = 'stakingProxyAddress()';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    /**
-     * Gets all authorized addresses.
-    * @returns Array of authorized addresses.
-     */
-    public getAuthorizedAddresses(
-    ): ContractFunctionObj<string[]
-> {
-        const self = this as any as GrgVaultContract;
-        const functionSignature = 'getAuthorizedAddresses()';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string[]
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string[]
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
@@ -1444,7 +1475,7 @@ _grgTokenAddress
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1462,7 +1493,7 @@ _grgTokenAddress
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1472,7 +1503,7 @@ _grgTokenAddress
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
@@ -1481,6 +1512,115 @@ _grgTokenAddress
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [_grgProxyAddress.toLowerCase()
             ]);
+            },
+        }
+    };
+    /**
+     * Sets the address of the StakingProxy contract. Note that only the contract owner can call this function.
+      * @param _stakingProxyAddress Address of Staking proxy contract.
+     */
+    public setStakingProxy(
+            _stakingProxyAddress: string,
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as GrgVaultContract;
+            assert.isString('_stakingProxyAddress', _stakingProxyAddress);
+        const functionSignature = 'setStakingProxy(address)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [_stakingProxyAddress.toLowerCase()
+            ]);
+            },
+        }
+    };
+    public stakingProxyAddress(
+    ): ContractTxFunctionObj<string
+> {
+        const self = this as any as GrgVaultContract;
+        const functionSignature = 'stakingProxyAddress()';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
@@ -1502,7 +1642,7 @@ _grgTokenAddress
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1520,7 +1660,7 @@ _grgTokenAddress
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1530,7 +1670,7 @@ _grgTokenAddress
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
@@ -1560,7 +1700,7 @@ _grgTokenAddress
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1578,7 +1718,7 @@ _grgTokenAddress
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1588,7 +1728,7 @@ _grgTokenAddress
             ): Promise<BigNumber
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<BigNumber
@@ -1596,6 +1736,68 @@ _grgTokenAddress
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [staker.toLowerCase()
+            ]);
+            },
+        }
+    };
+    /**
+     * Withdraw an `amount` of Grg Tokens to `staker` from the vault. Note that only the Staking contract can call this. Note that this can only be called when *not* in Catastrophic Failure mode.
+      * @param staker of Grg Tokens.
+      * @param amount of Grg Tokens to withdraw.
+     */
+    public withdrawFrom(
+            staker: string,
+            amount: BigNumber,
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as GrgVaultContract;
+            assert.isString('staker', staker);
+            assert.isBigNumber('amount', amount);
+        const functionSignature = 'withdrawFrom(address,uint256)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [staker.toLowerCase(),
+            amount
             ]);
             },
         }
