@@ -582,7 +582,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
@@ -618,7 +618,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}
@@ -654,7 +654,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}
@@ -690,7 +690,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
