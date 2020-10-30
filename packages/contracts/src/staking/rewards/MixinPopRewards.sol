@@ -30,7 +30,7 @@ import "../staking_pools/MixinStakingPool.sol";
 import "./MixinPopManager.sol";
 
 
-contract MixinExchangeFees is
+contract MixinPopRewards is
     MixinPopManager,
     MixinStakingPool,
     MixinFinalizer

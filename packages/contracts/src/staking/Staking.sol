@@ -23,14 +23,14 @@ pragma experimental ABIEncoderV2;
 import "./interfaces/IStaking.sol";
 import "./sys/MixinParams.sol";
 import "./stake/MixinStake.sol";
-import "./fees/MixinExchangeFees.sol";
+import "./rewards/MixinPopRewards.sol";
 
 
 contract Staking is
     IStaking,
     MixinParams,
     MixinStake,
-    MixinExchangeFees
+    MixinPopRewards
 {
     /// @dev Initialize storage owned by this contract.
     ///      This function should not be called directly.

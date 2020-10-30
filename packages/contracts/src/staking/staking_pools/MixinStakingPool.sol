@@ -95,6 +95,16 @@ contract MixinStakingPool is
 
         return poolId;
     }
+    
+    // TODO: pool operator can reset stakingpal
+    /*
+    function setStakingPal(bytes32 poolId, address stakingPal)
+        external
+        onlyStakingPoolOperator(poolId)
+    {
+        stakingPal = stakingPal;
+    }
+    */
 
     /// @dev Decreases the operator share for the given pool (i.e. increases pool rewards for members).
     /// @param poolId Unique Id of pool.
