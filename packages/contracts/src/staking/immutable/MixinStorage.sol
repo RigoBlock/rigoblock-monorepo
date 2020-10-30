@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./MixinConstants.sol";
@@ -53,7 +55,7 @@ contract MixinStorage is
     bytes32 public lastPoolId;
 
     /// @dev Mapping from RigoBlock pool subaccount to pool Id of rigoblock pool
-    /// @param 0 RigoBlock pool subaccount address.
+    /// @dev 0 RigoBlock pool subaccount address.
     /// @return 0 The pool ID.
     mapping (address => bytes32) public poolIdByRbPoolAccount;
 
@@ -61,7 +63,7 @@ contract MixinStorage is
     mapping (bytes32 => IStructs.Pool) internal _poolById;
 
     /// @dev mapping from pool ID to reward balance of members
-    /// @param 0 Pool ID.
+    /// @dev 0 Pool ID.
     /// @return 0 The total reward balance of members in this pool.
     mapping (bytes32 => uint256) public rewardsByPoolId;
 
@@ -78,7 +80,7 @@ contract MixinStorage is
     mapping (bytes32 => uint256) internal _cumulativeRewardsByPoolLastStored;
 
     /// @dev Registered RigoBlock Proof_of_Performance contracts, capable of paying protocol fees.
-    /// @param 0 The address to check.
+    /// @dev 0 The address to check.
     /// @return 0 Whether the address is a registered proof_of_performance.
     mapping (address => bool) public validPops;
 
@@ -103,14 +105,14 @@ contract MixinStorage is
 
     /// @dev Stats for each pool that generated fees with sufficient stake to earn rewards.
     ///      See `_minimumPoolStake` in `MixinParams`.
-    /// @param 0 Pool ID.
-    /// @param 1 Epoch number.
+    /// @dev 0 Pool ID.
+    /// @dev 1 Epoch number.
     /// @return 0 Pool fee stats.
     mapping (bytes32 => mapping (uint256 => IStructs.PoolStats)) public poolStatsByEpoch;
 
     /// @dev Aggregated stats across all pools that generated fees with sufficient stake to earn rewards.
     ///      See `_minimumPoolStake` in MixinParams.
-    /// @param 0 Epoch number.
+    /// @dev 0 Epoch number.
     /// @return 0 Reward computation stats.
     mapping (uint256 => IStructs.AggregatedStats) public aggregatedStatsByEpoch;
 
