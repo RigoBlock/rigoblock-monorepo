@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity 0.5.9;
+pragma solidity 0.7.1;
 pragma experimental ABIEncoderV2;
 
 import "./libs/LibSafeDowncast.sol";
@@ -38,7 +40,6 @@ contract StakingProxy is
     /// @dev Constructor.
     /// @param _stakingContract Staking contract to delegate calls to.
     constructor(address _stakingContract)
-        public
         MixinStorage()
     {
         // Deployer address must be authorized in order to call `init`
@@ -52,7 +53,7 @@ contract StakingProxy is
     }
 
     /// @dev Delegates calls to the staking contract, if it is set.
-    function ()
+    receive()
         external
         payable
     {
@@ -84,6 +85,7 @@ contract StakingProxy is
     /// @param _stakingContract Address of staking contract.
     function attachStakingContract(address _stakingContract)
         external
+        override
         onlyAuthorized
     {
         _attachStakingContract(_stakingContract);
@@ -93,6 +95,7 @@ contract StakingProxy is
     /// Note that this is callable only by an authorized address.
     function detachStakingContract()
         external
+        override
         onlyAuthorized
     {
         stakingContract = NIL_ADDRESS;
@@ -147,6 +150,7 @@ contract StakingProxy is
     function assertValidStorageParams()
         public
         view
+        override
     {
         // Epoch length must be between 5 and 30 days long
         uint256 _epochDurationInSeconds = epochDurationInSeconds;

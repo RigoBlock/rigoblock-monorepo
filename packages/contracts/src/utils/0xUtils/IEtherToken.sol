@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Copyright 2019 ZeroEx Intl.
@@ -21,13 +23,15 @@ pragma solidity >= 0.5.9;
 import "./IERC20Token.sol";
 
 
-contract IEtherToken is
+abstract contract IEtherToken is
     IERC20Token
 {
     function deposit()
         public
+        virtual
         payable;
 
     function withdraw(uint256 amount)
-        public;
+        public
+        virtual;
 }

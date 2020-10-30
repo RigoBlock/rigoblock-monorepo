@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Copyright 2019 ZeroEx Intl.
@@ -16,7 +18,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 
 import "./interfaces/IAuthorizable.sol";
 import "./LibAuthorizableRichErrors.sol";
@@ -35,18 +37,17 @@ contract Authorizable is
         _;
     }
 
-    /// @dev Whether an adderss is authorized to call privileged functions.
-    /// @param 0 Address to query.
+    /// @dev Whether an address is authorized to call privileged functions.
+    /// @dev 0 Address to query.
     /// @return 0 Whether the address is authorized.
     mapping (address => bool) public authorized;
     /// @dev Whether an adderss is authorized to call privileged functions.
-    /// @param 0 Index of authorized address.
+    /// @dev 0 Index of authorized address.
     /// @return 0 Authorized address.
     address[] public authorities;
 
     /// @dev Initializes the `owner` address.
     constructor()
-        public
         Ownable()
     {}
 
@@ -54,6 +55,7 @@ contract Authorizable is
     /// @param target Address to authorize.
     function addAuthorizedAddress(address target)
         external
+        override
         onlyOwner
     {
         _addAuthorizedAddress(target);
@@ -63,6 +65,7 @@ contract Authorizable is
     /// @param target Address to remove authorization from.
     function removeAuthorizedAddress(address target)
         external
+        override
         onlyOwner
     {
         if (!authorized[target]) {
@@ -84,6 +87,7 @@ contract Authorizable is
         uint256 index
     )
         external
+        override
         onlyOwner
     {
         _removeAuthorizedAddressAtIndex(target, index);
@@ -94,6 +98,7 @@ contract Authorizable is
     function getAuthorizedAddresses()
         external
         view
+        override
         returns (address[] memory)
     {
         return authorities;
@@ -129,7 +134,7 @@ contract Authorizable is
         emit AuthorizedAddressAdded(target, msg.sender);
     }
 
-    /// @dev Removes authorizion of an address.
+    /// @dev Removes authorization of an address.
     /// @param target Address to remove authorization from.
     /// @param index Index of target in authorities array.
     function _removeAuthorizedAddressAtIndex(
@@ -156,7 +161,7 @@ contract Authorizable is
 
         delete authorized[target];
         authorities[index] = authorities[authorities.length - 1];
-        authorities.length -= 1;
+        authorities.pop();
         emit AuthorizedAddressRemoved(target, msg.sender);
     }
 }

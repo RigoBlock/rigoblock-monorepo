@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/LibFractions.sol";
@@ -115,7 +117,7 @@ contract MixinCumulativeRewards is
     ///        the interval.
     /// @param beginEpoch Beginning of interval.
     /// @param endEpoch End of interval.
-    /// @return rewards Reward accumulated over interval [beginEpoch, endEpoch]
+    /// @return reward Reward accumulated over interval [beginEpoch, endEpoch]
     function _computeMemberRewardOverInterval(
         bytes32 poolId,
         uint256 memberStakeOverInterval,
@@ -166,7 +168,6 @@ contract MixinCumulativeRewards is
     /// @param poolId Unique ID of pool.
     /// @param epoch The epoch to find the
     /// @return cumulativeReward The cumulative reward for `poolId` at `epoch`.
-    /// @return cumulativeRewardStoredAt Epoch that the `cumulativeReward` is stored at.
     function _getCumulativeRewardAtEpoch(bytes32 poolId, uint256 epoch)
         private
         view
