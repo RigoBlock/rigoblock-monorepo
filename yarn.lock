@@ -30,10 +30,10 @@
   dependencies:
     "@0x/base-contract" "^5.0.2"
 
-"@0x/abi-gen@^5.4.7":
-  version "5.4.7"
-  resolved "https://registry.yarnpkg.com/@0x/abi-gen/-/abi-gen-5.4.7.tgz#85900cf14df40fc50030b7faee39ca42c36b8582"
-  integrity sha512-KNo3/X+GqO02PQBceUe40/5gqh00r61ZZ4uG/kUIdxIli29m6TjePXNv7Yney90InLfDCrcc3VUJQhP6xPBv8w==
+"@0x/abi-gen@^5.4.8":
+  version "5.4.8"
+  resolved "https://registry.yarnpkg.com/@0x/abi-gen/-/abi-gen-5.4.8.tgz#a2b0700190161e00c74d2c781e42ad2c6cc2a468"
+  integrity sha512-XbsrX7auNN+834GZWDqmq4/rF0Zp9FaGiDf2K3Ka0lmezYpGXYqhRRb4bGmiZk5KxP2aUWwU72cMCi9fMcrOXg==
   dependencies:
     "@0x/types" "^3.3.0"
     "@0x/typescript-typings" "^5.1.5"
@@ -173,12 +173,12 @@
     lodash "^4.17.11"
     uuid "^3.3.2"
 
-"@0x/contracts-gen@^2.0.18":
-  version "2.0.18"
-  resolved "https://registry.yarnpkg.com/@0x/contracts-gen/-/contracts-gen-2.0.18.tgz#a75e5c007275db569bd4204ed1a79eedfb63b7e1"
-  integrity sha512-0AntKnVPaK/tbr/zKLQD96P36ye70+LapZ3WN4FVXJIaZSeuy2DgIVGUNr+7yEeByfKZx2a9Bd0C1UhdTuZDvQ==
+"@0x/contracts-gen@^2.0.19":
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/@0x/contracts-gen/-/contracts-gen-2.0.19.tgz#4314281cc015728df5f6aa7c615f0ca10e9e1cf0"
+  integrity sha512-di5fdCby8/xKHpXV+jwtv+OhXalcBRO9GHhGkXT0cahfeskoaa0iZlmFE1spOYNDd/KIBMxVvsKgsYPxO09XEA==
   dependencies:
-    "@0x/sol-compiler" "^4.2.7"
+    "@0x/sol-compiler" "^4.3.0"
     "@0x/sol-resolver" "^3.1.5"
     "@0x/types" "^3.3.0"
     "@0x/typescript-typings" "^5.1.5"
@@ -285,10 +285,10 @@
     lodash "^4.17.11"
     websocket "^1.0.25"
 
-"@0x/sol-compiler@^4.2.7":
-  version "4.2.7"
-  resolved "https://registry.yarnpkg.com/@0x/sol-compiler/-/sol-compiler-4.2.7.tgz#1a47f14eb29a77d2bebfb514b7d532ab956805ee"
-  integrity sha512-Qliq7fF6bAc7BRJt3b4LSENAjL5O1D+D9sUitytWR1YOioU8iYc7tlx1MrD4WuKTG0kcctJrUHWDdXf06k1VQw==
+"@0x/sol-compiler@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@0x/sol-compiler/-/sol-compiler-4.3.0.tgz#ba43e964ac04915a35c6fdecdafc34a26c955817"
+  integrity sha512-BVL3BR+a45hlrMkPS4Qh2koVCWLO3XDl2FLUkXs//AFlocR/dRM+mjph24O2dAF40edc+1d8i4kOTV0yBac42A==
   dependencies:
     "@0x/assert" "^3.0.17"
     "@0x/json-schemas" "^5.3.3"
