@@ -1438,7 +1438,7 @@ public static async deployFrom0xArtifactAsync(
                         type: 'address',
                     },
                 ],
-                name: 'removeExchangeAddress',
+                name: 'removePopAddress',
                 outputs: [
                 ],
                 stateMutability: 'nonpayable',
@@ -1739,8 +1739,8 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     /**
-     * Adds a new pop address
-      * @param addr Address of pop contract to add
+     * Adds a new pop address.
+      * @param addr Address of pop contract to add.
      */
     public addPopAddress(
             addr: string,
@@ -4013,16 +4013,16 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     /**
-     * Removes an existing exchange address
-      * @param addr Address of exchange contract to remove
+     * Removes an existing proof_of_performance address.
+      * @param addr Address of proof_of_performance contract to remove.
      */
-    public removeExchangeAddress(
+    public removePopAddress(
             addr: string,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as StakingContract;
             assert.isString('addr', addr);
-        const functionSignature = 'removeExchangeAddress(address)';
+        const functionSignature = 'removePopAddress(address)';
 
         return {
             async sendTransactionAsync(
