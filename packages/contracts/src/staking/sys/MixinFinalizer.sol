@@ -98,10 +98,7 @@ contract MixinFinalizer is
     {
         // allow smart contract calls only from whitelisted smart contract
         if (_isContract(msg.sender)) {
-            require(
-                validPops[msg.sender] = true,
-                "CALLER_IS_NON_WHITELISTED_SMART_CONTRACT_ERROR"
-            );
+            _assertSenderIsAuthorized();
         }
 
         // Compute relevant epochs
