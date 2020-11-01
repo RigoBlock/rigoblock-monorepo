@@ -29,8 +29,8 @@ import "./IGrgVault.sol";
 
 interface IStaking {
 
-    /// @dev Adds a new proof_of_performance address
-    /// @param addr Address of proof_of_performance contract to add
+    /// @dev Adds a new proof_of_performance address.
+    /// @param addr Address of proof_of_performance contract to add.
     function addPopAddress(address addr)
         external;
 
@@ -105,8 +105,8 @@ interface IStaking {
         external
         payable;
 
-    /// @dev Removes an existing proof_of_performance address
-    /// @param addr Address of proof_of_performance contract to remove
+    /// @dev Removes an existing proof_of_performance address.
+    /// @param addr Address of proof_of_performance contract to remove.
     function removePopAddress(address addr)
         external;
 
