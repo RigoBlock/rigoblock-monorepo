@@ -41,8 +41,8 @@ contract MixinPopManager is
         _;
     }
 
-    /// @dev Adds a new pop address
-    /// @param addr Address of pop contract to add
+    /// @dev Adds a new pop address.
+    /// @param addr Address of pop contract to add.
     function addPopAddress(address addr)
         external
         onlyAuthorized
@@ -57,9 +57,9 @@ contract MixinPopManager is
         emit PopAdded(addr);
     }
 
-    /// @dev Removes an existing exchange address
-    /// @param addr Address of exchange contract to remove
-    function removeExchangeAddress(address addr)
+    /// @dev Removes an existing proof_of_performance address.
+    /// @param addr Address of proof_of_performance contract to remove.
+    function removePopAddress(address addr)
         external
         onlyAuthorized
     {
