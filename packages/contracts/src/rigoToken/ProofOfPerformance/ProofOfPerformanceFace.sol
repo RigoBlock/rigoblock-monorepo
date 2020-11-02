@@ -79,7 +79,7 @@ interface ProofOfPerformanceFace {
             uint256 ratio,
             uint256 pop
         );
-
+    
     /// @dev Returns the highwatermark of a pool.
     /// @param poolId Id of the pool.
     /// @return Value of the all-time-high pool nav.

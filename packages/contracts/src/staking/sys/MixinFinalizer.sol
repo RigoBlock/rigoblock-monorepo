@@ -247,28 +247,17 @@ contract MixinFinalizer is
         if (poolStats.feesCollected == 0) {
             return rewards;
         }
-
-        InflationFace inflationInstance = InflationFace(
-            getGrgContract().minter()
-        );
-
-        //TODO: use non-weighted stake and query stats correctly
-        uint256 popReward = ProofOfPerformanceFace(
-            inflationInstance.proofOfPerformance()
-        ).getPop(bytes32(uint256(1))); //.getPop(bytes32(1));
         
-        uint256 period = inflationInstance.period();
-        
-        //TODO: calculate total stake allocated to pool
-        //TODO: check whether inputs can be sent from calling method
-        uint256 totalGrgDelegatedToPool =getTotalStakeDelegatedToPool(bytes32(uint256(1))).currentEpochBalance;
-        uint256 maxEpochReward = totalGrgDelegatedToPool * period / 365 days;
+        // TODO: check where this could be better initialized
+        // TODO: check difference between weightedStake and poolStake
+        //          if weightedStake is always lower than poolStake, this will never revert in minting reward
+        uint256 maxEpochReward = InflationFace(getGrgContract().minter()).getMaxEpochReward(poolStats.weightedStake);
 
         // Use the cobb-douglas function to compute the total reward.
         rewards = LibCobbDouglas.cobbDouglas(
-            maxEpochReward,
-            popReward,
-            maxEpochReward,
+            maxEpochReward, // aggregatedStats.rewardsAvailable,
+            poolStats.feesCollected,
+            maxEpochReward, // aggregatedStats.totalFeesCollected,
             poolStats.weightedStake,
             aggregatedStats.totalWeightedStake,
             cobbDouglasAlphaNumerator,

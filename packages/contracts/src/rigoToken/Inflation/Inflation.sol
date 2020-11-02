@@ -64,6 +64,7 @@ contract Inflation is
     InflationFace
 {
     address public RIGOTOKENADDRESS;
+    // TODO: check whether best to initialize Staking(stakingProxyAddress) to saving 1 passage
     address public GRG_VAULT_ADDRESS;
 
     uint256 public period = 14 days;
@@ -124,7 +125,8 @@ contract Inflation is
         address _rigoTokenAddress,
         address _grgVaultAddress,
         address _proofOfPerformance,
-        address _authority)
+        address _authority
+    )
         public
     {
         RIGOTOKENADDRESS = _rigoTokenAddress;
@@ -160,7 +162,10 @@ contract Inflation is
         RigoTokenFace rigoToken = RigoTokenFace(RIGOTOKENADDRESS);
         // TODO: test
         rigoToken.mintToken(rigoblockDao, rigoblockDaoReward);
-        rigoToken.mintToken(GRG_VAULT_ADDRESS, safeSub(reward, rigoblockDaoReward));
+        rigoToken.mintToken(
+            GrgVault(GRG_VAULT_ADDRESS).stakingProxyAddress(), // TODO: check whether mint to this address and later transferFrom
+            reward //safeSub(reward, rigoblockDaoReward) // TODO: we must transfer full reward to staking proxy for correct accounting
+        );
         return true;
     }
 
@@ -269,6 +274,9 @@ contract Inflation is
         return groups[groupAddress].epochReward;
     }
     
+    /// @dev Returns the max epoch reward of a pool.
+    /// @param totalGrgDelegatedToPool Total amount of GRG delegated to the pool.
+    /// @return Value of the maximum pool reward.
     function getMaxEpochReward(uint256 totalGrgDelegatedToPool) public view returns (uint256) {
         return safeDiv(
             totalGrgDelegatedToPool * period,
