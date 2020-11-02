@@ -58,7 +58,7 @@ interface IStorage {
         view
         returns (uint256);
 
-    function validExchanges(address exchangeAddress)
+    function validPops(address popAddress)
         external
         view
         returns (bool);
