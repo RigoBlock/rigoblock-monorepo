@@ -64,6 +64,7 @@ contract Inflation is
     InflationFace
 {
     address public RIGOTOKENADDRESS;
+    // TODO: check whether best to initialize Staking(stakingProxyAddress) to saving 1 passage
     address public GRG_VAULT_ADDRESS;
 
     uint256 public period = 14 days;
@@ -77,7 +78,6 @@ contract Inflation is
     mapping(address => Group) groups;
 
     struct Performer {
-        uint256 highWaterMark;
         uint256 claimedTokens;
         mapping(uint256 => bool) claim;
         uint256 startTime;
@@ -233,18 +233,6 @@ contract Inflation is
         );
         period = newPeriod;
     }
-    
-    /// @dev Returns the high-water mark of a pool.
-    /// @param poolPrice Current price of the pool.
-    /// @param stakingPoolId Id of the pool.
-    function updateHwmIfPositivePerformance(uint256 poolPrice, bytes32 stakingPoolId)
-        external
-        onlyProofOfPerformance
-    {
-        if (poolPrice > performers[stakingPoolId].highWaterMark) {
-            performers[stakingPoolId].highWaterMark = poolPrice;
-        }
-    }
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
@@ -284,22 +272,6 @@ contract Inflation is
         returns (uint256)
     {
         return groups[groupAddress].epochReward;
-    }
-    
-    /// @dev Returns the high-water mark of a pool.
-    /// @param stakingPoolId Id of the pool.
-    /// @return Value of the all-time-high pool nav.
-    function getHwm(bytes32 stakingPoolId)
-        external
-        view
-        returns (uint256)
-    {
-        if (performers[stakingPoolId].highWaterMark == 0) {
-            return (1 ether);
-
-        } else {
-            return performers[stakingPoolId].highWaterMark;
-        }
     }
     
     /// @dev Returns the max epoch reward of a pool.

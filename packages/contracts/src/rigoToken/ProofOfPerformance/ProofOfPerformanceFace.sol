@@ -79,6 +79,11 @@ interface ProofOfPerformanceFace {
             uint256 ratio,
             uint256 pop
         );
+    
+    /// @dev Returns the highwatermark of a pool.
+    /// @param poolId Id of the pool.
+    /// @return Value of the all-time-high pool nav.
+    function getHwm(uint256 poolId) external view returns (uint256);
 
     /// @dev Returns the reward factor for a pool.
     /// @param poolId Id of the pool.

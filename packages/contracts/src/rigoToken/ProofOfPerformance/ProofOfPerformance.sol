@@ -41,14 +41,8 @@ contract ProofOfPerformance is
     address public dragoRegistryAddress;
     address public rigoblockDaoAddress;
 
-    //mapping (uint256 => PoolPrice) poolPriceById;
+    mapping (bytes32 => uint256) highWaterMark;
     mapping (address => Group) groups;
-
-/*
-    struct PoolPrice {
-        uint256 highWaterMark;
-    }
-*/
 
     struct Group {
         uint256 rewardRatio;
@@ -103,11 +97,6 @@ contract ProofOfPerformance is
         
         // pop assets component is always positive, therefore we must update the hwm if positive performance
         _updateHwmIfPositivePerformance(poolPrice, stakingPoolId);
-        /*
-        if (poolPrice > poolPriceById[poolId].highWaterMark) {
-            poolPriceById[poolId].highWaterMark = poolPrice;
-        }
-        */
 
         require(
             InflationFace(getMinter()).mintInflation(stakingPoolId, reward),
@@ -196,7 +185,18 @@ contract ProofOfPerformance is
             pop
         );
     }
-
+    
+    /// @dev Returns the highwatermark of a pool.
+    /// @param poolId Id of the pool.
+    /// @return Value of the all-time-high pool nav.
+    function getHwm(uint256 poolId)
+        external
+        view
+        returns (uint256)
+    {
+        return (getHwmInternal(bytes32(poolId)));
+    }
+    
     /// @dev Returns the reward factor for a pool.
     /// @param poolId Id of the pool.
     /// @return Value of the reward factor.
@@ -346,7 +346,6 @@ contract ProofOfPerformance is
         view
         returns (uint256 popReward, uint256 performanceReward)
     {
-        uint256 highwatermark = getHwmInternal(bytes32(poolId));
         (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = getPoolPriceAndValueInternal(poolId);
         (address thePoolAddress, ) = addressFromIdInternal(poolId);
         (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = getInflationParameters(poolId);
@@ -359,9 +358,9 @@ contract ProofOfPerformance is
         ) * epochTime / 1 days; // proportional to epoch time
 
         // TODO: test new logic of only performance component null if price below high watermark
-        performanceComponent = newPrice < highwatermark ? 0 : safeMul(
+        performanceComponent = newPrice <= getHwmInternal(bytes32(poolId)) ? 0 : safeMul(
             safeMul(
-                (newPrice - highwatermark),
+                (newPrice - getHwmInternal(bytes32(poolId))),
                 tokenSupply
             ) / 1000000, // Pool(thePoolAddress).BASE(),
             epochReward
@@ -393,7 +392,12 @@ contract ProofOfPerformance is
         view
         returns (uint256)
     {
-        return (InflationFace(getMinter()).getHwm(stakingPoolId));
+        if (highWaterMark[stakingPoolId] == 0) {
+            return (1 ether);
+        
+        } else {
+            return highWaterMark[stakingPoolId];
+        }
     }
 
     /// @dev Returns the non-linear rewards adjustment by eth.
@@ -580,6 +584,8 @@ contract ProofOfPerformance is
     /// @param poolPrice Value of the pool price.
     /// @param stakingPoolId Hex-encoded staking pool id.
     function _updateHwmIfPositivePerformance(uint256 poolPrice, bytes32 stakingPoolId) internal {
-        InflationFace(getMinter()).updateHwmIfPositivePerformance(poolPrice, stakingPoolId);
+        if (poolPrice > highWaterMark[stakingPoolId]) {
+            highWaterMark[stakingPoolId] = poolPrice;
+        }
     }
 }

@@ -36,7 +36,6 @@ interface InflationFace {
     function setAuthority(address authorityAddress) external;
     function setProofOfPerformance(address popAddress) external;
     function setPeriod(uint256 newPeriod) external;
-    function updateHwmIfPositivePerformance(uint256 poolPrice, bytes32 stakingPoolId) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
@@ -44,6 +43,5 @@ interface InflationFace {
     function canWithdraw(bytes32 stakingPoolId) external view returns (bool);
     function timeUntilClaim(bytes32 stakingPoolId) external view returns (uint256);
     function getInflationFactor(address groupAddress) external view returns (uint256);
-    function getHwm(bytes32 stakingPoolId) external view returns (uint256);
     function getMaxEpochReward(uint256 totalGrgDelegatedToPool) external view returns (uint256);
 }
