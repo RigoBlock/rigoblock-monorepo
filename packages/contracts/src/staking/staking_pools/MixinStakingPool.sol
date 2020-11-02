@@ -100,11 +100,11 @@ contract MixinStakingPool is
     
     // TODO: pool operator can reset stakingpal
     /*
-    function setStakingPal(bytes32 poolId, address stakingPal)
+    function setStakingPal(bytes32 poolId, address newStakingPalAddress)
         external
         onlyStakingPoolOperator(poolId)
     {
-        stakingPal = stakingPal;
+        stakingPal = newStakingPalAddress;
     }
     */
 
