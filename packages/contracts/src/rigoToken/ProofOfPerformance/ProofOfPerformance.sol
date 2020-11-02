@@ -41,12 +41,14 @@ contract ProofOfPerformance is
     address public dragoRegistryAddress;
     address public rigoblockDaoAddress;
 
-    mapping (uint256 => PoolPrice) poolPriceById;
+    //mapping (uint256 => PoolPrice) poolPriceById;
     mapping (address => Group) groups;
 
+/*
     struct PoolPrice {
-        uint256 highwatermark;
+        uint256 highWaterMark;
     }
+*/
 
     struct Group {
         uint256 rewardRatio;
@@ -100,9 +102,12 @@ contract ProofOfPerformance is
         uint256 poolPrice = Pool(poolAddress).calcSharePrice();
         
         // pop assets component is always positive, therefore we must update the hwm if positive performance
-        if (poolPrice > poolPriceById[poolId].highwatermark) {
-            poolPriceById[poolId].highwatermark = poolPrice;
+        _updateHwmIfPositivePerformance(poolPrice, stakingPoolId);
+        /*
+        if (poolPrice > poolPriceById[poolId].highWaterMark) {
+            poolPriceById[poolId].highWaterMark = poolPrice;
         }
+        */
 
         require(
             InflationFace(getMinter()).mintInflation(stakingPoolId, reward),
@@ -190,17 +195,6 @@ contract ProofOfPerformance is
             ratio,
             pop
         );
-    }
-
-    /// @dev Returns the highwatermark of a pool.
-    /// @param poolId Id of the pool.
-    /// @return Value of the all-time-high pool nav.
-    function getHwm(uint256 poolId)
-        external
-        view
-        returns (uint256)
-    {
-        return (getHwmInternal(poolId));
     }
 
     /// @dev Returns the reward factor for a pool.
@@ -333,7 +327,6 @@ contract ProofOfPerformance is
 
     /// @dev Returns the address of the Inflation contract.
     /// @return Address of the minter/inflation.
-
     function getMinter()
         internal
         view
@@ -353,7 +346,7 @@ contract ProofOfPerformance is
         view
         returns (uint256 popReward, uint256 performanceReward)
     {
-        uint256 highwatermark= getHwmInternal(poolId);
+        uint256 highwatermark = getHwmInternal(bytes32(poolId));
         (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = getPoolPriceAndValueInternal(poolId);
         (address thePoolAddress, ) = addressFromIdInternal(poolId);
         (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = getInflationParameters(poolId);
@@ -393,29 +386,24 @@ contract ProofOfPerformance is
     }
 
     /// @dev Returns the high-watermark of the pool.
-    /// @param poolId Number of the pool in registry.
+    /// @param stakingPoolId Number of the pool in registry.
     /// @return Number high-watermark.
-    function getHwmInternal(uint256 poolId)
+    function getHwmInternal(bytes32 stakingPoolId)
         internal
         view
         returns (uint256)
     {
-        if (poolPriceById[poolId].highwatermark == 0) {
-            return (1 ether);
-
-        } else {
-            return poolPriceById[poolId].highwatermark;
-        }
+        return (InflationFace(getMinter()).getHwm(stakingPoolId));
     }
 
     /// @dev Returns the non-linear rewards adjustment by eth.
     /// @param thePoolAddress Address of the pool.
     /// @param poolValue Number of value of the pool in wei.
     /// @return Number non-linear adjustment.
-
     function ethBalanceAdjustmentInternal(
         address thePoolAddress,
-        uint256 poolValue)
+        uint256 poolValue
+    )
         internal
         view
         returns (uint256)
@@ -586,5 +574,12 @@ contract ProofOfPerformance is
             revert("POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR");
         }
         aum = safeMul(poolPrice, totalTokens) / 1000000; // pool.BASE();
+    }
+    
+    /// @dev Updates high-water mark if positive performance.
+    /// @param poolPrice Value of the pool price.
+    /// @param stakingPoolId Hex-encoded staking pool id.
+    function _updateHwmIfPositivePerformance(uint256 poolPrice, bytes32 stakingPoolId) internal {
+        InflationFace(getMinter()).updateHwmIfPositivePerformance(poolPrice, stakingPoolId);
     }
 }

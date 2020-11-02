@@ -77,6 +77,7 @@ contract Inflation is
     mapping(address => Group) groups;
 
     struct Performer {
+        uint256 highWaterMark;
         uint256 claimedTokens;
         mapping(uint256 => bool) claim;
         uint256 startTime;
@@ -124,7 +125,8 @@ contract Inflation is
         address _rigoTokenAddress,
         address _grgVaultAddress,
         address _proofOfPerformance,
-        address _authority)
+        address _authority
+    )
         public
     {
         RIGOTOKENADDRESS = _rigoTokenAddress;
@@ -160,7 +162,10 @@ contract Inflation is
         RigoTokenFace rigoToken = RigoTokenFace(RIGOTOKENADDRESS);
         // TODO: test
         rigoToken.mintToken(rigoblockDao, rigoblockDaoReward);
-        rigoToken.mintToken(GRG_VAULT_ADDRESS, safeSub(reward, rigoblockDaoReward));
+        rigoToken.mintToken(
+            GrgVault(GRG_VAULT_ADDRESS).stakingProxyAddress(), // TODO: check whether mint to this address and later transferFrom
+            reward //safeSub(reward, rigoblockDaoReward) // TODO: we must transfer full reward to staking proxy for correct accounting
+        );
         return true;
     }
 
@@ -228,6 +233,18 @@ contract Inflation is
         );
         period = newPeriod;
     }
+    
+    /// @dev Returns the high-water mark of a pool.
+    /// @param poolPrice Current price of the pool.
+    /// @param stakingPoolId Id of the pool.
+    function updateHwmIfPositivePerformance(uint256 poolPrice, bytes32 stakingPoolId)
+        external
+        onlyProofOfPerformance
+    {
+        if (poolPrice > performers[stakingPoolId].highWaterMark) {
+            performers[stakingPoolId].highWaterMark = poolPrice;
+        }
+    }
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
@@ -269,6 +286,25 @@ contract Inflation is
         return groups[groupAddress].epochReward;
     }
     
+    /// @dev Returns the high-water mark of a pool.
+    /// @param stakingPoolId Id of the pool.
+    /// @return Value of the all-time-high pool nav.
+    function getHwm(bytes32 stakingPoolId)
+        external
+        view
+        returns (uint256)
+    {
+        if (performers[stakingPoolId].highWaterMark == 0) {
+            return (1 ether);
+
+        } else {
+            return performers[stakingPoolId].highWaterMark;
+        }
+    }
+    
+    /// @dev Returns the max epoch reward of a pool.
+    /// @param totalGrgDelegatedToPool Total amount of GRG delegated to the pool.
+    /// @return Value of the maximum pool reward.
     function getMaxEpochReward(uint256 totalGrgDelegatedToPool) public view returns (uint256) {
         return safeDiv(
             totalGrgDelegatedToPool * period,
