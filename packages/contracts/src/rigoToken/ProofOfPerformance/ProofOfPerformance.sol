@@ -97,6 +97,11 @@ contract ProofOfPerformance is
         (address poolAddress, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
         uint256 poolPrice = Pool(poolAddress).calcSharePrice();
         
+        // allow smart contract calls only from pool itself
+        if (_isContract(msg.sender)) {
+            _assertContractIsPool(poolAddress);
+        }
+        
         // pop assets component is always positive, therefore we must update the hwm if positive performance
         _updateHwmIfPositivePerformance(poolPrice, poolId);
         
@@ -597,6 +602,32 @@ contract ProofOfPerformance is
     {
         if (msg.sender != STAKINGPROXYADDRESS) {
             revert("CALLER_NOT_STAKING_PROXY_ERROR");
+        }
+    }
+    
+    /// @dev Determines whether an address is an account or a contract
+    /// @param target Address to be inspected
+    /// @return Boolean the address is a contract
+    /// @notice if it is a contract, we use this function to lookup for the owner
+    function _isContract(address target)
+        internal view
+        returns (bool)
+    {
+        uint size;
+        assembly {
+            size := extcodesize(target)
+        }
+        return size > 0;
+    }
+    
+    /// @dev Asserts whether the caller contract is the pool
+    /// @param poolAddress Address of the calling pool
+    function _assertContractIsPool(address poolAddress)
+        internal
+        view
+    {
+        if (msg.sender != poolAddress) {
+            revert("SMART_CONTRACT_CALLER_IS_NOT_POOL_ERROR");
         }
     }
 }
