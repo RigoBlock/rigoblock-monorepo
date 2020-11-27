@@ -416,7 +416,7 @@ _stakingProxyAddress
                 name: 'getPoolPrice',
                 outputs: [
                     {
-                        name: 'thePoolPrice',
+                        name: 'poolPrice',
                         type: 'uint256',
                     },
                     {
@@ -1061,7 +1061,7 @@ _stakingProxyAddress
     /**
      * Returns the price a pool from its id.
       * @param poolId Id of the pool.
-    * @returns thePoolPrice Price of the pool in wei.totalTokens Number of tokens of a pool (totalSupply).
+    * @returns poolPrice Price of the pool in wei.totalTokens Number of tokens of a pool (totalSupply).
      */
     public getPoolPrice(
             poolId: BigNumber,
