@@ -26,6 +26,21 @@ import { InflationFace } from "../Inflation/InflationFace.sol";
 import { RigoTokenFace } from "../RigoToken/RigoTokenFace.sol";
 import { IDragoRegistry } from "../../protocol/DragoRegistry/IDragoRegistry.sol";
 
+interface Staking {
+
+    /// @dev Credits the value of a pool's pop reward.
+    ///      Only a known RigoBlock pop can call this method. See
+    ///      (MixinPopManager).
+    /// @param poolAccount The address of the rigoblock pool account.
+    /// @param popReward The pop reward.
+    function creditPopReward(
+        address poolAccount,
+        uint256 popReward
+    )
+        external
+        payable;
+}
+
 
 /// @title Proof of Performance - Controls parameters of inflation.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -36,12 +51,12 @@ contract ProofOfPerformance is
     ProofOfPerformanceFace
 {
     address public RIGOTOKENADDRESS;
-    address public STAKING_PROXY_ADDRESS;
+    address public STAKINGPROXYADDRESS;
 
     address public dragoRegistryAddress;
     address public rigoblockDaoAddress;
 
-    mapping (bytes32 => uint256) highWaterMark;
+    mapping (uint256 => uint256) highWaterMark;
     mapping (address => Group) groups;
 
     struct Group {
@@ -49,18 +64,12 @@ contract ProofOfPerformance is
     }
 
     modifier onlyRigoblockDao() {
-        require(
-            msg.sender == rigoblockDaoAddress,
-            "ONLY_RIGOBLOCK_DAO"
-        );
+        _assertCallerIsRigoblockDao();
         _;
     }
 
     modifier onlyStakingProxy() {
-        require(
-            msg.sender == STAKING_PROXY_ADDRESS,
-            "ONLY_STAKING_PROXY"
-        );
+        _assertCallerIsStakingProxy();
         _;
     }
 
@@ -74,69 +83,62 @@ contract ProofOfPerformance is
         RIGOTOKENADDRESS = _rigoTokenAddress;
         rigoblockDaoAddress = _rigoblockDao;
         dragoRegistryAddress = _dragoRegistry;
-        STAKING_PROXY_ADDRESS = _stakingProxyAddress;
+        STAKINGPROXYADDRESS = _stakingProxyAddress;
     }
-
-    /*
-     * CORE FUNCTIONS
-     */
-    /// @dev Allows staking proxy to allocate the pop reward to staking pool.
-    /// @param stakingPoolId Hex-encoded staking pool id.
-    /// @param reward Value of the stake-rebased reward.
-    function claimPop(
-        bytes32 stakingPoolId,
-        uint256 reward
+    
+    /// @dev Credits the pop reward to the Staking Proxy contract.
+    /// @param poolId Number of the pool Id in registry.
+    function creditPopRewardToStakingProxy(
+        uint256 poolId
     )
         external
         nonReentrant
-        onlyStakingProxy
     {
-        uint256 poolId = uint256(stakingPoolId);
         (address poolAddress, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
         uint256 poolPrice = Pool(poolAddress).calcSharePrice();
         
         // pop assets component is always positive, therefore we must update the hwm if positive performance
-        _updateHwmIfPositivePerformance(poolPrice, stakingPoolId);
-
-        require(
-            InflationFace(getMinter()).mintInflation(stakingPoolId, reward),
-            "MINT_INFLATION_ERROR"
-        );
+        _updateHwmIfPositivePerformance(poolPrice, poolId);
+        
+        (uint256 popReward, ) = proofOfPerformanceInternal(poolId);
+        
+        // TODO: check if shold return error message or should use more recent solc & require
+        Staking(STAKINGPROXYADDRESS).creditPopReward(poolAddress, popReward);
     }
 
     /// @dev Allows RigoBlock Dao to update the pools registry.
-    /// @param _dragoRegistry Address of new registry.
-    function setRegistry(address _dragoRegistry)
+    /// @param newDragoRegistryAddress Address of new registry.
+    function setRegistry(address newDragoRegistryAddress)
         external
         onlyRigoblockDao
     {
-        dragoRegistryAddress = _dragoRegistry;
+        dragoRegistryAddress = newDragoRegistryAddress;
     }
 
     /// @dev Allows RigoBlock Dao to update its address.
-    /// @param _rigoblockDao Address of new dao.
-    function setRigoblockDao(address _rigoblockDao)
+    /// @param newRigoblockDaoAddress Address of new dao.
+    function setRigoblockDao(address newRigoblockDaoAddress)
         external
         onlyRigoblockDao
     {
-        rigoblockDaoAddress = _rigoblockDao;
+        rigoblockDaoAddress = newRigoblockDaoAddress;
     }
-
+    
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
-    /// @param _ofGroup Id of the pool.
-    /// @param _ratio Id of the pool.
+    /// @param groupAddress Address of the pool's group.
+    /// @param newRatio Value of the new ratio.
     /// @notice onlyRigoblockDao can set ratio.
     function setRatio(
-        address _ofGroup,
-        uint256 _ratio)
+        address groupAddress,
+        uint256 newRatio)
         external
         onlyRigoblockDao
     {
         require(
-            _ratio <= 10000,
+            newRatio <= 10000,
             "RATIO_BIGGER_THAN_10000"
         ); //(from 0 to 10000)
-        groups[_ofGroup].rewardRatio = _ratio;
+        groups[groupAddress].rewardRatio = newRatio;
     }
 
     /*
@@ -194,7 +196,7 @@ contract ProofOfPerformance is
         view
         returns (uint256)
     {
-        return (getHwmInternal(bytes32(poolId)));
+        return (getHwmInternal(poolId));
     }
     
     /// @dev Returns the reward factor for a pool.
@@ -291,17 +293,6 @@ contract ProofOfPerformance is
         ( , , aum) = getPoolPriceAndValueInternal(poolId);
     }
 
-    /// @dev Returns the aggregated reward of all rigoblock pools belonging to a staking pool.
-    /// @param stakingPoolId Hex-encoded staking pool id.
-    /// @return popReward Value of the aggregated reward.
-    function getPop(bytes32 stakingPoolId)
-        external
-        view
-        returns (uint256 popReward)
-    {
-        (popReward, ) = proofOfPerformanceInternal(uint256(stakingPoolId));
-    }
-
     /*
      * INTERNAL FUNCTIONS
      */
@@ -358,9 +349,9 @@ contract ProofOfPerformance is
         ) * epochTime / 1 days; // proportional to epoch time
 
         // TODO: test new logic of only performance component null if price below high watermark
-        performanceComponent = newPrice <= getHwmInternal(bytes32(poolId)) ? 0 : safeMul(
+        performanceComponent = newPrice <= getHwmInternal(poolId) ? 0 : safeMul(
             safeMul(
-                (newPrice - getHwmInternal(bytes32(poolId))),
+                (newPrice - getHwmInternal(poolId)),
                 tokenSupply
             ) / 1000000, // Pool(thePoolAddress).BASE(),
             epochReward
@@ -385,18 +376,18 @@ contract ProofOfPerformance is
     }
 
     /// @dev Returns the high-watermark of the pool.
-    /// @param stakingPoolId Number of the pool in registry.
+    /// @param poolId Number of the pool in registry.
     /// @return Number high-watermark.
-    function getHwmInternal(bytes32 stakingPoolId)
+    function getHwmInternal(uint256 poolId)
         internal
         view
         returns (uint256)
     {
-        if (highWaterMark[stakingPoolId] == 0) {
+        if (highWaterMark[poolId] == 0) {
             return (1 ether);
         
         } else {
-            return highWaterMark[stakingPoolId];
+            return highWaterMark[poolId];
         }
     }
 
@@ -582,10 +573,30 @@ contract ProofOfPerformance is
     
     /// @dev Updates high-water mark if positive performance.
     /// @param poolPrice Value of the pool price.
-    /// @param stakingPoolId Hex-encoded staking pool id.
-    function _updateHwmIfPositivePerformance(uint256 poolPrice, bytes32 stakingPoolId) internal {
-        if (poolPrice > highWaterMark[stakingPoolId]) {
-            highWaterMark[stakingPoolId] = poolPrice;
+    /// @param poolId Hex-encoded staking pool id.
+    function _updateHwmIfPositivePerformance(uint256 poolPrice, uint256 poolId) internal {
+        if (poolPrice > highWaterMark[poolId]) {
+            highWaterMark[poolId] = poolPrice;
+        }
+    }
+    
+    /// @dev Asserts that the caller is the RigoBlock Dao.
+    function _assertCallerIsRigoblockDao()
+        internal
+        view
+    {
+        if (msg.sender != rigoblockDaoAddress) {
+            revert("CALLER_NOT_RIGOBLOCK_DAO_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that the caller is the Staking Proxy.
+    function _assertCallerIsStakingProxy()
+        internal
+        view
+    {
+        if (msg.sender != STAKINGPROXYADDRESS) {
+            revert("CALLER_NOT_STAKING_PROXY_ERROR");
         }
     }
 }
