@@ -32,7 +32,7 @@ interface InflationFace {
     function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
     function setMinimumRigo(uint256 minimum) external;
     function setRigoblock(address newRigoblockDaoAddress) external;
-    function setAuthority(address authorityAddress) external;
+    function setAuthority(address newRigoblockDaoAddress) external;
     function setStakingProxy(address stakingProxyAddress) external;
     function setPeriod(uint256 newPeriod) external;
 
