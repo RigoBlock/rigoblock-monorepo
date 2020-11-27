@@ -23,7 +23,6 @@ pragma solidity >=0.4.22 <0.8.0;
 // solhint-disable-next-line
 interface InflationFace {
 
-    function proofOfPerformance() external view returns (address);
     function period() external view returns (uint256);
 
     /*
@@ -34,7 +33,7 @@ interface InflationFace {
     function setMinimumRigo(uint256 minimum) external;
     function setRigoblock(address newRigoblockDaoAddress) external;
     function setAuthority(address authorityAddress) external;
-    function setProofOfPerformance(address popAddress) external;
+    function setStakingProxy(address stakingProxyAddress) external;
     function setPeriod(uint256 newPeriod) external;
 
     /*
