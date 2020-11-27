@@ -65,8 +65,8 @@ contract Inflation is
     uint256 public period = 14 days;
     uint256 public minimumGRG = 100 * 10**18;
     uint256 public slot;
-    address public authority;
-    address public rigoblockDao;
+    address public authorityAddress;
+    address public rigoblockDaoAddress;
 
     mapping(bytes32 => Performer) performers;
     mapping(address => Group) groups;
@@ -105,14 +105,14 @@ contract Inflation is
     constructor(
         address _rigoTokenAddress,
         address _stakingProxyAddress,
-        address _authority
+        address _authorityAddress
     )
         public
     {
         RIGOTOKENADDRESS = _rigoTokenAddress;
         STAKINGPROXYADDRESS = _stakingProxyAddress;
-        rigoblockDao = msg.sender;
-        authority = _authority;
+        rigoblockDaoAddress = msg.sender;
+        authorityAddress = _authorityAddress;
     }
 
     /*
@@ -140,7 +140,7 @@ contract Inflation is
         uint256 rigoblockDaoReward = reward * 5 / 100; //5% royalty to rigoblock dao
         RigoTokenFace rigoToken = RigoTokenFace(RIGOTOKENADDRESS);
         // TODO: test
-        rigoToken.mintToken(rigoblockDao, rigoblockDaoReward);
+        rigoToken.mintToken(rigoblockDaoAddress, rigoblockDaoReward);
         rigoToken.mintToken(
             STAKINGPROXYADDRESS,
             reward
@@ -178,16 +178,16 @@ contract Inflation is
         external
         onlyRigoblockDao
     {
-        rigoblockDao = newRigoblockDaoAddress;
+        rigoblockDaoAddress = newRigoblockDaoAddress;
     }
 
     /// @dev Allows rigoblock dao to update the authority.
-    /// @param authorityAddress Address of the authority.
-    function setAuthority(address authorityAddress)
+    /// @param newAuthorityAddress Address of the authority.
+    function setAuthority(address newAuthorityAddress)
         external
         onlyRigoblockDao
     {
-        authority = authorityAddress;
+        authorityAddress = newAuthorityAddress;
     }
 
     /// @dev Allows rigoblock dao to update staking proxy address.
@@ -293,7 +293,7 @@ contract Inflation is
         internal
         view
     {
-        if (msg.sender != rigoblockDao) {
+        if (msg.sender != rigoblockDaoAddress) {
             revert("CALLER_NOT_RIGOBLOCK_DAO_ERROR");
         }
     }
@@ -314,7 +314,7 @@ contract Inflation is
         internal
         view
     {
-        if (!Authority(authority).isWhitelistedFactory(_factory)) 
+        if (!Authority(authorityAddress).isWhitelistedFactory(_factory)) 
         {
             revert("NOT_APPROVED_AUTHORITY_ERROR");
         }
