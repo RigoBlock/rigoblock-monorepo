@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
   Copyright 2019 ZeroEx Intl.
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,10 +13,10 @@
   limitations under the License.
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 
 
-contract IOwnable {
+abstract contract IOwnable {
 
     /// @dev Emitted by Ownable when ownership is transferred.
     /// @param previousOwner The previous owner of the contract.
@@ -24,5 +26,6 @@ contract IOwnable {
     /// @dev Transfers ownership of the contract to a new address.
     /// @param newOwner The address that will become the owner.
     function transferOwnership(address newOwner)
-        public;
+        public
+        virtual;
 }

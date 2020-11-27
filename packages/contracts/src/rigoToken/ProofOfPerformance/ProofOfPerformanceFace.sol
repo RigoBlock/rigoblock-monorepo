@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity >=0.4.22 <0.6.0;
+pragma solidity >=0.4.22 <0.8.0;
 
 /// @title Proof of Performance Interface - Allows interaction with the PoP contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -28,28 +28,23 @@ interface ProofOfPerformanceFace {
     /*
      * CORE FUNCTIONS
      */
-    /// @dev Allows anyone to allocate the pop reward to pool wizards.
-    /// @param stakingPoolId Number of pool id in registry.
-    /// @param reward Value of the stake-rebased reward.
-    function claimPop(
-        bytes32 stakingPoolId,
-        uint256 reward
-    )
-        external;
+    /// @dev Credits the pop reward to the Staking Proxy contract.
+    /// @param poolId Number of the pool Id in registry.
+    function creditPopRewardToStakingProxy(uint256 poolId) external;
 
     /// @dev Allows RigoBlock Dao to update the pools registry.
-    /// @param _dragoRegistry Address of new registry.
-    function setRegistry(address _dragoRegistry) external;
+    /// @param newDragoRegistryAddress Address of new registry.
+    function setRegistry(address newDragoRegistryAddress) external;
 
     /// @dev Allows RigoBlock Dao to update its address.
-    /// @param _rigoblockDao Address of new dao.
-    function setRigoblockDao(address _rigoblockDao) external;
+    /// @param newRigoblockDaoAddress Address of new dao.
+    function setRigoblockDao(address newRigoblockDaoAddress) external;
 
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
-    /// @param _ofGroup Id of the pool.
-    /// @param _ratio Id of the pool.
+    /// @param groupAddress Address of the pool's group.
+    /// @param newRatio Value of the new ratio.
     /// @notice onlyRigoblockDao can set ratio.
-    function setRatio(address _ofGroup, uint256 _ratio) external;
+    function setRatio(address groupAddress, uint256 newRatio) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
@@ -79,7 +74,7 @@ interface ProofOfPerformanceFace {
             uint256 ratio,
             uint256 pop
         );
-
+    
     /// @dev Returns the highwatermark of a pool.
     /// @param poolId Id of the pool.
     /// @return Value of the all-time-high pool nav.
@@ -155,12 +150,4 @@ interface ProofOfPerformanceFace {
         returns (
             uint256 aum
         );
-    
-    /// @dev Returns the aggregated reward of all rigoblock pools belonging to a staking pool.
-    /// @param stakingPoolId Hex-encoded staking pool id.
-    /// @return popReward Value of the aggregated reward.
-    function getPop(bytes32 stakingPoolId)
-        external
-        view
-        returns (uint256 popReward);
 }

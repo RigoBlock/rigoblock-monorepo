@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
 //import "../../rigoToken/RigoToken/RigoTokenFace.sol";
@@ -96,10 +98,7 @@ contract MixinFinalizer is
     {
         // allow smart contract calls only from whitelisted smart contract
         if (_isContract(msg.sender)) {
-            require(
-                validPops[msg.sender] = true,
-                "CALLER_IS_NON_WHITELISTED_SMART_CONTRACT_ERROR"
-            );
+            _assertSenderIsAuthorized();
         }
 
         // Compute relevant epochs
@@ -143,6 +142,7 @@ contract MixinFinalizer is
         );
 
         uint256 totalReward = operatorReward.safeAdd(membersReward);
+        // TODO: mint reward here
 
         // Increase `totalRewardsFinalized`.
         aggregatedStatsByEpoch[prevEpoch].totalRewardsFinalized =
@@ -168,12 +168,14 @@ contract MixinFinalizer is
     /// @dev Computes the reward owed to a pool during finalization.
     ///      Does nothing if the pool is already finalized.
     /// @param poolId The pool's ID.
-    /// @return totalReward The total reward owed to a pool.
+    /// @return reward The total reward owed to a pool.
     /// @return membersStake The total stake for all non-operator members in
     ///         this pool.
     function _getUnfinalizedPoolRewards(bytes32 poolId)
         internal
         view
+        virtual
+        override
         returns (
             uint256 reward,
             uint256 membersStake
@@ -191,7 +193,7 @@ contract MixinFinalizer is
     {
         uint256 ethBalance = address(this).balance;
         if (ethBalance != 0) {
-            getWethContract().deposit.value(ethBalance)();
+            getWethContract().deposit{value: ethBalance}();
         }
     }
 
@@ -213,6 +215,8 @@ contract MixinFinalizer is
     function _assertPoolFinalizedLastEpoch(bytes32 poolId)
         internal
         view
+        virtual
+        override
     {
         uint256 prevEpoch = currentEpoch.safeSub(1);
         IStructs.PoolStats memory poolStats = poolStatsByEpoch[poolId][prevEpoch];
@@ -244,28 +248,17 @@ contract MixinFinalizer is
         if (poolStats.feesCollected == 0) {
             return rewards;
         }
-
-        InflationFace inflationInstance = InflationFace(
-            getGrgContract().minter()
-        );
-
-        //TODO: use non-weighted stake and query stats correctly
-        uint256 popReward = ProofOfPerformanceFace(
-            inflationInstance.proofOfPerformance()
-        ).getPop(bytes32(uint256(1))); //.getPop(bytes32(1));
         
-        uint256 period = inflationInstance.period();
-        
-        //TODO: calculate total stake allocated to pool
-        //TODO: check whether inputs can be sent from calling method
-        uint256 totalGrgDelegatedToPool =getTotalStakeDelegatedToPool(bytes32(uint256(1))).currentEpochBalance;
-        uint256 maxEpochReward = totalGrgDelegatedToPool * period / 365 days;
+        // TODO: check where this could be better initialized
+        // TODO: check difference between weightedStake and poolStake
+        //          if weightedStake is always lower than poolStake, this will never revert in minting reward
+        uint256 maxEpochReward = InflationFace(getGrgContract().minter()).getMaxEpochReward(poolStats.weightedStake);
 
         // Use the cobb-douglas function to compute the total reward.
         rewards = LibCobbDouglas.cobbDouglas(
-            maxEpochReward,
-            popReward,
-            maxEpochReward,
+            maxEpochReward, // aggregatedStats.rewardsAvailable,
+            poolStats.feesCollected,
+            maxEpochReward, // aggregatedStats.totalFeesCollected,
             poolStats.weightedStake,
             aggregatedStats.totalWeightedStake,
             cobbDouglasAlphaNumerator,
@@ -284,7 +277,6 @@ contract MixinFinalizer is
     /// @dev Determines whether an address is an account or a contract
     /// @param target Address to be inspected
     /// @return Boolean the address is a contract
-    /// @notice if it is a contract, we use this function to lookup for the owner
     function _isContract(address target)
         internal view
         returns (bool)

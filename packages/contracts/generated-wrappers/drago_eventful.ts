@@ -1438,7 +1438,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1456,7 +1456,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1466,7 +1466,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -1504,7 +1504,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1522,7 +1522,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1532,7 +1532,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -1578,7 +1578,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1596,7 +1596,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1606,7 +1606,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -1655,7 +1655,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1673,7 +1673,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1683,7 +1683,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -1731,7 +1731,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1749,7 +1749,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1759,7 +1759,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -1806,7 +1806,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1824,7 +1824,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1834,7 +1834,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -1876,7 +1876,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1894,7 +1894,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1904,7 +1904,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -1947,7 +1947,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -1965,7 +1965,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -1975,7 +1975,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -2012,7 +2012,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -2030,7 +2030,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -2040,7 +2040,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -2066,7 +2066,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<string
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<string
@@ -2102,7 +2102,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -2120,7 +2120,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -2130,7 +2130,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -2169,7 +2169,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -2187,7 +2187,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -2197,7 +2197,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -2237,7 +2237,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -2255,7 +2255,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -2265,7 +2265,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -2305,7 +2305,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -2323,7 +2323,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -2333,7 +2333,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -2378,7 +2378,7 @@ public static async deployFrom0xArtifactAsync(
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -2396,7 +2396,7 @@ public static async deployFrom0xArtifactAsync(
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -2406,7 +2406,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean
@@ -2435,7 +2435,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<string
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<string

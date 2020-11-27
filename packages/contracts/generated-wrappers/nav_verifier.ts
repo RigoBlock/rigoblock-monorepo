@@ -301,7 +301,7 @@ public static async deployFrom0xArtifactAsync(
             ): Promise<boolean
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<boolean

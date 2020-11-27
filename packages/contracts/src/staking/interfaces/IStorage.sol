@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "../interfaces/IGrgVault.sol";
@@ -56,7 +58,7 @@ interface IStorage {
         view
         returns (uint256);
 
-    function validExchanges(address exchangeAddress)
+    function validPops(address popAddress)
         external
         view
         returns (bool);

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity 0.5.9;
+pragma solidity 0.7.4;
 
 import "../utils/0xUtils/Authorizable.sol";
 import "../utils/0xUtils/LibRichErrors.sol";
@@ -78,7 +80,6 @@ contract GrgVault is
         address _grgProxyAddress,
         address _grgTokenAddress
     )
-        public
         Authorizable()
     {
         grgAssetProxy = IAssetProxy(_grgProxyAddress);
@@ -94,6 +95,7 @@ contract GrgVault is
     /// @param _stakingProxyAddress Address of Staking proxy contract.
     function setStakingProxy(address _stakingProxyAddress)
         external
+        override
         onlyAuthorized
     {
         stakingProxyAddress = _stakingProxyAddress;
@@ -105,6 +107,7 @@ contract GrgVault is
     /// Note that only the contract owner can call this function.
     function enterCatastrophicFailure()
         external
+        override
         onlyAuthorized
         onlyNotInCatastrophicFailure
     {
@@ -118,6 +121,7 @@ contract GrgVault is
     /// @param _grgProxyAddress Address of the RigoBlock Grg Proxy.
     function setGrgProxy(address _grgProxyAddress)
         external
+        override
         onlyAuthorized
         onlyNotInCatastrophicFailure
     {
@@ -132,6 +136,7 @@ contract GrgVault is
     /// @param amount of Grg Tokens to deposit.
     function depositFrom(address staker, uint256 amount)
         external
+        override
         onlyStakingProxy
         onlyNotInCatastrophicFailure
     {
@@ -157,6 +162,7 @@ contract GrgVault is
     /// @param amount of Grg Tokens to withdraw.
     function withdrawFrom(address staker, uint256 amount)
         external
+        override
         onlyStakingProxy
         onlyNotInCatastrophicFailure
     {
@@ -168,6 +174,7 @@ contract GrgVault is
     /// @param staker of Grg Tokens.
     function withdrawAllFrom(address staker)
         external
+        override
         onlyInCatastrophicFailure
         returns (uint256)
     {
@@ -184,6 +191,7 @@ contract GrgVault is
     function balanceOf(address staker)
         external
         view
+        override
         returns (uint256)
     {
         return _balances[staker];
@@ -193,6 +201,7 @@ contract GrgVault is
     function balanceOfGrgVault()
         external
         view
+        override
         returns (uint256)
     {
         return _grgToken.balanceOf(address(this));

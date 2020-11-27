@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/LibMath.sol";
@@ -30,63 +32,46 @@ import "../staking_pools/MixinStakingPool.sol";
 import "./MixinPopManager.sol";
 
 
-contract MixinExchangeFees is
+contract MixinPopRewards is
     MixinPopManager,
     MixinStakingPool,
     MixinFinalizer
 {
     using LibSafeMath for uint256;
 
-    /// @dev Pays a protocol fee in ETH or WETH.
-    ///      Only a known 0x exchange can call this method. See
-    ///      (MixinExchangeManager).
-    /// @param makerAddress The address of the order's maker.
-    /// @param payerAddress The address of the protocol fee payer.
-    /// @param protocolFee The protocol fee amount. This is either passed as ETH or transferred as WETH.
-    function payProtocolFee(
-        address makerAddress,
-        address payerAddress,
-        uint256 protocolFee
+    /// @dev Credits the value of a pool's pop reward.
+    ///      Only a known RigoBlock pop can call this method. See
+    ///      (MixinPopManager).
+    /// @param poolAccount The address of the rigoblock pool account.
+    /// @param popReward The pop reward.
+    function creditPopReward(
+        address poolAccount,
+        uint256 popReward
     )
         external
         payable
         onlyPop
     {
-        _assertValidProtocolFee(protocolFee);
-
-        // Transfer the protocol fee to this address if it should be paid in
-        // WETH.
-        if (msg.value == 0) {
-            require(
-                getWethContract().transferFrom(
-                    payerAddress,
-                    address(this),
-                    protocolFee
-                ),
-                "WETH_TRANSFER_FAILED"
-            );
-        }
-
         // Get the pool id of the maker address.
-        bytes32 poolId = poolIdByRbPoolAccount[makerAddress];
-
-        // Only attribute the protocol fee payment to a pool if the maker is
+        bytes32 poolId = poolIdByRbPoolAccount[poolAccount];
+        
+        // Only attribute the pop reward to a pool if the pool account is
         // registered to a pool.
         if (poolId == NIL_POOL_ID) {
             return;
         }
-
+        
         uint256 poolStake = getTotalStakeDelegatedToPool(poolId).currentEpochBalance;
         // Ignore pools with dust stake.
         if (poolStake < minimumPoolStake) {
             return;
         }
-
+        
         // Look up the pool stats and aggregated stats for this epoch.
         uint256 currentEpoch_ = currentEpoch;
         IStructs.PoolStats storage poolStatsPtr = poolStatsByEpoch[poolId][currentEpoch_];
         IStructs.AggregatedStats storage aggregatedStatsPtr = aggregatedStatsByEpoch[currentEpoch_];
-
+        
         // Perform some initialization if this is the pool's first protocol fee in this epoch.
         uint256 feesCollectedByPool = poolStatsPtr.feesCollected;
         if (feesCollectedByPool == 0) {
@@ -104,12 +89,14 @@ contract MixinExchangeFees is
             // Emit an event so keepers know what pools earned rewards this epoch.
             emit StakingPoolEarnedRewardsInEpoch(currentEpoch_, poolId);
         }
-
-        // Credit the fees to the pool.
-        poolStatsPtr.feesCollected = feesCollectedByPool.safeAdd(protocolFee);
-
-        // Increase the total fees collected this epoch.
-        aggregatedStatsPtr.totalFeesCollected = aggregatedStatsPtr.totalFeesCollected.safeAdd(protocolFee);
+        
+        if (popReward > feesCollectedByPool) {
+            // Credit the fees to the pool.
+            poolStatsPtr.feesCollected = popReward;
+            
+            // Increase the total fees collected this epoch.
+            aggregatedStatsPtr.totalFeesCollected = aggregatedStatsPtr.totalFeesCollected.safeAdd(popReward).safeSub(feesCollectedByPool);
+        }
     }
 
     /// @dev Get stats on a staking pool in this epoch.
@@ -171,5 +158,34 @@ contract MixinExchangeFees is
                 )
             );
         }
+    }
+
+    /// @dev Computes the reward owed to a pool during finalization.
+    ///      Does nothing if the pool is already finalized.
+    /// @param poolId The pool's ID.
+    /// @return totalReward The total reward owed to a pool.
+    /// @return membersStake The total stake for all non-operator members in
+    ///         this pool.
+    function _getUnfinalizedPoolRewards(bytes32 poolId)
+        internal
+        view
+        virtual
+        override(MixinFinalizer, MixinStakingPool)
+        returns (
+            uint256 totalReward,
+            uint256 membersStake)
+    {
+        (totalReward, membersStake) = MixinFinalizer._getUnfinalizedPoolRewards(poolId);
+    }
+
+    /// @dev Asserts that a pool has been finalized last epoch.
+    /// @param poolId The id of the pool that should have been finalized.
+    function _assertPoolFinalizedLastEpoch(bytes32 poolId)
+        internal
+        view
+        virtual
+        override(MixinFinalizer, MixinStakingPool)
+    {
+        return MixinFinalizer._assertPoolFinalizedLastEpoch(poolId);
     }
 }
