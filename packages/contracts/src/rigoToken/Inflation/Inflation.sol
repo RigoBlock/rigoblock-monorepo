@@ -52,10 +52,6 @@ interface Staking {
         returns (IStructs.StoredBalance memory balance);
 }
 
-interface GrgVault {
-    function stakingProxyAddress() external view returns (address);
-}
-
 /// @title Inflation - Allows ProofOfPerformance to mint tokens.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
@@ -64,15 +60,13 @@ contract Inflation is
     InflationFace
 {
     address public RIGOTOKENADDRESS;
-    // TODO: check whether best to initialize Staking(stakingProxyAddress) to saving 1 passage
-    address public GRG_VAULT_ADDRESS;
+    address public STAKINGPROXYADDRESS;
 
     uint256 public period = 14 days;
     uint256 public minimumGRG = 100 * 10**18;
     uint256 public slot;
-    address public proofOfPerformance;
     address public authority;
-    address public rigoblockDao; // TODO: check if make this private
+    address public rigoblockDao;
 
     mapping(bytes32 => Performer) performers;
     mapping(address => Group) groups;
@@ -89,50 +83,35 @@ contract Inflation is
     }
 
     modifier onlyRigoblockDao {
-        require(
-            msg.sender == rigoblockDao,
-            "ONLY_RIGOBLOCK_DAO"
-        );
+        _assertCallerIsRigoblockDao();
         _;
     }
 
-    modifier onlyProofOfPerformance {
-        require(
-            msg.sender == proofOfPerformance,
-            "ONLY_PROOF_OF_PERFORMANCE"
-        );
+    modifier onlyStakingProxy {
+        _assertCallerIsStakingProxy();
         _;
     }
 
     modifier isApprovedFactory(address _factory) {
-        Authority auth = Authority(authority);
-        require(
-            auth.isWhitelistedFactory(_factory),
-            "NOT_APPROVED_AUTHORITY"
-        );
+        _assertIsApprovedFactory(_factory);
         _;
     }
 
     modifier timeAtLeast(bytes32 stakingPoolId) {
-        require(
-            block.timestamp >= performers[stakingPoolId].endTime,
-            "TIME_NOT_ENOUGH"
-        );
+        _assertTimeAtLeast(stakingPoolId);
         _;
     }
 
     constructor(
         address _rigoTokenAddress,
-        address _grgVaultAddress,
-        address _proofOfPerformance,
+        address _stakingProxyAddress,
         address _authority
     )
         public
     {
         RIGOTOKENADDRESS = _rigoTokenAddress;
-        GRG_VAULT_ADDRESS = _grgVaultAddress;
+        STAKINGPROXYADDRESS = _stakingProxyAddress;
         rigoblockDao = msg.sender;
-        proofOfPerformance = _proofOfPerformance;
         authority = _authority;
     }
 
@@ -145,7 +124,7 @@ contract Inflation is
     /// @return Bool the transaction executed correctly.
     function mintInflation(bytes32 stakingPoolId, uint256 reward)
         external
-        onlyProofOfPerformance
+        onlyStakingProxy
         timeAtLeast(stakingPoolId)
         returns (bool)
     {
@@ -163,8 +142,8 @@ contract Inflation is
         // TODO: test
         rigoToken.mintToken(rigoblockDao, rigoblockDaoReward);
         rigoToken.mintToken(
-            GrgVault(GRG_VAULT_ADDRESS).stakingProxyAddress(), // TODO: check whether mint to this address and later transferFrom
-            reward //safeSub(reward, rigoblockDaoReward) // TODO: we must transfer full reward to staking proxy for correct accounting
+            STAKINGPROXYADDRESS,
+            reward
         );
         return true;
     }
@@ -211,13 +190,13 @@ contract Inflation is
         authority = authorityAddress;
     }
 
-    /// @dev Allows rigoblock dao to update proof of performance.
-    /// @param popAddress Address of the Proof of Performance contract.
-    function setProofOfPerformance(address popAddress)
+    /// @dev Allows rigoblock dao to update staking proxy address.
+    /// @param stakingProxyAddress Address of the staking proxy contract.
+    function setStakingProxyAddres(address stakingProxyAddress)
         external
         onlyRigoblockDao
     {
-        proofOfPerformance = popAddress;
+        STAKINGPROXYADDRESS = stakingProxyAddress;
     }
 
     /// @dev Allows rigoblock dao to set the minimum time between reward collection.
@@ -259,8 +238,8 @@ contract Inflation is
         returns (uint256)
     {
         if (block.timestamp < performers[stakingPoolId].endTime) {
-            return (performers[stakingPoolId].endTime);
-        }
+            return (performers[stakingPoolId].endTime - block.timestamp);
+        } else return (uint256(0));
     }
 
     /// @dev Return the reward factor for a group.
@@ -291,9 +270,8 @@ contract Inflation is
     /// @param stakingPoolId ID of the staking pool.
     /// @return Amount of GRG staked.
     function _getTotalGrgDelegatedToPool(bytes32 stakingPoolId) internal view returns (uint256) {
-        address stakingProxyAddress = GrgVault(GRG_VAULT_ADDRESS).stakingProxyAddress();
         return uint256(
-            Staking(stakingProxyAddress)
+            Staking(STAKINGPROXYADDRESS)
             .getTotalStakeDelegatedToPool(stakingPoolId)
             .currentEpochBalance
         );
@@ -307,6 +285,49 @@ contract Inflation is
     {
         if (totalGrgDelegatedToPool < minimumGRG) {
             revert("STAKED_GRG_AMOUNT_BELOW_MINIMUM_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that the caller is the RigoBlock Dao.
+    function _assertCallerIsRigoblockDao()
+        internal
+        view
+    {
+        if (msg.sender != rigoblockDao) {
+            revert("CALLER_NOT_RIGOBLOCK_DAO_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that the caller is the Staking Proxy.
+    function _assertCallerIsStakingProxy()
+        internal
+        view
+    {
+        if (msg.sender != STAKINGPROXYADDRESS) {
+            revert("CALLER_NOT_STAKING_PROXY_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that an address is an approved factory.
+    /// @param _factory Address of the target factory.
+    function _assertIsApprovedFactory(address _factory)
+        internal
+        view
+    {
+        if (!Authority(authority).isWhitelistedFactory(_factory)) 
+        {
+            revert("NOT_APPROVED_AUTHORITY_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that the minimum time has past.
+    /// @param stakingPoolId Hex-encoded staking pool id.
+    function _assertTimeAtLeast(bytes32 stakingPoolId)
+        internal
+        view
+    {
+        if (block.timestamp < performers[stakingPoolId].endTime) {
+            revert("TIME_NOT_ENOUGH_ERROR");
         }
     }
     
@@ -328,7 +349,7 @@ contract Inflation is
     /// @dev Returns the value of the disinflationary divisor.
     /// @return Value of the divisor.
     function _getDisinflationaryDivisor() internal view returns (uint256) {
-        uint256 firstHalving = uint256(1636581600); // 10 Nov 2021 10:00pm UTC
+        uint256 firstHalving = uint256(1639130400); // 10 Dec 2021 10:00pm UTC
         if (block.timestamp < firstHalving) {
             return uint256(1);
         } else if (block.timestamp < firstHalving + 52 weeks) {
