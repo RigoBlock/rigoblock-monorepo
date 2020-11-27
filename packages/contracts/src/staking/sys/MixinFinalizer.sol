@@ -100,30 +100,30 @@ contract MixinFinalizer is
         if (_isContract(msg.sender)) {
             _assertSenderIsAuthorized();
         }
-
+        
         // Compute relevant epochs
         uint256 currentEpoch_ = currentEpoch;
         uint256 prevEpoch = currentEpoch_.safeSub(1);
-
+        
         // Load the aggregated stats into memory; noop if no pools to finalize.
         IStructs.AggregatedStats memory aggregatedStats = aggregatedStatsByEpoch[prevEpoch];
         if (aggregatedStats.numPoolsToFinalize == 0) {
             return;
         }
-
+        
         // Noop if the pool did not earn rewards or already finalized (has no fees).
         IStructs.PoolStats memory poolStats = poolStatsByEpoch[poolId][prevEpoch];
         if (poolStats.feesCollected == 0) {
             return;
         }
-
+        
         // Clear the pool stats so we don't finalize it again, and to recoup
         // some gas.
         delete poolStatsByEpoch[poolId][prevEpoch];
-
+        
         // Compute the rewards.
         uint256 rewards = _getUnfinalizedPoolRewardsFromPoolStats(poolStats, aggregatedStats);
-
+        
         // Pay the operator and update rewards for the pool.
         // Note that we credit at the CURRENT epoch even though these rewards
         // were earned in the previous epoch.
@@ -132,7 +132,7 @@ contract MixinFinalizer is
             rewards,
             poolStats.membersStake
         );
-
+        
         // Emit an event.
         emit RewardsPaid(
             currentEpoch_,
@@ -140,20 +140,25 @@ contract MixinFinalizer is
             operatorReward,
             membersReward
         );
-
+        
         uint256 totalReward = operatorReward.safeAdd(membersReward);
-        // TODO: mint reward here
-
+        
+        // mint reward tokens
+        require(
+            InflationFace(getGrgContract().minter()).mintInflation(poolId, totalReward),
+            "FINALIZER_MINT_INFLATION_ERROR"
+        );
+        
         // Increase `totalRewardsFinalized`.
         aggregatedStatsByEpoch[prevEpoch].totalRewardsFinalized =
             aggregatedStats.totalRewardsFinalized =
             aggregatedStats.totalRewardsFinalized.safeAdd(totalReward);
-
+        
         // Decrease the number of unfinalized pools left.
         aggregatedStatsByEpoch[prevEpoch].numPoolsToFinalize =
             aggregatedStats.numPoolsToFinalize =
             aggregatedStats.numPoolsToFinalize.safeSub(1);
-
+        
         // If there are no more unfinalized pools remaining, the epoch is
         // finalized.
         if (aggregatedStats.numPoolsToFinalize == 0) {
