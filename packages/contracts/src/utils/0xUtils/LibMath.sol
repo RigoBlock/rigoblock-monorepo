@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Copyright 2019 ZeroEx Intl.
@@ -16,7 +18,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 
 import "./LibSafeMath.sol";
 import "./LibRichErrors.sol";
@@ -32,7 +34,7 @@ library LibMath {
     /// @param numerator Numerator.
     /// @param denominator Denominator.
     /// @param target Value to calculate partial of.
-    /// @return Partial value of target rounded down.
+    /// @return partialAmount Partial value of target rounded down.
     function safeGetPartialAmountFloor(
         uint256 numerator,
         uint256 denominator,
@@ -63,7 +65,7 @@ library LibMath {
     /// @param numerator Numerator.
     /// @param denominator Denominator.
     /// @param target Value to calculate partial of.
-    /// @return Partial value of target rounded up.
+    /// @return partialAmount Partial value of target rounded up.
     function safeGetPartialAmountCeil(
         uint256 numerator,
         uint256 denominator,
@@ -99,7 +101,7 @@ library LibMath {
     /// @param numerator Numerator.
     /// @param denominator Denominator.
     /// @param target Value to calculate partial of.
-    /// @return Partial value of target rounded down.
+    /// @return partialAmount Partial value of target rounded down.
     function getPartialAmountFloor(
         uint256 numerator,
         uint256 denominator,
@@ -117,7 +119,7 @@ library LibMath {
     /// @param numerator Numerator.
     /// @param denominator Denominator.
     /// @param target Value to calculate partial of.
-    /// @return Partial value of target rounded up.
+    /// @return partialAmount Partial value of target rounded up.
     function getPartialAmountCeil(
         uint256 numerator,
         uint256 denominator,
@@ -141,7 +143,7 @@ library LibMath {
     /// @param numerator Numerator.
     /// @param denominator Denominator.
     /// @param target Value to multiply with numerator/denominator.
-    /// @return Rounding error is present.
+    /// @return isError Rounding error is present.
     function isRoundingErrorFloor(
         uint256 numerator,
         uint256 denominator,
@@ -194,7 +196,7 @@ library LibMath {
     /// @param numerator Numerator.
     /// @param denominator Denominator.
     /// @param target Value to multiply with numerator/denominator.
-    /// @return Rounding error is present.
+    /// @return isError Rounding error is present.
     function isRoundingErrorCeil(
         uint256 numerator,
         uint256 denominator,

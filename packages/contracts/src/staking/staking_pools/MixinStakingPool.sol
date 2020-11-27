@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/LibRichErrors.sol";
@@ -44,18 +46,34 @@ contract MixinStakingPool is
 
     /// @dev Create a new staking pool. The sender will be the operator of this pool.
     /// Note that an operator must be payable.
-    /// @param operatorShare Portion of rewards owned by the operator, in ppm.
-    /// @param addOperatorAsMaker Adds operator to the created pool as a maker for convenience iff true.
+    /// @param rigoblockPoolAddress Adds rigoblock pool to the created staking pool for convenience if non-null.
     /// @return poolId The unique pool id generated for this pool.
-    function createStakingPool(uint32 operatorShare, bool addOperatorAsMaker)
+    function createStakingPool(address rigoblockPoolAddress)
         external
         returns (bytes32 poolId)
     {
+        // TODO: test
+        (uint256 rbPoolId, , , , address rbPoolOwner, ) = getDragoRegistry().fromAddress(rigoblockPoolAddress);
+        require(
+            rbPoolId != uint256(0),
+            "NON_REGISTERED_RB_POOL_ERROR"
+        );
         // note that an operator must be payable
-        address operator = msg.sender;
+        address operator = rbPoolOwner;
 
-        // compute unique id for this pool
-        poolId = lastPoolId = bytes32(uint256(lastPoolId).safeAdd(1));
+        // add stakingPal, which will receive part of community reward if not pool operator
+        // staking pal can be added in storage in Pool by adding 1 address
+        address stakingPal;
+        if (rbPoolOwner != msg.sender) {
+            stakingPal = msg.sender;
+        }
+
+        // operator initially shares 30% with stakers
+        uint32 operatorShare = uint32(700000);
+
+        // check that staking pool does not exist and add unique id for this pool
+        _assertStakingPoolDoesNotExist(bytes32(rbPoolId));
+        poolId = bytes32(rbPoolId);
 
         // sanity check on operator share
         _assertNewOperatorShare(
@@ -67,19 +85,28 @@ contract MixinStakingPool is
         // create and store pool
         IStructs.Pool memory pool = IStructs.Pool({
             operator: operator,
-            operatorShare: operatorShare
+            operatorShare: operatorShare,
+            stakingPal: stakingPal
         });
         _poolById[poolId] = pool;
 
         // Staking pool has been created
         emit StakingPoolCreated(poolId, operator, operatorShare);
 
-        if (addOperatorAsMaker) {
-            joinStakingPoolAsMaker(poolId);
-        }
+        joinStakingPoolAsRbPoolAccount(poolId, rigoblockPoolAddress);
 
         return poolId;
     }
+    
+    // TODO: pool operator can reset stakingpal
+    /*
+    function setStakingPal(bytes32 poolId, address newStakingPalAddress)
+        external
+        onlyStakingPoolOperator(poolId)
+    {
+        stakingPal = newStakingPalAddress;
+    }
+    */
 
     /// @dev Decreases the operator share for the given pool (i.e. increases pool rewards for members).
     /// @param poolId Unique Id of pool.
@@ -105,15 +132,31 @@ contract MixinStakingPool is
         );
     }
 
-    /// @dev Allows caller to join a staking pool as a maker.
+    /// @dev Allows caller to join a staking pool as a rigoblock pool account.
     /// @param poolId Unique id of pool.
-    function joinStakingPoolAsMaker(bytes32 poolId)
+    /// @param rigoblockPoolAccount Address of subaccount to be added to staking pool.
+    function joinStakingPoolAsRbPoolAccount(
+        bytes32 poolId,
+        address rigoblockPoolAccount)
         public
     {
-        address maker = msg.sender;
-        poolIdByMaker[maker] = poolId;
-        emit MakerStakingPoolSet(
-            maker,
+        //TODO: test
+        (address poolAddress, , , uint256 rbPoolId, , ) = getDragoRegistry().fromId(uint256(poolId));
+        
+        // only rigoblock pools registered in drago registry can have accounts added to their staking pool
+        if (rbPoolId == uint256(0)) {
+            revert("NON_REGISTERED_POOL_ID_ERROR");
+        }
+        
+        // only allow pool itself to be registered account
+        if (poolAddress != rigoblockPoolAccount) {
+            revert("POOL_TO_JOIN_NOT_SELF_ERROR");
+        }
+        
+        // write to storage
+        poolIdByRbPoolAccount[poolAddress] = poolId;
+        emit RbPoolStakingPoolSet(
+            rigoblockPoolAccount,
             poolId
         );
     }
@@ -135,6 +178,23 @@ contract MixinStakingPool is
         view
     {
         if (_poolById[poolId].operator == NIL_ADDRESS) {
+            // we use the pool's operator as a proxy for its existence
+            LibRichErrors.rrevert(
+                LibStakingRichErrors.PoolExistenceError(
+                    poolId,
+                    false
+                )
+            );
+        }
+    }
+    
+    /// @dev Reverts iff a staking pool does exist.
+    /// @param poolId Unique id of pool.
+    function _assertStakingPoolDoesNotExist(bytes32 poolId)
+        internal
+        view
+    {
+        if (_poolById[poolId].operator != NIL_ADDRESS) {
             // we use the pool's operator as a proxy for its existence
             LibRichErrors.rrevert(
                 LibStakingRichErrors.PoolExistenceError(
@@ -191,4 +251,29 @@ contract MixinStakingPool is
             );
         }
     }
+    
+    /// @dev Computes the reward owed to a pool during finalization.
+    ///      Does nothing if the pool is already finalized.
+    /// @param poolId The pool's ID.
+    /// @return totalReward The total reward owed to a pool.
+    /// @return membersStake The total stake for all non-operator members in
+    ///         this pool.
+    function _getUnfinalizedPoolRewards(bytes32 poolId)
+        internal
+        view
+        virtual
+        override(MixinAbstract, MixinStakingPoolRewards)
+        returns (
+            uint256 totalReward,
+            uint256 membersStake)
+    {}
+
+    /// @dev Asserts that a pool has been finalized last epoch.
+    /// @param poolId The id of the pool that should have been finalized.
+    function _assertPoolFinalizedLastEpoch(bytes32 poolId)
+        internal
+        view
+        virtual
+        override(MixinAbstract, MixinStakingPoolRewards)
+    {}
 }

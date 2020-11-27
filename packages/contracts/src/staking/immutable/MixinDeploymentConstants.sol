@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,16 +19,16 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 
 import "../../utils/0xUtils/IEtherToken.sol";
 import "../interfaces/IGrgVault.sol";
+import "../../protocol/DragoRegistry/IDragoRegistry.sol";
+import "../../rigoToken/RigoToken/RigoTokenFace.sol";
 
 
 // solhint-disable separate-by-one-line-in-contract
 contract MixinDeploymentConstants {
-
-    // @TODO SET THESE VALUES FOR DEPLOYMENT
 
     // Mainnet WETH9 Address
     address constant private WETH_ADDRESS = address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
@@ -36,8 +38,6 @@ contract MixinDeploymentConstants {
 
     // Ropsten & Rinkeby WETH9 Address
     // address constant private WETH_ADDRESS = address(0xc778417E063141139Fce010982780140Aa0cD5Ab);
-
-    // @TODO SET THESE VALUES FOR DEPLOYMENT
 
     // Mainnet GrgVault address
     address constant private GRG_VAULT_ADDRESS = address(0xBa7f8b5fB1b19c1211c5d49550fcD149177A5Eaf);
@@ -50,6 +50,18 @@ contract MixinDeploymentConstants {
 
     // Rinkeby GrgVault address
     // address constant private GRG_VAULT_ADDRESS = address(0xA5Bf6aC73bC40790FC6Ffc9DBbbCE76c9176e224);
+    
+    // Mainnet DragoRegistry address
+    address constant private DRAGO_REGISTRY_ADDRESS = address(0xdE6445484a8dcD9bf35fC95eb4E3990Cc358822e);
+    
+    // Ropsten DragoRegistry address
+    // address constant private DRAGO_REGISTRY_ADDRESS = address(0x4e868D1dDF940316964eA7673E21bE6CBED8b30B);
+    
+    // Mainnet GRG Address
+    address constant private GRG_ADDRESS = address(0x4FbB350052Bca5417566f188eB2EBCE5b19BC964);
+
+    // Ropsten GRG Address
+    // address constant private GRG_ADDRESS = address(0x6FA8590920c5966713b1a86916f7b0419411e474);
 
     /// @dev An overridable way to access the deployed WETH contract.
     ///      Must be view to allow overrides to access state.
@@ -73,5 +85,29 @@ contract MixinDeploymentConstants {
     {
         grgVault = IGrgVault(GRG_VAULT_ADDRESS);
         return grgVault;
+    }
+    
+    /// @dev An overridable way to access the deployed dragoRegistry.
+    ///      Must be view to allow overrides to access state.
+    /// @return dragoRegistry The dragoRegistry contract.
+    function getDragoRegistry()
+        public
+        view
+        returns (IDragoRegistry dragoRegistry)
+    {
+        dragoRegistry = IDragoRegistry(DRAGO_REGISTRY_ADDRESS);
+        return dragoRegistry;
+    }
+    
+    /// @dev An overridable way to access the deployed GRG contract.
+    ///      Must be view to allow overrides to access state.
+    /// @return grgContract The GRG contract instance.
+    function getGrgContract()
+        public
+        view
+        returns (RigoTokenFace grgContract)
+    {
+        grgContract = RigoTokenFace(GRG_ADDRESS);
+        return grgContract;
     }
 }

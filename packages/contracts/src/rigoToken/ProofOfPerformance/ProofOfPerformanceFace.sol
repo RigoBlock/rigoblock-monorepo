@@ -16,33 +16,35 @@
 
 */
 
-pragma solidity >=0.4.22 <0.6.0;
+pragma solidity >=0.4.22 <0.8.0;
 
 /// @title Proof of Performance Interface - Allows interaction with the PoP contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 interface ProofOfPerformanceFace {
+    
+    function minter() external view returns (address);
 
     /*
      * CORE FUNCTIONS
      */
-    /// @dev Allows anyone to allocate the pop reward to pool wizards.
-    /// @param poolId Number of pool id in registry.
-    function claimPop(uint256 poolId) external;
+    /// @dev Credits the pop reward to the Staking Proxy contract.
+    /// @param poolId Number of the pool Id in registry.
+    function creditPopRewardToStakingProxy(uint256 poolId) external;
 
     /// @dev Allows RigoBlock Dao to update the pools registry.
-    /// @param _dragoRegistry Address of new registry.
-    function setRegistry(address _dragoRegistry) external;
+    /// @param newDragoRegistryAddress Address of new registry.
+    function setRegistry(address newDragoRegistryAddress) external;
 
     /// @dev Allows RigoBlock Dao to update its address.
-    /// @param _rigoblockDao Address of new dao.
-    function setRigoblockDao(address _rigoblockDao) external;
+    /// @param newRigoblockDaoAddress Address of new dao.
+    function setRigoblockDao(address newRigoblockDaoAddress) external;
 
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
-    /// @param _ofGroup Id of the pool.
-    /// @param _ratio Id of the pool.
+    /// @param groupAddress Address of the pool's group.
+    /// @param newRatio Value of the new ratio.
     /// @notice onlyRigoblockDao can set ratio.
-    function setRatio(address _ofGroup, uint256 _ratio) external;
+    function setRatio(address groupAddress, uint256 newRatio) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
@@ -50,10 +52,10 @@ interface ProofOfPerformanceFace {
     /// @dev Gets data of a pool.
     /// @param poolId Id of the pool.
     /// @return active Bool the pool is active.
-    /// @return thePoolAddress address of the pool.
-    /// @return thePoolGroup address of the pool factory.
-    /// @return thePoolPrice price of the pool in wei.
-    /// @return thePoolSupply total supply of the pool in units.
+    /// @return poolAddress address of the pool.
+    /// @return poolGroup address of the pool factory.
+    /// @return poolPrice price of the pool in wei.
+    /// @return poolSupply total supply of the pool in units.
     /// @return poolValue total value of the pool in wei.
     /// @return epochReward value of the reward factor or said pool.
     /// @return ratio of assets/performance reward (from 0 to 10000).
@@ -63,16 +65,16 @@ interface ProofOfPerformanceFace {
         view
         returns (
             bool active,
-            address thePoolAddress,
-            address thePoolGroup,
-            uint256 thePoolPrice,
-            uint256 thePoolSupply,
+            address poolAddress,
+            address poolGroup,
+            uint256 poolPrice,
+            uint256 poolSupply,
             uint256 poolValue,
             uint256 epochReward,
             uint256 ratio,
             uint256 pop
         );
-
+    
     /// @dev Returns the highwatermark of a pool.
     /// @param poolId Id of the pool.
     /// @return Value of the all-time-high pool nav.
@@ -129,13 +131,13 @@ interface ProofOfPerformanceFace {
 
     /// @dev Returns the price a pool from its id.
     /// @param poolId Id of the pool.
-    /// @return thePoolPrice Price of the pool in wei.
+    /// @return poolPrice Price of the pool in wei.
     /// @return totalTokens Number of tokens of a pool (totalSupply).
     function getPoolPrice(uint256 poolId)
         external
         view
         returns (
-            uint256 thePoolPrice,
+            uint256 poolPrice,
             uint256 totalTokens
         );
 

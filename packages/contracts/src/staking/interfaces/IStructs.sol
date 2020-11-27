@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 
 
 interface IStructs {
@@ -87,8 +89,10 @@ interface IStructs {
     /// @dev Holds the metadata for a staking pool.
     /// @param operator Operator of the pool.
     /// @param operatorShare Fraction of the total balance owned by the operator, in ppm.
+    /// @param stakingPal Wallet that collects 10% of otherwise redistributed community rewards.
     struct Pool {
         address operator;
         uint32 operatorShare;
+        address stakingPal;
     }
 }

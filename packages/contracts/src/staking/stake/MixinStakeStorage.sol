@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 
 import "../libs/LibSafeDowncast.sol";
 import "../../utils/0xUtils/LibSafeMath.sol";
@@ -74,7 +76,7 @@ contract MixinStakeStorage is
 
     /// @dev Loads a balance from storage and updates its fields to reflect values for the current epoch.
     /// @param balancePtr to load.
-    /// @return current balance.
+    /// @return balance current balance.
     function _loadCurrentBalance(IStructs.StoredBalance storage balancePtr)
         internal
         view
@@ -166,7 +168,7 @@ contract MixinStakeStorage is
     /// @dev Returns true iff storage pointers resolve to same storage location.
     /// @param balancePtrA first storage pointer.
     /// @param balancePtrB second storage pointer.
-    /// @return true iff pointers are equal.
+    /// @return areEqual true iff pointers are equal.
     function _arePointersEqual(
         // solhint-disable-next-line no-unused-vars
         IStructs.StoredBalance storage balancePtrA,
@@ -179,8 +181,8 @@ contract MixinStakeStorage is
     {
         assembly {
             areEqual := and(
-                eq(balancePtrA_slot, balancePtrB_slot),
-                eq(balancePtrA_offset, balancePtrB_offset)
+                eq(balancePtrA.slot, balancePtrB.slot),
+                eq(balancePtrA.offset, balancePtrB.offset)
             )
         }
         return areEqual;

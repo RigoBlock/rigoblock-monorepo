@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,7 +19,7 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/IEtherToken.sol";
@@ -27,8 +29,8 @@ import "./IGrgVault.sol";
 
 interface IStaking {
 
-    /// @dev Adds a new proof_of_performance address
-    /// @param addr Address of proof_of_performance contract to add
+    /// @dev Adds a new proof_of_performance address.
+    /// @param addr Address of proof_of_performance contract to add.
     function addPopAddress(address addr)
         external;
 
@@ -70,9 +72,12 @@ interface IStaking {
     function init()
         external;
 
-    /// @dev Allows caller to join a staking pool as a maker.
-    /// @param poolId Unique id of pool.
-    function joinStakingPoolAsMaker(bytes32 poolId)
+    /// @dev Allows caller to join a staking pool as a rigoblock pool id subaccount.
+    /// @param stakingPoolId Unique id of staking pool.
+    /// @param rigoblockPoolAccount Address of subaccount to be added to staking pool.
+    function joinStakingPoolAsRbPoolAccount(
+        bytes32 stakingPoolId,
+        address rigoblockPoolAccount)
         external;
 
     /// @dev Moves stake between statuses: 'undelegated' or 'delegated'.
@@ -100,8 +105,8 @@ interface IStaking {
         external
         payable;
 
-    /// @dev Removes an existing proof_of_performance address
-    /// @param addr Address of proof_of_performance contract to remove
+    /// @dev Removes an existing proof_of_performance address.
+    /// @param addr Address of proof_of_performance contract to remove.
     function removePopAddress(address addr)
         external;
 

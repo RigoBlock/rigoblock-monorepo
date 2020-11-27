@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,9 +19,10 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
+import "../libs/LibSafeDowncast.sol";
 import "../../utils/0xUtils/LibSafeMath.sol";
 import "../interfaces/IStructs.sol";
 import "../immutable/MixinDeploymentConstants.sol";
@@ -31,10 +34,11 @@ contract MixinStakeBalances is
     MixinDeploymentConstants
 {
     using LibSafeMath for uint256;
+    using LibSafeDowncast for uint256;
 
     /// @dev Gets global stake for a given status.
     /// @param stakeStatus UNDELEGATED or DELEGATED
-    /// @return Global stake for given status.
+    /// @return balance Global stake for given status.
     function getGlobalStakeByStatus(IStructs.StakeStatus stakeStatus)
         external
         view
@@ -56,7 +60,7 @@ contract MixinStakeBalances is
     /// @dev Gets an owner's stake balances by status.
     /// @param staker Owner of stake.
     /// @param stakeStatus UNDELEGATED or DELEGATED
-    /// @return Owner's stake balances for given status.
+    /// @return balance Owner's stake balances for given status.
     function getOwnerStakeByStatus(
         address staker,
         IStructs.StakeStatus stakeStatus
@@ -73,7 +77,7 @@ contract MixinStakeBalances is
 
     /// @dev Returns the total stake for a given staker.
     /// @param staker of stake.
-    /// @return Total ZRX staked by `staker`.
+    /// @return Total GRG staked by `staker`.
     function getTotalStake(address staker)
         public
         view
@@ -85,7 +89,7 @@ contract MixinStakeBalances is
     /// @dev Returns the stake delegated to a specific staking pool, by a given staker.
     /// @param staker of stake.
     /// @param poolId Unique Id of pool.
-    /// @return Stake delegated to pool by staker.
+    /// @return balance Stake delegated to pool by staker.
     function getStakeDelegatedToPoolByOwner(address staker, bytes32 poolId)
         public
         view
@@ -98,7 +102,7 @@ contract MixinStakeBalances is
     /// @dev Returns the total stake delegated to a specific staking pool,
     ///      across all members.
     /// @param poolId Unique Id of pool.
-    /// @return Total stake delegated to pool.
+    /// @return balance Total stake delegated to pool.
     function getTotalStakeDelegatedToPool(bytes32 poolId)
         public
         view

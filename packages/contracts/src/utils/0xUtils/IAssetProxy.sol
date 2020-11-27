@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,10 +19,10 @@
 
 */
 
-pragma solidity ^0.5.4;
+pragma solidity >=0.5.4 <0.8.0;
 
 
-contract IAssetProxy {
+abstract contract IAssetProxy {
 
     /// @dev Transfers assets. Either succeeds or throws.
     /// @param assetData Byte array encoded for the respective asset proxy.
@@ -33,12 +35,14 @@ contract IAssetProxy {
         address to,
         uint256 amount
     )
-        external;
+        external
+        virtual;
 
     /// @dev Gets the proxy id associated with the proxy address.
     /// @return Proxy id.
     function getProxyId()
         external
         pure
+        virtual
         returns (bytes4);
 }

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,13 +19,13 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
 
 /// @dev Exposes some internal functions from various contracts to avoid
 ///      cyclical dependencies.
-contract MixinAbstract {
+abstract contract MixinAbstract {
 
     /// @dev Computes the reward owed to a pool during finalization.
     ///      Does nothing if the pool is already finalized.
@@ -34,6 +36,7 @@ contract MixinAbstract {
     function _getUnfinalizedPoolRewards(bytes32 poolId)
         internal
         view
+        virtual
         returns (
             uint256 totalReward,
             uint256 membersStake
@@ -43,5 +46,6 @@ contract MixinAbstract {
     /// @param poolId The id of the pool that should have been finalized.
     function _assertPoolFinalizedLastEpoch(bytes32 poolId)
         internal
-        view;
+        view
+        virtual;
 }

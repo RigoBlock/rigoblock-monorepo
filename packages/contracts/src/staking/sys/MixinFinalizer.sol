@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,9 +19,12 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
+//import "../../rigoToken/RigoToken/RigoTokenFace.sol";
+import "../../rigoToken/Inflation/InflationFace.sol";
+import "../../rigoToken/ProofOfPerformance/ProofOfPerformanceFace.sol";
 import "../../utils/0xUtils/LibRichErrors.sol";
 import "../../utils/0xUtils/LibSafeMath.sol";
 import "../libs/LibCobbDouglas.sol";
@@ -91,29 +96,34 @@ contract MixinFinalizer is
     function finalizePool(bytes32 poolId)
         external
     {
+        // allow smart contract calls only from whitelisted smart contract
+        if (_isContract(msg.sender)) {
+            _assertSenderIsAuthorized();
+        }
+        
         // Compute relevant epochs
         uint256 currentEpoch_ = currentEpoch;
         uint256 prevEpoch = currentEpoch_.safeSub(1);
-
+        
         // Load the aggregated stats into memory; noop if no pools to finalize.
         IStructs.AggregatedStats memory aggregatedStats = aggregatedStatsByEpoch[prevEpoch];
         if (aggregatedStats.numPoolsToFinalize == 0) {
             return;
         }
-
+        
         // Noop if the pool did not earn rewards or already finalized (has no fees).
         IStructs.PoolStats memory poolStats = poolStatsByEpoch[poolId][prevEpoch];
         if (poolStats.feesCollected == 0) {
             return;
         }
-
+        
         // Clear the pool stats so we don't finalize it again, and to recoup
         // some gas.
         delete poolStatsByEpoch[poolId][prevEpoch];
-
+        
         // Compute the rewards.
         uint256 rewards = _getUnfinalizedPoolRewardsFromPoolStats(poolStats, aggregatedStats);
-
+        
         // Pay the operator and update rewards for the pool.
         // Note that we credit at the CURRENT epoch even though these rewards
         // were earned in the previous epoch.
@@ -122,7 +132,7 @@ contract MixinFinalizer is
             rewards,
             poolStats.membersStake
         );
-
+        
         // Emit an event.
         emit RewardsPaid(
             currentEpoch_,
@@ -130,19 +140,25 @@ contract MixinFinalizer is
             operatorReward,
             membersReward
         );
-
+        
         uint256 totalReward = operatorReward.safeAdd(membersReward);
-
+        
+        // mint reward tokens
+        require(
+            InflationFace(getGrgContract().minter()).mintInflation(poolId, totalReward),
+            "FINALIZER_MINT_INFLATION_ERROR"
+        );
+        
         // Increase `totalRewardsFinalized`.
         aggregatedStatsByEpoch[prevEpoch].totalRewardsFinalized =
             aggregatedStats.totalRewardsFinalized =
             aggregatedStats.totalRewardsFinalized.safeAdd(totalReward);
-
+        
         // Decrease the number of unfinalized pools left.
         aggregatedStatsByEpoch[prevEpoch].numPoolsToFinalize =
             aggregatedStats.numPoolsToFinalize =
             aggregatedStats.numPoolsToFinalize.safeSub(1);
-
+        
         // If there are no more unfinalized pools remaining, the epoch is
         // finalized.
         if (aggregatedStats.numPoolsToFinalize == 0) {
@@ -157,12 +173,14 @@ contract MixinFinalizer is
     /// @dev Computes the reward owed to a pool during finalization.
     ///      Does nothing if the pool is already finalized.
     /// @param poolId The pool's ID.
-    /// @return totalReward The total reward owed to a pool.
+    /// @return reward The total reward owed to a pool.
     /// @return membersStake The total stake for all non-operator members in
     ///         this pool.
     function _getUnfinalizedPoolRewards(bytes32 poolId)
         internal
         view
+        virtual
+        override
         returns (
             uint256 reward,
             uint256 membersStake
@@ -180,7 +198,7 @@ contract MixinFinalizer is
     {
         uint256 ethBalance = address(this).balance;
         if (ethBalance != 0) {
-            getWethContract().deposit.value(ethBalance)();
+            getWethContract().deposit{value: ethBalance}();
         }
     }
 
@@ -202,6 +220,8 @@ contract MixinFinalizer is
     function _assertPoolFinalizedLastEpoch(bytes32 poolId)
         internal
         view
+        virtual
+        override
     {
         uint256 prevEpoch = currentEpoch.safeSub(1);
         IStructs.PoolStats memory poolStats = poolStatsByEpoch[poolId][prevEpoch];
@@ -233,12 +253,17 @@ contract MixinFinalizer is
         if (poolStats.feesCollected == 0) {
             return rewards;
         }
+        
+        // TODO: check where this could be better initialized
+        // TODO: check difference between weightedStake and poolStake
+        //          if weightedStake is always lower than poolStake, this will never revert in minting reward
+        uint256 maxEpochReward = InflationFace(getGrgContract().minter()).getMaxEpochReward(poolStats.weightedStake);
 
         // Use the cobb-douglas function to compute the total reward.
         rewards = LibCobbDouglas.cobbDouglas(
-            aggregatedStats.rewardsAvailable,
+            maxEpochReward, // aggregatedStats.rewardsAvailable,
             poolStats.feesCollected,
-            aggregatedStats.totalFeesCollected,
+            maxEpochReward, // aggregatedStats.totalFeesCollected,
             poolStats.weightedStake,
             aggregatedStats.totalWeightedStake,
             cobbDouglasAlphaNumerator,
@@ -252,5 +277,19 @@ contract MixinFinalizer is
         if (rewardsRemaining < rewards) {
             rewards = rewardsRemaining;
         }
+    }
+    
+    /// @dev Determines whether an address is an account or a contract
+    /// @param target Address to be inspected
+    /// @return Boolean the address is a contract
+    function _isContract(address target)
+        internal view
+        returns (bool)
+    {
+        uint size;
+        assembly {
+            size := extcodesize(target)
+        }
+        return size > 0;
     }
 }

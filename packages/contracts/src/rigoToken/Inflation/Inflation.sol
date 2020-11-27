@@ -17,19 +17,39 @@
 */
 
 pragma solidity 0.5.4;
+pragma experimental ABIEncoderV2;
 
 import { Owned } from "../../utils/Owned/Owned.sol";
 import { AuthorityFace as Authority } from "../../protocol/authorities/Authority/AuthorityFace.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { InflationFace } from "./InflationFace.sol";
+import { RigoTokenFace } from "../RigoToken/RigoTokenFace.sol";
 
-interface RigoToken {
 
-    function mintToken(address _recipient, uint256 _amount) external;
-    function changeMintingAddress(address _newAddress) external;
-    function changeRigoblockAddress(address _newAddress) external;
+interface IStructs {
+    /// @dev Encapsulates a balance for the current and next epochs.
+    /// Note that these balances may be stale if the current epoch
+    /// is greater than `currentEpoch`.
+    /// @param currentEpoch The current epoch
+    /// @param currentEpochBalance Balance in the current epoch.
+    /// @param nextEpochBalance Balance in `currentEpoch+1`.
+    struct StoredBalance {
+        uint64 currentEpoch;
+        uint96 currentEpochBalance;
+        uint96 nextEpochBalance;
+    }
+}
 
-    function balanceOf(address _who) external view returns (uint256);
+interface Staking {
+
+    /// @dev Returns the total stake delegated to a specific staking pool,
+    ///      across all members.
+    /// @param poolId Unique Id of pool.
+    /// @return balance Total stake delegated to pool.
+    function getTotalStakeDelegatedToPool(bytes32 poolId)
+        external
+        view
+        returns (IStructs.StoredBalance memory balance);
 }
 
 /// @title Inflation - Allows ProofOfPerformance to mint tokens.
@@ -40,14 +60,15 @@ contract Inflation is
     InflationFace
 {
     address public RIGOTOKENADDRESS;
+    address public STAKINGPROXYADDRESS;
 
-    uint256 public period = 1 days;
+    uint256 public period = 14 days;
     uint256 public minimumGRG = 100 * 10**18;
-    address public proofOfPerformance;
-    address public authority;
-    address public rigoblockDao;
+    uint256 public slot;
+    address public authorityAddress;
+    address public rigoblockDaoAddress;
 
-    mapping(address => Performer) performers;
+    mapping(bytes32 => Performer) performers;
     mapping(address => Group) groups;
 
     struct Performer {
@@ -55,210 +76,284 @@ contract Inflation is
         mapping(uint256 => bool) claim;
         uint256 startTime;
         uint256 endTime;
-        uint256 epoch;
     }
 
     struct Group {
         uint256 epochReward;
     }
 
-    /// @notice in order to qualify for PoP user has to hold minimum rigo token
-    modifier minimumRigo(address _ofPool) {
-        RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
-        require(
-            rigoToken.balanceOf(getPoolOwner(_ofPool)) >= minimumGRG,
-            "BELOW_MINIMUM_GRG"
-        );
-        _;
-    }
-
     modifier onlyRigoblockDao {
-        require(
-            msg.sender == rigoblockDao,
-            "ONLY_RIGOBLOCK_DAO"
-        );
+        _assertCallerIsRigoblockDao();
         _;
     }
 
-    modifier onlyProofOfPerformance {
-        require(
-            msg.sender == proofOfPerformance,
-            "ONLY_POP_CONTRACT"
-        );
+    modifier onlyStakingProxy {
+        _assertCallerIsStakingProxy();
         _;
     }
 
     modifier isApprovedFactory(address _factory) {
-        Authority auth = Authority(authority);
-        require(
-            auth.isWhitelistedFactory(_factory),
-            "NOT_APPROVED_AUTHORITY"
-        );
+        _assertIsApprovedFactory(_factory);
         _;
     }
 
-    modifier timeAtLeast(address _thePool) {
-        require(
-            block.timestamp >= performers[_thePool].endTime,
-            "TIME_NOT_ENOUGH"
-        );
+    modifier timeAtLeast(bytes32 stakingPoolId) {
+        _assertTimeAtLeast(stakingPoolId);
         _;
     }
 
     constructor(
         address _rigoTokenAddress,
-        address _proofOfPerformance,
-        address _authority)
+        address _stakingProxyAddress,
+        address _authorityAddress
+    )
         public
     {
         RIGOTOKENADDRESS = _rigoTokenAddress;
-        rigoblockDao = msg.sender;
-        proofOfPerformance = _proofOfPerformance;
-        authority = _authority;
+        STAKINGPROXYADDRESS = _stakingProxyAddress;
+        rigoblockDaoAddress = msg.sender;
+        authorityAddress = _authorityAddress;
     }
 
     /*
      * CORE FUNCTIONS
      */
-    /// @dev Allows ProofOfPerformance to mint rewards
-    /// @param _thePool Address of the target pool
-    /// @param _reward Number of reward in Rigo tokens
-    /// @return Bool the transaction executed correctly
-    function mintInflation(address _thePool, uint256 _reward)
+    /// @dev Allows ProofOfPerformance to mint rewards.
+    /// @param stakingPoolId String of the staking pool.
+    /// @param reward Number of reward in Rigo tokens.
+    /// @return Bool the transaction executed correctly.
+    function mintInflation(bytes32 stakingPoolId, uint256 reward)
         external
-        onlyProofOfPerformance
-        minimumRigo(_thePool)
-        timeAtLeast(_thePool)
+        onlyStakingProxy
+        timeAtLeast(stakingPoolId)
         returns (bool)
     {
-        performers[_thePool].startTime = block.timestamp;
-        performers[_thePool].endTime = block.timestamp + period;
-        ++performers[_thePool].epoch;
-        uint256 reward = _reward * 95 / 100; //5% royalty to rigoblock dao
-        uint256 rigoblockReward = safeSub(_reward, reward);
-        RigoToken rigoToken = RigoToken(RIGOTOKENADDRESS);
-        // TODO: amend logic as staking contract receives reward
-        rigoToken.mintToken(getPoolOwner(_thePool), reward);
-        rigoToken.mintToken(rigoblockDao, rigoblockReward);
+        //TODO: test
+        uint256 totalGrgDelegatedToPool = _getTotalGrgDelegatedToPool(stakingPoolId);
+        
+        _assertMinimumGrgContraintSatisfied(totalGrgDelegatedToPool);
+        _assertRewardNotAboveMaxEpochReward(reward, totalGrgDelegatedToPool);
+
+        performers[stakingPoolId].startTime = block.timestamp;
+        performers[stakingPoolId].endTime = block.timestamp + period;
+        ++slot;
+        uint256 rigoblockDaoReward = reward * 5 / 100; //5% royalty to rigoblock dao
+        RigoTokenFace rigoToken = RigoTokenFace(RIGOTOKENADDRESS);
+        // TODO: test
+        rigoToken.mintToken(rigoblockDaoAddress, rigoblockDaoReward);
+        rigoToken.mintToken(
+            STAKINGPROXYADDRESS,
+            reward
+        );
         return true;
     }
 
-    /// @dev Allows rigoblock dao to set the inflation factor for a group
-    /// @param _group Address of the group/factory
-    /// @param _inflationFactor Value of the reward factor
-    function setInflationFactor(address _group, uint256 _inflationFactor)
+    /// @dev Allows rigoblock dao to set the inflation factor for a group.
+    /// @param groupAddress Address of the group/factory.
+    /// @param inflationFactor Value of the reward factor.
+    function setInflationFactor(address groupAddress, uint256 inflationFactor)
         external
         onlyRigoblockDao
-        isApprovedFactory(_group)
+        isApprovedFactory(groupAddress)
     {
-        groups[_group].epochReward = _inflationFactor;
+        groups[groupAddress].epochReward = inflationFactor;
     }
 
-    /// @dev Allows rigoblock dao to set the minimum number of required tokens
-    /// @param _minimum Number of minimum tokens
-    function setMinimumRigo(uint256 _minimum)
+    /// @dev Allows rigoblock dao to set the minimum number of required tokens.
+    /// @param minimum Number of minimum tokens.
+    function setMinimumRigo(uint256 minimum)
         external
         onlyRigoblockDao
     {
         require(
-            _minimum >= 100 * 10**18,
+            minimum >= 100 * 10**18,
             "MINIMUM_GRG_BELOW_100_ERROR"
         );
-        minimumGRG = _minimum;
+        minimumGRG = minimum;
     }
 
-    /// @dev Allows rigoblock dao to upgrade its address
-    /// @param _newRigoblock Address of the new rigoblock dao
-    function setRigoblock(address _newRigoblock)
+    /// @dev Allows rigoblock dao to upgrade its address.
+    /// @param newRigoblockDaoAddress Address of the new rigoblock dao.
+    function setRigoblock(address newRigoblockDaoAddress)
         external
         onlyRigoblockDao
     {
-        rigoblockDao = _newRigoblock;
+        rigoblockDaoAddress = newRigoblockDaoAddress;
     }
 
-    /// @dev Allows rigoblock dao to update the authority
-    /// @param _authority Address of the authority
-    function setAuthority(address _authority)
+    /// @dev Allows rigoblock dao to update the authority.
+    /// @param newAuthorityAddress Address of the authority.
+    function setAuthority(address newAuthorityAddress)
         external
         onlyRigoblockDao
     {
-        authority = _authority;
+        authorityAddress = newAuthorityAddress;
     }
 
-    /// @dev Allows rigoblock dao to update proof of performance
-    /// @param _pop Address of the Proof of Performance contract
-    function setProofOfPerformance(address _pop)
+    /// @dev Allows rigoblock dao to update staking proxy address.
+    /// @param stakingProxyAddress Address of the staking proxy contract.
+    function setStakingProxyAddres(address stakingProxyAddress)
         external
         onlyRigoblockDao
     {
-        proofOfPerformance = _pop;
+        STAKINGPROXYADDRESS = stakingProxyAddress;
     }
 
-    /// @dev Allows rigoblock dao to set the minimum time between reward collection
-    /// @param _newPeriod Number of seconds between 2 rewards
-    /// @notice set period on shorter subsets of time for testing
-    function setPeriod(uint256 _newPeriod)
+    /// @dev Allows rigoblock dao to set the minimum time between reward collection.
+    /// @param newPeriod Number of seconds between 2 rewards.
+    /// @notice set period on shorter subsets of time for testing.
+    function setPeriod(uint256 newPeriod)
         external
         onlyRigoblockDao
     {
         require(
-            _newPeriod >= 1 days && _newPeriod <= 365 days,
+            newPeriod >= 1 days && newPeriod <= 365 days,
             "PERIOD_TOO_LONG_OR_TOO_SHORT_ERROR"
         );
-        period = _newPeriod;
+        period = newPeriod;
     }
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    /// @dev Returns whether a wizard can claim reward tokens
-    /// @param _thePool Address of the target pool
-    /// @return Bool the wizard can claim
-    function canWithdraw(address _thePool)
+    /// @dev Returns whether a staking pool's reward can be claimed.
+    /// @param stakingPoolId Address of the target pool.
+    /// @return Bool the wizard can claim.
+    function canWithdraw(bytes32 stakingPoolId)
         external
         view
         returns (bool)
     {
-        if (block.timestamp >= performers[_thePool].endTime) {
+        if (block.timestamp >= performers[stakingPoolId].endTime) {
             return true;
         }
     }
 
-    /// @dev Returns how much time needed until next claim
-    /// @param _thePool Address of the target pool
-    /// @return Number in seconds
-    function timeUntilClaim(address _thePool)
+    /// @dev Returns how much time needed until next claim.
+    /// @param stakingPoolId Address of the target pool.
+    /// @return Number in seconds.
+    function timeUntilClaim(bytes32 stakingPoolId)
         external
         view
         returns (uint256)
     {
-        if (block.timestamp < performers[_thePool].endTime) {
-            return (performers[_thePool].endTime);
-        }
+        if (block.timestamp < performers[stakingPoolId].endTime) {
+            return (performers[stakingPoolId].endTime - block.timestamp);
+        } else return (uint256(0));
     }
 
-    /// @dev Return the reward factor for a group
-    /// @param _group Address of the group
-    /// @return Value of the reward factor
-    function getInflationFactor(address _group)
+    /// @dev Return the reward factor for a group.
+    /// @param groupAddress Address of the group.
+    /// @return Value of the reward factor.
+    function getInflationFactor(address groupAddress)
         external
         view
         returns (uint256)
     {
-        return groups[_group].epochReward;
+        return groups[groupAddress].epochReward;
     }
-
+    
+    /// @dev Returns the max epoch reward of a pool.
+    /// @param totalGrgDelegatedToPool Total amount of GRG delegated to the pool.
+    /// @return Value of the maximum pool reward.
+    function getMaxEpochReward(uint256 totalGrgDelegatedToPool) public view returns (uint256) {
+        return safeDiv(
+            totalGrgDelegatedToPool * period,
+            _getDisinflationaryDivisor() * 365 days // multiply in order not to dividing in previous line
+        );
+    }
+    
     /*
-     * INTERNAL FUNCTIONS
+     * INTERNAL METHODS
      */
-    /// @dev Returns the address of the pool owner
-    /// @param _ofPool Number of the registered pool
-    /// @return Address of the pool owner
-    function getPoolOwner(address _ofPool)
+    /// @dev Returns the amount of GRG staked to a pool.
+    /// @param stakingPoolId ID of the staking pool.
+    /// @return Amount of GRG staked.
+    function _getTotalGrgDelegatedToPool(bytes32 stakingPoolId) internal view returns (uint256) {
+        return uint256(
+            Staking(STAKINGPROXYADDRESS)
+            .getTotalStakeDelegatedToPool(stakingPoolId)
+            .currentEpochBalance
+        );
+    }
+    
+    /// @dev Asserts that the minimum GRG amount is staked.
+    /// @param totalGrgDelegatedToPool GRG amount staked to pool.
+    function _assertMinimumGrgContraintSatisfied(uint256 totalGrgDelegatedToPool)
         internal
         view
-        returns (address)
     {
-        return Owned(_ofPool).owner();
+        if (totalGrgDelegatedToPool < minimumGRG) {
+            revert("STAKED_GRG_AMOUNT_BELOW_MINIMUM_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that the caller is the RigoBlock Dao.
+    function _assertCallerIsRigoblockDao()
+        internal
+        view
+    {
+        if (msg.sender != rigoblockDaoAddress) {
+            revert("CALLER_NOT_RIGOBLOCK_DAO_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that the caller is the Staking Proxy.
+    function _assertCallerIsStakingProxy()
+        internal
+        view
+    {
+        if (msg.sender != STAKINGPROXYADDRESS) {
+            revert("CALLER_NOT_STAKING_PROXY_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that an address is an approved factory.
+    /// @param _factory Address of the target factory.
+    function _assertIsApprovedFactory(address _factory)
+        internal
+        view
+    {
+        if (!Authority(authorityAddress).isWhitelistedFactory(_factory)) 
+        {
+            revert("NOT_APPROVED_AUTHORITY_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that the minimum time has past.
+    /// @param stakingPoolId Hex-encoded staking pool id.
+    function _assertTimeAtLeast(bytes32 stakingPoolId)
+        internal
+        view
+    {
+        if (block.timestamp < performers[stakingPoolId].endTime) {
+            revert("TIME_NOT_ENOUGH_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that the reward is below the maximum allowed.
+    /// @param reward Reward to be sent.
+    /// @param totalGrgDelegatedToPool GRG amount staked to pool.
+    function _assertRewardNotAboveMaxEpochReward(
+        uint256 reward,
+        uint256 totalGrgDelegatedToPool
+    )
+        internal
+        view
+    {
+        if (reward > getMaxEpochReward(totalGrgDelegatedToPool)) {
+            revert("REWARD_ABOVE_MAX_EPOCH_REWARD_ERROR");
+        }
+    }
+    
+    /// @dev Returns the value of the disinflationary divisor.
+    /// @return Value of the divisor.
+    function _getDisinflationaryDivisor() internal view returns (uint256) {
+        uint256 firstHalving = uint256(1639130400); // 10 Dec 2021 10:00pm UTC
+        if (block.timestamp < firstHalving) {
+            return uint256(1);
+        } else if (block.timestamp < firstHalving + 52 weeks) {
+            return uint256(2);
+        } else return uint256(4);
     }
 }

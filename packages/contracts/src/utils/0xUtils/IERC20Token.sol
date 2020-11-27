@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
   Original work Copyright 2019 ZeroEx Intl.
@@ -17,10 +19,10 @@
 
 */
 
-pragma solidity ^0.5.9;
+pragma solidity >=0.5.9 <0.8.0;
 
 
-contract IERC20Token {
+abstract contract IERC20Token {
 
     // solhint-disable no-simple-event-func-name
     event Transfer(
@@ -41,6 +43,7 @@ contract IERC20Token {
     /// @return True if transfer was successful
     function transfer(address _to, uint256 _value)
         external
+        virtual
         returns (bool);
 
     /// @dev send `value` token to `to` from `from` on the condition it is approved by `from`
@@ -54,6 +57,7 @@ contract IERC20Token {
         uint256 _value
     )
         external
+        virtual
         returns (bool);
 
     /// @dev `msg.sender` approves `_spender` to spend `_value` tokens
@@ -62,6 +66,7 @@ contract IERC20Token {
     /// @return Always true if the call has enough gas to complete execution
     function approve(address _spender, uint256 _value)
         external
+        virtual
         returns (bool);
 
     /// @dev Query total supply of token
@@ -69,6 +74,7 @@ contract IERC20Token {
     function totalSupply()
         external
         view
+        virtual
         returns (uint256);
 
     /// @param _owner The address from which the balance will be retrieved
@@ -76,6 +82,7 @@ contract IERC20Token {
     function balanceOf(address _owner)
         external
         view
+        virtual
         returns (uint256);
 
     /// @param _owner The address of the account owning tokens
@@ -84,5 +91,6 @@ contract IERC20Token {
     function allowance(address _owner, address _spender)
         external
         view
+        virtual
         returns (uint256);
 }

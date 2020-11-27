@@ -52,8 +52,8 @@ public static async deployFrom0xArtifactAsync(
         txDefaults: Partial<TxData>,
         logDecodeDependencies: { [contractName: string]: (ContractArtifact | SimpleContractArtifact) },
             _rigoTokenAddress: string,
-            _proofOfPerformance: string,
-            _authority: string,
+            _stakingProxyAddress: string,
+            _authorityAddress: string,
     ): Promise<InflationContract> {
         assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
             schemas.addressSchema,
@@ -73,8 +73,8 @@ public static async deployFrom0xArtifactAsync(
             }
         }
         return InflationContract.deployAsync(bytecode, abi, provider, txDefaults, logDecodeDependenciesAbiOnly, _rigoTokenAddress,
-_proofOfPerformance,
-_authority
+_stakingProxyAddress,
+_authorityAddress
 );
     }
 
@@ -85,8 +85,8 @@ _authority
         txDefaults: Partial<TxData>,
         logDecodeDependencies: { [contractName: string]: (ContractArtifact | SimpleContractArtifact) },
             _rigoTokenAddress: string,
-            _proofOfPerformance: string,
-            _authority: string,
+            _stakingProxyAddress: string,
+            _authorityAddress: string,
     ): Promise<InflationContract> {
         assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
             schemas.addressSchema,
@@ -115,8 +115,8 @@ _authority
             libraryAddresses,
         );
         return InflationContract.deployAsync(bytecode, abi, provider, txDefaults, logDecodeDependenciesAbiOnly, _rigoTokenAddress,
-_proofOfPerformance,
-_authority
+_stakingProxyAddress,
+_authorityAddress
 );
     }
 
@@ -127,8 +127,8 @@ _authority
         txDefaults: Partial<TxData>,
         logDecodeDependencies: { [contractName: string]: ContractAbi },
             _rigoTokenAddress: string,
-            _proofOfPerformance: string,
-            _authority: string,
+            _stakingProxyAddress: string,
+            _authorityAddress: string,
     ): Promise<InflationContract> {
         assert.isHexString('bytecode', bytecode);
         assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
@@ -139,21 +139,21 @@ _authority
         const provider = providerUtils.standardizeOrThrow(supportedProvider);
         const constructorAbi = BaseContract._lookupConstructorAbi(abi);
         [_rigoTokenAddress,
-_proofOfPerformance,
-_authority
+_stakingProxyAddress,
+_authorityAddress
 ] = BaseContract._formatABIDataItemList(
             constructorAbi.inputs,
             [_rigoTokenAddress,
-_proofOfPerformance,
-_authority
+_stakingProxyAddress,
+_authorityAddress
 ],
             BaseContract._bigNumberToString,
         );
         const iface = new ethers.utils.Interface(abi);
         const deployInfo = iface.deployFunction;
         const txData = deployInfo.encode(bytecode, [_rigoTokenAddress,
-_proofOfPerformance,
-_authority
+_stakingProxyAddress,
+_authorityAddress
 ]);
         const web3Wrapper = new Web3Wrapper(provider);
         const txDataWithDefaults = await BaseContract._applyDefaultsToContractTxDataAsync(
@@ -169,8 +169,8 @@ _authority
         logUtils.log(`Inflation successfully deployed at ${txReceipt.contractAddress}`);
         const contractInstance = new InflationContract(txReceipt.contractAddress as string, provider, txDefaults, logDecodeDependencies);
         contractInstance.constructorArgs = [_rigoTokenAddress,
-_proofOfPerformance,
-_authority
+_stakingProxyAddress,
+_authorityAddress
 ];
         return contractInstance;
     }
@@ -184,11 +184,11 @@ _authority
                 constant: false,
                 inputs: [
                     {
-                        name: '_group',
+                        name: 'groupAddress',
                         type: 'address',
                     },
                     {
-                        name: '_inflationFactor',
+                        name: 'inflationFactor',
                         type: 'uint256',
                     },
                 ],
@@ -203,7 +203,7 @@ _authority
                 constant: false,
                 inputs: [
                     {
-                        name: '_newPeriod',
+                        name: 'newPeriod',
                         type: 'uint256',
                     },
                 ],
@@ -217,9 +217,107 @@ _authority
             { 
                 constant: true,
                 inputs: [
+                ],
+                name: 'slot',
+                outputs: [
                     {
-                        name: '_thePool',
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                ],
+                name: 'authorityAddress',
+                outputs: [
+                    {
+                        name: '',
                         type: 'address',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'stakingPoolId',
+                        type: 'bytes32',
+                    },
+                ],
+                name: 'timeUntilClaim',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'totalGrgDelegatedToPool',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'getMaxEpochReward',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                ],
+                name: 'STAKINGPROXYADDRESS',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: false,
+                inputs: [
+                    {
+                        name: 'stakingProxyAddress',
+                        type: 'address',
+                    },
+                ],
+                name: 'setStakingProxy',
+                outputs: [
+                ],
+                payable: false,
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                    {
+                        name: 'stakingPoolId',
+                        type: 'bytes32',
                     },
                 ],
                 name: 'canWithdraw',
@@ -234,25 +332,10 @@ _authority
                 type: 'function',
             },
             { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'rigoblockDao',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
                 constant: false,
                 inputs: [
                     {
-                        name: '_minimum',
+                        name: 'minimum',
                         type: 'uint256',
                     },
                 ],
@@ -267,7 +350,7 @@ _authority
                 constant: false,
                 inputs: [
                     {
-                        name: '_newRigoblock',
+                        name: 'newRigoblockDaoAddress',
                         type: 'address',
                     },
                 ],
@@ -282,11 +365,64 @@ _authority
                 constant: false,
                 inputs: [
                     {
-                        name: '_authority',
+                        name: 'newAuthorityAddress',
                         type: 'address',
                     },
                 ],
                 name: 'setAuthority',
+                outputs: [
+                ],
+                payable: false,
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                constant: true,
+                inputs: [
+                ],
+                name: 'rigoblockDaoAddress',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'address',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                constant: false,
+                inputs: [
+                    {
+                        name: 'stakingPoolId',
+                        type: 'bytes32',
+                    },
+                    {
+                        name: 'reward',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'mintInflation',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'bool',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                constant: false,
+                inputs: [
+                    {
+                        name: 'stakingProxyAddress',
+                        type: 'address',
+                    },
+                ],
+                name: 'setStakingProxyAddres',
                 outputs: [
                 ],
                 payable: false,
@@ -309,67 +445,10 @@ _authority
                 type: 'function',
             },
             { 
-                constant: false,
-                inputs: [
-                    {
-                        name: '_thePool',
-                        type: 'address',
-                    },
-                    {
-                        name: '_reward',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'mintInflation',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'bool',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'authority',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
                 constant: true,
                 inputs: [
                     {
-                        name: '_thePool',
-                        type: 'address',
-                    },
-                ],
-                name: 'timeUntilClaim',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'uint256',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                    {
-                        name: '_group',
+                        name: 'groupAddress',
                         type: 'address',
                     },
                 ],
@@ -378,36 +457,6 @@ _authority
                     {
                         name: '',
                         type: 'uint256',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: false,
-                inputs: [
-                    {
-                        name: '_pop',
-                        type: 'address',
-                    },
-                ],
-                name: 'setProofOfPerformance',
-                outputs: [
-                ],
-                payable: false,
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                ],
-                name: 'proofOfPerformance',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
                     },
                 ],
                 payable: false,
@@ -451,11 +500,11 @@ _authority
                         type: 'address',
                     },
                     {
-                        name: '_proofOfPerformance',
+                        name: '_stakingProxyAddress',
                         type: 'address',
                     },
                     {
-                        name: '_authority',
+                        name: '_authorityAddress',
                         type: 'address',
                     },
                 ],
@@ -548,18 +597,18 @@ _authority
     }
 
     /**
-     * Allows rigoblock dao to set the inflation factor for a group
-      * @param _group Address of the group/factory
-      * @param _inflationFactor Value of the reward factor
+     * Allows rigoblock dao to set the inflation factor for a group.
+      * @param groupAddress Address of the group/factory.
+      * @param inflationFactor Value of the reward factor.
      */
     public setInflationFactor(
-            _group: string,
-            _inflationFactor: BigNumber,
+            groupAddress: string,
+            inflationFactor: BigNumber,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isString('_group', _group);
-            assert.isBigNumber('_inflationFactor', _inflationFactor);
+            assert.isString('groupAddress', groupAddress);
+            assert.isBigNumber('inflationFactor', inflationFactor);
         const functionSignature = 'setInflationFactor(address,uint256)';
 
         return {
@@ -568,7 +617,7 @@ _authority
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -586,7 +635,7 @@ _authority
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -596,29 +645,29 @@ _authority
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_group.toLowerCase(),
-            _inflationFactor
+                return self._strictEncodeArguments(functionSignature, [groupAddress.toLowerCase(),
+            inflationFactor
             ]);
             },
         }
     };
     /**
-     * Allows rigoblock dao to set the minimum time between reward collection
-      * @param _newPeriod Number of seconds between 2 rewards
+     * Allows rigoblock dao to set the minimum time between reward collection.
+      * @param newPeriod Number of seconds between 2 rewards.
      */
     public setPeriod(
-            _newPeriod: BigNumber,
+            newPeriod: BigNumber,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isBigNumber('_newPeriod', _newPeriod);
+            assert.isBigNumber('newPeriod', newPeriod);
         const functionSignature = 'setPeriod(uint256)';
 
         return {
@@ -627,7 +676,7 @@ _authority
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -645,7 +694,7 @@ _authority
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -655,55 +704,47 @@ _authority
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_newPeriod
+                return self._strictEncodeArguments(functionSignature, [newPeriod
             ]);
             },
         }
     };
-    /**
-     * Returns whether a wizard can claim reward tokens
-      * @param _thePool Address of the target pool
-    * @returns Bool the wizard can claim
-     */
-    public canWithdraw(
-            _thePool: string,
-    ): ContractFunctionObj<boolean
+    public slot(
+    ): ContractFunctionObj<BigNumber
 > {
         const self = this as any as InflationContract;
-            assert.isString('_thePool', _thePool);
-        const functionSignature = 'canWithdraw(address)';
+        const functionSignature = 'slot()';
 
         return {
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
-            ): Promise<boolean
+            ): Promise<BigNumber
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<boolean
+                return abiEncoder.strictDecodeReturnValue<BigNumber
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_thePool.toLowerCase()
-            ]);
+                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
-    public rigoblockDao(
+    public authorityAddress(
     ): ContractFunctionObj<string
 > {
         const self = this as any as InflationContract;
-        const functionSignature = 'rigoblockDao()';
+        const functionSignature = 'authorityAddress()';
 
         return {
             async callAsync(
@@ -712,7 +753,7 @@ _authority
             ): Promise<string
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<string
@@ -724,15 +765,189 @@ _authority
         }
     };
     /**
-     * Allows rigoblock dao to set the minimum number of required tokens
-      * @param _minimum Number of minimum tokens
+     * Returns how much time needed until next claim.
+      * @param stakingPoolId Address of the target pool.
+    * @returns Number in seconds.
      */
-    public setMinimumRigo(
-            _minimum: BigNumber,
+    public timeUntilClaim(
+            stakingPoolId: string,
+    ): ContractFunctionObj<BigNumber
+> {
+        const self = this as any as InflationContract;
+            assert.isString('stakingPoolId', stakingPoolId);
+        const functionSignature = 'timeUntilClaim(bytes32)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [stakingPoolId
+            ]);
+            },
+        }
+    };
+    /**
+     * Returns the max epoch reward of a pool.
+      * @param totalGrgDelegatedToPool Total amount of GRG delegated to the pool.
+    * @returns Value of the maximum pool reward.
+     */
+    public getMaxEpochReward(
+            totalGrgDelegatedToPool: BigNumber,
+    ): ContractFunctionObj<BigNumber
+> {
+        const self = this as any as InflationContract;
+            assert.isBigNumber('totalGrgDelegatedToPool', totalGrgDelegatedToPool);
+        const functionSignature = 'getMaxEpochReward(uint256)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [totalGrgDelegatedToPool
+            ]);
+            },
+        }
+    };
+    public STAKINGPROXYADDRESS(
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as InflationContract;
+        const functionSignature = 'STAKINGPROXYADDRESS()';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    public setStakingProxy(
+            stakingProxyAddress: string,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isBigNumber('_minimum', _minimum);
+            assert.isString('stakingProxyAddress', stakingProxyAddress);
+        const functionSignature = 'setStakingProxy(address)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [stakingProxyAddress.toLowerCase()
+            ]);
+            },
+        }
+    };
+    /**
+     * Returns whether a staking pool's reward can be claimed.
+      * @param stakingPoolId Address of the target pool.
+    * @returns Bool the wizard can claim.
+     */
+    public canWithdraw(
+            stakingPoolId: string,
+    ): ContractFunctionObj<boolean
+> {
+        const self = this as any as InflationContract;
+            assert.isString('stakingPoolId', stakingPoolId);
+        const functionSignature = 'canWithdraw(bytes32)';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<boolean
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<boolean
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [stakingPoolId
+            ]);
+            },
+        }
+    };
+    /**
+     * Allows rigoblock dao to set the minimum number of required tokens.
+      * @param minimum Number of minimum tokens.
+     */
+    public setMinimumRigo(
+            minimum: BigNumber,
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as InflationContract;
+            assert.isBigNumber('minimum', minimum);
         const functionSignature = 'setMinimumRigo(uint256)';
 
         return {
@@ -741,7 +956,7 @@ _authority
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -759,7 +974,7 @@ _authority
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -769,28 +984,28 @@ _authority
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_minimum
+                return self._strictEncodeArguments(functionSignature, [minimum
             ]);
             },
         }
     };
     /**
-     * Allows rigoblock dao to upgrade its address
-      * @param _newRigoblock Address of the new rigoblock dao
+     * Allows rigoblock dao to upgrade its address.
+      * @param newRigoblockDaoAddress Address of the new rigoblock dao.
      */
     public setRigoblock(
-            _newRigoblock: string,
+            newRigoblockDaoAddress: string,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isString('_newRigoblock', _newRigoblock);
+            assert.isString('newRigoblockDaoAddress', newRigoblockDaoAddress);
         const functionSignature = 'setRigoblock(address)';
 
         return {
@@ -799,7 +1014,7 @@ _authority
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -817,7 +1032,7 @@ _authority
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -827,28 +1042,28 @@ _authority
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_newRigoblock.toLowerCase()
+                return self._strictEncodeArguments(functionSignature, [newRigoblockDaoAddress.toLowerCase()
             ]);
             },
         }
     };
     /**
-     * Allows rigoblock dao to update the authority
-      * @param _authority Address of the authority
+     * Allows rigoblock dao to update the authority.
+      * @param newAuthorityAddress Address of the authority.
      */
     public setAuthority(
-            _authority: string,
+            newAuthorityAddress: string,
     ): ContractTxFunctionObj<void
 > {
         const self = this as any as InflationContract;
-            assert.isString('_authority', _authority);
+            assert.isString('newAuthorityAddress', newAuthorityAddress);
         const functionSignature = 'setAuthority(address)';
 
         return {
@@ -857,7 +1072,7 @@ _authority
                 opts: SendTransactionOpts = { shouldValidate: true },
             ): Promise<string> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
+                    { data: this.getABIEncodedTransactionData(), ...txData },
                     this.estimateGasAsync.bind(this),
                 );
                 if (opts.shouldValidate !== false) {
@@ -875,7 +1090,7 @@ _authority
                 txData?: Partial<TxData> | undefined,
             ): Promise<number> {
                 const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
+                    { data: this.getABIEncodedTransactionData(), ...txData }
                 );
                 return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
             },
@@ -885,14 +1100,159 @@ _authority
             ): Promise<void
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<void
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_authority.toLowerCase()
+                return self._strictEncodeArguments(functionSignature, [newAuthorityAddress.toLowerCase()
+            ]);
+            },
+        }
+    };
+    public rigoblockDaoAddress(
+    ): ContractFunctionObj<string
+> {
+        const self = this as any as InflationContract;
+        const functionSignature = 'rigoblockDaoAddress()';
+
+        return {
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<string
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<string
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    /**
+     * Allows ProofOfPerformance to mint rewards.
+      * @param stakingPoolId String of the staking pool.
+      * @param reward Number of reward in Rigo tokens.
+    * @returns Bool the transaction executed correctly.
+     */
+    public mintInflation(
+            stakingPoolId: string,
+            reward: BigNumber,
+    ): ContractTxFunctionObj<boolean
+> {
+        const self = this as any as InflationContract;
+            assert.isString('stakingPoolId', stakingPoolId);
+            assert.isBigNumber('reward', reward);
+        const functionSignature = 'mintInflation(bytes32,uint256)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<boolean
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<boolean
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [stakingPoolId,
+            reward
+            ]);
+            },
+        }
+    };
+    /**
+     * Allows rigoblock dao to update staking proxy address.
+      * @param stakingProxyAddress Address of the staking proxy contract.
+     */
+    public setStakingProxyAddres(
+            stakingProxyAddress: string,
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as InflationContract;
+            assert.isString('stakingProxyAddress', stakingProxyAddress);
+        const functionSignature = 'setStakingProxyAddres(address)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [stakingProxyAddress.toLowerCase()
             ]);
             },
         }
@@ -910,7 +1270,7 @@ _authority
             ): Promise<string
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<string
@@ -922,135 +1282,16 @@ _authority
         }
     };
     /**
-     * Allows ProofOfPerformance to mint rewards
-      * @param _thePool Address of the target pool
-      * @param _reward Number of reward in Rigo tokens
-    * @returns Bool the transaction executed correctly
-     */
-    public mintInflation(
-            _thePool: string,
-            _reward: BigNumber,
-    ): ContractTxFunctionObj<boolean
-> {
-        const self = this as any as InflationContract;
-            assert.isString('_thePool', _thePool);
-            assert.isBigNumber('_reward', _reward);
-        const functionSignature = 'mintInflation(address,uint256)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<boolean
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<boolean
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_thePool.toLowerCase(),
-            _reward
-            ]);
-            },
-        }
-    };
-    public authority(
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as InflationContract;
-        const functionSignature = 'authority()';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    /**
-     * Returns how much time needed until next claim
-      * @param _thePool Address of the target pool
-    * @returns Number in seconds
-     */
-    public timeUntilClaim(
-            _thePool: string,
-    ): ContractFunctionObj<BigNumber
-> {
-        const self = this as any as InflationContract;
-            assert.isString('_thePool', _thePool);
-        const functionSignature = 'timeUntilClaim(address)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<BigNumber
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<BigNumber
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_thePool.toLowerCase()
-            ]);
-            },
-        }
-    };
-    /**
-     * Return the reward factor for a group
-      * @param _group Address of the group
-    * @returns Value of the reward factor
+     * Return the reward factor for a group.
+      * @param groupAddress Address of the group.
+    * @returns Value of the reward factor.
      */
     public getInflationFactor(
-            _group: string,
+            groupAddress: string,
     ): ContractFunctionObj<BigNumber
 > {
         const self = this as any as InflationContract;
-            assert.isString('_group', _group);
+            assert.isString('groupAddress', groupAddress);
         const functionSignature = 'getInflationFactor(address)';
 
         return {
@@ -1060,97 +1301,15 @@ _authority
             ): Promise<BigNumber
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<BigNumber
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_group.toLowerCase()
+                return self._strictEncodeArguments(functionSignature, [groupAddress.toLowerCase()
             ]);
-            },
-        }
-    };
-    /**
-     * Allows rigoblock dao to update proof of performance
-      * @param _pop Address of the Proof of Performance contract
-     */
-    public setProofOfPerformance(
-            _pop: string,
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as InflationContract;
-            assert.isString('_pop', _pop);
-        const functionSignature = 'setProofOfPerformance(address)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { ...txData, data: this.getABIEncodedTransactionData() }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_pop.toLowerCase()
-            ]);
-            },
-        }
-    };
-    public proofOfPerformance(
-    ): ContractFunctionObj<string
-> {
-        const self = this as any as InflationContract;
-        const functionSignature = 'proofOfPerformance()';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
@@ -1167,7 +1326,7 @@ _authority
             ): Promise<BigNumber
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<BigNumber
@@ -1191,7 +1350,7 @@ _authority
             ): Promise<BigNumber
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ ...callData, data: this.getABIEncodedTransactionData() }, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
                 return abiEncoder.strictDecodeReturnValue<BigNumber
