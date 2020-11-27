@@ -276,17 +276,17 @@ contract ProofOfPerformance is
 
     /// @dev Returns the price a pool from its id.
     /// @param poolId Id of the pool.
-    /// @return thePoolPrice Price of the pool in wei.
+    /// @return poolPrice Price of the pool in wei.
     /// @return totalTokens Number of tokens of a pool (totalSupply).
     function getPoolPrice(uint256 poolId)
         external
         view
         returns (
-            uint256 thePoolPrice,
+            uint256 poolPrice,
             uint256 totalTokens
         )
     {
-        (thePoolPrice, totalTokens, ) = _getPoolPriceAndValueInternal(poolId);
+        (poolPrice, totalTokens, ) = _getPoolPriceAndValueInternal(poolId);
     }
 
     /// @dev Returns the value of a pool from its id.
@@ -371,7 +371,7 @@ contract ProofOfPerformance is
         returns (uint256 popReward, uint256 performanceReward)
     {
         (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = _getPoolPriceAndValueInternal(poolId);
-        (address thePoolAddress, ) = _addressFromIdInternal(poolId);
+        (address poolAddress, ) = _addressFromIdInternal(poolId);
         (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = _getInflationParameters(poolId);
         uint256 assetsComponent = 0;
         uint256 performanceComponent = 0;
@@ -386,7 +386,7 @@ contract ProofOfPerformance is
             safeMul(
                 (newPrice - _getHwmInternal(poolId)),
                 tokenSupply
-            ) / 1000000, // Pool(thePoolAddress).BASE(),
+            ) / 1000000, // Pool(poolAddress).BASE(),
             epochReward
         ) * 365 days / 1 days;
 
@@ -395,12 +395,12 @@ contract ProofOfPerformance is
                 assetsComponent,
                 safeSub(10000, rewardRatio) // 10000 = 100%
             ) / 10000 ether
-        ) * _ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether; // reward inversely proportional to Eth in pool
+        ) * _ethBalanceAdjustmentInternal(poolAddress, poolValue) / 1 ether; // reward inversely proportional to Eth in pool
 
         performanceReward = safeDiv(
             safeMul(performanceComponent, rewardRatio),
             10000 ether
-        ) * _ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether;
+        ) * _ethBalanceAdjustmentInternal(poolAddress, poolValue) / 1 ether;
 
         // TODO: return pop before GRG slashing and move GRG rebasing to staking proxy
         // note: popClaim must include GRG slashing, therefore must be moved to staking proxy as well
@@ -425,18 +425,18 @@ contract ProofOfPerformance is
     }
 
     /// @dev Returns the non-linear rewards adjustment by eth.
-    /// @param thePoolAddress Address of the pool.
+    /// @param poolAddress Address of the pool.
     /// @param poolValue Number of value of the pool in wei.
     /// @return Number non-linear adjustment.
     function _ethBalanceAdjustmentInternal(
-        address thePoolAddress,
+        address poolAddress,
         uint256 poolValue
     )
         internal
         view
         returns (uint256)
     {
-        uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
+        uint256 poolEthBalance = address(Pool(poolAddress)).balance;
         // prevent dust from small pools
         if (
             poolEthBalance > poolValue ||
@@ -502,7 +502,7 @@ contract ProofOfPerformance is
     {
         // TODO: fix code
         //previous code
-        //uint256 operatorGrgBalance = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(thePoolAddress).owner());
+        //uint256 operatorGrgBalance = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(poolAddress).owner());
         //uint256 grgTotalSupply = RigoToken(RIGOTOKENADDRESS).totalSupply();
 
         //mock variable definition
@@ -558,8 +558,8 @@ contract ProofOfPerformance is
         internal view
         returns (bool)
     {
-        (address thePool, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
-        if (thePool != address(0)) {
+        (address poolAddress, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
+        if (poolAddress != address(0)) {
             return true;
         }
     }
@@ -582,7 +582,7 @@ contract ProofOfPerformance is
 
     /// @dev Returns price, supply, aum of a pool from its id.
     /// @param poolId Id of the pool.
-    /// @return thePoolPrice Price of the pool in wei.
+    /// @return poolPrice Price of the pool in wei.
     /// @return totalTokens Number of tokens of a pool (totalSupply).
     /// @return aum Address of the target pool.
     function _getPoolPriceAndValueInternal(uint256 poolId)

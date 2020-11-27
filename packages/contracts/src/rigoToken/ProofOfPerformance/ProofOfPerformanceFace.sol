@@ -52,10 +52,10 @@ interface ProofOfPerformanceFace {
     /// @dev Gets data of a pool.
     /// @param poolId Id of the pool.
     /// @return active Bool the pool is active.
-    /// @return thePoolAddress address of the pool.
-    /// @return thePoolGroup address of the pool factory.
-    /// @return thePoolPrice price of the pool in wei.
-    /// @return thePoolSupply total supply of the pool in units.
+    /// @return poolAddress address of the pool.
+    /// @return poolGroup address of the pool factory.
+    /// @return poolPrice price of the pool in wei.
+    /// @return poolSupply total supply of the pool in units.
     /// @return poolValue total value of the pool in wei.
     /// @return epochReward value of the reward factor or said pool.
     /// @return ratio of assets/performance reward (from 0 to 10000).
@@ -65,10 +65,10 @@ interface ProofOfPerformanceFace {
         view
         returns (
             bool active,
-            address thePoolAddress,
-            address thePoolGroup,
-            uint256 thePoolPrice,
-            uint256 thePoolSupply,
+            address poolAddress,
+            address poolGroup,
+            uint256 poolPrice,
+            uint256 poolSupply,
             uint256 poolValue,
             uint256 epochReward,
             uint256 ratio,
@@ -131,13 +131,13 @@ interface ProofOfPerformanceFace {
 
     /// @dev Returns the price a pool from its id.
     /// @param poolId Id of the pool.
-    /// @return thePoolPrice Price of the pool in wei.
+    /// @return poolPrice Price of the pool in wei.
     /// @return totalTokens Number of tokens of a pool (totalSupply).
     function getPoolPrice(uint256 poolId)
         external
         view
         returns (
-            uint256 thePoolPrice,
+            uint256 poolPrice,
             uint256 totalTokens
         );
 
