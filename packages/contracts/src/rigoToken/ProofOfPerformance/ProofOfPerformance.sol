@@ -401,10 +401,7 @@ contract ProofOfPerformance is
             safeMul(performanceComponent, rewardRatio),
             10000 ether
         ) * _ethBalanceAdjustmentInternal(poolAddress, poolValue) / 1 ether;
-
-        // TODO: return pop before GRG slashing and move GRG rebasing to staking proxy
-        // note: popClaim must include GRG slashing, therefore must be moved to staking proxy as well
-        //popReward = grgBalanceRewardSlashInternal(poolId, epochTime, safeAdd(performanceReward, assetsReward));
+        
         popReward = safeAdd(performanceReward, assetsReward);
     }
 
@@ -445,112 +442,47 @@ contract ProofOfPerformance is
           ) {
             revert('ETH_ABOVE_AUM_OR_DUST_ERROR');
         }
-
+        
         // logistic function progression g(x)=e^x/(1+e^x).
         // rebased on {(poolEthBalance / poolValue)} ∈ [0.025:0.6], x ∈ [-1.9:2.8].
         if (1 ether * poolEthBalance / poolValue >= 800 finney) {
             return (1 ether);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
             return (1 ether * 943 / 1000);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 500 finney) {
             return (1 ether * 881 / 1000);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 400 finney) {
             return (1 ether * 769 / 1000);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 300 finney) {
             return (1 ether * 599 / 1000);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 200 finney) {
             return (1 ether * 401 / 1000);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 100 finney) {
             return (1 ether * 231 / 1000);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 75 finney) {
             return (1 ether * 198 / 1000);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 50 finney) {
             return (1 ether * 168 / 1000);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 38 finney) {
             return (1 ether * 155 / 1000);
-
+        
         } else if (1 ether * poolEthBalance / poolValue >= 25 finney) {
             return (1 ether * 142 / 1000);
-
+        
         } else { // reward is 0 for any pool not backed by at least 2.5% eth
             revert('ETH_BELOW_2.5_PERCENT_AUM_ERROR');
         }
     }
-
-    /// @dev Returns the non-linear rewards adjustment by grg operator balance.
-    /// @param poolId Id of the pool.
-    /// @param epochTime Length of an epoch in seconds.
-    /// @param pop Number of preliminary reward.
-    /// @return Number non-linear adjustment.
-    /*
-    function grgBalanceRewardSlashInternal(
-        uint256 poolId,
-        uint256 epochTime,
-        uint256 pop)
-        internal
-        view
-        returns (uint256)
-    {
-        // TODO: fix code
-        //previous code
-        //uint256 operatorGrgBalance = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(poolAddress).owner());
-        //uint256 grgTotalSupply = RigoToken(RIGOTOKENADDRESS).totalSupply();
-
-        //mock variable definition
-        (address poolAddress, , , , , ) = DragoRegistry(dragoRegistryAddress).fromId(poolId);
-        uint256 stakedGrgRebasedOnEpoch = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(poolAddress).owner()) * epochTime / 365 days;
-
-        // TODO: getTotalStakeDelegatedToPool should be called from staking contract
-        //next code
-        //uint256 stakedGrgRebasedOnEpoch = IStaking(STAKINGCONTRACTADDRESS).getTotalStakeDelegatedToPool(bytes32(poolId)).currentEpochBalance * epochTime / 365 days;
-        // ignore pools with dust stake
-        if (stakedGrgRebasedOnEpoch < Inflation(getMinter()).minimumGRG()) {
-            revert('STAKED_GRG_BELOW_MINIMUM');
-        }
-
-        // half-exponential progression with slashing factor = (pop/stakedGrgRebasedOnEpoch)^(2/3).
-        if (pop >= stakedGrgRebasedOnEpoch) {
-            return stakedGrgRebasedOnEpoch; // max single reward = stake / period, max 100% of staked GRG per year.
-
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 800 finney) {
-            return (stakedGrgRebasedOnEpoch * 862 / 1000);
-
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 600 finney) {
-            return (stakedGrgRebasedOnEpoch * 711 / 1000);
-
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 300 finney) {
-            return (stakedGrgRebasedOnEpoch * 448 / 1000);
-
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 200 finney) {
-            return (stakedGrgRebasedOnEpoch * 342 / 1000);
-
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 100 finney) {
-            return (stakedGrgRebasedOnEpoch * 215 / 1000);
-
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 10 finney) {
-            return (stakedGrgRebasedOnEpoch * 46 / 1000);
-
-        } else if (1 ether * pop / stakedGrgRebasedOnEpoch >= 5 finney) {
-            return (stakedGrgRebasedOnEpoch * 29 / 1000);
-
-        } else if (10 ether * pop / stakedGrgRebasedOnEpoch >= 5 finney) {
-            return (stakedGrgRebasedOnEpoch * 6 / 1000);
-
-        // all remaining values are overstaked
-        } else {
-            return pop;
-        }
-    }*/
-
+    
     /// @dev Checks whether a pool is registered and active.
     /// @param poolId Id of the pool.
     /// @return Bool the pool is active.
