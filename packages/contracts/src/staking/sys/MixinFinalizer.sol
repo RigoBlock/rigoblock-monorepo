@@ -142,6 +142,7 @@ contract MixinFinalizer is
         );
 
         uint256 totalReward = operatorReward.safeAdd(membersReward);
+        // TODO: mint reward here
 
         // Increase `totalRewardsFinalized`.
         aggregatedStatsByEpoch[prevEpoch].totalRewardsFinalized =
