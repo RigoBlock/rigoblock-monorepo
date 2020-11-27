@@ -627,7 +627,6 @@ contract ProofOfPerformance is
     /// @dev Determines whether an address is an account or a contract
     /// @param target Address to be inspected
     /// @return Boolean the address is a contract
-    /// @notice if it is a contract, we use this function to lookup for the owner
     function _isContract(address target)
         internal view
         returns (bool)
