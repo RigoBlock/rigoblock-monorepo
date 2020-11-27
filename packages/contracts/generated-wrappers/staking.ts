@@ -830,6 +830,23 @@ public static async deployFrom0xArtifactAsync(
             },
             { 
                 inputs: [
+                    {
+                        name: 'poolAccount',
+                        type: 'address',
+                    },
+                    {
+                        name: 'popReward',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'creditPopReward',
+                outputs: [
+                ],
+                stateMutability: 'payable',
+                type: 'function',
+            },
+            { 
+                inputs: [
                 ],
                 name: 'currentEpoch',
                 outputs: [
@@ -1332,27 +1349,6 @@ public static async deployFrom0xArtifactAsync(
                     },
                 ],
                 stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                inputs: [
-                    {
-                        name: 'makerAddress',
-                        type: 'address',
-                    },
-                    {
-                        name: 'payerAddress',
-                        type: 'address',
-                    },
-                    {
-                        name: 'protocolFee',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'payProtocolFee',
-                outputs: [
-                ],
-                stateMutability: 'payable',
                 type: 'function',
             },
             { 
@@ -2235,6 +2231,70 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [rigoblockPoolAddress.toLowerCase()
+            ]);
+            },
+        }
+    };
+    /**
+     * Credits the value of a pool's pop reward.
+ * Only a known RigoBlock pop can call this method. See
+ * (MixinPopManager).
+      * @param poolAccount The address of the rigoblock pool account.
+      * @param popReward The pop reward.
+     */
+    public creditPopReward(
+            poolAccount: string,
+            popReward: BigNumber,
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as StakingContract;
+            assert.isString('poolAccount', poolAccount);
+            assert.isBigNumber('popReward', popReward);
+        const functionSignature = 'creditPopReward(address,uint256)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [poolAccount.toLowerCase(),
+            popReward
             ]);
             },
         }
@@ -3709,75 +3769,6 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
-    /**
-     * Pays a protocol fee in ETH or WETH.
- * Only a known 0x exchange can call this method. See
- * (MixinExchangeManager).
-      * @param makerAddress The address of the order's maker.
-      * @param payerAddress The address of the protocol fee payer.
-      * @param protocolFee The protocol fee amount. This is either passed as ETH or
-     *     transferred as WETH.
-     */
-    public payProtocolFee(
-            makerAddress: string,
-            payerAddress: string,
-            protocolFee: BigNumber,
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as StakingContract;
-            assert.isString('makerAddress', makerAddress);
-            assert.isString('payerAddress', payerAddress);
-            assert.isBigNumber('protocolFee', protocolFee);
-        const functionSignature = 'payProtocolFee(address,address,uint256)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [makerAddress.toLowerCase(),
-            payerAddress.toLowerCase(),
-            protocolFee
-            ]);
             },
         }
     };
