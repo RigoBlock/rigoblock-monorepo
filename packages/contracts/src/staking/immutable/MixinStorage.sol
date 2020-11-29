@@ -116,6 +116,6 @@ contract MixinStorage is
     /// @return 0 Reward computation stats.
     mapping (uint256 => IStructs.AggregatedStats) public aggregatedStatsByEpoch;
 
-    /// @dev The WETH balance of this contract that is reserved for pool reward payouts.
-    uint256 public wethReservedForPoolRewards;
+    /// @dev The GRG balance of this contract that is reserved for pool reward payouts.
+    uint256 public grgReservedForPoolRewards;
 }

@@ -57,12 +57,10 @@ contract MixinFinalizer is
                 )
             );
         }
-
-        // Convert all ETH to WETH; the WETH balance of this contract is the total rewards.
-        _wrapEth();
-
+        
+        // TODO: test 
         // Load aggregated stats for the epoch we're ending.
-        aggregatedStatsByEpoch[currentEpoch_].rewardsAvailable = _getAvailableWethBalance();
+        aggregatedStatsByEpoch[currentEpoch_].rewardsAvailable = _getAvailableGrgBalance();
         IStructs.AggregatedStats memory aggregatedStats = aggregatedStatsByEpoch[currentEpoch_];
 
         // Emit an event.
@@ -190,27 +188,17 @@ contract MixinFinalizer is
         membersStake = poolStats.membersStake;
     }
 
-    /// @dev Converts the entire ETH balance of this contract into WETH.
-    function _wrapEth()
-        internal
-    {
-        uint256 ethBalance = address(this).balance;
-        if (ethBalance != 0) {
-            getWethContract().deposit{value: ethBalance}();
-        }
-    }
-
-    /// @dev Returns the WETH balance of this contract, minus
-    ///      any WETH that has already been reserved for rewards.
-    function _getAvailableWethBalance()
+    /// @dev Returns the GRG balance of this contract, minus
+    ///      any GRG that has already been reserved for rewards.
+    function _getAvailableGrgBalance()
         internal
         view
-        returns (uint256 wethBalance)
+        returns (uint256 grgBalance)
     {
-        wethBalance = getWethContract().balanceOf(address(this))
-            .safeSub(wethReservedForPoolRewards);
+        grgBalance = getGrgContract().balanceOf(address(this))
+            .safeSub(grgReservedForPoolRewards);
 
-        return wethBalance;
+        return grgBalance;
     }
 
     /// @dev Asserts that a pool has been finalized last epoch.

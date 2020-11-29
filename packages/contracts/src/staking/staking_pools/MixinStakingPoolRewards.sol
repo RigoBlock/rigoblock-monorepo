@@ -321,7 +321,7 @@ contract MixinStakingPoolRewards is
         private
     {
         rewardsByPoolId[poolId] = rewardsByPoolId[poolId].safeAdd(amount);
-        wethReservedForPoolRewards = wethReservedForPoolRewards.safeAdd(amount);
+        grgReservedForPoolRewards = grgReservedForPoolRewards.safeAdd(amount);
     }
 
     /// @dev Decreases rewards for a pool.
@@ -331,7 +331,7 @@ contract MixinStakingPoolRewards is
         private
     {
         rewardsByPoolId[poolId] = rewardsByPoolId[poolId].safeSub(amount);
-        wethReservedForPoolRewards = wethReservedForPoolRewards.safeSub(amount);
+        grgReservedForPoolRewards = grgReservedForPoolRewards.safeSub(amount);
     }
 
 
