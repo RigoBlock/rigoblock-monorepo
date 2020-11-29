@@ -32,6 +32,7 @@ interface IStructs {
         uint256 feesCollected;
         uint256 weightedStake;
         uint256 membersStake;
+        uint256 stakingPalStake;
     }
 
     /// @dev Holds stats aggregated across a set of pools.

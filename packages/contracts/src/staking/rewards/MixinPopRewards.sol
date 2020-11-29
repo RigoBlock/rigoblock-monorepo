@@ -76,9 +76,14 @@ contract MixinPopRewards is
         uint256 feesCollectedByPool = poolStatsPtr.feesCollected;
         if (feesCollectedByPool == 0) {
             // Compute member and total weighted stake.
-            (uint256 membersStakeInPool, uint256 weightedStakeInPool) = _computeMembersAndWeightedStake(poolId, poolStake);
+            (
+                uint256 membersStakeInPool,
+                uint256 weightedStakeInPool,
+                uint256 stakingPalStake
+            ) = _computeMembersAndWeightedStake(poolId, poolStake);
             poolStatsPtr.membersStake = membersStakeInPool;
             poolStatsPtr.weightedStake = weightedStakeInPool;
+            poolStatsPtr.stakingPalStake = stakingPalStake;
 
             // Increase the total weighted stake.
             aggregatedStatsPtr.totalWeightedStake = aggregatedStatsPtr.totalWeightedStake.safeAdd(weightedStakeInPool);
@@ -116,13 +121,18 @@ contract MixinPopRewards is
     /// @param totalStake Total (unweighted) stake in the pool.
     /// @return membersStake Non-operator stake in the pool.
     /// @return weightedStake Weighted stake of the pool.
+    /// @return stakingPalStake Staking-pal artificial stake in the pool.
     function _computeMembersAndWeightedStake(
         bytes32 poolId,
         uint256 totalStake
     )
         private
         view
-        returns (uint256 membersStake, uint256 weightedStake)
+        returns (
+            uint256 membersStake,
+            uint256 weightedStake,
+            uint256 stakingPalStake
+        )
     {
         uint256 operatorStake = getStakeDelegatedToPoolByOwner(
             _poolById[poolId].operator,
@@ -137,9 +147,13 @@ contract MixinPopRewards is
                 membersStake
             )
         );
-        return (membersStake, weightedStake);
+        // TODO: check whether we can just add 1 output and leave weighted stake
+        //      i.e. check that it is neutral to the rewards calculations
+        stakingPalStake = totalStake.safeSub(weightedStake); // could avoid using safeMath here
+        return (membersStake, weightedStake, stakingPalStake);
     }
-
+    
+    // TODO: delete this method
     /// @dev Checks that the protocol fee passed into `payProtocolFee()` is
     ///      valid.
     /// @param protocolFee The `protocolFee` parameter to
