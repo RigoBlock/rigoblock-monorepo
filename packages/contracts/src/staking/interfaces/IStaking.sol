@@ -42,6 +42,12 @@ interface IStaking {
     function createStakingPool(uint32 operatorShare, bool addOperatorAsMaker)
         external
         returns (bytes32 poolId);
+    
+    /// @dev Allows the operator to update the staking pal address.
+    /// @param poolId Unique id of pool.
+    /// @param newStakingPalAddress Address of the new staking pal.
+    function setStakingPalAddress(bytes32 poolId, address newStakingPalAddress)
+        external;
 
     /// @dev Decreases the operator share for the given pool (i.e. increases pool rewards for members).
     /// @param poolId Unique Id of pool.
@@ -238,14 +244,6 @@ interface IStaking {
         external
         view
         returns (IStructs.StoredBalance memory balance);
-
-    /// @dev An overridable way to access the deployed WETH contract.
-    ///      Must be view to allow overrides to access state.
-    /// @return wethContract The WETH contract instance.
-    function getWethContract()
-        external
-        view
-        returns (IEtherToken wethContract);
 
     /// @dev An overridable way to access the deployed grgVault.
     ///      Must be view to allow overrides to access state.

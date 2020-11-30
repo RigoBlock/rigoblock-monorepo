@@ -30,15 +30,6 @@ import "../../rigoToken/RigoToken/RigoTokenFace.sol";
 // solhint-disable separate-by-one-line-in-contract
 contract MixinDeploymentConstants {
 
-    // Mainnet WETH9 Address
-    address constant private WETH_ADDRESS = address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
-
-    // Kovan WETH9 Address
-    // address constant private WETH_ADDRESS = address(0xd0A1E359811322d97991E03f863a0C30C2cF029C);
-
-    // Ropsten & Rinkeby WETH9 Address
-    // address constant private WETH_ADDRESS = address(0xc778417E063141139Fce010982780140Aa0cD5Ab);
-
     // Mainnet GrgVault address
     address constant private GRG_VAULT_ADDRESS = address(0xBa7f8b5fB1b19c1211c5d49550fcD149177A5Eaf);
 
@@ -62,18 +53,6 @@ contract MixinDeploymentConstants {
 
     // Ropsten GRG Address
     // address constant private GRG_ADDRESS = address(0x6FA8590920c5966713b1a86916f7b0419411e474);
-
-    /// @dev An overridable way to access the deployed WETH contract.
-    ///      Must be view to allow overrides to access state.
-    /// @return wethContract The WETH contract instance.
-    function getWethContract()
-        public
-        view
-        returns (IEtherToken wethContract)
-    {
-        wethContract = IEtherToken(WETH_ADDRESS);
-        return wethContract;
-    }
 
     /// @dev An overridable way to access the deployed grgVault.
     ///      Must be view to allow overrides to access state.
