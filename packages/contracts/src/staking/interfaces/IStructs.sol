@@ -88,11 +88,13 @@ interface IStructs {
 
     /// @dev Holds the metadata for a staking pool.
     /// @param operator Operator of the pool.
+    /// @param stakingPal Staking pal of the pool.
     /// @param operatorShare Fraction of the total balance owned by the operator, in ppm.
-    /// @param stakingPal Wallet that collects 10% of otherwise redistributed community rewards.
+    /// @param stakingPalShare Fraction of the operator reward owned by the staking pal, in ppm.
     struct Pool {
         address operator;
-        uint32 operatorShare;
         address stakingPal;
+        uint32 operatorShare;
+        uint32 stakingPalShare;
     }
 }

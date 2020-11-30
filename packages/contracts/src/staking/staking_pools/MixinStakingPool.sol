@@ -60,53 +60,54 @@ contract MixinStakingPool is
         );
         // note that an operator must be payable
         address operator = rbPoolOwner;
-
-        // add stakingPal, which will receive part of community reward if not pool operator
-        // staking pal can be added in storage in Pool by adding 1 address
-        address stakingPal;
-        if (rbPoolOwner != msg.sender) {
-            stakingPal = msg.sender;
-        }
-
+        
+        // add stakingPal, which receives part of operator reward
+        address stakingPal = msg.sender;
+        
         // operator initially shares 30% with stakers
         uint32 operatorShare = uint32(700000);
-
+        
+        // staking pal received 10% of operator rewards
+        uint32 stakingPalShare = uint32(100000);
+        
         // check that staking pool does not exist and add unique id for this pool
         _assertStakingPoolDoesNotExist(bytes32(rbPoolId));
         poolId = bytes32(rbPoolId);
-
-        // sanity check on operator share
-        _assertNewOperatorShare(
-            poolId,
-            PPM_DENOMINATOR,    // max operator share
-            operatorShare
-        );
-
+        
+        // @notice _assertNewOperatorShare if operatorShare, stakingPalShare are inputs after an upgrade
+        
         // create and store pool
         IStructs.Pool memory pool = IStructs.Pool({
             operator: operator,
+            stakingPal: stakingPal,
             operatorShare: operatorShare,
-            stakingPal: stakingPal
+            stakingPalShare : stakingPalShare
         });
         _poolById[poolId] = pool;
-
+        
         // Staking pool has been created
         emit StakingPoolCreated(poolId, operator, operatorShare);
-
+        
         joinStakingPoolAsRbPoolAccount(poolId, rigoblockPoolAddress);
-
+        
         return poolId;
     }
     
-    // TODO: pool operator can reset stakingpal
-    /*
-    function setStakingPal(bytes32 poolId, address newStakingPalAddress)
+    /// @dev Allows the operator to update the staking pal address.
+    /// @param poolId Unique id of pool.
+    /// @param newStakingPalAddress Address of the new staking pal.
+    function setStakingPalAddress(bytes32 poolId, address newStakingPalAddress)
         external
         onlyStakingPoolOperator(poolId)
     {
-        stakingPal = newStakingPalAddress;
+        IStructs.Pool storage pool = _poolById[poolId];
+        
+        if (newStakingPalAddress == address(0) || pool.stakingPal == newStakingPalAddress) {
+            return;
+        }
+        
+        pool.stakingPal = newStakingPalAddress;
     }
-    */
 
     /// @dev Decreases the operator share for the given pool (i.e. increases pool rewards for members).
     /// @param poolId Unique Id of pool.

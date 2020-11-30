@@ -139,7 +139,8 @@ contract MixinPopRewards is
         );
         return (membersStake, weightedStake);
     }
-
+    
+    // TODO: delete this method
     /// @dev Checks that the protocol fee passed into `payProtocolFee()` is
     ///      valid.
     /// @param protocolFee The `protocolFee` parameter to
