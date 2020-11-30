@@ -1140,12 +1140,16 @@ public static async deployFrom0xArtifactAsync(
                                 type: 'address',
                             },
                             {
+                                name: 'stakingPal',
+                                type: 'address',
+                            },
+                            {
                                 name: 'operatorShare',
                                 type: 'uint32',
                             },
                             {
-                                name: 'stakingPal',
-                                type: 'address',
+                                name: 'stakingPalShare',
+                                type: 'uint32',
                             },
                         ]
                     },
@@ -1235,11 +1239,11 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                 ],
-                name: 'getWethContract',
+                name: 'grgReservedForPoolRewards',
                 outputs: [
                     {
-                        name: 'wethContract',
-                        type: 'address',
+                        name: '',
+                        type: 'uint256',
                     },
                 ],
                 stateMutability: 'view',
@@ -1502,6 +1506,23 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
+                        name: 'poolId',
+                        type: 'bytes32',
+                    },
+                    {
+                        name: 'newStakingPalAddress',
+                        type: 'address',
+                    },
+                ],
+                name: 'setStakingPalAddress',
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                    {
                         name: 'amount',
                         type: 'uint256',
                     },
@@ -1563,19 +1584,6 @@ public static async deployFrom0xArtifactAsync(
                     {
                         name: '',
                         type: 'bool',
-                    },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                inputs: [
-                ],
-                name: 'wethReservedForPoolRewards',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'uint256',
                     },
                 ],
                 stateMutability: 'view',
@@ -3150,7 +3158,7 @@ public static async deployFrom0xArtifactAsync(
      */
     public getStakingPool(
             poolId: string,
-    ): ContractTxFunctionObj<{operator: string;operatorShare: number;stakingPal: string}
+    ): ContractTxFunctionObj<{operator: string;stakingPal: string;operatorShare: number;stakingPalShare: number}
 > {
         const self = this as any as StakingContract;
             assert.isString('poolId', poolId);
@@ -3187,13 +3195,13 @@ public static async deployFrom0xArtifactAsync(
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
-            ): Promise<{operator: string;operatorShare: number;stakingPal: string}
+            ): Promise<{operator: string;stakingPal: string;operatorShare: number;stakingPalShare: number}
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<{operator: string;operatorShare: number;stakingPal: string}
+                return abiEncoder.strictDecodeReturnValue<{operator: string;stakingPal: string;operatorShare: number;stakingPalShare: number}
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
@@ -3377,15 +3385,11 @@ public static async deployFrom0xArtifactAsync(
             },
         }
     };
-    /**
-     * An overridable way to access the deployed WETH contract.
- * Must be view to allow overrides to access state.
-     */
-    public getWethContract(
-    ): ContractTxFunctionObj<string
+    public grgReservedForPoolRewards(
+    ): ContractTxFunctionObj<BigNumber
 > {
         const self = this as any as StakingContract;
-        const functionSignature = 'getWethContract()';
+        const functionSignature = 'grgReservedForPoolRewards()';
 
         return {
             async sendTransactionAsync(
@@ -3418,13 +3422,13 @@ public static async deployFrom0xArtifactAsync(
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
-            ): Promise<string
+            ): Promise<BigNumber
             > {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
                 const abiEncoder = self._lookupAbiEncoder(functionSignature);
                 BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
+                return abiEncoder.strictDecodeReturnValue<BigNumber
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
@@ -4244,6 +4248,68 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     /**
+     * Allows the operator to update the staking pal address.
+      * @param poolId Unique id of pool.
+      * @param newStakingPalAddress Address of the new staking pal.
+     */
+    public setStakingPalAddress(
+            poolId: string,
+            newStakingPalAddress: string,
+    ): ContractTxFunctionObj<void
+> {
+        const self = this as any as StakingContract;
+            assert.isString('poolId', poolId);
+            assert.isString('newStakingPalAddress', newStakingPalAddress);
+        const functionSignature = 'setStakingPalAddress(bytes32,address)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<void
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<void
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [poolId,
+            newStakingPalAddress.toLowerCase()
+            ]);
+            },
+        }
+    };
+    /**
      * Stake GRG tokens. Tokens are deposited into the GRG Vault.
  * Unstake to retrieve the GRG. Stake is in the 'Active' status.
       * @param amount Amount of GRG to stake.
@@ -4522,57 +4588,6 @@ public static async deployFrom0xArtifactAsync(
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [index_0.toLowerCase()
             ]);
-            },
-        }
-    };
-    public wethReservedForPoolRewards(
-    ): ContractTxFunctionObj<BigNumber
-> {
-        const self = this as any as StakingContract;
-        const functionSignature = 'wethReservedForPoolRewards()';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<BigNumber
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<BigNumber
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
