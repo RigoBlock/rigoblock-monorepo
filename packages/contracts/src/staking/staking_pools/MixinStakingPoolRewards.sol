@@ -130,8 +130,8 @@ contract MixinStakingPoolRewards is
             // Decrease the balance of the pool
             _decreasePoolRewards(poolId, balance);
 
-            // Withdraw the member's WETH balance
-            getWethContract().transfer(member, balance);
+            // Withdraw the member's GRG balance
+            getGrgContract().transfer(member, balance);
         }
 
         // Ensure a cumulative reward entry exists for this epoch,
@@ -168,8 +168,16 @@ contract MixinStakingPoolRewards is
         );
 
         if (operatorReward > 0) {
-            // Transfer the operator's weth reward to the operator
-            getWethContract().transfer(pool.operator, operatorReward);
+            if (pool.operator == pool.stakingPal) {
+                // Transfer the operator's grg reward to the operator
+                getGrgContract().transfer(pool.operator, operatorReward);
+            } else {
+                // Transfer 10% of operator's reward to staking pal
+                // Transfer the reamining operator's grg reward to the operator
+                uint256 stakingPalReward = operatorReward.safeMul(pool.stakingPalShare).safeDiv(PPM_DENOMINATOR);
+                getGrgContract().transfer(pool.stakingPal, stakingPalReward);
+                getGrgContract().transfer(pool.operator, operatorReward.safeSub(stakingPalReward));
+            }
         }
 
         if (membersReward > 0) {
