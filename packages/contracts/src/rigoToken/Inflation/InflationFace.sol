@@ -28,11 +28,10 @@ interface InflationFace {
     /*
      * CORE FUNCTIONS
      */
-    function mintInflation(bytes32 stakingPoolId, uint256 reward) external returns (bool);
+    function mintInflation(bytes32 stakingPoolId, uint256 reward) external returns (uint256);
     function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
     function setRigoblock(address newRigoblockDaoAddress) external;
     function setAuthority(address newRigoblockDaoAddress) external;
-    function setStakingProxy(address stakingProxyAddress) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
