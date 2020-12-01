@@ -271,6 +271,7 @@ contract MixinFinalizer is
         returns (bool)
     {
         uint size;
+        // solhint-disable-next-line
         assembly {
             size := extcodesize(target)
         }

@@ -357,6 +357,7 @@ contract MixinStakingPoolRewards is
         returns (
             uint256 totalReward,
             uint256 membersStake)
+    // solhint-disable-next-line
     {}
 
     /// @dev Asserts that a pool has been finalized last epoch.
@@ -366,5 +367,6 @@ contract MixinStakingPoolRewards is
         view
         virtual
         override
+    // solhint-disable-next-line
     {}
 }
