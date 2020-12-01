@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
  Copyright 2017-2019 RigoBlock, Rigo Investment Sagl, 2020 Rigo Intl.
@@ -16,10 +18,10 @@
 
 */
 
-pragma solidity 0.5.4;
+// solhint-disable-next-line
+pragma solidity 0.7.4;
 
-import { Pool } from "../../utils/Pool/Pool.sol";
-import { ReentrancyGuard } from "../../utils/ReentrancyGuard/ReentrancyGuard.sol";
+import { IPool } from "../../utils/Pool/IPool.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
 import { InflationFace } from "../Inflation/InflationFace.sol";
@@ -39,6 +41,11 @@ interface Staking {
     )
         external
         payable;
+    
+    function epochDurationInSeconds()
+        external
+        view
+        returns (uint256);
 }
 
 
@@ -47,16 +54,17 @@ interface Staking {
 // solhint-disable-next-line
 contract ProofOfPerformance is
     SafeMath,
-    ReentrancyGuard,
     ProofOfPerformanceFace
 {
+    // solhint-disable-next-line
     address public RIGOTOKENADDRESS;
+    // solhint-disable-next-line
     address public STAKINGPROXYADDRESS;
 
     address public dragoRegistryAddress;
     address public rigoblockDaoAddress;
 
-    mapping (address => Group) groups;
+    mapping (address => Group) public groups;
     mapping (uint256 => uint256) private _highWaterMark;
 
     struct Group {
@@ -78,7 +86,7 @@ contract ProofOfPerformance is
         address _rigoblockDao,
         address _dragoRegistry,
         address _stakingProxyAddress)
-        public
+        //public
     {
         RIGOTOKENADDRESS = _rigoTokenAddress;
         rigoblockDaoAddress = _rigoblockDao;
@@ -92,10 +100,10 @@ contract ProofOfPerformance is
         uint256 poolId
     )
         external
-        nonReentrant
+        override
     {
         (address poolAddress, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
-        uint256 poolPrice = Pool(poolAddress).calcSharePrice();
+        uint256 poolPrice = IPool(poolAddress).calcSharePrice();
         
         // allow smart contract calls only from pool itself
         if (_isContract(msg.sender)) {
@@ -119,6 +127,7 @@ contract ProofOfPerformance is
     /// @param newDragoRegistryAddress Address of new registry.
     function setRegistry(address newDragoRegistryAddress)
         external
+        override
         onlyRigoblockDao
     {
         dragoRegistryAddress = newDragoRegistryAddress;
@@ -128,6 +137,7 @@ contract ProofOfPerformance is
     /// @param newRigoblockDaoAddress Address of new dao.
     function setRigoblockDao(address newRigoblockDaoAddress)
         external
+        override
         onlyRigoblockDao
     {
         rigoblockDaoAddress = newRigoblockDaoAddress;
@@ -141,6 +151,7 @@ contract ProofOfPerformance is
         address groupAddress,
         uint256 newRatio)
         external
+        override
         onlyRigoblockDao
     {
         require(
@@ -167,6 +178,7 @@ contract ProofOfPerformance is
     function getPoolData(uint256 poolId)
         external
         view
+        override
         returns (
             bool active,
             address poolAddress,
@@ -203,6 +215,7 @@ contract ProofOfPerformance is
     function getHwm(uint256 poolId)
         external
         view
+        override
         returns (uint256)
     {
         return _getHwmInternal(poolId);
@@ -214,6 +227,7 @@ contract ProofOfPerformance is
     function getEpochReward(uint256 poolId)
         external
         view
+        override
         returns (uint256)
     {
         (uint256 epochReward, , ) = _getInflationParameters(poolId);
@@ -226,6 +240,7 @@ contract ProofOfPerformance is
     function getRatio(uint256 poolId)
         external
         view
+        override
         returns (uint256)
     {
         ( , , uint256 ratio) = _getInflationParameters(poolId);
@@ -243,6 +258,7 @@ contract ProofOfPerformance is
     function proofOfPerformance(uint256 poolId)
         external
         view
+        override
         returns (uint256 popReward, uint256 performanceReward)
     {
         return _proofOfPerformanceInternal(poolId);
@@ -254,6 +270,7 @@ contract ProofOfPerformance is
     function isActive(uint256 poolId)
         external
         view
+        override
         returns (bool)
     {
         return _isActiveInternal(poolId);
@@ -266,6 +283,7 @@ contract ProofOfPerformance is
     function addressFromId(uint256 poolId)
         external
         view
+        override
         returns (
             address pool,
             address group
@@ -281,6 +299,7 @@ contract ProofOfPerformance is
     function getPoolPrice(uint256 poolId)
         external
         view
+        override
         returns (
             uint256 poolPrice,
             uint256 totalTokens
@@ -295,6 +314,7 @@ contract ProofOfPerformance is
     function calcPoolValue(uint256 poolId)
         external
         view
+        override
         returns (
             uint256 aum
         )
@@ -345,7 +365,7 @@ contract ProofOfPerformance is
     {
         ( , address groupAddress) = _addressFromIdInternal(poolId);
         epochReward = InflationFace(_getMinter()).getInflationFactor(groupAddress);
-        epochTime = InflationFace(_getMinter()).period();
+        epochTime = Staking(STAKINGPROXYADDRESS).epochDurationInSeconds();
         ratio = groups[groupAddress].rewardRatio;
     }
 
@@ -373,22 +393,20 @@ contract ProofOfPerformance is
         (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = _getPoolPriceAndValueInternal(poolId);
         (address poolAddress, ) = _addressFromIdInternal(poolId);
         (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = _getInflationParameters(poolId);
-        uint256 assetsComponent = 0;
-        uint256 performanceComponent = 0;
 
-        assetsComponent = safeMul(
+        uint256 assetsComponent = safeMul(
             poolValue,
             epochReward
         ) * epochTime / 1 days; // proportional to epoch time
 
         // TODO: test new logic of only performance component null if price below high watermark
-        performanceComponent = newPrice <= _getHwmInternal(poolId) ? 0 : safeMul(
+        uint256 performanceComponent = newPrice <= _getHwmInternal(poolId) ? 0 : safeMul(
             safeMul(
                 (newPrice - _getHwmInternal(poolId)),
                 tokenSupply
             ) / 1000000, // Pool(poolAddress).BASE(),
             epochReward
-        ) * 365 days / 1 days;
+        ) * 365; // 365 = 365 days / 1 days
 
         uint256 assetsReward = (
             safeMul(
@@ -433,53 +451,50 @@ contract ProofOfPerformance is
         view
         returns (uint256)
     {
-        uint256 poolEthBalance = address(Pool(poolAddress)).balance;
+        uint256 poolEthBalance = address(IPool(poolAddress)).balance;
         // prevent dust from small pools
-        if (
-            poolEthBalance > poolValue ||
-            poolEthBalance < 1 finney ||
-            poolValue < 10 finney
-          ) {
-            revert('ETH_ABOVE_AUM_OR_DUST_ERROR');
+        // 1 gwei = 1e9
+        if (poolEthBalance > poolValue || poolEthBalance < 1000000 gwei || poolValue < 10 * 1000000 gwei) {
+            revert("ETH_ABOVE_AUM_OR_DUST_ERROR");
         }
         
         // logistic function progression g(x)=e^x/(1+e^x).
         // rebased on {(poolEthBalance / poolValue)} ∈ [0.025:0.6], x ∈ [-1.9:2.8].
-        if (1 ether * poolEthBalance / poolValue >= 800 finney) {
+        if (1 ether * poolEthBalance / poolValue >= 800 * 1000000 gwei) {
             return (1 ether);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 600 * 1000000 gwei) {
             return (1 ether * 943 / 1000);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 500 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 500 * 1000000 gwei) {
             return (1 ether * 881 / 1000);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 400 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 400 * 1000000 gwei) {
             return (1 ether * 769 / 1000);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 300 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 300 * 1000000 gwei) {
             return (1 ether * 599 / 1000);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 200 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 200 * 1000000 gwei) {
             return (1 ether * 401 / 1000);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 100 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 100 * 1000000 gwei) {
             return (1 ether * 231 / 1000);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 75 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 75 * 1000000 gwei) {
             return (1 ether * 198 / 1000);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 50 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 50 * 1000000 gwei) {
             return (1 ether * 168 / 1000);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 38 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 38 * 1000000 gwei) {
             return (1 ether * 155 / 1000);
         
-        } else if (1 ether * poolEthBalance / poolValue >= 25 finney) {
+        } else if (1 ether * poolEthBalance / poolValue >= 25 * 1000000 gwei) {
             return (1 ether * 142 / 1000);
         
         } else { // reward is 0 for any pool not backed by at least 2.5% eth
-            revert('ETH_BELOW_2.5_PERCENT_AUM_ERROR');
+            revert("ETH_BELOW_2.5_PERCENT_AUM_ERROR");
         }
     }
     
@@ -493,7 +508,7 @@ contract ProofOfPerformance is
         (address poolAddress, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
         if (poolAddress != address(0)) {
             return true;
-        }
+        } else return false;
     }
 
     /// @dev Returns the address and the group of a pool from its id.
@@ -527,7 +542,7 @@ contract ProofOfPerformance is
         )
     {
         (address poolAddress, ) = _addressFromIdInternal(poolId);
-        Pool pool = Pool(poolAddress);
+        IPool pool = IPool(poolAddress);
         poolPrice = pool.calcSharePrice();
         totalTokens = pool.totalSupply();
         if (poolPrice == uint256(0) || totalTokens == uint256(0)) {
@@ -564,6 +579,7 @@ contract ProofOfPerformance is
         returns (bool)
     {
         uint size;
+        // solhint-disable-next-line
         assembly {
             size := extcodesize(target)
         }
