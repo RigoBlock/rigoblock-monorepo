@@ -124,7 +124,7 @@ contract Inflation is
     /// @dev Allows ProofOfPerformance to mint rewards.
     /// @param stakingPoolId String of the staking pool.
     /// @param reward Number of reward in Rigo tokens.
-    /// @return Bool the transaction executed correctly.
+    /// @return Number of allocated reward.
     function mintInflation(bytes32 stakingPoolId, uint256 reward)
         external
         onlyStakingProxy
