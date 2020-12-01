@@ -1,6 +1,8 @@
 const c = require('chalk')
 const logger = require('./logger')
 const deploy = require('./deploy')
+// TODO: add support for .ts files or deprecate bootstrap
+//const { AuthorityContract } = require('../src/wrappers')
 
 const printAddress = (name, address) => {
   return logger.info(c.bold(name), c.bold.magenta(address))
