@@ -120,12 +120,16 @@ contract MixinFinalizer is
         // Compute the rewards.
         uint256 rewards = _getUnfinalizedPoolRewardsFromPoolStats(poolStats, aggregatedStats);
         
+        // mint reward tokens
+        // will be equal to rewards, unless DAO changes epoch length or minimum stake, when it could be 0 for 1 epoch
+        uint256 mintedRewards = InflationFace(getGrgContract().minter()).mintInflation(poolId, rewards);
+        
         // Pay the operator and update rewards for the pool.
         // Note that we credit at the CURRENT epoch even though these rewards
         // were earned in the previous epoch.
         (uint256 operatorReward, uint256 membersReward) = _syncPoolRewards(
             poolId,
-            rewards,
+            mintedRewards,
             poolStats.membersStake
         );
         
@@ -138,12 +142,6 @@ contract MixinFinalizer is
         );
         
         uint256 totalReward = operatorReward.safeAdd(membersReward);
-        
-        // mint reward tokens
-        require(
-            InflationFace(getGrgContract().minter()).mintInflation(poolId, totalReward),
-            "FINALIZER_MINT_INFLATION_ERROR"
-        );
         
         // Increase `totalRewardsFinalized`.
         aggregatedStatsByEpoch[prevEpoch].totalRewardsFinalized =

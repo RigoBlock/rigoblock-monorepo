@@ -895,7 +895,7 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     /**
-     * Asserts that an epoch is between 5 and 30 days long.
+     * Asserts that an epoch is between 5 and 90 days long.
      */
     public assertValidStorageParams(
     ): ContractTxFunctionObj<void

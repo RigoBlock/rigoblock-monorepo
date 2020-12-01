@@ -172,7 +172,7 @@ contract MixinStakingPoolRewards is
                 // Transfer the operator's grg reward to the operator
                 getGrgContract().transfer(pool.operator, operatorReward);
             } else {
-                // Transfer 10% of operator's reward to staking pal
+                // Transfer staking pal share of operator's reward to staking pal
                 // Transfer the reamining operator's grg reward to the operator
                 uint256 stakingPalReward = operatorReward.safeMul(pool.stakingPalShare).safeDiv(PPM_DENOMINATOR);
                 getGrgContract().transfer(pool.stakingPal, stakingPalReward);
