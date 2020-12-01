@@ -105,11 +105,6 @@ contract Inflation is
         _;
     }
 
-    modifier timeAtLeast(bytes32 stakingPoolId) {
-        _assertTimeAtLeast(stakingPoolId);
-        _;
-    }
-
     constructor(
         address _rigoTokenAddress,
         address _stakingProxyAddress,
@@ -133,15 +128,22 @@ contract Inflation is
     function mintInflation(bytes32 stakingPoolId, uint256 reward)
         external
         onlyStakingProxy
-        timeAtLeast(stakingPoolId)
-        returns (bool)
+        returns (uint256)
     {
+        //TODO: test
+        // in case of staking parameters upgrade, the following conditions may be met
+        // parameters should be updated towards end of an epoch to prevent invalidating rewards
+        if (block.timestamp < performers[stakingPoolId].endTime) {
+            return uint256(0);
+        }
+        
         //TODO: test
         uint256 totalGrgDelegatedToPool = _getTotalGrgDelegatedToPool(stakingPoolId);
         
-        _assertMinimumGrgConstraintSatisfied(totalGrgDelegatedToPool);
-        _assertRewardNotAboveMaxEpochReward(reward, totalGrgDelegatedToPool);
-
+        if (reward > getMaxEpochReward(totalGrgDelegatedToPool)) {
+            return uint256(0);
+        }
+        
         performers[stakingPoolId].startTime = block.timestamp;
         performers[stakingPoolId].endTime = block.timestamp + Staking(STAKINGPROXYADDRESS).epochDurationInSeconds();
         ++slot;
@@ -153,7 +155,7 @@ contract Inflation is
             STAKINGPROXYADDRESS,
             reward
         );
-        return true;
+        return reward;
     }
 
     /// @dev Allows rigoblock dao to set the inflation factor for a group.
@@ -183,15 +185,6 @@ contract Inflation is
         onlyRigoblockDao
     {
         authorityAddress = newAuthorityAddress;
-    }
-
-    /// @dev Allows rigoblock dao to update staking proxy address.
-    /// @param stakingProxyAddress Address of the staking proxy contract.
-    function setStakingProxyAddres(address stakingProxyAddress)
-        external
-        onlyRigoblockDao
-    {
-        STAKINGPROXYADDRESS = stakingProxyAddress;
     }
 
     /*
@@ -258,17 +251,6 @@ contract Inflation is
         );
     }
     
-    /// @dev Asserts that the minimum GRG amount is staked.
-    /// @param totalGrgDelegatedToPool GRG amount staked to pool.
-    function _assertMinimumGrgConstraintSatisfied(uint256 totalGrgDelegatedToPool)
-        internal
-        view
-    {
-        if (totalGrgDelegatedToPool < Staking(STAKINGPROXYADDRESS).minimumPoolStake()) {
-            revert("STAKED_GRG_AMOUNT_BELOW_MINIMUM_ERROR");
-        }
-    }
-    
     /// @dev Asserts that the caller is the RigoBlock Dao.
     function _assertCallerIsRigoblockDao()
         internal
@@ -298,32 +280,6 @@ contract Inflation is
         if (!Authority(authorityAddress).isWhitelistedFactory(_factory)) 
         {
             revert("NOT_APPROVED_AUTHORITY_ERROR");
-        }
-    }
-    
-    /// @dev Asserts that the minimum time has past.
-    /// @param stakingPoolId Hex-encoded staking pool id.
-    function _assertTimeAtLeast(bytes32 stakingPoolId)
-        internal
-        view
-    {
-        if (block.timestamp < performers[stakingPoolId].endTime) {
-            revert("TIME_NOT_ENOUGH_ERROR");
-        }
-    }
-    
-    /// @dev Asserts that the reward is below the maximum allowed.
-    /// @param reward Reward to be sent.
-    /// @param totalGrgDelegatedToPool GRG amount staked to pool.
-    function _assertRewardNotAboveMaxEpochReward(
-        uint256 reward,
-        uint256 totalGrgDelegatedToPool
-    )
-        internal
-        view
-    {
-        if (reward > getMaxEpochReward(totalGrgDelegatedToPool)) {
-            revert("REWARD_ABOVE_MAX_EPOCH_REWARD_ERROR");
         }
     }
     
