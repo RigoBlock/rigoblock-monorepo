@@ -142,7 +142,7 @@ contract StakingProxy is
         return batchReturnData;
     }
 
-    /// @dev Asserts that an epoch is between 5 and 30 days long.
+    /// @dev Asserts that an epoch is between 5 and 90 days long.
     //       Asserts that 0 < cobb douglas alpha value <= 1.
     //       Asserts that a stake weight is <= 100%.
     //       Asserts that pools allow >= 1 maker.
@@ -152,9 +152,9 @@ contract StakingProxy is
         view
         override
     {
-        // Epoch length must be between 5 and 30 days long
+        // Epoch length must be between 5 and 90 days long
         uint256 _epochDurationInSeconds = epochDurationInSeconds;
-        if (_epochDurationInSeconds < 5 days || _epochDurationInSeconds > 30 days) {
+        if (_epochDurationInSeconds < 5 days || _epochDurationInSeconds > 90 days) {
             LibRichErrors.rrevert(
                 LibStakingRichErrors.InvalidParamValueError(
                     LibStakingRichErrors.InvalidParamValueErrorCodes.InvalidEpochDuration
