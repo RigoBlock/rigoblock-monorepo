@@ -66,9 +66,8 @@ contract ProofOfPerformance is
         address _rigoTokenAddress,
         address _rigoblockDao,
         address _dragoRegistry,
-        address _stakingProxyAddress)
-        //public
-    {
+        address _stakingProxyAddress
+    ) {
         RIGOTOKENADDRESS = _rigoTokenAddress;
         rigoblockDaoAddress = _rigoblockDao;
         dragoRegistryAddress = _dragoRegistry;

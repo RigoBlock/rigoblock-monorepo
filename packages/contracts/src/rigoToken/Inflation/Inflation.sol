@@ -78,9 +78,7 @@ contract Inflation is
         address _rigoTokenAddress,
         address _stakingProxyAddress,
         address _authorityAddress
-    )
-        //public
-    {
+    ) {
         RIGOTOKENADDRESS = _rigoTokenAddress;
         STAKINGPROXYADDRESS = _stakingProxyAddress;
         rigoblockDaoAddress = msg.sender;
