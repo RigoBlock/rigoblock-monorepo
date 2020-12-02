@@ -30,7 +30,6 @@ import "../interfaces/IStructs.sol";
 import "../sys/MixinFinalizer.sol";
 import "../staking_pools/MixinStakingPool.sol";
 import "./MixinPopManager.sol";
-import "../../rigoToken/Inflation/InflationFace.sol";
 
 
 contract MixinPopRewards is
@@ -92,7 +91,7 @@ contract MixinPopRewards is
         }
         
         // Cap reward to max epoch reward
-        uint256 maxEpochReward = InflationFace(getGrgContract().minter()).getMaxEpochReward(poolStatsPtr.weightedStake);
+        uint256 maxEpochReward = getMaxEpochReward(poolStatsPtr.weightedStake);
         if (popReward > maxEpochReward) {
             popReward = maxEpochReward;
         }

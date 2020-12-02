@@ -244,6 +244,14 @@ interface IStaking {
         external
         view
         returns (IStructs.StoredBalance memory balance);
+    
+    /// @dev Returns the total maximum epoch reward given a stake.
+    /// @param stakedTokens Number of staked tokens.
+    /// @return maxEpochReward Maximum epoch reward.
+    function getMaxEpochReward(uint256 stakedTokens)
+        external
+        view
+        returns (uint256);
 
     /// @dev An overridable way to access the deployed grgVault.
     ///      Must be view to allow overrides to access state.
