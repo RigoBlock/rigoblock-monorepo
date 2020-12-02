@@ -23,8 +23,6 @@ pragma solidity >=0.4.22 <0.8.0;
 // solhint-disable-next-line
 interface InflationFace {
 
-    function period() external view returns (uint256);
-
     /*
      * CORE FUNCTIONS
      */

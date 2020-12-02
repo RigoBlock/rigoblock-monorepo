@@ -23,8 +23,6 @@ pragma solidity >=0.4.22 <0.8.0;
 // solhint-disable-next-line
 interface ProofOfPerformanceFace {
     
-    function minter() external view returns (address);
-
     /*
      * CORE FUNCTIONS
      */
