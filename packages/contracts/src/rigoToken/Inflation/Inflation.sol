@@ -26,43 +26,8 @@ import { AuthorityFace as Authority } from "../../protocol/authorities/Authority
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { InflationFace } from "./InflationFace.sol";
 import { RigoTokenFace } from "../RigoToken/RigoTokenFace.sol";
+import { IStaking } from "../../staking/interfaces/IStaking.sol";
 
-
-interface IStructs {
-    /// @dev Encapsulates a balance for the current and next epochs.
-    /// Note that these balances may be stale if the current epoch
-    /// is greater than `currentEpoch`.
-    /// @param currentEpoch The current epoch
-    /// @param currentEpochBalance Balance in the current epoch.
-    /// @param nextEpochBalance Balance in `currentEpoch+1`.
-    struct StoredBalance {
-        uint64 currentEpoch;
-        uint96 currentEpochBalance;
-        uint96 nextEpochBalance;
-    }
-}
-
-interface Staking {
-
-    /// @dev Returns the total stake delegated to a specific staking pool,
-    ///      across all members.
-    /// @param poolId Unique Id of pool.
-    /// @return balance Total stake delegated to pool.
-    function getTotalStakeDelegatedToPool(bytes32 poolId)
-        external
-        view
-        returns (IStructs.StoredBalance memory balance);
-    
-    function minimumPoolStake()
-        external
-        view
-        returns (uint256);
-    
-    function epochDurationInSeconds()
-        external
-        view
-        returns (uint256);
-}
 
 /// @title Inflation - Allows ProofOfPerformance to mint tokens.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -150,9 +115,10 @@ contract Inflation is
             return uint256(0);
         }
         
+        (uint256 epochDuration, , , , ) = IStaking(STAKINGPROXYADDRESS).getParams();
         /* solhint-disable not-rely-on-time */
         performers[stakingPoolId].startTime = block.timestamp;
-        performers[stakingPoolId].endTime = block.timestamp + Staking(STAKINGPROXYADDRESS).epochDurationInSeconds();
+        performers[stakingPoolId].endTime = block.timestamp + epochDuration;
         /* solhint-disable not-rely-on-time */
         ++slot;
         uint256 rigoblockDaoReward = reward * 5 / 100; //5% royalty to rigoblock dao
@@ -253,8 +219,9 @@ contract Inflation is
         override
         returns (uint256)
     {
+        (uint256 epochDuration, , , , ) = IStaking(STAKINGPROXYADDRESS).getParams();
         return safeDiv(
-            totalGrgDelegatedToPool * Staking(STAKINGPROXYADDRESS).epochDurationInSeconds(),
+            totalGrgDelegatedToPool * epochDuration,
             _getDisinflationaryDivisor() * 365 days // multiply in order not to dividing in previous line
         );
     }
@@ -267,7 +234,7 @@ contract Inflation is
     /// @return Amount of GRG staked.
     function _getTotalGrgDelegatedToPool(bytes32 stakingPoolId) internal view returns (uint256) {
         return uint256(
-            Staking(STAKINGPROXYADDRESS)
+            IStaking(STAKINGPROXYADDRESS)
             .getTotalStakeDelegatedToPool(stakingPoolId)
             .currentEpochBalance
         );
