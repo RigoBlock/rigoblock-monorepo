@@ -27,26 +27,7 @@ import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
 import { InflationFace } from "../Inflation/InflationFace.sol";
 import { RigoTokenFace } from "../RigoToken/RigoTokenFace.sol";
 import { IDragoRegistry } from "../../protocol/DragoRegistry/IDragoRegistry.sol";
-
-interface Staking {
-
-    /// @dev Credits the value of a pool's pop reward.
-    ///      Only a known RigoBlock pop can call this method. See
-    ///      (MixinPopManager).
-    /// @param poolAccount The address of the rigoblock pool account.
-    /// @param popReward The pop reward.
-    function creditPopReward(
-        address poolAccount,
-        uint256 popReward
-    )
-        external
-        payable;
-    
-    function epochDurationInSeconds()
-        external
-        view
-        returns (uint256);
-}
+import { IStaking } from "../../staking/interfaces/IStaking.sol";
 
 
 /// @title Proof of Performance - Controls parameters of inflation.
@@ -85,9 +66,8 @@ contract ProofOfPerformance is
         address _rigoTokenAddress,
         address _rigoblockDao,
         address _dragoRegistry,
-        address _stakingProxyAddress)
-        //public
-    {
+        address _stakingProxyAddress
+    ) {
         RIGOTOKENADDRESS = _rigoTokenAddress;
         rigoblockDaoAddress = _rigoblockDao;
         dragoRegistryAddress = _dragoRegistry;
@@ -119,8 +99,7 @@ contract ProofOfPerformance is
         // pop assets component is always positive, therefore we must update the hwm if positive performance
         _updateHwmIfPositivePerformance(poolPrice, poolId);
         
-        // TODO: check if shold return error message or should use more recent solc & require
-        Staking(STAKINGPROXYADDRESS).creditPopReward(poolAddress, popReward);
+        IStaking(STAKINGPROXYADDRESS).creditPopReward(poolAddress, popReward);
     }
 
     /// @dev Allows RigoBlock Dao to update the pools registry.
@@ -365,7 +344,7 @@ contract ProofOfPerformance is
     {
         ( , address groupAddress) = _addressFromIdInternal(poolId);
         epochReward = InflationFace(_getMinter()).getInflationFactor(groupAddress);
-        epochTime = Staking(STAKINGPROXYADDRESS).epochDurationInSeconds();
+        (epochTime, , , , ) = IStaking(STAKINGPROXYADDRESS).getParams();
         ratio = groups[groupAddress].rewardRatio;
     }
 
@@ -400,7 +379,7 @@ contract ProofOfPerformance is
         ) * epochTime / 1 days; // proportional to epoch time
 
         // TODO: test new logic of only performance component null if price below high watermark
-        uint256 performanceComponent = newPrice <= _getHwmInternal(poolId) ? 0 : safeMul(
+        uint256 performanceComponent = newPrice <= _getHwmInternal(poolId) ? uint256(0) : safeMul(
             safeMul(
                 (newPrice - _getHwmInternal(poolId)),
                 tokenSupply

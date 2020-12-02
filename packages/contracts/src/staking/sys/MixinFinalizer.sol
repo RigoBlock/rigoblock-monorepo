@@ -22,7 +22,6 @@
 pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "../../rigoToken/Inflation/InflationFace.sol";
 import "../../utils/0xUtils/LibRichErrors.sol";
 import "../../utils/0xUtils/LibSafeMath.sol";
 import "../libs/LibCobbDouglas.sol";
@@ -237,11 +236,8 @@ contract MixinFinalizer is
         if (poolStats.feesCollected == 0) {
             return rewards;
         }
-        
-        // TODO: check where this could be better initialized
-        // TODO: check difference between weightedStake and poolStake
-        //          if weightedStake is always lower than poolStake, this will never revert in minting reward
-        uint256 maxEpochReward = InflationFace(getGrgContract().minter()).getMaxEpochReward(poolStats.weightedStake);
+
+        uint256 maxEpochReward = getMaxEpochReward(poolStats.weightedStake);
 
         // Use the cobb-douglas function to compute the total reward.
         rewards = LibCobbDouglas.cobbDouglas(
