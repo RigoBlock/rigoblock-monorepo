@@ -100,7 +100,6 @@ contract ProofOfPerformance is
         // pop assets component is always positive, therefore we must update the hwm if positive performance
         _updateHwmIfPositivePerformance(poolPrice, poolId);
         
-        // TODO: check if shold return error message
         IStaking(STAKINGPROXYADDRESS).creditPopReward(poolAddress, popReward);
     }
 
