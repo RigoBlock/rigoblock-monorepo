@@ -22,7 +22,7 @@
 pragma solidity 0.7.4;
 pragma experimental ABIEncoderV2;
 
-import "./interfaces/IStaking.sol";
+//import "./interfaces/IStaking.sol";
 import "./sys/MixinParams.sol";
 import "./stake/MixinStake.sol";
 import "./rewards/MixinPopRewards.sol";
