@@ -30,6 +30,7 @@ import "../interfaces/IStructs.sol";
 import "../sys/MixinFinalizer.sol";
 import "../staking_pools/MixinStakingPool.sol";
 import "./MixinPopManager.sol";
+import "../../rigoToken/Inflation/InflationFace.sol";
 
 
 contract MixinPopRewards is
@@ -90,6 +91,12 @@ contract MixinPopRewards is
             emit StakingPoolEarnedRewardsInEpoch(currentEpoch_, poolId);
         }
         
+        // Cap reward to max epoch reward
+        uint256 maxEpochReward = InflationFace(getGrgContract().minter()).getMaxEpochReward(poolStatsPtr.weightedStake);
+        if (popReward > maxEpochReward) {
+            popReward = maxEpochReward;
+        }
+        
         if (popReward > feesCollectedByPool) {
             // Credit the fees to the pool.
             poolStatsPtr.feesCollected = popReward;
@@ -138,27 +145,6 @@ contract MixinPopRewards is
             )
         );
         return (membersStake, weightedStake);
-    }
-    
-    // TODO: delete this method
-    /// @dev Checks that the protocol fee passed into `payProtocolFee()` is
-    ///      valid.
-    /// @param protocolFee The `protocolFee` parameter to
-    ///        `payProtocolFee.`
-    function _assertValidProtocolFee(uint256 protocolFee)
-        private
-        view
-    {
-        // The protocol fee must equal the value passed to the contract; unless
-        // the value is zero, in which case the fee is taken in WETH.
-        if (msg.value != protocolFee && msg.value != 0) {
-            LibRichErrors.rrevert(
-                LibStakingRichErrors.InvalidProtocolFeePaymentError(
-                    protocolFee,
-                    msg.value
-                )
-            );
-        }
     }
 
     /// @dev Computes the reward owed to a pool during finalization.
