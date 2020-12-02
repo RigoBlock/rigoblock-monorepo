@@ -50,9 +50,9 @@ library LibStakingRichErrors {
         PopNotRegistered
     }
 
-    // bytes4(keccak256("OnlyCallableByExchangeError(address)")) // TODO: amend to OnlyCallableByPopError
+    // bytes4(keccak256("OnlyCallableByPopError(address)"))
     bytes4 internal constant ONLY_CALLABLE_BY_POP_ERROR_SELECTOR =
-        0xb56d2df0;
+        0x61ecb802;
 
     // bytes4(keccak256("PopManagerError(uint8,address)"))
     bytes4 internal constant POP_MANAGER_ERROR_SELECTOR =
