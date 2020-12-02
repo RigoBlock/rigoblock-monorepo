@@ -98,15 +98,15 @@ interface IStaking {
         uint256 amount
     )
         external;
-
-    /// @dev Pays a protocol fee in ETH.
-    /// @param makerAddress The address of the order's maker.
-    /// @param payerAddress The address that is responsible for paying the protocol fee.
-    /// @param protocolFee The amount of protocol fees that should be paid.
-    function payProtocolFee(
-        address makerAddress,
-        address payerAddress,
-        uint256 protocolFee
+        
+    /// @dev Credits the value of a pool's pop reward.
+    ///      Only a known RigoBlock pop can call this method. See
+    ///      (MixinPopManager).
+    /// @param poolAccount The address of the rigoblock pool account.
+    /// @param popReward The pop reward.
+    function creditPopReward(
+        address poolAccount,
+        uint256 popReward
     )
         external
         payable;
