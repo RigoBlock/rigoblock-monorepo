@@ -37,10 +37,10 @@ contract ProofOfPerformance is
     SafeMath,
     ProofOfPerformanceFace
 {
-    // solhint-disable-next-line
-    address public RIGOTOKENADDRESS;
-    // solhint-disable-next-line
-    address public STAKINGPROXYADDRESS;
+    /* solhint-disable */
+    address public immutable RIGOTOKENADDRESS;
+    address public immutable STAKINGPROXYADDRESS;
+    /* solhint-disable */
 
     address public dragoRegistryAddress;
     address public rigoblockDaoAddress;
@@ -73,7 +73,7 @@ contract ProofOfPerformance is
         dragoRegistryAddress = _dragoRegistry;
         STAKINGPROXYADDRESS = _stakingProxyAddress;
     }
-    
+
     /// @dev Credits the pop reward to the Staking Proxy contract.
     /// @param poolId Number of the pool Id in registry.
     function creditPopRewardToStakingProxy(
@@ -83,22 +83,27 @@ contract ProofOfPerformance is
         override
     {
         (address poolAddress, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
+
+        if (poolAddress == address(0) {
+            return;
+        }
+
         uint256 poolPrice = IPool(poolAddress).calcSharePrice();
-        
+
         // allow smart contract calls only from pool itself
         if (_isContract(msg.sender)) {
             _assertContractIsPool(poolAddress);
         }
-        
+
         // TODO: test
         // initialization is not necessary but explicit as to prevent failure in case of a future upgrade
         _initializeHwmIfUninitialized(poolId);
-        
+
         (uint256 popReward, ) = _proofOfPerformanceInternal(poolId);
-        
+
         // pop assets component is always positive, therefore we must update the hwm if positive performance
         _updateHwmIfPositivePerformance(poolPrice, poolId);
-        
+
         IStaking(STAKINGPROXYADDRESS).creditPopReward(poolAddress, popReward);
     }
 
@@ -121,7 +126,7 @@ contract ProofOfPerformance is
     {
         rigoblockDaoAddress = newRigoblockDaoAddress;
     }
-    
+
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
     /// @param groupAddress Address of the pool's group.
     /// @param newRatio Value of the new ratio.
@@ -187,7 +192,7 @@ contract ProofOfPerformance is
             pop
         );
     }
-    
+
     /// @dev Returns the highwatermark of a pool.
     /// @param poolId Id of the pool.
     /// @return Value of the all-time-high pool nav.
@@ -199,7 +204,7 @@ contract ProofOfPerformance is
     {
         return _getHwmInternal(poolId);
     }
-    
+
     /// @dev Returns the reward factor for a pool.
     /// @param poolId Id of the pool.
     /// @return Value of the reward factor.
@@ -313,7 +318,7 @@ contract ProofOfPerformance is
             _highWaterMark[poolId] = 1 ether;
         }
     }
-    
+
     /// @dev Updates high-water mark if positive performance.
     /// @param poolPrice Value of the pool price.
     /// @param poolId Number of the pool Id in registry.
@@ -327,7 +332,7 @@ contract ProofOfPerformance is
             _highWaterMark[poolId] = poolPrice;
         }
     }
-    
+
     /// @dev Returns the split ratio of asset and performance reward.
     /// @param poolId Id of the pool.
     /// @return epochReward Value of the reward factor.
@@ -398,7 +403,7 @@ contract ProofOfPerformance is
             safeMul(performanceComponent, rewardRatio),
             10000 ether
         ) * _ethBalanceAdjustmentInternal(poolAddress, poolValue) / 1 ether;
-        
+
         popReward = safeAdd(performanceReward, assetsReward);
     }
 
@@ -412,7 +417,7 @@ contract ProofOfPerformance is
     {
         if (_highWaterMark[poolId] == uint256(0)) {
             return (1 ether);
-        
+
         } else {
             return _highWaterMark[poolId];
         }
@@ -436,47 +441,47 @@ contract ProofOfPerformance is
         if (poolEthBalance > poolValue || poolEthBalance < 1000000 gwei || poolValue < 10 * 1000000 gwei) {
             revert("ETH_ABOVE_AUM_OR_DUST_ERROR");
         }
-        
+
         // logistic function progression g(x)=e^x/(1+e^x).
         // rebased on {(poolEthBalance / poolValue)} ∈ [0.025:0.6], x ∈ [-1.9:2.8].
         if (1 ether * poolEthBalance / poolValue >= 800 * 1000000 gwei) {
             return (1 ether);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 600 * 1000000 gwei) {
             return (1 ether * 943 / 1000);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 500 * 1000000 gwei) {
             return (1 ether * 881 / 1000);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 400 * 1000000 gwei) {
             return (1 ether * 769 / 1000);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 300 * 1000000 gwei) {
             return (1 ether * 599 / 1000);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 200 * 1000000 gwei) {
             return (1 ether * 401 / 1000);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 100 * 1000000 gwei) {
             return (1 ether * 231 / 1000);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 75 * 1000000 gwei) {
             return (1 ether * 198 / 1000);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 50 * 1000000 gwei) {
             return (1 ether * 168 / 1000);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 38 * 1000000 gwei) {
             return (1 ether * 155 / 1000);
-        
+
         } else if (1 ether * poolEthBalance / poolValue >= 25 * 1000000 gwei) {
             return (1 ether * 142 / 1000);
-        
+
         } else { // reward is 0 for any pool not backed by at least 2.5% eth
             revert("ETH_BELOW_2.5_PERCENT_AUM_ERROR");
         }
     }
-    
+
     /// @dev Checks whether a pool is registered and active.
     /// @param poolId Id of the pool.
     /// @return Bool the pool is active.
@@ -529,7 +534,7 @@ contract ProofOfPerformance is
         }
         aum = safeMul(poolPrice, totalTokens) / 1000000; // pool.BASE();
     }
-    
+
     /// @dev Asserts that the caller is the RigoBlock Dao.
     function _assertCallerIsRigoblockDao()
         internal
@@ -539,7 +544,7 @@ contract ProofOfPerformance is
             revert("CALLER_NOT_RIGOBLOCK_DAO_ERROR");
         }
     }
-    
+
     /// @dev Asserts that the caller is the Staking Proxy.
     function _assertCallerIsStakingProxy()
         internal
@@ -549,7 +554,7 @@ contract ProofOfPerformance is
             revert("CALLER_NOT_STAKING_PROXY_ERROR");
         }
     }
-    
+
     /// @dev Determines whether an address is an account or a contract
     /// @param target Address to be inspected
     /// @return Boolean the address is a contract
@@ -564,7 +569,7 @@ contract ProofOfPerformance is
         }
         return size > 0;
     }
-    
+
     /// @dev Asserts whether the caller contract is the pool
     /// @param poolAddress Address of the calling pool
     function _assertContractIsPool(address poolAddress)
