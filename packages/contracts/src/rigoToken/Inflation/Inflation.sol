@@ -45,9 +45,10 @@ contract Inflation is
 
     uint256 public slot;
     uint256 public epochLength = 14 days;
-    uint256 epochEndTime;
     address public authorityAddress;
     address public rigoblockDaoAddress;
+    
+    uint256 private epochEndTime;
 
     mapping (address => Group) public groupByAddress;
 
