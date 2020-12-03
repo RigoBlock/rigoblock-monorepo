@@ -37,23 +37,19 @@ contract Inflation is
     InflationFace
 {
     /* solhint-disable */
-    address public RIGOTOKENADDRESS;
-    address public STAKINGPROXYADDRESS;
+    // TODO: check
+    uint256 public immutable INFLATIONRATE = 200; // in bps, 200 = 2%
+    address public immutable RIGOTOKENADDRESS;
+    address public immutable STAKINGPROXYADDRESS;
     /* solhint-disable */
 
     uint256 public slot;
+    uint256 public epochLength = 14 days;
+    uint256 epochEndTime;
     address public authorityAddress;
     address public rigoblockDaoAddress;
 
-    mapping(bytes32 => Performer) public performers;
-    mapping(address => Group) public groups;
-
-    struct Performer {
-        uint256 claimedTokens;
-        mapping(uint256 => bool) claim;
-        uint256 startTime;
-        uint256 endTime;
-    }
+    mapping (address => Group) public groupByAddress;
 
     struct Group {
         uint256 epochReward;
@@ -89,45 +85,48 @@ contract Inflation is
      * CORE FUNCTIONS
      */
     /// @dev Allows ProofOfPerformance to mint rewards.
-    /// @param stakingPoolId String of the staking pool.
-    /// @param reward Number of reward in Rigo tokens.
     /// @return Number of allocated reward.
-    function mintInflation(bytes32 stakingPoolId, uint256 reward)
+    function mintInflation()
         external
         override
         onlyStakingProxy
-        returns (uint256)
+        returns (uint256 mintedReward)
     {
         //TODO: test
-        // in case of staking parameters upgrade, the following conditions may be met
-        // parameters should be updated towards end of an epoch to prevent invalidating rewards
         // solhint-disable-next-line not-rely-on-time
-        if (block.timestamp < performers[stakingPoolId].endTime) {
-            return uint256(0);
+        if (block.timestamp < epochEndTime) {
+            revert("NOT_ENOUGH_TIME_ERROR");
         }
-        
+
+        (uint256 epochDurationInSeconds, , , , ) = IStaking(STAKINGPROXYADDRESS).getParams();
+
+        // sanity check for epoch length queried from staking
+        if (epochLength != epochDurationInSeconds) {
+            if (epochDurationInSeconds < 5 days || epochDurationInSeconds > 90 days) {
+                revert("STAKING_EPOCH_TIME_ANOMALY_DETECTED_ERROR");
+            } else {
+                epochLenght = epochDurationInSeconds;
+            }
+        }
+
         //TODO: test
-        uint256 totalGrgDelegatedToPool = _getTotalGrgDelegatedToPool(stakingPoolId);
-        
-        if (reward > getMaxEpochReward(totalGrgDelegatedToPool)) {
-            return uint256(0);
-        }
-        
-        (uint256 epochDuration, , , , ) = IStaking(STAKINGPROXYADDRESS).getParams();
+        uint256 epochTotalReward = getEpochReward();
+
         /* solhint-disable not-rely-on-time */
-        performers[stakingPoolId].startTime = block.timestamp;
-        performers[stakingPoolId].endTime = block.timestamp + epochDuration;
+        //performers[stakingPoolId].startTime = block.timestamp;
+        epochEndTime = block.timestamp + epochLength;
         /* solhint-disable not-rely-on-time */
+
         ++slot;
-        uint256 rigoblockDaoReward = reward * 5 / 100; //5% royalty to rigoblock dao
         RigoTokenFace rigoToken = RigoTokenFace(RIGOTOKENADDRESS);
+
         // TODO: test
-        rigoToken.mintToken(rigoblockDaoAddress, rigoblockDaoReward);
-        rigoToken.mintToken(
+        // mint rewards
+        RigoTokenFace(RIGOTOKENADDRESS).mintToken(
             STAKINGPROXYADDRESS,
-            reward
+            epochTotalReward
         );
-        return reward;
+        return (mintedReward = epochTotalReward);
     }
 
     /// @dev Allows rigoblock dao to set the inflation factor for a group.
@@ -139,7 +138,7 @@ contract Inflation is
         onlyRigoblockDao
         isApprovedFactory(groupAddress)
     {
-        groups[groupAddress].epochReward = inflationFactor;
+        groupByAddress[groupAddress].epochReward = inflationFactor;
     }
 
     /// @dev Allows rigoblock dao to upgrade its address.
@@ -165,33 +164,31 @@ contract Inflation is
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    /// @dev Returns whether a staking pool's reward can be claimed.
-    /// @param stakingPoolId Address of the target pool.
+    /// @dev Returns whether an epoch has ended.
     /// @return Bool the wizard can claim.
-    function canWithdraw(bytes32 stakingPoolId)
+    function epochEnded()
         external
         override
         view
         returns (bool)
     {
         // solhint-disable-next-line not-rely-on-time
-        if (block.timestamp >= performers[stakingPoolId].endTime) {
+        if (block.timestamp >= epochEndTime) {
             return true;
         } else return false;
     }
 
     /// @dev Returns how much time needed until next claim.
-    /// @param stakingPoolId Address of the target pool.
     /// @return Number in seconds.
-    function timeUntilClaim(bytes32 stakingPoolId)
+    function timeUntilNextClaim()
         external
         view
         override
         returns (uint256)
     {
         /* solhint-disable not-rely-on-time */
-        if (block.timestamp < performers[stakingPoolId].endTime) {
-            return (performers[stakingPoolId].endTime - block.timestamp);
+        if (block.timestamp < epochEndTime) {
+            return (epochEndTime - block.timestamp);
         } else return (uint256(0));
         /* solhint-disable not-rely-on-time */
     }
@@ -205,39 +202,31 @@ contract Inflation is
         override
         returns (uint256)
     {
-        return groups[groupAddress].epochReward;
+        return groupByAddress[groupAddress].epochReward;
     }
-    
+
     /// @dev Returns the max epoch reward of a pool.
-    /// @param totalGrgDelegatedToPool Total amount of GRG delegated to the pool.
     /// @return Value of the maximum pool reward.
-    function getMaxEpochReward(uint256 totalGrgDelegatedToPool)
+    function getEpochReward()
         public
         view
         override
         returns (uint256)
     {
-        (uint256 epochDuration, , , , ) = IStaking(STAKINGPROXYADDRESS).getParams();
+        // TODO: test
         return safeDiv(
-            totalGrgDelegatedToPool * epochDuration,
-            _getDisinflationaryDivisor() * 365 days // multiply in order not to dividing in previous line
+            safeMul(
+                RigoToken(RIGOTOKENADDRESS).totalSupply(),
+                INFLATIONRATE * epochLength
+            ),
+            (10000 * 365 days)
         );
     }
-    
+
     /*
      * INTERNAL METHODS
      */
-    /// @dev Returns the amount of GRG staked to a pool.
-    /// @param stakingPoolId ID of the staking pool.
-    /// @return Amount of GRG staked.
-    function _getTotalGrgDelegatedToPool(bytes32 stakingPoolId) internal view returns (uint256) {
-        return uint256(
-            IStaking(STAKINGPROXYADDRESS)
-            .getTotalStakeDelegatedToPool(stakingPoolId)
-            .currentEpochBalance
-        );
-    }
-    
+
     /// @dev Asserts that the caller is the RigoBlock Dao.
     function _assertCallerIsRigoblockDao()
         internal
@@ -247,7 +236,7 @@ contract Inflation is
             revert("CALLER_NOT_RIGOBLOCK_DAO_ERROR");
         }
     }
-    
+
     /// @dev Asserts that the caller is the Staking Proxy.
     function _assertCallerIsStakingProxy()
         internal
@@ -257,29 +246,16 @@ contract Inflation is
             revert("CALLER_NOT_STAKING_PROXY_ERROR");
         }
     }
-    
+
     /// @dev Asserts that an address is an approved factory.
     /// @param _factory Address of the target factory.
     function _assertIsApprovedFactory(address _factory)
         internal
         view
     {
-        if (!Authority(authorityAddress).isWhitelistedFactory(_factory)) 
+        if (!Authority(authorityAddress).isWhitelistedFactory(_factory))
         {
             revert("NOT_APPROVED_AUTHORITY_ERROR");
         }
-    }
-    
-    /// @dev Returns the value of the disinflationary divisor.
-    /// @return Value of the divisor.
-    function _getDisinflationaryDivisor() internal view returns (uint256) {
-        uint256 firstHalving = uint256(1639130400); // 10 Dec 2021 10:00pm UTC
-        /* solhint-disable not-rely-on-time */
-        if (block.timestamp < firstHalving) {
-            return uint256(1);
-        } else if (block.timestamp < firstHalving + 52 weeks) {
-            return uint256(2);
-        } else return uint256(4);
-        /* solhint-disable not-rely-on-time */
     }
 }
