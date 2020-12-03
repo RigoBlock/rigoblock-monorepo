@@ -253,8 +253,7 @@ contract Inflation is
         internal
         view
     {
-        if (!Authority(authorityAddress).isWhitelistedFactory(_factory))
-        {
+        if (!Authority(authorityAddress).isWhitelistedFactory(_factory)) {
             revert("NOT_APPROVED_AUTHORITY_ERROR");
         }
     }
