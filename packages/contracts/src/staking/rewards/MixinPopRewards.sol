@@ -54,24 +54,24 @@ contract MixinPopRewards is
     {
         // Get the pool id of the maker address.
         bytes32 poolId = poolIdByRbPoolAccount[poolAccount];
-        
+
         // Only attribute the pop reward to a pool if the pool account is
         // registered to a pool.
         if (poolId == NIL_POOL_ID) {
             return;
         }
-        
+
         uint256 poolStake = getTotalStakeDelegatedToPool(poolId).currentEpochBalance;
         // Ignore pools with dust stake.
         if (poolStake < minimumPoolStake) {
             return;
         }
-        
+
         // Look up the pool stats and aggregated stats for this epoch.
         uint256 currentEpoch_ = currentEpoch;
         IStructs.PoolStats storage poolStatsPtr = poolStatsByEpoch[poolId][currentEpoch_];
         IStructs.AggregatedStats storage aggregatedStatsPtr = aggregatedStatsByEpoch[currentEpoch_];
-        
+
         // Perform some initialization if this is the pool's first protocol fee in this epoch.
         uint256 feesCollectedByPool = poolStatsPtr.feesCollected;
         if (feesCollectedByPool == 0) {
@@ -89,19 +89,24 @@ contract MixinPopRewards is
             // Emit an event so keepers know what pools earned rewards this epoch.
             emit StakingPoolEarnedRewardsInEpoch(currentEpoch_, poolId);
         }
-        
+
         // Cap reward to max epoch reward
         uint256 maxEpochReward = getMaxEpochReward(poolStatsPtr.weightedStake);
+
+        // cap reward at 100% of stake annually
         if (popReward > maxEpochReward) {
             popReward = maxEpochReward;
         }
-        
+
         if (popReward > feesCollectedByPool) {
             // Credit the fees to the pool.
             poolStatsPtr.feesCollected = popReward;
-            
+
             // Increase the total fees collected this epoch.
-            aggregatedStatsPtr.totalFeesCollected = aggregatedStatsPtr.totalFeesCollected.safeAdd(popReward).safeSub(feesCollectedByPool);
+            aggregatedStatsPtr.totalFeesCollected = aggregatedStatsPtr
+                .totalFeesCollected
+                .safeAdd(popReward)
+                .safeSub(feesCollectedByPool);
         }
     }
 
