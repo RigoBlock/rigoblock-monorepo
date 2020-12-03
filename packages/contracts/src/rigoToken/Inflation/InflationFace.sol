@@ -26,7 +26,7 @@ interface InflationFace {
     /*
      * CORE FUNCTIONS
      */
-    function mintInflation(bytes32 stakingPoolId, uint256 reward) external returns (uint256);
+    function mintInflation() external returns (uint256 mintedReward);
     function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
     function setRigoblock(address newRigoblockDaoAddress) external;
     function setAuthority(address newRigoblockDaoAddress) external;
@@ -34,8 +34,8 @@ interface InflationFace {
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    function canWithdraw(bytes32 stakingPoolId) external view returns (bool);
-    function timeUntilClaim(bytes32 stakingPoolId) external view returns (uint256);
+    function epochEnded() external view returns (bool);
+    function timeUntilNextClaim() external view returns (uint256);
     function getInflationFactor(address groupAddress) external view returns (uint256);
-    function getMaxEpochReward(uint256 totalGrgDelegatedToPool) external view returns (uint256);
+    function getEpochReward() external view returns (uint256);
 }
