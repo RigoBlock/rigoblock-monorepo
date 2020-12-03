@@ -33,16 +33,6 @@ interface IStorage {
         view
         returns (address);
 
-    function lastPoolId()
-        external
-        view
-        returns (bytes32);
-
-    function numMakersByPoolId(bytes32 poolId)
-        external
-        view
-        returns (uint256);
-
     function currentEpoch()
         external
         view
