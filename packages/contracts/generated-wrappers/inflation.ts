@@ -203,6 +203,19 @@ _authorityAddress
             { 
                 inputs: [
                 ],
+                name: 'INFLATIONRATE',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
                 name: 'RIGOTOKENADDRESS',
                 outputs: [
                     {
@@ -241,16 +254,38 @@ _authorityAddress
             },
             { 
                 inputs: [
-                    {
-                        name: 'stakingPoolId',
-                        type: 'bytes32',
-                    },
                 ],
-                name: 'canWithdraw',
+                name: 'epochEnded',
                 outputs: [
                     {
                         name: '',
                         type: 'bool',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
+                name: 'epochLength',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
+                inputs: [
+                ],
+                name: 'getEpochReward',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
                     },
                 ],
                 stateMutability: 'view',
@@ -276,28 +311,11 @@ _authorityAddress
             { 
                 inputs: [
                     {
-                        name: 'totalGrgDelegatedToPool',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'getMaxEpochReward',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'uint256',
-                    },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                inputs: [
-                    {
                         name: 'index_0',
                         type: 'address',
                     },
                 ],
-                name: 'groups',
+                name: 'groupByAddress',
                 outputs: [
                     {
                         name: 'epochReward',
@@ -309,48 +327,15 @@ _authorityAddress
             },
             { 
                 inputs: [
-                    {
-                        name: 'stakingPoolId',
-                        type: 'bytes32',
-                    },
-                    {
-                        name: 'reward',
-                        type: 'uint256',
-                    },
                 ],
                 name: 'mintInflation',
                 outputs: [
                     {
-                        name: '',
+                        name: 'mintedReward',
                         type: 'uint256',
                     },
                 ],
                 stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                inputs: [
-                    {
-                        name: 'index_0',
-                        type: 'bytes32',
-                    },
-                ],
-                name: 'performers',
-                outputs: [
-                    {
-                        name: 'claimedTokens',
-                        type: 'uint256',
-                    },
-                    {
-                        name: 'startTime',
-                        type: 'uint256',
-                    },
-                    {
-                        name: 'endTime',
-                        type: 'uint256',
-                    },
-                ],
-                stateMutability: 'view',
                 type: 'function',
             },
             { 
@@ -424,12 +409,8 @@ _authorityAddress
             },
             { 
                 inputs: [
-                    {
-                        name: 'stakingPoolId',
-                        type: 'bytes32',
-                    },
                 ],
-                name: 'timeUntilClaim',
+                name: 'timeUntilNextClaim',
                 outputs: [
                     {
                         name: '',
@@ -521,6 +502,57 @@ _authorityAddress
         return abiEncoder.getSelector();
     }
 
+    public INFLATIONRATE(
+    ): ContractTxFunctionObj<BigNumber
+> {
+        const self = this as any as InflationContract;
+        const functionSignature = 'INFLATIONRATE()';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
     public RIGOTOKENADDRESS(
     ): ContractTxFunctionObj<string
 > {
@@ -675,16 +707,13 @@ _authorityAddress
         }
     };
     /**
-     * Returns whether a staking pool's reward can be claimed.
-      * @param stakingPoolId Address of the target pool.
+     * Returns whether an epoch has ended.
      */
-    public canWithdraw(
-            stakingPoolId: string,
+    public epochEnded(
     ): ContractTxFunctionObj<boolean
 > {
         const self = this as any as InflationContract;
-            assert.isString('stakingPoolId', stakingPoolId);
-        const functionSignature = 'canWithdraw(bytes32)';
+        const functionSignature = 'epochEnded()';
 
         return {
             async sendTransactionAsync(
@@ -727,8 +756,112 @@ _authorityAddress
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [stakingPoolId
-            ]);
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    public epochLength(
+    ): ContractTxFunctionObj<BigNumber
+> {
+        const self = this as any as InflationContract;
+        const functionSignature = 'epochLength()';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
+            },
+        }
+    };
+    /**
+     * Returns the max epoch reward of a pool.
+     */
+    public getEpochReward(
+    ): ContractTxFunctionObj<BigNumber
+> {
+        const self = this as any as InflationContract;
+        const functionSignature = 'getEpochReward()';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<BigNumber
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<BigNumber
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
@@ -790,71 +923,13 @@ _authorityAddress
             },
         }
     };
-    /**
-     * Returns the max epoch reward of a pool.
-      * @param totalGrgDelegatedToPool Total amount of GRG delegated to the pool.
-     */
-    public getMaxEpochReward(
-            totalGrgDelegatedToPool: BigNumber,
-    ): ContractTxFunctionObj<BigNumber
-> {
-        const self = this as any as InflationContract;
-            assert.isBigNumber('totalGrgDelegatedToPool', totalGrgDelegatedToPool);
-        const functionSignature = 'getMaxEpochReward(uint256)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<BigNumber
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<BigNumber
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [totalGrgDelegatedToPool
-            ]);
-            },
-        }
-    };
-    public groups(
+    public groupByAddress(
             index_0: string,
     ): ContractTxFunctionObj<BigNumber
 > {
         const self = this as any as InflationContract;
             assert.isString('index_0', index_0);
-        const functionSignature = 'groups(address)';
+        const functionSignature = 'groupByAddress(address)';
 
         return {
             async sendTransactionAsync(
@@ -903,19 +978,13 @@ _authorityAddress
         }
     };
     /**
-     * Allows ProofOfPerformance to mint rewards.
-      * @param stakingPoolId String of the staking pool.
-      * @param reward Number of reward in Rigo tokens.
+     * Allows staking proxy to mint rewards.
      */
     public mintInflation(
-            stakingPoolId: string,
-            reward: BigNumber,
     ): ContractTxFunctionObj<BigNumber
 > {
         const self = this as any as InflationContract;
-            assert.isString('stakingPoolId', stakingPoolId);
-            assert.isBigNumber('reward', reward);
-        const functionSignature = 'mintInflation(bytes32,uint256)';
+        const functionSignature = 'mintInflation()';
 
         return {
             async sendTransactionAsync(
@@ -958,63 +1027,7 @@ _authorityAddress
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [stakingPoolId,
-            reward
-            ]);
-            },
-        }
-    };
-    public performers(
-            index_0: string,
-    ): ContractTxFunctionObj<[BigNumber, BigNumber, BigNumber]
-> {
-        const self = this as any as InflationContract;
-            assert.isString('index_0', index_0);
-        const functionSignature = 'performers(bytes32)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<[BigNumber, BigNumber, BigNumber]
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<[BigNumber, BigNumber, BigNumber]
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [index_0
-            ]);
+                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
@@ -1300,15 +1313,12 @@ _authorityAddress
     };
     /**
      * Returns how much time needed until next claim.
-      * @param stakingPoolId Address of the target pool.
      */
-    public timeUntilClaim(
-            stakingPoolId: string,
+    public timeUntilNextClaim(
     ): ContractTxFunctionObj<BigNumber
 > {
         const self = this as any as InflationContract;
-            assert.isString('stakingPoolId', stakingPoolId);
-        const functionSignature = 'timeUntilClaim(bytes32)';
+        const functionSignature = 'timeUntilNextClaim()';
 
         return {
             async sendTransactionAsync(
@@ -1351,8 +1361,7 @@ _authorityAddress
             >(rawCallResult);
             },
             getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [stakingPoolId
-            ]);
+                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };
