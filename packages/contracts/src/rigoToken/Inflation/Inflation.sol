@@ -84,8 +84,8 @@ contract Inflation is
     /*
      * CORE FUNCTIONS
      */
-    /// @dev Allows ProofOfPerformance to mint rewards.
-    /// @return Number of allocated reward.
+    /// @dev Allows staking proxy to mint rewards.
+    /// @return mintedReward Number of allocated reward.
     function mintInflation()
         external
         override
@@ -105,7 +105,7 @@ contract Inflation is
             if (epochDurationInSeconds < 5 days || epochDurationInSeconds > 90 days) {
                 revert("STAKING_EPOCH_TIME_ANOMALY_DETECTED_ERROR");
             } else {
-                epochLenght = epochDurationInSeconds;
+                epochLength = epochDurationInSeconds;
             }
         }
 
@@ -118,7 +118,6 @@ contract Inflation is
         /* solhint-disable not-rely-on-time */
 
         ++slot;
-        RigoTokenFace rigoToken = RigoTokenFace(RIGOTOKENADDRESS);
 
         // TODO: test
         // mint rewards
@@ -216,7 +215,7 @@ contract Inflation is
         // TODO: test
         return safeDiv(
             safeMul(
-                RigoToken(RIGOTOKENADDRESS).totalSupply(),
+                RigoTokenFace(RIGOTOKENADDRESS).totalSupply(),
                 INFLATIONRATE * epochLength
             ),
             (10000 * 365 days)

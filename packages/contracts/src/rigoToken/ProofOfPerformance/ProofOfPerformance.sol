@@ -84,7 +84,7 @@ contract ProofOfPerformance is
     {
         (address poolAddress, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
 
-        if (poolAddress == address(0) {
+        if (poolAddress == address(0)) {
             return;
         }
 

@@ -122,6 +122,6 @@ contract MixinStakeBalances is
         returns (uint256)
     {
         // individual pop reward capped at 100% of stake annually
-        return (stakedTokens.safeMul(epochDurationInSeconds).safeDiv(365 days);
+        return stakedTokens.safeMul(epochDurationInSeconds).safeDiv(365 days);
     }
 }

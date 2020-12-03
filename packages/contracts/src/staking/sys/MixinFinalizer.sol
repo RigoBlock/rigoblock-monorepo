@@ -62,9 +62,7 @@ contract MixinFinalizer is
 
         // TODO: test
         // Load aggregated stats for the epoch we're ending.
-        aggregatedStatsByEpoch[currentEpoch_].rewardsAvailable =
-            InflationFace(getGrgContract().minter())
-            .mintInflation();
+        aggregatedStatsByEpoch[currentEpoch_].rewardsAvailable = mintedRewards;
         IStructs.AggregatedStats memory aggregatedStats = aggregatedStatsByEpoch[currentEpoch_];
 
         // Emit an event.
@@ -129,7 +127,7 @@ contract MixinFinalizer is
         // were earned in the previous epoch.
         (uint256 operatorReward, uint256 membersReward) = _syncPoolRewards(
             poolId,
-            mintedRewards,
+            rewards,
             poolStats.membersStake
         );
 
