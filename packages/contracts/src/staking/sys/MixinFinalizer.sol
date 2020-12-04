@@ -57,12 +57,12 @@ contract MixinFinalizer is
             );
         }
 
-        // mint reward tokens
-        uint256 mintedRewards = InflationFace(getGrgContract().minter()).mintInflation();
+        // mint epoch inflation
+        InflationFace(getGrgContract().minter()).mintInflation();
 
         // TODO: test
         // Load aggregated stats for the epoch we're ending.
-        aggregatedStatsByEpoch[currentEpoch_].rewardsAvailable = mintedRewards;
+        aggregatedStatsByEpoch[currentEpoch_].rewardsAvailable = _getAvailableGrgBalance();
         IStructs.AggregatedStats memory aggregatedStats = aggregatedStatsByEpoch[currentEpoch_];
 
         // Emit an event.
@@ -94,11 +94,6 @@ contract MixinFinalizer is
     function finalizePool(bytes32 poolId)
         external
     {
-        // allow smart contract calls only from whitelisted smart contract
-        if (_isContract(msg.sender)) {
-            _assertSenderIsAuthorized();
-        }
-
         // Compute relevant epochs
         uint256 currentEpoch_ = currentEpoch;
         uint256 prevEpoch = currentEpoch_.safeSub(1);
