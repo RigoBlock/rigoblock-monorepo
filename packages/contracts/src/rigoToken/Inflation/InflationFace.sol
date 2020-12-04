@@ -1,6 +1,6 @@
 /*
 
- Copyright 2017-2019 RigoBlock, Rigo Investment Sagl.
+ Copyright 2017-2019 RigoBlock, Rigo Investment Sagl, 2020 Rigo Intl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -26,16 +26,22 @@ interface InflationFace {
     /*
      * CORE FUNCTIONS
      */
-    function mintInflation() external returns (uint256 mintedReward);
-    function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
-    function setRigoblock(address newRigoblockDaoAddress) external;
-    function setAuthority(address newRigoblockDaoAddress) external;
+    /// @dev Allows staking proxy to mint rewards.
+    /// @return mintedInflation Number of allocated tokens.
+    function mintInflation() external returns (uint256 mintedInflation);
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
+    /// @dev Returns whether an epoch has ended.
+    /// @return Bool the epoch has ended.
     function epochEnded() external view returns (bool);
+    
+    /// @dev Returns how long until next claim.
+    /// @return Number in seconds.
     function timeUntilNextClaim() external view returns (uint256);
-    function getInflationFactor(address groupAddress) external view returns (uint256);
-    function getEpochReward() external view returns (uint256);
+    
+    /// @dev Returns the epoch inflation.
+    /// @return Value of units of GRG minted in an epoch.
+    function getEpochInflation() external view returns (uint256);
 }

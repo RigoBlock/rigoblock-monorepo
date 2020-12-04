@@ -21,10 +21,10 @@
 // solhint-disable-next-line
 pragma solidity 0.7.4;
 
+import { AuthorityFace } from "../../protocol/authorities/Authority/AuthorityFace.sol";
 import { IPool } from "../../utils/Pool/IPool.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
-import { InflationFace } from "../Inflation/InflationFace.sol";
 import { RigoTokenFace } from "../RigoToken/RigoTokenFace.sol";
 import { IDragoRegistry } from "../../protocol/DragoRegistry/IDragoRegistry.sol";
 import { IStaking } from "../../staking/interfaces/IStaking.sol";
@@ -37,18 +37,18 @@ contract ProofOfPerformance is
     SafeMath,
     ProofOfPerformanceFace
 {
-    /* solhint-disable */
-    address public immutable RIGOTOKENADDRESS;
-    address public immutable STAKINGPROXYADDRESS;
-    /* solhint-disable */
+    address public immutable RIGO_TOKEN_ADDRESS;
+    address public immutable STAKING_PROXY_ADDRESS;
 
     address public dragoRegistryAddress;
     address public rigoblockDaoAddress;
+    address public authorityAddress;
 
-    mapping (address => Group) public groups;
+    mapping (address => Group) public groupByAddress;
     mapping (uint256 => uint256) private _highWaterMark;
 
     struct Group {
+        uint256 epochReward;
         uint256 rewardRatio;
     }
 
@@ -61,17 +61,24 @@ contract ProofOfPerformance is
         _assertCallerIsStakingProxy();
         _;
     }
+    
+    modifier isApprovedFactory(address _factory) {
+        _assertIsApprovedFactory(_factory);
+        _;
+    }
 
     constructor(
         address _rigoTokenAddress,
+        address _stakingProxyAddress,
         address _rigoblockDao,
         address _dragoRegistry,
-        address _stakingProxyAddress
+        address _authorityAddress
     ) {
-        RIGOTOKENADDRESS = _rigoTokenAddress;
+        RIGO_TOKEN_ADDRESS = _rigoTokenAddress;
+        STAKING_PROXY_ADDRESS = _stakingProxyAddress;
         rigoblockDaoAddress = _rigoblockDao;
         dragoRegistryAddress = _dragoRegistry;
-        STAKINGPROXYADDRESS = _stakingProxyAddress;
+        authorityAddress = _authorityAddress;
     }
 
     /// @dev Credits the pop reward to the Staking Proxy contract.
@@ -104,7 +111,7 @@ contract ProofOfPerformance is
         // pop assets component is always positive, therefore we must update the hwm if positive performance
         _updateHwmIfPositivePerformance(poolPrice, poolId);
 
-        IStaking(STAKINGPROXYADDRESS).creditPopReward(poolAddress, popReward);
+        IStaking(STAKING_PROXY_ADDRESS).creditPopReward(poolAddress, popReward);
     }
 
     /// @dev Allows RigoBlock Dao to update the pools registry.
@@ -126,6 +133,16 @@ contract ProofOfPerformance is
     {
         rigoblockDaoAddress = newRigoblockDaoAddress;
     }
+    
+    /// @dev Allows rigoblock dao to update the authority.
+    /// @param newAuthorityAddress Address of the authority.
+    function setAuthority(address newAuthorityAddress)
+        external
+        override
+        onlyRigoblockDao
+    {
+        authorityAddress = newAuthorityAddress;
+    }
 
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
     /// @param groupAddress Address of the pool's group.
@@ -142,7 +159,19 @@ contract ProofOfPerformance is
             newRatio <= 10000,
             "RATIO_BIGGER_THAN_10000"
         ); //(from 0 to 10000)
-        groups[groupAddress].rewardRatio = newRatio;
+        groupByAddress[groupAddress].rewardRatio = newRatio;
+    }
+    
+    /// @dev Allows rigoblock dao to set the inflation factor for a group.
+    /// @param groupAddress Address of the group/factory.
+    /// @param inflationFactor Value of the reward factor.
+    function setInflationFactor(address groupAddress, uint256 inflationFactor)
+        external
+        override
+        onlyRigoblockDao
+        isApprovedFactory(groupAddress)
+    {
+        groupByAddress[groupAddress].epochReward = inflationFactor;
     }
 
     /*
@@ -178,7 +207,7 @@ contract ProofOfPerformance is
         active = _isActiveInternal(poolId);
         (poolAddress, poolGroup) = _addressFromIdInternal(poolId);
         (poolPrice, poolSupply, poolValue) = _getPoolPriceAndValueInternal(poolId);
-        (epochReward, , ratio) = _getInflationParameters(poolId);
+        (epochReward, , ratio) = getRewardParameters(poolId);
         (pop, ) = _proofOfPerformanceInternal(poolId);
         return(
             active,
@@ -204,31 +233,26 @@ contract ProofOfPerformance is
     {
         return _getHwmInternal(poolId);
     }
-
-    /// @dev Returns the reward factor for a pool.
-    /// @param poolId Id of the pool.
-    /// @return Value of the reward factor.
-    function getEpochReward(uint256 poolId)
-        external
-        view
-        override
-        returns (uint256)
-    {
-        (uint256 epochReward, , ) = _getInflationParameters(poolId);
-        return epochReward;
-    }
-
+    
     /// @dev Returns the split ratio of asset and performance reward.
     /// @param poolId Id of the pool.
-    /// @return Value of the ratio from 1 to 100.
-    function getRatio(uint256 poolId)
-        external
+    /// @return epochReward Value of the reward factor.
+    /// @return epochTime Value of epoch time.
+    /// @return ratio Value of the ratio from 1 to 100.
+    function getRewardParameters(uint256 poolId)
+        public
         view
         override
-        returns (uint256)
+        returns (
+            uint256 epochReward,
+            uint256 epochTime,
+            uint256 ratio
+        )
     {
-        ( , , uint256 ratio) = _getInflationParameters(poolId);
-        return ratio;
+        ( , address groupAddress) = _addressFromIdInternal(poolId);
+        epochReward = groupByAddress[groupAddress].epochReward;
+        (epochTime, , , , ) = IStaking(STAKING_PROXY_ADDRESS).getParams();
+        ratio = groupByAddress[groupAddress].rewardRatio;
     }
 
     /// @dev Returns the proof of performance reward for a pool.
@@ -333,36 +357,6 @@ contract ProofOfPerformance is
         }
     }
 
-    /// @dev Returns the split ratio of asset and performance reward.
-    /// @param poolId Id of the pool.
-    /// @return epochReward Value of the reward factor.
-    /// @return epochTime Value of epoch time.
-    /// @return ratio Value of the ratio from 1 to 100.
-    function _getInflationParameters(uint256 poolId)
-        internal
-        view
-        returns (
-            uint256 epochReward,
-            uint256 epochTime,
-            uint256 ratio
-        )
-    {
-        ( , address groupAddress) = _addressFromIdInternal(poolId);
-        epochReward = InflationFace(_getMinter()).getInflationFactor(groupAddress);
-        (epochTime, , , , ) = IStaking(STAKINGPROXYADDRESS).getParams();
-        ratio = groups[groupAddress].rewardRatio;
-    }
-
-    /// @dev Returns the address of the Inflation contract.
-    /// @return Address of the minter/inflation.
-    function _getMinter()
-        internal
-        view
-        returns (address)
-    {
-        return RigoTokenFace(RIGOTOKENADDRESS).minter();
-    }
-
     /// @dev Returns the proof of performance reward for a pool.
     /// @param poolId Id of the pool.
     /// @return popReward Value of the pop reward in Rigo tokens.
@@ -376,7 +370,7 @@ contract ProofOfPerformance is
     {
         (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = _getPoolPriceAndValueInternal(poolId);
         (address poolAddress, ) = _addressFromIdInternal(poolId);
-        (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = _getInflationParameters(poolId);
+        (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = getRewardParameters(poolId);
 
         uint256 assetsComponent = safeMul(
             poolValue,
@@ -550,7 +544,7 @@ contract ProofOfPerformance is
         internal
         view
     {
-        if (msg.sender != STAKINGPROXYADDRESS) {
+        if (msg.sender != STAKING_PROXY_ADDRESS) {
             revert("CALLER_NOT_STAKING_PROXY_ERROR");
         }
     }
@@ -578,6 +572,17 @@ contract ProofOfPerformance is
     {
         if (msg.sender != poolAddress) {
             revert("SMART_CONTRACT_CALLER_IS_NOT_POOL_ERROR");
+        }
+    }
+    
+    /// @dev Asserts that an address is an approved factory.
+    /// @param _factory Address of the target factory.
+    function _assertIsApprovedFactory(address _factory)
+        internal
+        view
+    {
+        if (!AuthorityFace(authorityAddress).isWhitelistedFactory(_factory)) {
+            revert("NOT_APPROVED_AUTHORITY_ERROR");
         }
     }
 }

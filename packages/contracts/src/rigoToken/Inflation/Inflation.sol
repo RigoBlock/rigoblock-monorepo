@@ -2,7 +2,7 @@
 
 /*
 
- Copyright 2017-2019 RigoBlock, Rigo Investment Sagl.
+ Copyright 2017-2019 RigoBlock, Rigo Investment Sagl, 2020 Rigo Intl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@
 pragma solidity 0.7.4;
 pragma experimental ABIEncoderV2;
 
-import { AuthorityFace as Authority } from "../../protocol/authorities/Authority/AuthorityFace.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { InflationFace } from "./InflationFace.sol";
 import { RigoTokenFace } from "../RigoToken/RigoTokenFace.sol";
@@ -36,62 +35,40 @@ contract Inflation is
     SafeMath,
     InflationFace
 {
-    /* solhint-disable */
-    // TODO: check
-    uint256 public immutable INFLATIONRATE = 200; // in bps, 200 = 2%
-    address public immutable RIGOTOKENADDRESS;
-    address public immutable STAKINGPROXYADDRESS;
-    /* solhint-disable */
+    address public immutable RIGO_TOKEN_ADDRESS;
+    address public immutable STAKING_PROXY_ADDRESS;
+
+    uint32 internal immutable PPM_DENOMINATOR = 10**6; // 100% in parts-per-million
+    uint256 internal immutable ANNUAL_INFLATION_RATE = 2 * 10**4; // 2% annual inflation
 
     uint256 public slot;
     uint256 public epochLength = 14 days;
-    address public authorityAddress;
-    address public rigoblockDaoAddress;
-    
+
     uint256 private epochEndTime;
-
-    mapping (address => Group) public groupByAddress;
-
-    struct Group {
-        uint256 epochReward;
-    }
-
-    modifier onlyRigoblockDao {
-        _assertCallerIsRigoblockDao();
-        _;
-    }
 
     modifier onlyStakingProxy {
         _assertCallerIsStakingProxy();
         _;
     }
 
-    modifier isApprovedFactory(address _factory) {
-        _assertIsApprovedFactory(_factory);
-        _;
-    }
-
     constructor(
         address _rigoTokenAddress,
-        address _stakingProxyAddress,
-        address _authorityAddress
+        address _stakingProxyAddress
     ) {
-        RIGOTOKENADDRESS = _rigoTokenAddress;
-        STAKINGPROXYADDRESS = _stakingProxyAddress;
-        rigoblockDaoAddress = msg.sender;
-        authorityAddress = _authorityAddress;
+        RIGO_TOKEN_ADDRESS = _rigoTokenAddress;
+        STAKING_PROXY_ADDRESS = _stakingProxyAddress;
     }
 
     /*
      * CORE FUNCTIONS
      */
     /// @dev Allows staking proxy to mint rewards.
-    /// @return mintedReward Number of allocated reward.
+    /// @return mintedInflation Number of allocated tokens.
     function mintInflation()
         external
         override
         onlyStakingProxy
-        returns (uint256 mintedReward)
+        returns (uint256 mintedInflation)
     {
         //TODO: test
         // solhint-disable-next-line not-rely-on-time
@@ -99,7 +76,7 @@ contract Inflation is
             revert("NOT_ENOUGH_TIME_ERROR");
         }
 
-        (uint256 epochDurationInSeconds, , , , ) = IStaking(STAKINGPROXYADDRESS).getParams();
+        (uint256 epochDurationInSeconds, , , , ) = IStaking(STAKING_PROXY_ADDRESS).getParams();
 
         // sanity check for epoch length queried from staking
         if (epochLength != epochDurationInSeconds) {
@@ -111,61 +88,26 @@ contract Inflation is
         }
 
         //TODO: test
-        uint256 epochTotalReward = getEpochReward();
+        uint256 epochInflation = getEpochInflation();
 
-        /* solhint-disable not-rely-on-time */
-        //performers[stakingPoolId].startTime = block.timestamp;
+        // solhint-disable-next-line not-rely-on-time
         epochEndTime = block.timestamp + epochLength;
-        /* solhint-disable not-rely-on-time */
-
-        ++slot;
+        slot = safeAdd(slot, 1);
 
         // TODO: test
         // mint rewards
-        RigoTokenFace(RIGOTOKENADDRESS).mintToken(
-            STAKINGPROXYADDRESS,
-            epochTotalReward
+        RigoTokenFace(RIGO_TOKEN_ADDRESS).mintToken(
+            STAKING_PROXY_ADDRESS,
+            epochInflation
         );
-        return (mintedReward = epochTotalReward);
-    }
-
-    /// @dev Allows rigoblock dao to set the inflation factor for a group.
-    /// @param groupAddress Address of the group/factory.
-    /// @param inflationFactor Value of the reward factor.
-    function setInflationFactor(address groupAddress, uint256 inflationFactor)
-        external
-        override
-        onlyRigoblockDao
-        isApprovedFactory(groupAddress)
-    {
-        groupByAddress[groupAddress].epochReward = inflationFactor;
-    }
-
-    /// @dev Allows rigoblock dao to upgrade its address.
-    /// @param newRigoblockDaoAddress Address of the new rigoblock dao.
-    function setRigoblock(address newRigoblockDaoAddress)
-        external
-        override
-        onlyRigoblockDao
-    {
-        rigoblockDaoAddress = newRigoblockDaoAddress;
-    }
-
-    /// @dev Allows rigoblock dao to update the authority.
-    /// @param newAuthorityAddress Address of the authority.
-    function setAuthority(address newAuthorityAddress)
-        external
-        override
-        onlyRigoblockDao
-    {
-        authorityAddress = newAuthorityAddress;
+        return (mintedInflation = epochInflation);
     }
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
     /// @dev Returns whether an epoch has ended.
-    /// @return Bool the wizard can claim.
+    /// @return Bool the epoch has ended.
     function epochEnded()
         external
         override
@@ -178,7 +120,7 @@ contract Inflation is
         } else return false;
     }
 
-    /// @dev Returns how much time needed until next claim.
+    /// @dev Returns how long until next claim.
     /// @return Number in seconds.
     function timeUntilNextClaim()
         external
@@ -193,21 +135,9 @@ contract Inflation is
         /* solhint-disable not-rely-on-time */
     }
 
-    /// @dev Return the reward factor for a group.
-    /// @param groupAddress Address of the group.
-    /// @return Value of the reward factor.
-    function getInflationFactor(address groupAddress)
-        external
-        view
-        override
-        returns (uint256)
-    {
-        return groupByAddress[groupAddress].epochReward;
-    }
-
-    /// @dev Returns the max epoch reward of a pool.
-    /// @return Value of the maximum pool reward.
-    function getEpochReward()
+    /// @dev Returns the epoch inflation.
+    /// @return Value of units of GRG minted in an epoch.
+    function getEpochInflation()
         public
         view
         override
@@ -216,45 +146,23 @@ contract Inflation is
         // TODO: test
         return safeDiv(
             safeMul(
-                RigoTokenFace(RIGOTOKENADDRESS).totalSupply(),
-                INFLATIONRATE * epochLength
+                RigoTokenFace(RIGO_TOKEN_ADDRESS).totalSupply(),
+                ANNUAL_INFLATION_RATE * epochLength
             ),
-            (10000 * 365 days)
+            (PPM_DENOMINATOR * 365 days)
         );
     }
 
     /*
      * INTERNAL METHODS
      */
-
-    /// @dev Asserts that the caller is the RigoBlock Dao.
-    function _assertCallerIsRigoblockDao()
-        internal
-        view
-    {
-        if (msg.sender != rigoblockDaoAddress) {
-            revert("CALLER_NOT_RIGOBLOCK_DAO_ERROR");
-        }
-    }
-
     /// @dev Asserts that the caller is the Staking Proxy.
     function _assertCallerIsStakingProxy()
         internal
         view
     {
-        if (msg.sender != STAKINGPROXYADDRESS) {
+        if (msg.sender != STAKING_PROXY_ADDRESS) {
             revert("CALLER_NOT_STAKING_PROXY_ERROR");
-        }
-    }
-
-    /// @dev Asserts that an address is an approved factory.
-    /// @param _factory Address of the target factory.
-    function _assertIsApprovedFactory(address _factory)
-        internal
-        view
-    {
-        if (!Authority(authorityAddress).isWhitelistedFactory(_factory)) {
-            revert("NOT_APPROVED_AUTHORITY_ERROR");
         }
     }
 }
