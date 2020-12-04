@@ -90,14 +90,6 @@ contract MixinPopRewards is
             emit StakingPoolEarnedRewardsInEpoch(currentEpoch_, poolId);
         }
 
-        // Cap reward to max epoch reward
-        uint256 maxEpochReward = getMaxEpochReward(poolStatsPtr.weightedStake);
-
-        // cap reward at 100% of stake annually
-        if (popReward > maxEpochReward) {
-            popReward = maxEpochReward;
-        }
-
         if (popReward > feesCollectedByPool) {
             // Credit the fees to the pool.
             poolStatsPtr.feesCollected = popReward;
