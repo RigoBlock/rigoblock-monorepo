@@ -254,19 +254,4 @@ abstract contract MixinFinalizer is
             rewards = rewardsRemaining;
         }
     }
-
-    /// @dev Determines whether an address is an account or a contract
-    /// @param target Address to be inspected
-    /// @return Boolean the address is a contract
-    function _isContract(address target)
-        internal view
-        returns (bool)
-    {
-        uint size;
-        // solhint-disable-next-line
-        assembly {
-            size := extcodesize(target)
-        }
-        return size > 0;
-    }
 }

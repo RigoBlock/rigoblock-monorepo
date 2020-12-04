@@ -144,33 +144,4 @@ abstract contract MixinPopRewards is
         );
         return (membersStake, weightedStake);
     }
-
-    /// @dev Computes the reward owed to a pool during finalization.
-    ///      Does nothing if the pool is already finalized.
-    /// @param poolId The pool's ID.
-    /// @return totalReward The total reward owed to a pool.
-    /// @return membersStake The total stake for all non-operator members in
-    ///         this pool.
-    function _getUnfinalizedPoolRewards(bytes32 poolId)
-        internal
-        view
-        virtual
-        override(MixinFinalizer, MixinStakingPool)
-        returns (
-            uint256 totalReward,
-            uint256 membersStake)
-    {
-        (totalReward, membersStake) = MixinFinalizer._getUnfinalizedPoolRewards(poolId);
-    }
-
-    /// @dev Asserts that a pool has been finalized last epoch.
-    /// @param poolId The id of the pool that should have been finalized.
-    function _assertPoolFinalizedLastEpoch(bytes32 poolId)
-        internal
-        view
-        virtual
-        override(MixinFinalizer, MixinStakingPool)
-    {
-        return MixinFinalizer._assertPoolFinalizedLastEpoch(poolId);
-    }
 }
