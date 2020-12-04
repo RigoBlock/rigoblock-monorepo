@@ -57,8 +57,10 @@ contract MixinFinalizer is
             );
         }
 
-        // mint epoch inflation
-        InflationFace(getGrgContract().minter()).mintInflation();
+        // mint epoch inflation, jump first epoch as all regitered pool accounts will become active from following epoch
+        if (currentEpoch_ > uint256(1)) {
+            InflationFace(getGrgContract().minter()).mintInflation();
+        }
 
         // TODO: test
         // Load aggregated stats for the epoch we're ending.
