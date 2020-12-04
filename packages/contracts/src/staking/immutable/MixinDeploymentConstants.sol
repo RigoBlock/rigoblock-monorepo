@@ -20,15 +20,17 @@
 */
 
 pragma solidity >=0.5.9 <0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/IEtherToken.sol";
 import "../interfaces/IGrgVault.sol";
+import "../interfaces/IStaking.sol";
 import "../../protocol/DragoRegistry/IDragoRegistry.sol";
 import "../../rigoToken/RigoToken/RigoTokenFace.sol";
 
 
 // solhint-disable separate-by-one-line-in-contract
-contract MixinDeploymentConstants {
+abstract contract MixinDeploymentConstants is IStaking {
 
     // Mainnet GrgVault address
     address constant private GRG_VAULT_ADDRESS = address(0x0a33744eE5D57d6d69944213d8E6ad80d64Fdc58);
@@ -54,6 +56,8 @@ contract MixinDeploymentConstants {
     function getGrgVault()
         public
         view
+        virtual
+        override
         returns (IGrgVault grgVault)
     {
         grgVault = IGrgVault(GRG_VAULT_ADDRESS);
@@ -66,6 +70,8 @@ contract MixinDeploymentConstants {
     function getDragoRegistry()
         public
         view
+        virtual
+        override
         returns (IDragoRegistry dragoRegistry)
     {
         dragoRegistry = IDragoRegistry(DRAGO_REGISTRY_ADDRESS);
@@ -78,6 +84,8 @@ contract MixinDeploymentConstants {
     function getGrgContract()
         public
         view
+        virtual
+        override
         returns (RigoTokenFace grgContract)
     {
         grgContract = RigoTokenFace(GRG_ADDRESS);

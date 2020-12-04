@@ -22,7 +22,7 @@
 pragma solidity >=0.5.9 <0.8.0;
 
 
-contract MixinConstants {
+abstract contract MixinConstants {
 
     // 100% in parts-per-million.
     uint32 constant internal PPM_DENOMINATOR = 10**6;

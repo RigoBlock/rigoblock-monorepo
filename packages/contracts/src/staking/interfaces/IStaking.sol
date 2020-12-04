@@ -22,7 +22,8 @@
 pragma solidity >=0.5.9 <0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "../../utils/0xUtils/IEtherToken.sol";
+import "../../rigoToken/RigoToken/RigoTokenFace.sol";
+import "../../protocol/DragoRegistry/IDragoRegistry.sol";
 import "./IStructs.sol";
 import "./IGrgVault.sol";
 
@@ -195,6 +196,14 @@ interface IStaking {
         view
         returns (IStructs.StoredBalance memory balance);
 
+    /// @dev Returns the total stake for a given staker.
+    /// @param staker of stake.
+    /// @return Total GRG staked by `staker`.
+    function getTotalStake(address staker)
+        external
+        view
+        returns (uint256);
+
     /// @dev Retrieves all configurable parameter values.
     /// @return _epochDurationInSeconds Minimum seconds between epochs.
     /// @return _rewardDelegatedStakeWeight How much delegated stake is weighted vs operator stake, in ppm.
@@ -243,6 +252,22 @@ interface IStaking {
         external
         view
         returns (IStructs.StoredBalance memory balance);
+
+    /// @dev An overridable way to access the deployed GRG contract.
+    ///      Must be view to allow overrides to access state.
+    /// @return grgContract The GRG contract instance.
+    function getGrgContract()
+        external
+        view
+        returns (RigoTokenFace grgContract);
+
+    /// @dev An overridable way to access the deployed dragoRegistry.
+    ///      Must be view to allow overrides to access state.
+    /// @return dragoRegistry The dragoRegistry contract.
+    function getDragoRegistry()
+        external
+        view
+        returns (IDragoRegistry dragoRegistry);
 
     /// @dev An overridable way to access the deployed grgVault.
     ///      Must be view to allow overrides to access state.

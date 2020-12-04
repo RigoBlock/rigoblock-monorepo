@@ -22,14 +22,14 @@
 pragma solidity 0.7.4;
 pragma experimental ABIEncoderV2;
 
-//import "./interfaces/IStaking.sol";
+import "./interfaces/IStaking.sol";
 import "./sys/MixinParams.sol";
 import "./stake/MixinStake.sol";
 import "./rewards/MixinPopRewards.sol";
 
 
 contract Staking is
-    //IStaking, // IStakin commented as cannot override in subcontracts, but must check interface exposes correct methods when modifying
+    IStaking,
     MixinParams,
     MixinStake,
     MixinPopRewards
@@ -39,6 +39,7 @@ contract Staking is
     ///      The StakingProxy contract will call it in `attachStakingContract()`.
     function init()
         public
+        override
         onlyAuthorized
     {
         // DANGER! When performing upgrades, take care to modify this logic

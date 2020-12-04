@@ -32,7 +32,7 @@ import "../staking_pools/MixinStakingPool.sol";
 import "./MixinPopManager.sol";
 
 
-contract MixinPopRewards is
+abstract contract MixinPopRewards is
     MixinPopManager,
     MixinStakingPool,
     MixinFinalizer
@@ -50,6 +50,7 @@ contract MixinPopRewards is
     )
         external
         payable
+        override
         onlyPop
     {
         // Get the pool id of the maker address.
@@ -108,6 +109,7 @@ contract MixinPopRewards is
     function getStakingPoolStatsThisEpoch(bytes32 poolId)
         external
         view
+        override
         returns (IStructs.PoolStats memory)
     {
         return poolStatsByEpoch[poolId][currentEpoch];

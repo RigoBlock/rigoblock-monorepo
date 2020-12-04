@@ -24,11 +24,13 @@ pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/LibMath.sol";
 import "../../utils/0xUtils/LibSafeMath.sol";
+import "../interfaces/IStaking.sol";
 import "./MixinCumulativeRewards.sol";
 import "../sys/MixinAbstract.sol";
 
 
-contract MixinStakingPoolRewards is
+abstract contract MixinStakingPoolRewards is
+    IStaking,
     MixinAbstract,
     MixinCumulativeRewards
 {
@@ -39,6 +41,7 @@ contract MixinStakingPoolRewards is
     /// @param poolId Unique id of pool.
     function withdrawDelegatorRewards(bytes32 poolId)
         external
+        override
     {
         _withdrawAndSyncDelegatorRewards(poolId, msg.sender);
     }
@@ -49,6 +52,7 @@ contract MixinStakingPoolRewards is
     function computeRewardBalanceOfOperator(bytes32 poolId)
         external
         view
+        override
         returns (uint256 reward)
     {
         // Because operator rewards are immediately withdrawn as WETH
@@ -75,6 +79,7 @@ contract MixinStakingPoolRewards is
     function computeRewardBalanceOfDelegator(bytes32 poolId, address member)
         external
         view
+        override
         returns (uint256 reward)
     {
         IStructs.Pool memory pool = _poolById[poolId];

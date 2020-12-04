@@ -30,7 +30,7 @@ import "../interfaces/IStructs.sol";
 import "../staking_pools/MixinStakingPoolRewards.sol";
 
 
-contract MixinFinalizer is
+abstract contract MixinFinalizer is
     MixinStakingPoolRewards
 {
     using LibSafeMath for uint256;
@@ -41,6 +41,7 @@ contract MixinFinalizer is
     /// @return numPoolsToFinalize The number of unfinalized pools.
     function endEpoch()
         external
+        override
         returns (uint256)
     {
         uint256 currentEpoch_ = currentEpoch;
@@ -95,6 +96,7 @@ contract MixinFinalizer is
     /// @param poolId The pool ID to finalize.
     function finalizePool(bytes32 poolId)
         external
+        override
     {
         // Compute relevant epochs
         uint256 currentEpoch_ = currentEpoch;

@@ -20,14 +20,17 @@
 */
 
 pragma solidity >=0.5.9 <0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/LibRichErrors.sol";
 import "../libs/LibStakingRichErrors.sol";
 import "../interfaces/IStakingEvents.sol";
+import "../interfaces/IStaking.sol";
 import "../immutable/MixinStorage.sol";
 
 
-contract MixinPopManager is
+abstract contract MixinPopManager is
+    IStaking,
     IStakingEvents,
     MixinStorage
 {
@@ -45,6 +48,7 @@ contract MixinPopManager is
     /// @param addr Address of pop contract to add.
     function addPopAddress(address addr)
         external
+        override
         onlyAuthorized
     {
         if (validPops[addr]) {
@@ -61,6 +65,7 @@ contract MixinPopManager is
     /// @param addr Address of proof_of_performance contract to remove.
     function removePopAddress(address addr)
         external
+        override
         onlyAuthorized
     {
         if (!validPops[addr]) {
