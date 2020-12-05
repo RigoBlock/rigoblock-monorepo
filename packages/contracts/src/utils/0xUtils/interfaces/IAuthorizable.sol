@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: Apache 2.0
-
 /*
   Copyright 2019 ZeroEx Intl.
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +13,9 @@
 
 pragma solidity >=0.5.9 <0.8.0;
 
-import "./IOwnable.sol";
 
+abstract contract IAuthorizable {
 
-abstract contract IAuthorizable is
-    IOwnable
-{
     // Event logged when a new address is authorized.
     event AuthorizedAddressAdded(
         address indexed target,
