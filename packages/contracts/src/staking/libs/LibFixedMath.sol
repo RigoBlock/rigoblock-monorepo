@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: Apache 2.0
-
 /*
 
   Copyright 2017 Bprotocol Foundation, 2019 ZeroEx Intl.
