@@ -1026,23 +1026,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'stakedTokens',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'getMaxEpochReward',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'uint256',
-                    },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                inputs: [
-                    {
                         name: 'staker',
                         type: 'address',
                     },
@@ -1290,19 +1273,6 @@ public static async deployFrom0xArtifactAsync(
                 outputs: [
                 ],
                 stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                inputs: [
-                ],
-                name: 'lastPoolId',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'bytes32',
-                    },
-                ],
-                stateMutability: 'view',
                 type: 'function',
             },
             { 
@@ -2202,7 +2172,7 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     /**
-     * Create a new staking pool. The sender will be the operator of this pool. Note that an operator must be payable.
+     * Create a new staking pool. The sender will be the staking pal of this pool. Note that a staking pal must be payable.
       * @param rigoblockPoolAddress Adds rigoblock pool to the created staking pool
      *     for convenience if non-null.
      */
@@ -2992,64 +2962,6 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     /**
-     * Returns the total maximum epoch reward given a stake.
-      * @param stakedTokens Number of staked tokens.
-     */
-    public getMaxEpochReward(
-            stakedTokens: BigNumber,
-    ): ContractTxFunctionObj<BigNumber
-> {
-        const self = this as any as StakingContract;
-            assert.isBigNumber('stakedTokens', stakedTokens);
-        const functionSignature = 'getMaxEpochReward(uint256)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<BigNumber
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<BigNumber
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [stakedTokens
-            ]);
-            },
-        }
-    };
-    /**
      * Gets an owner's stake balances by status.
       * @param staker Owner of stake.
       * @param stakeStatus UNDELEGATED or DELEGATED
@@ -3627,57 +3539,6 @@ public static async deployFrom0xArtifactAsync(
                 return self._strictEncodeArguments(functionSignature, [poolId,
             rigoblockPoolAccount.toLowerCase()
             ]);
-            },
-        }
-    };
-    public lastPoolId(
-    ): ContractTxFunctionObj<string
-> {
-        const self = this as any as StakingContract;
-        const functionSignature = 'lastPoolId()';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
             },
         }
     };

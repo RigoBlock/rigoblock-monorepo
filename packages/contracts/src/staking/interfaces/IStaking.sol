@@ -33,13 +33,12 @@ interface IStaking {
     /// @param addr Address of proof_of_performance contract to add.
     function addPopAddress(address addr)
         external;
-
-    /// @dev Create a new staking pool. The sender will be the operator of this pool.
-    /// Note that an operator must be payable.
-    /// @param operatorShare Portion of rewards owned by the operator, in ppm.
-    /// @param addOperatorAsMaker Adds operator to the created pool as a maker for convenience iff true.
+        
+    /// @dev Create a new staking pool. The sender will be the staking pal of this pool.
+    /// Note that a staking pal must be payable.
+    /// @param rigoblockPoolAddress Adds rigoblock pool to the created staking pool for convenience if non-null.
     /// @return poolId The unique pool id generated for this pool.
-    function createStakingPool(uint32 operatorShare, bool addOperatorAsMaker)
+    function createStakingPool(address rigoblockPoolAddress)
         external
         returns (bytes32 poolId);
     
@@ -244,14 +243,6 @@ interface IStaking {
         external
         view
         returns (IStructs.StoredBalance memory balance);
-    
-    /// @dev Returns the total maximum epoch reward given a stake.
-    /// @param stakedTokens Number of staked tokens.
-    /// @return maxEpochReward Maximum epoch reward.
-    function getMaxEpochReward(uint256 stakedTokens)
-        external
-        view
-        returns (uint256);
 
     /// @dev An overridable way to access the deployed grgVault.
     ///      Must be view to allow overrides to access state.

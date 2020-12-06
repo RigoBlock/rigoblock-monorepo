@@ -51,9 +51,6 @@ contract MixinStorage is
     // Mapping from Pool Id to Amount Delegated
     mapping (bytes32 => IStructs.StoredBalance) internal _delegatedStakeByPoolId;
 
-    // tracking Pool Id, a unique identifier for each staking pool.
-    bytes32 public lastPoolId;
-
     /// @dev Mapping from RigoBlock pool subaccount to pool Id of rigoblock pool
     /// @dev 0 RigoBlock pool subaccount address.
     /// @return 0 The pool ID.

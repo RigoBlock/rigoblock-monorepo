@@ -112,15 +112,4 @@ contract MixinStakeBalances is
         balance = _loadCurrentBalance(_delegatedStakeByPoolId[poolId]);
         return balance;
     }
-    
-    /// @dev Returns the total maximum epoch reward given a stake.
-    /// @param stakedTokens Number of staked tokens.
-    /// @return maxEpochReward Maximum epoch reward.
-    function getMaxEpochReward(uint256 stakedTokens)
-        public
-        view
-        returns (uint256)
-    {
-        return InflationFace(getGrgContract().minter()).getMaxEpochReward(stakedTokens);
-    }
 }

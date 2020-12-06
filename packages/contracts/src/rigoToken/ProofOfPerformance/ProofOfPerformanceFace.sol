@@ -37,12 +37,21 @@ interface ProofOfPerformanceFace {
     /// @dev Allows RigoBlock Dao to update its address.
     /// @param newRigoblockDaoAddress Address of new dao.
     function setRigoblockDao(address newRigoblockDaoAddress) external;
+    
+    /// @dev Allows rigoblock dao to update the authority.
+    /// @param newAuthorityAddress Address of the authority.
+    function setAuthority(address newAuthorityAddress) external;
 
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
     /// @param groupAddress Address of the pool's group.
     /// @param newRatio Value of the new ratio.
     /// @notice onlyRigoblockDao can set ratio.
     function setRatio(address groupAddress, uint256 newRatio) external;
+    
+    /// @dev Allows rigoblock dao to set the inflation factor for a group.
+    /// @param groupAddress Address of the group/factory.
+    /// @param inflationFactor Value of the reward factor.
+    function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
@@ -78,21 +87,19 @@ interface ProofOfPerformanceFace {
     /// @return Value of the all-time-high pool nav.
     function getHwm(uint256 poolId) external view returns (uint256);
 
-    /// @dev Returns the reward factor for a pool.
-    /// @param poolId Id of the pool.
-    /// @return Value of the reward factor.
-    function getEpochReward(uint256 poolId)
-        external
-        view
-        returns (uint256);
-
     /// @dev Returns the split ratio of asset and performance reward.
     /// @param poolId Id of the pool.
-    /// @return Value of the ratio from 1 to 100.
-    function getRatio(uint256 poolId)
+    /// @return epochReward Value of the reward factor.
+    /// @return epochTime Value of epoch time.
+    /// @return ratio Value of the ratio from 1 to 100.
+    function getRewardParameters(uint256 poolId)
         external
         view
-        returns (uint256);
+        returns (
+            uint256 epochReward,
+            uint256 epochTime,
+            uint256 ratio
+        );
 
     /// @dev Returns the proof of performance reward for a pool.
     /// @param poolId Id of the pool.

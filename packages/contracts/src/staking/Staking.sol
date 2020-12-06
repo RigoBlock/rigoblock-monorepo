@@ -29,7 +29,7 @@ import "./rewards/MixinPopRewards.sol";
 
 
 contract Staking is
-    //IStaking,
+    //IStaking, // IStakin commented as cannot override in subcontracts, but must check interface exposes correct methods when modifying
     MixinParams,
     MixinStake,
     MixinPopRewards

@@ -56,8 +56,13 @@ contract MixinFinalizer is
                 )
             );
         }
-        
-        // TODO: test 
+
+        // mint epoch inflation, jump first epoch as all regitered pool accounts will become active from following epoch
+        if (currentEpoch_ > uint256(1)) {
+            InflationFace(getGrgContract().minter()).mintInflation();
+        }
+
+        // TODO: test
         // Load aggregated stats for the epoch we're ending.
         aggregatedStatsByEpoch[currentEpoch_].rewardsAvailable = _getAvailableGrgBalance();
         IStructs.AggregatedStats memory aggregatedStats = aggregatedStatsByEpoch[currentEpoch_];
@@ -91,47 +96,38 @@ contract MixinFinalizer is
     function finalizePool(bytes32 poolId)
         external
     {
-        // allow smart contract calls only from whitelisted smart contract
-        if (_isContract(msg.sender)) {
-            _assertSenderIsAuthorized();
-        }
-        
         // Compute relevant epochs
         uint256 currentEpoch_ = currentEpoch;
         uint256 prevEpoch = currentEpoch_.safeSub(1);
-        
+
         // Load the aggregated stats into memory; noop if no pools to finalize.
         IStructs.AggregatedStats memory aggregatedStats = aggregatedStatsByEpoch[prevEpoch];
         if (aggregatedStats.numPoolsToFinalize == 0) {
             return;
         }
-        
+
         // Noop if the pool did not earn rewards or already finalized (has no fees).
         IStructs.PoolStats memory poolStats = poolStatsByEpoch[poolId][prevEpoch];
         if (poolStats.feesCollected == 0) {
             return;
         }
-        
+
         // Clear the pool stats so we don't finalize it again, and to recoup
         // some gas.
         delete poolStatsByEpoch[poolId][prevEpoch];
-        
+
         // Compute the rewards.
         uint256 rewards = _getUnfinalizedPoolRewardsFromPoolStats(poolStats, aggregatedStats);
-        
-        // mint reward tokens
-        // will be equal to rewards, unless DAO changes epoch length or minimum stake, when it could be 0 for 1 epoch
-        uint256 mintedRewards = InflationFace(getGrgContract().minter()).mintInflation(poolId, rewards);
-        
+
         // Pay the operator and update rewards for the pool.
         // Note that we credit at the CURRENT epoch even though these rewards
         // were earned in the previous epoch.
         (uint256 operatorReward, uint256 membersReward) = _syncPoolRewards(
             poolId,
-            mintedRewards,
+            rewards,
             poolStats.membersStake
         );
-        
+
         // Emit an event.
         emit RewardsPaid(
             currentEpoch_,
@@ -139,19 +135,19 @@ contract MixinFinalizer is
             operatorReward,
             membersReward
         );
-        
+
         uint256 totalReward = operatorReward.safeAdd(membersReward);
-        
+
         // Increase `totalRewardsFinalized`.
         aggregatedStatsByEpoch[prevEpoch].totalRewardsFinalized =
             aggregatedStats.totalRewardsFinalized =
             aggregatedStats.totalRewardsFinalized.safeAdd(totalReward);
-        
+
         // Decrease the number of unfinalized pools left.
         aggregatedStatsByEpoch[prevEpoch].numPoolsToFinalize =
             aggregatedStats.numPoolsToFinalize =
             aggregatedStats.numPoolsToFinalize.safeSub(1);
-        
+
         // If there are no more unfinalized pools remaining, the epoch is
         // finalized.
         if (aggregatedStats.numPoolsToFinalize == 0) {
@@ -237,13 +233,11 @@ contract MixinFinalizer is
             return rewards;
         }
 
-        uint256 maxEpochReward = getMaxEpochReward(poolStats.weightedStake);
-
         // Use the cobb-douglas function to compute the total reward.
         rewards = LibCobbDouglas.cobbDouglas(
-            maxEpochReward, // aggregatedStats.rewardsAvailable,
+            aggregatedStats.rewardsAvailable,
             poolStats.feesCollected,
-            maxEpochReward, // aggregatedStats.totalFeesCollected,
+            aggregatedStats.totalFeesCollected,
             poolStats.weightedStake,
             aggregatedStats.totalWeightedStake,
             cobbDouglasAlphaNumerator,
@@ -258,7 +252,7 @@ contract MixinFinalizer is
             rewards = rewardsRemaining;
         }
     }
-    
+
     /// @dev Determines whether an address is an account or a contract
     /// @param target Address to be inspected
     /// @return Boolean the address is a contract

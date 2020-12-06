@@ -44,8 +44,8 @@ contract MixinStakingPool is
         _;
     }
 
-    /// @dev Create a new staking pool. The sender will be the operator of this pool.
-    /// Note that an operator must be payable.
+    /// @dev Create a new staking pool. The sender will be the staking pal of this pool.
+    /// Note that a staking pal must be payable.
     /// @param rigoblockPoolAddress Adds rigoblock pool to the created staking pool for convenience if non-null.
     /// @return poolId The unique pool id generated for this pool.
     function createStakingPool(address rigoblockPoolAddress)
