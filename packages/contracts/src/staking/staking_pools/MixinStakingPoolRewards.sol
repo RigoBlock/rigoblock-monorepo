@@ -24,11 +24,13 @@ pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/LibMath.sol";
 import "../../utils/0xUtils/LibSafeMath.sol";
+import "../interfaces/IStaking.sol";
 import "./MixinCumulativeRewards.sol";
 import "../sys/MixinAbstract.sol";
 
 
-contract MixinStakingPoolRewards is
+abstract contract MixinStakingPoolRewards is
+    IStaking,
     MixinAbstract,
     MixinCumulativeRewards
 {
@@ -39,6 +41,7 @@ contract MixinStakingPoolRewards is
     /// @param poolId Unique id of pool.
     function withdrawDelegatorRewards(bytes32 poolId)
         external
+        override
     {
         _withdrawAndSyncDelegatorRewards(poolId, msg.sender);
     }
@@ -49,6 +52,7 @@ contract MixinStakingPoolRewards is
     function computeRewardBalanceOfOperator(bytes32 poolId)
         external
         view
+        override
         returns (uint256 reward)
     {
         // Because operator rewards are immediately withdrawn as WETH
@@ -75,6 +79,7 @@ contract MixinStakingPoolRewards is
     function computeRewardBalanceOfDelegator(bytes32 poolId, address member)
         external
         view
+        override
         returns (uint256 reward)
     {
         IStructs.Pool memory pool = _poolById[poolId];
@@ -341,32 +346,4 @@ contract MixinStakingPoolRewards is
         rewardsByPoolId[poolId] = rewardsByPoolId[poolId].safeSub(amount);
         grgReservedForPoolRewards = grgReservedForPoolRewards.safeSub(amount);
     }
-
-
-    /// @dev Computes the reward owed to a pool during finalization.
-    ///      Does nothing if the pool is already finalized.
-    /// @param poolId The pool's ID.
-    /// @return totalReward The total reward owed to a pool.
-    /// @return membersStake The total stake for all non-operator members in
-    ///         this pool.
-    function _getUnfinalizedPoolRewards(bytes32 poolId)
-        internal
-        view
-        virtual
-        override
-        returns (
-            uint256 totalReward,
-            uint256 membersStake)
-    // solhint-disable-next-line
-    {}
-
-    /// @dev Asserts that a pool has been finalized last epoch.
-    /// @param poolId The id of the pool that should have been finalized.
-    function _assertPoolFinalizedLastEpoch(bytes32 poolId)
-        internal
-        view
-        virtual
-        override
-    // solhint-disable-next-line
-    {}
 }

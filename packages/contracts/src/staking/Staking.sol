@@ -22,14 +22,14 @@
 pragma solidity 0.7.4;
 pragma experimental ABIEncoderV2;
 
-//import "./interfaces/IStaking.sol";
+import "./interfaces/IStaking.sol";
 import "./sys/MixinParams.sol";
 import "./stake/MixinStake.sol";
 import "./rewards/MixinPopRewards.sol";
 
 
 contract Staking is
-    //IStaking, // IStakin commented as cannot override in subcontracts, but must check interface exposes correct methods when modifying
+    IStaking,
     MixinParams,
     MixinStake,
     MixinPopRewards
@@ -39,38 +39,12 @@ contract Staking is
     ///      The StakingProxy contract will call it in `attachStakingContract()`.
     function init()
         public
+        override
         onlyAuthorized
     {
         // DANGER! When performing upgrades, take care to modify this logic
         // to prevent accidentally clearing prior state.
         _initMixinScheduler();
         _initMixinParams();
-    }
-    
-    /// @dev Computes the reward owed to a pool during finalization.
-    ///      Does nothing if the pool is already finalized.
-    /// @param poolId The pool's ID.
-    /// @return totalReward The total reward owed to a pool.
-    /// @return membersStake The total stake for all non-operator members in
-    ///         this pool.
-    function _getUnfinalizedPoolRewards(bytes32 poolId)
-        internal
-        view
-        override(MixinPopRewards, MixinStakingPool)
-        returns (
-            uint256 totalReward,
-            uint256 membersStake)
-    {
-        (totalReward, membersStake) = MixinPopRewards._getUnfinalizedPoolRewards(poolId);
-    }
-
-    /// @dev Asserts that a pool has been finalized last epoch.
-    /// @param poolId The id of the pool that should have been finalized.
-    function _assertPoolFinalizedLastEpoch(bytes32 poolId)
-        internal
-        view
-        override(MixinPopRewards, MixinStakingPool)
-    {
-        return MixinPopRewards._assertPoolFinalizedLastEpoch(poolId);
     }
 }

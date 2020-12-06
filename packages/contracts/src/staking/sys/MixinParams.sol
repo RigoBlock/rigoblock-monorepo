@@ -20,16 +20,19 @@
 */
 
 pragma solidity >=0.5.9 <0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "../../utils/0xUtils/LibRichErrors.sol";
 import "../immutable/MixinStorage.sol";
 import "../immutable/MixinConstants.sol";
 import "../interfaces/IStakingEvents.sol";
 import "../interfaces/IStakingProxy.sol";
+import "../interfaces/IStaking.sol";
 import "../libs/LibStakingRichErrors.sol";
 
 
-contract MixinParams is
+abstract contract MixinParams is
+    IStaking,
     IStakingEvents,
     MixinStorage,
     MixinConstants
@@ -48,6 +51,7 @@ contract MixinParams is
         uint32 _cobbDouglasAlphaDenominator
     )
         external
+        override
         onlyAuthorized
     {
         _setParams(
@@ -72,6 +76,7 @@ contract MixinParams is
     function getParams()
         external
         view
+        override
         returns (
             uint256 _epochDurationInSeconds,
             uint32 _rewardDelegatedStakeWeight,

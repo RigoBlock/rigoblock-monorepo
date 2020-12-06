@@ -27,7 +27,7 @@ import "../staking_pools/MixinStakingPool.sol";
 import "../libs/LibStakingRichErrors.sol";
 
 
-contract MixinStake is
+abstract contract MixinStake is
     MixinStakingPool
 {
     using LibSafeMath for uint256;
@@ -37,6 +37,7 @@ contract MixinStake is
     /// @param amount Amount of GRG to stake.
     function stake(uint256 amount)
         external
+        override
     {
         address staker = msg.sender;
 
@@ -62,6 +63,7 @@ contract MixinStake is
     /// @param amount Amount of GRG to unstake.
     function unstake(uint256 amount)
         external
+        override
     {
         address staker = msg.sender;
 
@@ -111,6 +113,7 @@ contract MixinStake is
         uint256 amount
     )
         external
+        override
     {
         address staker = msg.sender;
 

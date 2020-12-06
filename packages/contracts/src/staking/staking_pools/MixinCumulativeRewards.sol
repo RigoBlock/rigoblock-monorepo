@@ -28,7 +28,7 @@ import "../stake/MixinStakeBalances.sol";
 import "../immutable/MixinConstants.sol";
 
 
-contract MixinCumulativeRewards is
+abstract contract MixinCumulativeRewards is
     MixinStakeBalances,
     MixinConstants
 {

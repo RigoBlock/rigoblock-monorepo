@@ -30,7 +30,7 @@ import "./MixinStakeStorage.sol";
 import "../../rigoToken/Inflation/InflationFace.sol";
 
 
-contract MixinStakeBalances is
+abstract contract MixinStakeBalances is
     MixinStakeStorage,
     MixinDeploymentConstants
 {
@@ -43,6 +43,7 @@ contract MixinStakeBalances is
     function getGlobalStakeByStatus(IStructs.StakeStatus stakeStatus)
         external
         view
+        override
         returns (IStructs.StoredBalance memory balance)
     {
         balance = _loadCurrentBalance(
@@ -68,6 +69,7 @@ contract MixinStakeBalances is
     )
         external
         view
+        override
         returns (IStructs.StoredBalance memory balance)
     {
         balance = _loadCurrentBalance(
@@ -82,6 +84,7 @@ contract MixinStakeBalances is
     function getTotalStake(address staker)
         public
         view
+        override
         returns (uint256)
     {
         return getGrgVault().balanceOf(staker);
@@ -94,6 +97,7 @@ contract MixinStakeBalances is
     function getStakeDelegatedToPoolByOwner(address staker, bytes32 poolId)
         public
         view
+        override
         returns (IStructs.StoredBalance memory balance)
     {
         balance = _loadCurrentBalance(_delegatedStakeToPoolByOwner[staker][poolId]);
@@ -107,6 +111,7 @@ contract MixinStakeBalances is
     function getTotalStakeDelegatedToPool(bytes32 poolId)
         public
         view
+        override
         returns (IStructs.StoredBalance memory balance)
     {
         balance = _loadCurrentBalance(_delegatedStakeByPoolId[poolId]);

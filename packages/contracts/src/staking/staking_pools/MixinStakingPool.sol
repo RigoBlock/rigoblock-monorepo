@@ -30,7 +30,7 @@ import "../sys/MixinAbstract.sol";
 import "./MixinStakingPoolRewards.sol";
 
 
-contract MixinStakingPool is
+abstract contract MixinStakingPool is
     MixinAbstract,
     MixinStakingPoolRewards
 {
@@ -50,6 +50,7 @@ contract MixinStakingPool is
     /// @return poolId The unique pool id generated for this pool.
     function createStakingPool(address rigoblockPoolAddress)
         external
+        override
         returns (bytes32 poolId)
     {
         // TODO: test
@@ -60,22 +61,22 @@ contract MixinStakingPool is
         );
         // note that an operator must be payable
         address operator = rbPoolOwner;
-        
+
         // add stakingPal, which receives part of operator reward
         address stakingPal = msg.sender;
-        
+
         // operator initially shares 30% with stakers
         uint32 operatorShare = uint32(700000);
-        
+
         // staking pal received 10% of operator rewards
         uint32 stakingPalShare = uint32(100000);
-        
+
         // check that staking pool does not exist and add unique id for this pool
         _assertStakingPoolDoesNotExist(bytes32(rbPoolId));
         poolId = bytes32(rbPoolId);
-        
+
         // @notice _assertNewOperatorShare if operatorShare, stakingPalShare are inputs after an upgrade
-        
+
         // create and store pool
         IStructs.Pool memory pool = IStructs.Pool({
             operator: operator,
@@ -84,28 +85,29 @@ contract MixinStakingPool is
             stakingPalShare : stakingPalShare
         });
         _poolById[poolId] = pool;
-        
+
         // Staking pool has been created
         emit StakingPoolCreated(poolId, operator, operatorShare);
-        
+
         joinStakingPoolAsRbPoolAccount(poolId, rigoblockPoolAddress);
-        
+
         return poolId;
     }
-    
+
     /// @dev Allows the operator to update the staking pal address.
     /// @param poolId Unique id of pool.
     /// @param newStakingPalAddress Address of the new staking pal.
     function setStakingPalAddress(bytes32 poolId, address newStakingPalAddress)
         external
+        override
         onlyStakingPoolOperator(poolId)
     {
         IStructs.Pool storage pool = _poolById[poolId];
-        
+
         if (newStakingPalAddress == address(0) || pool.stakingPal == newStakingPalAddress) {
             return;
         }
-        
+
         pool.stakingPal = newStakingPalAddress;
     }
 
@@ -114,6 +116,7 @@ contract MixinStakingPool is
     /// @param newOperatorShare The newly decreased percentage of any rewards owned by the operator.
     function decreaseStakingPoolOperatorShare(bytes32 poolId, uint32 newOperatorShare)
         external
+        override
         onlyStakingPoolOperator(poolId)
     {
         // load pool and assert that we can decrease
@@ -140,20 +143,21 @@ contract MixinStakingPool is
         bytes32 poolId,
         address rigoblockPoolAccount)
         public
+        override
     {
         //TODO: test
         (address poolAddress, , , uint256 rbPoolId, , ) = getDragoRegistry().fromId(uint256(poolId));
-        
+
         // only rigoblock pools registered in drago registry can have accounts added to their staking pool
         if (rbPoolId == uint256(0)) {
             revert("NON_REGISTERED_POOL_ID_ERROR");
         }
-        
+
         // only allow pool itself to be registered account
         if (poolAddress != rigoblockPoolAccount) {
             revert("POOL_TO_JOIN_NOT_SELF_ERROR");
         }
-        
+
         // write to storage
         poolIdByRbPoolAccount[poolAddress] = poolId;
         emit RbPoolStakingPoolSet(
@@ -167,6 +171,7 @@ contract MixinStakingPool is
     function getStakingPool(bytes32 poolId)
         public
         view
+        override
         returns (IStructs.Pool memory)
     {
         return _poolById[poolId];
@@ -188,7 +193,7 @@ contract MixinStakingPool is
             );
         }
     }
-    
+
     /// @dev Reverts iff a staking pool does exist.
     /// @param poolId Unique id of pool.
     function _assertStakingPoolDoesNotExist(bytes32 poolId)
@@ -252,29 +257,4 @@ contract MixinStakingPool is
             );
         }
     }
-    
-    /// @dev Computes the reward owed to a pool during finalization.
-    ///      Does nothing if the pool is already finalized.
-    /// @param poolId The pool's ID.
-    /// @return totalReward The total reward owed to a pool.
-    /// @return membersStake The total stake for all non-operator members in
-    ///         this pool.
-    function _getUnfinalizedPoolRewards(bytes32 poolId)
-        internal
-        view
-        virtual
-        override(MixinAbstract, MixinStakingPoolRewards)
-        returns (
-            uint256 totalReward,
-            uint256 membersStake)
-    {}
-
-    /// @dev Asserts that a pool has been finalized last epoch.
-    /// @param poolId The id of the pool that should have been finalized.
-    function _assertPoolFinalizedLastEpoch(bytes32 poolId)
-        internal
-        view
-        virtual
-        override(MixinAbstract, MixinStakingPoolRewards)
-    {}
 }

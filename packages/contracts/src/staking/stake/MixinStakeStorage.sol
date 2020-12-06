@@ -20,6 +20,7 @@
 */
 
 pragma solidity >=0.5.9 <0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "../libs/LibSafeDowncast.sol";
 import "../../utils/0xUtils/LibSafeMath.sol";
@@ -28,7 +29,7 @@ import "../sys/MixinScheduler.sol";
 
 
 /// @dev This mixin contains logic for managing stake storage.
-contract MixinStakeStorage is
+abstract contract MixinStakeStorage is
     MixinScheduler
 {
     using LibSafeMath for uint256;
