@@ -957,7 +957,7 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/tokens/ERC20/ERC20Face.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/Owned/Owned.sol"
             ],
-            "address": "0x5bc70cae7e51ff117309806cd5e961f686ee55f1",
+            "address": "0x3e4bf17526ca7fe9f780a2c67f57393e0a489ee1",
             "constructor_args": "0x0000000000000000000000001fb4c7f7197ef339ae4125aeec9406a6788bb065000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000094752474661756365740000000000000000000000000000000000000000000000"
         }
     }

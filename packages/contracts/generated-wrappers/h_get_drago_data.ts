@@ -154,88 +154,6 @@ public static async deployFrom0xArtifactAsync(
     public static ABI(): ContractAbi {
         const abi = [
             { 
-                constant: true,
-                inputs: [
-                    {
-                        name: '_dragoRegistry',
-                        type: 'address',
-                    },
-                    {
-                        name: '_dragoAddresses',
-                        type: 'address[]',
-                    },
-                ],
-                name: 'queryMultiDataFromAddress',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'tuple[]',
-                        components: [
-                            {
-                                name: 'name',
-                                type: 'string',
-                            },
-                            {
-                                name: 'symbol',
-                                type: 'string',
-                            },
-                            {
-                                name: 'sellPrice',
-                                type: 'uint256',
-                            },
-                            {
-                                name: 'buyPrice',
-                                type: 'uint256',
-                            },
-                            {
-                                name: 'owner',
-                                type: 'address',
-                            },
-                            {
-                                name: 'feeCollector',
-                                type: 'address',
-                            },
-                            {
-                                name: 'dragoDao',
-                                type: 'address',
-                            },
-                            {
-                                name: 'ratio',
-                                type: 'uint256',
-                            },
-                            {
-                                name: 'transactionFee',
-                                type: 'uint256',
-                            },
-                            {
-                                name: 'totalSupply',
-                                type: 'uint256',
-                            },
-                            {
-                                name: 'ethBalance',
-                                type: 'uint256',
-                            },
-                            {
-                                name: 'minPeriod',
-                                type: 'uint32',
-                            },
-                            {
-                                name: 'id',
-                                type: 'uint256',
-                            },
-                            {
-                                name: 'drago',
-                                type: 'address',
-                            },
-                        ]
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                constant: true,
                 inputs: [
                     {
                         name: '_dragoRegistry',
@@ -311,12 +229,10 @@ public static async deployFrom0xArtifactAsync(
                         ]
                     },
                 ],
-                payable: false,
                 stateMutability: 'view',
                 type: 'function',
             },
             { 
-                constant: true,
                 inputs: [
                     {
                         name: '_dragoRegistry',
@@ -392,12 +308,89 @@ public static async deployFrom0xArtifactAsync(
                         ]
                     },
                 ],
-                payable: false,
                 stateMutability: 'view',
                 type: 'function',
             },
             { 
-                constant: true,
+                inputs: [
+                    {
+                        name: '_dragoRegistry',
+                        type: 'address',
+                    },
+                    {
+                        name: '_dragoAddresses',
+                        type: 'address[]',
+                    },
+                ],
+                name: 'queryMultiDataFromAddress',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'tuple[]',
+                        components: [
+                            {
+                                name: 'name',
+                                type: 'string',
+                            },
+                            {
+                                name: 'symbol',
+                                type: 'string',
+                            },
+                            {
+                                name: 'sellPrice',
+                                type: 'uint256',
+                            },
+                            {
+                                name: 'buyPrice',
+                                type: 'uint256',
+                            },
+                            {
+                                name: 'owner',
+                                type: 'address',
+                            },
+                            {
+                                name: 'feeCollector',
+                                type: 'address',
+                            },
+                            {
+                                name: 'dragoDao',
+                                type: 'address',
+                            },
+                            {
+                                name: 'ratio',
+                                type: 'uint256',
+                            },
+                            {
+                                name: 'transactionFee',
+                                type: 'uint256',
+                            },
+                            {
+                                name: 'totalSupply',
+                                type: 'uint256',
+                            },
+                            {
+                                name: 'ethBalance',
+                                type: 'uint256',
+                            },
+                            {
+                                name: 'minPeriod',
+                                type: 'uint32',
+                            },
+                            {
+                                name: 'id',
+                                type: 'uint256',
+                            },
+                            {
+                                name: 'drago',
+                                type: 'address',
+                            },
+                        ]
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
                 inputs: [
                     {
                         name: '_dragoRegistry',
@@ -473,7 +466,6 @@ public static async deployFrom0xArtifactAsync(
                         ]
                     },
                 ],
-                payable: false,
                 stateMutability: 'view',
                 type: 'function',
             },
@@ -562,49 +554,12 @@ public static async deployFrom0xArtifactAsync(
     /**
      * Returns structs of infos on a drago from its address.
       * @param _dragoRegistry Address of the pools registry.
-      * @param _dragoAddresses Array of addresses of the target dragos.
-    * @returns Arrays of structs of data and related address of a drago.
-     */
-    public queryMultiDataFromAddress(
-            _dragoRegistry: string,
-            _dragoAddresses: string[],
-    ): ContractFunctionObj<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
-> {
-        const self = this as any as HGetDragoDataContract;
-            assert.isString('_dragoRegistry', _dragoRegistry);
-            assert.isArray('_dragoAddresses', _dragoAddresses);
-        const functionSignature = 'queryMultiDataFromAddress(address,address[])';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [_dragoRegistry.toLowerCase(),
-            _dragoAddresses
-            ]);
-            },
-        }
-    };
-    /**
-     * Returns structs of infos on a drago from its address.
-      * @param _dragoRegistry Address of the pools registry.
       * @param _dragoAddress Array of addresses of the target drago.
-    * @returns Arrays of structs of data.
      */
     public queryDataFromAddress(
             _dragoRegistry: string,
             _dragoAddress: string,
-    ): ContractFunctionObj<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}
+    ): ContractTxFunctionObj<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}
 > {
         const self = this as any as HGetDragoDataContract;
             assert.isString('_dragoRegistry', _dragoRegistry);
@@ -612,6 +567,33 @@ public static async deployFrom0xArtifactAsync(
         const functionSignature = 'queryDataFromAddress(address,address)';
 
         return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
@@ -635,12 +617,11 @@ public static async deployFrom0xArtifactAsync(
      * Returns structs of infos on a drago from its ID.
       * @param _dragoRegistry Address of the pools registry.
       * @param _dragoId Number of the target drago ID.
-    * @returns Structs of data.
      */
     public queryDataFromId(
             _dragoRegistry: string,
             _dragoId: BigNumber,
-    ): ContractFunctionObj<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}
+    ): ContractTxFunctionObj<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}
 > {
         const self = this as any as HGetDragoDataContract;
             assert.isString('_dragoRegistry', _dragoRegistry);
@@ -648,6 +629,33 @@ public static async deployFrom0xArtifactAsync(
         const functionSignature = 'queryDataFromId(address,uint256)';
 
         return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
@@ -668,15 +676,76 @@ public static async deployFrom0xArtifactAsync(
         }
     };
     /**
+     * Returns structs of infos on a drago from its address.
+      * @param _dragoRegistry Address of the pools registry.
+      * @param _dragoAddresses Array of addresses of the target dragos.
+     */
+    public queryMultiDataFromAddress(
+            _dragoRegistry: string,
+            _dragoAddresses: string[],
+    ): ContractTxFunctionObj<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
+> {
+        const self = this as any as HGetDragoDataContract;
+            assert.isString('_dragoRegistry', _dragoRegistry);
+            assert.isArray('_dragoAddresses', _dragoAddresses);
+        const functionSignature = 'queryMultiDataFromAddress(address,address[])';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [_dragoRegistry.toLowerCase(),
+            _dragoAddresses
+            ]);
+            },
+        }
+    };
+    /**
      * Returns structs of infos on a drago from its ID.
       * @param _dragoRegistry Address of the drago registry.
       * @param _dragoIds Array of IDs of the target dragos.
-    * @returns Arrays of structs of data and related address of a drago.
      */
     public queryMultiDataFromId(
             _dragoRegistry: string,
             _dragoIds: BigNumber[],
-    ): ContractFunctionObj<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
+    ): ContractTxFunctionObj<Array<{name: string;symbol: string;sellPrice: BigNumber;buyPrice: BigNumber;owner: string;feeCollector: string;dragoDao: string;ratio: BigNumber;transactionFee: BigNumber;totalSupply: BigNumber;ethBalance: BigNumber;minPeriod: number;id: BigNumber;drago: string}>
 > {
         const self = this as any as HGetDragoDataContract;
             assert.isString('_dragoRegistry', _dragoRegistry);
@@ -684,6 +753,33 @@ public static async deployFrom0xArtifactAsync(
         const functionSignature = 'queryMultiDataFromId(address,uint256[])';
 
         return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
