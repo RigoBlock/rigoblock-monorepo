@@ -8,8 +8,6 @@
   "files": [
     "generated-artifacts/ASelfCustody.json",
     "generated-artifacts/ASelfCustody.json",
-    "generated-artifacts/ATotlePrimary.json",
-    "generated-artifacts/ATotlePrimary.json",
     "generated-artifacts/AUniswapV2.json",
     "generated-artifacts/AUniswapV2.json",
     "generated-artifacts/AWeth.json",
@@ -62,10 +60,6 @@
     "generated-artifacts/Staking.json",
     "generated-artifacts/StakingProxy.json",
     "generated-artifacts/StakingProxy.json",
-    "generated-artifacts/TokenTransferProxy.json",
-    "generated-artifacts/TokenTransferProxy.json",
-    "generated-artifacts/TotlePrimary.json",
-    "generated-artifacts/TotlePrimary.json",
     "generated-artifacts/UnlimitedAllowanceToken.json",
     "generated-artifacts/UnlimitedAllowanceToken.json",
     "generated-artifacts/Vault.json",
@@ -75,9 +69,7 @@
     "generated-artifacts/VaultFactory.json",
     "generated-artifacts/VaultFactory.json",
     "generated-artifacts/WETH9.json",
-    "generated-artifacts/WETH9.json",
-    "generated-artifacts/ZeroExExchangeHandler.json",
-    "generated-artifacts/ZeroExExchangeHandler.json"
+    "generated-artifacts/WETH9.json"
   ],
   "exclude": ["./deploy/solc/solc_bin"]
 }

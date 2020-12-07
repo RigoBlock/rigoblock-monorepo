@@ -173,30 +173,6 @@ module.exports = async (baseAccount, network) => {
     aEthfinex.address
   )
 
-  const aTotlePrimary = await deploy(baseAccount, network, 'ATotlePrimary', [
-    wETH9.address // TODO: add totle primary as constructor input
-  ])
-  printAddress('ATotlePrimary', aTotlePrimary.address)
-
-  const totlePrimary = await deploy(baseAccount, network, 'TotlePrimary', [
-    tokenTransferProxy.address,
-    baseAccount
-  ])
-  printAddress('TotlePrimary', totlePrimary.address)
-
-  const zeroExExchangeHandler = await deploy(
-    baseAccount,
-    network,
-    'ZeroExExchangeHandler',
-    [exchange.address, wETH9.address]
-  )
-  printAddress('ZeroExExchangeHandler', zeroExExchangeHandler.address)
-
-  await exchangesAuthority.setExchangeAdapter(
-    totlePrimary.address,
-    aTotlePrimary.address
-  )
-
   const faucet = await deploy(baseAccount, network, 'Faucet', [
     rigoToken.address,
     'GRGFaucet'
@@ -213,7 +189,6 @@ module.exports = async (baseAccount, network) => {
     AbiEncoder: abiEncoder,
     AEthfinex: aEthfinex,
     ASelfCustody: aSelfCustody,
-    ATotlePrimary: aTotlePrimary,
     AWeth: aWeth,
     Authority: authority,
     DragoRegistry: dragoRegistry,
@@ -229,15 +204,12 @@ module.exports = async (baseAccount, network) => {
     NavVerifier: navVerifier,
     RigoToken: rigoToken,
     ProofOfPerformance: proofOfPerformance,
-    TotlePrimary: totlePrimary,
     Inflation: inflation,
     SigVerifier: sigVerifier,
-    TokenTransferProxy: tokenTransferProxy,
     VaultEventful: vaultEventful,
     VaultFactory: vaultFactory,
     WETH9: wETH9,
     WrapperLockEth: wrapperLockEth,
-    WrapperLock: wrapperLock,
-    ZeroExExchangeHandler: zeroExExchangeHandler
+    WrapperLock: wrapperLock
   }
 }
