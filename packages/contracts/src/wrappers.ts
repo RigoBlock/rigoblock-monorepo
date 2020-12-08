@@ -30,6 +30,7 @@ export * from "../generated-wrappers/rigo_token";
 export * from "../generated-wrappers/sig_verifier";
 export * from "../generated-wrappers/staking";
 export * from "../generated-wrappers/staking_proxy";
+export * from "../generated-wrappers/token_transfer_proxy";
 export * from "../generated-wrappers/unlimited_allowance_token";
 export * from "../generated-wrappers/vault";
 export * from "../generated-wrappers/vault_eventful";

@@ -32,6 +32,7 @@ import * as RigoToken from "../generated-artifacts/RigoToken.json";
 import * as SigVerifier from "../generated-artifacts/SigVerifier.json";
 import * as Staking from "../generated-artifacts/Staking.json";
 import * as StakingProxy from "../generated-artifacts/StakingProxy.json";
+import * as TokenTransferProxy from "../generated-artifacts/TokenTransferProxy.json";
 import * as UnlimitedAllowanceToken from "../generated-artifacts/UnlimitedAllowanceToken.json";
 import * as Vault from "../generated-artifacts/Vault.json";
 import * as VaultEventful from "../generated-artifacts/VaultEventful.json";
@@ -69,5 +70,6 @@ export const artifacts = {
   Owned: Owned as ContractArtifact,
   OwnedUninitialized: OwnedUninitialized as ContractArtifact,
   Erc20Proxy: Erc20Proxy as ContractArtifact,
-  Exchange: Exchange as ContractArtifact
+  Exchange: Exchange as ContractArtifact,
+  TokenTransferProxy: TokenTransferProxy as ContractArtifact
 };

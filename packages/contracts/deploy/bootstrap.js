@@ -206,6 +206,7 @@ module.exports = async (baseAccount, network) => {
     ProofOfPerformance: proofOfPerformance,
     Inflation: inflation,
     SigVerifier: sigVerifier,
+    TokenTransferProxy: tokenTransferProxy,
     VaultEventful: vaultEventful,
     VaultFactory: vaultFactory,
     WETH9: wETH9,

@@ -33,7 +33,8 @@
     "utils/Owned/Owned.sol",
     "utils/Owned/OwnedUninitialized.sol",
     "utils/exchanges/0xV2/Erc20Proxy/Erc20Proxy.sol",
-    "utils/exchanges/0xV2/Exchange/Exchange.sol"
+    "utils/exchanges/0xV2/Exchange/Exchange.sol",
+    "utils/exchanges/TokenTransferProxy/TokenTransferProxy.sol"
   ],
   "useDockerisedSolc": false,
   "isOfflineMode": false,

@@ -60,6 +60,8 @@
     "generated-artifacts/Staking.json",
     "generated-artifacts/StakingProxy.json",
     "generated-artifacts/StakingProxy.json",
+    "generated-artifacts/TokenTransferProxy.json",
+    "generated-artifacts/TokenTransferProxy.json",
     "generated-artifacts/UnlimitedAllowanceToken.json",
     "generated-artifacts/UnlimitedAllowanceToken.json",
     "generated-artifacts/Vault.json",
