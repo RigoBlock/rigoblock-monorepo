@@ -51,7 +51,6 @@ abstract contract MixinStakingPool is
         override
         returns (bytes32 poolId)
     {
-        // TODO: test
         (uint256 rbPoolId, , , , address rbPoolOwner, ) = getDragoRegistry().fromAddress(rigoblockPoolAddress);
         require(
             rbPoolId != uint256(0),
@@ -143,7 +142,6 @@ abstract contract MixinStakingPool is
         public
         override
     {
-        //TODO: test
         (address poolAddress, , , uint256 rbPoolId, , ) = getDragoRegistry().fromId(uint256(poolId));
 
         // only rigoblock pools registered in drago registry can have accounts added to their staking pool

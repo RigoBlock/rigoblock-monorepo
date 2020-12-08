@@ -61,15 +61,14 @@ abstract contract MixinFinalizer is
         //  but will not be minted again until epoch time has passed. This could happen when epoch length is changed only.
         if (currentEpoch_ > uint256(1)) {
             try InflationFace(getGrgContract().minter()).mintInflation() returns (uint256 mintedInflation) {
-                return (mintedInflation);
-            } catch Error(string memory) {
-                return (0);
-            } catch (bytes memory) {
-                return (0);
+                emit GrgMintEvent(mintedInflation);
+            } catch Error(string memory revertReason) {
+                emit CatchStringEvent(revertReason);
+            } catch (bytes memory returnData) {
+                emit ReturnDataEvent(returnData);
             }
         }
 
-        // TODO: test
         // Load aggregated stats for the epoch we're ending.
         aggregatedStatsByEpoch[currentEpoch_].rewardsAvailable = _getAvailableGrgBalance();
         IStructs.AggregatedStats memory aggregatedStats = aggregatedStatsByEpoch[currentEpoch_];
