@@ -31,22 +31,22 @@ import "../../rigoToken/RigoToken/RigoTokenFace.sol";
 abstract contract MixinDeploymentConstants is IStaking {
 
     // Mainnet GrgVault address
-    address constant private GRG_VAULT_ADDRESS = address(0x0a33744eE5D57d6d69944213d8E6ad80d64Fdc58);
+    // address constant private GRG_VAULT_ADDRESS = address(0x0a33744eE5D57d6d69944213d8E6ad80d64Fdc58);
 
     // Ropsten GrgVault address
-    // address constant private GRG_VAULT_ADDRESS = address(0x8bd3132B2C6Bb8A2776315134fE5B0B08a1A6035);
+    address constant private GRG_VAULT_ADDRESS = address(0x7fc6a07e4b7b859c80F949A2A7812e00C64b4264);
     
     // Mainnet DragoRegistry address
-    address constant private DRAGO_REGISTRY_ADDRESS = address(0xdE6445484a8dcD9bf35fC95eb4E3990Cc358822e);
-    
+    // address constant private DRAGO_REGISTRY_ADDRESS = address(0xdE6445484a8dcD9bf35fC95eb4E3990Cc358822e);
+
     // Ropsten DragoRegistry address
-    // address constant private DRAGO_REGISTRY_ADDRESS = address(0x4e868D1dDF940316964eA7673E21bE6CBED8b30B);
-    
+    address constant private DRAGO_REGISTRY_ADDRESS = address(0x4e868D1dDF940316964eA7673E21bE6CBED8b30B);
+
     // Mainnet GRG Address
-    address constant private GRG_ADDRESS = address(0x4FbB350052Bca5417566f188eB2EBCE5b19BC964);
+    // address constant private GRG_ADDRESS = address(0x4FbB350052Bca5417566f188eB2EBCE5b19BC964);
 
     // Ropsten GRG Address
-    // address constant private GRG_ADDRESS = address(0x6FA8590920c5966713b1a86916f7b0419411e474);
+    address constant private GRG_ADDRESS = address(0x6FA8590920c5966713b1a86916f7b0419411e474);
 
     /// @dev An overridable way to access the deployed grgVault.
     ///      Must be view to allow overrides to access state.
