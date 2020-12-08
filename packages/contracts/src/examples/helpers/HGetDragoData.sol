@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.5.2;
+pragma solidity 0.7.4;
 pragma experimental ABIEncoderV2;
 
 /// @title Drago Interface - Allows interaction with the Drago contract.
@@ -121,7 +121,7 @@ contract HGetDragoData {
     /// @dev Returns structs of infos on a drago from its ID.
     /// @param _dragoRegistry Address of the pools registry.
     /// @param _dragoId Number of the target drago ID.
-    /// @return Structs of data.
+    /// @return dragoData Structs of data.
     function queryDataFromId(
         address _dragoRegistry,
         uint256 _dragoId)
@@ -144,7 +144,7 @@ contract HGetDragoData {
     /// @dev Returns structs of infos on a drago from its address.
     /// @param _dragoRegistry Address of the pools registry.
     /// @param _dragoAddress Array of addresses of the target drago.
-    /// @return Arrays of structs of data.
+    /// @return dragoData Arrays of structs of data.
     function queryDataFromAddress(
         address _dragoRegistry,
         address _dragoAddress)
@@ -230,7 +230,7 @@ contract HGetDragoData {
      */
     /// @dev Returns structs of infos on a drago.
     /// @param _drago Array of addresses of the target dragos.
-    /// @return Structs of data.
+    /// @return dragoData Structs of data.
     function queryDataInternal(
         address _drago)
         internal

@@ -17,7 +17,6 @@
     "protocol/extensions/NavVerifier/NavVerifier.sol",
     "protocol/extensions/SigVerifier/SigVerifier.sol",
     "protocol/extensions/adapters/ASelfCustody.sol",
-    "protocol/extensions/adapters/ATotlePrimary.sol",
     "protocol/extensions/adapters/AUniswapV2.sol",
     "protocol/extensions/adapters/AWeth.sol",
     "protocol/vaultFactory/VaultFactory/VaultFactory.sol",
@@ -35,15 +34,13 @@
     "utils/Owned/OwnedUninitialized.sol",
     "utils/exchanges/0xV2/Erc20Proxy/Erc20Proxy.sol",
     "utils/exchanges/0xV2/Exchange/Exchange.sol",
-    "utils/exchanges/TokenTransferProxy/TokenTransferProxy.sol",
-    "utils/exchanges/totle/TotlePrimary.sol",
-    "utils/exchanges/totle/exchange_handlers/ZeroExExchangeHandler.sol"
+    "utils/exchanges/TokenTransferProxy/TokenTransferProxy.sol"
   ],
   "useDockerisedSolc": false,
   "isOfflineMode": false,
   "shouldSaveStandardInput": true,
   "compilerSettings": {
-    "optimizer": { "enabled": true, "runs": 1000000 },
+    "optimizer": { "enabled": true, "runs": 200 },
     "outputSelection": {
       "*": {
         "*": [

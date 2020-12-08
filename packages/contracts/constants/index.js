@@ -18,7 +18,6 @@ module.exports = {
   CONTRACT_NAMES: [
     'AbiEncoder',
     'ASelfCustody',
-    'ATotlePrimary',
     'AWeth',
     'Authority',
     'Distribution',
@@ -40,13 +39,11 @@ module.exports = {
     'ProofOfPerformance',
     'RigoToken',
     'SigVerifier',
-    'TotlePrimary',
     'TokenTransferProxy',
     'UnlimitedAllowanceToken',
     'Vault',
     'VaultEventful',
     'VaultFactory',
-    'WETH9',
-    'ZeroExExchangeHandler'
+    'WETH9'
   ]
 }

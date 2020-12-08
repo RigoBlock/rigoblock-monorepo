@@ -7,7 +7,6 @@ import { ContractArtifact } from "ethereum-types";
 
 import * as AbiEncoder from "../generated-artifacts/AbiEncoder.json";
 import * as ASelfCustody from "../generated-artifacts/ASelfCustody.json";
-import * as ATotlePrimary from "../generated-artifacts/ATotlePrimary.json";
 import * as AUniswapV2 from "../generated-artifacts/AUniswapV2.json";
 import * as Authority from "../generated-artifacts/Authority.json";
 import * as AWeth from "../generated-artifacts/AWeth.json";
@@ -34,13 +33,11 @@ import * as SigVerifier from "../generated-artifacts/SigVerifier.json";
 import * as Staking from "../generated-artifacts/Staking.json";
 import * as StakingProxy from "../generated-artifacts/StakingProxy.json";
 import * as TokenTransferProxy from "../generated-artifacts/TokenTransferProxy.json";
-import * as TotlePrimary from "../generated-artifacts/TotlePrimary.json";
 import * as UnlimitedAllowanceToken from "../generated-artifacts/UnlimitedAllowanceToken.json";
 import * as Vault from "../generated-artifacts/Vault.json";
 import * as VaultEventful from "../generated-artifacts/VaultEventful.json";
 import * as VaultFactory from "../generated-artifacts/VaultFactory.json";
 import * as WETH9 from "../generated-artifacts/WETH9.json";
-import * as ZeroExExchangeHandler from "../generated-artifacts/ZeroExExchangeHandler.json";
 export const artifacts = {
   Migrations: Migrations as ContractArtifact,
   Distribution: Distribution as ContractArtifact,
@@ -57,7 +54,6 @@ export const artifacts = {
   NavVerifier: NavVerifier as ContractArtifact,
   SigVerifier: SigVerifier as ContractArtifact,
   ASelfCustody: ASelfCustody as ContractArtifact,
-  ATotlePrimary: ATotlePrimary as ContractArtifact,
   AUniswapV2: AUniswapV2 as ContractArtifact,
   AWeth: AWeth as ContractArtifact,
   VaultFactory: VaultFactory as ContractArtifact,
@@ -75,7 +71,5 @@ export const artifacts = {
   OwnedUninitialized: OwnedUninitialized as ContractArtifact,
   Erc20Proxy: Erc20Proxy as ContractArtifact,
   Exchange: Exchange as ContractArtifact,
-  TokenTransferProxy: TokenTransferProxy as ContractArtifact,
-  TotlePrimary: TotlePrimary as ContractArtifact,
-  ZeroExExchangeHandler: ZeroExExchangeHandler as ContractArtifact
+  TokenTransferProxy: TokenTransferProxy as ContractArtifact
 };

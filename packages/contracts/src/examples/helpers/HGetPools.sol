@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.5.2;
+pragma solidity 0.7.4;
 pragma experimental ABIEncoderV2;
 
 /// @title Drago Registry Interface - Allows external interaction with Drago Registry.

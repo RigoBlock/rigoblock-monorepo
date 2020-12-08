@@ -4,7 +4,6 @@
  * -----------------------------------------------------------------------------
  */
 export * from "../test/generated-wrappers/a_self_custody";
-export * from "../test/generated-wrappers/a_totle_primary";
 export * from "../test/generated-wrappers/a_uniswap_v2";
 export * from "../test/generated-wrappers/a_weth";
 export * from "../test/generated-wrappers/abi_encoder";
@@ -32,10 +31,8 @@ export * from "../test/generated-wrappers/sig_verifier";
 export * from "../test/generated-wrappers/staking";
 export * from "../test/generated-wrappers/staking_proxy";
 export * from "../test/generated-wrappers/token_transfer_proxy";
-export * from "../test/generated-wrappers/totle_primary";
 export * from "../test/generated-wrappers/unlimited_allowance_token";
 export * from "../test/generated-wrappers/vault";
 export * from "../test/generated-wrappers/vault_eventful";
 export * from "../test/generated-wrappers/vault_factory";
 export * from "../test/generated-wrappers/weth9";
-export * from "../test/generated-wrappers/zero_ex_exchange_handler";
