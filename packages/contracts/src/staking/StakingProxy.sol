@@ -53,9 +53,8 @@ contract StakingProxy is
     }
 
     /// @dev Delegates calls to the staking contract, if it is set.
-    receive()
+    fallback()
         external
-        payable
     {
         // Sanity check that we have a staking contract to call
         address stakingContract_ = stakingContract;
