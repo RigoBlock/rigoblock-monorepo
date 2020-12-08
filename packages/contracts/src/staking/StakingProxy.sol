@@ -153,7 +153,7 @@ contract StakingProxy is
     {
         // Epoch length must be between 5 and 90 days long
         uint256 _epochDurationInSeconds = epochDurationInSeconds;
-        if (_epochDurationInSeconds < 5 days || _epochDurationInSeconds > 90 days) {
+        if (_epochDurationInSeconds < 5 minutes || _epochDurationInSeconds > 90 days) {
             LibRichErrors.rrevert(
                 LibStakingRichErrors.InvalidParamValueError(
                     LibStakingRichErrors.InvalidParamValueErrorCodes.InvalidEpochDuration

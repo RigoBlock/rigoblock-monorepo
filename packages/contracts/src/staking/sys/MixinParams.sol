@@ -98,7 +98,7 @@ abstract contract MixinParams is
         _assertParamsNotInitialized();
 
         // Set up defaults.
-        uint256 _epochDurationInSeconds = 14 days;
+        uint256 _epochDurationInSeconds = 10 minutes;
         uint32 _rewardDelegatedStakeWeight = (90 * PPM_DENOMINATOR) / 100;
         uint256 _minimumPoolStake = 100 * MIN_TOKEN_VALUE;
         uint32 _cobbDouglasAlphaNumerator = 2;
