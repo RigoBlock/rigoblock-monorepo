@@ -147,4 +147,16 @@ interface IStakingEvents {
         uint32 oldOperatorShare,
         uint32 newOperatorShare
     );
+    
+    /// @dev Emitted when an inflation mint call is executed successfully.
+    /// @param grgAmount Amount of GRG tokens minted to the staking proxy.
+    event GrgMintEvent(uint256 grgAmount);
+    
+    /// @dev Emitted whenever an inflation mint call is reverted.
+    /// @param reason String of the revert message.
+    event CatchStringEvent(string reason);
+    
+    /// @dev Emitted to catch any other inflation mint call fail.
+    /// @param reason Bytes output of the reverted transaction.
+    event ReturnDataEvent(bytes reason);
 }

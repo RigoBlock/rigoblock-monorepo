@@ -34,7 +34,7 @@ abstract contract MixinDeploymentConstants is IStaking {
     address constant private GRG_VAULT_ADDRESS = address(0x0a33744eE5D57d6d69944213d8E6ad80d64Fdc58);
 
     // Ropsten GrgVault address
-    // address constant private GRG_VAULT_ADDRESS = address(0x8bd3132B2C6Bb8A2776315134fE5B0B08a1A6035);
+    // address constant private GRG_VAULT_ADDRESS = address(0x7fc6a07e4b7b859c80F949A2A7812e00C64b4264);
     
     // Mainnet DragoRegistry address
     address constant private DRAGO_REGISTRY_ADDRESS = address(0xdE6445484a8dcD9bf35fC95eb4E3990Cc358822e);
