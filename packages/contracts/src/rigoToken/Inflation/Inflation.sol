@@ -143,14 +143,22 @@ contract Inflation is
         override
         returns (uint256)
     {
-        // TODO: test
-        return safeDiv(
-            safeMul(
-                RigoTokenFace(RIGO_TOKEN_ADDRESS).totalSupply(),
-                ANNUAL_INFLATION_RATE * epochLength
-            ),
-            (PPM_DENOMINATOR * 365 days)
-        );
+        uint256 epochInflation = 
+            safeDiv(
+                safeDiv(
+                    safeMul(
+                        RigoTokenFace(RIGO_TOKEN_ADDRESS).totalSupply(),
+                        safeMul(
+                            ANNUAL_INFLATION_RATE,
+                            epochLength
+                        )
+                    ),
+                    PPM_DENOMINATOR
+                ),
+                365 days
+            );
+
+        return epochInflation;
     }
 
     /*
