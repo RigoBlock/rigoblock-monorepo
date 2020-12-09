@@ -70,7 +70,6 @@ contract Inflation is
         onlyStakingProxy
         returns (uint256 mintedInflation)
     {
-        //TODO: test
         // solhint-disable-next-line not-rely-on-time
         if (block.timestamp < epochEndTime) {
             revert("NOT_ENOUGH_TIME_ERROR");
@@ -87,14 +86,12 @@ contract Inflation is
             }
         }
 
-        //TODO: test
         uint256 epochInflation = getEpochInflation();
 
         // solhint-disable-next-line not-rely-on-time
         epochEndTime = block.timestamp + epochLength;
         slot = safeAdd(slot, 1);
 
-        // TODO: test
         // mint rewards
         RigoTokenFace(RIGO_TOKEN_ADDRESS).mintToken(
             STAKING_PROXY_ADDRESS,
