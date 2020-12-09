@@ -80,7 +80,7 @@ contract Inflation is
 
         // sanity check for epoch length queried from staking
         if (epochLength != epochDurationInSeconds) {
-            if (epochDurationInSeconds < 5 days || epochDurationInSeconds > 90 days) {
+            if (epochDurationInSeconds < 5 minutes || epochDurationInSeconds > 90 days) {
                 revert("STAKING_EPOCH_TIME_ANOMALY_DETECTED_ERROR");
             } else {
                 epochLength = epochDurationInSeconds;
@@ -143,14 +143,22 @@ contract Inflation is
         override
         returns (uint256)
     {
-        // TODO: test
-        return safeDiv(
-            safeMul(
-                RigoTokenFace(RIGO_TOKEN_ADDRESS).totalSupply(),
-                ANNUAL_INFLATION_RATE * epochLength
-            ),
-            (PPM_DENOMINATOR * 365 days)
-        );
+        uint256 epochInflation = 
+            safeDiv(
+                safeDiv(
+                    safeMul(
+                        RigoTokenFace(RIGO_TOKEN_ADDRESS).totalSupply(),
+                        safeMul(
+                            ANNUAL_INFLATION_RATE,
+                            epochLength
+                        )
+                    ),
+                    PPM_DENOMINATOR
+                ),
+                365 days
+            );
+
+        return epochInflation;
     }
 
     /*
