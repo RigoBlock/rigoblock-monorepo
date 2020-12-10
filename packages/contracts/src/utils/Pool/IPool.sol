@@ -25,15 +25,6 @@ interface IPool {
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    // solhint-disable-next-line
-    function BASE()
-        external
-        view
-        returns (uint256);    
-
-    /*
-     * CONSTANT PUBLIC FUNCTIONS
-     */
     /// @dev Calculates how many shares a user holds.
     /// @param _who Address of the target account.
     /// @return Number of shares.
