@@ -418,11 +418,8 @@ contract ProofOfPerformance is
         returns (uint256)
     {
         uint256 poolEthBalance = address(IPool(poolAddress)).balance;
-
-        // prevent dust from small pools
-        if (poolEthBalance > poolValue || poolEthBalance < 1e15 || poolValue < 1e16) {
-            revert("ETH_ABOVE_AUM_OR_DUST_ERROR");
-        }
+        
+        _assertPoolEthBalanceAndValueValid(poolEthBalance, poolValue);
 
         // logistic function progression g(x)=e^x/(1+e^x).
         // rebased on {(poolEthBalance / poolValue)} ∈ [0.025:0.6], x ∈ [-1.9:2.8].
@@ -593,6 +590,27 @@ contract ProofOfPerformance is
         // inflationFactor is between 1e12 and 1e21
         if (inflationFactor < 1e12 || inflationFactor > 1e21) {
             revert("INVALID_INFLATION_FACTOR_ERROR");
+        }
+    }
+    
+    /// @dev Asserts than pool ETH balance and total value are ordinary and not dust.
+    /// @param poolEthBalance Value of the ETH balance.
+    /// @param poolValue Total Value of the pool.
+    function _assertPoolEthBalanceAndValueValid(
+        uint256 poolEthBalance,
+        uint256 poolValue
+    )
+        internal
+        pure
+    {
+        // assert ETH in pool is below pool value
+        if (poolEthBalance > poolValue) {
+            revert("ETH_ABOVE_AUM_ERROR");
+        }
+        
+        // prevent dust from small pools
+        if (poolEthBalance < 1e15 || poolValue < 1e16) {
+            revert("POOL_OR_BALANCE_DUST_ERROR");
         }
     }
 }
