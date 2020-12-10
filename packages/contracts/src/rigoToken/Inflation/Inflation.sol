@@ -40,7 +40,7 @@ contract Inflation is
 
     uint256 public override slot;
     uint256 public override epochLength;
-    
+
     uint32 internal immutable PPM_DENOMINATOR = 10**6; // 100% in parts-per-million
     uint256 internal immutable ANNUAL_INFLATION_RATE = 2 * 10**4; // 2% annual inflation
 

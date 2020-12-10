@@ -39,12 +39,12 @@ contract ProofOfPerformance is
     address public override dragoRegistryAddress;
     address public override rigoblockDaoAddress;
     address public override authorityAddress;
-    
+
     address private immutable STAKING_PROXY_ADDRESS;
 
     mapping (address => Group) public groupByAddress;
     mapping (uint256 => uint256) private _highWaterMark;
-    
+
     struct Group {
         uint256 epochReward;
         uint256 rewardRatio;
@@ -55,11 +55,6 @@ contract ProofOfPerformance is
         _;
     }
 
-    modifier onlyStakingProxy() {
-        _assertCallerIsStakingProxy();
-        _;
-    }
-    
     modifier isApprovedFactory(address _factory) {
         _assertIsApprovedFactory(_factory);
         _;
@@ -98,7 +93,6 @@ contract ProofOfPerformance is
             _assertContractIsPool(poolAddress);
         }
 
-        // TODO: test
         // initialization is not necessary but explicit as to prevent failure in case of a future upgrade
         _initializeHwmIfUninitialized(poolId);
 
@@ -129,7 +123,7 @@ contract ProofOfPerformance is
     {
         rigoblockDaoAddress = newRigoblockDaoAddress;
     }
-    
+
     /// @dev Allows rigoblock dao to update the authority.
     /// @param newAuthorityAddress Address of the authority.
     function setAuthority(address newAuthorityAddress)
@@ -140,30 +134,14 @@ contract ProofOfPerformance is
         authorityAddress = newAuthorityAddress;
     }
 
-    /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
+    /// @dev Allows RigoBlock Dao to set the parameters for a group.
     /// @param groupAddress Address of the pool's group.
-    /// @param newRatio Value of the new ratio.
+    /// @param ratio Value of the ratio between assets and performance reward for a group.
+    /// @param inflationFactor Value of the reward factor for a group.
     /// @notice onlyRigoblockDao can set ratio.
-    function setRatio(
+    function setGroupParams(
         address groupAddress,
-        uint256 newRatio
-    )
-        external
-        override
-        onlyRigoblockDao
-    {
-        require(
-            newRatio <= 10000,
-            "RATIO_BIGGER_THAN_10000"
-        ); //(from 0 to 10000)
-        groupByAddress[groupAddress].rewardRatio = newRatio;
-    }
-    
-    /// @dev Allows rigoblock dao to set the inflation factor for a group.
-    /// @param groupAddress Address of the group/factory.
-    /// @param inflationFactor Value of the reward factor.
-    function setInflationFactor(
-        address groupAddress,
+        uint256 ratio,
         uint256 inflationFactor
     )
         external
@@ -171,6 +149,11 @@ contract ProofOfPerformance is
         onlyRigoblockDao
         isApprovedFactory(groupAddress)
     {
+        // assert that group parameters are correct
+        _assertValidGroupParams(ratio, inflationFactor);
+        
+        // update storage
+        groupByAddress[groupAddress].rewardRatio = ratio;
         groupByAddress[groupAddress].epochReward = inflationFactor;
     }
 
@@ -233,7 +216,7 @@ contract ProofOfPerformance is
     {
         return _getHwmInternal(poolId);
     }
-    
+
     /// @dev Returns the split ratio of asset and performance reward.
     /// @param poolId Id of the pool.
     /// @return epochReward Value of the reward factor.
@@ -381,26 +364,27 @@ contract ProofOfPerformance is
             epochReward
         ) * epochTime / 1 days; // proportional to epoch time
 
-        // TODO: test new logic of only performance component null if price below high watermark
         uint256 performanceComponent = newPrice <= _getHwmInternal(poolId) ? uint256(0) : safeMul(
             safeMul(
                 (newPrice - _getHwmInternal(poolId)),
                 tokenSupply
-            ) / 1000000, // Pool(poolAddress).BASE(),
+            ) / IPool(poolAddress).BASE(),
             epochReward
         ) * 365; // 365 = 365 days / 1 days
 
+        // reward is inversely proportional to Eth in pool
+        uint256 ethBalanceAdjustment = _ethBalanceAdjustmentInternal(poolAddress, poolValue);
         uint256 assetsReward = (
             safeMul(
                 assetsComponent,
                 safeSub(10000, rewardRatio) // 10000 = 100%
             ) / 10000 ether
-        ) * _ethBalanceAdjustmentInternal(poolAddress, poolValue) / 1 ether; // reward inversely proportional to Eth in pool
+        ) * ethBalanceAdjustment / 1 ether;
 
         performanceReward = safeDiv(
             safeMul(performanceComponent, rewardRatio),
             10000 ether
-        ) * _ethBalanceAdjustmentInternal(poolAddress, poolValue) / 1 ether;
+        ) * ethBalanceAdjustment / 1 ether;
 
         popReward = safeAdd(performanceReward, assetsReward);
     }
@@ -434,45 +418,45 @@ contract ProofOfPerformance is
         returns (uint256)
     {
         uint256 poolEthBalance = address(IPool(poolAddress)).balance;
+
         // prevent dust from small pools
-        // 1 gwei = 1e9
-        if (poolEthBalance > poolValue || poolEthBalance < 1000000 gwei || poolValue < 10 * 1000000 gwei) {
+        if (poolEthBalance > poolValue || poolEthBalance < 1e15 || poolValue < 1e16) {
             revert("ETH_ABOVE_AUM_OR_DUST_ERROR");
         }
 
         // logistic function progression g(x)=e^x/(1+e^x).
         // rebased on {(poolEthBalance / poolValue)} ∈ [0.025:0.6], x ∈ [-1.9:2.8].
-        if (1 ether * poolEthBalance / poolValue >= 800 * 1000000 gwei) {
+        if (1000 * poolEthBalance >= 800 * poolValue) {
             return (1 ether);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 600 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 600 * poolValue) {
             return (1 ether * 943 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 500 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 500 * poolValue) {
             return (1 ether * 881 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 400 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 400 * poolValue) {
             return (1 ether * 769 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 300 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 300 * poolValue) {
             return (1 ether * 599 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 200 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 200 * poolValue) {
             return (1 ether * 401 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 100 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 100 * poolValue) {
             return (1 ether * 231 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 75 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 75 * poolValue) {
             return (1 ether * 198 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 50 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 50 * poolValue) {
             return (1 ether * 168 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 38 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 38 * poolValue) {
             return (1 ether * 155 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 25 * 1000000 gwei) {
+        } else if (1000 * poolEthBalance >= 25 * poolValue) {
             return (1 ether * 142 / 1000);
 
         } else { // reward is 0 for any pool not backed by at least 2.5% eth
@@ -530,7 +514,7 @@ contract ProofOfPerformance is
         if (poolPrice == uint256(0) || totalTokens == uint256(0)) {
             revert("POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR");
         }
-        aum = safeMul(poolPrice, totalTokens) / 1000000; // pool.BASE();
+        aum = safeMul(poolPrice, totalTokens) / IPool(poolAddress).BASE();
     }
 
     /// @dev Asserts that the caller is the RigoBlock Dao.
@@ -579,7 +563,7 @@ contract ProofOfPerformance is
             revert("SMART_CONTRACT_CALLER_IS_NOT_POOL_ERROR");
         }
     }
-    
+
     /// @dev Asserts that an address is an approved factory.
     /// @param _factory Address of the target factory.
     function _assertIsApprovedFactory(address _factory)
@@ -588,6 +572,27 @@ contract ProofOfPerformance is
     {
         if (!AuthorityFace(authorityAddress).isWhitelistedFactory(_factory)) {
             revert("NOT_APPROVED_AUTHORITY_ERROR");
+        }
+    }
+
+    /// @dev Asserts that the group parameters are valid.
+    /// @param ratio Value of the ratio between assets and performance reward for a group.
+    /// @param inflationFactor Value of the reward factor for a group.
+    function _assertValidGroupParams(
+        uint256 ratio,
+        uint256 inflationFactor
+    )
+        internal
+        pure
+    {
+        // ratio is from 0 to 10000, 10000 = 100%
+        if (ratio > 10000) {
+            revert("TOO_BIG_RATIO_ERROR");
+        }
+        
+        // inflationFactor is between 1e12 and 1e21
+        if (inflationFactor < 1e12 || inflationFactor > 1e21) {
+            revert("INVALID_INFLATION_FACTOR_ERROR");
         }
     }
 }
