@@ -35,14 +35,14 @@ contract Inflation is
     SafeMath,
     InflationFace
 {
-    address public immutable RIGO_TOKEN_ADDRESS;
-    address public immutable STAKING_PROXY_ADDRESS;
+    address public immutable override RIGO_TOKEN_ADDRESS;
+    address public immutable override STAKING_PROXY_ADDRESS;
 
+    uint256 public override slot;
+    uint256 public override epochLength;
+    
     uint32 internal immutable PPM_DENOMINATOR = 10**6; // 100% in parts-per-million
     uint256 internal immutable ANNUAL_INFLATION_RATE = 2 * 10**4; // 2% annual inflation
-
-    uint256 public slot;
-    uint256 public epochLength;
 
     uint256 private epochEndTime;
 
