@@ -42,7 +42,7 @@ contract Inflation is
     uint256 internal immutable ANNUAL_INFLATION_RATE = 2 * 10**4; // 2% annual inflation
 
     uint256 public slot;
-    uint256 public epochLength = 14 days;
+    uint256 public epochLength;
 
     uint256 private epochEndTime;
 
