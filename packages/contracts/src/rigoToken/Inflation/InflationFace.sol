@@ -22,7 +22,7 @@ pragma solidity >=0.4.22 <0.8.0;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 interface InflationFace {
-    
+
     /*
      * PUBLIC VARIABLES
      */
@@ -66,14 +66,14 @@ interface InflationFace {
         external
         view
         returns (bool);
-    
+
     /// @dev Returns how long until next claim.
     /// @return Number in seconds.
     function timeUntilNextClaim()
         external
         view
         returns (uint256);
-    
+
     /// @dev Returns the epoch inflation.
     /// @return Value of units of GRG minted in an epoch.
     function getEpochInflation()
