@@ -528,16 +528,6 @@ contract ProofOfPerformance is
         }
     }
 
-    /// @dev Asserts that the caller is the Staking Proxy.
-    function _assertCallerIsStakingProxy()
-        internal
-        view
-    {
-        if (msg.sender != STAKING_PROXY_ADDRESS) {
-            revert("CALLER_NOT_STAKING_PROXY_ERROR");
-        }
-    }
-
     /// @dev Determines whether an address is an account or a contract
     /// @param target Address to be inspected
     /// @return Boolean the address is a contract
