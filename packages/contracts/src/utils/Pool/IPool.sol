@@ -25,10 +25,75 @@ interface IPool {
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    function balanceOf(address _who) external view returns (uint256);
-    function totalSupply() external view returns (uint256 totaSupply);
-    function getEventful() external view returns (address);
-    function getData() external view returns (string memory name, string memory symbol, uint256 sellPrice, uint256 buyPrice);
-    function calcSharePrice() external view returns (uint256);
-    function getAdminData() external view returns (address, address feeCollector, address dragodAO, uint256 ratio, uint256 transactionFee, uint32 minPeriod);
+    // solhint-disable-next-line
+    function BASE()
+        external
+        view
+        returns (uint256);    
+
+    /*
+     * CONSTANT PUBLIC FUNCTIONS
+     */
+    /// @dev Calculates how many shares a user holds.
+    /// @param _who Address of the target account.
+    /// @return Number of shares.
+    function balanceOf(address _who)
+        external
+        view
+        returns (uint256);
+    
+    /// @dev Returns the total amount of issued tokens for this drago.
+    /// @return totaSupply Number of shares.
+    function totalSupply()
+        external
+        view
+        returns (uint256 totaSupply);
+
+    /// @dev Gets the address of the logger contract.
+    /// @return Address of the logger contract.
+    function getEventful()
+        external
+        view
+        returns (address);
+
+    /// @dev Finds details of a drago pool.
+    /// @return name String name of a drago.
+    /// @return symbol String symbol of a drago.
+    /// @return sellPrice Value of the share price in wei.
+    /// @return buyPrice Value of the share price in wei.
+    function getData()
+        external
+        view
+        returns (
+            string memory name,
+            string memory symbol,
+            uint256 sellPrice,
+            uint256 buyPrice
+        );
+
+    /// @dev Returns the price of a pool.
+    /// @return Value of the share price in wei.
+    function calcSharePrice()
+        external
+        view
+        returns (uint256);
+
+    /// @dev Finds the administrative data of the pool.
+    /// @return Address of the account where a user collects fees.
+    /// @return feeCollector Address of the drago dao/factory.
+    /// @return dragoDao Number of the fee split ratio.
+    /// @return ratio Value of the transaction fee in basis points.
+    /// @return transactionFee Value of the subscription fee.
+    /// @return minPeriod Number of the minimum holding period for shares.
+    function getAdminData()
+        external
+        view
+        returns (
+            address,
+            address feeCollector,
+            address dragoDao,
+            uint256 ratio,
+            uint256 transactionFee,
+            uint32 minPeriod
+        );
 }
