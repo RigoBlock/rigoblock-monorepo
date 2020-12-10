@@ -41,6 +41,7 @@ contract ProofOfPerformance is
     address public override authorityAddress;
 
     address private immutable STAKING_PROXY_ADDRESS;
+    uint256 private immutable POOL_BASE = 1e6;
 
     mapping (address => Group) public groupByAddress;
     mapping (uint256 => uint256) private _highWaterMark;
@@ -368,7 +369,7 @@ contract ProofOfPerformance is
             safeMul(
                 (newPrice - _getHwmInternal(poolId)),
                 tokenSupply
-            ) / IPool(poolAddress).BASE(),
+            ) / POOL_BASE,
             epochReward
         ) * 365; // 365 = 365 days / 1 days
 
@@ -508,10 +509,13 @@ contract ProofOfPerformance is
         IPool pool = IPool(poolAddress);
         poolPrice = pool.calcSharePrice();
         totalTokens = pool.totalSupply();
+
+        // revert if pool has no tokens issues or price is 0
         if (poolPrice == uint256(0) || totalTokens == uint256(0)) {
             revert("POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR");
         }
-        aum = safeMul(poolPrice, totalTokens) / IPool(poolAddress).BASE();
+
+        aum = safeMul(poolPrice, totalTokens) / POOL_BASE;
     }
 
     /// @dev Asserts that the caller is the RigoBlock Dao.
