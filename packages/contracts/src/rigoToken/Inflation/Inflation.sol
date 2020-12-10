@@ -42,7 +42,7 @@ contract Inflation is
     uint256 internal immutable ANNUAL_INFLATION_RATE = 2 * 10**4; // 2% annual inflation
 
     uint256 public slot;
-    uint256 public epochLength = 14 days;
+    uint256 public epochLength;
 
     uint256 private epochEndTime;
 
@@ -70,7 +70,6 @@ contract Inflation is
         onlyStakingProxy
         returns (uint256 mintedInflation)
     {
-        //TODO: test
         // solhint-disable-next-line not-rely-on-time
         if (block.timestamp < epochEndTime) {
             revert("NOT_ENOUGH_TIME_ERROR");
@@ -87,14 +86,12 @@ contract Inflation is
             }
         }
 
-        //TODO: test
         uint256 epochInflation = getEpochInflation();
 
         // solhint-disable-next-line not-rely-on-time
         epochEndTime = block.timestamp + epochLength;
         slot = safeAdd(slot, 1);
 
-        // TODO: test
         // mint rewards
         RigoTokenFace(RIGO_TOKEN_ADDRESS).mintToken(
             STAKING_PROXY_ADDRESS,
@@ -143,14 +140,22 @@ contract Inflation is
         override
         returns (uint256)
     {
-        // TODO: test
-        return safeDiv(
-            safeMul(
-                RigoTokenFace(RIGO_TOKEN_ADDRESS).totalSupply(),
-                ANNUAL_INFLATION_RATE * epochLength
-            ),
-            (PPM_DENOMINATOR * 365 days)
-        );
+        uint256 epochInflation = 
+            safeDiv(
+                safeDiv(
+                    safeMul(
+                        RigoTokenFace(RIGO_TOKEN_ADDRESS).totalSupply(),
+                        safeMul(
+                            ANNUAL_INFLATION_RATE,
+                            epochLength
+                        )
+                    ),
+                    PPM_DENOMINATOR
+                ),
+                365 days
+            );
+
+        return epochInflation;
     }
 
     /*
