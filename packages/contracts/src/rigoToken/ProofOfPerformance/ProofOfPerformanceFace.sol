@@ -24,34 +24,64 @@ pragma solidity >=0.4.22 <0.8.0;
 interface ProofOfPerformanceFace {
     
     /*
+     * PUBLIC VARIABLES
+     */
+    function dragoRegistryAddress()
+        external
+        view
+        returns (address);
+
+    function rigoblockDaoAddress()
+        external
+        view
+        returns (address);
+
+    function authorityAddress()
+        external
+        view
+        returns (address);
+
+    /*
      * CORE FUNCTIONS
      */
     /// @dev Credits the pop reward to the Staking Proxy contract.
     /// @param poolId Number of the pool Id in registry.
-    function creditPopRewardToStakingProxy(uint256 poolId) external;
+    function creditPopRewardToStakingProxy(uint256 poolId)
+        external;
 
     /// @dev Allows RigoBlock Dao to update the pools registry.
     /// @param newDragoRegistryAddress Address of new registry.
-    function setRegistry(address newDragoRegistryAddress) external;
+    function setRegistry(address newDragoRegistryAddress)
+        external;
 
     /// @dev Allows RigoBlock Dao to update its address.
     /// @param newRigoblockDaoAddress Address of new dao.
-    function setRigoblockDao(address newRigoblockDaoAddress) external;
+    function setRigoblockDao(address newRigoblockDaoAddress)
+        external;
     
     /// @dev Allows rigoblock dao to update the authority.
     /// @param newAuthorityAddress Address of the authority.
-    function setAuthority(address newAuthorityAddress) external;
+    function setAuthority(address newAuthorityAddress)
+        external;
 
     /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
     /// @param groupAddress Address of the pool's group.
     /// @param newRatio Value of the new ratio.
     /// @notice onlyRigoblockDao can set ratio.
-    function setRatio(address groupAddress, uint256 newRatio) external;
+    function setRatio(
+        address groupAddress,
+        uint256 newRatio
+    )
+        external;
     
     /// @dev Allows rigoblock dao to set the inflation factor for a group.
     /// @param groupAddress Address of the group/factory.
     /// @param inflationFactor Value of the reward factor.
-    function setInflationFactor(address groupAddress, uint256 inflationFactor) external;
+    function setInflationFactor(
+        address groupAddress,
+        uint256 inflationFactor
+    )
+        external;
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
@@ -85,7 +115,10 @@ interface ProofOfPerformanceFace {
     /// @dev Returns the highwatermark of a pool.
     /// @param poolId Id of the pool.
     /// @return Value of the all-time-high pool nav.
-    function getHwm(uint256 poolId) external view returns (uint256);
+    function getHwm(uint256 poolId)
+        external
+        view
+        returns (uint256);
 
     /// @dev Returns the split ratio of asset and performance reward.
     /// @param poolId Id of the pool.
@@ -112,7 +145,9 @@ interface ProofOfPerformanceFace {
     function proofOfPerformance(uint256 poolId)
         external
         view
-        returns (uint256 popReward, uint256 performanceReward);
+        returns (
+            uint256 popReward,
+            uint256 performanceReward);
 
     /// @dev Checks whether a pool is registered and active.
     /// @param poolId Id of the pool.
@@ -152,7 +187,5 @@ interface ProofOfPerformanceFace {
     function calcPoolValue(uint256 poolId)
         external
         view
-        returns (
-            uint256 aum
-        );
+        returns (uint256 aum);
 }

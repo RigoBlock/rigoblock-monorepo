@@ -22,26 +22,62 @@ pragma solidity >=0.4.22 <0.8.0;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 interface InflationFace {
+    
+    /*
+     * PUBLIC VARIABLES
+     */
+    // solhint-disable-next-line
+    function RIGO_TOKEN_ADDRESS()
+        external
+        view
+        returns (address);
+
+    //solhint-disable-next-line
+    function STAKING_PROXY_ADDRESS()
+        external
+        view
+        returns (address);
+
+    function slot()
+        external
+        view
+        returns (uint256);
+
+    function epochLength()
+        external
+        view
+        returns (uint256);
 
     /*
      * CORE FUNCTIONS
      */
     /// @dev Allows staking proxy to mint rewards.
     /// @return mintedInflation Number of allocated tokens.
-    function mintInflation() external returns (uint256 mintedInflation);
+    function mintInflation()
+        external
+        returns (uint256 mintedInflation);
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
     /// @dev Returns whether an epoch has ended.
     /// @return Bool the epoch has ended.
-    function epochEnded() external view returns (bool);
+    function epochEnded()
+        external
+        view
+        returns (bool);
     
     /// @dev Returns how long until next claim.
     /// @return Number in seconds.
-    function timeUntilNextClaim() external view returns (uint256);
+    function timeUntilNextClaim()
+        external
+        view
+        returns (uint256);
     
     /// @dev Returns the epoch inflation.
     /// @return Value of units of GRG minted in an epoch.
-    function getEpochInflation() external view returns (uint256);
+    function getEpochInflation()
+        external
+        view
+        returns (uint256);
 }
