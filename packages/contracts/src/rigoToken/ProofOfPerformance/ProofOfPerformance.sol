@@ -25,7 +25,6 @@ import { AuthorityFace } from "../../protocol/authorities/Authority/AuthorityFac
 import { IPool } from "../../utils/Pool/IPool.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
-import { RigoTokenFace } from "../RigoToken/RigoTokenFace.sol";
 import { IDragoRegistry } from "../../protocol/DragoRegistry/IDragoRegistry.sol";
 import { IStaking } from "../../staking/interfaces/IStaking.sol";
 
@@ -37,16 +36,15 @@ contract ProofOfPerformance is
     SafeMath,
     ProofOfPerformanceFace
 {
-    address public immutable RIGO_TOKEN_ADDRESS;
-    address public immutable STAKING_PROXY_ADDRESS;
-
-    address public dragoRegistryAddress;
-    address public rigoblockDaoAddress;
-    address public authorityAddress;
+    address public override dragoRegistryAddress;
+    address public override rigoblockDaoAddress;
+    address public override authorityAddress;
+    
+    address private immutable STAKING_PROXY_ADDRESS;
 
     mapping (address => Group) public groupByAddress;
     mapping (uint256 => uint256) private _highWaterMark;
-
+    
     struct Group {
         uint256 epochReward;
         uint256 rewardRatio;
@@ -68,13 +66,11 @@ contract ProofOfPerformance is
     }
 
     constructor(
-        address _rigoTokenAddress,
         address _stakingProxyAddress,
         address _rigoblockDao,
         address _dragoRegistry,
         address _authorityAddress
     ) {
-        RIGO_TOKEN_ADDRESS = _rigoTokenAddress;
         STAKING_PROXY_ADDRESS = _stakingProxyAddress;
         rigoblockDaoAddress = _rigoblockDao;
         dragoRegistryAddress = _dragoRegistry;
@@ -150,7 +146,8 @@ contract ProofOfPerformance is
     /// @notice onlyRigoblockDao can set ratio.
     function setRatio(
         address groupAddress,
-        uint256 newRatio)
+        uint256 newRatio
+    )
         external
         override
         onlyRigoblockDao
@@ -165,7 +162,10 @@ contract ProofOfPerformance is
     /// @dev Allows rigoblock dao to set the inflation factor for a group.
     /// @param groupAddress Address of the group/factory.
     /// @param inflationFactor Value of the reward factor.
-    function setInflationFactor(address groupAddress, uint256 inflationFactor)
+    function setInflationFactor(
+        address groupAddress,
+        uint256 inflationFactor
+    )
         external
         override
         onlyRigoblockDao
@@ -267,7 +267,10 @@ contract ProofOfPerformance is
         external
         view
         override
-        returns (uint256 popReward, uint256 performanceReward)
+        returns (
+            uint256 popReward,
+            uint256 performanceReward
+        )
     {
         return _proofOfPerformanceInternal(poolId);
     }
@@ -323,9 +326,7 @@ contract ProofOfPerformance is
         external
         view
         override
-        returns (
-            uint256 aum
-        )
+        returns (uint256 aum)
     {
         ( , , aum) = _getPoolPriceAndValueInternal(poolId);
     }
@@ -366,7 +367,10 @@ contract ProofOfPerformance is
     function _proofOfPerformanceInternal(uint256 poolId)
         internal
         view
-        returns (uint256 popReward, uint256 performanceReward)
+        returns (
+            uint256 popReward,
+            uint256 performanceReward
+        )
     {
         (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = _getPoolPriceAndValueInternal(poolId);
         (address poolAddress, ) = _addressFromIdInternal(poolId);
@@ -553,7 +557,8 @@ contract ProofOfPerformance is
     /// @param target Address to be inspected
     /// @return Boolean the address is a contract
     function _isContract(address target)
-        internal view
+        internal
+        view
         returns (bool)
     {
         uint size;
