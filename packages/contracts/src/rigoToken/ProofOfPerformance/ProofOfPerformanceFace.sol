@@ -22,7 +22,7 @@ pragma solidity >=0.4.22 <0.8.0;
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 interface ProofOfPerformanceFace {
-    
+
     /*
      * PUBLIC VARIABLES
      */
@@ -58,27 +58,20 @@ interface ProofOfPerformanceFace {
     /// @param newRigoblockDaoAddress Address of new dao.
     function setRigoblockDao(address newRigoblockDaoAddress)
         external;
-    
+
     /// @dev Allows rigoblock dao to update the authority.
     /// @param newAuthorityAddress Address of the authority.
     function setAuthority(address newAuthorityAddress)
         external;
 
-    /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
+    /// @dev Allows RigoBlock Dao to set the parameters for a group.
     /// @param groupAddress Address of the pool's group.
-    /// @param newRatio Value of the new ratio.
+    /// @param ratio Value of the ratio between assets and performance reward for a group.
+    /// @param inflationFactor Value of the reward factor for a group.
     /// @notice onlyRigoblockDao can set ratio.
-    function setRatio(
+    function setGroupParams(
         address groupAddress,
-        uint256 newRatio
-    )
-        external;
-    
-    /// @dev Allows rigoblock dao to set the inflation factor for a group.
-    /// @param groupAddress Address of the group/factory.
-    /// @param inflationFactor Value of the reward factor.
-    function setInflationFactor(
-        address groupAddress,
+        uint256 ratio,
         uint256 inflationFactor
     )
         external;
@@ -111,7 +104,7 @@ interface ProofOfPerformanceFace {
             uint256 ratio,
             uint256 pop
         );
-    
+
     /// @dev Returns the highwatermark of a pool.
     /// @param poolId Id of the pool.
     /// @return Value of the all-time-high pool nav.
