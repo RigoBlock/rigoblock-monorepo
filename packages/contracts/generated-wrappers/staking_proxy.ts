@@ -295,6 +295,14 @@ public static async deployFrom0xArtifactAsync(
             },
             { 
                 inputs: [
+                ],
+                outputs: [
+                ],
+                stateMutability: 'nonpayable',
+                type: 'fallback',
+            },
+            { 
+                inputs: [
                     {
                         name: 'target',
                         type: 'address',
