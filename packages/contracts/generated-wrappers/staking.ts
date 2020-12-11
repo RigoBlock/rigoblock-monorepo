@@ -38,8 +38,10 @@ import * as ethers from 'ethers';
 export type StakingEventArgs =
     | StakingAuthorizedAddressAddedEventArgs
     | StakingAuthorizedAddressRemovedEventArgs
+    | StakingCatchStringEventEventArgs
     | StakingEpochEndedEventArgs
     | StakingEpochFinalizedEventArgs
+    | StakingGrgMintEventEventArgs
     | StakingMoveStakeEventArgs
     | StakingOperatorShareDecreasedEventArgs
     | StakingOwnershipTransferredEventArgs
@@ -47,6 +49,7 @@ export type StakingEventArgs =
     | StakingPopAddedEventArgs
     | StakingPopRemovedEventArgs
     | StakingRbPoolStakingPoolSetEventArgs
+    | StakingReturnDataEventEventArgs
     | StakingRewardsPaidEventArgs
     | StakingStakeEventArgs
     | StakingStakingPoolCreatedEventArgs
@@ -56,8 +59,10 @@ export type StakingEventArgs =
 export enum StakingEvents {
     AuthorizedAddressAdded = 'AuthorizedAddressAdded',
     AuthorizedAddressRemoved = 'AuthorizedAddressRemoved',
+    CatchStringEvent = 'CatchStringEvent',
     EpochEnded = 'EpochEnded',
     EpochFinalized = 'EpochFinalized',
+    GrgMintEvent = 'GrgMintEvent',
     MoveStake = 'MoveStake',
     OperatorShareDecreased = 'OperatorShareDecreased',
     OwnershipTransferred = 'OwnershipTransferred',
@@ -65,6 +70,7 @@ export enum StakingEvents {
     PopAdded = 'PopAdded',
     PopRemoved = 'PopRemoved',
     RbPoolStakingPoolSet = 'RbPoolStakingPoolSet',
+    ReturnDataEvent = 'ReturnDataEvent',
     RewardsPaid = 'RewardsPaid',
     Stake = 'Stake',
     StakingPoolCreated = 'StakingPoolCreated',
@@ -82,6 +88,10 @@ export interface StakingAuthorizedAddressRemovedEventArgs extends DecodedLogArgs
     caller: string;
 }
 
+export interface StakingCatchStringEventEventArgs extends DecodedLogArgs {
+    reason: string;
+}
+
 export interface StakingEpochEndedEventArgs extends DecodedLogArgs {
     epoch: BigNumber;
     numPoolsToFinalize: BigNumber;
@@ -94,6 +104,10 @@ export interface StakingEpochFinalizedEventArgs extends DecodedLogArgs {
     epoch: BigNumber;
     rewardsPaid: BigNumber;
     rewardsRemaining: BigNumber;
+}
+
+export interface StakingGrgMintEventEventArgs extends DecodedLogArgs {
+    grgAmount: BigNumber;
 }
 
 export interface StakingMoveStakeEventArgs extends DecodedLogArgs {
@@ -135,6 +149,10 @@ export interface StakingPopRemovedEventArgs extends DecodedLogArgs {
 export interface StakingRbPoolStakingPoolSetEventArgs extends DecodedLogArgs {
     rbPoolAddress: string;
     poolId: string;
+}
+
+export interface StakingReturnDataEventEventArgs extends DecodedLogArgs {
+    reason: string;
 }
 
 export interface StakingRewardsPaidEventArgs extends DecodedLogArgs {
@@ -327,6 +345,20 @@ public static async deployFrom0xArtifactAsync(
                 anonymous: false,
                 inputs: [
                     {
+                        name: 'reason',
+                        type: 'string',
+                        indexed: false,
+                    },
+                ],
+                name: 'CatchStringEvent',
+                outputs: [
+                ],
+                type: 'event',
+            },
+            { 
+                anonymous: false,
+                inputs: [
+                    {
                         name: 'epoch',
                         type: 'uint256',
                         indexed: true,
@@ -377,6 +409,20 @@ public static async deployFrom0xArtifactAsync(
                     },
                 ],
                 name: 'EpochFinalized',
+                outputs: [
+                ],
+                type: 'event',
+            },
+            { 
+                anonymous: false,
+                inputs: [
+                    {
+                        name: 'grgAmount',
+                        type: 'uint256',
+                        indexed: false,
+                    },
+                ],
+                name: 'GrgMintEvent',
                 outputs: [
                 ],
                 type: 'event',
@@ -540,6 +586,20 @@ public static async deployFrom0xArtifactAsync(
                     },
                 ],
                 name: 'RbPoolStakingPoolSet',
+                outputs: [
+                ],
+                type: 'event',
+            },
+            { 
+                anonymous: false,
+                inputs: [
+                    {
+                        name: 'reason',
+                        type: 'bytes',
+                        indexed: false,
+                    },
+                ],
+                name: 'ReturnDataEvent',
                 outputs: [
                 ],
                 type: 'event',
