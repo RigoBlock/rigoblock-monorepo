@@ -31,7 +31,7 @@ import "../../rigoToken/RigoToken/RigoTokenFace.sol";
 abstract contract MixinDeploymentConstants is IStaking {
 
     // Mainnet GrgVault address
-    address constant private GRG_VAULT_ADDRESS = address(0x0a33744eE5D57d6d69944213d8E6ad80d64Fdc58);
+    address constant private GRG_VAULT_ADDRESS = address(0xfbd2588b170Ff776eBb1aBbB58C0fbE3ffFe1931);
 
     // Ropsten GrgVault address
     // address constant private GRG_VAULT_ADDRESS = address(0x7fc6a07e4b7b859c80F949A2A7812e00C64b4264);
