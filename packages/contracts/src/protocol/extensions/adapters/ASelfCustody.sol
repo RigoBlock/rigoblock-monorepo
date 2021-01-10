@@ -16,7 +16,8 @@
 
 */
 
-pragma solidity 0.4.25;
+// solhint-disable-next-line
+pragma solidity =0.8.0;
 
 contract SafeMath {
 
@@ -44,27 +45,26 @@ interface Token {
 
 interface DragoEventful {
 
-    function customDragoLog(bytes4 _methodHash, bytes _encodedParams) external returns (bool success);
+    function customDragoLog(bytes4 _methodHash, bytes calldata _encodedParams) external returns (bool success);
 }
 
-interface ExchangesAuthority {
-
-    function getCasper() external view returns (address);
-}
-
-contract Drago {
+abstract contract Drago {
 
     address public owner;
 
-    function getExchangesAuth() external view returns (address);
-
-    function getEventful() external view returns (address);
+    function getEventful() external view virtual returns (address);
 }
 
 /// @title Self Custody adapter - A helper contract for self custody.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 contract ASelfCustody is SafeMath {
+    
+    address constant private GRG_ADDRESS = address(0x4FbB350052Bca5417566f188eB2EBCE5b19BC964);
+
+    uint256 constant internal MIN_TOKEN_VALUE = 1e22;
+    
+    bytes4 private constant SELECTOR = bytes4(keccak256(bytes("transfer(address,uint256)")));
 
     /// @dev transfers ETH or tokens to self custody.
     /// @param selfCustodyAccount Address of the target account.
@@ -74,7 +74,7 @@ contract ASelfCustody is SafeMath {
     /// @return Number of GRG pool operator shortfall.
     /// @notice Transfeer of tokens excluded from GRG requirement for now.
     function transferToSelfCustody(
-        address selfCustodyAccount,
+        address payable selfCustodyAccount,
         address token,
         uint256 amount)
         external
@@ -86,15 +86,10 @@ contract ASelfCustody is SafeMath {
             ).owner() == msg.sender,
             "FAIL_OWNER_CHECK"
         );
-        address grgToken =
-            ExchangesAuthority(
-                Drago(
-                    address(this)
-                ).getExchangesAuth()
-            ).getCasper()
-        ;
+
         require(amount != uint256(0));
-        (bool satisfied, uint256 shortfall) = operatorGRGminimumSatisfied(grgToken, token, amount);
+
+        (bool satisfied, uint256 shortfall) = _poolGRGminimumSatisfied(GRG_ADDRESS, token, amount);
         if (satisfied == true) {
             require(
                 transferToSelfCustodyInternal(selfCustodyAccount, token, amount),
@@ -110,71 +105,76 @@ contract ASelfCustody is SafeMath {
         }
     }
 
-    /// @dev external check if minimum pool operator GRG amount requirement satisfied.
-    /// @param grgToken Address of the Rigo token.
-    /// @param token Address of the token to be transferred.
+    /// @dev external check if minimum pool GRG amount requirement satisfied.
+    /// @param grgTokenAddress Address of the Rigo token.
+    /// @param tokenAddress Address of the token to be transferred.
     /// @param amount Number of tokens to be transferred.
-    /// @return Bool the transaction was successful.
-    /// @return Number of GRG pool operator shortfall.
+    /// @return satisfied Bool the transaction was successful.
+    /// @return shortfall Number of GRG pool operator shortfall.
     /// @notice built around powers of pi number.
-    function operatorGRGminimumSatisfiedExternal (address grgToken, address token, uint256 amount)
+    function poolGRGminimumSatisfied (
+        address grgTokenAddress,
+        address tokenAddress,
+        uint256 amount
+    )
         external
         view
         returns (bool satisfied, uint256 shortfall)
     {
-        return operatorGRGminimumSatisfied(grgToken, token, amount);
+        return _poolGRGminimumSatisfied(grgTokenAddress, tokenAddress, amount);
     }
 
     /*
      * INTERNAL FUNCTIONS
      */
-    /// @dev checks if minimum pool operator GRG amount requirement satisfied.
-    /// @param grgToken Address of the Rigo token.
-    /// @param token Address of the token to be transferred.
+    /// @dev checks if minimum pool GRG amount requirement satisfied.
+    /// @param grgTokenAddress Address of the Rigo token.
+    /// @param tokenAddress Address of the token to be transferred.
     /// @param amount Number of tokens to be transferred.
-    /// @return Bool the transaction was successful.
-    /// @return Number of GRG pool operator shortfall.
+    /// @return satisfied Bool the transaction was successful.
+    /// @return shortfall Number of GRG pool operator shortfall.
     /// @notice built around powers of pi number.
-    function operatorGRGminimumSatisfied(address grgToken, address token, uint256 amount)
+    function _poolGRGminimumSatisfied(
+        address grgTokenAddress,
+        address tokenAddress,
+        uint256 amount
+    )
         internal
         view
         returns (bool satisfied, uint256 shortfall)
     {
-        uint256 ether_base = 18;
-        uint256 rational_base = 36;
-        uint256 rationalized_amount_base36 = safeMul(amount, 10 ** (rational_base - ether_base));
-        uint256 operator_rationalized_GRG_balance_base36 = Token(grgToken).balanceOf(msg.sender) * (10 ** (rational_base - ether_base));
+        uint256 etherBase = 18;
+        uint256 rationalBase = 36;
+        uint256 rationalizedAmountBase36 = safeMul(amount, 10 ** (rationalBase - etherBase));
+        uint256 poolRationalizedGrgBalanceBase36 = Token(grgTokenAddress).balanceOf(address(this)) * (10 ** (rationalBase - etherBase));
 
-        if (token != address(0)) {
-            satisfied = true;
-            shortfall = uint256(0);
+        if (tokenAddress != address(0)) {
+            uint256 poolGrgBalance = Token(grgTokenAddress).balanceOf(address(this));
+            satisfied = poolGrgBalance >= MIN_TOKEN_VALUE;
+            shortfall = poolGrgBalance < MIN_TOKEN_VALUE ? MIN_TOKEN_VALUE - poolGrgBalance : uint256(0);
 
-        } else if (rationalized_amount_base36 < findPi()) {
-            satisfied = true;
-            shortfall = uint256(0);
-
-        } else if (rationalized_amount_base36 < findPi2()) {
-            if (operator_rationalized_GRG_balance_base36 < findPi4()) {
+        } else if (rationalizedAmountBase36 < findPi2()) {
+            if (poolRationalizedGrgBalanceBase36 < findPi4()) {
                 satisfied = false;
-                shortfall = safeDiv(findPi4() - operator_rationalized_GRG_balance_base36, (10 ** (rational_base - ether_base)));
+                shortfall = safeDiv(findPi4() - poolRationalizedGrgBalanceBase36, (10 ** (rationalBase - etherBase)));
             } else {
                 satisfied = true;
                 shortfall = uint256(0);
             }
 
-        } else if (rationalized_amount_base36 < findPi3()) {
-            if (operator_rationalized_GRG_balance_base36 < findPi5()) {
+        } else if (rationalizedAmountBase36 < findPi3()) {
+            if (poolRationalizedGrgBalanceBase36 < findPi5()) {
                 satisfied = false;
-                shortfall = safeDiv(findPi5() - operator_rationalized_GRG_balance_base36, (10 ** (rational_base - ether_base)));
+                shortfall = safeDiv(findPi5() - poolRationalizedGrgBalanceBase36, (10 ** (rationalBase - etherBase)));
             } else {
                 satisfied = true;
                 shortfall = uint256(0);
             }
 
-        } else if (rationalized_amount_base36 >= findPi3()) {
-            if (operator_rationalized_GRG_balance_base36 < findPi6()) {
+        } else if (rationalizedAmountBase36 >= findPi3()) {
+            if (poolRationalizedGrgBalanceBase36 < findPi6()) {
                 satisfied = false;
-                shortfall = safeDiv(findPi6() - operator_rationalized_GRG_balance_base36, (10 ** (rational_base - ether_base)));
+                shortfall = safeDiv(findPi6() - poolRationalizedGrgBalanceBase36, (10 ** (rationalBase - etherBase)));
             } else {
                 satisfied = true;
                 shortfall = uint256(0);
@@ -192,9 +192,9 @@ contract ASelfCustody is SafeMath {
     function findPi() internal pure returns (uint256 pi1) {
         uint8 power = 1;
         uint256 pi = 3141592;
-        uint256 pi_base = 6;
-        uint256 rational_base = 36;
-        pi1 = pi ** power * 10 ** (rational_base - pi_base * power);
+        uint256 piBase = 6;
+        uint256 rationalBase = 36;
+        pi1 = pi ** power * 10 ** (rationalBase - piBase * power);
     }
 
     /// @dev returns the base 36 value of pi^2 number.
@@ -202,9 +202,9 @@ contract ASelfCustody is SafeMath {
     function findPi2() internal pure returns (uint256 pi2) {
         uint8 power = 2;
         uint256 pi = 3141592;
-        uint256 pi_base = 6;
-        uint256 rational_base = 36;
-        pi2 = pi ** power * 10 ** (rational_base - pi_base * power);
+        uint256 piBase = 6;
+        uint256 rationalBase = 36;
+        pi2 = pi ** power * 10 ** (rationalBase - piBase * power);
     }
 
     /// @dev returns the base 36 value of pi^3 number.
@@ -212,9 +212,9 @@ contract ASelfCustody is SafeMath {
     function findPi3() internal pure returns (uint256 pi3) {
         uint8 power = 3;
         uint256 pi = 3141592;
-        uint256 pi_base = 6;
-        uint256 rational_base = 36;
-        pi3 = pi ** power * 10 ** (rational_base - pi_base * power);
+        uint256 piBase = 6;
+        uint256 rationalBase = 36;
+        pi3 = pi ** power * 10 ** (rationalBase - piBase * power);
     }
 
     /// @dev returns the base 36 value of pi^4 number.
@@ -222,9 +222,9 @@ contract ASelfCustody is SafeMath {
     function findPi4() internal pure returns (uint256 pi4) {
         uint8 power = 4;
         uint256 pi = 3141592;
-        uint256 pi_base = 6;
-        uint256 rational_base = 36;
-        pi4 = pi ** power * 10 ** (rational_base - pi_base * power);
+        uint256 piBase = 6;
+        uint256 rationalBase = 36;
+        pi4 = pi ** power * 10 ** (rationalBase - piBase * power);
     }
 
     /// @dev returns the base 36 value of pi^5 number.
@@ -232,9 +232,9 @@ contract ASelfCustody is SafeMath {
     function findPi5() internal pure returns (uint256 pi5) {
         uint8 power = 5;
         uint256 pi = 3141592;
-        uint256 pi_base = 6;
-        uint256 rational_base = 36;
-        pi5 = pi ** power * 10 ** (rational_base - pi_base * power);
+        uint256 piBase = 6;
+        uint256 rationalBase = 36;
+        pi5 = pi ** power * 10 ** (rationalBase - piBase * power);
     }
 
     /// @dev returns the base 36 value of pi^6 number.
@@ -242,9 +242,9 @@ contract ASelfCustody is SafeMath {
     function findPi6() internal pure returns (uint256 pi6) {
         uint8 power = 6;
         uint256 pi = 3141592;
-        uint256 pi_base = 6;
-        uint256 rational_base = 36;
-        pi6 = pi ** power * 10 ** (rational_base - pi_base * power);
+        uint256 piBase = 6;
+        uint256 rationalBase = 36;
+        pi6 = pi ** power * 10 ** (rationalBase - piBase * power);
     }
 
     /// @dev prints a custom log of the transfer.
@@ -280,7 +280,7 @@ contract ASelfCustody is SafeMath {
     /// @param amount Number of tokens to be transferred.
     /// @return success Bool the transfer executed correctly.
     function transferToSelfCustodyInternal(
-        address selfCustodyAccount,
+        address payable selfCustodyAccount,
         address token,
         uint256 amount)
         internal
@@ -290,10 +290,20 @@ contract ASelfCustody is SafeMath {
             selfCustodyAccount.transfer(amount);
             success = true;
         } else {
-            Token(token).transfer(selfCustodyAccount, amount);
+            _safeTransfer(token, selfCustodyAccount, amount);
             success = true;
         }
         return success;
+    }
+    
+    /// @dev executes a safe transfer to any ERC20 token
+    /// @param token Address of the origin
+    /// @param to Address of the target
+    /// @param value Amount to transfer
+    function _safeTransfer(address token, address to, uint value) private {
+        // solhint-disable-next-line avoid-low-level-calls
+        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, to, value));
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "RigoBlock: TRANSFER_FAILED");
     }
 
     /// @dev Gets the address of the logger contract.
