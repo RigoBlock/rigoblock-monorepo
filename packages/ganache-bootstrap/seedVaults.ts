@@ -1,8 +1,8 @@
-const Web3 = require('web3')
-const fetchContracts = require('@rgbk/contracts').default
-const logger = require('./logger')
+import { Web3 } from 'web3'
+import { fetchContracts } from '@rgbk/contracts'
+import { logger } from './logger'
 
-module.exports = async network => {
+const task = async network => {
   let receipt
   const defaultOptions = {
     gas: 5700000 // TODO: estimate gas
@@ -222,3 +222,5 @@ module.exports = async network => {
   logger.info(`Third vault total supply: ${supply3 / ETH_IN_MICRO} ETH`)
   logger.info(`Fourth vault total supply: ${supply4 / ETH_IN_MICRO} ETH`)
 }
+
+export default task

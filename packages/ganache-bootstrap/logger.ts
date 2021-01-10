@@ -1,8 +1,8 @@
-const pino = require('pino')
+import { pino } from 'pino'
 
 const loggerOpts = {
   prettyPrint: true,
   timestamp: false
 }
 
-module.exports = pino(loggerOpts)
+export default pino(loggerOpts)
