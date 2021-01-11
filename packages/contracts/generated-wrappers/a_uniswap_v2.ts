@@ -155,19 +155,6 @@ public static async deployFrom0xArtifactAsync(
         const abi = [
             { 
                 inputs: [
-                ],
-                name: 'UNISWAPV2ROUTERADDRESS',
-                outputs: [
-                    {
-                        name: '',
-                        type: 'address',
-                    },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { 
-                inputs: [
                     {
                         name: 'tokenA',
                         type: 'address',
@@ -758,57 +745,6 @@ public static async deployFrom0xArtifactAsync(
         return abiEncoder.getSelector();
     }
 
-    public UNISWAPV2ROUTERADDRESS(
-    ): ContractTxFunctionObj<string
-> {
-        const self = this as any as AUniswapV2Contract;
-        const functionSignature = 'UNISWAPV2ROUTERADDRESS()';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<string
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<string
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, []);
-            },
-        }
-    };
     public addLiquidity(
             tokenA: string,
             tokenB: string,
