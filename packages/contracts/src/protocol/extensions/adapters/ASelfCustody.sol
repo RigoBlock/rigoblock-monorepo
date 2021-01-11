@@ -60,9 +60,13 @@ abstract contract Drago {
 // solhint-disable-next-line
 contract ASelfCustody is SafeMath {
     
+    // Mainnet GRG Address
     address constant private GRG_ADDRESS = address(0x4FbB350052Bca5417566f188eB2EBCE5b19BC964);
 
-    uint256 constant internal MIN_TOKEN_VALUE = 1e22;
+    // Ropsten GRG Address
+    // address constant private GRG_ADDRESS = address(0x6FA8590920c5966713b1a86916f7b0419411e474);
+
+    uint256 constant internal MIN_TOKEN_VALUE = 1e21;
     
     bytes4 private constant SELECTOR = bytes4(keccak256(bytes("transfer(address,uint256)")));
 
@@ -303,7 +307,10 @@ contract ASelfCustody is SafeMath {
     function _safeTransfer(address token, address to, uint value) private {
         // solhint-disable-next-line avoid-low-level-calls
         (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, to, value));
-        require(success && (data.length == 0 || abi.decode(data, (bool))), "RigoBlock: TRANSFER_FAILED");
+        require(
+            success && (data.length == 0 || abi.decode(data, (bool))),
+            "RIGOBLOCK_TRANSFER_FAILED"
+        );
     }
 
     /// @dev Gets the address of the logger contract.
