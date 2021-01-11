@@ -7,7 +7,7 @@ jest.setTimeout(30000)
 
 const contractName = 'Drago'
 
-describeContract(contractName, () => {
+describeContract.skip(contractName, () => {
   let dragoInstance
   let ethAddress
   let transactionDefault
