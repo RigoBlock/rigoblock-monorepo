@@ -1,4 +1,4 @@
-pragma solidity >=0.5.12;
+pragma solidity >=0.5.12 <0.8.0;
 
 interface IUniswapV2Router02 {
     function removeLiquidityETHSupportingFeeOnTransferTokens(
@@ -40,6 +40,7 @@ interface IUniswapV2Router02 {
         uint deadline
     ) external;
     function factory() external pure returns (address);
+    // solhint-disable-next-line
     function WETH() external pure returns (address);
 
     function addLiquidity(
