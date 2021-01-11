@@ -7,7 +7,7 @@ jest.setTimeout(30000)
 
 const contractName = 'Drago'
 
-describeContract.skip(contractName, () => {
+describeContract(contractName, () => {
   let dragoInstance
   let ethAddress
   let transactionDefault
@@ -47,7 +47,7 @@ describeContract.skip(contractName, () => {
     await baseContracts['ExchangesAuthority'].setCasper(grgTokenAddress) // temporary patch, GRG = Casper
   })
 
-  describe('operateOnExchange', () => {
+  describe.skip('operateOnExchange', () => {
     it('runs slow - sends ETH to a self custody wallet when operator holds enough GRG', async () => {
       // adds additional ether to the pool to be able to transfer
       const purchaseAmount = web3.utils.toWei('5.1')
