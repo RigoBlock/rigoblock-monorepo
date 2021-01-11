@@ -154,7 +154,35 @@ public static async deployFrom0xArtifactAsync(
     public static ABI(): ContractAbi {
         const abi = [
             { 
-                constant: false,
+                inputs: [
+                    {
+                        name: 'grgTokenAddress',
+                        type: 'address',
+                    },
+                    {
+                        name: 'tokenAddress',
+                        type: 'address',
+                    },
+                    {
+                        name: 'amount',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'poolGRGminimumSatisfied',
+                outputs: [
+                    {
+                        name: 'satisfied',
+                        type: 'bool',
+                    },
+                    {
+                        name: 'shortfall',
+                        type: 'uint256',
+                    },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+            },
+            { 
                 inputs: [
                     {
                         name: 'selfCustodyAccount',
@@ -180,39 +208,7 @@ public static async deployFrom0xArtifactAsync(
                         type: 'uint256',
                     },
                 ],
-                payable: false,
                 stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { 
-                constant: true,
-                inputs: [
-                    {
-                        name: 'grgToken',
-                        type: 'address',
-                    },
-                    {
-                        name: 'token',
-                        type: 'address',
-                    },
-                    {
-                        name: 'amount',
-                        type: 'uint256',
-                    },
-                ],
-                name: 'operatorGRGminimumSatisfiedExternal',
-                outputs: [
-                    {
-                        name: 'satisfied',
-                        type: 'bool',
-                    },
-                    {
-                        name: 'shortfall',
-                        type: 'uint256',
-                    },
-                ],
-                payable: false,
-                stateMutability: 'view',
                 type: 'function',
             },
         ] as ContractAbi;
@@ -298,11 +294,76 @@ public static async deployFrom0xArtifactAsync(
     }
 
     /**
+     * external check if minimum pool GRG amount requirement satisfied.
+      * @param grgTokenAddress Address of the Rigo token.
+      * @param tokenAddress Address of the token to be transferred.
+      * @param amount Number of tokens to be transferred.
+     */
+    public poolGRGminimumSatisfied(
+            grgTokenAddress: string,
+            tokenAddress: string,
+            amount: BigNumber,
+    ): ContractTxFunctionObj<[boolean, BigNumber]
+> {
+        const self = this as any as ASelfCustodyContract;
+            assert.isString('grgTokenAddress', grgTokenAddress);
+            assert.isString('tokenAddress', tokenAddress);
+            assert.isBigNumber('amount', amount);
+        const functionSignature = 'poolGRGminimumSatisfied(address,address,uint256)';
+
+        return {
+            async sendTransactionAsync(
+                txData?: Partial<TxData> | undefined,
+                opts: SendTransactionOpts = { shouldValidate: true },
+            ): Promise<string> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData },
+                    this.estimateGasAsync.bind(this),
+                );
+                if (opts.shouldValidate !== false) {
+                    await this.callAsync(txDataWithDefaults);
+                }
+                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
+            },
+            awaitTransactionSuccessAsync(
+                txData?: Partial<TxData>,
+                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
+            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
+                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
+            },
+            async estimateGasAsync(
+                txData?: Partial<TxData> | undefined,
+            ): Promise<number> {
+                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+                    { data: this.getABIEncodedTransactionData(), ...txData }
+                );
+                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
+            },
+            async callAsync(
+                callData: Partial<CallData> = {},
+                defaultBlock?: BlockParam,
+            ): Promise<[boolean, BigNumber]
+            > {
+                BaseContract._assertCallParams(callData, defaultBlock);
+                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
+                const abiEncoder = self._lookupAbiEncoder(functionSignature);
+                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
+                return abiEncoder.strictDecodeReturnValue<[boolean, BigNumber]
+            >(rawCallResult);
+            },
+            getABIEncodedTransactionData(): string {
+                return self._strictEncodeArguments(functionSignature, [grgTokenAddress.toLowerCase(),
+            tokenAddress.toLowerCase(),
+            amount
+            ]);
+            },
+        }
+    };
+    /**
      * transfers ETH or tokens to self custody.
       * @param selfCustodyAccount Address of the target account.
       * @param token Address of the target token.
       * @param amount Number of tokens.
-    * @returns Bool the transaction was successful.Number of GRG pool operator shortfall.
      */
     public transferToSelfCustody(
             selfCustodyAccount: string,
@@ -358,46 +419,6 @@ public static async deployFrom0xArtifactAsync(
             },
             getABIEncodedTransactionData(): string {
                 return self._strictEncodeArguments(functionSignature, [selfCustodyAccount.toLowerCase(),
-            token.toLowerCase(),
-            amount
-            ]);
-            },
-        }
-    };
-    /**
-     * external check if minimum pool operator GRG amount requirement satisfied.
-      * @param grgToken Address of the Rigo token.
-      * @param token Address of the token to be transferred.
-      * @param amount Number of tokens to be transferred.
-    * @returns Bool the transaction was successful.Number of GRG pool operator shortfall.
-     */
-    public operatorGRGminimumSatisfiedExternal(
-            grgToken: string,
-            token: string,
-            amount: BigNumber,
-    ): ContractFunctionObj<[boolean, BigNumber]
-> {
-        const self = this as any as ASelfCustodyContract;
-            assert.isString('grgToken', grgToken);
-            assert.isString('token', token);
-            assert.isBigNumber('amount', amount);
-        const functionSignature = 'operatorGRGminimumSatisfiedExternal(address,address,uint256)';
-
-        return {
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<[boolean, BigNumber]
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<[boolean, BigNumber]
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [grgToken.toLowerCase(),
             token.toLowerCase(),
             amount
             ]);
