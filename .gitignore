@@ -18,3 +18,9 @@ packages/exchange-connector/package-lock\.json
 
 # generated truffle contract artifacts/
 packages/contracts/src/**/**/artifacts/
+
+# generated contract artifacts/
+packages/contracts/test/generated-artifacts/
+
+# generated contract wrappers
+packages/contracts/test/generated-wrappers/
