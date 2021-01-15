@@ -220,10 +220,12 @@
 	"sourceTreeHashHex": "0xa58d1bf3c9e2bb2bd7cf64785a8f3be65b82c1e3cb46aeb522cfbab744820810",
 	"sources": {
 		"./ERC20.sol": {
-			"id": 0
+			"id": 0,
+			"content": "pragma solidity >=0.5.0 <0.6.0;\n\nimport { ERC20Face } from \"./ERC20Face.sol\";\n\ncontract ERC20 is ERC20Face {\n\n    function transfer(address _to, uint256 _value)\n        external\n        returns (bool success)\n    {\n        require(balances[msg.sender] >= _value && balances[_to] + _value > balances[_to]);\n        balances[msg.sender] -= _value;\n        balances[_to] += _value;\n        emit Transfer(msg.sender, _to, _value);\n        return true;\n    }\n\n    function transferFrom(address _from, address _to, uint256 _value)\n        external\n        returns (bool success)\n    {\n        require(balances[_from] >= _value && allowed[_from][msg.sender] >= _value && balances[_to] + _value > balances[_to]);\n        balances[_to] += _value;\n        balances[_from] -= _value;\n        allowed[_from][msg.sender] -= _value;\n        emit Transfer(_from, _to, _value);\n        return true;\n    }\n\n    function approve(address _spender, uint256 _value)\n        external\n        returns (bool success)\n    {\n        allowed[msg.sender][_spender] = _value;\n        emit Approval(msg.sender, _spender, _value);\n        return true;\n    }\n\n    function balanceOf(address _owner)\n        external\n        view\n        returns (uint256)\n    {\n        return balances[_owner];\n    }\n\n    function allowance(address _owner, address _spender)\n        external\n        view\n        returns (uint256)\n    {\n        return allowed[_owner][_spender];\n    }\n\n    uint256 public totalSupply;\n    mapping (address => uint256) balances;\n    mapping (address => mapping (address => uint256)) allowed;\n}\n"
 		},
 		"./ERC20Face.sol": {
-			"id": 1
+			"id": 1,
+			"content": "pragma solidity >=0.5.0;\n\ninterface ERC20Face {\n\n    event Transfer(address indexed _from, address indexed _to, uint256 _value);\n    event Approval(address indexed _owner, address indexed _spender, uint256 _value);\n\n    function transfer(address _to, uint256 _value) external returns (bool success);\n    function transferFrom(address _from, address _to, uint256 _value) external returns (bool success);\n    function approve(address _spender, uint256 _value) external returns (bool success);\n\n    function balanceOf(address _who) external view returns (uint256);\n    function allowance(address _owner, address _spender) external view returns (uint256);\n}\n"
 		}
 	},
 	"sourceCodes": {

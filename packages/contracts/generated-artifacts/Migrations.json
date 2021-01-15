@@ -87,7 +87,8 @@
 	"sourceTreeHashHex": "0x9408987af397fa8abea6e2ac2e12d539daf0ef85484bed0a42c6f79e27eb9ee8",
 	"sources": {
 		"./Migrations.sol": {
-			"id": 0
+			"id": 0,
+			"content": "pragma solidity 0.4.25;\n\ncontract Migrations {\n    address public owner;\n    uint256 public last_completed_migration;\n\n    modifier restricted() {\n        if (msg.sender == owner)\n        _;\n    }\n\n    constructor() public {\n        owner = msg.sender;\n    }\n\n    function setCompleted(uint256 completed) public restricted {\n        last_completed_migration = completed;\n    }\n\n    function upgrade(address new_address) public restricted {\n        Migrations upgraded = Migrations(new_address);\n        upgraded.setCompleted(last_completed_migration);\n    }\n}\n"
 		}
 	},
 	"sourceCodes": {
