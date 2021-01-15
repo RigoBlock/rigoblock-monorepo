@@ -73,7 +73,8 @@
 	"sourceTreeHashHex": "0x1467c099073f2f35d57bbadd8b9bbb80a277ebc210f1b0782d90e9c53b93d6c1",
 	"sources": {
 		"./NavVerifier.sol": {
-			"id": 20
+			"id": 20,
+			"content": "/*\n\n Copyright 2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity 0.5.0;\n\n/// @title Nav Verifier - Allows to check if new NAV comes from approved authority.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\n// solhint-disable-next-line\ncontract NavVerifier {\n\n    /// @dev Verifies that a signature is valid.\n    /// @param sellPrice Price in wei\n    /// @param buyPrice Price in wei\n    /// @param signaturevaliduntilBlock Number of blocks till price expiry\n    /// @param hash Message hash that is signed.\n    /// @param signedData Proof of nav validity.\n    /// @notice mock function which returns true\n    function isValidNav(\n        /* solhint-disable */\n        uint256 sellPrice,\n        uint256 buyPrice,\n        uint256 signaturevaliduntilBlock,\n        bytes32 hash,\n        bytes calldata signedData\n        /* solhint-disable */\n    )\n        external\n        view\n        returns (bool isValid)\n    {\n        return isValid = true;\n    }\n}\n"
 		}
 	},
 	"sourceCodes": {

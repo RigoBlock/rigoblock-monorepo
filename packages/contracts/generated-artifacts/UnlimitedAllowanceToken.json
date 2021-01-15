@@ -208,13 +208,16 @@
 	"sourceTreeHashHex": "0x8cedb3186c3b6c680e47c2feacab11413f4c0a9f3e878b6c40788c36dad431ca",
 	"sources": {
 		"./UnlimitedAllowanceToken.sol": {
-			"id": 31
+			"id": 31,
+			"content": "pragma solidity 0.5.0;\n\nimport { ERC20 } from \"../ERC20/ERC20.sol\";\n\ncontract UnlimitedAllowanceToken is ERC20 {\n\n    uint256 constant MAX_UINT = 2**256 - 1;\n\n    /// @dev ERC20 transferFrom, modified such that an allowance of MAX_UINT represents an unlimited allowance.\n    /// @param _from Address to transfer from.\n    /// @param _to Address to transfer to.\n    /// @param _value Amount to transfer.\n    /// @return Success of transfer.\n    function transferFrom(address _from, address _to, uint256 _value)\n        external\n        returns (bool)\n    {\n        uint256 allowance = allowed[_from][msg.sender];\n        require(\n            balances[_from] >= _value\n            && allowance >= _value\n            && balances[_to] + _value >= balances[_to]\n        );\n        balances[_to] += _value;\n        balances[_from] -= _value;\n        if (allowance < MAX_UINT) {\n            allowed[_from][msg.sender] -= _value;\n        }\n        emit Transfer(_from, _to, _value);\n        return true;\n    }\n}\n"
 		},
 		"../ERC20/ERC20.sol": {
-			"id": 29
+			"id": 29,
+			"content": "pragma solidity >=0.5.0 <0.6.0;\n\nimport { ERC20Face } from \"./ERC20Face.sol\";\n\ncontract ERC20 is ERC20Face {\n\n    function transfer(address _to, uint256 _value)\n        external\n        returns (bool success)\n    {\n        require(balances[msg.sender] >= _value && balances[_to] + _value > balances[_to]);\n        balances[msg.sender] -= _value;\n        balances[_to] += _value;\n        emit Transfer(msg.sender, _to, _value);\n        return true;\n    }\n\n    function transferFrom(address _from, address _to, uint256 _value)\n        external\n        returns (bool success)\n    {\n        require(balances[_from] >= _value && allowed[_from][msg.sender] >= _value && balances[_to] + _value > balances[_to]);\n        balances[_to] += _value;\n        balances[_from] -= _value;\n        allowed[_from][msg.sender] -= _value;\n        emit Transfer(_from, _to, _value);\n        return true;\n    }\n\n    function approve(address _spender, uint256 _value)\n        external\n        returns (bool success)\n    {\n        allowed[msg.sender][_spender] = _value;\n        emit Approval(msg.sender, _spender, _value);\n        return true;\n    }\n\n    function balanceOf(address _owner)\n        external\n        view\n        returns (uint256)\n    {\n        return balances[_owner];\n    }\n\n    function allowance(address _owner, address _spender)\n        external\n        view\n        returns (uint256)\n    {\n        return allowed[_owner][_spender];\n    }\n\n    uint256 public totalSupply;\n    mapping (address => uint256) balances;\n    mapping (address => mapping (address => uint256)) allowed;\n}\n"
 		},
 		"../ERC20/ERC20Face.sol": {
-			"id": 30
+			"id": 30,
+			"content": "pragma solidity >=0.5.0;\n\ninterface ERC20Face {\n\n    event Transfer(address indexed _from, address indexed _to, uint256 _value);\n    event Approval(address indexed _owner, address indexed _spender, uint256 _value);\n\n    function transfer(address _to, uint256 _value) external returns (bool success);\n    function transferFrom(address _from, address _to, uint256 _value) external returns (bool success);\n    function approve(address _spender, uint256 _value) external returns (bool success);\n\n    function balanceOf(address _who) external view returns (uint256);\n    function allowance(address _owner, address _spender) external view returns (uint256);\n}\n"
 		}
 	},
 	"sourceCodes": {
