@@ -1330,8 +1330,8 @@
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/ReentrancyGuard/ReentrancyGuard.sol",
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/SafeMath/SafeMathLight.sol"
             ],
-            "address": "0x6f355cfdeda5188fe5fff5e939a40af9fde3c845",
-            "constructor_args": "0x000000000000000000000000f7cbb0849d4a8ec5ab4650030fa776c00eb52da7000000000000000000000000242b2dd21e7e1a2b2516d0a3a06b58e2d9bf91960000000000000000000000007e6957630956f2b5ecc3f16e65a28c26032b1a59"
+            "address": "0x8976aa36712be3e2622b3fd68bb08a70141777a7",
+            "constructor_args": "0x000000000000000000000000849a0e361f83cf7a35642d80dde346fc0d1289d4000000000000000000000000242b2dd21e7e1a2b2516d0a3a06b58e2d9bf9196000000000000000000000000eca718f782aa54d8ca76cb6c5146e3de5c4ff2fc"
         }
     }
 }
