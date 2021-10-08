@@ -112,7 +112,7 @@ jobs:
       - image: *node_image
         environment:
           NODE_OPTIONS: --max_old_space_size=4096
-    parallelism: 4
+    parallelism: 1
     steps:
       - checkout
       - *attach_workspace
