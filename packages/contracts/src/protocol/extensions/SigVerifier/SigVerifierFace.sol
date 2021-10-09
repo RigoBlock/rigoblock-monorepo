@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
+pragma solidity >=0.4.25;
 
 /// @title SigVerifier Interface - Allows interaction with the signature verifier contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -29,7 +29,7 @@ interface SigVerifierFace {
     /// @return Validity of order signature.
     function isValidSignature(
         bytes32 hash,
-        bytes signature
+        bytes calldata signature
     )
         external
         view

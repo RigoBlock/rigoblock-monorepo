@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
+pragma solidity >=0.4.25;
 
 /// @title Nav Verifier Interface - Allows to check if new NAV comes from approved authority.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -35,7 +35,7 @@ interface NavVerifierFace {
         uint256 buyPrice,
         uint256 signaturevaliduntilBlock,
         bytes32 hash,
-        bytes signedData)
+        bytes calldata signedData)
         external
         view
         returns (bool isValid);

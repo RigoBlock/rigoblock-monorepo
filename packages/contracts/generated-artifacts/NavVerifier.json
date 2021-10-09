@@ -1,0 +1,107 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "NavVerifier",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "sellPrice",
+						"type": "uint256"
+					},
+					{
+						"name": "buyPrice",
+						"type": "uint256"
+					},
+					{
+						"name": "signaturevaliduntilBlock",
+						"type": "uint256"
+					},
+					{
+						"name": "hash",
+						"type": "bytes32"
+					},
+					{
+						"name": "signedData",
+						"type": "bytes"
+					}
+				],
+				"name": "isValidNav",
+				"outputs": [
+					{
+						"name": "isValid",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Gabriele Rigo - <gab@rigoblock.com>",
+			"methods": {
+				"isValidNav(uint256,uint256,uint256,bytes32,bytes)": {
+					"details": "Verifies that a signature is valid.",
+					"params": {
+						"buyPrice": "Price in wei",
+						"hash": "Message hash that is signed.",
+						"sellPrice": "Price in wei",
+						"signaturevaliduntilBlock": "Number of blocks till price expiry",
+						"signedData": "Proof of nav validity."
+					}
+				}
+			},
+			"title": "Nav Verifier - Allows to check if new NAV comes from approved authority."
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x608060405234801561001057600080fd5b5061011d806100206000396000f3fe608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060d1600480360360a0811015606357600080fd5b81359160208101359160408201359160608101359181019060a081016080820135640100000000811115609557600080fd5b82018360208201111560a657600080fd5b8035906020019184600183028401116401000000008311171560c757600080fd5b50909250905060e5565b604080519115158252519081900360200190f35b6001969550505050505056fea165627a7a723058205c8dd0643c43771cfbc38ca9a81cca22df6c1b0ae1ba4c9945b94b6c7d47644a0029",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x11D DUP1 PUSH2 0x20 PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x4 CALLDATASIZE LT PUSH1 0x3E JUMPI PUSH4 0xFFFFFFFF PUSH29 0x100000000000000000000000000000000000000000000000000000000 PUSH1 0x0 CALLDATALOAD DIV AND PUSH4 0x802AF840 DUP2 EQ PUSH1 0x43 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST CALLVALUE DUP1 ISZERO PUSH1 0x4E JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0xD1 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0xA0 DUP2 LT ISZERO PUSH1 0x63 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 CALLDATALOAD SWAP2 PUSH1 0x20 DUP2 ADD CALLDATALOAD SWAP2 PUSH1 0x40 DUP3 ADD CALLDATALOAD SWAP2 PUSH1 0x60 DUP2 ADD CALLDATALOAD SWAP2 DUP2 ADD SWAP1 PUSH1 0xA0 DUP2 ADD PUSH1 0x80 DUP3 ADD CALLDATALOAD PUSH5 0x100000000 DUP2 GT ISZERO PUSH1 0x95 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP3 ADD DUP4 PUSH1 0x20 DUP3 ADD GT ISZERO PUSH1 0xA6 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD SWAP2 DUP5 PUSH1 0x1 DUP4 MUL DUP5 ADD GT PUSH5 0x100000000 DUP4 GT OR ISZERO PUSH1 0xC7 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP SWAP1 SWAP3 POP SWAP1 POP PUSH1 0xE5 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 ISZERO ISZERO DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH1 0x1 SWAP7 SWAP6 POP POP POP POP POP POP JUMP INVALID LOG1 PUSH6 0x627A7A723058 KECCAK256 0x5c DUP14 0xd0 PUSH5 0x3C43771CFB 0xc3 DUP13 0xa9 0xa8 SHR 0xca 0x22 0xdf PUSH13 0x1B0AE1BA4C9945B94B6C7D4764 0x4a STOP 0x29 ",
+				"sourceMap": "777:717:20:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;777:717:20;;;;;;;"
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x608060405260043610603e5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663802af84081146043575b600080fd5b348015604e57600080fd5b5060d1600480360360a0811015606357600080fd5b81359160208101359160408201359160608101359181019060a081016080820135640100000000811115609557600080fd5b82018360208201111560a657600080fd5b8035906020019184600183028401116401000000008311171560c757600080fd5b50909250905060e5565b604080519115158252519081900360200190f35b6001969550505050505056fea165627a7a723058205c8dd0643c43771cfbc38ca9a81cca22df6c1b0ae1ba4c9945b94b6c7d47644a0029",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x4 CALLDATASIZE LT PUSH1 0x3E JUMPI PUSH4 0xFFFFFFFF PUSH29 0x100000000000000000000000000000000000000000000000000000000 PUSH1 0x0 CALLDATALOAD DIV AND PUSH4 0x802AF840 DUP2 EQ PUSH1 0x43 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST CALLVALUE DUP1 ISZERO PUSH1 0x4E JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0xD1 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0xA0 DUP2 LT ISZERO PUSH1 0x63 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 CALLDATALOAD SWAP2 PUSH1 0x20 DUP2 ADD CALLDATALOAD SWAP2 PUSH1 0x40 DUP3 ADD CALLDATALOAD SWAP2 PUSH1 0x60 DUP2 ADD CALLDATALOAD SWAP2 DUP2 ADD SWAP1 PUSH1 0xA0 DUP2 ADD PUSH1 0x80 DUP3 ADD CALLDATALOAD PUSH5 0x100000000 DUP2 GT ISZERO PUSH1 0x95 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP3 ADD DUP4 PUSH1 0x20 DUP3 ADD GT ISZERO PUSH1 0xA6 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP1 CALLDATALOAD SWAP1 PUSH1 0x20 ADD SWAP2 DUP5 PUSH1 0x1 DUP4 MUL DUP5 ADD GT PUSH5 0x100000000 DUP4 GT OR ISZERO PUSH1 0xC7 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP SWAP1 SWAP3 POP SWAP1 POP PUSH1 0xE5 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 ISZERO ISZERO DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH1 0x1 SWAP7 SWAP6 POP POP POP POP POP POP JUMP INVALID LOG1 PUSH6 0x627A7A723058 KECCAK256 0x5c DUP14 0xd0 PUSH5 0x3C43771CFB 0xc3 DUP13 0xa9 0xa8 SHR 0xca 0x22 0xdf PUSH13 0x1B0AE1BA4C9945B94B6C7D4764 0x4a STOP 0x29 ",
+				"sourceMap": "777:717:20:-;;;;;;;;;;;;;;;;;;;;;;;1151:341;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1151:341:20;;;;;;13:3:-1;8;5:12;2:2;;;30:1;27;20:12;2:2;1151:341:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;21:11:-1;5:28;;2:2;;;46:1;43;36:12;2:2;1151:341:20;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;1151:341:20;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;-1:-1;1151:341:20;;-1:-1:-1;1151:341:20;-1:-1:-1;1151:341:20;;;;;;;;;;;;;;;;;;;;;1481:4;1151:341;;;;;;;;:::o"
+			}
+		}
+	},
+	"sourceTreeHashHex": "0x1467c099073f2f35d57bbadd8b9bbb80a277ebc210f1b0782d90e9c53b93d6c1",
+	"sources": {
+		"./NavVerifier.sol": {
+			"id": 20,
+			"content": "/*\n\n Copyright 2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity 0.5.0;\n\n/// @title Nav Verifier - Allows to check if new NAV comes from approved authority.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\n// solhint-disable-next-line\ncontract NavVerifier {\n\n    /// @dev Verifies that a signature is valid.\n    /// @param sellPrice Price in wei\n    /// @param buyPrice Price in wei\n    /// @param signaturevaliduntilBlock Number of blocks till price expiry\n    /// @param hash Message hash that is signed.\n    /// @param signedData Proof of nav validity.\n    /// @notice mock function which returns true\n    function isValidNav(\n        /* solhint-disable */\n        uint256 sellPrice,\n        uint256 buyPrice,\n        uint256 signaturevaliduntilBlock,\n        bytes32 hash,\n        bytes calldata signedData\n        /* solhint-disable */\n    )\n        external\n        view\n        returns (bool isValid)\n    {\n        return isValid = true;\n    }\n}\n"
+		}
+	},
+	"sourceCodes": {
+		"./NavVerifier.sol": "/*\n\n Copyright 2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity 0.5.0;\n\n/// @title Nav Verifier - Allows to check if new NAV comes from approved authority.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\n// solhint-disable-next-line\ncontract NavVerifier {\n\n    /// @dev Verifies that a signature is valid.\n    /// @param sellPrice Price in wei\n    /// @param buyPrice Price in wei\n    /// @param signaturevaliduntilBlock Number of blocks till price expiry\n    /// @param hash Message hash that is signed.\n    /// @param signedData Proof of nav validity.\n    /// @notice mock function which returns true\n    function isValidNav(\n        /* solhint-disable */\n        uint256 sellPrice,\n        uint256 buyPrice,\n        uint256 signaturevaliduntilBlock,\n        bytes32 hash,\n        bytes calldata signedData\n        /* solhint-disable */\n    )\n        external\n        view\n        returns (bool isValid)\n    {\n        return isValid = true;\n    }\n}\n"
+	},
+	"compiler": {
+		"name": "solc",
+		"version": "0.5.0+commit.1d4f565a",
+		"settings": {
+			"remappings": [],
+			"optimizer": {
+				"enabled": true,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap"
+					]
+				}
+			}
+		}
+	},
+	"chains": {}
+}

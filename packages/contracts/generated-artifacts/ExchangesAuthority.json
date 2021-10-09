@@ -1,0 +1,953 @@
+{
+	"schemaVersion": "2.0.0",
+	"contractName": "ExchangesAuthority",
+	"compilerOutput": {
+		"abi": [
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_new",
+						"type": "address"
+					}
+				],
+				"name": "setOwner",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "isCasperInitialized",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getCasper",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_authority",
+						"type": "address"
+					}
+				],
+				"name": "isAuthority",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_wrapper",
+						"type": "address"
+					},
+					{
+						"name": "_isWhitelisted",
+						"type": "bool"
+					}
+				],
+				"name": "whitelistWrapper",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_casper",
+						"type": "address"
+					}
+				],
+				"name": "setCasper",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"name": "_wrapper",
+						"type": "address"
+					},
+					{
+						"name": "_isWhitelisted",
+						"type": "bool"
+					}
+				],
+				"name": "whitelistTokenOnWrapper",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_exchange",
+						"type": "address"
+					}
+				],
+				"name": "getExchangeAdapter",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"name": "_wrapper",
+						"type": "address"
+					}
+				],
+				"name": "canWrapTokenOnWrapper",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_tokenTransferProxy",
+						"type": "address"
+					}
+				],
+				"name": "isWhitelistedProxy",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getSigVerifier",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "accounts",
+				"outputs": [
+					{
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"name": "authorized",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_method",
+						"type": "bytes4"
+					},
+					{
+						"name": "_adapter",
+						"type": "address"
+					}
+				],
+				"name": "isMethodAllowed",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "blocks",
+				"outputs": [
+					{
+						"name": "exchangeEventful",
+						"type": "address"
+					},
+					{
+						"name": "sigVerifier",
+						"type": "address"
+					},
+					{
+						"name": "casper",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_exchange",
+						"type": "address"
+					}
+				],
+				"name": "isWhitelistedExchange",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_exchange",
+						"type": "address"
+					},
+					{
+						"name": "_isWhitelisted",
+						"type": "bool"
+					}
+				],
+				"name": "whitelistExchange",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_asset",
+						"type": "address"
+					}
+				],
+				"name": "isWhitelistedAsset",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_asset",
+						"type": "address"
+					},
+					{
+						"name": "_exchange",
+						"type": "address"
+					},
+					{
+						"name": "_isWhitelisted",
+						"type": "bool"
+					}
+				],
+				"name": "whitelistAssetOnExchange",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_exchangeEventful",
+						"type": "address"
+					}
+				],
+				"name": "setExchangeEventful",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_authority",
+						"type": "address"
+					},
+					{
+						"name": "_isWhitelisted",
+						"type": "bool"
+					}
+				],
+				"name": "setAuthority",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_tokenTransferProxy",
+						"type": "address"
+					},
+					{
+						"name": "_isWhitelisted",
+						"type": "bool"
+					}
+				],
+				"name": "whitelistTokenTransferProxy",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_exchange",
+						"type": "address"
+					},
+					{
+						"name": "_adapter",
+						"type": "address"
+					}
+				],
+				"name": "setExchangeAdapter",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_whitelister",
+						"type": "address"
+					},
+					{
+						"name": "_isWhitelisted",
+						"type": "bool"
+					}
+				],
+				"name": "setWhitelister",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_asset",
+						"type": "address"
+					},
+					{
+						"name": "_isWhitelisted",
+						"type": "bool"
+					}
+				],
+				"name": "whitelistAsset",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "types",
+				"outputs": [
+					{
+						"name": "types",
+						"type": "string"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_sigVerifier",
+						"type": "address"
+					}
+				],
+				"name": "setSignatureVerifier",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"name": "_exchange",
+						"type": "address"
+					}
+				],
+				"name": "canTradeTokenOnExchange",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_wrapper",
+						"type": "address"
+					}
+				],
+				"name": "isWhitelistedWrapper",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_method",
+						"type": "bytes4"
+					},
+					{
+						"name": "_adapter",
+						"type": "address"
+					},
+					{
+						"name": "_isWhitelisted",
+						"type": "bool"
+					}
+				],
+				"name": "whitelistMethod",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "authority",
+						"type": "address"
+					}
+				],
+				"name": "AuthoritySet",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "whitelister",
+						"type": "address"
+					}
+				],
+				"name": "WhitelisterSet",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "WhitelistedAsset",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "exchange",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "WhitelistedExchange",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "wrapper",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "WhitelistedWrapper",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "proxy",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "WhitelistedProxy",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "method",
+						"type": "bytes4"
+					},
+					{
+						"indexed": true,
+						"name": "adapter",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "WhitelistedMethod",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "sigVerifier",
+						"type": "address"
+					}
+				],
+				"name": "NewSigVerifier",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "exchangeEventful",
+						"type": "address"
+					}
+				],
+				"name": "NewExchangeEventful",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "casper",
+						"type": "address"
+					}
+				],
+				"name": "NewCasper",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"name": "old",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"name": "current",
+						"type": "address"
+					}
+				],
+				"name": "NewOwner",
+				"type": "event"
+			}
+		],
+		"devdoc": {
+			"author": "Gabriele Rigo - <gab@rigoblock.com>",
+			"methods": {
+				"canTradeTokenOnExchange(address,address)": {
+					"details": "Checkes whether a token is allowed on an exchange",
+					"params": {
+						"_exchange": "Address of the exchange",
+						"_token": "Address of the token"
+					},
+					"return": "Bool the token is whitelisted on the exchange"
+				},
+				"canWrapTokenOnWrapper(address,address)": {
+					"details": "Checkes whether a token is allowed on a wrapper",
+					"params": {
+						"_token": "Address of the token",
+						"_wrapper": "Address of the token wrapper"
+					},
+					"return": "Bool the token is whitelisted on the exchange"
+				},
+				"getCasper()": {
+					"details": "Provides the address of the casper contract",
+					"return": "Address of the casper contract"
+				},
+				"getExchangeAdapter(address)": {
+					"details": "Provides the address of the exchange adapter",
+					"params": {
+						"_exchange": "Address of the exchange"
+					},
+					"return": "Address of the adapter"
+				},
+				"getSigVerifier()": {
+					"details": "Provides the address of the signature verifier",
+					"return": "Address of the verifier"
+				},
+				"isAuthority(address)": {
+					"details": "Provides whether an address is an authority",
+					"params": {
+						"_authority": "Address of the target authority"
+					},
+					"return": "Bool is whitelisted"
+				},
+				"isCasperInitialized()": {
+					"details": "Checkes whether casper has been inizialized",
+					"return": "Bool the casper contract has been initialized"
+				},
+				"isMethodAllowed(bytes4,address)": {
+					"details": "Checkes whether a method is allowed on an exchange",
+					"params": {
+						"_adapter": "Address of the exchange",
+						"_method": "Bytes of the function signature"
+					},
+					"return": "Bool the method is allowed"
+				},
+				"isWhitelistedAsset(address)": {
+					"details": "Provides whether an asset is whitelisted",
+					"params": {
+						"_asset": "Address of the target asset"
+					},
+					"return": "Bool is whitelisted"
+				},
+				"isWhitelistedExchange(address)": {
+					"details": "Provides whether an exchange is whitelisted",
+					"params": {
+						"_exchange": "Address of the target exchange"
+					},
+					"return": "Bool is whitelisted"
+				},
+				"isWhitelistedProxy(address)": {
+					"details": "Provides whether a proxy is whitelisted",
+					"params": {
+						"_tokenTransferProxy": "Address of the proxy"
+					},
+					"return": "Bool is whitelisted"
+				},
+				"isWhitelistedWrapper(address)": {
+					"details": "Provides whether a token wrapper is whitelisted",
+					"params": {
+						"_wrapper": "Address of the target exchange"
+					},
+					"return": "Bool is whitelisted"
+				},
+				"setAuthority(address,bool)": {
+					"details": "Allows the owner to whitelist an authority",
+					"params": {
+						"_authority": "Address of the authority",
+						"_isWhitelisted": "Bool whitelisted"
+					}
+				},
+				"setCasper(address)": {
+					"details": "Allows the owner to set the casper contract",
+					"params": {
+						"_casper": "Address of the casper contract"
+					}
+				},
+				"setExchangeAdapter(address,address)": {
+					"details": "Allows the owner to associate an exchange to its adapter",
+					"params": {
+						"_adapter": "Address of the adapter",
+						"_exchange": "Address of the exchange"
+					}
+				},
+				"setExchangeEventful(address)": {
+					"details": "Allows the owner to set the exchange eventful",
+					"params": {
+						"_exchangeEventful": "Address of the exchange logs contract"
+					}
+				},
+				"setSignatureVerifier(address)": {
+					"details": "Allows the owner to set the signature verifier",
+					"params": {
+						"_sigVerifier": "Address of the verifier contract"
+					}
+				},
+				"setWhitelister(address,bool)": {
+					"details": "Allows the owner to whitelist a whitelister",
+					"params": {
+						"_isWhitelisted": "Bool whitelisted",
+						"_whitelister": "Address of the whitelister"
+					}
+				},
+				"whitelistAsset(address,bool)": {
+					"details": "Allows a whitelister to whitelist an asset",
+					"params": {
+						"_asset": "Address of the token",
+						"_isWhitelisted": "Bool whitelisted"
+					}
+				},
+				"whitelistAssetOnExchange(address,address,bool)": {
+					"details": "Allows a whitelister to enable trading on a particular exchange",
+					"params": {
+						"_asset": "Address of the token",
+						"_exchange": "Address of the exchange",
+						"_isWhitelisted": "Bool whitelisted"
+					}
+				},
+				"whitelistExchange(address,bool)": {
+					"details": "Allows a whitelister to whitelist an exchange",
+					"params": {
+						"_exchange": "Address of the target exchange",
+						"_isWhitelisted": "Bool whitelisted"
+					}
+				},
+				"whitelistMethod(bytes4,address,bool)": {
+					"details": "Allows an admin to whitelist a factory",
+					"params": {
+						"_isWhitelisted": "Bool whitelisted",
+						"_method": "Hex of the function ABI"
+					}
+				},
+				"whitelistTokenOnWrapper(address,address,bool)": {
+					"details": "Allows a whitelister to enable assiciate wrappers to a token",
+					"params": {
+						"_isWhitelisted": "Bool whitelisted",
+						"_token": "Address of the token",
+						"_wrapper": "Address of the exchange"
+					}
+				},
+				"whitelistTokenTransferProxy(address,bool)": {
+					"details": "Allows a whitelister to whitelist a tokenTransferProxy",
+					"params": {
+						"_isWhitelisted": "Bool whitelisted",
+						"_tokenTransferProxy": "Address of the proxy"
+					}
+				},
+				"whitelistWrapper(address,bool)": {
+					"details": "Allows a whitelister to whitelist an token wrapper",
+					"params": {
+						"_isWhitelisted": "Bool whitelisted",
+						"_wrapper": "Address of the target token wrapper"
+					}
+				}
+			},
+			"title": "Exchanges Authority - A helper contract for the exchange adapters."
+		},
+		"evm": {
+			"bytecode": {
+				"linkReferences": {},
+				"object": "0x608060405260008054600160a060020a03191633179055611512806100256000396000f3fe60806040526004361061017f5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146101845780631a68f034146101b95780632314d79c146101e25780632330f247146102135780633bd89497146102465780633f7532e214610281578063418a56e4146102b4578063485ff697146102f95780634da07da31461032c57806358c860f9146103675780635b28556d1461039a5780635e5c06e2146103af5780637ecf2c2f146104055780638da5cb5b14610448578063967ff23e1461045d5780639aa4d0a01461049d578063a3254102146104d0578063ab1dc4271461050b578063abda23711461053e578063b191f13b14610583578063b5f0d35c146105b6578063bdcc542f146105f1578063c4ef5c851461062c578063c91b014914610667578063cba91dd2146106a2578063ccbff979146106dd578063e08a660514610767578063f1915b171461079a578063f3229cda146107d5578063fb34c29014610808575b600080fd5b34801561019057600080fd5b506101b7600480360360208110156101a757600080fd5b5035600160a060020a0316610853565b005b3480156101c557600080fd5b506101ce6108cd565b604080519115158252519081900360200190f35b3480156101ee57600080fd5b506101f76108ee565b60408051600160a060020a039092168252519081900360200190f35b34801561021f57600080fd5b506101ce6004803603602081101561023657600080fd5b5035600160a060020a03166108fd565b34801561025257600080fd5b506101b76004803603604081101561026957600080fd5b50600160a060020a0381351690602001351515610930565b34801561028d57600080fd5b506101b7600480360360208110156102a457600080fd5b5035600160a060020a0316610a17565b3480156102c057600080fd5b506101b7600480360360608110156102d757600080fd5b50600160a060020a038135811691602081013590911690604001351515610a94565b34801561030557600080fd5b506101f76004803603602081101561031c57600080fd5b5035600160a060020a0316610b2a565b34801561033857600080fd5b506101ce6004803603604081101561034f57600080fd5b50600160a060020a0381358116916020013516610b48565b34801561037357600080fd5b506101ce6004803603602081101561038a57600080fd5b5035600160a060020a0316610b77565b3480156103a657600080fd5b506101f7610bac565b3480156103bb57600080fd5b506103e2600480360360208110156103d257600080fd5b5035600160a060020a0316610bbb565b60408051600160a060020a03909316835290151560208301528051918290030190f35b34801561041157600080fd5b506101ce6004803603604081101561042857600080fd5b508035600160e060020a0319169060200135600160a060020a0316610be2565b34801561045457600080fd5b506101f7610c16565b34801561046957600080fd5b50610472610c25565b60408051600160a060020a039485168152928416602084015292168183015290519081900360600190f35b3480156104a957600080fd5b506101ce600480360360208110156104c057600080fd5b5035600160a060020a0316610c42565b3480156104dc57600080fd5b506101b7600480360360408110156104f357600080fd5b50600160a060020a0381351690602001351515610c73565b34801561051757600080fd5b506101ce6004803603602081101561052e57600080fd5b5035600160a060020a0316610d54565b34801561054a57600080fd5b506101b76004803603606081101561056157600080fd5b50600160a060020a038135811691602081013590911690604001351515610d86565b34801561058f57600080fd5b506101b7600480360360208110156105a657600080fd5b5035600160a060020a0316610e1c565b3480156105c257600080fd5b506101b7600480360360408110156105d957600080fd5b50600160a060020a0381351690602001351515610e83565b3480156105fd57600080fd5b506101b76004803603604081101561061457600080fd5b50600160a060020a0381351690602001351515610ea8565b34801561063857600080fd5b506101b76004803603604081101561064f57600080fd5b50600160a060020a0381358116916020013516610f91565b34801561067357600080fd5b506101b76004803603604081101561068a57600080fd5b50600160a060020a0381351690602001351515610fef565b3480156106ae57600080fd5b506101b7600480360360408110156106c557600080fd5b50600160a060020a0381351690602001351515611010565b3480156106e957600080fd5b506106f26110f3565b6040805160208082528351818301528351919283929083019185019080838360005b8381101561072c578181015183820152602001610714565b50505050905090810190601f1680156107595780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b34801561077357600080fd5b506101b76004803603602081101561078a57600080fd5b5035600160a060020a0316611185565b3480156107a657600080fd5b506101ce600480360360408110156107bd57600080fd5b50600160a060020a03813581169160200135166111ec565b3480156107e157600080fd5b506101ce600480360360208110156107f857600080fd5b5035600160a060020a031661121b565b34801561081457600080fd5b506101b76004803603606081101561082b57600080fd5b50600160e060020a031981351690600160a060020a036020820135169060400135151561124f565b600054600160a060020a0316331461086a57600080fd5b600160a060020a038116151561087f57600080fd5b60008054600160a060020a031916600160a060020a0383811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b600354600160a060020a031660009081526004602052604090205460ff1690565b600354600160a060020a031690565b600160a060020a03166000908152600b602090815260408083206001808552019091529020546301000000900460ff1690565b610939336112ed565b151561094457600080fd5b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a0319938416891716178355808652600192830185528386208054640100000000830264ff000000001990911617905583518086018552878152600a8054948501815590965294516000805160206114c78339815191529092018054929097169116179094558351918252925191927f7aef30a25ce3716a35bed040cbe56c5c3634c99fd57f50fd37a8b9187af04c9d92918290030190a25050565b600054600160a060020a03163314610a2e57600080fd5b60038054600160a060020a031916600160a060020a038381169182178355600091825260046020526040808320805460ff19166001179055925492519216917ff62b7326bb5f6084a70482a099d3ded86de8cfbbfcea28e4f5b04ad693bf55ce9190a250565b600054600160a060020a0316331480610ab15750610ab1336112ed565b1515610abc57600080fd5b600160a060020a03828116600090815260086020908152604080832093871680845293825291829020805460ff1916851515908117909155825190815291517fb4e51190ac09d88100031de9d538eda33e031ff4ea0598f973dcb1531ce12eb19281900390910190a2505050565b600160a060020a039081166000908152600560205260409020541690565b600160a060020a0380821660009081526008602090815260408083209386168352929052205460ff1692915050565b600160a060020a03166000908152600b6020908152604080832060018085520190915290205465010000000000900460ff1690565b600254600160a060020a031690565b600b60205260009081526040902054600160a060020a0381169060a060020a900460ff1682565b600160a060020a03166000908152600660209081526040808320600160e060020a0319949094168352929052205460ff1690565b600054600160a060020a031681565b600154600254600354600160a060020a0392831692918216911683565b600160a060020a03166000908152600b60209081526040808320600180855201909152902054610100900460ff1690565b610c7c336112ed565b1515610c8757600080fd5b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a0319938416891716178355808652600192830185528386208054610100830261ff001990911617905583518086018552878152600a8054948501815590965294516000805160206114c78339815191529092018054929097169116179094558351918252925191927fb541b66aaab15841e9f8a3a40fc50b777ddd85dc6378cfc6389a973d2117c7d592918290030190a25050565b600160a060020a03166000908152600b6020908152604080832060018085520190915290205462010000900460ff1690565b600054600160a060020a0316331480610da35750610da3336112ed565b1515610dae57600080fd5b600160a060020a03828116600090815260076020908152604080832093871680845293825291829020805460ff1916851515908117909155825190815291517fb4e51190ac09d88100031de9d538eda33e031ff4ea0598f973dcb1531ce12eb19281900390910190a2505050565b600054600160a060020a03163314610e3357600080fd5b60018054600160a060020a031916600160a060020a0383811691909117918290556040519116907f357d1ba45e9ef3fb937f4b33a26a6efed1b2f40114460d16fbfce82aca41575590600090a250565b600054600160a060020a03163314610e9a57600080fd5b610ea48282611319565b5050565b610eb1336112ed565b1515610ebc57600080fd5b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a031993841689171617835580865260019283018552838620805465010000000000830265ff00000000001990911617905583518086018552878152600a8054948501815590965294516000805160206114c78339815191529092018054929097169116179094558351918252925191927f3f3eed7eaae83dc29780651cd8137dff8325c81eea4c1091ac034a5572e1e2ef92918290030190a25050565b600054600160a060020a03163314610fa857600080fd5b600160a060020a038281169082161415610fc157600080fd5b600160a060020a0391821660009081526005602052604090208054600160a060020a03191691909216179055565b600054600160a060020a0316331461100657600080fd5b610ea48282611408565b611019336112ed565b151561102457600080fd5b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a031993841689171617835580865260019283018552838620805462010000830262ff00001990911617905583518086018552878152600a8054948501815590965294516000805160206114c78339815191529092018054929097169116179094558351918252925191927fb4e51190ac09d88100031de9d538eda33e031ff4ea0598f973dcb1531ce12eb192918290030190a25050565b60098054604080516020601f6002600019610100600188161502019095169490940493840181900481028201810190925282815291839183018282801561117b5780601f106111505761010080835404028352916020019161117b565b820191906000526020600020905b81548152906001019060200180831161115e57829003601f168201915b5050505050905081565b600054600160a060020a0316331461119c57600080fd5b60028054600160a060020a031916600160a060020a0383811691909117918290556040519116907f95dcb20e52ed37833185c8b850bf9fa7990bdb0f232209c82b0a97a0a3a602e190600090a250565b600160a060020a0380821660009081526007602090815260408083209386168352929052205460ff1692915050565b600160a060020a03166000908152600b60209081526040808320600180855201909152902054640100000000900460ff1690565b600054600160a060020a031633148061126c575061126c336112ed565b151561127757600080fd5b600160a060020a0382166000818152600660209081526040808320600160e060020a0319881680855290835292819020805460ff1916861515908117909155815190815290517f3f8a1234a535cf651c4bcc3d4c56b68d7ff3264d0c4c8a3675245853f7851a11929181900390910190a3505050565b600160a060020a03166000908152600b6020908152604080832060018085520190915290205460ff1690565b600160a060020a0382166000818152600b602090815260408083208054600160a060020a03191690941760a060020a60ff02191660a060020a86151590810291909117855580845260019094019091529020805463ff0000001916630100000090920291909117905561138c8282611408565b60408051602081018252600160a060020a03848116808352600a8054600181018255600091825293516000805160206114c78339815191529094018054600160a060020a031916949093169390931790915591517f17898fd7375ca5152626d6fdd4ceb2bce6cc033c9b61e254dd0087d5f8b474309190a25050565b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a031993841689171617835580865260019283018552838620805460ff1916909117905582519384018352858452600a80549283018155855292516000805160206114c7833981519152909101805491909616921691909117909355915190917f0a9327c1e2b316c1e4412bc43a5bc2b0c629ecde4f1c9e21911d02ac8b3ad42d91a2505056fec65a7bb8d6351c1cf70c95a316cc6a92839c986682d98bc35f958f4883f9d2a8a165627a7a7230582032a454b0474fb87e231d15fc7ac10059c51864e0ea82582b5f42e17f54cd36d30029",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND CALLER OR SWAP1 SSTORE PUSH2 0x1512 DUP1 PUSH2 0x25 PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x4 CALLDATASIZE LT PUSH2 0x17F JUMPI PUSH4 0xFFFFFFFF PUSH29 0x100000000000000000000000000000000000000000000000000000000 PUSH1 0x0 CALLDATALOAD DIV AND PUSH4 0x13AF4035 DUP2 EQ PUSH2 0x184 JUMPI DUP1 PUSH4 0x1A68F034 EQ PUSH2 0x1B9 JUMPI DUP1 PUSH4 0x2314D79C EQ PUSH2 0x1E2 JUMPI DUP1 PUSH4 0x2330F247 EQ PUSH2 0x213 JUMPI DUP1 PUSH4 0x3BD89497 EQ PUSH2 0x246 JUMPI DUP1 PUSH4 0x3F7532E2 EQ PUSH2 0x281 JUMPI DUP1 PUSH4 0x418A56E4 EQ PUSH2 0x2B4 JUMPI DUP1 PUSH4 0x485FF697 EQ PUSH2 0x2F9 JUMPI DUP1 PUSH4 0x4DA07DA3 EQ PUSH2 0x32C JUMPI DUP1 PUSH4 0x58C860F9 EQ PUSH2 0x367 JUMPI DUP1 PUSH4 0x5B28556D EQ PUSH2 0x39A JUMPI DUP1 PUSH4 0x5E5C06E2 EQ PUSH2 0x3AF JUMPI DUP1 PUSH4 0x7ECF2C2F EQ PUSH2 0x405 JUMPI DUP1 PUSH4 0x8DA5CB5B EQ PUSH2 0x448 JUMPI DUP1 PUSH4 0x967FF23E EQ PUSH2 0x45D JUMPI DUP1 PUSH4 0x9AA4D0A0 EQ PUSH2 0x49D JUMPI DUP1 PUSH4 0xA3254102 EQ PUSH2 0x4D0 JUMPI DUP1 PUSH4 0xAB1DC427 EQ PUSH2 0x50B JUMPI DUP1 PUSH4 0xABDA2371 EQ PUSH2 0x53E JUMPI DUP1 PUSH4 0xB191F13B EQ PUSH2 0x583 JUMPI DUP1 PUSH4 0xB5F0D35C EQ PUSH2 0x5B6 JUMPI DUP1 PUSH4 0xBDCC542F EQ PUSH2 0x5F1 JUMPI DUP1 PUSH4 0xC4EF5C85 EQ PUSH2 0x62C JUMPI DUP1 PUSH4 0xC91B0149 EQ PUSH2 0x667 JUMPI DUP1 PUSH4 0xCBA91DD2 EQ PUSH2 0x6A2 JUMPI DUP1 PUSH4 0xCCBFF979 EQ PUSH2 0x6DD JUMPI DUP1 PUSH4 0xE08A6605 EQ PUSH2 0x767 JUMPI DUP1 PUSH4 0xF1915B17 EQ PUSH2 0x79A JUMPI DUP1 PUSH4 0xF3229CDA EQ PUSH2 0x7D5 JUMPI DUP1 PUSH4 0xFB34C290 EQ PUSH2 0x808 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x190 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x1A7 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0x853 JUMP JUMPDEST STOP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x1C5 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH2 0x8CD JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 ISZERO ISZERO DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x1EE JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1F7 PUSH2 0x8EE JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP1 SWAP3 AND DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x21F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x236 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0x8FD JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x252 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x269 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0x930 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x28D JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x2A4 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xA17 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x2C0 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x60 DUP2 LT ISZERO PUSH2 0x2D7 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 DUP2 ADD CALLDATALOAD SWAP1 SWAP2 AND SWAP1 PUSH1 0x40 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xA94 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x305 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1F7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x31C JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xB2A JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x338 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x34F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 ADD CALLDATALOAD AND PUSH2 0xB48 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x373 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x38A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xB77 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x3A6 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1F7 PUSH2 0xBAC JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x3BB JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x3E2 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x3D2 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xBBB JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP1 SWAP4 AND DUP4 MSTORE SWAP1 ISZERO ISZERO PUSH1 0x20 DUP4 ADD MSTORE DUP1 MLOAD SWAP2 DUP3 SWAP1 SUB ADD SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x411 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x428 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP DUP1 CALLDATALOAD PUSH1 0x1 PUSH1 0xE0 PUSH1 0x2 EXP SUB NOT AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xBE2 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x454 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1F7 PUSH2 0xC16 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x469 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x472 PUSH2 0xC25 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP5 DUP6 AND DUP2 MSTORE SWAP3 DUP5 AND PUSH1 0x20 DUP5 ADD MSTORE SWAP3 AND DUP2 DUP4 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x60 ADD SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x4A9 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x4C0 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xC42 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x4DC JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x4F3 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xC73 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x517 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x52E JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xD54 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x54A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x60 DUP2 LT ISZERO PUSH2 0x561 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 DUP2 ADD CALLDATALOAD SWAP1 SWAP2 AND SWAP1 PUSH1 0x40 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xD86 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x58F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x5A6 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xE1C JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x5C2 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x5D9 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xE83 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x5FD JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x614 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xEA8 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x638 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x64F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 ADD CALLDATALOAD AND PUSH2 0xF91 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x673 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x68A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xFEF JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x6AE JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x6C5 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0x1010 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x6E9 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x6F2 PUSH2 0x10F3 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x20 DUP1 DUP3 MSTORE DUP4 MLOAD DUP2 DUP4 ADD MSTORE DUP4 MLOAD SWAP2 SWAP3 DUP4 SWAP3 SWAP1 DUP4 ADD SWAP2 DUP6 ADD SWAP1 DUP1 DUP4 DUP4 PUSH1 0x0 JUMPDEST DUP4 DUP2 LT ISZERO PUSH2 0x72C JUMPI DUP2 DUP2 ADD MLOAD DUP4 DUP3 ADD MSTORE PUSH1 0x20 ADD PUSH2 0x714 JUMP JUMPDEST POP POP POP POP SWAP1 POP SWAP1 DUP2 ADD SWAP1 PUSH1 0x1F AND DUP1 ISZERO PUSH2 0x759 JUMPI DUP1 DUP3 SUB DUP1 MLOAD PUSH1 0x1 DUP4 PUSH1 0x20 SUB PUSH2 0x100 EXP SUB NOT AND DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP JUMPDEST POP SWAP3 POP POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x773 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x78A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0x1185 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x7A6 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x7BD JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 ADD CALLDATALOAD AND PUSH2 0x11EC JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x7E1 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x7F8 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0x121B JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x814 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x60 DUP2 LT ISZERO PUSH2 0x82B JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xE0 PUSH1 0x2 EXP SUB NOT DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB PUSH1 0x20 DUP3 ADD CALLDATALOAD AND SWAP1 PUSH1 0x40 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0x124F JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0x86A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 AND ISZERO ISZERO PUSH2 0x87F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP4 DUP2 AND SWAP2 DUP3 OR DUP1 DUP5 SSTORE PUSH1 0x40 MLOAD SWAP3 SWAP4 SWAP2 AND SWAP2 PUSH32 0x70AEA8D848E8A90FB7661B227DC522EB6395C3DAC71B63CB59EDD5C9899B2364 SWAP2 SWAP1 LOG3 POP JUMP JUMPDEST PUSH1 0x3 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x4 PUSH1 0x20 MSTORE PUSH1 0x40 SWAP1 KECCAK256 SLOAD PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x3 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND SWAP1 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH4 0x1000000 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH2 0x939 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0x944 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH5 0x100000000 DUP4 MUL PUSH5 0xFF00000000 NOT SWAP1 SWAP2 AND OR SWAP1 SSTORE DUP4 MLOAD DUP1 DUP7 ADD DUP6 MSTORE DUP8 DUP2 MSTORE PUSH1 0xA DUP1 SLOAD SWAP5 DUP6 ADD DUP2 SSTORE SWAP1 SWAP7 MSTORE SWAP5 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP3 ADD DUP1 SLOAD SWAP3 SWAP1 SWAP8 AND SWAP2 AND OR SWAP1 SWAP5 SSTORE DUP4 MLOAD SWAP2 DUP3 MSTORE SWAP3 MLOAD SWAP2 SWAP3 PUSH32 0x7AEF30A25CE3716A35BED040CBE56C5C3634C99FD57F50FD37A8B9187AF04C9D SWAP3 SWAP2 DUP3 SWAP1 SUB ADD SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0xA2E JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x3 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP4 DUP2 AND SWAP2 DUP3 OR DUP4 SSTORE PUSH1 0x0 SWAP2 DUP3 MSTORE PUSH1 0x4 PUSH1 0x20 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND PUSH1 0x1 OR SWAP1 SSTORE SWAP3 SLOAD SWAP3 MLOAD SWAP3 AND SWAP2 PUSH32 0xF62B7326BB5F6084A70482A099D3DED86DE8CFBBFCEA28E4F5B04AD693BF55CE SWAP2 SWAP1 LOG2 POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ DUP1 PUSH2 0xAB1 JUMPI POP PUSH2 0xAB1 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0xABC JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 DUP2 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x8 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 SWAP4 DUP8 AND DUP1 DUP5 MSTORE SWAP4 DUP3 MSTORE SWAP2 DUP3 SWAP1 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND DUP6 ISZERO ISZERO SWAP1 DUP2 OR SWAP1 SWAP2 SSTORE DUP3 MLOAD SWAP1 DUP2 MSTORE SWAP2 MLOAD PUSH32 0xB4E51190AC09D88100031DE9D538EDA33E031FF4EA0598F973DCB1531CE12EB1 SWAP3 DUP2 SWAP1 SUB SWAP1 SWAP2 ADD SWAP1 LOG2 POP POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP1 DUP2 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x5 PUSH1 0x20 MSTORE PUSH1 0x40 SWAP1 KECCAK256 SLOAD AND SWAP1 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP3 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x8 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 SWAP4 DUP7 AND DUP4 MSTORE SWAP3 SWAP1 MSTORE KECCAK256 SLOAD PUSH1 0xFF AND SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH6 0x10000000000 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x2 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND SWAP1 JUMP JUMPDEST PUSH1 0xB PUSH1 0x20 MSTORE PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x40 SWAP1 KECCAK256 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 AND SWAP1 PUSH1 0xA0 PUSH1 0x2 EXP SWAP1 DIV PUSH1 0xFF AND DUP3 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x6 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 PUSH1 0xE0 PUSH1 0x2 EXP SUB NOT SWAP5 SWAP1 SWAP5 AND DUP4 MSTORE SWAP3 SWAP1 MSTORE KECCAK256 SLOAD PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND DUP2 JUMP JUMPDEST PUSH1 0x1 SLOAD PUSH1 0x2 SLOAD PUSH1 0x3 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP3 DUP4 AND SWAP3 SWAP2 DUP3 AND SWAP2 AND DUP4 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH2 0x100 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH2 0xC7C CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0xC87 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH2 0x100 DUP4 MUL PUSH2 0xFF00 NOT SWAP1 SWAP2 AND OR SWAP1 SSTORE DUP4 MLOAD DUP1 DUP7 ADD DUP6 MSTORE DUP8 DUP2 MSTORE PUSH1 0xA DUP1 SLOAD SWAP5 DUP6 ADD DUP2 SSTORE SWAP1 SWAP7 MSTORE SWAP5 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP3 ADD DUP1 SLOAD SWAP3 SWAP1 SWAP8 AND SWAP2 AND OR SWAP1 SWAP5 SSTORE DUP4 MLOAD SWAP2 DUP3 MSTORE SWAP3 MLOAD SWAP2 SWAP3 PUSH32 0xB541B66AAAB15841E9F8A3A40FC50B777DDD85DC6378CFC6389A973D2117C7D5 SWAP3 SWAP2 DUP3 SWAP1 SUB ADD SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH3 0x10000 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ DUP1 PUSH2 0xDA3 JUMPI POP PUSH2 0xDA3 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0xDAE JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 DUP2 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x7 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 SWAP4 DUP8 AND DUP1 DUP5 MSTORE SWAP4 DUP3 MSTORE SWAP2 DUP3 SWAP1 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND DUP6 ISZERO ISZERO SWAP1 DUP2 OR SWAP1 SWAP2 SSTORE DUP3 MLOAD SWAP1 DUP2 MSTORE SWAP2 MLOAD PUSH32 0xB4E51190AC09D88100031DE9D538EDA33E031FF4EA0598F973DCB1531CE12EB1 SWAP3 DUP2 SWAP1 SUB SWAP1 SWAP2 ADD SWAP1 LOG2 POP POP POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0xE33 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP4 DUP2 AND SWAP2 SWAP1 SWAP2 OR SWAP2 DUP3 SWAP1 SSTORE PUSH1 0x40 MLOAD SWAP2 AND SWAP1 PUSH32 0x357D1BA45E9EF3FB937F4B33A26A6EFED1B2F40114460D16FBFCE82ACA415755 SWAP1 PUSH1 0x0 SWAP1 LOG2 POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0xE9A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0xEA4 DUP3 DUP3 PUSH2 0x1319 JUMP JUMPDEST POP POP JUMP JUMPDEST PUSH2 0xEB1 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0xEBC JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH6 0x10000000000 DUP4 MUL PUSH6 0xFF0000000000 NOT SWAP1 SWAP2 AND OR SWAP1 SSTORE DUP4 MLOAD DUP1 DUP7 ADD DUP6 MSTORE DUP8 DUP2 MSTORE PUSH1 0xA DUP1 SLOAD SWAP5 DUP6 ADD DUP2 SSTORE SWAP1 SWAP7 MSTORE SWAP5 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP3 ADD DUP1 SLOAD SWAP3 SWAP1 SWAP8 AND SWAP2 AND OR SWAP1 SWAP5 SSTORE DUP4 MLOAD SWAP2 DUP3 MSTORE SWAP3 MLOAD SWAP2 SWAP3 PUSH32 0x3F3EED7EAAE83DC29780651CD8137DFF8325C81EEA4C1091AC034A5572E1E2EF SWAP3 SWAP2 DUP3 SWAP1 SUB ADD SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0xFA8 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 DUP2 AND SWAP1 DUP3 AND EQ ISZERO PUSH2 0xFC1 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP2 DUP3 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x5 PUSH1 0x20 MSTORE PUSH1 0x40 SWAP1 KECCAK256 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND SWAP2 SWAP1 SWAP3 AND OR SWAP1 SSTORE JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0x1006 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0xEA4 DUP3 DUP3 PUSH2 0x1408 JUMP JUMPDEST PUSH2 0x1019 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0x1024 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH3 0x10000 DUP4 MUL PUSH3 0xFF0000 NOT SWAP1 SWAP2 AND OR SWAP1 SSTORE DUP4 MLOAD DUP1 DUP7 ADD DUP6 MSTORE DUP8 DUP2 MSTORE PUSH1 0xA DUP1 SLOAD SWAP5 DUP6 ADD DUP2 SSTORE SWAP1 SWAP7 MSTORE SWAP5 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP3 ADD DUP1 SLOAD SWAP3 SWAP1 SWAP8 AND SWAP2 AND OR SWAP1 SWAP5 SSTORE DUP4 MLOAD SWAP2 DUP3 MSTORE SWAP3 MLOAD SWAP2 SWAP3 PUSH32 0xB4E51190AC09D88100031DE9D538EDA33E031FF4EA0598F973DCB1531CE12EB1 SWAP3 SWAP2 DUP3 SWAP1 SUB ADD SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x9 DUP1 SLOAD PUSH1 0x40 DUP1 MLOAD PUSH1 0x20 PUSH1 0x1F PUSH1 0x2 PUSH1 0x0 NOT PUSH2 0x100 PUSH1 0x1 DUP9 AND ISZERO MUL ADD SWAP1 SWAP6 AND SWAP5 SWAP1 SWAP5 DIV SWAP4 DUP5 ADD DUP2 SWAP1 DIV DUP2 MUL DUP3 ADD DUP2 ADD SWAP1 SWAP3 MSTORE DUP3 DUP2 MSTORE SWAP2 DUP4 SWAP2 DUP4 ADD DUP3 DUP3 DUP1 ISZERO PUSH2 0x117B JUMPI DUP1 PUSH1 0x1F LT PUSH2 0x1150 JUMPI PUSH2 0x100 DUP1 DUP4 SLOAD DIV MUL DUP4 MSTORE SWAP2 PUSH1 0x20 ADD SWAP2 PUSH2 0x117B JUMP JUMPDEST DUP3 ADD SWAP2 SWAP1 PUSH1 0x0 MSTORE PUSH1 0x20 PUSH1 0x0 KECCAK256 SWAP1 JUMPDEST DUP2 SLOAD DUP2 MSTORE SWAP1 PUSH1 0x1 ADD SWAP1 PUSH1 0x20 ADD DUP1 DUP4 GT PUSH2 0x115E JUMPI DUP3 SWAP1 SUB PUSH1 0x1F AND DUP3 ADD SWAP2 JUMPDEST POP POP POP POP POP SWAP1 POP DUP2 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0x119C JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x2 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP4 DUP2 AND SWAP2 SWAP1 SWAP2 OR SWAP2 DUP3 SWAP1 SSTORE PUSH1 0x40 MLOAD SWAP2 AND SWAP1 PUSH32 0x95DCB20E52ED37833185C8B850BF9FA7990BDB0F232209C82B0A97A0A3A602E1 SWAP1 PUSH1 0x0 SWAP1 LOG2 POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP3 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x7 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 SWAP4 DUP7 AND DUP4 MSTORE SWAP3 SWAP1 MSTORE KECCAK256 SLOAD PUSH1 0xFF AND SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH5 0x100000000 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ DUP1 PUSH2 0x126C JUMPI POP PUSH2 0x126C CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0x1277 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0x6 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 PUSH1 0xE0 PUSH1 0x2 EXP SUB NOT DUP9 AND DUP1 DUP6 MSTORE SWAP1 DUP4 MSTORE SWAP3 DUP2 SWAP1 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND DUP7 ISZERO ISZERO SWAP1 DUP2 OR SWAP1 SWAP2 SSTORE DUP2 MLOAD SWAP1 DUP2 MSTORE SWAP1 MLOAD PUSH32 0x3F8A1234A535CF651C4BCC3D4C56B68D7FF3264D0C4C8A3675245853F7851A11 SWAP3 SWAP2 DUP2 SWAP1 SUB SWAP1 SWAP2 ADD SWAP1 LOG3 POP POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND SWAP1 SWAP5 OR PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT AND PUSH1 0xA0 PUSH1 0x2 EXP DUP7 ISZERO ISZERO SWAP1 DUP2 MUL SWAP2 SWAP1 SWAP2 OR DUP6 SSTORE DUP1 DUP5 MSTORE PUSH1 0x1 SWAP1 SWAP5 ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 DUP1 SLOAD PUSH4 0xFF000000 NOT AND PUSH4 0x1000000 SWAP1 SWAP3 MUL SWAP2 SWAP1 SWAP2 OR SWAP1 SSTORE PUSH2 0x138C DUP3 DUP3 PUSH2 0x1408 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x20 DUP2 ADD DUP3 MSTORE PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP5 DUP2 AND DUP1 DUP4 MSTORE PUSH1 0xA DUP1 SLOAD PUSH1 0x1 DUP2 ADD DUP3 SSTORE PUSH1 0x0 SWAP2 DUP3 MSTORE SWAP4 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP5 ADD DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND SWAP5 SWAP1 SWAP4 AND SWAP4 SWAP1 SWAP4 OR SWAP1 SWAP2 SSTORE SWAP2 MLOAD PUSH32 0x17898FD7375CA5152626D6FDD4CEB2BCE6CC033C9B61E254DD0087D5F8B47430 SWAP2 SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND SWAP1 SWAP2 OR SWAP1 SSTORE DUP3 MLOAD SWAP4 DUP5 ADD DUP4 MSTORE DUP6 DUP5 MSTORE PUSH1 0xA DUP1 SLOAD SWAP3 DUP4 ADD DUP2 SSTORE DUP6 MSTORE SWAP3 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP2 ADD DUP1 SLOAD SWAP2 SWAP1 SWAP7 AND SWAP3 AND SWAP2 SWAP1 SWAP2 OR SWAP1 SWAP4 SSTORE SWAP2 MLOAD SWAP1 SWAP2 PUSH32 0xA9327C1E2B316C1E4412BC43A5BC2B0C629ECDE4F1C9E21911D02AC8B3AD42D SWAP2 LOG2 POP POP JUMP INVALID 0xc6 GAS PUSH28 0xB8D6351C1CF70C95A316CC6A92839C986682D98BC35F958F4883F9D2 0xa8 LOG1 PUSH6 0x627A7A723058 KECCAK256 ORIGIN LOG4 SLOAD 0xb0 0x47 0x4f 0xb8 PUSH31 0x231D15FC7AC10059C51864E0EA82582B5F42E17F54CD36D300290000000000 ",
+				"sourceMap": "899:13217:15:-;;;262:5:37;:18;;-1:-1:-1;;;;;;262:18:37;270:10;262:18;;;899:13217:15;;;;;;"
+			},
+			"deployedBytecode": {
+				"linkReferences": {},
+				"object": "0x60806040526004361061017f5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166313af403581146101845780631a68f034146101b95780632314d79c146101e25780632330f247146102135780633bd89497146102465780633f7532e214610281578063418a56e4146102b4578063485ff697146102f95780634da07da31461032c57806358c860f9146103675780635b28556d1461039a5780635e5c06e2146103af5780637ecf2c2f146104055780638da5cb5b14610448578063967ff23e1461045d5780639aa4d0a01461049d578063a3254102146104d0578063ab1dc4271461050b578063abda23711461053e578063b191f13b14610583578063b5f0d35c146105b6578063bdcc542f146105f1578063c4ef5c851461062c578063c91b014914610667578063cba91dd2146106a2578063ccbff979146106dd578063e08a660514610767578063f1915b171461079a578063f3229cda146107d5578063fb34c29014610808575b600080fd5b34801561019057600080fd5b506101b7600480360360208110156101a757600080fd5b5035600160a060020a0316610853565b005b3480156101c557600080fd5b506101ce6108cd565b604080519115158252519081900360200190f35b3480156101ee57600080fd5b506101f76108ee565b60408051600160a060020a039092168252519081900360200190f35b34801561021f57600080fd5b506101ce6004803603602081101561023657600080fd5b5035600160a060020a03166108fd565b34801561025257600080fd5b506101b76004803603604081101561026957600080fd5b50600160a060020a0381351690602001351515610930565b34801561028d57600080fd5b506101b7600480360360208110156102a457600080fd5b5035600160a060020a0316610a17565b3480156102c057600080fd5b506101b7600480360360608110156102d757600080fd5b50600160a060020a038135811691602081013590911690604001351515610a94565b34801561030557600080fd5b506101f76004803603602081101561031c57600080fd5b5035600160a060020a0316610b2a565b34801561033857600080fd5b506101ce6004803603604081101561034f57600080fd5b50600160a060020a0381358116916020013516610b48565b34801561037357600080fd5b506101ce6004803603602081101561038a57600080fd5b5035600160a060020a0316610b77565b3480156103a657600080fd5b506101f7610bac565b3480156103bb57600080fd5b506103e2600480360360208110156103d257600080fd5b5035600160a060020a0316610bbb565b60408051600160a060020a03909316835290151560208301528051918290030190f35b34801561041157600080fd5b506101ce6004803603604081101561042857600080fd5b508035600160e060020a0319169060200135600160a060020a0316610be2565b34801561045457600080fd5b506101f7610c16565b34801561046957600080fd5b50610472610c25565b60408051600160a060020a039485168152928416602084015292168183015290519081900360600190f35b3480156104a957600080fd5b506101ce600480360360208110156104c057600080fd5b5035600160a060020a0316610c42565b3480156104dc57600080fd5b506101b7600480360360408110156104f357600080fd5b50600160a060020a0381351690602001351515610c73565b34801561051757600080fd5b506101ce6004803603602081101561052e57600080fd5b5035600160a060020a0316610d54565b34801561054a57600080fd5b506101b76004803603606081101561056157600080fd5b50600160a060020a038135811691602081013590911690604001351515610d86565b34801561058f57600080fd5b506101b7600480360360208110156105a657600080fd5b5035600160a060020a0316610e1c565b3480156105c257600080fd5b506101b7600480360360408110156105d957600080fd5b50600160a060020a0381351690602001351515610e83565b3480156105fd57600080fd5b506101b76004803603604081101561061457600080fd5b50600160a060020a0381351690602001351515610ea8565b34801561063857600080fd5b506101b76004803603604081101561064f57600080fd5b50600160a060020a0381358116916020013516610f91565b34801561067357600080fd5b506101b76004803603604081101561068a57600080fd5b50600160a060020a0381351690602001351515610fef565b3480156106ae57600080fd5b506101b7600480360360408110156106c557600080fd5b50600160a060020a0381351690602001351515611010565b3480156106e957600080fd5b506106f26110f3565b6040805160208082528351818301528351919283929083019185019080838360005b8381101561072c578181015183820152602001610714565b50505050905090810190601f1680156107595780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b34801561077357600080fd5b506101b76004803603602081101561078a57600080fd5b5035600160a060020a0316611185565b3480156107a657600080fd5b506101ce600480360360408110156107bd57600080fd5b50600160a060020a03813581169160200135166111ec565b3480156107e157600080fd5b506101ce600480360360208110156107f857600080fd5b5035600160a060020a031661121b565b34801561081457600080fd5b506101b76004803603606081101561082b57600080fd5b50600160e060020a031981351690600160a060020a036020820135169060400135151561124f565b600054600160a060020a0316331461086a57600080fd5b600160a060020a038116151561087f57600080fd5b60008054600160a060020a031916600160a060020a0383811691821780845560405192939116917f70aea8d848e8a90fb7661b227dc522eb6395c3dac71b63cb59edd5c9899b23649190a350565b600354600160a060020a031660009081526004602052604090205460ff1690565b600354600160a060020a031690565b600160a060020a03166000908152600b602090815260408083206001808552019091529020546301000000900460ff1690565b610939336112ed565b151561094457600080fd5b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a0319938416891716178355808652600192830185528386208054640100000000830264ff000000001990911617905583518086018552878152600a8054948501815590965294516000805160206114c78339815191529092018054929097169116179094558351918252925191927f7aef30a25ce3716a35bed040cbe56c5c3634c99fd57f50fd37a8b9187af04c9d92918290030190a25050565b600054600160a060020a03163314610a2e57600080fd5b60038054600160a060020a031916600160a060020a038381169182178355600091825260046020526040808320805460ff19166001179055925492519216917ff62b7326bb5f6084a70482a099d3ded86de8cfbbfcea28e4f5b04ad693bf55ce9190a250565b600054600160a060020a0316331480610ab15750610ab1336112ed565b1515610abc57600080fd5b600160a060020a03828116600090815260086020908152604080832093871680845293825291829020805460ff1916851515908117909155825190815291517fb4e51190ac09d88100031de9d538eda33e031ff4ea0598f973dcb1531ce12eb19281900390910190a2505050565b600160a060020a039081166000908152600560205260409020541690565b600160a060020a0380821660009081526008602090815260408083209386168352929052205460ff1692915050565b600160a060020a03166000908152600b6020908152604080832060018085520190915290205465010000000000900460ff1690565b600254600160a060020a031690565b600b60205260009081526040902054600160a060020a0381169060a060020a900460ff1682565b600160a060020a03166000908152600660209081526040808320600160e060020a0319949094168352929052205460ff1690565b600054600160a060020a031681565b600154600254600354600160a060020a0392831692918216911683565b600160a060020a03166000908152600b60209081526040808320600180855201909152902054610100900460ff1690565b610c7c336112ed565b1515610c8757600080fd5b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a0319938416891716178355808652600192830185528386208054610100830261ff001990911617905583518086018552878152600a8054948501815590965294516000805160206114c78339815191529092018054929097169116179094558351918252925191927fb541b66aaab15841e9f8a3a40fc50b777ddd85dc6378cfc6389a973d2117c7d592918290030190a25050565b600160a060020a03166000908152600b6020908152604080832060018085520190915290205462010000900460ff1690565b600054600160a060020a0316331480610da35750610da3336112ed565b1515610dae57600080fd5b600160a060020a03828116600090815260076020908152604080832093871680845293825291829020805460ff1916851515908117909155825190815291517fb4e51190ac09d88100031de9d538eda33e031ff4ea0598f973dcb1531ce12eb19281900390910190a2505050565b600054600160a060020a03163314610e3357600080fd5b60018054600160a060020a031916600160a060020a0383811691909117918290556040519116907f357d1ba45e9ef3fb937f4b33a26a6efed1b2f40114460d16fbfce82aca41575590600090a250565b600054600160a060020a03163314610e9a57600080fd5b610ea48282611319565b5050565b610eb1336112ed565b1515610ebc57600080fd5b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a031993841689171617835580865260019283018552838620805465010000000000830265ff00000000001990911617905583518086018552878152600a8054948501815590965294516000805160206114c78339815191529092018054929097169116179094558351918252925191927f3f3eed7eaae83dc29780651cd8137dff8325c81eea4c1091ac034a5572e1e2ef92918290030190a25050565b600054600160a060020a03163314610fa857600080fd5b600160a060020a038281169082161415610fc157600080fd5b600160a060020a0391821660009081526005602052604090208054600160a060020a03191691909216179055565b600054600160a060020a0316331461100657600080fd5b610ea48282611408565b611019336112ed565b151561102457600080fd5b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a031993841689171617835580865260019283018552838620805462010000830262ff00001990911617905583518086018552878152600a8054948501815590965294516000805160206114c78339815191529092018054929097169116179094558351918252925191927fb4e51190ac09d88100031de9d538eda33e031ff4ea0598f973dcb1531ce12eb192918290030190a25050565b60098054604080516020601f6002600019610100600188161502019095169490940493840181900481028201810190925282815291839183018282801561117b5780601f106111505761010080835404028352916020019161117b565b820191906000526020600020905b81548152906001019060200180831161115e57829003601f168201915b5050505050905081565b600054600160a060020a0316331461119c57600080fd5b60028054600160a060020a031916600160a060020a0383811691909117918290556040519116907f95dcb20e52ed37833185c8b850bf9fa7990bdb0f232209c82b0a97a0a3a602e190600090a250565b600160a060020a0380821660009081526007602090815260408083209386168352929052205460ff1692915050565b600160a060020a03166000908152600b60209081526040808320600180855201909152902054640100000000900460ff1690565b600054600160a060020a031633148061126c575061126c336112ed565b151561127757600080fd5b600160a060020a0382166000818152600660209081526040808320600160e060020a0319881680855290835292819020805460ff1916861515908117909155815190815290517f3f8a1234a535cf651c4bcc3d4c56b68d7ff3264d0c4c8a3675245853f7851a11929181900390910190a3505050565b600160a060020a03166000908152600b6020908152604080832060018085520190915290205460ff1690565b600160a060020a0382166000818152600b602090815260408083208054600160a060020a03191690941760a060020a60ff02191660a060020a86151590810291909117855580845260019094019091529020805463ff0000001916630100000090920291909117905561138c8282611408565b60408051602081018252600160a060020a03848116808352600a8054600181018255600091825293516000805160206114c78339815191529094018054600160a060020a031916949093169390931790915591517f17898fd7375ca5152626d6fdd4ceb2bce6cc033c9b61e254dd0087d5f8b474309190a25050565b600160a060020a038083166000818152600b60209081526040808320805487151560a060020a810260a060020a60ff0219600160a060020a031993841689171617835580865260019283018552838620805460ff1916909117905582519384018352858452600a80549283018155855292516000805160206114c7833981519152909101805491909616921691909117909355915190917f0a9327c1e2b316c1e4412bc43a5bc2b0c629ecde4f1c9e21911d02ac8b3ad42d91a2505056fec65a7bb8d6351c1cf70c95a316cc6a92839c986682d98bc35f958f4883f9d2a8a165627a7a7230582032a454b0474fb87e231d15fc7ac10059c51864e0ea82582b5f42e17f54cd36d30029",
+				"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x4 CALLDATASIZE LT PUSH2 0x17F JUMPI PUSH4 0xFFFFFFFF PUSH29 0x100000000000000000000000000000000000000000000000000000000 PUSH1 0x0 CALLDATALOAD DIV AND PUSH4 0x13AF4035 DUP2 EQ PUSH2 0x184 JUMPI DUP1 PUSH4 0x1A68F034 EQ PUSH2 0x1B9 JUMPI DUP1 PUSH4 0x2314D79C EQ PUSH2 0x1E2 JUMPI DUP1 PUSH4 0x2330F247 EQ PUSH2 0x213 JUMPI DUP1 PUSH4 0x3BD89497 EQ PUSH2 0x246 JUMPI DUP1 PUSH4 0x3F7532E2 EQ PUSH2 0x281 JUMPI DUP1 PUSH4 0x418A56E4 EQ PUSH2 0x2B4 JUMPI DUP1 PUSH4 0x485FF697 EQ PUSH2 0x2F9 JUMPI DUP1 PUSH4 0x4DA07DA3 EQ PUSH2 0x32C JUMPI DUP1 PUSH4 0x58C860F9 EQ PUSH2 0x367 JUMPI DUP1 PUSH4 0x5B28556D EQ PUSH2 0x39A JUMPI DUP1 PUSH4 0x5E5C06E2 EQ PUSH2 0x3AF JUMPI DUP1 PUSH4 0x7ECF2C2F EQ PUSH2 0x405 JUMPI DUP1 PUSH4 0x8DA5CB5B EQ PUSH2 0x448 JUMPI DUP1 PUSH4 0x967FF23E EQ PUSH2 0x45D JUMPI DUP1 PUSH4 0x9AA4D0A0 EQ PUSH2 0x49D JUMPI DUP1 PUSH4 0xA3254102 EQ PUSH2 0x4D0 JUMPI DUP1 PUSH4 0xAB1DC427 EQ PUSH2 0x50B JUMPI DUP1 PUSH4 0xABDA2371 EQ PUSH2 0x53E JUMPI DUP1 PUSH4 0xB191F13B EQ PUSH2 0x583 JUMPI DUP1 PUSH4 0xB5F0D35C EQ PUSH2 0x5B6 JUMPI DUP1 PUSH4 0xBDCC542F EQ PUSH2 0x5F1 JUMPI DUP1 PUSH4 0xC4EF5C85 EQ PUSH2 0x62C JUMPI DUP1 PUSH4 0xC91B0149 EQ PUSH2 0x667 JUMPI DUP1 PUSH4 0xCBA91DD2 EQ PUSH2 0x6A2 JUMPI DUP1 PUSH4 0xCCBFF979 EQ PUSH2 0x6DD JUMPI DUP1 PUSH4 0xE08A6605 EQ PUSH2 0x767 JUMPI DUP1 PUSH4 0xF1915B17 EQ PUSH2 0x79A JUMPI DUP1 PUSH4 0xF3229CDA EQ PUSH2 0x7D5 JUMPI DUP1 PUSH4 0xFB34C290 EQ PUSH2 0x808 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x190 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x1A7 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0x853 JUMP JUMPDEST STOP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x1C5 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH2 0x8CD JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 ISZERO ISZERO DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x1EE JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1F7 PUSH2 0x8EE JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP1 SWAP3 AND DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x21F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x236 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0x8FD JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x252 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x269 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0x930 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x28D JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x2A4 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xA17 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x2C0 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x60 DUP2 LT ISZERO PUSH2 0x2D7 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 DUP2 ADD CALLDATALOAD SWAP1 SWAP2 AND SWAP1 PUSH1 0x40 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xA94 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x305 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1F7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x31C JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xB2A JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x338 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x34F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 ADD CALLDATALOAD AND PUSH2 0xB48 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x373 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x38A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xB77 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x3A6 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1F7 PUSH2 0xBAC JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x3BB JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x3E2 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x3D2 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xBBB JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP1 SWAP4 AND DUP4 MSTORE SWAP1 ISZERO ISZERO PUSH1 0x20 DUP4 ADD MSTORE DUP1 MLOAD SWAP2 DUP3 SWAP1 SUB ADD SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x411 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x428 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP DUP1 CALLDATALOAD PUSH1 0x1 PUSH1 0xE0 PUSH1 0x2 EXP SUB NOT AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xBE2 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x454 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1F7 PUSH2 0xC16 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x469 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x472 PUSH2 0xC25 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP5 DUP6 AND DUP2 MSTORE SWAP3 DUP5 AND PUSH1 0x20 DUP5 ADD MSTORE SWAP3 AND DUP2 DUP4 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x60 ADD SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x4A9 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x4C0 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xC42 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x4DC JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x4F3 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xC73 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x517 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x52E JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xD54 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x54A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x60 DUP2 LT ISZERO PUSH2 0x561 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 DUP2 ADD CALLDATALOAD SWAP1 SWAP2 AND SWAP1 PUSH1 0x40 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xD86 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x58F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x5A6 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0xE1C JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x5C2 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x5D9 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xE83 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x5FD JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x614 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xEA8 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x638 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x64F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 ADD CALLDATALOAD AND PUSH2 0xF91 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x673 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x68A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0xFEF JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x6AE JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x6C5 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x20 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0x1010 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x6E9 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x6F2 PUSH2 0x10F3 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x20 DUP1 DUP3 MSTORE DUP4 MLOAD DUP2 DUP4 ADD MSTORE DUP4 MLOAD SWAP2 SWAP3 DUP4 SWAP3 SWAP1 DUP4 ADD SWAP2 DUP6 ADD SWAP1 DUP1 DUP4 DUP4 PUSH1 0x0 JUMPDEST DUP4 DUP2 LT ISZERO PUSH2 0x72C JUMPI DUP2 DUP2 ADD MLOAD DUP4 DUP3 ADD MSTORE PUSH1 0x20 ADD PUSH2 0x714 JUMP JUMPDEST POP POP POP POP SWAP1 POP SWAP1 DUP2 ADD SWAP1 PUSH1 0x1F AND DUP1 ISZERO PUSH2 0x759 JUMPI DUP1 DUP3 SUB DUP1 MLOAD PUSH1 0x1 DUP4 PUSH1 0x20 SUB PUSH2 0x100 EXP SUB NOT AND DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP JUMPDEST POP SWAP3 POP POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x773 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x78A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0x1185 JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x7A6 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x40 DUP2 LT ISZERO PUSH2 0x7BD JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 CALLDATALOAD DUP2 AND SWAP2 PUSH1 0x20 ADD CALLDATALOAD AND PUSH2 0x11EC JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x7E1 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1CE PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x7F8 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH2 0x121B JUMP JUMPDEST CALLVALUE DUP1 ISZERO PUSH2 0x814 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH2 0x1B7 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x60 DUP2 LT ISZERO PUSH2 0x82B JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x1 PUSH1 0xE0 PUSH1 0x2 EXP SUB NOT DUP2 CALLDATALOAD AND SWAP1 PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB PUSH1 0x20 DUP3 ADD CALLDATALOAD AND SWAP1 PUSH1 0x40 ADD CALLDATALOAD ISZERO ISZERO PUSH2 0x124F JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0x86A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 AND ISZERO ISZERO PUSH2 0x87F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP4 DUP2 AND SWAP2 DUP3 OR DUP1 DUP5 SSTORE PUSH1 0x40 MLOAD SWAP3 SWAP4 SWAP2 AND SWAP2 PUSH32 0x70AEA8D848E8A90FB7661B227DC522EB6395C3DAC71B63CB59EDD5C9899B2364 SWAP2 SWAP1 LOG3 POP JUMP JUMPDEST PUSH1 0x3 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x4 PUSH1 0x20 MSTORE PUSH1 0x40 SWAP1 KECCAK256 SLOAD PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x3 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND SWAP1 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH4 0x1000000 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH2 0x939 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0x944 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH5 0x100000000 DUP4 MUL PUSH5 0xFF00000000 NOT SWAP1 SWAP2 AND OR SWAP1 SSTORE DUP4 MLOAD DUP1 DUP7 ADD DUP6 MSTORE DUP8 DUP2 MSTORE PUSH1 0xA DUP1 SLOAD SWAP5 DUP6 ADD DUP2 SSTORE SWAP1 SWAP7 MSTORE SWAP5 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP3 ADD DUP1 SLOAD SWAP3 SWAP1 SWAP8 AND SWAP2 AND OR SWAP1 SWAP5 SSTORE DUP4 MLOAD SWAP2 DUP3 MSTORE SWAP3 MLOAD SWAP2 SWAP3 PUSH32 0x7AEF30A25CE3716A35BED040CBE56C5C3634C99FD57F50FD37A8B9187AF04C9D SWAP3 SWAP2 DUP3 SWAP1 SUB ADD SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0xA2E JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x3 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP4 DUP2 AND SWAP2 DUP3 OR DUP4 SSTORE PUSH1 0x0 SWAP2 DUP3 MSTORE PUSH1 0x4 PUSH1 0x20 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND PUSH1 0x1 OR SWAP1 SSTORE SWAP3 SLOAD SWAP3 MLOAD SWAP3 AND SWAP2 PUSH32 0xF62B7326BB5F6084A70482A099D3DED86DE8CFBBFCEA28E4F5B04AD693BF55CE SWAP2 SWAP1 LOG2 POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ DUP1 PUSH2 0xAB1 JUMPI POP PUSH2 0xAB1 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0xABC JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 DUP2 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x8 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 SWAP4 DUP8 AND DUP1 DUP5 MSTORE SWAP4 DUP3 MSTORE SWAP2 DUP3 SWAP1 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND DUP6 ISZERO ISZERO SWAP1 DUP2 OR SWAP1 SWAP2 SSTORE DUP3 MLOAD SWAP1 DUP2 MSTORE SWAP2 MLOAD PUSH32 0xB4E51190AC09D88100031DE9D538EDA33E031FF4EA0598F973DCB1531CE12EB1 SWAP3 DUP2 SWAP1 SUB SWAP1 SWAP2 ADD SWAP1 LOG2 POP POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP1 DUP2 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x5 PUSH1 0x20 MSTORE PUSH1 0x40 SWAP1 KECCAK256 SLOAD AND SWAP1 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP3 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x8 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 SWAP4 DUP7 AND DUP4 MSTORE SWAP3 SWAP1 MSTORE KECCAK256 SLOAD PUSH1 0xFF AND SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH6 0x10000000000 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x2 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND SWAP1 JUMP JUMPDEST PUSH1 0xB PUSH1 0x20 MSTORE PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x40 SWAP1 KECCAK256 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP2 AND SWAP1 PUSH1 0xA0 PUSH1 0x2 EXP SWAP1 DIV PUSH1 0xFF AND DUP3 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x6 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 PUSH1 0xE0 PUSH1 0x2 EXP SUB NOT SWAP5 SWAP1 SWAP5 AND DUP4 MSTORE SWAP3 SWAP1 MSTORE KECCAK256 SLOAD PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND DUP2 JUMP JUMPDEST PUSH1 0x1 SLOAD PUSH1 0x2 SLOAD PUSH1 0x3 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP3 DUP4 AND SWAP3 SWAP2 DUP3 AND SWAP2 AND DUP4 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH2 0x100 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH2 0xC7C CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0xC87 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH2 0x100 DUP4 MUL PUSH2 0xFF00 NOT SWAP1 SWAP2 AND OR SWAP1 SSTORE DUP4 MLOAD DUP1 DUP7 ADD DUP6 MSTORE DUP8 DUP2 MSTORE PUSH1 0xA DUP1 SLOAD SWAP5 DUP6 ADD DUP2 SSTORE SWAP1 SWAP7 MSTORE SWAP5 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP3 ADD DUP1 SLOAD SWAP3 SWAP1 SWAP8 AND SWAP2 AND OR SWAP1 SWAP5 SSTORE DUP4 MLOAD SWAP2 DUP3 MSTORE SWAP3 MLOAD SWAP2 SWAP3 PUSH32 0xB541B66AAAB15841E9F8A3A40FC50B777DDD85DC6378CFC6389A973D2117C7D5 SWAP3 SWAP2 DUP3 SWAP1 SUB ADD SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH3 0x10000 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ DUP1 PUSH2 0xDA3 JUMPI POP PUSH2 0xDA3 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0xDAE JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 DUP2 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x7 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 SWAP4 DUP8 AND DUP1 DUP5 MSTORE SWAP4 DUP3 MSTORE SWAP2 DUP3 SWAP1 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND DUP6 ISZERO ISZERO SWAP1 DUP2 OR SWAP1 SWAP2 SSTORE DUP3 MLOAD SWAP1 DUP2 MSTORE SWAP2 MLOAD PUSH32 0xB4E51190AC09D88100031DE9D538EDA33E031FF4EA0598F973DCB1531CE12EB1 SWAP3 DUP2 SWAP1 SUB SWAP1 SWAP2 ADD SWAP1 LOG2 POP POP POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0xE33 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP4 DUP2 AND SWAP2 SWAP1 SWAP2 OR SWAP2 DUP3 SWAP1 SSTORE PUSH1 0x40 MLOAD SWAP2 AND SWAP1 PUSH32 0x357D1BA45E9EF3FB937F4B33A26A6EFED1B2F40114460D16FBFCE82ACA415755 SWAP1 PUSH1 0x0 SWAP1 LOG2 POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0xE9A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0xEA4 DUP3 DUP3 PUSH2 0x1319 JUMP JUMPDEST POP POP JUMP JUMPDEST PUSH2 0xEB1 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0xEBC JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH6 0x10000000000 DUP4 MUL PUSH6 0xFF0000000000 NOT SWAP1 SWAP2 AND OR SWAP1 SSTORE DUP4 MLOAD DUP1 DUP7 ADD DUP6 MSTORE DUP8 DUP2 MSTORE PUSH1 0xA DUP1 SLOAD SWAP5 DUP6 ADD DUP2 SSTORE SWAP1 SWAP7 MSTORE SWAP5 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP3 ADD DUP1 SLOAD SWAP3 SWAP1 SWAP8 AND SWAP2 AND OR SWAP1 SWAP5 SSTORE DUP4 MLOAD SWAP2 DUP3 MSTORE SWAP3 MLOAD SWAP2 SWAP3 PUSH32 0x3F3EED7EAAE83DC29780651CD8137DFF8325C81EEA4C1091AC034A5572E1E2EF SWAP3 SWAP2 DUP3 SWAP1 SUB ADD SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0xFA8 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 DUP2 AND SWAP1 DUP3 AND EQ ISZERO PUSH2 0xFC1 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB SWAP2 DUP3 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x5 PUSH1 0x20 MSTORE PUSH1 0x40 SWAP1 KECCAK256 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND SWAP2 SWAP1 SWAP3 AND OR SWAP1 SSTORE JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0x1006 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0xEA4 DUP3 DUP3 PUSH2 0x1408 JUMP JUMPDEST PUSH2 0x1019 CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0x1024 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH3 0x10000 DUP4 MUL PUSH3 0xFF0000 NOT SWAP1 SWAP2 AND OR SWAP1 SSTORE DUP4 MLOAD DUP1 DUP7 ADD DUP6 MSTORE DUP8 DUP2 MSTORE PUSH1 0xA DUP1 SLOAD SWAP5 DUP6 ADD DUP2 SSTORE SWAP1 SWAP7 MSTORE SWAP5 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP3 ADD DUP1 SLOAD SWAP3 SWAP1 SWAP8 AND SWAP2 AND OR SWAP1 SWAP5 SSTORE DUP4 MLOAD SWAP2 DUP3 MSTORE SWAP3 MLOAD SWAP2 SWAP3 PUSH32 0xB4E51190AC09D88100031DE9D538EDA33E031FF4EA0598F973DCB1531CE12EB1 SWAP3 SWAP2 DUP3 SWAP1 SUB ADD SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x9 DUP1 SLOAD PUSH1 0x40 DUP1 MLOAD PUSH1 0x20 PUSH1 0x1F PUSH1 0x2 PUSH1 0x0 NOT PUSH2 0x100 PUSH1 0x1 DUP9 AND ISZERO MUL ADD SWAP1 SWAP6 AND SWAP5 SWAP1 SWAP5 DIV SWAP4 DUP5 ADD DUP2 SWAP1 DIV DUP2 MUL DUP3 ADD DUP2 ADD SWAP1 SWAP3 MSTORE DUP3 DUP2 MSTORE SWAP2 DUP4 SWAP2 DUP4 ADD DUP3 DUP3 DUP1 ISZERO PUSH2 0x117B JUMPI DUP1 PUSH1 0x1F LT PUSH2 0x1150 JUMPI PUSH2 0x100 DUP1 DUP4 SLOAD DIV MUL DUP4 MSTORE SWAP2 PUSH1 0x20 ADD SWAP2 PUSH2 0x117B JUMP JUMPDEST DUP3 ADD SWAP2 SWAP1 PUSH1 0x0 MSTORE PUSH1 0x20 PUSH1 0x0 KECCAK256 SWAP1 JUMPDEST DUP2 SLOAD DUP2 MSTORE SWAP1 PUSH1 0x1 ADD SWAP1 PUSH1 0x20 ADD DUP1 DUP4 GT PUSH2 0x115E JUMPI DUP3 SWAP1 SUB PUSH1 0x1F AND DUP3 ADD SWAP2 JUMPDEST POP POP POP POP POP SWAP1 POP DUP2 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ PUSH2 0x119C JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x2 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP4 DUP2 AND SWAP2 SWAP1 SWAP2 OR SWAP2 DUP3 SWAP1 SSTORE PUSH1 0x40 MLOAD SWAP2 AND SWAP1 PUSH32 0x95DCB20E52ED37833185C8B850BF9FA7990BDB0F232209C82B0A97A0A3A602E1 SWAP1 PUSH1 0x0 SWAP1 LOG2 POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP3 AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x7 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 SWAP4 DUP7 AND DUP4 MSTORE SWAP3 SWAP1 MSTORE KECCAK256 SLOAD PUSH1 0xFF AND SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH5 0x100000000 SWAP1 DIV PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x0 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND CALLER EQ DUP1 PUSH2 0x126C JUMPI POP PUSH2 0x126C CALLER PUSH2 0x12ED JUMP JUMPDEST ISZERO ISZERO PUSH2 0x1277 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0x6 PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 PUSH1 0xE0 PUSH1 0x2 EXP SUB NOT DUP9 AND DUP1 DUP6 MSTORE SWAP1 DUP4 MSTORE SWAP3 DUP2 SWAP1 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND DUP7 ISZERO ISZERO SWAP1 DUP2 OR SWAP1 SWAP2 SSTORE DUP2 MLOAD SWAP1 DUP2 MSTORE SWAP1 MLOAD PUSH32 0x3F8A1234A535CF651C4BCC3D4C56B68D7FF3264D0C4C8A3675245853F7851A11 SWAP3 SWAP2 DUP2 SWAP1 SUB SWAP1 SWAP2 ADD SWAP1 LOG3 POP POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB AND PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 PUSH1 0x1 DUP1 DUP6 MSTORE ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 SLOAD PUSH1 0xFF AND SWAP1 JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP3 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND SWAP1 SWAP5 OR PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT AND PUSH1 0xA0 PUSH1 0x2 EXP DUP7 ISZERO ISZERO SWAP1 DUP2 MUL SWAP2 SWAP1 SWAP2 OR DUP6 SSTORE DUP1 DUP5 MSTORE PUSH1 0x1 SWAP1 SWAP5 ADD SWAP1 SWAP2 MSTORE SWAP1 KECCAK256 DUP1 SLOAD PUSH4 0xFF000000 NOT AND PUSH4 0x1000000 SWAP1 SWAP3 MUL SWAP2 SWAP1 SWAP2 OR SWAP1 SSTORE PUSH2 0x138C DUP3 DUP3 PUSH2 0x1408 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x20 DUP2 ADD DUP3 MSTORE PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP5 DUP2 AND DUP1 DUP4 MSTORE PUSH1 0xA DUP1 SLOAD PUSH1 0x1 DUP2 ADD DUP3 SSTORE PUSH1 0x0 SWAP2 DUP3 MSTORE SWAP4 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP5 ADD DUP1 SLOAD PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT AND SWAP5 SWAP1 SWAP4 AND SWAP4 SWAP1 SWAP4 OR SWAP1 SWAP2 SSTORE SWAP2 MLOAD PUSH32 0x17898FD7375CA5152626D6FDD4CEB2BCE6CC033C9B61E254DD0087D5F8B47430 SWAP2 SWAP1 LOG2 POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB DUP1 DUP4 AND PUSH1 0x0 DUP2 DUP2 MSTORE PUSH1 0xB PUSH1 0x20 SWAP1 DUP2 MSTORE PUSH1 0x40 DUP1 DUP4 KECCAK256 DUP1 SLOAD DUP8 ISZERO ISZERO PUSH1 0xA0 PUSH1 0x2 EXP DUP2 MUL PUSH1 0xA0 PUSH1 0x2 EXP PUSH1 0xFF MUL NOT PUSH1 0x1 PUSH1 0xA0 PUSH1 0x2 EXP SUB NOT SWAP4 DUP5 AND DUP10 OR AND OR DUP4 SSTORE DUP1 DUP7 MSTORE PUSH1 0x1 SWAP3 DUP4 ADD DUP6 MSTORE DUP4 DUP7 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND SWAP1 SWAP2 OR SWAP1 SSTORE DUP3 MLOAD SWAP4 DUP5 ADD DUP4 MSTORE DUP6 DUP5 MSTORE PUSH1 0xA DUP1 SLOAD SWAP3 DUP4 ADD DUP2 SSTORE DUP6 MSTORE SWAP3 MLOAD PUSH1 0x0 DUP1 MLOAD PUSH1 0x20 PUSH2 0x14C7 DUP4 CODECOPY DUP2 MLOAD SWAP2 MSTORE SWAP1 SWAP2 ADD DUP1 SLOAD SWAP2 SWAP1 SWAP7 AND SWAP3 AND SWAP2 SWAP1 SWAP2 OR SWAP1 SWAP4 SSTORE SWAP2 MLOAD SWAP1 SWAP2 PUSH32 0xA9327C1E2B316C1E4412BC43A5BC2B0C629ECDE4F1C9E21911D02AC8B3AD42D SWAP2 LOG2 POP POP JUMP INVALID 0xc6 GAS PUSH28 0xB8D6351C1CF70C95A316CC6A92839C986682D98BC35F958F4883F9D2 0xa8 LOG1 PUSH6 0x627A7A723058 KECCAK256 ORIGIN LOG4 SLOAD 0xb0 0x47 0x4f 0xb8 PUSH31 0x231D15FC7AC10059C51864E0EA82582B5F42E17F54CD36D300290000000000 ",
+				"sourceMap": "899:13217:15:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;293:171:37;;8:9:-1;5:2;;;30:1;27;20:12;5:2;293:171:37;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;293:171:37;-1:-1:-1;;;;;293:171:37;;;;;12189:170:15;;8:9:-1;5:2;;;30:1;27;20:12;5:2;12189:170:15;;;;;;;;;;;;;;;;;;;;;;12469:110;;8:9:-1;5:2;;;30:1;27;20:12;5:2;12469:110:15;;;;;;;;-1:-1:-1;;;;;12469:110:15;;;;;;;;;;;;;;8923:157;;8:9:-1;5:2;;;30:1;27;20:12;5:2;8923:157:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;8923:157:15;-1:-1:-1;;;;;8923:157:15;;;4882:396;;8:9:-1;5:2;;;30:1;27;20:12;5:2;4882:396:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;4882:396:15;;;;;;;;;;;8520:198;;8:9:-1;5:2;;;30:1;27;20:12;5:2;8520:198:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;8520:198:15;-1:-1:-1;;;;;8520:198:15;;;6674:256;;8:9:-1;5:2;;;30:1;27;20:12;5:2;6674:256:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;6674:256:15;;;;;;;;;;;;;;;;;;;;10496:148;;8:9:-1;5:2;;;30:1;27;20:12;5:2;10496:148:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;10496:148:15;-1:-1:-1;;;;;10496:148:15;;;11498:178;;8:9:-1;5:2;;;30:1;27;20:12;5:2;11498:178:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;11498:178:15;;;;;;;;;;;10166;;8:9:-1;5:2;;;30:1;27;20:12;5:2;10166:178:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;10166:178:15;-1:-1:-1;;;;;10166:178:15;;;10750:120;;8:9:-1;5:2;;;30:1;27;20:12;5:2;10750:120:15;;;;1025:44;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1025:44:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;1025:44:15;-1:-1:-1;;;;;1025:44:15;;;;;;;-1:-1:-1;;;;;1025:44:15;;;;;;;;;;;;;;;;;;;;;11892:172;;8:9:-1;5:2;;;30:1;27;20:12;5:2;11892:172:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;11892:172:15;;-1:-1:-1;;;;;;11892:172:15;;;;;-1:-1:-1;;;;;11892:172:15;;;56:20:37;;8:9:-1;5:2;;;30:1;27;20:12;5:2;56:20:37;;;;967:28:15;;8:9:-1;5:2;;;30:1;27;20:12;5:2;967:28:15;;;;;;;;-1:-1:-1;;;;;967:28:15;;;;;;;;;;;;;;;;;;;;;;;;;;;;9533:164;;8:9:-1;5:2;;;30:1;27;20:12;5:2;9533:164:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;9533:164:15;-1:-1:-1;;;;;9533:164:15;;;4299:406;;8:9:-1;5:2;;;30:1;27;20:12;5:2;4299:406:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;4299:406:15;;;;;;;;;;;9226:152;;8:9:-1;5:2;;;30:1;27;20:12;5:2;9226:152:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;9226:152:15;-1:-1:-1;;;;;9226:152:15;;;6174:282;;8:9:-1;5:2;;;30:1;27;20:12;5:2;6174:282:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;6174:282:15;;;;;;;;;;;;;;;;;;;;7820:214;;8:9:-1;5:2;;;30:1;27;20:12;5:2;7820:214:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;7820:214:15;-1:-1:-1;;;;;7820:214:15;;;3096:167;;8:9:-1;5:2;;;30:1;27;20:12;5:2;3096:167:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;3096:167:15;;;;;;;;;;;5455:497;;8:9:-1;5:2;;;30:1;27;20:12;5:2;5455:497:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;5455:497:15;;;;;;;;;;;8206:197;;8:9:-1;5:2;;;30:1;27;20:12;5:2;8206:197:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;8206:197:15;;;;;;;;;;;3428:175;;8:9:-1;5:2;;;30:1;27;20:12;5:2;3428:175:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;3428:175:15;;;;;;;;;;;3755:376;;8:9:-1;5:2;;;30:1;27;20:12;5:2;3755:376:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;3755:376:15;;;;;;;;;;;1001:17;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1001:17:15;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:100:-1;33:3;30:1;27:10;8:100;;;90:11;;;84:18;71:11;;;64:39;52:2;45:10;8:100;;;12:14;1001:17:15;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;7494:190;;8:9:-1;5:2;;;30:1;27;20:12;5:2;7494:190:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;7494:190:15;-1:-1:-1;;;;;7494:190:15;;;11093:180;;8:9:-1;5:2;;;30:1;27;20:12;5:2;11093:180:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;11093:180:15;;;;;;;;;;;9855:160;;8:9:-1;5:2;;;30:1;27;20:12;5:2;9855:160:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;9855:160:15;-1:-1:-1;;;;;9855:160:15;;;7082:285;;8:9:-1;5:2;;;30:1;27;20:12;5:2;7082:285:15;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;;7082:285:15;;;;-1:-1:-1;;;;;7082:285:15;;;;;;;;;;;;;293:171:37;201:5;;-1:-1:-1;;;;;201:5:37;187:10;:19;179:28;;;;;;-1:-1:-1;;;;;380:18:37;;;;372:27;;;;;;409:5;:12;;-1:-1:-1;;;;;;409:12:37;-1:-1:-1;;;;;409:12:37;;;;;;;;;436:21;;409:12;;445:5;;;436:21;;409:5;436:21;293:171;:::o;12189:170:15:-;12296:13;;-1:-1:-1;;;;;12296:13:15;12259:4;12326:26;;;:18;:26;;;;;;;;12189:170;:::o;12469:110::-;12559:13;;-1:-1:-1;;;;;12559:13:15;12469:110;:::o;8923:157::-;-1:-1:-1;;;;;9030:20:15;9003:4;9030:20;;;:8;:20;;;;;;;;:27;:33;;;:27;:33;;;;;:43;;;;;;;8923:157::o;4882:396::-;2855:25;2869:10;2855:13;:25::i;:::-;2847:34;;;;;;;;-1:-1:-1;;;;;5002:18:15;;;;;;;:8;:18;;;;;;;;:37;;5049:46;;;-1:-1:-1;;;5049:46:15;;-1:-1:-1;;;;;;;;;;;;5002:37:15;;;;;5049:46;;;;5105:41;;;5002:37;5105:25;;;:41;;;;;:66;;;;;-1:-1:-1;;5105:66:15;;;;;;5197:14;;;;;;;;;;5181:10;27::-1;;23:18;;;45:23;;5181:31:15;;;;;-1:-1:-1;;;;;;;;;;;5181:31:15;;;;;;;;;;;;;;;5227:44;;;;;;;5002:18;;5227:44;;;;;;;;;4882:396;;:::o;8520:198::-;201:5:37;;-1:-1:-1;;;;;201:5:37;187:10;:19;179:28;;;;;;8605:13:15;:23;;-1:-1:-1;;;;;;8605:23:15;-1:-1:-1;;;;;8605:23:15;;;;;;;;-1:-1:-1;8638:27:15;;;:18;:27;;;;;;:34;;-1:-1:-1;;8638:34:15;-1:-1:-1;8638:34:15;;;8697:13;;8687:24;;8697:13;;;8687:24;;-1:-1:-1;8687:24:15;8520:198;:::o;6674:256::-;2753:5;;-1:-1:-1;;;;;2753:5:15;2739:10;:19;;:48;;;2762:25;2776:10;2762:13;:25::i;:::-;2731:57;;;;;;;;-1:-1:-1;;;;;6811:32:15;;;;;;;:22;:32;;;;;;;;:40;;;;;;;;;;;;;:57;;-1:-1:-1;;6811:57:15;;;;;;;;;;6883:40;;;;;;;;;;;;;;;;;6674:256;;;:::o;10496:148::-;-1:-1:-1;;;;;10612:25:15;;;10582:7;10612:25;;;:14;:25;;;;;;;;10496:148::o;11498:178::-;-1:-1:-1;;;;;11629:32:15;;;11602:4;11629:32;;;:22;:32;;;;;;;;:40;;;;;;;;;;;;11498:178;;;;:::o;10166:::-;-1:-1:-1;;;;;10289:29:15;10262:4;10289:29;;;:8;:29;;;;;;;;:36;:42;;;:36;:42;;;;;:48;;;;;;;10166:178::o;10750:120::-;10845:18;;-1:-1:-1;;;;;10845:18:15;10750:120;:::o;1025:44::-;;;;;;;;;;;;-1:-1:-1;;;;;1025:44:15;;;-1:-1:-1;;;1025:44:15;;;;;:::o;11892:172::-;-1:-1:-1;;;;;12017:31:15;11990:4;12017:31;;;:21;:31;;;;;;;;-1:-1:-1;;;;;;12017:40:15;;;;;;;;;;;;;;11892:172::o;56:20:37:-;;;-1:-1:-1;;;;;56:20:37;;:::o;967:28:15:-;;;;;;;-1:-1:-1;;;;;967:28:15;;;;;;;;;;:::o;9533:164::-;-1:-1:-1;;;;;9649:19:15;9622:4;9649:19;;;:8;:19;;;;;;;;:26;:32;;;:26;:32;;;;;:41;;;;;;;9533:164::o;4299:406::-;2855:25;2869:10;2855:13;:25::i;:::-;2847:34;;;;;;;;-1:-1:-1;;;;;4421:19:15;;;;;;;:8;:19;;;;;;;;:39;;4470:47;;;-1:-1:-1;;;4470:47:15;;-1:-1:-1;;;;;;;;;;;;4421:39:15;;;;;4470:47;;;;4527:42;;;4421:39;4527:26;;;:42;;;;;:68;;4421:39;4527:68;;-1:-1:-1;;4527:68:15;;;;;;4621:15;;;;;;;;;;4605:10;27::-1;;23:18;;;45:23;;4605:32:15;;;;;-1:-1:-1;;;;;;;;;;;4605:32:15;;;;;;;;;;;;;;;4652:46;;;;;;;4421:19;;4652:46;;;;;;;;;4299:406;;:::o;9226:152::-;-1:-1:-1;;;;;9336:16:15;9309:4;9336:16;;;:8;:16;;;;;;;;:23;:29;;;:23;:29;;;;;:35;;;;;;;9226:152::o;6174:282::-;2753:5;;-1:-1:-1;;;;;2753:5:15;2739:10;:19;;:48;;;2762:25;2776:10;2762:13;:25::i;:::-;2731:57;;;;;;;;-1:-1:-1;;;;;6338:31:15;;;;;;;:20;:31;;;;;;;;:39;;;;;;;;;;;;;:56;;-1:-1:-1;;6338:56:15;;;;;;;;;;6409:40;;;;;;;;;;;;;;;;;6174:282;;;:::o;7820:214::-;201:5:37;;-1:-1:-1;;;;;201:5:37;187:10;:19;179:28;;;;;;7925:6:15;:43;;-1:-1:-1;;;;;;7925:43:15;-1:-1:-1;;;;;7925:43:15;;;;;;;;;;;7983:44;;8003:23;;;7983:44;;-1:-1:-1;;7983:44:15;7820:214;:::o;3096:167::-;201:5:37;;-1:-1:-1;;;;;201:5:37;187:10;:19;179:28;;;;;;3208:48:15;3229:10;3241:14;3208:20;:48::i;:::-;3096:167;;:::o;5455:497::-;2855:25;2869:10;2855:13;:25::i;:::-;2847:34;;;;;;;;-1:-1:-1;;;;;5614:29:15;;;;;;;:8;:29;;;;;;;;:59;;5683:57;;;-1:-1:-1;;;5683:57:15;;-1:-1:-1;;;;;;;;;;;;5614:59:15;;;;;5683:57;;;;5750:52;;;5614:59;5750:36;;;:52;;;;;:75;;;;;-1:-1:-1;;5750:75:15;;;;;;5851:25;;;;;;;;;;5835:10;27::-1;;23:18;;;45:23;;5835:42:15;;;;;-1:-1:-1;;;;;;;;;;;5835:42:15;;;;;;;;;;;;;;;5892:53;;;;;;;5614:29;;5892:53;;;;;;;;;5455:497;;:::o;8206:197::-;201:5:37;;-1:-1:-1;;;;;201:5:37;187:10;:19;179:28;;;;;;-1:-1:-1;;;;;8328:21:15;;;;;;;;8320:30;;;;;;-1:-1:-1;;;;;8360:25:15;;;;;;;:14;:25;;;;;:36;;-1:-1:-1;;;;;;8360:36:15;;;;;;;;8206:197::o;3428:175::-;201:5:37;;-1:-1:-1;;;;;201:5:37;187:10;:19;179:28;;;;;;3544:52:15;3567:12;3581:14;3544:22;:52::i;3755:376::-;2855:25;2869:10;2855:13;:25::i;:::-;2847:34;;;;;;;;-1:-1:-1;;;;;3871:16:15;;;;;;;:8;:16;;;;;;;;:33;;3914:44;;;-1:-1:-1;;;3914:44:15;;-1:-1:-1;;;;;;;;;;;;3871:33:15;;;;;3914:44;;;;3968:39;;;3871:33;3968:23;;;:39;;;;;:62;;;;;-1:-1:-1;;3968:62:15;;;;;;4056:12;;;;;;;;;;4040:10;27::-1;;23:18;;;45:23;;4040:29:15;;;;;-1:-1:-1;;;;;;;;;;;4040:29:15;;;;;;;;;;;;;;;4084:40;;;;;;;3871:16;;4084:40;;;;;;;;;3755:376;;:::o;1001:17::-;;;;;;;;;;-1:-1:-1;;1001:17:15;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;7494:190::-;201:5:37;;-1:-1:-1;;;;;201:5:37;187:10;:19;179:28;;;;;;7595:18:15;:33;;-1:-1:-1;;;;;;7595:33:15;-1:-1:-1;;;;;7595:33:15;;;;;;;;;;;7643:34;;7658:18;;;7643:34;;-1:-1:-1;;7643:34:15;7494:190;:::o;11093:180::-;-1:-1:-1;;;;;11227:31:15;;;11200:4;11227:31;;;:20;:31;;;;;;;;:39;;;;;;;;;;;;11093:180;;;;:::o;9855:160::-;-1:-1:-1;;;;;9969:18:15;9942:4;9969:18;;;:8;:18;;;;;;;;:25;:31;;;:25;:31;;;;;:39;;;;;;;9855:160::o;7082:285::-;2753:5;;-1:-1:-1;;;;;2753:5:15;2739:10;:19;;:48;;;2762:25;2776:10;2762:13;:25::i;:::-;2731:57;;;;;;;;-1:-1:-1;;;;;7236:31:15;;;;;;:21;:31;;;;;;;;-1:-1:-1;;;;;;7236:40:15;;;;;;;;;;;;:57;;-1:-1:-1;;7236:57:15;;;;;;;;;;7308:52;;;;;;;;;;;;;;;;;;7082:285;;;:::o;13949:165::-;-1:-1:-1;;;;;14060:22:15;14033:4;14060:22;;;:8;:22;;;;;;;;:29;:35;;;:29;:35;;;;;:47;;;;13949:165::o;12770:447::-;-1:-1:-1;;;;;12889:20:15;;;;;;:8;:20;;;;;;;;:41;;-1:-1:-1;;;;;;12889:41:15;;;;-1:-1:-1;;;;;;12940:48:15;-1:-1:-1;;;12940:48:15;;;;;;;;;;;;12998:43;;;-1:-1:-1;12998:27:15;;;:43;;;;;:70;;-1:-1:-1;;12998:70:15;;;;;;;;;;;13078:50;12889:20;12940:48;13078:22;:50::i;:::-;13154:16;;;;;;;;-1:-1:-1;;;;;13154:16:15;;;;;;13138:10;27::-1;;13138::15;23:18:-1;;45:23;;-1:-1;13138:33:15;;;;;-1:-1:-1;;;;;;;;;;;13138:33:15;;;;;-1:-1:-1;;;;;;13138:33:15;;;;;;;;;;;;13186:24;;;;-1:-1:-1;13186:24:15;12770:447;;:::o;13382:407::-;-1:-1:-1;;;;;13505:22:15;;;;;;;:8;:22;;;;;;;;:45;;13560:50;;;-1:-1:-1;;;13560:50:15;;-1:-1:-1;;;;;;;;;;;;13505:45:15;;;;;13560:50;;;;13620:45;;;13505;13620:29;;;:45;;;;;:74;;-1:-1:-1;;13620:74:15;;;;;;13720:18;;;;;;;;;;13704:10;27::-1;;23:18;;;45:23;;13704:35:15;;;;-1:-1:-1;;;;;;;;;;;13704:35:15;;;;;;;;;;;;;;;;;;13754:28;;13505:22;;13754:28;;;13382:407;;:::o"
+			}
+		}
+	},
+	"sourceTreeHashHex": "0x3ef3f30b3c0636388a17287778e5a3819fa400fab44d54a1551d49e75b59a622",
+	"sources": {
+		"./ExchangesAuthority.sol": {
+			"id": 15,
+			"content": "/*\n\n Copyright 2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity 0.5.0;\n\nimport { Owned } from \"../../../utils/Owned/Owned.sol\";\nimport { ExchangesAuthorityFace } from \"./ExchangesAuthorityFace.sol\";\n\n/// @title Exchanges Authority - A helper contract for the exchange adapters.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\n// solhint-disable-next-line\ncontract ExchangesAuthority is Owned, ExchangesAuthorityFace {\n\n    BuildingBlocks public blocks;\n    Type public types;\n\n    mapping (address => Account) public accounts;\n\n    struct List {\n        address target;\n    }\n\n    struct Type {\n        string types;\n        List[] list;\n    }\n\n    struct Group {\n        bool whitelister;\n        bool exchange;\n        bool asset;\n        bool authority;\n        bool wrapper;\n        bool proxy;\n    }\n\n    struct Account {\n        address account;\n        bool authorized;\n        mapping (bool => Group) groups; //mapping account to bool authorized to bool group\n    }\n\n    struct BuildingBlocks {\n        address exchangeEventful;\n        address sigVerifier;\n        address casper;\n        mapping (address => bool) initialized;\n        mapping (address => address) adapter;\n        // Mapping of exchange => method => approved\n        mapping (address => mapping (bytes4 => bool)) allowedMethods;\n        mapping (address => mapping (address => bool)) allowedTokens;\n        mapping (address => mapping (address => bool)) allowedWrappers;\n    }\n\n    /*\n     * EVENTS\n     */\n    event AuthoritySet(address indexed authority);\n    event WhitelisterSet(address indexed whitelister);\n    event WhitelistedAsset(address indexed asset, bool approved);\n    event WhitelistedExchange(address indexed exchange, bool approved);\n    event WhitelistedWrapper(address indexed wrapper, bool approved);\n    event WhitelistedProxy(address indexed proxy, bool approved);\n    event WhitelistedMethod(bytes4 indexed method, address indexed adapter, bool approved);\n    event NewSigVerifier(address indexed sigVerifier);\n    event NewExchangeEventful(address indexed exchangeEventful);\n    event NewCasper(address indexed casper);\n\n    /*\n     * MODIFIERS\n     */\n    modifier onlyAdmin {\n        require(msg.sender == owner || isWhitelister(msg.sender));\n        _;\n    }\n\n    modifier onlyWhitelister {\n        require(isWhitelister(msg.sender));\n        _;\n    }\n\n    /*\n     * CORE FUNCTIONS\n     */\n    /// @dev Allows the owner to whitelist an authority\n    /// @param _authority Address of the authority\n    /// @param _isWhitelisted Bool whitelisted\n    function setAuthority(address _authority, bool _isWhitelisted)\n        external\n        onlyOwner\n    {\n        setAuthorityInternal(_authority, _isWhitelisted);\n    }\n\n    /// @dev Allows the owner to whitelist a whitelister\n    /// @param _whitelister Address of the whitelister\n    /// @param _isWhitelisted Bool whitelisted\n    function setWhitelister(address _whitelister, bool _isWhitelisted)\n        external\n        onlyOwner\n    {\n        setWhitelisterInternal(_whitelister, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to whitelist an asset\n    /// @param _asset Address of the token\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistAsset(address _asset, bool _isWhitelisted)\n        external\n        onlyWhitelister\n    {\n        accounts[_asset].account = _asset;\n        accounts[_asset].authorized = _isWhitelisted;\n        accounts[_asset].groups[_isWhitelisted].asset = _isWhitelisted;\n        types.list.push(List(_asset));\n        emit WhitelistedAsset(_asset, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to whitelist an exchange\n    /// @param _exchange Address of the target exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistExchange(address _exchange, bool _isWhitelisted)\n        external\n        onlyWhitelister\n    {\n        accounts[_exchange].account = _exchange;\n        accounts[_exchange].authorized = _isWhitelisted;\n        accounts[_exchange].groups[_isWhitelisted].exchange = _isWhitelisted;\n        types.list.push(List(_exchange));\n        emit WhitelistedExchange(_exchange, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to whitelist an token wrapper\n    /// @param _wrapper Address of the target token wrapper\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistWrapper(address _wrapper, bool _isWhitelisted)\n        external\n        onlyWhitelister\n    {\n        accounts[_wrapper].account = _wrapper;\n        accounts[_wrapper].authorized = _isWhitelisted;\n        accounts[_wrapper].groups[_isWhitelisted].wrapper = _isWhitelisted;\n        types.list.push(List(_wrapper));\n        emit WhitelistedWrapper(_wrapper, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to whitelist a tokenTransferProxy\n    /// @param _tokenTransferProxy Address of the proxy\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistTokenTransferProxy(\n        address _tokenTransferProxy,\n        bool _isWhitelisted)\n        external\n        onlyWhitelister\n    {\n        accounts[_tokenTransferProxy].account = _tokenTransferProxy;\n        accounts[_tokenTransferProxy].authorized = _isWhitelisted;\n        accounts[_tokenTransferProxy].groups[_isWhitelisted].proxy = _isWhitelisted;\n        types.list.push(List(_tokenTransferProxy));\n        emit WhitelistedProxy(_tokenTransferProxy, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to enable trading on a particular exchange\n    /// @param _asset Address of the token\n    /// @param _exchange Address of the exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistAssetOnExchange(\n        address _asset,\n        address _exchange,\n        bool _isWhitelisted)\n        external\n        onlyAdmin\n    {\n        blocks.allowedTokens[_exchange][_asset] = _isWhitelisted;\n        emit WhitelistedAsset(_asset, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to enable assiciate wrappers to a token\n    /// @param _token Address of the token\n    /// @param _wrapper Address of the exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistTokenOnWrapper(address _token, address _wrapper, bool _isWhitelisted)\n        external\n        onlyAdmin\n    {\n        blocks.allowedWrappers[_wrapper][_token] = _isWhitelisted;\n        emit WhitelistedAsset(_token, _isWhitelisted);\n    }\n\n    /// @dev Allows an admin to whitelist a factory\n    /// @param _method Hex of the function ABI\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistMethod(\n        bytes4 _method,\n        address _adapter,\n        bool _isWhitelisted)\n        external\n        onlyAdmin\n    {\n        blocks.allowedMethods[_adapter][_method] = _isWhitelisted;\n        emit WhitelistedMethod(_method, _adapter, _isWhitelisted);\n    }\n\n    /// @dev Allows the owner to set the signature verifier\n    /// @param _sigVerifier Address of the verifier contract\n    function setSignatureVerifier(address _sigVerifier)\n        external\n        onlyOwner\n    {\n        blocks.sigVerifier = _sigVerifier;\n        emit NewSigVerifier(blocks.sigVerifier);\n    }\n\n    /// @dev Allows the owner to set the exchange eventful\n    /// @param _exchangeEventful Address of the exchange logs contract\n    function setExchangeEventful(address _exchangeEventful)\n        external\n        onlyOwner\n    {\n        blocks.exchangeEventful = _exchangeEventful;\n        emit NewExchangeEventful(blocks.exchangeEventful);\n    }\n\n    /// @dev Allows the owner to associate an exchange to its adapter\n    /// @param _exchange Address of the exchange\n    /// @param _adapter Address of the adapter\n    function setExchangeAdapter(address _exchange, address _adapter)\n        external\n        onlyOwner\n    {\n        require(_exchange != _adapter);\n        blocks.adapter[_exchange] = _adapter;\n    }\n\n    /// @dev Allows the owner to set the casper contract\n    /// @param _casper Address of the casper contract\n    function setCasper(address _casper)\n        external\n        onlyOwner\n    {\n        blocks.casper = _casper;\n        blocks.initialized[_casper] = true;\n        emit NewCasper(blocks.casper);\n    }\n\n    /*\n     * CONSTANT PUBLIC FUNCTIONS\n     */\n    /// @dev Provides whether an address is an authority\n    /// @param _authority Address of the target authority\n    /// @return Bool is whitelisted\n    function isAuthority(address _authority)\n        external view\n        returns (bool)\n    {\n        return accounts[_authority].groups[true].authority;\n    }\n\n    /// @dev Provides whether an asset is whitelisted\n    /// @param _asset Address of the target asset\n    /// @return Bool is whitelisted\n    function isWhitelistedAsset(address _asset)\n        external view\n        returns (bool)\n    {\n        return accounts[_asset].groups[true].asset;\n    }\n\n    /// @dev Provides whether an exchange is whitelisted\n    /// @param _exchange Address of the target exchange\n    /// @return Bool is whitelisted\n    function isWhitelistedExchange(address _exchange)\n        external view\n        returns (bool)\n    {\n        return accounts[_exchange].groups[true].exchange;\n    }\n\n    /// @dev Provides whether a token wrapper is whitelisted\n    /// @param _wrapper Address of the target exchange\n    /// @return Bool is whitelisted\n    function isWhitelistedWrapper(address _wrapper)\n        external view\n        returns (bool)\n    {\n        return accounts[_wrapper].groups[true].wrapper;\n    }\n\n    /// @dev Provides whether a proxy is whitelisted\n    /// @param _tokenTransferProxy Address of the proxy\n    /// @return Bool is whitelisted\n    function isWhitelistedProxy(address _tokenTransferProxy)\n        external view\n        returns (bool)\n    {\n        return accounts[_tokenTransferProxy].groups[true].proxy;\n    }\n\n    /// @dev Provides the address of the exchange adapter\n    /// @param _exchange Address of the exchange\n    /// @return Address of the adapter\n    function getExchangeAdapter(address _exchange)\n        external view\n        returns (address)\n    {\n        return blocks.adapter[_exchange];\n    }\n\n    /// @dev Provides the address of the signature verifier\n    /// @return Address of the verifier\n    function getSigVerifier()\n        external view\n        returns (address)\n    {\n        return blocks.sigVerifier;\n    }\n\n    /// @dev Checkes whether a token is allowed on an exchange\n    /// @param _token Address of the token\n    /// @param _exchange Address of the exchange\n    /// @return Bool the token is whitelisted on the exchange\n    function canTradeTokenOnExchange(address _token, address _exchange)\n        external view\n        returns (bool)\n    {\n        return blocks.allowedTokens[_exchange][_token];\n    }\n\n    /// @dev Checkes whether a token is allowed on a wrapper\n    /// @param _token Address of the token\n    /// @param _wrapper Address of the token wrapper\n    /// @return Bool the token is whitelisted on the exchange\n    function canWrapTokenOnWrapper(address _token, address _wrapper)\n        external view\n        returns (bool)\n    {\n        return blocks.allowedWrappers[_wrapper][_token];\n    }\n\n    /// @dev Checkes whether a method is allowed on an exchange\n    /// @param _method Bytes of the function signature\n    /// @param _adapter Address of the exchange\n    /// @return Bool the method is allowed\n    function isMethodAllowed(bytes4 _method, address _adapter)\n        external view\n        returns (bool)\n    {\n        return blocks.allowedMethods[_adapter][_method];\n    }\n\n    /// @dev Checkes whether casper has been inizialized\n    /// @return Bool the casper contract has been initialized\n    function isCasperInitialized()\n        external view\n        returns (bool)\n    {\n        address casper = blocks.casper;\n        return blocks.initialized[casper];\n    }\n\n    /// @dev Provides the address of the casper contract\n    /// @return Address of the casper contract\n    function getCasper()\n        external view\n        returns (address)\n    {\n        return blocks.casper;\n    }\n\n    /*\n     * INTERNAL FUNCTIONS\n     */\n    /// @dev Allows to whitelist an authority\n    /// @param _authority Address of the authority\n    /// @param _isWhitelisted Bool whitelisted\n    function setAuthorityInternal(\n        address _authority,\n        bool _isWhitelisted)\n        internal\n    {\n        accounts[_authority].account = _authority;\n        accounts[_authority].authorized = _isWhitelisted;\n        accounts[_authority].groups[_isWhitelisted].authority = _isWhitelisted;\n        setWhitelisterInternal(_authority, _isWhitelisted);\n        types.list.push(List(_authority));\n        emit AuthoritySet(_authority);\n    }\n\n    /// @dev Allows the owner to whitelist a whitelister\n    /// @param _whitelister Address of the whitelister\n    /// @param _isWhitelisted Bool whitelisted\n    function setWhitelisterInternal(\n        address _whitelister,\n        bool _isWhitelisted)\n        internal\n    {\n        accounts[_whitelister].account = _whitelister;\n        accounts[_whitelister].authorized = _isWhitelisted;\n        accounts[_whitelister].groups[_isWhitelisted].whitelister = _isWhitelisted;\n        types.list.push(List(_whitelister));\n        emit WhitelisterSet(_whitelister);\n    }\n\n    /// @dev Provides whether an address is whitelister\n    /// @param _whitelister Address of the target whitelister\n    /// @return Bool is whitelisted\n    function isWhitelister(address _whitelister)\n        internal view\n        returns (bool)\n    {\n        return accounts[_whitelister].groups[true].whitelister;\n    }\n}\n"
+		},
+		"../../../utils/Owned/Owned.sol": {
+			"id": 37,
+			"content": "pragma solidity >=0.4.22 <0.6.0;\n\ncontract Owned {\n\n    address public owner;\n\n    event NewOwner(address indexed old, address indexed current);\n\n    modifier onlyOwner {\n        require(msg.sender == owner);\n        _;\n    }\n\n    constructor() public {\n        owner = msg.sender;\n    }\n\n    function setOwner(address _new)\n        public\n        onlyOwner\n    {\n        require(_new != address(0));\n        owner = _new;\n        emit NewOwner(owner, _new);\n    }\n}\n"
+		},
+		"./ExchangesAuthorityFace.sol": {
+			"id": 16,
+			"content": "/*\n\n Copyright 2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity 0.5.0;\n\n/// @title Exchange Authority Interface - A helper contract for the exchange adapters.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\n// solhint-disable-next-line\ninterface ExchangesAuthorityFace {\n\n    /*\n     * EVENTS\n     */\n    event AuthoritySet(address indexed authority);\n    event WhitelisterSet(address indexed whitelister);\n    event WhitelistedAsset(address indexed asset, bool approved);\n    event WhitelistedExchange(address indexed exchange, bool approved);\n    event WhitelistedWrapper(address indexed wrapper, bool approved);\n    event WhitelistedProxy(address indexed proxy, bool approved);\n    event WhitelistedMethod(bytes4 indexed method, address indexed exchange, bool approved);\n    event NewSigVerifier(address indexed sigVerifier);\n    event NewExchangeEventful(address indexed exchangeEventful);\n    event NewCasper(address indexed casper);\n\n    /*\n     * CORE FUNCTIONS\n     */\n    /// @dev Allows the owner to whitelist an authority\n    /// @param _authority Address of the authority\n    /// @param _isWhitelisted Bool whitelisted\n    function setAuthority(address _authority, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows the owner to whitelist a whitelister\n    /// @param _whitelister Address of the whitelister\n    /// @param _isWhitelisted Bool whitelisted\n    function setWhitelister(address _whitelister, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to whitelist an asset\n    /// @param _asset Address of the token\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistAsset(address _asset, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to whitelist an exchange\n    /// @param _exchange Address of the target exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistExchange(address _exchange, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to whitelist an token wrapper\n    /// @param _wrapper Address of the target token wrapper\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistWrapper(address _wrapper, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to whitelist a tokenTransferProxy\n    /// @param _tokenTransferProxy Address of the proxy\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistTokenTransferProxy(\n        address _tokenTransferProxy, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to enable trading on a particular exchange\n    /// @param _asset Address of the token\n    /// @param _exchange Address of the exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistAssetOnExchange(\n        address _asset,\n        address _exchange,\n        bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to enable assiciate wrappers to a token\n    /// @param _token Address of the token\n    /// @param _wrapper Address of the exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistTokenOnWrapper(\n        address _token,\n        address _wrapper,\n        bool _isWhitelisted)\n        external;\n\n    /// @dev Allows an admin to whitelist a factory\n    /// @param _method Hex of the function ABI\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistMethod(\n        bytes4 _method,\n        address _adapter,\n        bool _isWhitelisted)\n        external;\n\n    /// @dev Allows the owner to set the signature verifier\n    /// @param _sigVerifier Address of the logs contract\n    function setSignatureVerifier(address _sigVerifier)\n        external;\n\n    /// @dev Allows the owner to set the exchange eventful\n    /// @param _exchangeEventful Address of the exchange logs contract\n    function setExchangeEventful(address _exchangeEventful)\n        external;\n\n    /// @dev Allows the owner to associate an exchange to its adapter\n    /// @param _exchange Address of the exchange\n    /// @param _adapter Address of the adapter\n    function setExchangeAdapter(address _exchange, address _adapter)\n        external;\n\n    /// @dev Allows the owner to set the casper contract\n    /// @param _casper Address of the casper contract\n    function setCasper(address _casper)\n        external;\n\n    /*\n     * CONSTANT PUBLIC FUNCTIONS\n     */\n    /// @dev Provides whether an address is an authority\n    /// @param _authority Address of the target authority\n    /// @return Bool is whitelisted\n    function isAuthority(address _authority)\n        external view\n        returns (bool);\n\n    /// @dev Provides whether an asset is whitelisted\n    /// @param _asset Address of the target asset\n    /// @return Bool is whitelisted\n    function isWhitelistedAsset(address _asset)\n        external view\n        returns (bool);\n\n    /// @dev Provides whether an exchange is whitelisted\n    /// @param _exchange Address of the target exchange\n    /// @return Bool is whitelisted\n    function isWhitelistedExchange(address _exchange)\n        external view\n        returns (bool);\n\n    /// @dev Provides whether a token wrapper is whitelisted\n    /// @param _wrapper Address of the target exchange\n    /// @return Bool is whitelisted\n    function isWhitelistedWrapper(address _wrapper)\n        external view\n        returns (bool);\n\n    /// @dev Provides whether a proxy is whitelisted\n    /// @param _tokenTransferProxy Address of the proxy\n    /// @return Bool is whitelisted\n    function isWhitelistedProxy(address _tokenTransferProxy)\n        external view\n        returns (bool);\n\n    /// @dev Provides the address of the exchange adapter\n    /// @param _exchange Address of the exchange\n    /// @return Address of the adapter\n    function getExchangeAdapter(address _exchange)\n        external view\n        returns (address);\n\n    /// @dev Provides the address of the signature verifier\n    /// @return Address of the verifier\n    function getSigVerifier()\n        external view\n        returns (address);\n\n    /// @dev Checkes whether a token is allowed on an exchange\n    /// @param _token Address of the token\n    /// @param _exchange Address of the exchange\n    /// @return Bool the token is whitelisted on the exchange\n    function canTradeTokenOnExchange(address _token, address _exchange)\n        external view\n        returns (bool);\n\n    /// @dev Checkes whether a token is allowed on a wrapper\n    /// @param _token Address of the token\n    /// @return Bool the token is whitelisted on the exchange\n    function canWrapTokenOnWrapper(address _token, address _wrapper)\n        external view\n        returns (bool);\n\n    /// @dev Checkes whether a method is allowed on an exchange\n    function isMethodAllowed(bytes4 _method, address _exchange)\n        external view\n        returns (bool);\n\n    /// @dev Checkes whether casper has been inizialized\n    /// @return Bool the casper contract has been initialized\n    function isCasperInitialized()\n        external view\n        returns (bool);\n\n    /// @dev Provides the address of the casper contract\n    /// @return Address of the casper contract\n    function getCasper()\n        external view\n        returns (address);\n}\n"
+		}
+	},
+	"sourceCodes": {
+		"./ExchangesAuthority.sol": "/*\n\n Copyright 2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity 0.5.0;\n\nimport { Owned } from \"../../../utils/Owned/Owned.sol\";\nimport { ExchangesAuthorityFace } from \"./ExchangesAuthorityFace.sol\";\n\n/// @title Exchanges Authority - A helper contract for the exchange adapters.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\n// solhint-disable-next-line\ncontract ExchangesAuthority is Owned, ExchangesAuthorityFace {\n\n    BuildingBlocks public blocks;\n    Type public types;\n\n    mapping (address => Account) public accounts;\n\n    struct List {\n        address target;\n    }\n\n    struct Type {\n        string types;\n        List[] list;\n    }\n\n    struct Group {\n        bool whitelister;\n        bool exchange;\n        bool asset;\n        bool authority;\n        bool wrapper;\n        bool proxy;\n    }\n\n    struct Account {\n        address account;\n        bool authorized;\n        mapping (bool => Group) groups; //mapping account to bool authorized to bool group\n    }\n\n    struct BuildingBlocks {\n        address exchangeEventful;\n        address sigVerifier;\n        address casper;\n        mapping (address => bool) initialized;\n        mapping (address => address) adapter;\n        // Mapping of exchange => method => approved\n        mapping (address => mapping (bytes4 => bool)) allowedMethods;\n        mapping (address => mapping (address => bool)) allowedTokens;\n        mapping (address => mapping (address => bool)) allowedWrappers;\n    }\n\n    /*\n     * EVENTS\n     */\n    event AuthoritySet(address indexed authority);\n    event WhitelisterSet(address indexed whitelister);\n    event WhitelistedAsset(address indexed asset, bool approved);\n    event WhitelistedExchange(address indexed exchange, bool approved);\n    event WhitelistedWrapper(address indexed wrapper, bool approved);\n    event WhitelistedProxy(address indexed proxy, bool approved);\n    event WhitelistedMethod(bytes4 indexed method, address indexed adapter, bool approved);\n    event NewSigVerifier(address indexed sigVerifier);\n    event NewExchangeEventful(address indexed exchangeEventful);\n    event NewCasper(address indexed casper);\n\n    /*\n     * MODIFIERS\n     */\n    modifier onlyAdmin {\n        require(msg.sender == owner || isWhitelister(msg.sender));\n        _;\n    }\n\n    modifier onlyWhitelister {\n        require(isWhitelister(msg.sender));\n        _;\n    }\n\n    /*\n     * CORE FUNCTIONS\n     */\n    /// @dev Allows the owner to whitelist an authority\n    /// @param _authority Address of the authority\n    /// @param _isWhitelisted Bool whitelisted\n    function setAuthority(address _authority, bool _isWhitelisted)\n        external\n        onlyOwner\n    {\n        setAuthorityInternal(_authority, _isWhitelisted);\n    }\n\n    /// @dev Allows the owner to whitelist a whitelister\n    /// @param _whitelister Address of the whitelister\n    /// @param _isWhitelisted Bool whitelisted\n    function setWhitelister(address _whitelister, bool _isWhitelisted)\n        external\n        onlyOwner\n    {\n        setWhitelisterInternal(_whitelister, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to whitelist an asset\n    /// @param _asset Address of the token\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistAsset(address _asset, bool _isWhitelisted)\n        external\n        onlyWhitelister\n    {\n        accounts[_asset].account = _asset;\n        accounts[_asset].authorized = _isWhitelisted;\n        accounts[_asset].groups[_isWhitelisted].asset = _isWhitelisted;\n        types.list.push(List(_asset));\n        emit WhitelistedAsset(_asset, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to whitelist an exchange\n    /// @param _exchange Address of the target exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistExchange(address _exchange, bool _isWhitelisted)\n        external\n        onlyWhitelister\n    {\n        accounts[_exchange].account = _exchange;\n        accounts[_exchange].authorized = _isWhitelisted;\n        accounts[_exchange].groups[_isWhitelisted].exchange = _isWhitelisted;\n        types.list.push(List(_exchange));\n        emit WhitelistedExchange(_exchange, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to whitelist an token wrapper\n    /// @param _wrapper Address of the target token wrapper\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistWrapper(address _wrapper, bool _isWhitelisted)\n        external\n        onlyWhitelister\n    {\n        accounts[_wrapper].account = _wrapper;\n        accounts[_wrapper].authorized = _isWhitelisted;\n        accounts[_wrapper].groups[_isWhitelisted].wrapper = _isWhitelisted;\n        types.list.push(List(_wrapper));\n        emit WhitelistedWrapper(_wrapper, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to whitelist a tokenTransferProxy\n    /// @param _tokenTransferProxy Address of the proxy\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistTokenTransferProxy(\n        address _tokenTransferProxy,\n        bool _isWhitelisted)\n        external\n        onlyWhitelister\n    {\n        accounts[_tokenTransferProxy].account = _tokenTransferProxy;\n        accounts[_tokenTransferProxy].authorized = _isWhitelisted;\n        accounts[_tokenTransferProxy].groups[_isWhitelisted].proxy = _isWhitelisted;\n        types.list.push(List(_tokenTransferProxy));\n        emit WhitelistedProxy(_tokenTransferProxy, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to enable trading on a particular exchange\n    /// @param _asset Address of the token\n    /// @param _exchange Address of the exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistAssetOnExchange(\n        address _asset,\n        address _exchange,\n        bool _isWhitelisted)\n        external\n        onlyAdmin\n    {\n        blocks.allowedTokens[_exchange][_asset] = _isWhitelisted;\n        emit WhitelistedAsset(_asset, _isWhitelisted);\n    }\n\n    /// @dev Allows a whitelister to enable assiciate wrappers to a token\n    /// @param _token Address of the token\n    /// @param _wrapper Address of the exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistTokenOnWrapper(address _token, address _wrapper, bool _isWhitelisted)\n        external\n        onlyAdmin\n    {\n        blocks.allowedWrappers[_wrapper][_token] = _isWhitelisted;\n        emit WhitelistedAsset(_token, _isWhitelisted);\n    }\n\n    /// @dev Allows an admin to whitelist a factory\n    /// @param _method Hex of the function ABI\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistMethod(\n        bytes4 _method,\n        address _adapter,\n        bool _isWhitelisted)\n        external\n        onlyAdmin\n    {\n        blocks.allowedMethods[_adapter][_method] = _isWhitelisted;\n        emit WhitelistedMethod(_method, _adapter, _isWhitelisted);\n    }\n\n    /// @dev Allows the owner to set the signature verifier\n    /// @param _sigVerifier Address of the verifier contract\n    function setSignatureVerifier(address _sigVerifier)\n        external\n        onlyOwner\n    {\n        blocks.sigVerifier = _sigVerifier;\n        emit NewSigVerifier(blocks.sigVerifier);\n    }\n\n    /// @dev Allows the owner to set the exchange eventful\n    /// @param _exchangeEventful Address of the exchange logs contract\n    function setExchangeEventful(address _exchangeEventful)\n        external\n        onlyOwner\n    {\n        blocks.exchangeEventful = _exchangeEventful;\n        emit NewExchangeEventful(blocks.exchangeEventful);\n    }\n\n    /// @dev Allows the owner to associate an exchange to its adapter\n    /// @param _exchange Address of the exchange\n    /// @param _adapter Address of the adapter\n    function setExchangeAdapter(address _exchange, address _adapter)\n        external\n        onlyOwner\n    {\n        require(_exchange != _adapter);\n        blocks.adapter[_exchange] = _adapter;\n    }\n\n    /// @dev Allows the owner to set the casper contract\n    /// @param _casper Address of the casper contract\n    function setCasper(address _casper)\n        external\n        onlyOwner\n    {\n        blocks.casper = _casper;\n        blocks.initialized[_casper] = true;\n        emit NewCasper(blocks.casper);\n    }\n\n    /*\n     * CONSTANT PUBLIC FUNCTIONS\n     */\n    /// @dev Provides whether an address is an authority\n    /// @param _authority Address of the target authority\n    /// @return Bool is whitelisted\n    function isAuthority(address _authority)\n        external view\n        returns (bool)\n    {\n        return accounts[_authority].groups[true].authority;\n    }\n\n    /// @dev Provides whether an asset is whitelisted\n    /// @param _asset Address of the target asset\n    /// @return Bool is whitelisted\n    function isWhitelistedAsset(address _asset)\n        external view\n        returns (bool)\n    {\n        return accounts[_asset].groups[true].asset;\n    }\n\n    /// @dev Provides whether an exchange is whitelisted\n    /// @param _exchange Address of the target exchange\n    /// @return Bool is whitelisted\n    function isWhitelistedExchange(address _exchange)\n        external view\n        returns (bool)\n    {\n        return accounts[_exchange].groups[true].exchange;\n    }\n\n    /// @dev Provides whether a token wrapper is whitelisted\n    /// @param _wrapper Address of the target exchange\n    /// @return Bool is whitelisted\n    function isWhitelistedWrapper(address _wrapper)\n        external view\n        returns (bool)\n    {\n        return accounts[_wrapper].groups[true].wrapper;\n    }\n\n    /// @dev Provides whether a proxy is whitelisted\n    /// @param _tokenTransferProxy Address of the proxy\n    /// @return Bool is whitelisted\n    function isWhitelistedProxy(address _tokenTransferProxy)\n        external view\n        returns (bool)\n    {\n        return accounts[_tokenTransferProxy].groups[true].proxy;\n    }\n\n    /// @dev Provides the address of the exchange adapter\n    /// @param _exchange Address of the exchange\n    /// @return Address of the adapter\n    function getExchangeAdapter(address _exchange)\n        external view\n        returns (address)\n    {\n        return blocks.adapter[_exchange];\n    }\n\n    /// @dev Provides the address of the signature verifier\n    /// @return Address of the verifier\n    function getSigVerifier()\n        external view\n        returns (address)\n    {\n        return blocks.sigVerifier;\n    }\n\n    /// @dev Checkes whether a token is allowed on an exchange\n    /// @param _token Address of the token\n    /// @param _exchange Address of the exchange\n    /// @return Bool the token is whitelisted on the exchange\n    function canTradeTokenOnExchange(address _token, address _exchange)\n        external view\n        returns (bool)\n    {\n        return blocks.allowedTokens[_exchange][_token];\n    }\n\n    /// @dev Checkes whether a token is allowed on a wrapper\n    /// @param _token Address of the token\n    /// @param _wrapper Address of the token wrapper\n    /// @return Bool the token is whitelisted on the exchange\n    function canWrapTokenOnWrapper(address _token, address _wrapper)\n        external view\n        returns (bool)\n    {\n        return blocks.allowedWrappers[_wrapper][_token];\n    }\n\n    /// @dev Checkes whether a method is allowed on an exchange\n    /// @param _method Bytes of the function signature\n    /// @param _adapter Address of the exchange\n    /// @return Bool the method is allowed\n    function isMethodAllowed(bytes4 _method, address _adapter)\n        external view\n        returns (bool)\n    {\n        return blocks.allowedMethods[_adapter][_method];\n    }\n\n    /// @dev Checkes whether casper has been inizialized\n    /// @return Bool the casper contract has been initialized\n    function isCasperInitialized()\n        external view\n        returns (bool)\n    {\n        address casper = blocks.casper;\n        return blocks.initialized[casper];\n    }\n\n    /// @dev Provides the address of the casper contract\n    /// @return Address of the casper contract\n    function getCasper()\n        external view\n        returns (address)\n    {\n        return blocks.casper;\n    }\n\n    /*\n     * INTERNAL FUNCTIONS\n     */\n    /// @dev Allows to whitelist an authority\n    /// @param _authority Address of the authority\n    /// @param _isWhitelisted Bool whitelisted\n    function setAuthorityInternal(\n        address _authority,\n        bool _isWhitelisted)\n        internal\n    {\n        accounts[_authority].account = _authority;\n        accounts[_authority].authorized = _isWhitelisted;\n        accounts[_authority].groups[_isWhitelisted].authority = _isWhitelisted;\n        setWhitelisterInternal(_authority, _isWhitelisted);\n        types.list.push(List(_authority));\n        emit AuthoritySet(_authority);\n    }\n\n    /// @dev Allows the owner to whitelist a whitelister\n    /// @param _whitelister Address of the whitelister\n    /// @param _isWhitelisted Bool whitelisted\n    function setWhitelisterInternal(\n        address _whitelister,\n        bool _isWhitelisted)\n        internal\n    {\n        accounts[_whitelister].account = _whitelister;\n        accounts[_whitelister].authorized = _isWhitelisted;\n        accounts[_whitelister].groups[_isWhitelisted].whitelister = _isWhitelisted;\n        types.list.push(List(_whitelister));\n        emit WhitelisterSet(_whitelister);\n    }\n\n    /// @dev Provides whether an address is whitelister\n    /// @param _whitelister Address of the target whitelister\n    /// @return Bool is whitelisted\n    function isWhitelister(address _whitelister)\n        internal view\n        returns (bool)\n    {\n        return accounts[_whitelister].groups[true].whitelister;\n    }\n}\n",
+		"../../../utils/Owned/Owned.sol": "pragma solidity >=0.4.22 <0.6.0;\n\ncontract Owned {\n\n    address public owner;\n\n    event NewOwner(address indexed old, address indexed current);\n\n    modifier onlyOwner {\n        require(msg.sender == owner);\n        _;\n    }\n\n    constructor() public {\n        owner = msg.sender;\n    }\n\n    function setOwner(address _new)\n        public\n        onlyOwner\n    {\n        require(_new != address(0));\n        owner = _new;\n        emit NewOwner(owner, _new);\n    }\n}\n",
+		"./ExchangesAuthorityFace.sol": "/*\n\n Copyright 2018 RigoBlock, Rigo Investment Sagl.\n\n Licensed under the Apache License, Version 2.0 (the \"License\");\n you may not use this file except in compliance with the License.\n You may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\n Unless required by applicable law or agreed to in writing, software\n distributed under the License is distributed on an \"AS IS\" BASIS,\n WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n See the License for the specific language governing permissions and\n limitations under the License.\n\n*/\n\npragma solidity 0.5.0;\n\n/// @title Exchange Authority Interface - A helper contract for the exchange adapters.\n/// @author Gabriele Rigo - <gab@rigoblock.com>\n// solhint-disable-next-line\ninterface ExchangesAuthorityFace {\n\n    /*\n     * EVENTS\n     */\n    event AuthoritySet(address indexed authority);\n    event WhitelisterSet(address indexed whitelister);\n    event WhitelistedAsset(address indexed asset, bool approved);\n    event WhitelistedExchange(address indexed exchange, bool approved);\n    event WhitelistedWrapper(address indexed wrapper, bool approved);\n    event WhitelistedProxy(address indexed proxy, bool approved);\n    event WhitelistedMethod(bytes4 indexed method, address indexed exchange, bool approved);\n    event NewSigVerifier(address indexed sigVerifier);\n    event NewExchangeEventful(address indexed exchangeEventful);\n    event NewCasper(address indexed casper);\n\n    /*\n     * CORE FUNCTIONS\n     */\n    /// @dev Allows the owner to whitelist an authority\n    /// @param _authority Address of the authority\n    /// @param _isWhitelisted Bool whitelisted\n    function setAuthority(address _authority, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows the owner to whitelist a whitelister\n    /// @param _whitelister Address of the whitelister\n    /// @param _isWhitelisted Bool whitelisted\n    function setWhitelister(address _whitelister, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to whitelist an asset\n    /// @param _asset Address of the token\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistAsset(address _asset, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to whitelist an exchange\n    /// @param _exchange Address of the target exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistExchange(address _exchange, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to whitelist an token wrapper\n    /// @param _wrapper Address of the target token wrapper\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistWrapper(address _wrapper, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to whitelist a tokenTransferProxy\n    /// @param _tokenTransferProxy Address of the proxy\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistTokenTransferProxy(\n        address _tokenTransferProxy, bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to enable trading on a particular exchange\n    /// @param _asset Address of the token\n    /// @param _exchange Address of the exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistAssetOnExchange(\n        address _asset,\n        address _exchange,\n        bool _isWhitelisted)\n        external;\n\n    /// @dev Allows a whitelister to enable assiciate wrappers to a token\n    /// @param _token Address of the token\n    /// @param _wrapper Address of the exchange\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistTokenOnWrapper(\n        address _token,\n        address _wrapper,\n        bool _isWhitelisted)\n        external;\n\n    /// @dev Allows an admin to whitelist a factory\n    /// @param _method Hex of the function ABI\n    /// @param _isWhitelisted Bool whitelisted\n    function whitelistMethod(\n        bytes4 _method,\n        address _adapter,\n        bool _isWhitelisted)\n        external;\n\n    /// @dev Allows the owner to set the signature verifier\n    /// @param _sigVerifier Address of the logs contract\n    function setSignatureVerifier(address _sigVerifier)\n        external;\n\n    /// @dev Allows the owner to set the exchange eventful\n    /// @param _exchangeEventful Address of the exchange logs contract\n    function setExchangeEventful(address _exchangeEventful)\n        external;\n\n    /// @dev Allows the owner to associate an exchange to its adapter\n    /// @param _exchange Address of the exchange\n    /// @param _adapter Address of the adapter\n    function setExchangeAdapter(address _exchange, address _adapter)\n        external;\n\n    /// @dev Allows the owner to set the casper contract\n    /// @param _casper Address of the casper contract\n    function setCasper(address _casper)\n        external;\n\n    /*\n     * CONSTANT PUBLIC FUNCTIONS\n     */\n    /// @dev Provides whether an address is an authority\n    /// @param _authority Address of the target authority\n    /// @return Bool is whitelisted\n    function isAuthority(address _authority)\n        external view\n        returns (bool);\n\n    /// @dev Provides whether an asset is whitelisted\n    /// @param _asset Address of the target asset\n    /// @return Bool is whitelisted\n    function isWhitelistedAsset(address _asset)\n        external view\n        returns (bool);\n\n    /// @dev Provides whether an exchange is whitelisted\n    /// @param _exchange Address of the target exchange\n    /// @return Bool is whitelisted\n    function isWhitelistedExchange(address _exchange)\n        external view\n        returns (bool);\n\n    /// @dev Provides whether a token wrapper is whitelisted\n    /// @param _wrapper Address of the target exchange\n    /// @return Bool is whitelisted\n    function isWhitelistedWrapper(address _wrapper)\n        external view\n        returns (bool);\n\n    /// @dev Provides whether a proxy is whitelisted\n    /// @param _tokenTransferProxy Address of the proxy\n    /// @return Bool is whitelisted\n    function isWhitelistedProxy(address _tokenTransferProxy)\n        external view\n        returns (bool);\n\n    /// @dev Provides the address of the exchange adapter\n    /// @param _exchange Address of the exchange\n    /// @return Address of the adapter\n    function getExchangeAdapter(address _exchange)\n        external view\n        returns (address);\n\n    /// @dev Provides the address of the signature verifier\n    /// @return Address of the verifier\n    function getSigVerifier()\n        external view\n        returns (address);\n\n    /// @dev Checkes whether a token is allowed on an exchange\n    /// @param _token Address of the token\n    /// @param _exchange Address of the exchange\n    /// @return Bool the token is whitelisted on the exchange\n    function canTradeTokenOnExchange(address _token, address _exchange)\n        external view\n        returns (bool);\n\n    /// @dev Checkes whether a token is allowed on a wrapper\n    /// @param _token Address of the token\n    /// @return Bool the token is whitelisted on the exchange\n    function canWrapTokenOnWrapper(address _token, address _wrapper)\n        external view\n        returns (bool);\n\n    /// @dev Checkes whether a method is allowed on an exchange\n    function isMethodAllowed(bytes4 _method, address _exchange)\n        external view\n        returns (bool);\n\n    /// @dev Checkes whether casper has been inizialized\n    /// @return Bool the casper contract has been initialized\n    function isCasperInitialized()\n        external view\n        returns (bool);\n\n    /// @dev Provides the address of the casper contract\n    /// @return Address of the casper contract\n    function getCasper()\n        external view\n        returns (address);\n}\n"
+	},
+	"compiler": {
+		"name": "solc",
+		"version": "0.5.0+commit.1d4f565a",
+		"settings": {
+			"remappings": [],
+			"optimizer": {
+				"enabled": true,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"*": [
+						"abi",
+						"devdoc",
+						"evm.bytecode.object",
+						"evm.bytecode.sourceMap",
+						"evm.deployedBytecode.object",
+						"evm.deployedBytecode.sourceMap"
+					]
+				}
+			}
+		}
+	},
+	"chains": {}
+}

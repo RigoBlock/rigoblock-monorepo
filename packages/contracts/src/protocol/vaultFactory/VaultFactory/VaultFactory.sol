@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { DragoRegistryFace as DragoRegistry } from "../../DragoRegistry/DragoRegistryFace.sol";
 import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
@@ -40,7 +39,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     struct Data {
         uint256 fee;
         address vaultRegistry;
-        address vaultDao;
+        address payable vaultDao;
         address authority;
         mapping(address => address[]) vaults;
     }
@@ -76,7 +75,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
     constructor(
         address _registry,
-        address _vaultDao,
+        address payable _vaultDao,
         address _authority)
         public
     {
@@ -93,7 +92,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @param _name String of the name
     /// @param _symbol String of the symbol
     /// @return Bool the transaction executed correctly
-    function createVault(string _name, string _symbol)
+    function createVault(string calldata _name, string calldata _symbol)
         external
         payable
         whenFeePaid
@@ -128,7 +127,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @dev Allows vault dao/factory to update its address
     /// @dev Creates internal record
     /// @param _newVaultDao Address of the vault dao
-    function changeVaultDao(address _newVaultDao)
+    function changeVaultDao(address payable _newVaultDao)
         external
         onlyVaultDao
     {
@@ -146,7 +145,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
 
     /// @dev Allows owner to set the address which can collect creation fees
     /// @param _vaultDao Address of the new vault dao/factory
-    function setBeneficiary(address _vaultDao)
+    function setBeneficiary(address payable _vaultDao)
         external
         onlyOwner
     {
@@ -190,7 +189,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
         external view
         returns (
             address vaultDao,
-            string version,
+            string memory version,
             uint256 nextVaultId
         )
     {
@@ -217,7 +216,7 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @return Array of vault addresses
     function getVaultsByAddress(address _owner)
         external view
-        returns (address[])
+        returns (address[] memory)
     {
         return data.vaults[_owner];
     }
@@ -232,8 +231,8 @@ contract VaultFactory is Owned, VaultFactoryFace {
     /// @param _vaultId Number of the new vault Id
     /// @return Bool the transaction executed correctly
     function createVaultInternal(
-        string _name,
-        string _symbol,
+        string memory _name,
+        string memory _symbol,
         address _owner,
         uint256 _vaultId)
         internal

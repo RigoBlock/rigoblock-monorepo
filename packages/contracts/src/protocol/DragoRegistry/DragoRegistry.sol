@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { Owned } from "../../utils/Owned/Owned.sol";
 import { DragoRegistryFace } from "./DragoRegistryFace.sol";
@@ -79,25 +78,25 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         _;
     }
 
-    modifier whenNameFree(string _name) {
+    modifier whenNameFree(string memory _name) {
         require(mapFromName[_name] == 0);
         _;
     }
 
-    modifier whenNameSanitized(string _input) {
+    modifier whenNameSanitized(string memory _input) {
         require(bytes(_input).length >= 4 && bytes(_input).length <= 50);
         require(LibSanitize.isValidCheck(_input));
         _;
     }
 
-    modifier whenSymbolSanitized(string _input) {
+    modifier whenSymbolSanitized(string memory _input) {
         require(bytes(_input).length >= 3 && bytes(_input).length <= 5);
         require(LibSanitize.isValidCheck(_input));
         require(LibSanitize.isUppercase(_input));
         _;
     }
 
-    modifier whenHasName(string _name) {
+    modifier whenHasName(string memory _name) {
         require(mapFromName[_name] != 0);
         _;
     }
@@ -123,8 +122,8 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @param _owner Address of the pool owner
     function register(
         address _drago,
-        string _name,
-        string _symbol,
+        string calldata _name,
+        string calldata _symbol,
         uint256 _dragoId,
         address _owner)
         external
@@ -193,7 +192,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
 
     /// @dev Allows anyone to update many owners if they differ from registered
     /// @param _id uint256 of the target pool
-    function updateOwners(uint256[] _id)
+    function updateOwners(uint256[] calldata _id)
         external
     {
         for (uint256 i = 0; i < _id.length; ++i) {
@@ -212,7 +211,8 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         DragoRegistry registry = DragoRegistry(_newAddress);
         ++VERSION;
         registry.setUpgraded(VERSION);
-        address(registry).transfer(address(this).balance);
+        address payable registryAddress = address(uint160(address(registry)));
+        registryAddress.transfer(address(this).balance);
     }
 
     /// @dev Allows owner to update version on registry upgrade
@@ -251,8 +251,8 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         public view //prev external
         returns (
             address drago,
-            string name,
-            string symbol,
+            string memory name,
+            string memory symbol,
             uint256 dragoId,
             address owner,
             address group
@@ -276,8 +276,8 @@ contract DragoRegistry is DragoRegistryFace, Owned {
         external view
         returns (
             uint256 id,
-            string name,
-            string symbol,
+            string memory name,
+            string memory symbol,
             uint256 dragoId,
             address owner,
             address group
@@ -298,12 +298,12 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @dev Provides a pool's struct data
     /// @param _name Name of the pool
     /// @return Pool struct data
-    function fromName(string _name)
+    function fromName(string calldata _name)
         external view
         returns (
             uint256 id,
             address drago,
-            string symbol,
+            string memory symbol,
             uint256 dragoId,
             address owner,
             address group
@@ -326,7 +326,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @return Name of the pool
     function getNameFromAddress(address _pool)
         external view
-        returns (string)
+        returns (string memory)
     {
         uint256 id = mapFromAddress[_pool] - 1;
         Drago memory pool = dragos[id];
@@ -338,7 +338,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @return Symbol of the pool
     function getSymbolFromAddress(address _pool)
         external view
-        returns (string)
+        returns (string memory)
     {
         uint256 id = mapFromAddress[_pool] - 1;
         Drago memory pool = dragos[id];
@@ -360,7 +360,7 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @return Array of addresses of the groups
     function getGroups()
         external view
-        returns (address[])
+        returns (address[] memory)
     {
         return groups;
     }
@@ -386,8 +386,8 @@ contract DragoRegistry is DragoRegistryFace, Owned {
     /// @param _group Address of the group/factory
     function registerAs(
         address _drago,
-        string _name,
-        string _symbol,
+        string memory _name,
+        string memory _symbol,
         uint256 _dragoId,
         address _owner,
         address _group)

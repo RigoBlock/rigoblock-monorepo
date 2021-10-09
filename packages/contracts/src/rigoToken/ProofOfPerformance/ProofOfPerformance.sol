@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: Apache 2.0
+
 /*
 
- Copyright 2017-2019 RigoBlock, Rigo Investment Sagl.
+ Copyright 2017-2019 RigoBlock, Rigo Investment Sagl, 2020 Rigo Intl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,222 +18,187 @@
 
 */
 
-pragma solidity 0.5.4;
+// solhint-disable-next-line
+pragma solidity 0.7.4;
 
-import { Pool } from "../../utils/Pool/Pool.sol";
-import { ReentrancyGuard } from "../../utils/ReentrancyGuard/ReentrancyGuard.sol";
+import { AuthorityFace } from "../../protocol/authorities/Authority/AuthorityFace.sol";
+import { IPool } from "../../utils/Pool/IPool.sol";
 import { SafeMath } from "../../utils/SafeMath/SafeMath.sol";
 import { ProofOfPerformanceFace } from "./ProofOfPerformanceFace.sol";
+import { IDragoRegistry } from "../../protocol/DragoRegistry/IDragoRegistry.sol";
+import { IStaking } from "../../staking/interfaces/IStaking.sol";
 
-contract Inflation {
-    
-    uint256 public period;
-
-    /*
-     * CORE FUNCTIONS
-     */
-    function mintInflation(address _thePool, uint256 _reward) external returns (bool);
-    function setInflationFactor(address _group, uint256 _inflationFactor) external;
-    function setMinimumRigo(uint256 _minimum) external;
-    function setRigoblock(address _newRigoblock) external;
-    function setAuthority(address _authority) external;
-    function setProofOfPerformance(address _pop) external;
-    function setPeriod(uint256 _newPeriod) external;
-
-    /*
-     * CONSTANT PUBLIC FUNCTIONS
-     */
-    function canWithdraw(address _thePool) external view returns (bool);
-    function timeUntilClaim(address _thePool) external view returns (uint256);
-    function getInflationFactor(address _group) external view returns (uint256);
-}
-
-contract RigoToken {
-    address public minter;
-    uint256 public totalSupply;
-
-    function balanceOf(address _who) external view returns (uint256);
-}
-
-interface DragoRegistry {
-
-    //EVENTS
-
-    event Registered(string name, string symbol, uint256 id, address indexed drago, address indexed owner, address indexed group);
-    event Unregistered(string indexed name, string indexed symbol, uint256 indexed id);
-    event MetaChanged(uint256 indexed id, bytes32 indexed key, bytes32 value);
-
-    /*
-     * CORE FUNCTIONS
-     */
-    function register(address _drago, string calldata _name, string calldata _symbol, uint256 _dragoId, address _owner) external payable returns (bool);
-    function unregister(uint256 _id) external;
-    function setMeta(uint256 _id, bytes32 _key, bytes32 _value) external;
-    function addGroup(address _group) external;
-    function setFee(uint256 _fee) external;
-    function updateOwner(uint256 _id) external;
-    function updateOwners(uint256[] calldata _id) external;
-    function upgrade(address _newAddress) external payable; //payable as there is a transfer of value, otherwise opcode might throw an error
-    function setUpgraded(uint256 _version) external;
-    function drain() external;
-
-    /*
-     * CONSTANT PUBLIC FUNCTIONS
-     */
-    function dragoCount() external view returns (uint256);
-    function fromId(uint256 _id) external view returns (address drago, string memory name, string memory symbol, uint256 dragoId, address owner, address group);
-    function fromAddress(address _drago) external view returns (uint256 id, string memory name, string memory symbol, uint256 dragoId, address owner, address group);
-    function fromName(string calldata _name) external view returns (uint256 id, address drago, string memory symbol, uint256 dragoId, address owner, address group);
-    function getNameFromAddress(address _pool) external view returns (string memory);
-    function getSymbolFromAddress(address _pool) external view returns (string memory);
-    function meta(uint256 _id, bytes32 _key) external view returns (bytes32);
-    function getGroups() external view returns (address[] memory);
-    function getFee() external view returns (uint256);
-}
 
 /// @title Proof of Performance - Controls parameters of inflation.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
 // solhint-disable-next-line
 contract ProofOfPerformance is
     SafeMath,
-    ReentrancyGuard,
     ProofOfPerformanceFace
 {
-    address public RIGOTOKENADDRESS;
+    address public override dragoRegistryAddress;
+    address public override rigoblockDaoAddress;
+    address public override authorityAddress;
 
-    address public dragoRegistry;
-    address public rigoblockDao;
+    address private immutable STAKING_PROXY_ADDRESS;
+    uint256 private immutable POOL_BASE = 1e6;
 
-    mapping (uint256 => PoolPrice) poolPrice;
-    mapping (address => Group) groups;
-
-    struct PoolPrice {
-        uint256 highwatermark;
-    }
+    mapping (address => Group) public groupByAddress;
+    mapping (uint256 => uint256) private _highWaterMark;
 
     struct Group {
+        uint256 epochReward;
         uint256 rewardRatio;
     }
 
     modifier onlyRigoblockDao() {
-        require(
-            msg.sender == rigoblockDao,
-            "ONLY_RIGOBLOCK_DAO"
-        );
+        _assertCallerIsRigoblockDao();
+        _;
+    }
+
+    modifier isApprovedFactory(address _factory) {
+        _assertIsApprovedFactory(_factory);
         _;
     }
 
     constructor(
-        address _rigoTokenAddress,
+        address _stakingProxyAddress,
         address _rigoblockDao,
-        address _dragoRegistry)
-        public
-    {
-        RIGOTOKENADDRESS = _rigoTokenAddress;
-        rigoblockDao = _rigoblockDao;
-        dragoRegistry = _dragoRegistry;
+        address _dragoRegistry,
+        address _authorityAddress
+    ) {
+        STAKING_PROXY_ADDRESS = _stakingProxyAddress;
+        rigoblockDaoAddress = _rigoblockDao;
+        dragoRegistryAddress = _dragoRegistry;
+        authorityAddress = _authorityAddress;
     }
 
-    /*
-     * CORE FUNCTIONS
-     */
-    /// @dev Allows anyone to allocate the pop reward to pool wizards.
-    /// @param _ofPool Number of pool id in registry.
-    function claimPop(uint256 _ofPool)
+    /// @dev Credits the pop reward to the Staking Proxy contract.
+    /// @param poolId Number of the pool Id in registry.
+    function creditPopRewardToStakingProxy(
+        uint256 poolId
+    )
         external
-        nonReentrant
+        override
     {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        address poolAddress;
-        (poolAddress, , , , , ) = registry.fromId(_ofPool);
-        (uint256 pop, ) = proofOfPerformanceInternal(_ofPool);
-        require(
-            pop > 0,
-            "POP_REWARD_IS_NULL"
-        );
-        uint256 price = Pool(poolAddress).calcSharePrice();
-        poolPrice[_ofPool].highwatermark = price;
-        require(
-            Inflation(getMinter()).mintInflation(poolAddress, pop),
-            "MINT_INFLATION_ERROR"
-        );
+        (address poolAddress, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
+
+        if (poolAddress == address(0)) {
+            return;
+        }
+
+        uint256 poolPrice = IPool(poolAddress).calcSharePrice();
+
+        // allow smart contract calls only from pool itself
+        if (_isContract(msg.sender)) {
+            _assertContractIsPool(poolAddress);
+        }
+
+        // initialization is not necessary but explicit as to prevent failure in case of a future upgrade
+        _initializeHwmIfUninitialized(poolId);
+
+        (uint256 popReward, ) = _proofOfPerformanceInternal(poolId);
+
+        // pop assets component is always positive, therefore we must update the hwm if positive performance
+        _updateHwmIfPositivePerformance(poolPrice, poolId);
+
+        IStaking(STAKING_PROXY_ADDRESS).creditPopReward(poolAddress, popReward);
     }
 
     /// @dev Allows RigoBlock Dao to update the pools registry.
-    /// @param _dragoRegistry Address of new registry.
-    function setRegistry(address _dragoRegistry)
+    /// @param newDragoRegistryAddress Address of new registry.
+    function setRegistry(address newDragoRegistryAddress)
         external
+        override
         onlyRigoblockDao
     {
-        dragoRegistry = _dragoRegistry;
+        dragoRegistryAddress = newDragoRegistryAddress;
     }
 
     /// @dev Allows RigoBlock Dao to update its address.
-    /// @param _rigoblockDao Address of new dao.
-    function setRigoblockDao(address _rigoblockDao)
+    /// @param newRigoblockDaoAddress Address of new dao.
+    function setRigoblockDao(address newRigoblockDaoAddress)
         external
+        override
         onlyRigoblockDao
     {
-        rigoblockDao = _rigoblockDao;
+        rigoblockDaoAddress = newRigoblockDaoAddress;
     }
 
-    /// @dev Allows RigoBlock Dao to set the ratio between assets and performance reward for a group.
-    /// @param _ofGroup Id of the pool.
-    /// @param _ratio Id of the pool.
-    /// @notice onlyRigoblockDao can set ratio.
-    function setRatio(
-        address _ofGroup,
-        uint256 _ratio)
+    /// @dev Allows rigoblock dao to update the authority.
+    /// @param newAuthorityAddress Address of the authority.
+    function setAuthority(address newAuthorityAddress)
         external
+        override
         onlyRigoblockDao
     {
-        require(
-            _ratio <= 10000,
-            "RATIO_BIGGER_THAN_10000"
-        ); //(from 0 to 10000)
-        groups[_ofGroup].rewardRatio = _ratio;
+        authorityAddress = newAuthorityAddress;
+    }
+
+    /// @dev Allows RigoBlock Dao to set the parameters for a group.
+    /// @param groupAddress Address of the pool's group.
+    /// @param ratio Value of the ratio between assets and performance reward for a group.
+    /// @param inflationFactor Value of the reward factor for a group.
+    /// @notice onlyRigoblockDao can set ratio.
+    function setGroupParams(
+        address groupAddress,
+        uint256 ratio,
+        uint256 inflationFactor
+    )
+        external
+        override
+        onlyRigoblockDao
+        isApprovedFactory(groupAddress)
+    {
+        // assert that group parameters are correct
+        _assertValidGroupParams(ratio, inflationFactor);
+        
+        // update storage
+        groupByAddress[groupAddress].rewardRatio = ratio;
+        groupByAddress[groupAddress].epochReward = inflationFactor;
     }
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
     /// @dev Gets data of a pool.
-    /// @param _ofPool Id of the pool.
-    /// @return Bool the pool is active.
-    /// @return address of the pool.
-    /// @return address of the pool factory.
-    /// @return price of the pool in wei.
-    /// @return total supply of the pool in units.
-    /// @return total value of the pool in wei.
-    /// @return value of the reward factor or said pool.
+    /// @param poolId Id of the pool.
+    /// @return active Bool the pool is active.
+    /// @return poolAddress address of the pool.
+    /// @return poolGroup address of the pool factory.
+    /// @return poolPrice price of the pool in wei.
+    /// @return poolSupply total supply of the pool in units.
+    /// @return poolValue total value of the pool in wei.
+    /// @return epochReward value of the reward factor or said pool.
     /// @return ratio of assets/performance reward (from 0 to 10000).
-    /// @return value of the pop reward to be claimed in GRGs.
-    function getPoolData(uint256 _ofPool)
+    /// @return pop value of the pop reward to be claimed in GRGs.
+    function getPoolData(uint256 poolId)
         external
         view
+        override
         returns (
             bool active,
-            address thePoolAddress,
-            address thePoolGroup,
-            uint256 thePoolPrice,
-            uint256 thePoolSupply,
+            address poolAddress,
+            address poolGroup,
+            uint256 poolPrice,
+            uint256 poolSupply,
             uint256 poolValue,
             uint256 epochReward,
             uint256 ratio,
             uint256 pop
         )
     {
-        active = isActiveInternal(_ofPool);
-        (thePoolAddress, thePoolGroup) = addressFromIdInternal(_ofPool);
-        (thePoolPrice, thePoolSupply, poolValue) = getPoolPriceAndValueInternal(_ofPool);
-        (epochReward, , ratio) = getInflationParameters(_ofPool);
-        (pop, ) = proofOfPerformanceInternal(_ofPool);
+        active = _isActiveInternal(poolId);
+        (poolAddress, poolGroup) = _addressFromIdInternal(poolId);
+        (poolPrice, poolSupply, poolValue) = _getPoolPriceAndValueInternal(poolId);
+        (epochReward, , ratio) = getRewardParameters(poolId);
+        (pop, ) = _proofOfPerformanceInternal(poolId);
         return(
             active,
-            thePoolAddress,
-            thePoolGroup,
-            thePoolPrice,
-            thePoolSupply,
+            poolAddress,
+            poolGroup,
+            poolPrice,
+            poolSupply,
             poolValue,
             epochReward,
             ratio,
@@ -240,307 +207,279 @@ contract ProofOfPerformance is
     }
 
     /// @dev Returns the highwatermark of a pool.
-    /// @param _ofPool Id of the pool.
+    /// @param poolId Id of the pool.
     /// @return Value of the all-time-high pool nav.
-    function getHwm(uint256 _ofPool)
+    function getHwm(uint256 poolId)
         external
         view
+        override
         returns (uint256)
     {
-        return (getHwmInternal(_ofPool));
-    }
-
-    /// @dev Returns the reward factor for a pool.
-    /// @param _ofPool Id of the pool.
-    /// @return Value of the reward factor.
-    function getEpochReward(uint256 _ofPool)
-        external
-        view
-        returns (uint256)
-    {
-        (uint256 epochReward, , ) = getInflationParameters(_ofPool);
-        return epochReward;
+        return _getHwmInternal(poolId);
     }
 
     /// @dev Returns the split ratio of asset and performance reward.
-    /// @param _ofPool Id of the pool.
-    /// @return Value of the ratio from 1 to 100.
-    function getRatio(uint256 _ofPool)
-        external
+    /// @param poolId Id of the pool.
+    /// @return epochReward Value of the reward factor.
+    /// @return epochTime Value of epoch time.
+    /// @return ratio Value of the ratio from 1 to 100.
+    function getRewardParameters(uint256 poolId)
+        public
         view
-        returns (uint256)
-    {
-        ( , , uint256 ratio) = getInflationParameters(_ofPool);
-        return ratio;
-    }
-
-    /// @dev Returns the proof of performance reward for a pool.
-    /// @param _ofPool Id of the pool.
-    /// @return popReward Value of the pop reward in Rigo tokens.
-    /// @return performanceReward Split of the performance reward in Rigo tokens.
-    /// @notice epoch reward should be big enough that it.
-    /// @notice can be decreased if number of funds increases.
-    /// @notice should be at least 10^6 (just as pool base) to start with.
-    /// @notice rigo token has 10^18 decimals.
-    function proofOfPerformance(uint256 _ofPool)
-        external
-        view
-        returns (uint256 popReward, uint256 performanceReward)
-    {
-        return proofOfPerformanceInternal(_ofPool);
-    }
-
-    /// @dev Checks whether a pool is registered and active.
-    /// @param _ofPool Id of the pool.
-    /// @return Bool the pool is active.
-    function isActive(uint256 _ofPool)
-        external
-        view
-        returns (bool)
-    {
-        return isActiveInternal(_ofPool);
-    }
-
-    /// @dev Returns the address and the group of a pool from its id.
-    /// @param _ofPool Id of the pool.
-    /// @return Address of the target pool.
-    /// @return Address of the pool's group.
-    function addressFromId(uint256 _ofPool)
-        external
-        view
-        returns (
-            address pool,
-            address group
-        )
-    {
-        return (addressFromIdInternal(_ofPool));
-    }
-
-    /// @dev Returns the price a pool from its id.
-    /// @param _ofPool Id of the pool.
-    /// @return Price of the pool in wei.
-    /// @return Number of tokens of a pool (totalSupply).
-    function getPoolPrice(uint256 _ofPool)
-        external
-        view
-        returns (
-            uint256 thePoolPrice,
-            uint256 totalTokens
-        )
-    {
-        (thePoolPrice, totalTokens, ) = getPoolPriceAndValueInternal(_ofPool);
-    }
-
-    /// @dev Returns the address and the group of a pool from its id.
-    /// @param _ofPool Id of the pool.
-    /// @return Address of the target pool.
-    /// @return Address of the pool's group.
-    function calcPoolValue(uint256 _ofPool)
-        external
-        view
-        returns (
-            uint256 aum
-        )
-    {
-        ( , , aum) = getPoolPriceAndValueInternal(_ofPool);
-    }
-
-    /*
-     * INTERNAL FUNCTIONS
-     */
-    /// @dev Returns the split ratio of asset and performance reward.
-    /// @param _ofPool Id of the pool.
-    /// @return Value of the reward factor.
-    /// @return Value of epoch time.
-    /// @return Value of the ratio from 1 to 100.
-    function getInflationParameters(uint256 _ofPool)
-        internal
-        view
+        override
         returns (
             uint256 epochReward,
             uint256 epochTime,
             uint256 ratio
         )
     {
-        ( , address group) = addressFromIdInternal(_ofPool);
-        epochReward = Inflation(getMinter()).getInflationFactor(group);
-        epochTime = Inflation(getMinter()).period();
-        ratio = groups[group].rewardRatio;
-    }
-
-    /// @dev Returns the address of the Inflation contract.
-    /// @return Address of the minter/inflation.
-    function getMinter()
-        internal
-        view
-        returns (address)
-    {
-        RigoToken token = RigoToken(RIGOTOKENADDRESS);
-        return token.minter();
+        ( , address groupAddress) = _addressFromIdInternal(poolId);
+        epochReward = groupByAddress[groupAddress].epochReward;
+        (epochTime, , , , ) = IStaking(STAKING_PROXY_ADDRESS).getParams();
+        ratio = groupByAddress[groupAddress].rewardRatio;
     }
 
     /// @dev Returns the proof of performance reward for a pool.
-    /// @param _ofPool Id of the pool.
+    /// @param poolId Id of the pool.
+    /// @return popReward Value of the pop reward in Rigo tokens.
+    /// @return performanceReward Split of the performance reward in Rigo tokens.
+    /// @notice epoch reward should be big enough that it.
+    /// @notice can be decreased if number of funds increases.
+    /// @notice should be at least 10^6 (just as pool base) to start with.
+    /// @notice rigo token has 10^18 decimals.
+    function proofOfPerformance(uint256 poolId)
+        external
+        view
+        override
+        returns (
+            uint256 popReward,
+            uint256 performanceReward
+        )
+    {
+        return _proofOfPerformanceInternal(poolId);
+    }
+
+    /// @dev Checks whether a pool is registered and active.
+    /// @param poolId Id of the pool.
+    /// @return Bool the pool is active.
+    function isActive(uint256 poolId)
+        external
+        view
+        override
+        returns (bool)
+    {
+        return _isActiveInternal(poolId);
+    }
+
+    /// @dev Returns the address and the group of a pool from its id.
+    /// @param poolId Id of the pool.
+    /// @return pool Address of the target pool.
+    /// @return group Address of the pool's group.
+    function addressFromId(uint256 poolId)
+        external
+        view
+        override
+        returns (
+            address pool,
+            address group
+        )
+    {
+        return _addressFromIdInternal(poolId);
+    }
+
+    /// @dev Returns the price a pool from its id.
+    /// @param poolId Id of the pool.
+    /// @return poolPrice Price of the pool in wei.
+    /// @return totalTokens Number of tokens of a pool (totalSupply).
+    function getPoolPrice(uint256 poolId)
+        external
+        view
+        override
+        returns (
+            uint256 poolPrice,
+            uint256 totalTokens
+        )
+    {
+        (poolPrice, totalTokens, ) = _getPoolPriceAndValueInternal(poolId);
+    }
+
+    /// @dev Returns the value of a pool from its id.
+    /// @param poolId Id of the pool.
+    /// @return aum Total value of the pool in ETH.
+    function calcPoolValue(uint256 poolId)
+        external
+        view
+        override
+        returns (uint256 aum)
+    {
+        ( , , aum) = _getPoolPriceAndValueInternal(poolId);
+    }
+
+    /*
+     * INTERNAL FUNCTIONS
+     */
+    /// @dev Initializes the High Watermark if unitialized.
+    /// @param poolId Number of the pool Id in registry.
+    function _initializeHwmIfUninitialized(uint256 poolId)
+        internal
+    {
+        if (_highWaterMark[poolId] == uint256(0)) {
+            _highWaterMark[poolId] = 1 ether;
+        }
+    }
+
+    /// @dev Updates high-water mark if positive performance.
+    /// @param poolPrice Value of the pool price.
+    /// @param poolId Number of the pool Id in registry.
+    function _updateHwmIfPositivePerformance(
+        uint256 poolPrice,
+        uint256 poolId
+    )
+        internal
+    {
+        if (poolPrice > _highWaterMark[poolId]) {
+            _highWaterMark[poolId] = poolPrice;
+        }
+    }
+
+    /// @dev Returns the proof of performance reward for a pool.
+    /// @param poolId Id of the pool.
     /// @return popReward Value of the pop reward in Rigo tokens.
     /// @return performanceReward Split of the performance reward in Rigo tokens.
     /// @notice epoch reward should be big enough that it  can be decreased when number of funds increases
     /// @notice should be at least 10^6 (just as pool base) to start with.
-    function proofOfPerformanceInternal(uint256 _ofPool)
+    function _proofOfPerformanceInternal(uint256 poolId)
         internal
         view
-        returns (uint256 popReward, uint256 performanceReward)
+        returns (
+            uint256 popReward,
+            uint256 performanceReward
+        )
     {
-        uint256 highwatermark= getHwmInternal(_ofPool);
-        (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = getPoolPriceAndValueInternal(_ofPool);
-        require (
-            newPrice >= highwatermark,
-            "PRICE_LOWER_THAN_HWM_ERROR"
-        );
-        (address thePoolAddress, ) = addressFromIdInternal(_ofPool);
-        (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = getInflationParameters(_ofPool);
+        (uint256 newPrice, uint256 tokenSupply, uint256 poolValue) = _getPoolPriceAndValueInternal(poolId);
+        (address poolAddress, ) = _addressFromIdInternal(poolId);
+        (uint256 epochReward, uint256 epochTime, uint256 rewardRatio) = getRewardParameters(poolId);
 
         uint256 assetsComponent = safeMul(
             poolValue,
             epochReward
         ) * epochTime / 1 days; // proportional to epoch time
 
-        uint256 performanceComponent = safeMul(
+        uint256 performanceComponent = newPrice <= _getHwmInternal(poolId) ? uint256(0) : safeMul(
             safeMul(
-                (newPrice - highwatermark),
+                (newPrice - _getHwmInternal(poolId)),
                 tokenSupply
-            ) / 1000000, // Pool(thePoolAddress).BASE(),
+            ) / POOL_BASE,
             epochReward
-        ) * 365 days / 1 days;
+        ) * 365; // 365 = 365 days / 1 days
 
+        // reward is inversely proportional to Eth in pool
+        uint256 ethBalanceAdjustment = _ethBalanceAdjustmentInternal(poolAddress, poolValue);
         uint256 assetsReward = (
             safeMul(
                 assetsComponent,
-                safeSub(10000, rewardRatio) // 100000 = 100%
+                safeSub(10000, rewardRatio) // 10000 = 100%
             ) / 10000 ether
-        ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether; // reward inversly proportional to Eth in pool
+        ) * ethBalanceAdjustment / 1 ether;
 
         performanceReward = safeDiv(
             safeMul(performanceComponent, rewardRatio),
             10000 ether
-        ) * ethBalanceAdjustmentInternal(thePoolAddress, poolValue) / 1 ether;
+        ) * ethBalanceAdjustment / 1 ether;
 
-        popReward = grgBalanceRewardSlashInternal(thePoolAddress, safeAdd(performanceReward, assetsReward));
-
-        if (popReward > 10 ** 25 / 10000) {
-            popReward = 10 ** 25 / 10000; // max single reward 0.01% of total supply
-        }
+        popReward = safeAdd(performanceReward, assetsReward);
     }
 
     /// @dev Returns the high-watermark of the pool.
-    /// @param _ofPool Number of the pool in registry.
+    /// @param poolId Number of the pool in registry.
     /// @return Number high-watermark.
-    function getHwmInternal(uint256 _ofPool) 
+    function _getHwmInternal(uint256 poolId)
         internal
         view
         returns (uint256)
     {
-        if (poolPrice[_ofPool].highwatermark == 0) {
+        if (_highWaterMark[poolId] == uint256(0)) {
             return (1 ether);
 
         } else {
-            return poolPrice[_ofPool].highwatermark;
+            return _highWaterMark[poolId];
         }
     }
 
     /// @dev Returns the non-linear rewards adjustment by eth.
-    /// @param thePoolAddress Address of the pool.
+    /// @param poolAddress Address of the pool.
     /// @param poolValue Number of value of the pool in wei.
     /// @return Number non-linear adjustment.
-    function ethBalanceAdjustmentInternal(
-        address thePoolAddress,
-        uint256 poolValue)
+    function _ethBalanceAdjustmentInternal(
+        address poolAddress,
+        uint256 poolValue
+    )
         internal
         view
         returns (uint256)
     {
-        uint256 poolEthBalance = address(Pool(thePoolAddress)).balance;
-        require(
-            poolEthBalance <= poolValue && poolEthBalance >= 1 finney, // prevent dust from small pools
-            "ETH_BALANCE_HIGHER_THAN_AUM_OR_TOO_SMALL_ERROR"
-        );
+        uint256 poolEthBalance = address(IPool(poolAddress)).balance;
+        
+        _assertPoolEthBalanceAndValueValid(poolEthBalance, poolValue);
 
-        // non-linear progression series with decay factor 18%
-        // y = (1-decay factor)*k^[(1-decay factor)^(n-1)]
-        if (1 ether * poolEthBalance / poolValue >= 800 finney) {
-            return (1 ether * poolEthBalance / poolValue);
+        // logistic function progression g(x)=e^x/(1+e^x).
+        // rebased on {(poolEthBalance / poolValue)} ∈ [0.025:0.6], x ∈ [-1.9:2.8].
+        if (1000 * poolEthBalance >= 800 * poolValue) {
+            return (1 ether);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 600 finney) {
-            return (1 ether * poolEthBalance / poolValue * 820 / 1000);
+        } else if (1000 * poolEthBalance >= 600 * poolValue) {
+            return (1 ether * 943 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 400 finney) {
-            return (1 ether * poolEthBalance / poolValue * 201 / 1000);
+        } else if (1000 * poolEthBalance >= 500 * poolValue) {
+            return (1 ether * 881 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 200 finney) {
-            return (1 ether * poolEthBalance / poolValue * 29 / 1000);
+        } else if (1000 * poolEthBalance >= 400 * poolValue) {
+            return (1 ether * 769 / 1000);
 
-        } else if (1 ether * poolEthBalance / poolValue >= 100 finney) {
-            return (1 ether * poolEthBalance / poolValue * 5 / 1000);
+        } else if (1000 * poolEthBalance >= 300 * poolValue) {
+            return (1 ether * 599 / 1000);
 
-        } else { // reward is 0 for any pool not backed by < 10% eth
-            revert('ETH_BELOW_10_PERCENT_AUM_ERROR');
-        }
-    }
+        } else if (1000 * poolEthBalance >= 200 * poolValue) {
+            return (1 ether * 401 / 1000);
 
-    /// @dev Returns the non-linear rewards adjustment by grg operator balance.
-    /// @param thePoolAddress Address of the pool.
-    /// @param pop Number of preliminary reward.
-    /// @return Number non-linear adjustment.
-    function grgBalanceRewardSlashInternal(
-        address thePoolAddress,
-        uint256 pop)
-        internal
-        view
-        returns (uint256)
-    {
-        uint256 operatorGrgBalance = RigoToken(RIGOTOKENADDRESS).balanceOf(Pool(thePoolAddress).owner());
-        uint256 grgTotalSupply = RigoToken(RIGOTOKENADDRESS).totalSupply();
+        } else if (1000 * poolEthBalance >= 100 * poolValue) {
+            return (1 ether * 231 / 1000);
 
-        // non-linear progression series with decay factor 18%
-        // y = (1-decay factor)*k^[(1-decay factor)^(n-1)]
-        if (10 ether * operatorGrgBalance / grgTotalSupply >= 5 finney) {
-            return (pop);
+        } else if (1000 * poolEthBalance >= 75 * poolValue) {
+            return (1 ether * 198 / 1000);
 
-        } else if (10 ether * operatorGrgBalance / grgTotalSupply >= 4 finney) {
-            return (pop * 820 / 1000);
+        } else if (1000 * poolEthBalance >= 50 * poolValue) {
+            return (1 ether * 168 / 1000);
 
-        } else if (10 ether * operatorGrgBalance / grgTotalSupply >= 3 finney) {
-            return (pop * 201 / 1000);
+        } else if (1000 * poolEthBalance >= 38 * poolValue) {
+            return (1 ether * 155 / 1000);
 
-        } else if (10 ether * operatorGrgBalance / grgTotalSupply >= 2 finney) {
-            return (pop * 29 / 1000);
+        } else if (1000 * poolEthBalance >= 25 * poolValue) {
+            return (1 ether * 142 / 1000);
 
-        } else if (10 ether * operatorGrgBalance / grgTotalSupply >= 1 finney) {
-            return (pop * 5 / 1000);
-
-        } else {
-            return (pop * 2 / 1000);
+        } else { // reward is 0 for any pool not backed by at least 2.5% eth
+            revert("ETH_BELOW_2.5_PERCENT_AUM_ERROR");
         }
     }
 
     /// @dev Checks whether a pool is registered and active.
-    /// @param _ofPool Id of the pool.
+    /// @param poolId Id of the pool.
     /// @return Bool the pool is active.
-    function isActiveInternal(uint256 _ofPool)
+    function _isActiveInternal(uint256 poolId)
         internal view
         returns (bool)
     {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        (address thePool, , , , , ) = registry.fromId(_ofPool);
-        if (thePool != address(0)) {
+        (address poolAddress, , , , , ) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
+        if (poolAddress != address(0)) {
             return true;
-        }
+        } else return false;
     }
 
     /// @dev Returns the address and the group of a pool from its id.
-    /// @param _ofPool Id of the pool.
-    /// @return Address of the target pool.
-    /// @return Address of the pool's group.
-    function addressFromIdInternal(uint256 _ofPool)
+    /// @param poolId Id of the pool.
+    /// @return pool Address of the target pool.
+    /// @return group Address of the pool's group.
+    function _addressFromIdInternal(uint256 poolId)
         internal
         view
         returns (
@@ -548,34 +487,124 @@ contract ProofOfPerformance is
             address group
         )
     {
-        DragoRegistry registry = DragoRegistry(dragoRegistry);
-        (pool, , , , , group) = registry.fromId(_ofPool);
+        (pool, , , , , group) = IDragoRegistry(dragoRegistryAddress).fromId(poolId);
         return (pool, group);
     }
 
-    /// @dev Returns price, supply, aum and boolean of a pool from its id.
-    /// @param _ofPool Id of the pool.
-    /// @return Price of the pool in wei.
-    /// @return Number of tokens of a pool (totalSupply).
-    /// @return Address of the target pool.
-    /// @return Address of the pool's group.
-    function getPoolPriceAndValueInternal(uint256 _ofPool)
+    /// @dev Returns price, supply, aum of a pool from its id.
+    /// @param poolId Id of the pool.
+    /// @return poolPrice Price of the pool in wei.
+    /// @return totalTokens Number of tokens of a pool (totalSupply).
+    /// @return aum Address of the target pool.
+    function _getPoolPriceAndValueInternal(uint256 poolId)
         internal
         view
         returns (
-            uint256 thePoolPrice,
+            uint256 poolPrice,
             uint256 totalTokens,
             uint256 aum
         )
     {
-        (address poolAddress, ) = addressFromIdInternal(_ofPool);
-        Pool pool = Pool(poolAddress);
-        thePoolPrice = pool.calcSharePrice();
+        (address poolAddress, ) = _addressFromIdInternal(poolId);
+        IPool pool = IPool(poolAddress);
+        poolPrice = pool.calcSharePrice();
         totalTokens = pool.totalSupply();
-        require(
-            thePoolPrice != uint256(0) && totalTokens != uint256(0),
-            "POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR"
-        );
-        aum = safeMul(thePoolPrice, totalTokens) / 1000000; // pool.BASE();
+
+        // revert if pool has no tokens issues or price is 0
+        if (poolPrice == uint256(0) || totalTokens == uint256(0)) {
+            revert("POOL_PRICE_OR_TOTAL_SUPPLY_NULL_ERROR");
+        }
+
+        aum = safeMul(poolPrice, totalTokens) / POOL_BASE;
+    }
+
+    /// @dev Asserts that the caller is the RigoBlock Dao.
+    function _assertCallerIsRigoblockDao()
+        internal
+        view
+    {
+        if (msg.sender != rigoblockDaoAddress) {
+            revert("CALLER_NOT_RIGOBLOCK_DAO_ERROR");
+        }
+    }
+
+    /// @dev Determines whether an address is an account or a contract
+    /// @param target Address to be inspected
+    /// @return Boolean the address is a contract
+    function _isContract(address target)
+        internal
+        view
+        returns (bool)
+    {
+        uint size;
+        // solhint-disable-next-line
+        assembly {
+            size := extcodesize(target)
+        }
+        return size > 0;
+    }
+
+    /// @dev Asserts whether the caller contract is the pool
+    /// @param poolAddress Address of the calling pool
+    function _assertContractIsPool(address poolAddress)
+        internal
+        view
+    {
+        if (msg.sender != poolAddress) {
+            revert("SMART_CONTRACT_CALLER_IS_NOT_POOL_ERROR");
+        }
+    }
+
+    /// @dev Asserts that an address is an approved factory.
+    /// @param _factory Address of the target factory.
+    function _assertIsApprovedFactory(address _factory)
+        internal
+        view
+    {
+        if (!AuthorityFace(authorityAddress).isWhitelistedFactory(_factory)) {
+            revert("NOT_APPROVED_AUTHORITY_ERROR");
+        }
+    }
+
+    /// @dev Asserts that the group parameters are valid.
+    /// @param ratio Value of the ratio between assets and performance reward for a group.
+    /// @param inflationFactor Value of the reward factor for a group.
+    function _assertValidGroupParams(
+        uint256 ratio,
+        uint256 inflationFactor
+    )
+        internal
+        pure
+    {
+        // ratio is from 0 to 10000, 10000 = 100%
+        if (ratio > 10000) {
+            revert("TOO_BIG_RATIO_ERROR");
+        }
+        
+        // inflationFactor is between 1e12 and 1e21
+        if (inflationFactor < 1e12 || inflationFactor > 1e21) {
+            revert("INVALID_INFLATION_FACTOR_ERROR");
+        }
+    }
+    
+    /// @dev Asserts than pool ETH balance and total value are ordinary and not dust.
+    /// @param poolEthBalance Value of the ETH balance.
+    /// @param poolValue Total Value of the pool.
+    function _assertPoolEthBalanceAndValueValid(
+        uint256 poolEthBalance,
+        uint256 poolValue
+    )
+        internal
+        pure
+    {
+        // assert ETH in pool is below pool value
+        if (poolEthBalance > poolValue) {
+            revert("ETH_ABOVE_AUM_ERROR");
+        }
+        
+        // prevent dust from small pools
+        if (poolEthBalance < 1e15 || poolValue < 1e16) {
+            revert("POOL_OR_BALANCE_DUST_ERROR");
+        }
     }
 }

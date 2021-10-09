@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 /// @title Drago Registry Interface - Allows external interaction with Drago Registry.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -33,13 +32,13 @@ interface DragoRegistryFace {
     /*
      * CORE FUNCTIONS
      */
-    function register(address _drago, string _name, string _symbol, uint256 _dragoId, address _owner) external payable returns (bool);
+    function register(address _drago, string calldata _name, string calldata _symbol, uint256 _dragoId, address _owner) external payable returns (bool);
     function unregister(uint256 _id) external;
     function setMeta(uint256 _id, bytes32 _key, bytes32 _value) external;
     function addGroup(address _group) external;
     function setFee(uint256 _fee) external;
     function updateOwner(uint256 _id) external;
-    function updateOwners(uint256[] _id) external;
+    function updateOwners(uint256[] calldata _id) external;
     function upgrade(address _newAddress) external payable; //payable as there is a transfer of value, otherwise opcode might throw an error
     function setUpgraded(uint256 _version) external;
     function drain() external;
@@ -48,12 +47,12 @@ interface DragoRegistryFace {
      * CONSTANT PUBLIC FUNCTIONS
      */
     function dragoCount() external view returns (uint256);
-    function fromId(uint256 _id) external view returns (address drago, string name, string symbol, uint256 dragoId, address owner, address group);
-    function fromAddress(address _drago) external view returns (uint256 id, string name, string symbol, uint256 dragoId, address owner, address group);
-    function fromName(string _name) external view returns (uint256 id, address drago, string symbol, uint256 dragoId, address owner, address group);
-    function getNameFromAddress(address _pool) external view returns (string);
-    function getSymbolFromAddress(address _pool) external view returns (string);
+    function fromId(uint256 _id) external view returns (address drago, string memory name, string memory symbol, uint256 dragoId, address owner, address group);
+    function fromAddress(address _drago) external view returns (uint256 id, string memory name, string memory symbol, uint256 dragoId, address owner, address group);
+    function fromName(string calldata _name) external view returns (uint256 id, address drago, string memory symbol, uint256 dragoId, address owner, address group);
+    function getNameFromAddress(address _pool) external view returns (string memory);
+    function getSymbolFromAddress(address _pool) external view returns (string memory);
     function meta(uint256 _id, bytes32 _key) external view returns (bytes32);
-    function getGroups() external view returns (address[]);
+    function getGroups() external view returns (address[] memory);
     function getFee() external view returns (uint256);
 }

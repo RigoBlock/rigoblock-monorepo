@@ -304,7 +304,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/AbiEncoder/AbiEncoder.sol"
             ],
-            "address": "0xb438be425346bd88abe9b63b66733d6ae391e448",
+            "address": "0x68ca70171325b725f54aa2d49d18476ec4b9d2a2",
             "constructor_args": "0x"
         }
     }

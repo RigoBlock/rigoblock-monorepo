@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { AuthorityFace as Authority } from "../authorities/Authority/AuthorityFace.sol";
 import { VaultEventfulFace as VaultEventful } from "../VaultEventful/VaultEventfulFace.sol";
@@ -103,8 +102,8 @@ contract Vault is Owned, SafeMath, ReentrancyGuard, VaultFace {
     }
 
     constructor(
-        string _vaultName,
-        string _vaultSymbol,
+        string memory _vaultName,
+        string memory _vaultSymbol,
         uint256 _vaultId,
         address _owner,
         address _authority)
@@ -182,7 +181,7 @@ contract Vault is Owned, SafeMath, ReentrancyGuard, VaultFace {
     {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.changeRatio(msg.sender, this, _ratio));
+        require(events.changeRatio(msg.sender, address(this), _ratio));
         admin.ratio = _ratio;
     }
 
@@ -195,7 +194,7 @@ contract Vault is Owned, SafeMath, ReentrancyGuard, VaultFace {
         require(_transactionFee <= 100); //fee cannot be higher than 1%
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.setTransactionFee(msg.sender, this, _transactionFee));
+        require(events.setTransactionFee(msg.sender, address(this), _transactionFee));
         data.transactionFee = _transactionFee;
     }
 
@@ -207,7 +206,7 @@ contract Vault is Owned, SafeMath, ReentrancyGuard, VaultFace {
     {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.changeFeeCollector(msg.sender, this, _feeCollector));
+        require(events.changeFeeCollector(msg.sender, address(this), _feeCollector));
         admin.feeCollector = _feeCollector;
     }
 
@@ -219,7 +218,7 @@ contract Vault is Owned, SafeMath, ReentrancyGuard, VaultFace {
     {
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.changeVaultDao(msg.sender, this, _vaultDao));
+        require(events.changeVaultDao(msg.sender, address(this), _vaultDao));
         admin.vaultDao = _vaultDao;
     }
 
@@ -369,8 +368,8 @@ contract Vault is Owned, SafeMath, ReentrancyGuard, VaultFace {
         external
         view
         returns (
-            string name,
-            string symbol,
+            string memory name,
+            string memory symbol,
             uint256 sellPrice,
             uint256 buyPrice
         )
@@ -508,7 +507,7 @@ contract Vault is Owned, SafeMath, ReentrancyGuard, VaultFace {
         bytes memory symbol = bytes(data.symbol);
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.buyVault(msg.sender, this, msg.value, _amount, name, symbol));
+        require(events.buyVault(msg.sender, address(this), msg.value, _amount, name, symbol));
     }
 
     /// @dev Sends a sell log to the eventful contract
@@ -523,9 +522,9 @@ contract Vault is Owned, SafeMath, ReentrancyGuard, VaultFace {
         bytes memory symbol = bytes(data.symbol);
         Authority auth = Authority(admin.authority);
         VaultEventful events = VaultEventful(auth.getVaultEventful());
-        require(events.sellVault(msg.sender, this, _amount, _netRevenue, name, symbol));
+        require(events.sellVault(msg.sender, address(this), _amount, _netRevenue, name, symbol));
     }
-    
+
     /// @dev Executes a deposit
     /// @param _token Address of the token to be deposited
     /// @param _hodler Address of the hodler

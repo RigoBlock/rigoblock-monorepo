@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
 import { Drago } from "../../Drago/Drago.sol";
@@ -43,8 +42,8 @@ library DragoFactoryLibrary {
     /// @return Bool the function executed
     function createDrago(
         NewDrago storage self,
-        string _name,
-        string _symbol,
+        string memory _name,
+        string memory _symbol,
         address _owner,
         uint256 _dragoId,
         address _authority)

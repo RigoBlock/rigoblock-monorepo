@@ -19,7 +19,7 @@ ENV NVM_DIR /usr/local/nvm
 ENV NPM_KEY ${NPM_KEY}
 RUN echo "//registry.npmjs.org/:_authToken=$NPM_KEY" > $HOME/.npmrc
 
-ENV NODE_VERSION 8.16.0
+ENV NODE_VERSION 10.6.0
 
 # Install nvm with node and npm
 RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.35.3/install.sh | bash \

@@ -48,10 +48,6 @@ interface Oracle {
         returns (uint expectedRate, uint slippageRate);
 }
 
-//import { Drago } from "../../Drago/Drago.sol";
-//import { AuthorityFace as Authority } from "../../authorities/Authority/AuthorityFace.sol";
-//import { ExchangesAuthorityFace as ExchangesAuthority } from "../../authorities/ExchangesAuthority/ExchangesAuthorityFace.sol";
-
 contract TotlePrimary {
     address public tokenTransferProxy;
 }

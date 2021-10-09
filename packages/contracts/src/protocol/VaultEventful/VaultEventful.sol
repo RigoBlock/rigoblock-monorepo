@@ -16,8 +16,7 @@
 
 */
 
-pragma solidity 0.4.25;
-pragma experimental "v0.5.0";
+pragma solidity 0.5.0;
 
 import { AuthorityFace as Authority } from "../authorities/Authority/AuthorityFace.sol";
 import { VaultEventfulFace } from "./VaultEventfulFace.sol";
@@ -125,8 +124,8 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         uint256 _value,
         uint256 _amount,
-        bytes _name,
-        bytes _symbol)
+        bytes calldata _name,
+        bytes calldata _symbol)
         external
         approvedVaultOnly(msg.sender)
         returns (bool success)
@@ -147,8 +146,8 @@ contract VaultEventful is VaultEventfulFace {
         address _targetVault,
         uint256 _amount,
         uint256 _revenue,
-        bytes _name,
-        bytes _symbol)
+        bytes calldata _name,
+        bytes calldata _symbol)
         external
         approvedVaultOnly(msg.sender)
         returns(bool success)
@@ -241,8 +240,8 @@ contract VaultEventful is VaultEventfulFace {
     function createVault(
         address _who,
         address _newVault,
-        string _name,
-        string _symbol,
+        string calldata _name,
+        string calldata _symbol,
         uint256 _vaultId)
         external
         approvedFactoryOnly(msg.sender)
@@ -269,8 +268,8 @@ contract VaultEventful is VaultEventfulFace {
         address _factory,
         uint256 _value,
         uint256 _amount,
-        bytes _name,
-        bytes _symbol)
+        bytes memory _name,
+        bytes memory _symbol)
         internal
     {
         emit BuyVault(_targetVault, _who, _factory, _value, _amount, _name, _symbol);
@@ -290,8 +289,8 @@ contract VaultEventful is VaultEventfulFace {
         address _factory,
         uint256 _amount,
         uint256 _revenue,
-        bytes _name,
-        bytes _symbol)
+        bytes memory _name,
+        bytes memory _symbol)
         internal
     {
         emit SellVault(_targetVault, _who, _factory, _amount, _revenue, _name, _symbol);
@@ -308,8 +307,8 @@ contract VaultEventful is VaultEventfulFace {
         address _newVault,
         address _factory,
         address _who,
-        string _name,
-        string _symbol,
+        string memory _name,
+        string memory _symbol,
         uint256 _vaultId)
         internal
     {

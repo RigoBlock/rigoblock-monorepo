@@ -17,9 +17,7 @@ module.exports = {
   GAS_ESTIMATE: 5e6,
   CONTRACT_NAMES: [
     'AbiEncoder',
-    'AEthfinex',
     'ASelfCustody',
-    'ATotlePrimary',
     'AWeth',
     'Authority',
     'Distribution',
@@ -30,8 +28,6 @@ module.exports = {
     'ERC20',
     'Erc20Proxy',
     'Exchange',
-    'ExchangeEfx',
-    'ExchangeV1Fork',
     'ExchangesAuthority',
     'Faucet',
     'HGetDragoData',
@@ -43,15 +39,11 @@ module.exports = {
     'ProofOfPerformance',
     'RigoToken',
     'SigVerifier',
-    'TotlePrimary',
     'TokenTransferProxy',
     'UnlimitedAllowanceToken',
     'Vault',
     'VaultEventful',
     'VaultFactory',
-    'WETH9',
-    'WrapperLock',
-    'WrapperLockEth',
-    'ZeroExExchangeHandler'
+    'WETH9'
   ]
 }

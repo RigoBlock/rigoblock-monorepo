@@ -1,6 +1,6 @@
 /*
 
- Copyright 2017-2019 RigoBlock, Rigo Investment Sagl.
+ Copyright 2017-2019 RigoBlock, Rigo Investment Sagl, 2020 Rigo Intl.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 */
 
-pragma solidity >=0.4.22 <0.6.0;
+pragma solidity >=0.4.22 <0.8.0;
 
 /// @title Inflation Interface - Allows interaction with the Inflation contract.
 /// @author Gabriele Rigo - <gab@rigoblock.com>
@@ -24,20 +24,60 @@ pragma solidity >=0.4.22 <0.6.0;
 interface InflationFace {
 
     /*
+     * PUBLIC VARIABLES
+     */
+    // solhint-disable-next-line
+    function RIGO_TOKEN_ADDRESS()
+        external
+        view
+        returns (address);
+
+    //solhint-disable-next-line
+    function STAKING_PROXY_ADDRESS()
+        external
+        view
+        returns (address);
+
+    function slot()
+        external
+        view
+        returns (uint256);
+
+    function epochLength()
+        external
+        view
+        returns (uint256);
+
+    /*
      * CORE FUNCTIONS
      */
-    function mintInflation(address _thePool, uint256 _reward) external returns (bool);
-    function setInflationFactor(address _group, uint256 _inflationFactor) external;
-    function setMinimumRigo(uint256 _minimum) external;
-    function setRigoblock(address _newRigoblock) external;
-    function setAuthority(address _authority) external;
-    function setProofOfPerformance(address _pop) external;
-    function setPeriod(uint256 _newPeriod) external;
+    /// @dev Allows staking proxy to mint rewards.
+    /// @return mintedInflation Number of allocated tokens.
+    function mintInflation()
+        external
+        returns (uint256 mintedInflation);
 
     /*
      * CONSTANT PUBLIC FUNCTIONS
      */
-    function canWithdraw(address _thePool) external view returns (bool);
-    function timeUntilClaim(address _thePool) external view returns (uint256);
-    function getInflationFactor(address _group) external view returns (uint256);
+    /// @dev Returns whether an epoch has ended.
+    /// @return Bool the epoch has ended.
+    function epochEnded()
+        external
+        view
+        returns (bool);
+
+    /// @dev Returns how long until next claim.
+    /// @return Number in seconds.
+    function timeUntilNextClaim()
+        external
+        view
+        returns (uint256);
+
+    /// @dev Returns the epoch inflation.
+    /// @return Value of units of GRG minted in an epoch.
+    function getEpochInflation()
+        external
+        view
+        returns (uint256);
 }

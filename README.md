@@ -28,16 +28,9 @@ Ubuntu pre-requisites:
 
 Install nvm and use the correct node version
 
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.1/install.sh | bash
 
     nvm use
-
-Alternative install nvm
-
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-
-    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 > If you are having issues following this step check out [nvm's documentation](https://github.com/creationix/nvm/blob/master/README.md)
 

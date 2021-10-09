@@ -952,7 +952,7 @@
             "sources": [
                 "/home/gabriele/rigoblock-monorepo/packages/contracts/src/utils/exchanges/TokenTransferProxy/TokenTransferProxy.sol"
             ],
-            "address": "0x3b32af945599707baf0ecb195c20b60f063f987a",
+            "address": "0x5272be67472ad07e8752ba2155869a5fa7d3ca21",
             "constructor_args": "0x"
         }
     }
