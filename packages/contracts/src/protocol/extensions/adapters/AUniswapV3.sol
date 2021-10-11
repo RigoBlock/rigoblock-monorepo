@@ -23,6 +23,7 @@ pragma solidity 0.8.7;
 
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryPaymentsWithFee.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/IMulticall.sol";
 
 contract AUniswapV3 {
     
@@ -37,5 +38,136 @@ contract AUniswapV3 {
         returns (uint256 amountOut)
     {
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInputSingle(params);
+    }
+    
+    /// @notice Swaps `amountIn` of one token for as much as possible of another along the specified path
+    /// @param params The parameters necessary for the multi-hop swap, encoded as `ExactInputParams` in calldata
+    /// @return amountOut The amount of the received token
+    function exactInput(ISwapRouter.ExactInputParams calldata params)
+        external
+        payable
+        returns (uint256 amountOut)
+    {
+        amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInput(params);
+    }
+    
+    /// @notice Swaps as little as possible of one token for `amountOut` of another token
+    /// @param params The parameters necessary for the swap, encoded as `ExactOutputSingleParams` in calldata
+    /// @return amountIn The amount of the input token
+    function exactOutputSingle(ISwapRouter.ExactOutputSingleParams calldata params)
+        external
+        payable
+        returns (uint256 amountIn)
+    {
+        amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutputSingle(params);
+    }
+    
+    /// @notice Swaps as little as possible of one token for `amountOut` of another along the specified path (reversed)
+    /// @param params The parameters necessary for the multi-hop swap, encoded as `ExactOutputParams` in calldata
+    /// @return amountIn The amount of the input token
+    function exactOutput(ISwapRouter.ExactOutputParams calldata params)
+        external
+        payable
+        returns (uint256 amountIn)
+    {
+        amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutput(params);
+    }
+    
+    /// @notice Unwraps the contract's WETH9 balance and sends it to recipient as ETH.
+    /// @dev The amountMinimum parameter prevents malicious contracts from stealing WETH9 from users.
+    /// @param amountMinimum The minimum amount of WETH9 to unwrap
+    /// @param recipient The address receiving ETH
+    function unwrapWETH9(uint256 amountMinimum, address recipient)
+        external
+        payable
+    {
+        IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9(
+            amountMinimum,
+            recipient
+        );
+    }
+
+    /// @notice Refunds any ETH balance held by this contract to the `msg.sender`
+    /// @dev Useful for bundling with mint or increase liquidity that uses ether, or exact output swaps
+    /// that use ether for the input amount
+    function refundETH()
+        external
+        payable
+    {
+        IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).refundETH();
+    }
+
+    /// @notice Transfers the full amount of a token held by this contract to recipient
+    /// @dev The amountMinimum parameter prevents malicious contracts from stealing the token from users
+    /// @param token The contract address of the token which will be transferred to `recipient`
+    /// @param amountMinimum The minimum amount of token required for a transfer
+    /// @param recipient The destination address of the token
+    function sweepToken(
+        address token,
+        uint256 amountMinimum,
+        address recipient
+    )
+        external
+        payable
+    {
+        IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepToken(
+            token,
+            amountMinimum,
+            recipient
+        );
+    }
+    
+    /// @notice Unwraps the contract's WETH9 balance and sends it to recipient as ETH, with a percentage between
+    /// 0 (exclusive), and 1 (inclusive) going to feeRecipient
+    /// @dev The amountMinimum parameter prevents malicious contracts from stealing WETH9 from users.
+    function unwrapWETH9WithFee(
+        uint256 amountMinimum,
+        address recipient,
+        uint256 feeBips,
+        address feeRecipient
+    )
+        external
+        payable
+    {
+        IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9WithFee(
+            amountMinimum,
+            recipient,
+            feeBips,
+            feeRecipient
+        );
+    }
+
+    /// @notice Transfers the full amount of a token held by this contract to recipient, with a percentage between
+    /// 0 (exclusive) and 1 (inclusive) going to feeRecipient
+    /// @dev The amountMinimum parameter prevents malicious contracts from stealing the token from users
+    function sweepTokenWithFee(
+        address token,
+        uint256 amountMinimum,
+        address recipient,
+        uint256 feeBips,
+        address feeRecipient
+    )
+        external
+        payable
+    {
+        IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepTokenWithFee(
+            token,
+            amountMinimum,
+            recipient,
+            feeBips,
+            feeRecipient
+        );
+    }
+    
+    /// @notice Call multiple functions in the current contract and return the data from all of them if they all succeed
+    /// @dev The `msg.value` should not be trusted for any method callable from multicall.
+    /// @param data The encoded function data for each of the calls to make to this contract
+    /// @return results The results from each of the calls passed in via data
+    function multicall(bytes[] calldata data)
+        external
+        payable
+        returns (bytes[] memory results)
+    {
+        results = IMulticall(UNISWAP_V3_SWAP_ROUTER_ADDRESS).multicall(data);
     }
 }
