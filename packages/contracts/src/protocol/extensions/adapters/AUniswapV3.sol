@@ -26,7 +26,35 @@ import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryPaymentsWithFee.sol
 
 contract AUniswapV3 {
     
-    address payable constant private UNISWAP_V3_SWAP_ROUTER_ADDRESS = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+    address payable immutable private UNISWAP_V3_SWAP_ROUTER_ADDRESS;
+    
+    constructor() {
+        uint256 chainId = block.chainid;
+        address payable uniswapV3RouterAddress;
+        if (chainId == 1) { // Mainnet
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        } else if (chainId == 3) { // Ropsten
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        } else if (chainId == 4) { // Rinkeby
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        } else if (chainId == 10) { // Optimism
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        } else if (chainId == 42) { // Kovan
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        } else if (chainId == 137) { // Polygon
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        } else if (chainId == 1337) { // Ganache
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        } else if (chainId == 42161) { // Arbitrum
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        } else if (chainId == 43114) { // Avalanche
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        } else if (chainId == 80001) { // PolygonMumbai
+            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+        }
+        UNISWAP_V3_SWAP_ROUTER_ADDRESS = uniswapV3RouterAddress;
+            
+    }
     
     /// @notice Swaps `amountIn` of one token for as much as possible of another token
     /// @param params The parameters necessary for the swap, encoded as `ExactInputSingleParams` in calldata
