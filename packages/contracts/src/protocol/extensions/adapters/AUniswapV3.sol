@@ -91,7 +91,7 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountOut)
     {
-        // first me must wrap ETH if necessary
+        // first me must wrap ETH when necessary
         if (params.tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountIn) {
             // we wrap the full amount, which can always manually unwrap later
             IWETH9(WETH9).deposit{value: params.amountIn}();
@@ -106,6 +106,7 @@ contract AUniswapV3 {
         params.recipient != address(this) ? address(this) : address(this);
         
         // finally, we swap the tokens
+        // TODO: check if overwritten correctly or if we must overwrite
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInputSingle(params);
     }
     
@@ -118,12 +119,22 @@ contract AUniswapV3 {
         returns (uint256 amountOut)
     {
         (address tokenIn, , ) = params.path.decodeFirstPool();
+        
+        // first me must wrap ETH when necessary
+        if (tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountIn) {
+            // we wrap the full amount, which can always manually unwrap later
+            IWETH9(WETH9).deposit{value: params.amountIn}();
+        }
+        
+        // once we have the token balance, we set the allowance to the uniswap router
         if (Token(tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountIn) {
             safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
-        safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
-        // this drago is always the recipient
+
+        // we make sure this drago is always the recipient
         params.recipient != address(this) ? address(this) : address(this);
+        
+        // finally, we swap the tokens
         // TODO: check if overwritten correctly or if we must overwrite
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInput(params);
     }
@@ -136,11 +147,22 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountIn)
     {
+        // first me must wrap ETH when necessary
+        if (params.tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountInMaximum) {
+            // we wrap the full amount, which can always manually unwrap later
+            IWETH9(WETH9).deposit{value: params.amountInMaximum}();
+        }
+        
+        // once we have the token balance, we set the allowance to the uniswap router
         if (Token(params.tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountInMaximum) {
             safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
-        // this drago is always the recipient
+        
+        // we make sure this drago is always the recipient
         params.recipient != address(this) ? address(this) : address(this);
+        
+        // finally, we swap the tokens
+        // TODO: check if overwritten correctly or if we must overwrite
         amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutputSingle(params);
     }
     
@@ -153,11 +175,23 @@ contract AUniswapV3 {
         returns (uint256 amountIn)
     {
         (address tokenIn, , ) = params.path.decodeFirstPool();
+        
+        // first me must wrap ETH when necessary
+        if (tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountInMaximum) {
+            // we wrap the full amount, which can always manually unwrap later
+            IWETH9(WETH9).deposit{value: params.amountInMaximum}();
+        }
+        
+        // once we have the token balance, we set the allowance to the uniswap router
         if (Token(tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountInMaximum) {
             safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
-        // this drago is always the recipient
+        
+        // we make sure this drago is always the recipient
         params.recipient != address(this) ? address(this) : address(this);
+        
+        // finally, we swap the tokens
+        // TODO: check if overwritten correctly or if we must overwrite
         amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutput(params);
     }
     
@@ -169,7 +203,7 @@ contract AUniswapV3 {
         external
         payable
     {
-        // this drago is always the recipient
+        // we make sure this drago is always the recipient
         recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9(
             amountMinimum,
@@ -200,7 +234,7 @@ contract AUniswapV3 {
         external
         payable
     {
-        // this drago is always the recipient
+        // we make sure this drago is always the recipient
         recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepToken(
             token,
@@ -221,7 +255,7 @@ contract AUniswapV3 {
         external
         payable
     {
-        // this drago is always the recipient
+        // we make sure this drago is always the recipient
         recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9WithFee(
             amountMinimum,
@@ -244,7 +278,7 @@ contract AUniswapV3 {
         external
         payable
     {
-        // this drago is always the recipient
+        // we make sure this drago is always the recipient
         recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepTokenWithFee(
             token,
