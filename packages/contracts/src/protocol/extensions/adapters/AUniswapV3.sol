@@ -105,7 +105,6 @@ contract AUniswapV3 {
         params.recipient != address(this) ? address(this) : address(this);
         
         // finally, we swap the tokens
-        // TODO: check if overwritten correctly or if we must overwrite
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInputSingle(params);
     }
     
@@ -135,7 +134,6 @@ contract AUniswapV3 {
         params.recipient != address(this) ? address(this) : address(this);
         
         // finally, we swap the tokens
-        // TODO: check if overwritten correctly or if we must overwrite
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInput(params);
     }
     
@@ -163,7 +161,6 @@ contract AUniswapV3 {
         params.recipient != address(this) ? address(this) : address(this);
         
         // finally, we swap the tokens
-        // TODO: check if overwritten correctly or if we must overwrite
         amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutputSingle(params);
     }
     
@@ -193,7 +190,6 @@ contract AUniswapV3 {
         params.recipient != address(this) ? address(this) : address(this);
         
         // finally, we swap the tokens
-        // TODO: check if overwritten correctly or if we must overwrite
         amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutput(params);
     }
     
