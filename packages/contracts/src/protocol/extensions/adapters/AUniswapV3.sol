@@ -26,6 +26,13 @@ import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryPaymentsWithFee.sol
 
 import "@uniswap/v3-periphery/contracts/libraries/Path.sol";
 
+interface Token {
+
+    function approve(address _spender, uint256 _value) external returns (bool success);
+
+    function allowance(address _owner, address _spender) external view returns (uint256);
+}
+
 contract AUniswapV3 {
     
     using Path for bytes;
@@ -72,7 +79,11 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountOut)
     {
-        safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
+        if (Token(params.tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountIn) {
+            safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
+        }
+        // this drago is always the recipient
+        params.recipient != address(this) ? address(this) : address(this);
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInputSingle(params);
     }
     
@@ -85,9 +96,12 @@ contract AUniswapV3 {
         returns (uint256 amountOut)
     {
         (address tokenIn, , ) = params.path.decodeFirstPool();
+        if (Token(tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountIn) {
+            safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
+        }
         safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         // this drago is always the recipient
-        params.recipient !=  address(this) ? address(this) : address(this);
+        params.recipient != address(this) ? address(this) : address(this);
         // TODO: check if overwritten correctly or if we must overwrite
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInput(params);
     }
@@ -100,6 +114,11 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountIn)
     {
+        if (Token(params.tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountInMaximum) {
+            safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
+        }
+        // this drago is always the recipient
+        params.recipient != address(this) ? address(this) : address(this);
         amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutputSingle(params);
     }
     
@@ -111,6 +130,12 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountIn)
     {
+        (address tokenIn, , ) = params.path.decodeFirstPool();
+        if (Token(tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountInMaximum) {
+            safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
+        }
+        // this drago is always the recipient
+        params.recipient != address(this) ? address(this) : address(this);
         amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutput(params);
     }
     
@@ -122,6 +147,8 @@ contract AUniswapV3 {
         external
         payable
     {
+        // this drago is always the recipient
+        recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9(
             amountMinimum,
             recipient
@@ -151,6 +178,8 @@ contract AUniswapV3 {
         external
         payable
     {
+        // this drago is always the recipient
+        recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepToken(
             token,
             amountMinimum,
@@ -170,6 +199,8 @@ contract AUniswapV3 {
         external
         payable
     {
+        // this drago is always the recipient
+        recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9WithFee(
             amountMinimum,
             recipient,
@@ -191,6 +222,8 @@ contract AUniswapV3 {
         external
         payable
     {
+        // this drago is always the recipient
+        recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepTokenWithFee(
             token,
             amountMinimum,
