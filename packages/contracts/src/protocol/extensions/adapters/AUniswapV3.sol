@@ -18,18 +18,26 @@
 */
 
 // solhint-disable-next-line
-pragma solidity 0.8.7;
-//pragma abicoder v2; // in 0.8 solc this is default behaviour
+pragma solidity 0.7.6;
+pragma abicoder v2; // in 0.8 solc this is default behaviour
 
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryPaymentsWithFee.sol";
 
+import "@uniswap/v3-periphery/contracts/libraries/Path.sol";
+
 contract AUniswapV3 {
     
+    using Path for bytes;
+    
     address payable immutable private UNISWAP_V3_SWAP_ROUTER_ADDRESS;
+    bytes4 immutable private SELECTOR;
     
     constructor() {
-        uint256 chainId = block.chainid;
+        uint256 chainId;
+        assembly {
+            chainId := chainid()
+        }
         address payable uniswapV3RouterAddress;
         if (chainId == 1) { // Mainnet
             uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
@@ -53,7 +61,7 @@ contract AUniswapV3 {
             uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
         }
         UNISWAP_V3_SWAP_ROUTER_ADDRESS = uniswapV3RouterAddress;
-            
+        SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
     }
     
     /// @notice Swaps `amountIn` of one token for as much as possible of another token
@@ -64,6 +72,7 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountOut)
     {
+        safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInputSingle(params);
     }
     
@@ -75,6 +84,11 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountOut)
     {
+        (address tokenIn, , ) = params.path.decodeFirstPool();
+        safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
+        // this drago is always the recipient
+        params.recipient !=  address(this) ? address(this) : address(this);
+        // TODO: check if overwritten correctly or if we must overwrite
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInput(params);
     }
     
@@ -210,5 +224,20 @@ contract AUniswapV3 {
 
             results[i] = result;
         }
+    }
+    
+    function safeApproveInternal(
+        address token,
+        address spender,
+        uint256 value
+    )
+        internal
+    {
+        // solhint-disable-next-line avoid-low-level-calls
+        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, spender, value));
+        require(
+            success && (data.length == 0 || abi.decode(data, (bool))),
+            "RIGOBLOCK_APPROVE_FAILED"
+        );
     }
 }
