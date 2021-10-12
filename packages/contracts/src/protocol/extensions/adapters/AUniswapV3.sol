@@ -23,7 +23,7 @@ pragma abicoder v2; // in 0.8 solc this is default behaviour
 
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryPaymentsWithFee.sol";
-
+import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol";
 import "@uniswap/v3-periphery/contracts/libraries/Path.sol";
 
 interface Token {
@@ -31,6 +31,16 @@ interface Token {
     function approve(address _spender, uint256 _value) external returns (bool success);
 
     function allowance(address _owner, address _spender) external view returns (uint256);
+    function balanceOf(address _who) external view returns (uint256);
+}
+
+/// @title Interface for WETH9
+interface IWETH9 {
+    /// @notice Deposit ether to get wrapped ether
+    function deposit() external payable;
+
+    /// @notice Withdraw wrapped ether to get ether
+    function withdraw(uint256) external;
 }
 
 contract AUniswapV3 {
@@ -79,11 +89,22 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountOut)
     {
+        // first me must wrap ETH if necessary
+        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_SWAP_ROUTER_ADDRESS).WETH9();
+        if (params.tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountIn) {
+            // we wrap the full amount and can always manually unwrap later
+            IWETH9(WETH9).deposit{value: params.amountIn}();
+        }
+        
+        // once we have the token balance, we set the allowance to the uniswap router
         if (Token(params.tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountIn) {
             safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
-        // this drago is always the recipient
+        
+        // we make sure this drago is always the recipient
         params.recipient != address(this) ? address(this) : address(this);
+        
+        // finally, we swap the tokens
         amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInputSingle(params);
     }
     
