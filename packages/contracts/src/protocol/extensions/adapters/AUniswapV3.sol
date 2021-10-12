@@ -48,6 +48,7 @@ contract AUniswapV3 {
     using Path for bytes;
     
     address payable immutable private UNISWAP_V3_SWAP_ROUTER_ADDRESS;
+    address immutable private WETH9;
     bytes4 immutable private SELECTOR;
     
     constructor() {
@@ -78,6 +79,7 @@ contract AUniswapV3 {
             uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
         }
         UNISWAP_V3_SWAP_ROUTER_ADDRESS = uniswapV3RouterAddress;
+        WETH9 = IPeripheryImmutableState(uniswapV3RouterAddress).WETH9();
         SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
     }
     
@@ -90,9 +92,8 @@ contract AUniswapV3 {
         returns (uint256 amountOut)
     {
         // first me must wrap ETH if necessary
-        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_SWAP_ROUTER_ADDRESS).WETH9();
         if (params.tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountIn) {
-            // we wrap the full amount and can always manually unwrap later
+            // we wrap the full amount, which can always manually unwrap later
             IWETH9(WETH9).deposit{value: params.amountIn}();
         }
         
