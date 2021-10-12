@@ -22,6 +22,7 @@ pragma solidity 0.7.6;
 pragma abicoder v2; // in 0.8 solc this is default behaviour
 
 import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/IPoolInitializer.sol";
 import "@uniswap/v3-periphery/contracts/libraries/Path.sol";
 
@@ -100,10 +101,29 @@ contract AUniswapV3NPM {
             uint256 amount1
         )
     {
-        // TODO: wrap eth if necessary and set allowances
+        // first me must wrap ETH when necessary
+        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_NPM_ADDRESS).WETH9();
+        if (params.token0 == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amount0Desired) {
+            // we wrap the full amount, which can always manually unwrap later
+            IWETH9(WETH9).deposit{value: params.amount0Desired}();
+        } else if (params.token1 == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amount1Desired) {
+            // we wrap the full amount, which can always manually unwrap later
+            IWETH9(WETH9).deposit{value: params.amount1Desired}();
+        }
+
+        // once we have the token balance, we set the allowance to the uniswap router
+        if (Token(params.token0).allowance(address(this), UNISWAP_V3_NPM_ADDRESS) < params.amount0Desired) {
+            safeApproveInternal(params.token0, UNISWAP_V3_NPM_ADDRESS, type(uint).max);
+        }
+        if (Token(params.token1).allowance(address(this), UNISWAP_V3_NPM_ADDRESS) < params.amount1Desired) {
+            safeApproveInternal(params.token1, UNISWAP_V3_NPM_ADDRESS, type(uint).max);
+        }
+        
         // we make sure this drago is always the recipient
         params.recipient != address(this) ? address(this) : address(this);
-        INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).mint(params);
+        
+        // finally, we mint the liquidity token
+        (tokenId, liquidity, amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).mint(params);
     }
         
         
@@ -126,8 +146,27 @@ contract AUniswapV3NPM {
             uint256 amount1
         )
     {
-        // TODO: wrap eth if necessary and set allowances
-        INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).increaseLiquidity(params);
+        ( , , address token0, address token1, , , , , , , , ) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).positions(params.tokenId);
+        // first me must wrap ETH when necessary
+        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_NPM_ADDRESS).WETH9();
+        if (token0 == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amount0Desired) {
+            // we wrap the full amount, which can always manually unwrap later
+            IWETH9(WETH9).deposit{value: params.amount0Desired}();
+        } else if (token1 == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amount1Desired) {
+            // we wrap the full amount, which can always manually unwrap later
+            IWETH9(WETH9).deposit{value: params.amount1Desired}();
+        }
+
+        // once we have the token balance, we set the allowance to the uniswap router
+        if (Token(token0).allowance(address(this), UNISWAP_V3_NPM_ADDRESS) < params.amount0Desired) {
+            safeApproveInternal(token0, UNISWAP_V3_NPM_ADDRESS, type(uint).max);
+        }
+        if (Token(token1).allowance(address(this), UNISWAP_V3_NPM_ADDRESS) < params.amount1Desired) {
+            safeApproveInternal(token1, UNISWAP_V3_NPM_ADDRESS, type(uint).max);
+        }
+        
+        // finally, we add to the liquidity token
+        (liquidity, amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).increaseLiquidity(params);
     }
         
     /// @notice Decreases the amount of liquidity in a position and accounts it to the position
