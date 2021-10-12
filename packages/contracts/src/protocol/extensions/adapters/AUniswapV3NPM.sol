@@ -100,6 +100,9 @@ contract AUniswapV3NPM {
             uint256 amount1
         )
     {
+        // TODO: wrap eth if necessary and set allowances
+        // we make sure this drago is always the recipient
+        params.recipient != address(this) ? address(this) : address(this);
         INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).mint(params);
     }
         
@@ -123,6 +126,7 @@ contract AUniswapV3NPM {
             uint256 amount1
         )
     {
+        // TODO: wrap eth if necessary and set allowances
         INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).increaseLiquidity(params);
     }
         
@@ -139,7 +143,7 @@ contract AUniswapV3NPM {
         payable
         returns (uint256 amount0, uint256 amount1)
     {
-        INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).decreaseLiquidity(params);
+        (amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).decreaseLiquidity(params);
     }
         
     /// @notice Collects up to a maximum amount of fees owed to a specific position to the recipient
@@ -154,14 +158,16 @@ contract AUniswapV3NPM {
         payable
         returns (uint256 amount0, uint256 amount1)
     {
-        INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).collect(params);
+        // we make sure this drago is always the recipient
+        params.recipient != address(this) ? address(this) : address(this);
+        (amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).collect(params);
     }
 
     /// @notice Burns a token ID, which deletes it from the NFT contract. The token must have 0 liquidity and all tokens
     /// must be collected first.
     /// @param tokenId The ID of the token that is being burned
     function burn(uint256 tokenId) external payable {
-        
+        INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).burn(tokenId);
     }
     
     /// @notice Unwraps the contract's WETH9 balance and sends it to recipient as ETH.
