@@ -81,6 +81,16 @@ contract AUniswapV3 {
         SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
     }
     
+    /// @notice Wraps ETH when value input is non-null
+    /// @param value The ETH amount to be wrapped
+    function wrapETH(uint256 value) external payable {
+        if (value > uint256(0)) {
+            IWETH9(
+                IPeripheryImmutableState(UNISWAP_V3_SWAP_ROUTER_ADDRESS).WETH9()
+            ).deposit{value: value}();
+        }
+    }
+    
     /// @notice Swaps `amountIn` of one token for as much as possible of another token
     /// @param params The parameters necessary for the swap, encoded as `ExactInputSingleParams` in calldata
     /// @return amountOut The amount of the received token
@@ -89,14 +99,7 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountOut)
     {
-        // first me must wrap ETH when necessary
-        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_SWAP_ROUTER_ADDRESS).WETH9();
-        if (params.tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountIn) {
-            // we wrap the full amount, which can always manually unwrap later
-            IWETH9(WETH9).deposit{value: params.amountIn}();
-        }
-        
-        // once we have the token balance, we set the allowance to the uniswap router
+        // we first set the allowance to the uniswap router
         if (Token(params.tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountIn) {
             safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
@@ -118,14 +121,7 @@ contract AUniswapV3 {
     {
         (address tokenIn, , ) = params.path.decodeFirstPool();
         
-        // first me must wrap ETH when necessary
-        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_SWAP_ROUTER_ADDRESS).WETH9();
-        if (tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountIn) {
-            // we wrap the full amount, which can always manually unwrap later
-            IWETH9(WETH9).deposit{value: params.amountIn}();
-        }
-        
-        // once we have the token balance, we set the allowance to the uniswap router
+        // we first set the allowance to the uniswap router
         if (Token(tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountIn) {
             safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
@@ -145,14 +141,7 @@ contract AUniswapV3 {
         payable
         returns (uint256 amountIn)
     {
-        // first me must wrap ETH when necessary
-        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_SWAP_ROUTER_ADDRESS).WETH9();
-        if (params.tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountInMaximum) {
-            // we wrap the full amount, which can always manually unwrap later
-            IWETH9(WETH9).deposit{value: params.amountInMaximum}();
-        }
-        
-        // once we have the token balance, we set the allowance to the uniswap router
+        // we first set the allowance to the uniswap router
         if (Token(params.tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountInMaximum) {
             safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
@@ -174,14 +163,7 @@ contract AUniswapV3 {
     {
         (address tokenIn, , ) = params.path.decodeFirstPool();
         
-        // first me must wrap ETH when necessary
-        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_SWAP_ROUTER_ADDRESS).WETH9();
-        if (tokenIn == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amountInMaximum) {
-            // we wrap the full amount, which can always manually unwrap later
-            IWETH9(WETH9).deposit{value: params.amountInMaximum}();
-        }
-        
-        // once we have the token balance, we set the allowance to the uniswap router
+        // we first set the allowance to the uniswap router
         if (Token(tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountInMaximum) {
             safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
