@@ -83,6 +83,16 @@ contract AUniswapV3NPM {
         SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
     }
     
+    /// @notice Wraps ETH when value input is non-null
+    /// @param value The ETH amount to be wrapped
+    function wrapETH(uint256 value) external payable {
+        if (value > uint256(0)) {
+            IWETH9(
+                IPeripheryImmutableState(UNISWAP_V3_NPM_ADDRESS).WETH9()
+            ).deposit{value: value}();
+        }
+    }
+    
     /// @notice Creates a new position wrapped in a NFT
     /// @dev Call this when the pool does exist and is initialized. Note that if the pool is created but not initialized
     /// a method does not exist, i.e. the pool is assumed to be initialized.
@@ -101,17 +111,7 @@ contract AUniswapV3NPM {
             uint256 amount1
         )
     {
-        // first me must wrap ETH when necessary
-        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_NPM_ADDRESS).WETH9();
-        if (params.token0 == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amount0Desired) {
-            // we wrap the full amount, which can always manually unwrap later
-            IWETH9(WETH9).deposit{value: params.amount0Desired}();
-        } else if (params.token1 == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amount1Desired) {
-            // we wrap the full amount, which can always manually unwrap later
-            IWETH9(WETH9).deposit{value: params.amount1Desired}();
-        }
-
-        // once we have the token balance, we set the allowance to the uniswap router
+        // we first set the allowance to the uniswap position manager
         if (Token(params.token0).allowance(address(this), UNISWAP_V3_NPM_ADDRESS) < params.amount0Desired) {
             safeApproveInternal(params.token0, UNISWAP_V3_NPM_ADDRESS, type(uint).max);
         }
@@ -147,17 +147,8 @@ contract AUniswapV3NPM {
         )
     {
         ( , , address token0, address token1, , , , , , , , ) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).positions(params.tokenId);
-        // first me must wrap ETH when necessary
-        address WETH9 = IPeripheryImmutableState(UNISWAP_V3_NPM_ADDRESS).WETH9();
-        if (token0 == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amount0Desired) {
-            // we wrap the full amount, which can always manually unwrap later
-            IWETH9(WETH9).deposit{value: params.amount0Desired}();
-        } else if (token1 == WETH9 && Token(WETH9).balanceOf(address(this)) < params.amount1Desired) {
-            // we wrap the full amount, which can always manually unwrap later
-            IWETH9(WETH9).deposit{value: params.amount1Desired}();
-        }
-
-        // once we have the token balance, we set the allowance to the uniswap router
+        
+        // we first set the allowance to the uniswap position manager
         if (Token(token0).allowance(address(this), UNISWAP_V3_NPM_ADDRESS) < params.amount0Desired) {
             safeApproveInternal(token0, UNISWAP_V3_NPM_ADDRESS, type(uint).max);
         }
