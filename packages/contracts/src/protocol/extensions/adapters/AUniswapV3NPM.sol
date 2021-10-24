@@ -216,8 +216,6 @@ contract AUniswapV3NPM {
         payable
         returns (uint256 amount0, uint256 amount1)
     {
-        // we make sure this drago is always the recipient
-        params.recipient != address(this) ? address(this) : address(this);
         (amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).collect(
             INonfungiblePositionManager.CollectParams({
                 tokenId: params.tokenId,
@@ -272,12 +270,10 @@ contract AUniswapV3NPM {
         external
         payable
     {
-        // we make sure this drago is always the recipient
-        recipient != address(this) ? address(this) : address(this);
         IPeripheryPayments(UNISWAP_V3_NPM_ADDRESS).sweepToken(
             token,
             amountMinimum,
-            recipient
+            recipient != address(this) ? address(this) : address(this) // this drago is always the recipient
         );
     }
     
