@@ -104,11 +104,19 @@ contract AUniswapV3 {
             safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
         
-        // we make sure this drago is always the recipient
-        params.recipient != address(this) ? address(this) : address(this);
-        
         // finally, we swap the tokens
-        amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInputSingle(params);
+        amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInputSingle(
+            ISwapRouter.ExactInputSingleParams({
+                tokenIn: params.tokenIn,
+                tokenOut: params.tokenOut,
+                fee: params.fee,
+                recipient: address(this), // this drago is always the recipient
+                deadline: params.deadline,
+                amountIn: params.amountIn,
+                amountOutMinimum: params.amountOutMinimum,
+                sqrtPriceLimitX96: params.sqrtPriceLimitX96
+            })
+        );
     }
     
     /// @notice Swaps `amountIn` of one token for as much as possible of another along the specified path
@@ -125,12 +133,17 @@ contract AUniswapV3 {
         if (Token(tokenIn).allowance(address(this), UNISWAP_V3_SWAP_ROUTER_ADDRESS) < params.amountIn) {
             safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
-
-        // we make sure this drago is always the recipient
-        params.recipient != address(this) ? address(this) : address(this);
         
         // finally, we swap the tokens
-        amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInput(params);
+        amountOut = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactInput(
+            ISwapRouter.ExactInputParams({
+                path: params.path,
+                recipient: address(this), // this drago is always the recipient
+                deadline: params.deadline,
+                amountIn: params.amountIn,
+                amountOutMinimum: params.amountOutMinimum
+            })    
+        );
     }
     
     /// @notice Swaps as little as possible of one token for `amountOut` of another token
@@ -146,11 +159,19 @@ contract AUniswapV3 {
             safeApproveInternal(params.tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
         
-        // we make sure this drago is always the recipient
-        params.recipient != address(this) ? address(this) : address(this);
-        
         // finally, we swap the tokens
-        amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutputSingle(params);
+        amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutputSingle(
+            ISwapRouter.ExactOutputSingleParams({
+                tokenIn: params.tokenIn,
+                tokenOut: params.tokenOut,
+                fee: params.fee,
+                recipient: address(this), // this drago is always the recipient
+                deadline: params.deadline,
+                amountOut: params.amountOut,
+                amountInMaximum: params.amountInMaximum,
+                sqrtPriceLimitX96: params.sqrtPriceLimitX96
+            })    
+        );
     }
     
     /// @notice Swaps as little as possible of one token for `amountOut` of another along the specified path (reversed)
@@ -168,11 +189,16 @@ contract AUniswapV3 {
             safeApproveInternal(tokenIn, UNISWAP_V3_SWAP_ROUTER_ADDRESS, type(uint).max);
         }
         
-        // we make sure this drago is always the recipient
-        params.recipient != address(this) ? address(this) : address(this);
-        
         // finally, we swap the tokens
-        amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutput(params);
+        amountIn = ISwapRouter(UNISWAP_V3_SWAP_ROUTER_ADDRESS).exactOutput(
+            ISwapRouter.ExactOutputParams({
+                path: params.path,
+                recipient: address(this), // this drago is always the recipient
+                deadline: params.deadline,
+                amountOut: params.amountOut,
+                amountInMaximum: params.amountInMaximum
+            })
+        );
     }
     
     /// @notice Unwraps the contract's WETH9 balance and sends it to recipient as ETH.
@@ -183,11 +209,9 @@ contract AUniswapV3 {
         external
         payable
     {
-        // we make sure this drago is always the recipient
-        recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9(
             amountMinimum,
-            recipient
+            recipient != address(this) ? address(this) : address(this) // this drago is always the recipient
         );
     }
 
@@ -214,12 +238,10 @@ contract AUniswapV3 {
         external
         payable
     {
-        // we make sure this drago is always the recipient
-        recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepToken(
             token,
             amountMinimum,
-            recipient
+            recipient != address(this) ? address(this) : address(this) // this drago is always the recipient
         );
     }
     
@@ -235,11 +257,9 @@ contract AUniswapV3 {
         external
         payable
     {
-        // we make sure this drago is always the recipient
-        recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9WithFee(
             amountMinimum,
-            recipient,
+            recipient != address(this) ? address(this) : address(this),  // this drago is always the recipient
             feeBips,
             feeRecipient
         );
@@ -258,12 +278,10 @@ contract AUniswapV3 {
         external
         payable
     {
-        // we make sure this drago is always the recipient
-        recipient != address(this) ? address(this) : address(this);
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepTokenWithFee(
             token,
             amountMinimum,
-            recipient,
+            recipient != address(this) ? address(this) : address(this),  // this drago is always the recipient
             feeBips,
             feeRecipient
         );
