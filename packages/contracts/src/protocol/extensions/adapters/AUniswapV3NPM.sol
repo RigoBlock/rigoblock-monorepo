@@ -119,14 +119,25 @@ contract AUniswapV3NPM {
             safeApproveInternal(params.token1, UNISWAP_V3_NPM_ADDRESS, type(uint).max);
         }
         
-        // we make sure this drago is always the recipient
-        params.recipient != address(this) ? address(this) : address(this);
-        
         // finally, we mint the liquidity token
-        (tokenId, liquidity, amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).mint(params);
+        (tokenId, liquidity, amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).mint(
+            INonfungiblePositionManager.MintParams({
+                token0: params.token0,
+                token1: params.token1,
+                fee: params.fee,
+                tickLower: params.tickLower,
+                tickUpper: params.tickUpper,
+                amount0Desired: params.amount0Desired,
+                amount1Desired: params.amount1Desired,
+                amount0Min: params.amount0Min,
+                amount1Min: params.amount1Min,
+                recipient: address(this), // this drago is always the recipient
+                deadline: params.deadline
+            })
+        );
     }
-        
-        
+    
+    
     /// @notice Increases the amount of liquidity in a position, with tokens paid by the `msg.sender`
     /// @param params tokenId The ID of the token for which liquidity is being increased,
     /// amount0Desired The desired amount of token0 to be spent,
@@ -157,9 +168,18 @@ contract AUniswapV3NPM {
         }
         
         // finally, we add to the liquidity token
-        (liquidity, amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).increaseLiquidity(params);
+        (liquidity, amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).increaseLiquidity(
+            INonfungiblePositionManager.IncreaseLiquidityParams({
+                tokenId: params.tokenId,
+                amount0Desired: params.amount0Desired,
+                amount1Desired: params.amount1Desired,
+                amount0Min: params.amount0Min,
+                amount1Min: params.amount1Min,
+                deadline: params.deadline
+            })
+        );
     }
-        
+    
     /// @notice Decreases the amount of liquidity in a position and accounts it to the position
     /// @param params tokenId The ID of the token for which liquidity is being decreased,
     /// amount The amount by which liquidity will be decreased,
@@ -173,7 +193,15 @@ contract AUniswapV3NPM {
         payable
         returns (uint256 amount0, uint256 amount1)
     {
-        (amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).decreaseLiquidity(params);
+        (amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).decreaseLiquidity(
+            INonfungiblePositionManager.DecreaseLiquidityParams({
+                tokenId: params.tokenId,
+                liquidity: params.liquidity,
+                amount0Min: params.amount0Min,
+                amount1Min: params.amount1Min,
+                deadline: params.deadline
+            })
+        );
     }
         
     /// @notice Collects up to a maximum amount of fees owed to a specific position to the recipient
@@ -190,7 +218,14 @@ contract AUniswapV3NPM {
     {
         // we make sure this drago is always the recipient
         params.recipient != address(this) ? address(this) : address(this);
-        (amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).collect(params);
+        (amount0, amount1) = INonfungiblePositionManager(UNISWAP_V3_NPM_ADDRESS).collect(
+            INonfungiblePositionManager.CollectParams({
+                tokenId: params.tokenId,
+                recipient: address(this),  // this drago is always the recipient
+                amount0Max: params.amount0Max,
+                amount1Max: params.amount1Max
+            })
+        );
     }
 
     /// @notice Burns a token ID, which deletes it from the NFT contract. The token must have 0 liquidity and all tokens
@@ -208,11 +243,9 @@ contract AUniswapV3NPM {
         external
         payable
     {
-        // we make sure this drago is always the recipient
-        recipient != address(this) ? address(this) : address(this);
         IPeripheryPayments(UNISWAP_V3_NPM_ADDRESS).unwrapWETH9(
             amountMinimum,
-            recipient
+            recipient != address(this) ? address(this) : address(this) // this drago is always the recipient
         );
     }
 
