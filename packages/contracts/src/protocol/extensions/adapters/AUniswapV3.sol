@@ -109,11 +109,11 @@ contract AUniswapV3 {
 
             bytes memory messagePack = data[i];
             bytes4 sig;
-
+            
             assembly {
                 
                 sig := mload(add(messagePack, 32))
-
+            
             }
             
             if (sig == EXACT_INPUT_SINGLE_SELECTOR) {
