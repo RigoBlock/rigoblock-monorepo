@@ -106,44 +106,40 @@ contract AUniswapV3 {
     /// @param data The encoded function data for each of the calls to make to this contract
     function multicall(bytes[] calldata data) external payable {
         for (uint256 i = 0; i < data.length; i++) {
-            
             bytes memory messagePack = data[i];
-            bytes4 sig;
-            
+            bytes4 selector;
             assembly {
-                
-                sig := mload(add(messagePack, 32))
-            
+                selector := mload(add(messagePack, 32))
             }
             
-            if (sig == EXACT_INPUT_SINGLE_SELECTOR) {
-                exactInputSingleInternal(abi.decode(messagePack, (ISwapRouter.ExactInputSingleParams)));
-            } else if (sig == EXACT_INPUT_SELECTOR) {
-                exactInputInternal(abi.decode(messagePack, (ISwapRouter.ExactInputParams)));
-            } else if (sig == EXACT_OUTPUT_SINGLE_SELECTOR) {
-                exactOutputSingleInternal(abi.decode(messagePack, (ISwapRouter.ExactOutputSingleParams)));
-            } else if (sig == EXACT_OUTPUT_SELECTOR) {
-                exactOutputInternal(abi.decode(messagePack, (ISwapRouter.ExactOutputParams)));
-            } else if (sig == WRAP_ETH_SELECTOR) {
-                wrapETHInternal(abi.decode(messagePack, (uint256)));
-            } else if (sig == UNWRAP_WETH9_SELECTOR) {
-                (uint256 amountMinimum, address recipient) = abi.decode(messagePack, (uint256, address));
+            if (selector == EXACT_INPUT_SINGLE_SELECTOR) {
+                exactInputSingleInternal(abi.decode(data[i], (ISwapRouter.ExactInputSingleParams)));
+            } else if (selector == EXACT_INPUT_SELECTOR) {
+                exactInputInternal(abi.decode(data[i], (ISwapRouter.ExactInputParams)));
+            } else if (selector == EXACT_OUTPUT_SINGLE_SELECTOR) {
+                exactOutputSingleInternal(abi.decode(data[i], (ISwapRouter.ExactOutputSingleParams)));
+            } else if (selector == EXACT_OUTPUT_SELECTOR) {
+                exactOutputInternal(abi.decode(data[i], (ISwapRouter.ExactOutputParams)));
+            } else if (selector == WRAP_ETH_SELECTOR) {
+                wrapETHInternal(abi.decode(data[i], (uint256)));
+            } else if (selector == UNWRAP_WETH9_SELECTOR) {
+                (uint256 amountMinimum, address recipient) = abi.decode(data[i], (uint256, address));
                 unwrapWETH9Internal(amountMinimum, recipient);
-            } else if (sig == REFUND_ETH_SELECTOR) {
+            } else if (selector == REFUND_ETH_SELECTOR) {
                 refundETHInternal();
-            } else if (sig == SWEEP_TOKEN_SELECTOR) {
+            } else if (selector == SWEEP_TOKEN_SELECTOR) {
                 (address token, uint256 amountMinimum, address recipient) = abi.decode(
-                    messagePack,
+                    data[i],
                     (address, uint256, address)
                 );
                 sweepTokenInternal(token, amountMinimum, recipient);
-            } else if (sig == UNWRAP_WETH9_WITH_FEE_SELECTOR) {
+            } else if (selector == UNWRAP_WETH9_WITH_FEE_SELECTOR) {
                 (uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient) = abi.decode(
-                    messagePack,
+                    data[i],
                     (uint256, address, uint256, address)
                 );
                 unwrapWETH9WithFeeInternal(amountMinimum, recipient, feeBips, feeRecipient);
-            } else if (sig == SWEEP_TOKEN_WITH_FEE_SELECTOR) {
+            } else if (selector == SWEEP_TOKEN_WITH_FEE_SELECTOR) {
                 (
                     address token,
                     uint256 amountMinimum,
@@ -151,11 +147,11 @@ contract AUniswapV3 {
                     uint256 feeBips,
                     address feeRecipient
                 ) = abi.decode(
-                    messagePack,
+                    data[i],
                     (address, uint256, address, uint256, address)
                 );
                 sweepTokenWithFeeInternal(token, amountMinimum, recipient, feeBips, feeRecipient);
-            }
+            } else revert("UNKNOWN_SELECTOR");
         }
     }
     
