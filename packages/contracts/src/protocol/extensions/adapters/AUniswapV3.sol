@@ -106,7 +106,7 @@ contract AUniswapV3 {
     /// @param data The encoded function data for each of the calls to make to this contract
     function multicall(bytes[] calldata data) external payable {
         for (uint256 i = 0; i < data.length; i++) {
-
+            
             bytes memory messagePack = data[i];
             bytes4 sig;
             
