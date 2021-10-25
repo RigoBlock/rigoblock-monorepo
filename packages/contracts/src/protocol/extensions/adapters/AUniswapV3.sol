@@ -48,7 +48,17 @@ contract AUniswapV3 {
     using Path for bytes;
     
     address payable immutable private UNISWAP_V3_SWAP_ROUTER_ADDRESS;
-    bytes4 immutable private SELECTOR;
+    bytes4 immutable private APPROVE_SELECTOR;
+    bytes4 immutable private EXACT_INPUT_SELECTOR;
+    bytes4 immutable private EXACT_INPUT_SINGLE_SELECTOR;
+    bytes4 immutable private EXACT_OUTPUT_SELECTOR;
+    bytes4 immutable private EXACT_OUTPUT_SINGLE_SELECTOR;
+    bytes4 immutable private REFUND_ETH_SELECTOR;
+    bytes4 immutable private SWEEP_TOKEN_SELECTOR;
+    bytes4 immutable private SWEEP_TOKEN_WITH_FEE_SELECTOR;
+    bytes4 immutable private UNWRAP_WETH9_SELECTOR;
+    bytes4 immutable private UNWRAP_WETH9_WITH_FEE_SELECTOR;
+    bytes4 immutable private WRAP_ETH_SELECTOR;
     
     constructor() {
         uint256 chainId;
@@ -78,12 +88,84 @@ contract AUniswapV3 {
             uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
         }
         UNISWAP_V3_SWAP_ROUTER_ADDRESS = uniswapV3RouterAddress;
-        SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
+        APPROVE_SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
+        EXACT_INPUT_SELECTOR = bytes4(keccak256("exactInput(ISwapRouter.ExactInputParams)"));
+        EXACT_INPUT_SINGLE_SELECTOR = bytes4(keccak256("exactInputSingle(ISwapRouter.ExactInputSingleParams)"));
+        EXACT_OUTPUT_SELECTOR = bytes4(keccak256("exactOutput(ISwapRouter.exactOutputParams)"));
+        EXACT_OUTPUT_SINGLE_SELECTOR = bytes4(keccak256("exactOutputSingle(ISwapRouter.ExactOutputSingleParams)"));
+        REFUND_ETH_SELECTOR = bytes4(keccak256("refundETH()"));
+        SWEEP_TOKEN_SELECTOR = bytes4(keccak256("sweepToken(address,uint256,address)"));
+        SWEEP_TOKEN_WITH_FEE_SELECTOR = bytes4(keccak256("sweepTokenWithFee(address,uint256,address,uint256,address)"));
+        UNWRAP_WETH9_SELECTOR = bytes4(keccak256("unwrapWETH9(uint256,address)"));
+        UNWRAP_WETH9_WITH_FEE_SELECTOR = bytes4(keccak256("unwrapWETH9WithFee(uint256,address,uint256,address)"));
+        WRAP_ETH_SELECTOR = bytes4(keccak256("wrapETH(uint256)"));
+    }
+    
+    /// @notice Call multiple functions in the current contract and return the data from all of them if they all succeed
+    /// @dev The `msg.value` should not be trusted for any method callable from multicall.
+    /// @param data The encoded function data for each of the calls to make to this contract
+    function multicall(bytes[] calldata data) external payable {
+        for (uint256 i = 0; i < data.length; i++) {
+
+            bytes memory messagePack = data[i];
+            bytes4 sig;
+
+            assembly {
+                
+                sig := mload(add(messagePack, 32))
+
+            }
+            
+            if (sig == EXACT_INPUT_SINGLE_SELECTOR) {
+                exactInputSingleInternal(abi.decode(messagePack, (ISwapRouter.ExactInputSingleParams)));
+            } else if (sig == EXACT_INPUT_SELECTOR) {
+                exactInputInternal(abi.decode(messagePack, (ISwapRouter.ExactInputParams)));
+            } else if (sig == EXACT_OUTPUT_SINGLE_SELECTOR) {
+                exactOutputSingleInternal(abi.decode(messagePack, (ISwapRouter.ExactOutputSingleParams)));
+            } else if (sig == EXACT_OUTPUT_SELECTOR) {
+                exactOutputInternal(abi.decode(messagePack, (ISwapRouter.ExactOutputParams)));
+            } else if (sig == WRAP_ETH_SELECTOR) {
+                wrapETHInternal(abi.decode(messagePack, (uint256)));
+            } else if (sig == UNWRAP_WETH9_SELECTOR) {
+                (uint256 amountMinimum, address recipient) = abi.decode(messagePack, (uint256, address));
+                unwrapWETH9Internal(amountMinimum, recipient);
+            } else if (sig == REFUND_ETH_SELECTOR) {
+                refundETHInternal();
+            } else if (sig == SWEEP_TOKEN_SELECTOR) {
+                (address token, uint256 amountMinimum, address recipient) = abi.decode(
+                    messagePack,
+                    (address, uint256, address)
+                );
+                sweepTokenInternal(token, amountMinimum, recipient);
+            } else if (sig == UNWRAP_WETH9_WITH_FEE_SELECTOR) {
+                (uint256 amountMinimum, address recipient, uint256 feeBips, address feeRecipient) = abi.decode(
+                    messagePack,
+                    (uint256, address, uint256, address)
+                );
+                unwrapWETH9WithFeeInternal(amountMinimum, recipient, feeBips, feeRecipient);
+            } else if (sig == SWEEP_TOKEN_WITH_FEE_SELECTOR) {
+                (
+                    address token,
+                    uint256 amountMinimum,
+                    address recipient,
+                    uint256 feeBips,
+                    address feeRecipient
+                ) = abi.decode(
+                    messagePack,
+                    (address, uint256, address, uint256, address)
+                );
+                sweepTokenWithFeeInternal(token, amountMinimum, recipient, feeBips, feeRecipient);
+            }
+        }
     }
     
     /// @notice Wraps ETH when value input is non-null
     /// @param value The ETH amount to be wrapped
     function wrapETH(uint256 value) external payable {
+        wrapETHInternal(value);
+    }
+    
+    function wrapETHInternal(uint256 value) internal {
         if (value > uint256(0)) {
             IWETH9(
                 IPeripheryImmutableState(UNISWAP_V3_SWAP_ROUTER_ADDRESS).WETH9()
@@ -92,11 +174,18 @@ contract AUniswapV3 {
     }
     
     /// @notice Swaps `amountIn` of one token for as much as possible of another token
-    /// @param params The parameters necessary for the swap, encoded as `ExactInputSingleParams` in calldata
+    /// @param params The parameters necessary for the swap, encoded as `ExactInputSingleParams` in memory
     /// @return amountOut The amount of the received token
-    function exactInputSingle(ISwapRouter.ExactInputSingleParams memory params) 
+    function exactInputSingle(ISwapRouter.ExactInputSingleParams calldata params)
         external
         payable
+        returns (uint256 amountOut)
+    {
+        amountOut = exactInputSingleInternal(params);
+    }
+    
+    function exactInputSingleInternal(ISwapRouter.ExactInputSingleParams memory params)
+        internal
         returns (uint256 amountOut)
     {
         // we first set the allowance to the uniswap router
@@ -120,11 +209,18 @@ contract AUniswapV3 {
     }
     
     /// @notice Swaps `amountIn` of one token for as much as possible of another along the specified path
-    /// @param params The parameters necessary for the multi-hop swap, encoded as `ExactInputParams` in calldata
+    /// @param params The parameters necessary for the multi-hop swap, encoded as `ExactInputParams` in memory
     /// @return amountOut The amount of the received token
     function exactInput(ISwapRouter.ExactInputParams calldata params)
         external
         payable
+        returns (uint256 amountOut)
+    {
+        amountOut = exactInputInternal(params);
+    }
+    
+    function exactInputInternal(ISwapRouter.ExactInputParams memory params)
+        internal
         returns (uint256 amountOut)
     {
         (address tokenIn, , ) = params.path.decodeFirstPool();
@@ -147,11 +243,18 @@ contract AUniswapV3 {
     }
     
     /// @notice Swaps as little as possible of one token for `amountOut` of another token
-    /// @param params The parameters necessary for the swap, encoded as `ExactOutputSingleParams` in calldata
+    /// @param params The parameters necessary for the swap, encoded as `ExactOutputSingleParams` in memory
     /// @return amountIn The amount of the input token
     function exactOutputSingle(ISwapRouter.ExactOutputSingleParams calldata params)
         external
         payable
+        returns (uint256 amountIn)
+    {
+        amountIn = exactOutputSingleInternal(params);
+    }
+    
+    function exactOutputSingleInternal(ISwapRouter.ExactOutputSingleParams memory params)
+        internal
         returns (uint256 amountIn)
     {
         // we first set the allowance to the uniswap router
@@ -175,11 +278,18 @@ contract AUniswapV3 {
     }
     
     /// @notice Swaps as little as possible of one token for `amountOut` of another along the specified path (reversed)
-    /// @param params The parameters necessary for the multi-hop swap, encoded as `ExactOutputParams` in calldata
+    /// @param params The parameters necessary for the multi-hop swap, encoded as `ExactOutputParams` in memory
     /// @return amountIn The amount of the input token
     function exactOutput(ISwapRouter.ExactOutputParams calldata params)
         external
         payable
+        returns (uint256 amountIn)
+    {
+        amountIn = exactOutputInternal(params);
+    }
+    
+    function exactOutputInternal(ISwapRouter.ExactOutputParams memory params)
+        internal
         returns (uint256 amountIn)
     {
         (address tokenIn, , ) = params.path.decodeFirstPool();
@@ -209,12 +319,18 @@ contract AUniswapV3 {
         external
         payable
     {
+        unwrapWETH9Internal(amountMinimum, recipient);
+    }
+    
+    function unwrapWETH9Internal(uint256 amountMinimum, address recipient)
+        internal
+    {
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9(
             amountMinimum,
             recipient != address(this) ? address(this) : address(this) // this drago is always the recipient
         );
     }
-
+    
     /// @notice Refunds any ETH balance held by this contract to the `msg.sender`
     /// @dev Useful for bundling with mint or increase liquidity that uses ether, or exact output swaps
     /// that use ether for the input amount
@@ -222,9 +338,15 @@ contract AUniswapV3 {
         external
         payable
     {
+        refundETHInternal();
+    }
+    
+    function refundETHInternal()
+        internal
+    {
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).refundETH();
     }
-
+    
     /// @notice Transfers the full amount of a token held by this contract to recipient
     /// @dev The amountMinimum parameter prevents malicious contracts from stealing the token from users
     /// @param token The contract address of the token which will be transferred to `recipient`
@@ -237,6 +359,16 @@ contract AUniswapV3 {
     )
         external
         payable
+    {
+        sweepTokenInternal(token, amountMinimum, recipient);
+    }
+    
+    function sweepTokenInternal(
+        address token,
+        uint256 amountMinimum,
+        address recipient
+    )
+        internal
     {
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepToken(
             token,
@@ -257,6 +389,18 @@ contract AUniswapV3 {
         external
         payable
     {
+        unwrapWETH9WithFeeInternal(amountMinimum, recipient, feeBips, feeRecipient);
+    }
+    
+    function unwrapWETH9WithFeeInternal(
+        uint256 amountMinimum,
+        address recipient,
+        uint256 feeBips,
+        address feeRecipient
+    )
+        public
+        payable
+    {
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9WithFee(
             amountMinimum,
             recipient != address(this) ? address(this) : address(this),  // this drago is always the recipient
@@ -264,7 +408,7 @@ contract AUniswapV3 {
             feeRecipient
         );
     }
-
+    
     /// @notice Transfers the full amount of a token held by this contract to recipient, with a percentage between
     /// 0 (exclusive) and 1 (inclusive) going to feeRecipient
     /// @dev The amountMinimum parameter prevents malicious contracts from stealing the token from users
@@ -277,6 +421,18 @@ contract AUniswapV3 {
     )
         external
         payable
+    {
+        sweepTokenWithFeeInternal(token, amountMinimum, recipient, feeBips, feeRecipient);
+    }
+
+    function sweepTokenWithFeeInternal(
+        address token,
+        uint256 amountMinimum,
+        address recipient,
+        uint256 feeBips,
+        address feeRecipient
+    )
+        internal
     {
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).sweepTokenWithFee(
             token,
@@ -295,7 +451,7 @@ contract AUniswapV3 {
         internal
     {
         // solhint-disable-next-line avoid-low-level-calls
-        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, spender, value));
+        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(APPROVE_SELECTOR, spender, value));
         require(
             success && (data.length == 0 || abi.decode(data, (bool))),
             "RIGOBLOCK_APPROVE_FAILED"
