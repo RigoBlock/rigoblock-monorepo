@@ -21,10 +21,10 @@
 pragma solidity 0.7.6;
 pragma abicoder v2; // in 0.8 solc this is default behaviour
 
-import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol";
-import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol";
-import "@uniswap/v3-periphery/contracts/interfaces/IPoolInitializer.sol";
-import "@uniswap/v3-periphery/contracts/libraries/Path.sol";
+import "../../../utils/exchanges/uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol";
+import "../../../utils/exchanges/uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol";
+import "../../../utils/exchanges/uniswap/v3-periphery/contracts/interfaces/IPoolInitializer.sol";
+import "../../../utils/exchanges/uniswap/v3-periphery/contracts/libraries/Path.sol";
 
 import "../../../utils/exchanges/uniswap/INonfungiblePositionManager/INonfungiblePositionManager.sol";
 
