@@ -8,6 +8,8 @@ import { ContractArtifact } from "ethereum-types";
 import * as AbiEncoder from "../generated-artifacts/AbiEncoder.json";
 import * as ASelfCustody from "../generated-artifacts/ASelfCustody.json";
 import * as AUniswapV2 from "../generated-artifacts/AUniswapV2.json";
+import * as AUniswapV3 from "../generated-artifacts/AUniswapV3.json";
+import * as AUniswapV3NPM from "../generated-artifacts/AUniswapV3NPM.json";
 import * as Authority from "../generated-artifacts/Authority.json";
 import * as AWeth from "../generated-artifacts/AWeth.json";
 import * as Distribution from "../generated-artifacts/Distribution.json";
@@ -48,6 +50,8 @@ export const artifacts = {
   SigVerifier: SigVerifier as ContractArtifact,
   ASelfCustody: ASelfCustody as ContractArtifact,
   AUniswapV2: AUniswapV2 as ContractArtifact,
+  AUniswapV3: AUniswapV3 as ContractArtifact,
+  AUniswapV3NPM: AUniswapV3NPM as ContractArtifact,
   AWeth: AWeth as ContractArtifact,
   VaultFactory: VaultFactory as ContractArtifact,
   Inflation: Inflation as ContractArtifact,

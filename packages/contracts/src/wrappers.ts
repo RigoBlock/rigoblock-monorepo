@@ -5,6 +5,8 @@
  */
 export * from "../generated-wrappers/a_self_custody";
 export * from "../generated-wrappers/a_uniswap_v2";
+export * from "../generated-wrappers/a_uniswap_v3";
+export * from "../generated-wrappers/a_uniswap_v3_n_p_m";
 export * from "../generated-wrappers/a_weth";
 export * from "../generated-wrappers/abi_encoder";
 export * from "../generated-wrappers/authority";

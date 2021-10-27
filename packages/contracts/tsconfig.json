@@ -8,6 +8,8 @@
   "files": [
     "generated-artifacts/ASelfCustody.json",
     "generated-artifacts/AUniswapV2.json",
+    "generated-artifacts/AUniswapV3.json",
+    "generated-artifacts/AUniswapV3NPM.json",
     "generated-artifacts/AWeth.json",
     "generated-artifacts/AbiEncoder.json",
     "generated-artifacts/Authority.json",
@@ -34,6 +36,8 @@
     "generated-artifacts/VaultFactory.json",
     "test/generated-artifacts/ASelfCustody.json",
     "test/generated-artifacts/AUniswapV2.json",
+    "test/generated-artifacts/AUniswapV3.json",
+    "test/generated-artifacts/AUniswapV3NPM.json",
     "test/generated-artifacts/AWeth.json",
     "test/generated-artifacts/AbiEncoder.json",
     "test/generated-artifacts/Authority.json",
