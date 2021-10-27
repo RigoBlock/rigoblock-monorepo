@@ -155,14 +155,6 @@ public static async deployFrom0xArtifactAsync(
         const abi = [
             { 
                 inputs: [
-                ],
-                outputs: [
-                ],
-                stateMutability: 'nonpayable',
-                type: 'constructor',
-            },
-            { 
-                inputs: [
                     {
                         name: 'tokenId',
                         type: 'uint256',
