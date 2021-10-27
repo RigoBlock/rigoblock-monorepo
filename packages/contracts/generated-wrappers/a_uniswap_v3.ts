@@ -450,31 +450,6 @@ public static async deployFrom0xArtifactAsync(
             { 
                 inputs: [
                     {
-                        name: 'amountMinimum',
-                        type: 'uint256',
-                    },
-                    {
-                        name: 'recipient',
-                        type: 'address',
-                    },
-                    {
-                        name: 'feeBips',
-                        type: 'uint256',
-                    },
-                    {
-                        name: 'feeRecipient',
-                        type: 'address',
-                    },
-                ],
-                name: 'unwrapWETH9WithFeeInternal',
-                outputs: [
-                ],
-                stateMutability: 'payable',
-                type: 'function',
-            },
-            { 
-                inputs: [
-                    {
                         name: 'value',
                         type: 'uint256',
                     },
@@ -1110,69 +1085,6 @@ public static async deployFrom0xArtifactAsync(
             assert.isBigNumber('feeBips', feeBips);
             assert.isString('feeRecipient', feeRecipient);
         const functionSignature = 'unwrapWETH9WithFee(uint256,address,uint256,address)';
-
-        return {
-            async sendTransactionAsync(
-                txData?: Partial<TxData> | undefined,
-                opts: SendTransactionOpts = { shouldValidate: true },
-            ): Promise<string> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData },
-                    this.estimateGasAsync.bind(this),
-                );
-                if (opts.shouldValidate !== false) {
-                    await this.callAsync(txDataWithDefaults);
-                }
-                return self._web3Wrapper.sendTransactionAsync(txDataWithDefaults);
-            },
-            awaitTransactionSuccessAsync(
-                txData?: Partial<TxData>,
-                opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
-            ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-                return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
-            },
-            async estimateGasAsync(
-                txData?: Partial<TxData> | undefined,
-            ): Promise<number> {
-                const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
-                    { data: this.getABIEncodedTransactionData(), ...txData }
-                );
-                return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
-            },
-            async callAsync(
-                callData: Partial<CallData> = {},
-                defaultBlock?: BlockParam,
-            ): Promise<void
-            > {
-                BaseContract._assertCallParams(callData, defaultBlock);
-                const rawCallResult = await self._performCallAsync({ data: this.getABIEncodedTransactionData(), ...callData }, defaultBlock);
-                const abiEncoder = self._lookupAbiEncoder(functionSignature);
-                BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
-                return abiEncoder.strictDecodeReturnValue<void
-            >(rawCallResult);
-            },
-            getABIEncodedTransactionData(): string {
-                return self._strictEncodeArguments(functionSignature, [amountMinimum,
-            recipient.toLowerCase(),
-            feeBips,
-            feeRecipient.toLowerCase()
-            ]);
-            },
-        }
-    };
-    public unwrapWETH9WithFeeInternal(
-            amountMinimum: BigNumber,
-            recipient: string,
-            feeBips: BigNumber,
-            feeRecipient: string,
-    ): ContractTxFunctionObj<void
-> {
-        const self = this as any as AUniswapV3Contract;
-            assert.isBigNumber('amountMinimum', amountMinimum);
-            assert.isString('recipient', recipient);
-            assert.isBigNumber('feeBips', feeBips);
-            assert.isString('feeRecipient', feeRecipient);
-        const functionSignature = 'unwrapWETH9WithFeeInternal(uint256,address,uint256,address)';
 
         return {
             async sendTransactionAsync(

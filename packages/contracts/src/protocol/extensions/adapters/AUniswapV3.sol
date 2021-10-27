@@ -353,8 +353,7 @@ contract AUniswapV3 {
         uint256 feeBips,
         address feeRecipient
     )
-        public
-        payable
+        internal
     {
         IPeripheryPaymentsWithFee(UNISWAP_V3_SWAP_ROUTER_ADDRESS).unwrapWETH9WithFee(
             amountMinimum,
