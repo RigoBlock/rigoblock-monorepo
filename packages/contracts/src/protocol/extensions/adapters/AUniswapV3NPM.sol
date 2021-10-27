@@ -49,39 +49,10 @@ contract AUniswapV3NPM {
     
     using Path for bytes;
     
-    address payable immutable private UNISWAP_V3_NPM_ADDRESS;
-    bytes4 immutable private SELECTOR;
-    
-    constructor() {
-        uint256 chainId;
-        assembly {
-            chainId := chainid()
-        }
-        address payable uniswapV3NPMAddress;
-        if (chainId == 1) { // Mainnet
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        } else if (chainId == 3) { // Ropsten
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        } else if (chainId == 4) { // Rinkeby
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        } else if (chainId == 10) { // Optimism
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        } else if (chainId == 42) { // Kovan
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        } else if (chainId == 137) { // Polygon
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        } else if (chainId == 1337) { // Ganache
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        } else if (chainId == 42161) { // Arbitrum
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        } else if (chainId == 43114) { // Avalanche
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        } else if (chainId == 80001) { // PolygonMumbai
-            uniswapV3NPMAddress = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
-        }
-        UNISWAP_V3_NPM_ADDRESS = uniswapV3NPMAddress;
-        SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
-    }
+    // immutable variables, initialized here it to facilitate etherscan verification
+    // addresses are same on all networks
+    address payable immutable private UNISWAP_V3_NPM_ADDRESS = payable(address(0xC36442b4a4522E871399CD717aBDD847Ab11FE88));
+    bytes4 immutable private APPROVE_SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
     
     /// @notice Wraps ETH when value input is non-null
     /// @param value The ETH amount to be wrapped
@@ -340,7 +311,7 @@ contract AUniswapV3NPM {
         internal
     {
         // solhint-disable-next-line avoid-low-level-calls
-        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, spender, value));
+        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(APPROVE_SELECTOR, spender, value));
         require(
             success && (data.length == 0 || abi.decode(data, (bool))),
             "RIGOBLOCK_APPROVE_FAILED"

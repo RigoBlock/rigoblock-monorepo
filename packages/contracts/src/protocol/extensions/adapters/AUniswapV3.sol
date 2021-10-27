@@ -47,59 +47,18 @@ contract AUniswapV3 {
     
     using Path for bytes;
     
-    address payable immutable private UNISWAP_V3_SWAP_ROUTER_ADDRESS;
-    bytes4 immutable private APPROVE_SELECTOR;
-    bytes4 immutable private EXACT_INPUT_SELECTOR;
-    bytes4 immutable private EXACT_INPUT_SINGLE_SELECTOR;
-    bytes4 immutable private EXACT_OUTPUT_SELECTOR;
-    bytes4 immutable private EXACT_OUTPUT_SINGLE_SELECTOR;
-    bytes4 immutable private REFUND_ETH_SELECTOR;
-    bytes4 immutable private SWEEP_TOKEN_SELECTOR;
-    bytes4 immutable private SWEEP_TOKEN_WITH_FEE_SELECTOR;
-    bytes4 immutable private UNWRAP_WETH9_SELECTOR;
-    bytes4 immutable private UNWRAP_WETH9_WITH_FEE_SELECTOR;
-    bytes4 immutable private WRAP_ETH_SELECTOR;
-    
-    constructor() {
-        uint256 chainId;
-        assembly {
-            chainId := chainid()
-        }
-        address payable uniswapV3RouterAddress;
-        if (chainId == 1) { // Mainnet
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        } else if (chainId == 3) { // Ropsten
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        } else if (chainId == 4) { // Rinkeby
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        } else if (chainId == 10) { // Optimism
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        } else if (chainId == 42) { // Kovan
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        } else if (chainId == 137) { // Polygon
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        } else if (chainId == 1337) { // Ganache
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        } else if (chainId == 42161) { // Arbitrum
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        } else if (chainId == 43114) { // Avalanche
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        } else if (chainId == 80001) { // PolygonMumbai
-            uniswapV3RouterAddress = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
-        }
-        UNISWAP_V3_SWAP_ROUTER_ADDRESS = uniswapV3RouterAddress;
-        APPROVE_SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
-        EXACT_INPUT_SELECTOR = bytes4(keccak256("exactInput(ISwapRouter.ExactInputParams)"));
-        EXACT_INPUT_SINGLE_SELECTOR = bytes4(keccak256("exactInputSingle(ISwapRouter.ExactInputSingleParams)"));
-        EXACT_OUTPUT_SELECTOR = bytes4(keccak256("exactOutput(ISwapRouter.exactOutputParams)"));
-        EXACT_OUTPUT_SINGLE_SELECTOR = bytes4(keccak256("exactOutputSingle(ISwapRouter.ExactOutputSingleParams)"));
-        REFUND_ETH_SELECTOR = bytes4(keccak256("refundETH()"));
-        SWEEP_TOKEN_SELECTOR = bytes4(keccak256("sweepToken(address,uint256,address)"));
-        SWEEP_TOKEN_WITH_FEE_SELECTOR = bytes4(keccak256("sweepTokenWithFee(address,uint256,address,uint256,address)"));
-        UNWRAP_WETH9_SELECTOR = bytes4(keccak256("unwrapWETH9(uint256,address)"));
-        UNWRAP_WETH9_WITH_FEE_SELECTOR = bytes4(keccak256("unwrapWETH9WithFee(uint256,address,uint256,address)"));
-        WRAP_ETH_SELECTOR = bytes4(keccak256("wrapETH(uint256)"));
-    }
+    address payable immutable private UNISWAP_V3_SWAP_ROUTER_ADDRESS = payable(address(0xE592427A0AEce92De3Edee1F18E0157C05861564));
+    bytes4 immutable private APPROVE_SELECTOR = bytes4(keccak256(bytes("approve(address,uint256)")));
+    bytes4 immutable private EXACT_INPUT_SELECTOR = bytes4(keccak256("exactInput(ISwapRouter.ExactInputParams)"));
+    bytes4 immutable private EXACT_INPUT_SINGLE_SELECTOR = bytes4(keccak256("exactInputSingle(ISwapRouter.ExactInputSingleParams)"));
+    bytes4 immutable private EXACT_OUTPUT_SELECTOR = bytes4(keccak256("exactOutput(ISwapRouter.exactOutputParams)"));
+    bytes4 immutable private EXACT_OUTPUT_SINGLE_SELECTOR = bytes4(keccak256("exactOutputSingle(ISwapRouter.ExactOutputSingleParams)"));
+    bytes4 immutable private REFUND_ETH_SELECTOR = bytes4(keccak256("refundETH()"));
+    bytes4 immutable private SWEEP_TOKEN_SELECTOR = bytes4(keccak256("sweepToken(address,uint256,address)"));
+    bytes4 immutable private SWEEP_TOKEN_WITH_FEE_SELECTOR = bytes4(keccak256("sweepTokenWithFee(address,uint256,address,uint256,address)"));
+    bytes4 immutable private UNWRAP_WETH9_SELECTOR = bytes4(keccak256("unwrapWETH9(uint256,address)"));
+    bytes4 immutable private UNWRAP_WETH9_WITH_FEE_SELECTOR = bytes4(keccak256("unwrapWETH9WithFee(uint256,address,uint256,address)"));
+    bytes4 immutable private WRAP_ETH_SELECTOR = bytes4(keccak256("wrapETH(uint256)"));
     
     /// @notice Call multiple functions in the current contract and return the data from all of them if they all succeed
     /// @dev The `msg.value` should not be trusted for any method callable from multicall.
