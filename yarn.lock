@@ -357,10 +357,10 @@
     web3-eth-abi "^1.0.0-beta.24"
     yargs "^10.0.3"
 
-"@0x/sol-compiler@^4.7.6":
-  version "4.7.6"
-  resolved "https://registry.yarnpkg.com/@0x/sol-compiler/-/sol-compiler-4.7.6.tgz#6ba74e1981bdedfc096c60f5295f862de2f3bf32"
-  integrity sha512-JZMdQAAZPUMRD89ObpkV+4WOuYjlk0u3yL2eXO6ULwjewMPd4G+Fv8iwIblGulLW2RNppk0S5/7chTP3Y1DxMg==
+"@0x/sol-compiler@^4.7.7":
+  version "4.7.7"
+  resolved "https://registry.yarnpkg.com/@0x/sol-compiler/-/sol-compiler-4.7.7.tgz#14c9b844567fbb60e5beed0417f2c0bb5599028d"
+  integrity sha512-RCDvsqfHYjjE+YqXBcT6BeOl2KEAi9/o0z/X16Y82DBEJyr7UjAU8ca22ckQpK/UhiXdofBPXv/Zmowdq+qePQ==
   dependencies:
     "@0x/assert" "^3.0.30"
     "@0x/json-schemas" "^6.4.0"
