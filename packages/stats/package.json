@@ -1,6 +1,6 @@
 {
   "name": "@rgbk/stats",
-  "version": "0.1.17",
+  "version": "0.2.0",
   "description": "Rigoblock stats collector",
   "private": false,
   "main": "src/index.js",
@@ -14,9 +14,9 @@
     "postinstall": "rm -f node_modules/web3/index.d.ts"
   },
   "dependencies": {
-    "@rgbk/api": "^0.2.21",
-    "@rgbk/contracts": "^0.3.16",
-    "@rgbk/exchange-connector": "^0.0.18",
+    "@rgbk/api": "^0.3.0",
+    "@rgbk/contracts": "^0.4.0",
+    "@rgbk/exchange-connector": "^0.1.0",
     "bull": "^3.4.7",
     "node-statsd": "^0.1.1",
     "pino": "^5.1.1"
