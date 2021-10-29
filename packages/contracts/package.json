@@ -1,6 +1,6 @@
 {
   "name": "@rgbk/contracts",
-  "version": "0.3.16",
+  "version": "0.4.0",
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run pre_build && rm -rf dist && lerna run --scope=@rgbk/dapp ganache:bootstrap && webpack",
@@ -69,7 +69,7 @@
     }
   },
   "dependencies": {
-    "@rgbk/deployer": "^0.1.19",
+    "@rgbk/deployer": "^1.0.0",
     "chalk": "2.4.1",
     "core-js": "3.2.1",
     "inquirer": "6.2.1",
