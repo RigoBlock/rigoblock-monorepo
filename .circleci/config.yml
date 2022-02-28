@@ -8,7 +8,7 @@ references:
     "/usr/share/zoneinfo/Europe/Rome"
 
   node_image: &node_image
-    circleci/node:17.6.0-stretch
+    circleci/node:17.6.0 #-stretch
 
   attach_workspace: &attach_workspace
     attach_workspace:
@@ -58,7 +58,7 @@ jobs:
     environment:
       TZ: *timezone
     docker:
-      - image: circleci/node:17.6.0-stretch
+      - image: circleci/node:17.6.0 #-stretch
     steps:
       - checkout
       - *attach_workspace
@@ -197,7 +197,7 @@ jobs:
     environment:
       TZ: *timezone
     docker:
-      - image: circleci/node:17.6.0-stretch-browsers
+      - image: circleci/node:17.6.0-browsers #-stretch-browsers
     steps:
       - checkout
       - *attach_workspace
