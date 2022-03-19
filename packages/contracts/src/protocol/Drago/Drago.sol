@@ -341,6 +341,8 @@ contract Drago is Owned, SafeMath, ReentrancyGuard {
         address[] calldata _tokens,
         uint256[] calldata _amounts)
         external
+        onlyOwner
+        whenApprovedProxy(_tokenTransferProxy)
     {
         for (uint256 i = 0; i < _tokens.length; i++) {
             if (!setAllowancesInternal(_tokenTransferProxy, _tokens[i], _amounts[i])) continue;
